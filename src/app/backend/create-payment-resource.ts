@@ -8,6 +8,15 @@ function getFingerprintFromComponents(components: Fingerprint2.Component[]) {
     return Fingerprint2.x64hash128(values.join(''), 31);
 }
 
+const getClientInfoUrl = (): { url: string } | undefined => {
+    const url = (document.referrer || '').slice(
+        0,
+        // URL max length (API constraint)
+        599
+    );
+    return url ? { url } : undefined;
+};
+
 export const createPaymentResource = (
     capiEndpoint: string,
     accessToken: string,
@@ -22,11 +31,7 @@ export const createPaymentResource = (
                 paymentTool,
                 clientInfo: {
                     fingerprint: getFingerprintFromComponents(fingerprintComponents),
-                    url: (document.referrer || '').slice(
-                        0,
-                        // URL max length (API constraint)
-                        599
-                    )
+                    ...getClientInfoUrl()
                 }
             }
         })

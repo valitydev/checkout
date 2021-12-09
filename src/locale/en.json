@@ -98,7 +98,7 @@
     "form.pay.terminals.instruction.to.pay": "To pay",
     "form.pay.terminals.instruction.dueDate": "Payment must be made before",
     "form.pay.terminals.step.one.text": "Choose nearest mobile shop",
-    "form.pay.terminals.step.two.text": "Tell the booking-clerk you’re paying with RBKmoney",
+    "form.pay.terminals.step.two.text": "Tell the booking-clerk you’re paying with ${brandName}",
     "form.pay.terminals.step.three.text": "Tell your payment code",
     "form.pay.terminals.step.four.text": "Pay with cash",
     "form.pay.terminals.step.five.text": "Don’t forget the receipt",

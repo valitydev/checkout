@@ -23,7 +23,7 @@ const StyledInput = styled.input`
     width: 100%;
     height: 48px;
     box-sizing: border-box;
-    border-radius: 3px;
+    border-radius: 8px;
     border: 1px solid ${({ theme }) => theme.color.neutral[0.2]};
     box-shadow: 0 0 0 0 #fff;
     font-weight: 500;

@@ -28,5 +28,9 @@ package.json
 node_modules
 dist
 .cache-loader
-build_utils
+
+# VS Code
 .vscode
+
+# IDEA
+.idea

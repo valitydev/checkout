@@ -32,7 +32,7 @@ const mapStateToProps = (s: State): Partial<PaymentMethodsProps> => ({
     emailPrefilled: !!s.config.initConfig.email
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<any>): Partial<PaymentMethodsProps> => ({
+const mapDispatchToProps = (dispatch: Dispatch): Partial<PaymentMethodsProps> => ({
     setFormInfo: bindActionCreators(goToFormInfo, dispatch),
     setViewInfoHeight: bindActionCreators(setViewInfoHeight, dispatch),
     pay: bindActionCreators(payAction, dispatch)

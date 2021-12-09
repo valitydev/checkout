@@ -23,7 +23,7 @@ export class HtmlIntegration {
 
     constructor(origin: string) {
         this.origin = origin;
-        this.element = document.querySelector('.rbkmoney-checkout') as HTMLScriptElement;
+        this.element = document.querySelector('.vality-checkout') as HTMLScriptElement;
         this.isAvailable = !!(this.element && this.element.dataset);
     }
 

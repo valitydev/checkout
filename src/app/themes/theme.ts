@@ -14,7 +14,6 @@ export interface Theme {
             1: string;
         };
         primary: {
-            0.1: string;
             1: string;
             1.1: string;
             1.2: string;

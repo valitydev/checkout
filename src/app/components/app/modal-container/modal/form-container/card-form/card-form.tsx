@@ -38,7 +38,7 @@ const mapStateToProps = (state: State) => ({
     integrationType: state.config.initConfig.integrationType
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     pay: bindActionCreators(pay, dispatch),
     subscribe: bindActionCreators(subscribe, dispatch),
     setViewInfoError: bindActionCreators(setViewInfoError, dispatch)

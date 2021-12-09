@@ -25,7 +25,7 @@ const Container = styled.div`
         height: 690px;
         width: 680px;
         position: relative;
-        border-radius: 6px;
+        border-radius: 16px;
         overflow: hidden;
     }
 `;
@@ -41,7 +41,7 @@ const IFrame = styled.iframe`
     border: none;
 
     @media ${device.desktop} {
-        border-radius: 6px;
+        border-radius: 16px;
         position: absolute;
     }
 `;

@@ -8,7 +8,7 @@ import { pollInvoiceEvents } from '../../poll-events';
 import { TypeKeys } from 'checkout/actions';
 import { SetAcceptedError } from 'checkout/actions/error-actions/set-accepted-error';
 
-type CreatePaymentResourceFn = () => Iterator<PaymentResource>;
+type CreatePaymentResourceFn = (invoiceAccessToken: any) => Iterator<PaymentResource>;
 
 export function* makePayment(
     config: Config,

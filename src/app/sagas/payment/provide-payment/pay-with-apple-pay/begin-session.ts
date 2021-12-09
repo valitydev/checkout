@@ -39,11 +39,11 @@ const begin = (
     });
 
 export function* beginSession(config: Config, session: ApplePaySession): Iterator<CallEffect> {
-    const { applePayMerchantID, wrapperEndpoint } = config.appConfig;
+    const { applePayMerchantID, wrapperEndpoint, brandName } = config.appConfig;
     const payload = {
         merchantIdentifier: applePayMerchantID,
         domainName: location.hostname,
-        displayName: 'RBKmoney Checkout'
+        displayName: `${brandName} Checkout`
     };
     return yield call(begin, session, `${wrapperEndpoint}/applepay`, payload);
 }

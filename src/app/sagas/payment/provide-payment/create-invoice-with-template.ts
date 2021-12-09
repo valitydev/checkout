@@ -1,5 +1,5 @@
 import { call, CallEffect, put, PutEffect } from 'redux-saga/effects';
-import { InvoiceTemplate, createInvoiceWithTemplate as request } from 'checkout/backend';
+import { InvoiceTemplate, createInvoiceWithTemplate as request, InvoiceAndToken } from 'checkout/backend';
 import { InvoiceCreated, TypeKeys } from 'checkout/actions';
 import { AmountInfoState, AmountInfoStatus } from 'checkout/state';
 import { toMinorAmount } from 'checkout/utils';
@@ -27,7 +27,7 @@ export function* createInvoiceWithTemplate(
         metadata: template.metadata,
         currency: amountInfo.currencyCode
     };
-    const { invoice, invoiceAccessToken } = yield call(request, endpoint, token, template.id, params);
+    const { invoice, invoiceAccessToken }: InvoiceAndToken = yield call(request, endpoint, token, template.id, params);
     return yield put({
         type: TypeKeys.INVOICE_CREATED,
         payload: {

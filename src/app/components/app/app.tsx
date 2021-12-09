@@ -43,7 +43,7 @@ const mapStateToProps = (state: State) => ({
     initializeApp: state.initializeApp
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<State>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     initApp: bindActionCreators(initializeApp, dispatch)
 });
 

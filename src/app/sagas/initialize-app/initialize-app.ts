@@ -14,7 +14,7 @@ type InitializeAppPutEffect = InitializeAppCompleted | InitializeAppFailed;
 
 export type InitializeAppEffect = CallEffect | PutEffect<InitializeAppPutEffect>;
 
-export function* initialize(userInitConfig: InitConfig): Iterator<CallEffect> {
+export function* initialize(userInitConfig: InitConfig) {
     const configChunk = yield call(loadConfig, userInitConfig.locale);
     if (configChunk.appConfig.sentryDsn) {
         Sentry.init({

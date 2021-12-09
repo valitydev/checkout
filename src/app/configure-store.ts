@@ -18,14 +18,14 @@ import rootSaga from 'checkout/sagas/root-saga';
 
 export function configureStore(initState: any): Store<State> {
     const sagaMiddleware = createSagaMiddleware();
-    const store = createStore(
-        combineReducers({
+    const store: Store<State> = createStore(
+        combineReducers<State>({
             initializeApp: initializeAppReducer,
             result: resultReducer,
             config: configReducer,
             model: modelReducer,
             error: errorReducer,
-            form: formReducer,
+            form: formReducer as any,
             modals: modalReducer,
             availablePaymentMethods: availablePaymentMethodsReducer,
             amountInfo: amountInfoReducer,

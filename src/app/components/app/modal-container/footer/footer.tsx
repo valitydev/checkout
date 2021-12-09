@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { ReactSVG } from 'react-svg';
 
 import { State } from 'checkout/state';
 import { Locale } from 'checkout/locale';
@@ -8,7 +9,6 @@ import SecureIcon from './secure-icon.svg';
 import VisaIcon from './visa-icon.svg';
 import McIcon from './mc-icon.svg';
 import PciDssIcon from './pci-dss-icon.svg';
-import Logo from './logo.svg';
 import MirAcceptIcon from './mir-accept.svg';
 import { device } from 'checkout/utils/device';
 import styled, { css } from 'checkout/styled-components';
@@ -121,7 +121,12 @@ const FooterDef: React.FC<FooterProps> = (props) => (
                     <StyledSecureIcon />
                     <Label>{props.locale['footer.pay.label']}</Label>
                     <LogoWrapper>
-                        <Logo />
+                        <ReactSVG
+                            src="/assets/logo.svg"
+                            beforeInjection={(svg) => {
+                                svg.setAttribute('style', 'height: 24px; width: auto');
+                            }}
+                        />
                     </LogoWrapper>
                 </SafePayment>
             )}

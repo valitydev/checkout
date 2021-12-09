@@ -19,7 +19,7 @@ export function* toAvailablePaymentMethods(
     for (const method of paymentMethods) {
         switch (method.method) {
             case PaymentMethodName.BankCard:
-                const bankCardMethods = yield call(bankCardToMethods, method, config, amountInfo);
+                const bankCardMethods = yield call(bankCardToMethods, method as any, config, amountInfo);
                 result = result.concat(bankCardMethods);
                 break;
             case PaymentMethodName.DigitalWallet:

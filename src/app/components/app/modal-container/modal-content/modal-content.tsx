@@ -123,7 +123,7 @@ const mapStateToProps = (state: State) => ({
     activeModal: state.modals.find((modal) => modal.active)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     finishInteraction: bindActionCreators(finishInteraction, dispatch)
 });
 

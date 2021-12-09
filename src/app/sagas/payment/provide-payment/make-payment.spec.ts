@@ -1,5 +1,5 @@
 import { call, put } from 'redux-saga/effects';
-import { cloneableGenerator } from 'redux-saga/utils';
+import { cloneableGenerator } from '@redux-saga/testing-utils';
 import { SagaIterator } from 'redux-saga';
 import { makePayment } from './make-payment';
 import { getPayableInvoice } from './get-payable-invoice';
@@ -28,7 +28,7 @@ describe('makePayment', () => {
     const m = 'ModelStateMock' as any;
     const a = 'AmountInfoStateMock' as any;
     const v = { amount: 'amountMock', mail: 'mailMock' } as any;
-    const fn = () => [] as any;
+    const fn = (_token) => [] as any;
     const gen = cloneableGenerator(() => makePayment(c, m, a, v, fn) as SagaIterator)();
 
     it('should call getPayableInvoice', () => {
@@ -46,7 +46,7 @@ describe('makePayment', () => {
     it('should call createPayment', () => {
         const paymentResource = 'paymentResourceMock' as any;
         const actual = gen.next(paymentResource).value;
-        const expected = call(createPayment, capiEndpoint, token, id, v.email, paymentResource, initConfig);
+        const expected = call(createPayment, capiEndpoint, token, id, v.email);
         expect(actual.toString()).toEqual(expected.toString());
     });
 
