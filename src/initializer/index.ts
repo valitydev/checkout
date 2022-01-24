@@ -24,11 +24,11 @@ const init = (origin: string): Configurator => ({
 });
 
 domReady().then((origin) => {
-    const RbkmoneyCheckout = (environment.RbkmoneyCheckout = init(origin));
+    const ValityCheckout = (environment.ValityCheckout = init(origin));
     const htmlIntegration = new HtmlIntegration(origin);
     if (htmlIntegration.isAvailable) {
         const userConfig = htmlIntegration.getUserConfig();
-        const checkout = RbkmoneyCheckout.configure(userConfig);
+        const checkout = ValityCheckout.configure(userConfig);
         const payButton = htmlIntegration.renderPayButton(userConfig.label);
         payButton.onclick = (e: Event) => {
             e.preventDefault();

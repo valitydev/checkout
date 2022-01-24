@@ -10,6 +10,7 @@ enum AllowedCardNetwork {
 
 export const getYaPayPaymentData = (
     merchantID: string,
+    merchantName: string,
     gatewayMerchantId: string,
     order?: YaPay.Order
 ): YaPay.PaymentData => ({
@@ -19,7 +20,7 @@ export const getYaPayPaymentData = (
     currencyCode: YaPay.CurrencyCode.Rub,
     merchant: {
         id: merchantID,
-        name: 'RBKmoney'
+        name: merchantName
     },
     order: {
         ...(order || {}),
@@ -28,7 +29,7 @@ export const getYaPayPaymentData = (
     paymentMethods: [
         {
             type: YaPay.PaymentMethodType.Card,
-            gateway: 'rbkmoney',
+            gateway: gatewayMerchantId,
             gatewayMerchantId,
             allowedAuthMethods: [YaPay.AllowedAuthMethod.PanOnly, YaPay.AllowedAuthMethod.CloudToken],
             allowedCardNetworks: [

@@ -31,7 +31,7 @@ const mapStateToProps = (state: State): Partial<Props> => ({
     fieldsConfig: toFieldsConfig(state.config.initConfig, state.model.invoiceTemplate)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<any>): Partial<Props> => ({
+const mapDispatchToProps = (dispatch: Dispatch): Partial<Props> => ({
     finishInteraction: bindActionCreators(finishInteraction, dispatch),
     setViewInfoError: bindActionCreators(setViewInfoError, dispatch)
 });

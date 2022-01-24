@@ -35,7 +35,7 @@ const Container = styled.div`
 
 const Form = styled.div<{ error?: any; height?: number }>`
     background: #fff;
-    border-radius: 6px;
+    border-radius: 16px;
     box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.25);
     padding: 30px 20px;
     position: relative;
@@ -140,7 +140,7 @@ const mapStateToProps = (state: State): Partial<FormContainerProps> => {
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<any>): Partial<FormContainerProps> => ({
+const mapDispatchToProps = (dispatch: Dispatch): Partial<FormContainerProps> => ({
     setViewInfoHeight: bindActionCreators(setViewInfoHeight, dispatch)
 });
 

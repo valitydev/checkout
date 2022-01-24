@@ -25,7 +25,7 @@ type PayEffect = SelectEffect | CallEffect | PutEffect<PayPutEffect>;
 
 export function* pay(action: PaymentRequested): Iterator<PayEffect> {
     try {
-        const { config, model, amountInfo } = yield select((s: State) => ({
+        const { config, model, amountInfo }: State = yield select((s: State) => ({
             config: s.config,
             model: s.model,
             amountInfo: s.amountInfo

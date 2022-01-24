@@ -1,6 +1,5 @@
 import last from 'lodash-es/last';
-import { delay } from 'redux-saga';
-import { call, put, race, select, CallEffect, PutEffect, RaceEffect, SelectEffect } from 'redux-saga/effects';
+import { call, put, race, select, delay } from 'redux-saga/effects';
 import { InvoiceEvent, getInvoiceEvents, InvoiceChangeType, InteractionType } from 'checkout/backend';
 import { SetEventsAction, TypeKeys } from 'checkout/actions';
 import { State } from 'checkout/state';
@@ -25,20 +24,15 @@ const isStop = (event: InvoiceEvent): boolean => {
     }
 };
 
-function* getLastEventID(): Iterator<SelectEffect | number> {
+function* getLastEventID() {
     return yield select(({ events: { events: events } }: State) => (events && events.length > 0 ? last(events).id : 0));
 }
 
-function* poll(
-    endpoint: string,
-    token: string,
-    invoiceID: string,
-    interval = 1000
-): Iterator<CallEffect | InvoiceEvent | PutEffect<SetEventsAction> | boolean> {
+function* poll(endpoint: string, token: string, invoiceID: string, interval = 1000) {
     let lastEventID = yield call(getLastEventID);
     let lastEvent = null;
     while (!isStop(lastEvent)) {
-        yield call(delay, interval);
+        yield delay(interval);
         let chunk: InvoiceEvent[] = [];
         try {
             chunk = yield call(getInvoiceEvents, endpoint, token, invoiceID, 5, lastEventID);
@@ -67,23 +61,19 @@ const POLLING_INTEVAL_MS = 1000;
 const EVENTS_WAIT_POLLING_TIME_MS = 10 * 60 * 1000;
 const EVENTS_WAIT_INTERVAL_MS = 5 * 1000;
 
-export function* pollInvoiceEvents(
-    endpoint: string,
-    token: string,
-    invoiceID: string
-): Iterator<RaceEffect | PutEffect<SetEventsAction> | CallEffect> {
+export function* pollInvoiceEvents(endpoint: string, token: string, invoiceID: string) {
     let result: InvoiceEvent;
     for (let i = 1; !result && i < 6; i += 1) {
         [result] = yield race<any>([
             call(poll, endpoint, token, invoiceID),
-            call(delay, POLLING_TIME_MS * i, POLLING_INTEVAL_MS * 2 ** i)
+            delay(POLLING_TIME_MS * i, POLLING_INTEVAL_MS * 2 ** i)
         ]);
     }
     if (isEventToWait(result)) {
         yield call(provideFromInvoiceEvent, result);
-        [result] = yield race<any>([
+        [result] = yield race([
             call(poll, endpoint, token, invoiceID, EVENTS_WAIT_INTERVAL_MS),
-            call(delay, EVENTS_WAIT_POLLING_TIME_MS)
+            delay(EVENTS_WAIT_POLLING_TIME_MS)
         ]);
     }
     if (result) {

@@ -46,7 +46,7 @@ export function* getPayableInvoice(
         return { invoice, invoiceAccessToken };
     }
     if (invoiceTemplate) {
-        return yield call(createInvoice, initConfig, endpoint, invoiceTemplate, amountInfo, formAmount);
+        return yield call(createInvoice, initConfig as any, endpoint, invoiceTemplate, amountInfo, formAmount);
     }
     throw { code: 'error.inconsistent.model' };
 }

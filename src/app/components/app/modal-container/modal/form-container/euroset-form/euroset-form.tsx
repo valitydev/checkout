@@ -42,7 +42,7 @@ const mapStateToProps = (state: State): Partial<Props> => ({
     amount: formatAmount(state.amountInfo)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<any>): Partial<Props> => ({
+const mapDispatchToProps = (dispatch: Dispatch): Partial<Props> => ({
     pay: bindActionCreators(pay, dispatch),
     setViewInfoError: bindActionCreators(setViewInfoError, dispatch)
 });

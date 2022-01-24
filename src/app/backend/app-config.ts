@@ -4,12 +4,21 @@ export class AppConfig {
     capiEndpoint: string;
     wrapperEndpoint: string;
     applePayMerchantID: string;
-    googlePayMerchantID: string;
-    googlePayGatewayMerchantID: string;
     samsungPayMerchantName: string;
     samsungPayServiceID: string;
-    yandexPayMerchantID: string;
-    yandexPayGatewayMerchantID: string;
+    yandexPay: {
+        merchantName: string;
+        merchantID: string;
+        gatewayMerchantID: string;
+    };
+    googlePay: {
+        merchantName: string;
+        merchantID: string;
+        gateway: string;
+        gatewayMerchantID: string;
+        merchantOrigin: string;
+    };
     brandless: boolean;
     fixedTheme: ThemeName;
+    brandName: string;
 }

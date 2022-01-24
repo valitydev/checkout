@@ -9,6 +9,7 @@ import { Locale } from 'checkout/locale';
 import { ReceiptInfo } from './receipt-info';
 import { EurosetLogo } from 'checkout/components';
 import styled from 'checkout/styled-components';
+import { Config } from 'checkout/config';
 
 const Container = styled.div`
     display: flex;
@@ -26,23 +27,25 @@ const SystemLogo = styled(EurosetLogo)`
 
 const mapStateToProps = (s: State) => ({
     locale: s.config.locale,
-    amount: formatInvoiceAmount(s.model.invoice)
+    amount: formatInvoiceAmount(s.model.invoice),
+    config: s.config
 });
 
 export interface InteractionTerminalFormProps {
     receipt: PaymentTerminalReceipt;
     locale: Locale;
     amount: FormattedAmount;
+    config: Config;
 }
 
 class InteractionTerminalFormDef extends React.Component<InteractionTerminalFormProps> {
     render() {
-        const { locale, receipt, amount } = this.props;
+        const { locale, receipt, amount, config } = this.props;
         return (
             <Container id="terminal-interaction">
                 <Header title={this.props.locale['form.header.pay.euroset.label']} />
                 <SystemLogo />
-                <ReceiptInfo amount={amount} receipt={receipt} locale={locale} />
+                <ReceiptInfo amount={amount} receipt={receipt} locale={locale} config={config} />
             </Container>
         );
     }

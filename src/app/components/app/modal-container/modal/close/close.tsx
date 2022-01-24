@@ -30,7 +30,7 @@ interface CloseProps {
     setResult: (resultState: ResultState) => ResultAction;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<ResultAction>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     setResult: bindActionCreators(setResult, dispatch)
 });
 

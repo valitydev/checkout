@@ -16,7 +16,7 @@ describe('loadConfig', () => {
     it('should put config', () => {
         const appConfig = {};
         const locale = {};
-        const actual = iterator.next([appConfig, locale]).value;
+        const actual = iterator.next([appConfig, locale] as any).value;
         const expected = put({
             type: TypeKeys.CONFIG_CHUNK_RECEIVED,
             payload: { appConfig, locale }

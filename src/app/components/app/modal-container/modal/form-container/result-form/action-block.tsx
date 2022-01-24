@@ -110,7 +110,7 @@ const mapStateToProps = (s: State) => {
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     prepareToRetry: bindActionCreators(prepareToRetry, dispatch),
     forgetPaymentAttempt: bindActionCreators(forgetPaymentAttempt, dispatch)
 });

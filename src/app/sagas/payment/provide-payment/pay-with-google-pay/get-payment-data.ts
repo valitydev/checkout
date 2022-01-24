@@ -2,23 +2,23 @@ import { call, CallEffect } from 'redux-saga/effects';
 import { logPrefix } from 'checkout/log-messages';
 import { AmountInfoState } from 'checkout/state';
 import { toDisplayAmount } from 'checkout/utils';
+import { AppConfig } from 'checkout/backend';
 
 const getPaymentDataRequest = (
-    merchantId: string,
-    googlePayGatewayMerchantID: string,
+    config: AppConfig['googlePay'],
     amountInfo: AmountInfoState,
     formAmount: string
 ): PaymentDataRequest => ({
-    merchantId,
+    merchantId: config.merchantID,
     merchantInfo: {
-        merchantName: 'RBKmoney',
-        merchantOrigin: 'checkout.rbk.money'
+        merchantName: config.merchantName,
+        merchantOrigin: config.merchantOrigin
     },
     paymentMethodTokenizationParameters: {
         tokenizationType: 'PAYMENT_GATEWAY',
         parameters: {
-            gateway: 'rbkmoney',
-            gatewayMerchantId: googlePayGatewayMerchantID
+            gateway: config.gateway,
+            gatewayMerchantId: config.merchantID
         }
     },
     allowedPaymentMethods: ['CARD', 'TOKENIZED_CARD'],
@@ -54,14 +54,13 @@ const handleLoadPaymentDataError = (e: PaymentsError) => {
 };
 
 export function* getPaymentData(
-    merchantId: string,
-    googlePayGatewayMerchantID: string,
+    googlePayConfig: AppConfig['googlePay'],
     amountInfo: AmountInfoState,
     formAmount: string
 ): Iterator<CallEffect | PaymentData> {
     try {
         const paymentClient = new google.payments.api.PaymentsClient({ environment: 'PRODUCTION' });
-        const request = getPaymentDataRequest(merchantId, googlePayGatewayMerchantID, amountInfo, formAmount);
+        const request = getPaymentDataRequest(googlePayConfig, amountInfo, formAmount);
         return yield call(loadPaymentData, paymentClient, request);
     } catch (e) {
         yield call(handleLoadPaymentDataError, e);

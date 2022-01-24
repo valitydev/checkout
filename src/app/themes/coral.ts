@@ -12,7 +12,6 @@ const theme: Theme = {
     color: {
         neutral,
         primary: {
-            0.1: '#ff8454',
             1: '#d1658e',
             1.1: '#b85c76',
             1.2: '#9b4f69'

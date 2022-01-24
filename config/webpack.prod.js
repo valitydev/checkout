@@ -31,8 +31,8 @@ const commonProdConfig = {
             ? [
                   new SentryWebpackPlugin({
                       authToken: process.env.SENTRY_AUTH_TOKEN,
-                      org: 'rbkmoney-fd',
-                      project: 'payform',
+                      org: 'vality',
+                      project: 'checkout',
                       include: './dist',
                       ignore: ['node_modules', 'webpack.config.js']
                   })

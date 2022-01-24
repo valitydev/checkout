@@ -4,8 +4,9 @@ import main from './main';
 import coral from './coral';
 import persianGreen from './persian-green';
 import solitude from './solitude';
+import eastern from './eastern';
 
-const themes = [main, coral, persianGreen, solitude];
+const themes = [main, coral, persianGreen, solitude, eastern];
 
 export const DEFAULT_THEME = main;
 

@@ -1,10 +1,5 @@
-import { call, CallEffect } from 'redux-saga/effects';
-import {
-    AmountInfoState,
-    ConfigState,
-    PaymentMethod as PaymentMethodState,
-    PaymentMethodName as PaymentMethodNameState
-} from 'checkout/state';
+import { call } from 'redux-saga/effects';
+import { AmountInfoState, ConfigState, PaymentMethodName as PaymentMethodNameState } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend';
 import { isReadyToApplePay } from './is-ready-to-apple-pay';
 import { isReadyToGooglePay } from './is-ready-to-google-pay';
@@ -14,7 +9,7 @@ export function* tokenProvidersToMethods(
     providers: BankCardTokenProvider[],
     config: ConfigState,
     amountInfo: AmountInfoState
-): Iterator<CallEffect | PaymentMethodState[]> {
+) {
     const result = [];
     const { applePay, googlePay, samsungPay, yandexPay } = config.initConfig;
     for (const provider of providers) {
@@ -46,10 +41,13 @@ export function* tokenProvidersToMethods(
                 break;
             case BankCardTokenProvider.yandexpay:
                 if (yandexPay) {
-                    const {
-                        appConfig: { yandexPayMerchantID, yandexPayGatewayMerchantID }
-                    } = config;
-                    const isYandexPay = yield call(isReadyToYandexPay, yandexPayMerchantID, yandexPayGatewayMerchantID);
+                    const { appConfig } = config;
+                    const isYandexPay = yield call(
+                        isReadyToYandexPay,
+                        appConfig.yandexPay.merchantID,
+                        appConfig.yandexPay.merchantName,
+                        appConfig.yandexPay.gatewayMerchantID
+                    );
                     if (isYandexPay) {
                         result.push({ name: PaymentMethodNameState.YandexPay });
                     }

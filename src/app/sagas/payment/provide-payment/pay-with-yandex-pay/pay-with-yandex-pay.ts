@@ -21,14 +21,19 @@ export function* payWithYandexPay(
     v: TokenProviderFormValues
 ): Iterator<SelectEffect | CallEffect> {
     const {
-        appConfig: { yandexPayMerchantID, yandexPayGatewayMerchantID, capiEndpoint }
+        appConfig: { yandexPay, capiEndpoint }
     } = c;
     const yaOrder = getYaPaymentOrder(a, v.amount);
-    const yaPaymentData = getYaPayPaymentData(yandexPayMerchantID, yandexPayGatewayMerchantID, yaOrder);
-    const yaPayment = yield call(createYaPayment, yaPaymentData);
+    const yaPaymentData = getYaPayPaymentData(
+        yandexPay.merchantID,
+        yandexPay.merchantName,
+        yandexPay.gatewayMerchantID,
+        yaOrder
+    );
+    const yaPayment: YaPay.Payment = yield call(createYaPayment, yaPaymentData);
     const yaProcessEvent = yield call(processYaCheckout, yaPayment);
     try {
-        const fn = createPaymentResource(capiEndpoint, yandexPayGatewayMerchantID, yaProcessEvent);
+        const fn = createPaymentResource(capiEndpoint, yandexPay.gatewayMerchantID, yaProcessEvent);
         yield call(makePayment, c, m, v, a, fn);
     } catch (error) {
         yaPayment.complete(YaPay.CompleteReason.Error, null);

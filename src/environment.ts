@@ -1,7 +1,7 @@
 import { Initializer } from './initializer/initializer';
 
 export interface Environment extends Window {
-    RbkmoneyCheckout?: Configurator;
+    ValityCheckout?: Configurator;
     ApplePaySession?: ApplePaySession;
     PaymentRequest?: PaymentRequest;
     google?: any;
@@ -12,13 +12,13 @@ export interface Configurator {
     configure: (userConfig: any) => Initializer;
 }
 
-export const environment = window as Environment;
+export const environment = (window as any) as Environment;
 
 export const isApplePayAvailable = (): boolean => {
     try {
         return environment.ApplePaySession && ApplePaySession.canMakePayments();
     } catch (e) {
-        console.warn('[RbkmoneyCheckout] apple pay availability', e);
+        console.warn('[ValityCheckout] apple pay availability', e);
         return false;
     }
 };

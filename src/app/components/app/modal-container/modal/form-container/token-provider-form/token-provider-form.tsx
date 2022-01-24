@@ -35,7 +35,7 @@ const mapStateToProps = (state: State) => ({
     formValues: get(state.form, 'tokenProviderForm.values')
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     setViewInfoError: bindActionCreators(setViewInfoError, dispatch),
     pay: bindActionCreators(pay, dispatch)
 });

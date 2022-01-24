@@ -16,7 +16,6 @@ const theme: Theme = {
     color: {
         neutral,
         primary: {
-            0.1: palette.Black,
             1: palette.Black,
             1.1: palette.Black,
             1.2: palette.Black

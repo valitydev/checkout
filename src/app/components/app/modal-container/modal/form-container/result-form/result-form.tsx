@@ -114,7 +114,7 @@ const mapStateToProps = (state: State) => {
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     setResult: bindActionCreators(setResult, dispatch),
     goToFormInfo: bindActionCreators(goToFormInfo, dispatch)
 });

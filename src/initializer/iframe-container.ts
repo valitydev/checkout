@@ -26,8 +26,8 @@ const styles = {
 const create = (origin: string): HTMLIFrameElement => {
     const iframe = document.createElement('iframe');
     iframe.setAttribute('src', `${origin}/v1/checkout.html`);
-    iframe.setAttribute('name', `rbkmoney-payframe-${generateId()}`);
-    iframe.setAttribute('class', 'rbkmoney-payframe');
+    iframe.setAttribute('name', `vality-payframe-${generateId()}`);
+    iframe.setAttribute('class', 'vality-payframe');
     iframe.setAttribute('allowtransparency', 'true');
     iframe.setAttribute('frameborder', '0');
     iframe.setAttribute('allowpaymentrequest', '');

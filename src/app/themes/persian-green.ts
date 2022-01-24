@@ -18,7 +18,6 @@ const theme: Theme = {
     color: {
         neutral,
         primary: {
-            0.1: palette.PersianGreen,
             1: palette.PersianGreen,
             1.1: palette.Pelorous,
             1.2: palette.Teal

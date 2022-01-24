@@ -39,7 +39,8 @@ module.exports = {
             [
                 { from: './src/app/finish-interaction.html' },
                 { from: './src/appConfig.json', to: '..' },
-                { from: './src/locale/*.json', to: './locale', flatten: true }
+                { from: './src/locale/*.json', to: './locale', flatten: true },
+                { from: './src/assets', to: '../assets' }
             ],
             { logLevel: 'warn' }
         )

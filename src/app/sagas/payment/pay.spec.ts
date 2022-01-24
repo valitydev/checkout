@@ -5,7 +5,7 @@ import { State, EventsStatus, ResultFormInfo, ResultType } from 'checkout/state'
 import last from 'lodash-es/last';
 import { provideFromInvoiceEvent } from '../provide-modal';
 import { providePayment } from './provide-payment';
-import { cloneableGenerator } from 'redux-saga/utils';
+import { cloneableGenerator } from '@redux-saga/testing-utils';
 import { SagaIterator } from 'redux-saga';
 
 it('watchPayment should takeLatest pay', () => {

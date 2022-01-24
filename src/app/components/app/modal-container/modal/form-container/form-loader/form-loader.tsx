@@ -21,7 +21,7 @@ const LoaderWrapper = styled.div`
     left: 0;
     height: 100%;
     width: 100%;
-    border-radius: 6px;
+    border-radius: 16px;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;

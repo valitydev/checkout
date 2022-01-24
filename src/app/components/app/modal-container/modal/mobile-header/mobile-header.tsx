@@ -78,7 +78,7 @@ const mapStateToProps = (state: State) => ({
     destination: getDestination(state.modals)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     goToFormInfo: bindActionCreators(goToFormInfo, dispatch)
 });
 

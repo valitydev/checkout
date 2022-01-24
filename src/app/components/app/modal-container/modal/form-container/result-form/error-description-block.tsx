@@ -35,7 +35,7 @@ const mapStateToProps = (state: State) => ({
     locale: state.config.locale
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     goToFormInfo: bindActionCreators(goToFormInfo, dispatch)
 });
 

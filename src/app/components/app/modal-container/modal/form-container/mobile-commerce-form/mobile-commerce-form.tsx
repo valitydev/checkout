@@ -37,7 +37,7 @@ const mapStateToProps = (state: State) => ({
     mobileCommerceFormInfo: toMobileCommerceFormInfo(state.modals)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     setViewInfoError: bindActionCreators(setViewInfoError, dispatch),
     pay: bindActionCreators(pay, dispatch)
 });

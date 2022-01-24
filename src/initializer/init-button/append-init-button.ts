@@ -14,7 +14,7 @@ const appendPayButtonStyles = (origin: string) => {
 export const appendInitButton = (origin: string, appendEl: HTMLScriptElement, label: string): HTMLButtonElement => {
     appendPayButtonStyles(origin);
     const button = document.createElement('button');
-    button.id = 'rbkmoney-button';
+    button.id = 'vality-button';
     button.className = initButton;
     button.innerHTML = label || getDefaultLabel();
     appendEl.parentNode.appendChild(button);

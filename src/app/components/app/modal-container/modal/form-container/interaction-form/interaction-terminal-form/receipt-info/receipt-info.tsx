@@ -7,10 +7,12 @@ import { FormattedAmount } from 'checkout/utils';
 import { Highlight } from 'checkout/components/app/modal-container/modal/form-container/highlight';
 import { ListItem, NumerableList } from 'checkout/components/app/modal-container/modal/form-container/numerable-list';
 import { Text } from '../../../text';
+import { Config } from 'checkout/config';
 
 interface ReceiptInfo {
     locale: Locale;
     receipt: PaymentTerminalReceipt;
+    config: Config;
     amount: FormattedAmount;
 }
 
@@ -35,7 +37,12 @@ export const ReceiptInfo: React.FC<ReceiptInfo> = (props) => (
             <ListItem number={1}>
                 {props.locale['form.pay.terminals.step.one.text']} {props.locale['brand.euroset']}.
             </ListItem>
-            <ListItem number={2}>{props.locale['form.pay.terminals.step.two.text']}.</ListItem>
+            <ListItem number={2}>
+                {props.locale['form.pay.terminals.step.two.text'].replace(
+                    '${brandName}',
+                    props.config.appConfig.brandName
+                )}
+            </ListItem>
             <ListItem number={3}>
                 {props.locale['form.pay.terminals.step.three.text']}: <br />
                 <Highlight>{formatPaymentId(props.receipt.shortPaymentID)}</Highlight>.

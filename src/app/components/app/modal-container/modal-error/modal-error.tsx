@@ -15,7 +15,7 @@ const ModalErrorWrapper = styled.div`
         max-height: 690px;
         width: 680px;
         position: relative;
-        border-radius: 6px;
+        border-radius: 16px;
     }
 `;
 
