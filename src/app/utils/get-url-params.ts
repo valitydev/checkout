@@ -4,15 +4,6 @@ interface URLParams {
     [param: string]: boolean | string | number | null | undefined;
 }
 
-const decodeURIWithLogError = (uri: string): string => {
-    try {
-        return decodeURI(uri);
-    } catch (e) {
-        console.error(e);
-        return uri;
-    }
-};
-
 const decodeURIComponentWithLogError = (value: string): string => {
     try {
         return decodeURIComponent(value);
@@ -22,41 +13,45 @@ const decodeURIComponentWithLogError = (value: string): string => {
     }
 };
 
-export const getUrlParams = (url: string): URLParams => {
-    const params: URLParams = {};
+const parseValue = (value: string): URLParams[keyof URLParams] => {
+    switch (value) {
+        case 'true':
+            return true;
+        case 'false':
+            return false;
+        case 'undefined':
+            return undefined;
+        case 'null':
+            return null;
+        default:
+            if (value !== '' && !isNaN(value as any)) {
+                return parseFloat(value);
+            }
+            return value;
+    }
+};
+
+export const getEncodedUrlParams = (url: string): Record<string, string> => {
+    const params = {};
     if (url && typeof url === 'string') {
-        const decodedUrl = decodeURIWithLogError(url);
-        const urlParts = splitByFirst(decodedUrl, '?');
-        if (urlParts[1]) {
-            const paramsStr = urlParts[1];
+        const urlParts = splitByFirst(url, '?');
+        const paramsStr = urlParts[1];
+        if (paramsStr) {
             const paramsPartsStr = paramsStr.split('&');
             for (const paramStr of paramsPartsStr) {
-                const [encodedName, encodedValue] = splitByFirst(paramStr, '=') as [string, string | undefined];
-                const name = decodeURIComponentWithLogError(encodedName);
-                const value = decodeURIComponentWithLogError(encodedValue);
-                switch (value) {
-                    case 'true':
-                        params[name] = true;
-                        break;
-                    case 'false':
-                        params[name] = false;
-                        break;
-                    case 'undefined':
-                        params[name] = undefined;
-                        break;
-                    case 'null':
-                        params[name] = null;
-                        break;
-                    default:
-                        if (value !== '' && !isNaN(value as any)) {
-                            params[name] = parseFloat(value);
-                            break;
-                        }
-                        params[name] = value;
-                        break;
-                }
+                const [name, value] = splitByFirst(paramStr, '=') as [string, string | undefined];
+                params[name] = value;
             }
         }
     }
     return params;
 };
+
+export const getUrlParams = (url: string): URLParams =>
+    Object.entries(getEncodedUrlParams(url)).reduce(
+        (acc, [name, value]) => ({
+            ...acc,
+            [decodeURIComponentWithLogError(name)]: parseValue(decodeURIComponentWithLogError(value))
+        }),
+        {}
+    );
