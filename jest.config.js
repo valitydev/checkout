@@ -1,13 +1,15 @@
 module.exports = {
-    transform: {
-        '^.+\\.js?$': 'babel-jest',
-        '^.+\\.ts(x)?$': 'ts-jest'
+    preset: 'ts-jest/presets/js-with-babel-esm',
+    testEnvironment: 'jsdom',
+    globals: {
+        'ts-jest': {
+            useESM: true
+        }
     },
     testMatch: ['<rootDir>/src/**/?(*.)(spec|test).ts?(x)'],
-    moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
     moduleNameMapper: {
         '^.+\\.scss$': 'identity-obj-proxy',
-        '^checkout/(.*)': '<rootDir>/src/app/$1'
-    },
-    transformIgnorePatterns: ['<rootDir>/node_modules/(?!lodash-es)']
+        '^checkout/(.*)': '<rootDir>/src/app/$1',
+        '^lodash-es/(.*)$': 'lodash/$1'
+    }
 };
