@@ -92,6 +92,8 @@
     "form.payment.method.name.bonus.label": "Бонусные баллы",
     "form.payment.method.name.crypto.label": "Криптовалюта",
     "form.payment.method.name.others.label": "Другие способы оплаты",
+    "form.payment.method.name.onlineBanking.label": "Онлайн банк",
+    "form.payment.method.name.onlineBanking.search": "Поиск",
     "form.payment.method.description.cash.text": "Оплата через терминал, банкомат или салон связи",
     "form.payment.method.description.bonus.text": "Сбербанк Спасибо, программа Аэрофлот Бонус",
     "form.payment.terminal.email.label": "Укажите почту, чтобы получить код для оплаты",

@@ -11,6 +11,7 @@ import MobileCommerce from './mobile-commerce.svg';
 import QPS from './qps.svg';
 import Uzcard from './uzcard.svg';
 import YandexPay from './yandex-pay.svg';
+import OnlineBanking from './online-banking.svg';
 
 const IconClasses = {
     'apple-pay': ApplePay,
@@ -22,7 +23,8 @@ const IconClasses = {
     wallets: Wallets,
     'mobile-commerce': MobileCommerce,
     qps: QPS,
-    uzcard: Uzcard
+    uzcard: Uzcard,
+    'online-banking': OnlineBanking
 };
 
 type name = keyof typeof IconClasses;

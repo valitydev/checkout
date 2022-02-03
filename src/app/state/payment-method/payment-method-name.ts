@@ -8,5 +8,6 @@ export enum PaymentMethodName {
     GooglePay = 'GooglePay',
     SamsungPay = 'SamsungPay',
     YandexPay = 'YandexPay',
-    MobileCommerce = 'MobileCommerce'
+    MobileCommerce = 'MobileCommerce',
+    OnlineBanking = 'OnlineBanking'
 }

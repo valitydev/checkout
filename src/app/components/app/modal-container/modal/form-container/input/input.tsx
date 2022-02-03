@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 
 import { Marks } from './marks';
 import { default as styled, css } from 'checkout/styled-components';
@@ -80,35 +79,20 @@ const InputWrapper = styled.div<{ error?: any; mark?: boolean }>`
 
 export interface CustomProps {
     icon?: React.ReactNode;
-    placeholder?: string;
     mark?: boolean; // TODO mark always true
-    className?: string;
-    type?: 'text' | 'number' | 'value' | 'tel' | 'email' | 'password';
-    id?: string;
-    onInput?: React.FormEventHandler<HTMLInputElement>;
     autocomplete?: string;
     spellcheck?: boolean;
+    error?: any;
+    active?: boolean;
+    pristine?: boolean;
 }
 
-type InputProps = WrappedFieldInputProps & WrappedFieldMetaProps & CustomProps;
+type InputProps = Omit<JSX.IntrinsicElements['input'], 'ref'> & CustomProps;
 
-export const Input: React.FC<InputProps> = (props) => (
-    <InputWrapper className={props.className} error={props.error} mark={props.mark}>
-        {props.icon && <Icon>{props.icon}</Icon>}
-        <StyledInput
-            onChange={props.onChange}
-            onBlur={props.onBlur}
-            onFocus={props.onFocus}
-            onDrop={props.onDrop}
-            onDragStart={props.onDragStart}
-            onInput={props.onInput}
-            placeholder={props.placeholder}
-            type={props.type}
-            value={props.value}
-            id={props.id}
-            autoComplete={props.autocomplete}
-            spellCheck={props.spellcheck}
-        />
-        {props.mark && <Marks active={props.active} pristine={props.pristine} error={props.error} />}
+export const Input: React.FC<InputProps> = ({ className, error, mark, active, pristine, icon, ...props }) => (
+    <InputWrapper {...{ className, error, mark }}>
+        {icon && <Icon>{icon}</Icon>}
+        <StyledInput {...props} />
+        {!!mark && <Marks {...{ active, pristine, error }} />}
     </InputWrapper>
 );

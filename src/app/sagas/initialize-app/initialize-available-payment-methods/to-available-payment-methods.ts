@@ -40,6 +40,11 @@ export function* toAvailablePaymentMethods(
                     result = result.concat([{ name: PaymentMethodNameState.MobileCommerce }]);
                 }
                 break;
+            case PaymentMethodName.OnlineBanking:
+                if (config.initConfig.onlineBanking) {
+                    result = result.concat([{ name: PaymentMethodNameState.OnlineBanking }]);
+                }
+                break;
         }
     }
     if (result.length === 0) {

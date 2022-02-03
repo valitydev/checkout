@@ -11,6 +11,7 @@ import { QPS } from './qps';
 import { MobileCommerce } from './mobile-commerce';
 import { Uzcard } from './uzcard';
 import { YandexPay } from './yandex-pay';
+import { OnlineBanking } from './online-banking';
 
 const Method: React.FC<MethodProps> = (props) => {
     switch (props.method.name) {
@@ -34,6 +35,8 @@ const Method: React.FC<MethodProps> = (props) => {
             return <YandexPay {...props} />;
         case PaymentMethodName.MobileCommerce:
             return <MobileCommerce {...props} />;
+        case PaymentMethodName.OnlineBanking:
+            return <OnlineBanking {...props} />;
         default:
             return null;
     }

@@ -10,7 +10,8 @@ import {
     WalletFormInfo,
     TokenProviderFormInfo,
     QPSFormInfo,
-    UzcardFormInfo
+    UzcardFormInfo,
+    OnlineBankingFormInfo
 } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { assertUnreachable } from 'checkout/utils';
@@ -37,6 +38,8 @@ const resolveDefaultMethod = (defaultMethod: PaymentMethod): FormInfo => {
             return new TokenProviderFormInfo(BankCardTokenProvider.yandexpay);
         case PaymentMethodName.MobileCommerce:
             return new MobileCommerceFormInfo();
+        case PaymentMethodName.OnlineBanking:
+            return new OnlineBankingFormInfo();
         default:
             assertUnreachable(defaultMethod.name);
             console.error(`${logPrefix} Unsupported initial form for method ${defaultMethod}`);
