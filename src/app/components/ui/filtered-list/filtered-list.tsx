@@ -1,16 +1,26 @@
 import * as React from 'react';
-import { Input, Item, List } from 'checkout/components';
+import { Item, List } from '../list';
 import SearchIcon from './search.svg';
 import { FormGroup } from 'checkout/components/app/modal-container/modal/form-container/form-group';
-import { connect } from 'react-redux';
-import { State } from 'checkout/state';
-import { ComponentProps, ReactElement, useEffect, useState } from 'react';
+import { ComponentProps, useEffect, useState } from 'react';
+import styled from 'checkout/styled-components';
+import { Input } from 'checkout/components';
+
+const StyledFilteredList = styled.div`
+    overflow-y: auto;
+    display: flex;
+    flex-flow: column;
+`;
+const StyledList = styled(List)`
+    margin-top: 10px;
+`;
 
 export interface Params {
     idx: number;
 }
 
 interface Props<T> {
+    placeholder: string;
     values: T[];
     filter: (search: string, value: T, params: Params) => boolean;
     item: (value: T, params: Params) => ComponentProps<typeof Item>;
@@ -18,42 +28,44 @@ interface Props<T> {
     search?: (search: string) => void;
 }
 
-const mapState = (state: State) => ({
-    locale: state.config.locale
-});
-
-const FilteredListRef = <T extends any>(props: Props<T> & ReturnType<typeof mapState>) => {
+export const FilteredList = <T extends any>({
+    placeholder,
+    values,
+    filter,
+    item,
+    select,
+    search: searchFn,
+    ...props
+}: Omit<JSX.IntrinsicElements['div'], 'ref'> & Props<T>) => {
     const [search, setSearch] = useState('');
-    const filteredValues = props.values
+    const filteredValues = values
         .map((value, idx) => [value, { idx }] as const)
-        .filter(([value, params]) => props.filter(search, value, params));
+        .filter(([value, params]) => filter(search, value, params));
 
     useEffect(() => {
-        props.search(search);
+        searchFn(search);
     }, [search]);
 
     return (
-        <div>
+        <StyledFilteredList {...props}>
             <FormGroup>
                 <Input
-                    placeholder={props.locale['form.payment.method.name.onlineBanking.search']}
+                    placeholder={placeholder}
                     icon={<SearchIcon />}
                     onInput={({ currentTarget }) => setSearch(currentTarget.value)}
                 />
             </FormGroup>
             {!!filteredValues.length && (
-                <List>
+                <StyledList>
                     {filteredValues.map(([value, params]) => (
                         <Item
-                            {...props.item(value, params)}
-                            onClick={props.select ? () => props.select(props.values[params.idx], params) : null}
+                            {...item(value, params)}
+                            onClick={select ? () => select(values[params.idx], params) : null}
                             key={params.idx}
                         />
                     ))}
-                </List>
+                </StyledList>
             )}
-        </div>
+        </StyledFilteredList>
     );
 };
-
-export const FilteredList: <T>(props: Props<T>) => ReactElement = connect(mapState)(FilteredListRef);

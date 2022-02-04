@@ -8,6 +8,11 @@ import { FilteredList, RoundIcon } from 'checkout/components';
 import { ReactNode, useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import { Theme } from 'checkout/themes';
+import styled from 'checkout/styled-components';
+
+const StyledFilteredList = styled(FilteredList)`
+    max-height: 615px;
+`;
 
 export interface BankItem {
     name: string;
@@ -27,7 +32,8 @@ const BanksListRef: React.FC<{ items: BankItem[] } & ReturnType<typeof mapState>
     const themeContext = useContext<Theme>(ThemeContext);
 
     return (
-        <FilteredList
+        <StyledFilteredList
+            placeholder={props.locale['form.payment.method.name.onlineBanking.search']}
             values={props.items}
             filter={(search, { name }) => name.toLocaleLowerCase().includes(search.toLowerCase().trim())}
             item={({ name }, { idx }) => ({
