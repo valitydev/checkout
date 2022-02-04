@@ -8,7 +8,7 @@ import { toFieldsConfig } from '../fields-config';
 import { findNamed } from 'checkout/utils';
 import { pay, setViewInfoError } from 'checkout/actions';
 import { Header } from '../header';
-import { BankList } from './banks-list/banks-list';
+import { BankItem, BanksList } from './banks-list';
 
 const toOnlineBankingFormInfo = (m: ModalState[]) =>
     findNamed((findNamed(m, ModalName.modalForms) as ModalForms).formsInfo, FormName.onlineBankingForm);
@@ -27,7 +27,7 @@ const mapDispatch = (dispatch: Dispatch) => ({
 });
 
 const OnlineBankingFormDef: React.FC<ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>> = (props) => {
-    const banks = [
+    const bankItems: BankItem[] = [
         { name: 'First bank name' },
         { name: 'Bank NameBank NameBank NameBank NameBank NameBank Name' },
         { name: 'Third bank name' },
@@ -49,10 +49,8 @@ const OnlineBankingFormDef: React.FC<ReturnType<typeof mapState> & ReturnType<ty
 
     return (
         <form>
-            <div>
-                <Header title={props.locale['form.payment.method.name.onlineBanking.label']} />
-                <BankList banks={banks} />
-            </div>
+            <Header title={props.locale['form.payment.method.name.onlineBanking.label']} />
+            <BanksList items={bankItems} />
         </form>
     );
 };
