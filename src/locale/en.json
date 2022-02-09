@@ -5,7 +5,7 @@
         "A message has been sent to the indicated phone number. To confirm the payment, follow the steps indicated in the SMS from the operator. You can close this window.",
         "Usually payment takes several minutes, in rare cases, the process may take up to 3 days. Once the payment has passed, you will receive a message from the operator."
     ],
-    "info.modal.no.available.payment.method": "There are no available payment methods",
+    "info.modal.no.available.payment.method": "Отсутствуют доступные методы оплаты",
     "footer.pay.label": "Secure payment with",
     "form.header.payment.methods.label": "Payment method",
     "form.header.payment.method.groups.label": "Payment method",
