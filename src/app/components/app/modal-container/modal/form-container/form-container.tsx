@@ -23,6 +23,7 @@ import { device } from 'checkout/utils/device';
 import { shake } from 'checkout/styled-components/animations';
 import { stylableTransition, ENTER, LEAVE, ACTIVE } from 'checkout/styled-transition';
 import { MobileCommerceReceiptForm } from './mobile-commerce-receipt-form';
+import { NoAvailablePaymentMethodForm } from './no-available-payment-method-form';
 
 const Container = styled.div`
     padding: 0 5px;
@@ -213,6 +214,8 @@ class FormContainerDef extends React.Component<FormContainerProps> {
                 return <MobileCommerceForm key={name} />;
             case FormName.mobileCommerceReceiptForm:
                 return <MobileCommerceReceiptForm key={name} />;
+            case FormName.noAvailablePaymentMethodForm:
+                return <NoAvailablePaymentMethodForm key={name} />;
             default:
                 return null;
         }
