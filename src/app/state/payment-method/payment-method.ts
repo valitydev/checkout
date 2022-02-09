@@ -1,6 +1,7 @@
 import { PaymentMethodName } from './payment-method-name';
 
-export class PaymentMethod {
+export interface PaymentMethod {
     name: PaymentMethodName;
     priority?: number;
+    providers?: string[];
 }

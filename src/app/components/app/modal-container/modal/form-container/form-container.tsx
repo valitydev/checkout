@@ -24,6 +24,7 @@ import { shake } from 'checkout/styled-components/animations';
 import { stylableTransition, ENTER, LEAVE, ACTIVE } from 'checkout/styled-transition';
 import { MobileCommerceReceiptForm } from './mobile-commerce-receipt-form';
 import { NoAvailablePaymentMethodForm } from './no-available-payment-method-form';
+import { WalletProviders } from './wallet-providers';
 
 const Container = styled.div`
     padding: 0 5px;
@@ -193,6 +194,8 @@ class FormContainerDef extends React.Component<FormContainerProps> {
                 return <CardForm key={name} />;
             case FormName.walletForm:
                 return <WalletForm key={name} />;
+            case FormName.walletProviders:
+                return <WalletProviders key={name} />;
             case FormName.eurosetForm:
                 return <EurosetForm key={name} />;
             case FormName.uzcardForm:

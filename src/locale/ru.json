@@ -63,7 +63,7 @@
     "form.payment.method.name.euroset.label": "Евросеть",
     "form.payment.method.name.uzcard.label": "Uzcard",
     "form.payment.method.name.qps.label": "Система быстрых платежей",
-    "form.payment.method.name.wallet.label": "QIWI Кошелек",
+    "form.payment.method.name.wallet.label": "Электронные кошельки",
     "form.payment.method.name.bank.label": "Интернет-банк",
     "form.payment.method.name.mobile.commerce.label": "Счет телефона",
     "form.payment.method.name.others.label": "Другие способы оплаты",

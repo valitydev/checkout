@@ -4,19 +4,22 @@ import {
     FormInfo,
     PaymentMethod,
     PaymentMethodName,
-    PaymentMethodsFormInfo,
     MobileCommerceFormInfo,
     EurosetFormInfo,
     WalletFormInfo,
     TokenProviderFormInfo,
     QPSFormInfo,
-    UzcardFormInfo
+    UzcardFormInfo,
+    NoAvailablePaymentMethodFormInfo,
+    WalletProvidersFormInfo
 } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { assertUnreachable } from 'checkout/utils';
+import isArray from 'lodash-es/isArray';
 
-const resolveDefaultMethod = (defaultMethod: PaymentMethod): FormInfo => {
-    switch (defaultMethod.name) {
+// TODO rename function
+export const toInitialForm = (method: PaymentMethod): FormInfo => {
+    switch (method.name) {
         case PaymentMethodName.BankCard:
             return new CardFormInfo();
         case PaymentMethodName.Euroset:
@@ -26,6 +29,9 @@ const resolveDefaultMethod = (defaultMethod: PaymentMethod): FormInfo => {
         case PaymentMethodName.QPS:
             return new QPSFormInfo();
         case PaymentMethodName.DigitalWallet:
+            if (isArray(method.providers)) {
+                return new WalletProvidersFormInfo();
+            }
             return new WalletFormInfo();
         case PaymentMethodName.ApplePay:
             return new TokenProviderFormInfo(BankCardTokenProvider.applepay);
@@ -38,12 +44,8 @@ const resolveDefaultMethod = (defaultMethod: PaymentMethod): FormInfo => {
         case PaymentMethodName.MobileCommerce:
             return new MobileCommerceFormInfo();
         default:
-            assertUnreachable(defaultMethod.name);
-            console.error(`${logPrefix} Unsupported initial form for method ${defaultMethod}`);
-            return new CardFormInfo();
+            assertUnreachable(method.name);
+            console.error(`${logPrefix} Unsupported initial form for method ${method}`);
+            return new NoAvailablePaymentMethodFormInfo();
     }
 };
-
-export const toInitialForm = (isMultiMethods: boolean, defaultMethod: PaymentMethod): FormInfo[] => [
-    isMultiMethods ? new PaymentMethodsFormInfo() : resolveDefaultMethod(defaultMethod)
-];
