@@ -129,7 +129,10 @@
         },
         "PaymentRejected": {
             "text": "Payment failed: your payment has been rejected.",
-            "steps": ["Try using another card or account.", "Contact support."]
+            "steps": [
+                "Try using another card or account.",
+                "Contact support."
+            ]
         }
     },
     "brand.euroset": "Euroset",
