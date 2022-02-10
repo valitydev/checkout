@@ -1,53 +1,30 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { State } from 'checkout/state';
-import { bindActionCreators, Dispatch } from 'redux';
 import { setViewInfoHeight } from 'checkout/actions';
-import BankIcon from './bank.svg';
-import { FilteredList, RoundIcon } from 'checkout/components';
-import { ReactNode, useContext } from 'react';
-import { ThemeContext } from 'styled-components';
-import { Theme } from 'checkout/themes';
+import { FilteredList } from 'checkout/components';
 import styled from 'checkout/styled-components';
+import { ServiceProvider } from 'checkout/api-codegen/payments';
+import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
+import { BankLogo } from 'checkout/components/app/modal-container/modal/form-container/online-banking-form/bank-logo';
 
-const StyledFilteredList = styled(FilteredList)`
+const StyledFilteredList: typeof FilteredList = styled(FilteredList)`
     max-height: 615px;
 `;
 
-export interface BankItem {
-    name: string;
-    icon?: ReactNode;
-}
-
-const mapState = (state: State) => ({
-    locale: state.config.locale
-});
-const mapDispatch = (dispatch: Dispatch) => ({
-    setViewInfoHeight: bindActionCreators(setViewInfoHeight, dispatch)
-});
-
-const BanksListRef: React.FC<{ items: BankItem[] } & ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>> = (
-    props
-) => {
-    const themeContext = useContext<Theme>(ThemeContext);
+export const BanksList: React.FC<{ items: ServiceProvider[]; select?: (item: ServiceProvider) => void }> = (props) => {
+    const locale = useAppSelector((s) => s.config.locale);
+    const dispatch = useAppDispatch();
 
     return (
         <StyledFilteredList
-            placeholder={props.locale['form.payment.method.name.onlineBanking.search']}
+            placeholder={locale['form.payment.method.name.onlineBanking.search']}
             values={props.items}
-            filter={(search, { name }) => name.toLocaleLowerCase().includes(search.toLowerCase().trim())}
-            item={({ name }, { idx }) => ({
-                title: name,
-                icon: (
-                    <RoundIcon
-                        color={themeContext.color.iconBackgrounds[idx % themeContext.color.iconBackgrounds.length]}>
-                        <BankIcon />
-                    </RoundIcon>
-                )
+            filter={(search, { brandName }) => brandName.toLocaleLowerCase().includes(search.toLowerCase().trim())}
+            item={({ brandName }, { idx }) => ({
+                title: brandName,
+                icon: <BankLogo index={idx} />
             })}
-            search={() => props.setViewInfoHeight(null)}
+            search={() => dispatch(setViewInfoHeight(null))}
+            select={(item) => props.select(item)}
         />
     );
 };
-
-export const BanksList = connect(mapState, mapDispatch)(BanksListRef);

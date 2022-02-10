@@ -24,6 +24,7 @@ import { shake } from 'checkout/styled-components/animations';
 import { stylableTransition, ENTER, LEAVE, ACTIVE } from 'checkout/styled-transition';
 import { MobileCommerceReceiptForm } from './mobile-commerce-receipt-form';
 import { OnlineBankingForm } from './online-banking-form';
+import { OnlineBankingAccountForm } from './online-banking-account-form';
 
 const Container = styled.div`
     padding: 0 5px;
@@ -217,6 +218,8 @@ class FormContainerDef extends React.Component<FormContainerProps, { height: num
                 return <MobileCommerceReceiptForm key={name} />;
             case FormName.onlineBankingForm:
                 return <OnlineBankingForm key={name} />;
+            case FormName.onlineBankingAccountForm:
+                return <OnlineBankingAccountForm key={name} />;
             default:
                 return null;
         }

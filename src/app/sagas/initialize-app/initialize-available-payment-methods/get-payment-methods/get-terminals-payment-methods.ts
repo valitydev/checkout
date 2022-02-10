@@ -1,6 +1,6 @@
-import { PaymentMethod, PaymentMethodName } from 'checkout/state';
+import { OnlineBankingPaymentMethod, PaymentMethod, PaymentMethodName } from 'checkout/state';
 import { logUnavailableWithConfig } from './log-unavailable-with-config';
-import { TerminalProviders } from '../../../../backend';
+import { TerminalProviders } from 'checkout/backend';
 
 const mapPaymentMethodNameByProvider: { [P in TerminalProviders]: PaymentMethodName } = {
     euroset: PaymentMethodName.Euroset,
@@ -9,7 +9,7 @@ const mapPaymentMethodNameByProvider: { [P in TerminalProviders]: PaymentMethodN
 };
 
 export const getTerminalsPaymentMethods = (
-    methods: { [P in TerminalProviders]?: boolean } = {},
+    methods: { [P in TerminalProviders | 'onlineBanking']?: boolean } = {},
     providers: TerminalProviders[],
     paymentFlowHold: boolean,
     recurring: boolean
@@ -22,12 +22,21 @@ export const getTerminalsPaymentMethods = (
         logUnavailableWithConfig('terminals', 'recurring');
         return [];
     }
-    return providers
-        .filter(
-            (p) =>
-                (p === 'qps' && methods.qps) ||
-                (p === 'euroset' && methods.euroset) ||
-                (p === 'uzcard' && methods.uzcard)
-        )
-        .map((p) => ({ name: mapPaymentMethodNameByProvider[p] }));
+    return Object.values<PaymentMethod>(
+        providers.reduce<{ [P in keyof typeof methods]?: PaymentMethod }>((acc, provider) => {
+            // if (provider.includes(providers as any) && methods[provider]) { // TODO
+            if (typeof provider === 'string' && provider.includes(providers as any) && methods[provider]) {
+                acc[provider] = { name: mapPaymentMethodNameByProvider[provider] };
+            } else if (methods.onlineBanking) {
+                acc.onlineBanking = {
+                    name: PaymentMethodName.OnlineBanking,
+                    serviceProviders: [
+                        ...((acc.onlineBanking as OnlineBankingPaymentMethod)?.serviceProviders || []),
+                        provider
+                    ]
+                } as PaymentMethod;
+            }
+            return acc;
+        }, {})
+    );
 };

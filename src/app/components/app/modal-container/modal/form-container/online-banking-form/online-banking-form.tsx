@@ -1,58 +1,26 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import get from 'lodash-es/get';
-import { bindActionCreators, Dispatch } from 'redux';
 
-import { FormName, ModalForms, ModalName, ModalState, State } from 'checkout/state';
-import { toFieldsConfig } from '../fields-config';
-import { findNamed } from 'checkout/utils';
-import { pay, setViewInfoError } from 'checkout/actions';
+import { OnlineBankingAccountFormInfo } from 'checkout/state';
+import { goToFormInfo } from 'checkout/actions';
 import { Header } from '../header';
-import { BankItem, BanksList } from './banks-list';
+import { BanksList } from './banks-list';
+import { getCurrentModalFormSelector } from 'checkout/selectors/get-current-modal-form-selector';
+import { getOnlineBankingPaymentMethodSelector } from 'checkout/selectors/get-online-banking-payment-method-selector';
+import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 
-const toOnlineBankingFormInfo = (m: ModalState[]) =>
-    findNamed((findNamed(m, ModalName.modalForms) as ModalForms).formsInfo, FormName.onlineBankingForm);
-
-const mapState = (state: State) => ({
-    config: state.config,
-    model: state.model,
-    formValues: get(state.form, 'onlineBankingForm.values'),
-    locale: state.config.locale,
-    fieldsConfig: toFieldsConfig(state.config.initConfig, state.model.invoiceTemplate),
-    onlineBankingFormInfo: toOnlineBankingFormInfo(state.modals)
-});
-const mapDispatch = (dispatch: Dispatch) => ({
-    setViewInfoError: bindActionCreators(setViewInfoError, dispatch),
-    pay: bindActionCreators(pay, dispatch)
-});
-
-const OnlineBankingFormDef: React.FC<ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>> = (props) => {
-    const bankItems: BankItem[] = [
-        { name: 'First bank name' },
-        { name: 'Bank NameBank NameBank NameBank NameBank NameBank Name' },
-        { name: 'Third bank name' },
-        { name: 'Four Bank Name' },
-        { name: 'Bank Name' },
-        { name: 'Bank Name' },
-        { name: 'Bank Name' },
-        { name: 'Bank Name' },
-        { name: 'Bank Name' },
-        { name: 'Bank Name' },
-        { name: 'Bank Name' },
-        { name: 'Bank Name' },
-        { name: 'Bank Name' },
-        { name: 'Bank Name' },
-        { name: 'Bank Name' },
-        { name: 'Bank Name' },
-        { name: 'Bank Name' }
-    ];
+export const OnlineBankingForm: React.FC = () => {
+    const paymentMethod = useAppSelector(getOnlineBankingPaymentMethodSelector);
+    const locale = useAppSelector((s) => s.config.locale);
+    const formInfo = useAppSelector(getCurrentModalFormSelector);
+    const dispatch = useAppDispatch();
 
     return (
         <form>
-            <Header title={props.locale['form.payment.method.name.onlineBanking.label']} />
-            <BanksList items={bankItems} />
+            <Header title={locale['form.payment.method.name.onlineBanking.label']} />
+            <BanksList
+                items={paymentMethod.serviceProviders}
+                select={(item) => dispatch(goToFormInfo(new OnlineBankingAccountFormInfo(item, formInfo.name)))}
+            />
         </form>
     );
 };
-
-export const OnlineBankingForm = connect(mapState, mapDispatch)(OnlineBankingFormDef);

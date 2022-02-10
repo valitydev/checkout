@@ -111,6 +111,8 @@
     "form.interaction.redirect.text": "Следуйте инструкциям формы оплаты Uzcard",
     "form.interaction.redirect.button.text": "Открыть форму оплаты",
     "form.interaction.redirect.wait.text": "Ожидание результата оплаты от формы Uzcard",
+    "form.pay.onlineBanking.bankAccountName": "Bank account name",
+    "form.pay.onlineBanking.bankAccountNumber": "Bank account number",
     "form.help.header": "Как решить проблему?",
     "form.help.codes": {
         "InvalidPaymentTool": {
