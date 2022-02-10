@@ -51,7 +51,7 @@ export const getDigitalWalletPaymentMethods = (
         console.error(`${logPrefix} There are no known providers for DigitalWallet payment method`);
         return [];
     }
-    if (providers.length === 1) {
+    if (paymentMethodsState.length === 1) {
         return paymentMethodsState;
     }
     return [{ name: PaymentMethodNameState.DigitalWallet, subMethods: paymentMethodsState }];
