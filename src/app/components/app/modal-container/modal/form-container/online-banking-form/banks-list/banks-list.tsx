@@ -19,9 +19,9 @@ export const BanksList: React.FC<{ items: ServiceProvider[]; select?: (item: Ser
             placeholder={locale['form.payment.method.name.onlineBanking.search']}
             values={props.items}
             filter={(search, { brandName }) => brandName.toLocaleLowerCase().includes(search.toLowerCase().trim())}
-            item={({ brandName }, { idx }) => ({
+            item={({ brandName, metadata }, { idx }) => ({
                 title: brandName,
-                icon: <BankLogo index={idx} />
+                icon: <BankLogo index={idx} src={metadata.logo?.src} color={metadata.logo?.backgroundColor} />
             })}
             search={() => dispatch(setViewInfoHeight(null))}
             select={(item) => props.select(item)}
