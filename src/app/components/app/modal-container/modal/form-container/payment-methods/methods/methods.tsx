@@ -20,8 +20,6 @@ const Method: React.FC<MethodProps> = (props) => {
             return <Uzcard {...props} />;
         case PaymentMethodName.QPS:
             return <QPS {...props} />;
-        case PaymentMethodName.DigitalWallet:
-            return <Wallets {...props} />;
         case PaymentMethodName.BankCard:
             return <BankCard {...props} />;
         case PaymentMethodName.ApplePay:
@@ -34,6 +32,8 @@ const Method: React.FC<MethodProps> = (props) => {
             return <YandexPay {...props} />;
         case PaymentMethodName.MobileCommerce:
             return <MobileCommerce {...props} />;
+        case PaymentMethodName.DigitalWallet:
+            return <Wallets {...props} />;
         default:
             return null;
     }

@@ -14,7 +14,7 @@ import v from './capi-version';
 const case1 = [
     {
         method: PaymentMethodName.DigitalWallet,
-        providers: ['stickpay', 'qiwi']
+        providers: ['sticpay', 'qiwi']
     }
 ];
 
@@ -24,7 +24,7 @@ const case2 = [
     },
     {
         method: PaymentMethodName.DigitalWallet,
-        providers: ['stickpay', 'qiwi']
+        providers: ['sticpay', 'qiwi']
     }
 ];
 
