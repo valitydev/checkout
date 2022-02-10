@@ -49,8 +49,8 @@
     "form.input.amount.placeholder": "Amount",
     "form.button.next.label": "Next",
     "form.button.use.other.card.label": "To use a different card",
-    "form.button.use.other.wallet.label": "Use another phone number",
-    "form.button.use.other.mobileCommerce.label": "Use another phone number",
+    "form.button.use.other.wallet.label": "To use a different phone number",
+    "form.button.use.other.mobileCommerce.label": "To use a different phone number",
     "form.button.use.other.default.label": "Use another information",
     "form.button.pay.again.label": "Try again",
     "form.button.pay.label": "Pay",
@@ -96,56 +96,56 @@
             "text": "Payment failed: limits set by you exceeded.",
             "steps": [
                 "Login into your internet bank or account.",
-                "Check and modify your payment or country limits.",
-                "Return to checkout and press “Try again”.",
-                "If error persists contact your bank or payment institution."
+                "Please change limit settings and country restrictions.",
+                "Please return to checkout and press “Try again”.",
+                "If error persists please contact your bank or payment institution."
             ]
         },
         "InsufficientFunds": {
             "text": "Payment failed: insufficient funds.",
             "steps": [
-                "Check your card or account balance.",
-                "Top up your account.",
-                "Return to checkout and press “Try again”.",
-                "If error persists try using another card or account."
+                "Please check your card or account balance. ",
+                "If the funds are insufficient, please top up your account.",
+                "Please return to checkout and press “Try again”.",
+                "If error persists please try using a different card or bank account."
             ]
         },
         "PreauthorizationFailed": {
-            "text": "Payment failed: can’t verify confirmation code.",
+            "text": "Payment failed: not possible to verify confirmation code.",
             "steps": [
-                "Press “Try again”.",
-                "Check if you are entering correct payment password or SMS authentication code.",
-                "Check if you don’t cancel payment on your payment institution confirmation page.",
-                "If error persists contact your bank or payment institution."
+                "Please press “Try again”.",
+                "Please check if you are entering correct payment password or SMS authentication code.",
+                "Please check if you press a button 'To confirm' on the bank page or payment institution page.",
+                "If error persists please contact your bank or payment institution."
             ]
         },
         "RejectedByIssuer": {
-            "text": "Payment failed: your payment institution has rejected your payment.",
+            "text": "Payment failed: your payment institution has rejected the payment.",
             "steps": [
-                "Check your payment and country limits in your payment institution account.",
-                "Check if your card or account is enabled for internet payments.",
-                "Contact your bank or payment institution.",
-                "Try using another card or account."
+                "Please check there are no limits or country rectrictions on the side of your online bank or bank back office.",
+                "Please check if your card or bank account is enabled for online payments.",
+                "Please contact your bank or payment institution.",
+                "Please try using a different card or bank account."
             ]
         },
         "PaymentRejected": {
             "text": "Payment failed: your payment has been rejected.",
             "steps": [
-                "Try using another card or account.",
+                "Please try using a different card or bank account.",
                 "Contact support."
             ]
         }
     },
     "brand.euroset": "Euroset",
-    "error.apple.pay.unknown": "Unknown Apple Pay error",
+    "error.apple.pay.unknown": "Unknown error - Apple Pay",
     "error.apple.pay.cancel": "Apple Pay payment UI is dismissed",
     "error.apple.pay.session.create": "Apple Pay session is not created",
     "error.payment.request.cancel": "Payment UI is dismissed",
     "error.google.pay.cancel": "Google Pay payment UI is dismissed",
-    "error.google.pay.unknown": "Unknown Google Pay error",
+    "error.google.pay.unknown": "Unknown error - Google Pay ",
     "error.samsung.pay.cancel": "Samsung Pay payment UI is dismissed",
     "error.samsung.pay.not.available": "Samsung Pay payment UI is not available",
-    "error.yandex.pay.unknown": "Unknown Yandex Pay error",
+    "error.yandex.pay.unknown": "Unknown error - Yandex Pay",
     "error.yandex.pay.unavailable": "Yandex Pay payment is unavailable",
     "error.yandex.pay.event.abort.no.reason": "Yandex Pay UI is aborted",
     "error.yandex.pay.event.abort.close": "Yandex Pay UI is closed",
@@ -166,9 +166,9 @@
     "error.yandex.pay.event.error.INSECURE_MERCHANT_DOMAIN": "Yandex Pay payment error (INSECURE_MERCHANT_DOMAIN)",
     "error.yandex.pay.event.error.unknown": "Yandex Pay payment error",
     "InvalidPaymentTool": "Invalid payment tool",
-    "AccountLimitsExceeded": "Account limits exceeded",
+    "AccountLimitsExceeded": "Account limit is exceeded",
     "InsufficientFunds": "Insufficient funds",
-    "PreauthorizationFailed": "Preauthorization failed",
-    "RejectedByIssuer": "Rejected by issuer",
-    "PaymentRejected": "Payment rejected"
+    "PreauthorizationFailed": "Pre-authorization failed",
+    "RejectedByIssuer": "Rejected by issuing bank",
+    "PaymentRejected": "Payment is rejected"
 }
