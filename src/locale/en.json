@@ -35,7 +35,7 @@
     "form.final.success.card.text": "Paid by card",
     "form.final.success.binding.text": "Card is linked for a recurrent payment",
     "form.final.started.binding.text": "Binding started for card",
-    "form.final.started.pay.text": "Payment started",
+    "form.final.started.pay.text": "Payment is pending",
     "form.final.success.wallet.text": "Paid with an e-wallet",
     "form.final.success.terminal.text": "Paid with terminal",
     "form.final.success.check.text": "Receipt sent to email",
