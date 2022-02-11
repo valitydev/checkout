@@ -11,13 +11,12 @@ import {
     QPSFormInfo,
     UzcardFormInfo,
     NoAvailablePaymentMethodFormInfo,
+    DigitalWalletPaymentMethod,
     WalletProvidersFormInfo
 } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { assertUnreachable } from 'checkout/utils';
-import isArray from 'lodash-es/isArray';
 
-// TODO rename function
 export const toInitialForm = (method: PaymentMethod): FormInfo => {
     switch (method.name) {
         case PaymentMethodName.BankCard:
@@ -28,11 +27,6 @@ export const toInitialForm = (method: PaymentMethod): FormInfo => {
             return new UzcardFormInfo();
         case PaymentMethodName.QPS:
             return new QPSFormInfo();
-        case PaymentMethodName.DigitalWallet:
-            if (isArray(method.providers)) {
-                return new WalletProvidersFormInfo();
-            }
-            return new WalletFormInfo();
         case PaymentMethodName.ApplePay:
             return new TokenProviderFormInfo(BankCardTokenProvider.applepay);
         case PaymentMethodName.GooglePay:
@@ -43,9 +37,15 @@ export const toInitialForm = (method: PaymentMethod): FormInfo => {
             return new TokenProviderFormInfo(BankCardTokenProvider.yandexpay);
         case PaymentMethodName.MobileCommerce:
             return new MobileCommerceFormInfo();
+        case PaymentMethodName.DigitalWallet:
+            const { providers } = method as DigitalWalletPaymentMethod;
+            if (providers.length === 1) {
+                return new WalletFormInfo(providers[0]);
+            }
+            return new WalletProvidersFormInfo();
         default:
             assertUnreachable(method.name);
-            console.error(`${logPrefix} Unsupported initial form for method ${method}`);
+            console.error(`${logPrefix} Unsupported initial form for method ${method.name}`);
             return new NoAvailablePaymentMethodFormInfo();
     }
 };

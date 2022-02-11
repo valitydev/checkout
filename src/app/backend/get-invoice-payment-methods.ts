@@ -11,20 +11,13 @@ import v from './capi-version';
 //         accessToken
 //     });
 
-const case1 = [
-    {
-        method: PaymentMethodName.DigitalWallet,
-        providers: ['sticpay', 'qiwi']
-    }
-];
-
 const case2 = [
     {
         method: PaymentMethodName.BankCard
     },
     {
         method: PaymentMethodName.DigitalWallet,
-        providers: ['sticpay', 'qiwi']
+        providers: ['sticpay']
     }
 ];
 
@@ -33,5 +26,6 @@ export const getInvoicePaymentMethods = (
     accessToken: string,
     invoiceID: string
 ): Promise<PaymentMethod[]> => {
+    console.log(capiEndpoint, accessToken, invoiceID, v);
     return Promise.resolve(case2);
 };

@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { DigitalWalletPaymentMethod, FormName, PaymentMethod, PaymentMethodName } from 'checkout/state';
+import { assertUnreachable } from 'checkout/utils';
 import { Euroset } from './euroset';
-import { PaymentMethod, PaymentMethodName } from 'checkout/state';
 import { Wallets } from './wallets';
 import { ApplePay } from './apple-pay';
 import { BankCard } from './bank-card';
@@ -11,6 +12,7 @@ import { QPS } from './qps';
 import { MobileCommerce } from './mobile-commerce';
 import { Uzcard } from './uzcard';
 import { YandexPay } from './yandex-pay';
+import { WalletProviderPaymentMethodItem } from '../../wallet-provider-payment-method-item';
 
 const Method: React.FC<MethodProps> = (props) => {
     switch (props.method.name) {
@@ -33,8 +35,19 @@ const Method: React.FC<MethodProps> = (props) => {
         case PaymentMethodName.MobileCommerce:
             return <MobileCommerce {...props} />;
         case PaymentMethodName.DigitalWallet:
+            const { providers } = props.method as DigitalWalletPaymentMethod;
+            if (providers.length === 1) {
+                return (
+                    <WalletProviderPaymentMethodItem
+                        provider={providers[0]}
+                        previous={FormName.paymentMethods}
+                        setFormInfo={props.setFormInfo}
+                    />
+                );
+            }
             return <Wallets {...props} />;
         default:
+            assertUnreachable(props.method.name);
             return null;
     }
 };
