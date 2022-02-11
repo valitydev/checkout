@@ -14,7 +14,6 @@ import { Locale } from 'checkout/locale';
 import { Header } from '../header';
 import { goToFormInfo } from 'checkout/actions';
 import { WalletProviderPaymentMethodItem } from '../wallet-provider-payment-method-item';
-import { assertUnreachable } from 'checkout/utils';
 
 export interface WalletProvidersProps {
     locale: Locale;
@@ -44,20 +43,12 @@ class WalletProvidersDef extends React.Component<WalletProvidersProps> {
                 <div>
                     <Header title={locale['form.header.payment.methods.label']} />
                     {providers.map((provider) => {
-                        switch (provider) {
-                            case KnownDigitalWalletProviders.sticpay:
-                                return (
-                                    <WalletProviderPaymentMethodItem
-                                        key={provider}
-                                        previous={FormName.walletProviders}
-                                        setFormInfo={this.props.setFormInfo}
-                                        provider={provider}
-                                    />
-                                );
-                            default:
-                                assertUnreachable(provider);
-                                return;
-                        }
+                        <WalletProviderPaymentMethodItem
+                            key={provider}
+                            previous={FormName.walletProviders}
+                            setFormInfo={this.props.setFormInfo}
+                            provider={provider}
+                        />;
                     })}
                 </div>
             </form>
