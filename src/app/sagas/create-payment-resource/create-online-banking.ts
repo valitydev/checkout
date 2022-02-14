@@ -1,12 +1,11 @@
 import { call, CallEffect } from 'redux-saga/effects';
 import { createPaymentResource, PaymentResource, PaymentToolType } from 'checkout/backend';
-import { OnlineBankingPaymentResourceMetadata } from 'checkout/backend/model/online-banking/online-banking-payment-resource-metadata';
 
 export function* createOnlineBanking(
     endpoint: string,
     token: string,
     provider: string,
-    metadata: OnlineBankingPaymentResourceMetadata
+    metadata: any
 ): Iterator<CallEffect | PaymentResource> {
     const paymentTool = {
         paymentToolType: PaymentToolType.PaymentTerminalData,
