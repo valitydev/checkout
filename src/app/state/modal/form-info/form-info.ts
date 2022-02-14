@@ -15,7 +15,8 @@ export enum FormName {
     mobileCommerceForm = 'mobileCommerceForm',
     mobileCommerceReceiptForm = 'mobileCommerceReceiptForm',
     redirectInteractionForm = 'redirectInteractionForm',
-    onlineBankingForm = 'onlineBankingForm'
+    onlineBankingForm = 'onlineBankingForm',
+    noAvailablePaymentMethodForm = 'noAvailablePaymentMethodForm'
 }
 
 export abstract class FormInfo implements Named {

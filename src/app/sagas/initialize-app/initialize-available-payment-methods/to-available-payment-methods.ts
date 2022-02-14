@@ -47,9 +47,5 @@ export function* toAvailablePaymentMethods(
                 break;
         }
     }
-    if (result.length === 0) {
-        result.push({ name: PaymentMethodNameState.BankCard });
-        console.warn("Selected payment methods are currently unavailable. The parameter 'bankCard' has been enabled.");
-    }
     return result;
 }
