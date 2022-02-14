@@ -8,7 +8,7 @@ import { FormGroup } from '../form-group';
 import { Input } from 'checkout/components';
 import styled from 'checkout/styled-components';
 import { ReactSVG } from 'react-svg';
-import { Amount, Email } from '../common-fields';
+import { Amount } from '../common-fields';
 import { toFieldsConfig } from '../fields-config';
 import { Field, InjectedFormProps, reduxForm, WrappedFieldProps } from 'redux-form';
 import { isError } from '../common-fields/error-predicate';
@@ -55,7 +55,7 @@ const FormField = ({ field }) => {
 
 const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
     const formInfo = useAppSelector(getCurrentModalFormSelector) as OnlineBankingAccountFormInfo;
-    const { email, amount } = useAppSelector((s) => toFieldsConfig(s.config.initConfig, s.model.invoiceTemplate));
+    const { amount } = useAppSelector((s) => toFieldsConfig(s.config.initConfig, s.model.invoiceTemplate));
     const { serviceProvider } = formInfo;
     const dispatch = useAppDispatch();
 
@@ -78,11 +78,11 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
                         <FormField field={field} />
                     </FormGroup>
                 ))}
-                {email.visible && (
-                    <FormGroup>
-                        <Email />
-                    </FormGroup>
-                )}
+                {/*{email.visible && (*/}
+                {/*    <FormGroup>*/}
+                {/*        <Email />*/}
+                {/*    </FormGroup>*/}
+                {/*)}*/}
                 {amount.visible && (
                     <FormGroup>
                         <Amount cost={amount.cost} />
