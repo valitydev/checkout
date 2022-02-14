@@ -49,6 +49,7 @@
     "form.payment.method.name.google.pay.label": "Google Pay",
     "form.payment.method.name.samsung.pay.label": "Samsung Pay",
     "form.payment.method.name.yandex.pay.label": "Yandex Pay",
+    "form.payment.method.name.wallet.label": "Электронные кошельки",
     "form.payment.method.name.bank.label": "Интернет-банк",
     "form.payment.method.name.mobile.commerce.label": "Счет телефона",
     "form.payment.method.name.others.label": "Другие способы оплаты",
