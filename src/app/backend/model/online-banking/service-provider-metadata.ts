@@ -10,5 +10,5 @@ export interface ServiceProviderMetadata {
         src: string;
         backgroundColor?: string;
     };
-    form?: Array<ServiceProviderMetadataField>;
+    form?: ServiceProviderMetadataField[];
 }
