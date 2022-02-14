@@ -17,6 +17,7 @@ import { Validator } from 'redux-form/lib/Field';
 import { useMemo } from 'react';
 import { PayButton } from 'checkout/components/app/modal-container/modal/form-container/pay-button';
 import { pay } from 'checkout/actions';
+import { ServiceProviderMetadata, ServiceProviderMetadataField } from 'checkout/backend';
 
 const BankLogoWrapper = styled.div`
     margin: auto;
@@ -29,9 +30,14 @@ const StyledLogo = styled(ReactSVG)`
     }
 `;
 
-const createValidator = (field): Validator => (value) =>
+const createValidator = (field: ServiceProviderMetadataField): Validator => (value) =>
     (!!field.required && !value) || (!!field.pattern && !new RegExp(field.pattern).test(value));
-const WrappedInput: React.FC<WrappedFieldProps & { locale: Locale; field: any }> = ({ locale, field, input, meta }) => {
+const WrappedInput: React.FC<WrappedFieldProps & { locale: Locale; field: ServiceProviderMetadataField }> = ({
+    locale,
+    field,
+    input,
+    meta
+}) => {
     return (
         <Input
             {...input}
@@ -44,7 +50,7 @@ const WrappedInput: React.FC<WrappedFieldProps & { locale: Locale; field: any }>
         />
     );
 };
-const FormField = ({ field }) => {
+const FormField: React.FC<{ field: ServiceProviderMetadataField }> = ({ field }) => {
     const validate = useMemo(() => createValidator(field), [field]);
     const locale = useAppSelector((s) => s.config.locale);
 
@@ -57,6 +63,7 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
     const formInfo = useAppSelector(getCurrentModalFormSelector) as OnlineBankingAccountFormInfo;
     const { amount } = useAppSelector((s) => toFieldsConfig(s.config.initConfig, s.model.invoiceTemplate));
     const { serviceProvider } = formInfo;
+    const metadata: ServiceProviderMetadata = serviceProvider?.metadata;
     const dispatch = useAppDispatch();
 
     const submit = (values: PayableFormValues) => {
@@ -65,15 +72,15 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
     };
 
     return (
-        !!serviceProvider?.metadata && (
+        !!metadata && (
             <form onSubmit={props.handleSubmit(submit)}>
                 <Header title={serviceProvider.brandName} />
-                {!!serviceProvider.metadata.logo && (
+                {!!metadata.logo && (
                     <BankLogoWrapper>
-                        <StyledLogo src={serviceProvider.metadata.logo.src} />
+                        <StyledLogo src={metadata.logo.src} />
                     </BankLogoWrapper>
                 )}
-                {serviceProvider.metadata.form?.map((field) => (
+                {metadata.form?.map((field) => (
                     <FormGroup key={field.name}>
                         <FormField field={field} />
                     </FormGroup>
