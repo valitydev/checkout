@@ -15,3 +15,4 @@ export * from './qps-form-info';
 export * from './uzcard-form-info';
 export * from './online-banking-form-info';
 export * from './online-banking-account-form-info';
+export * from './no-available-payment-method-form-info';
