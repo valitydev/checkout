@@ -4,7 +4,7 @@ import {
     PaymentMethod as PaymentMethodState,
     PaymentMethodName as PaymentMethodNameState
 } from 'checkout/state';
-import { PaymentMethod, PaymentMethodName, PaymentTerminal } from 'checkout/backend';
+import { DigitalWallet, PaymentMethod, PaymentMethodName, PaymentTerminal } from 'checkout/backend';
 import { Config } from 'checkout/config';
 import { bankCardToMethods } from './bank-card-to-methods';
 import { getDigitalWalletPaymentMethods, getTerminalsPaymentMethods } from './get-payment-methods';
@@ -23,7 +23,9 @@ export function* toAvailablePaymentMethods(
                 result = result.concat(bankCardMethods);
                 break;
             case PaymentMethodName.DigitalWallet:
-                result = result.concat(getDigitalWalletPaymentMethods(wallets, paymentFlowHold, recurring));
+                result = result.concat(
+                    getDigitalWalletPaymentMethods(method as DigitalWallet, wallets, paymentFlowHold, recurring)
+                );
                 break;
             case PaymentMethodName.PaymentTerminal:
                 result = result.concat(

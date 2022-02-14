@@ -4,20 +4,22 @@ import {
     FormInfo,
     PaymentMethod,
     PaymentMethodName,
-    PaymentMethodsFormInfo,
     MobileCommerceFormInfo,
     EurosetFormInfo,
     WalletFormInfo,
     TokenProviderFormInfo,
     QPSFormInfo,
     UzcardFormInfo,
+    NoAvailablePaymentMethodFormInfo,
+    DigitalWalletPaymentMethod,
+    WalletProvidersFormInfo,
     OnlineBankingFormInfo
 } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { assertUnreachable } from 'checkout/utils';
 
-const resolveDefaultMethod = (defaultMethod: PaymentMethod): FormInfo => {
-    switch (defaultMethod.name) {
+export const toInitialForm = (method: PaymentMethod): FormInfo => {
+    switch (method.name) {
         case PaymentMethodName.BankCard:
             return new CardFormInfo();
         case PaymentMethodName.Euroset:
@@ -26,8 +28,6 @@ const resolveDefaultMethod = (defaultMethod: PaymentMethod): FormInfo => {
             return new UzcardFormInfo();
         case PaymentMethodName.QPS:
             return new QPSFormInfo();
-        case PaymentMethodName.DigitalWallet:
-            return new WalletFormInfo();
         case PaymentMethodName.ApplePay:
             return new TokenProviderFormInfo(BankCardTokenProvider.applepay);
         case PaymentMethodName.GooglePay:
@@ -38,15 +38,17 @@ const resolveDefaultMethod = (defaultMethod: PaymentMethod): FormInfo => {
             return new TokenProviderFormInfo(BankCardTokenProvider.yandexpay);
         case PaymentMethodName.MobileCommerce:
             return new MobileCommerceFormInfo();
+        case PaymentMethodName.DigitalWallet:
+            const { providers } = method as DigitalWalletPaymentMethod;
+            if (providers.length === 1) {
+                return new WalletFormInfo(providers[0]);
+            }
+            return new WalletProvidersFormInfo();
         case PaymentMethodName.OnlineBanking:
             return new OnlineBankingFormInfo();
         default:
-            assertUnreachable(defaultMethod.name);
-            console.error(`${logPrefix} Unsupported initial form for method ${defaultMethod}`);
-            return new CardFormInfo();
+            assertUnreachable(method.name);
+            console.error(`${logPrefix} Unsupported initial form for method ${method.name}`);
+            return new NoAvailablePaymentMethodFormInfo();
     }
 };
-
-export const toInitialForm = (isMultiMethods: boolean, defaultMethod: PaymentMethod): FormInfo[] => [
-    isMultiMethods ? new PaymentMethodsFormInfo() : resolveDefaultMethod(defaultMethod)
-];
