@@ -28,3 +28,4 @@ export * from './invoice-status';
 export * from './samsungpay';
 export * from './mobile-commerce';
 export * from './terminal-providers';
+export * from './service-provider';

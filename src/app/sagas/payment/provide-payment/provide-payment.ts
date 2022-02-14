@@ -24,8 +24,6 @@ const getPayFn = (method: PaymentMethodName) => {
             return call.bind(null, payWithYandexPay);
         case PaymentMethodName.BankCard:
             return call.bind(null, payWithBankCard);
-        case PaymentMethodName.DigitalWallet:
-            return call.bind(null, payWithDigitalWalletQiwi);
         case PaymentMethodName.Euroset:
             return call.bind(null, payWithTerminalEuroset);
         case PaymentMethodName.Uzcard:
@@ -34,6 +32,8 @@ const getPayFn = (method: PaymentMethodName) => {
             return call.bind(null, payWithTerminalQPS);
         case PaymentMethodName.MobileCommerce:
             return call.bind(null, payWithMobileCommerce);
+        case PaymentMethodName.DigitalWallet:
+            return call.bind(null, payWithDigitalWalletQiwi);
         default:
             assertUnreachable(method);
             throw { code: 'error.unsupported.payment.method' };
