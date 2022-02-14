@@ -24,7 +24,6 @@ export const getTerminalsPaymentMethods = (
     }
     return Object.values<PaymentMethod>(
         providers.reduce<{ [P in keyof typeof methods]?: PaymentMethod }>((acc, provider) => {
-            // if (provider.includes(providers as any) && methods[provider]) { // TODO
             if (typeof provider === 'string' && provider.includes(providers as any) && methods[provider]) {
                 acc[provider] = { name: mapPaymentMethodNameByProvider[provider] };
             } else if (methods.onlineBanking) {
