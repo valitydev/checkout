@@ -5,7 +5,7 @@ export function execWithLog(cmd: string) {
         exec(
             cmd,
             {
-                cwd: process.cwd(),
+                cwd: process.cwd()
             },
             (error, stdout, stderr) => {
                 if (error === null) {
