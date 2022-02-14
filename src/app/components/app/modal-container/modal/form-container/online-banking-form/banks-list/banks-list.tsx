@@ -16,7 +16,7 @@ export const BanksList: React.FC<{ items: ServiceProvider[]; select?: (item: Ser
 
     return (
         <StyledFilteredList
-            placeholder={locale['form.payment.method.name.onlineBanking.search']}
+            placeholder={locale['form.onlineBanking.search']}
             values={props.items}
             filter={(search, { brandName }) => brandName.toLocaleLowerCase().includes(search.toLowerCase().trim())}
             item={({ brandName, metadata }, { idx }) => ({

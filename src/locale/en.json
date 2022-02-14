@@ -59,6 +59,7 @@
     "form.interaction.redirect.text": "You should follow the payment form instruction",
     "form.interaction.redirect.button.text": "Open payment form",
     "form.interaction.redirect.wait.text": "Waiting for payment result",
+    "form.onlineBanking.search": "Search",
     "form.pay.onlineBanking.bankAccountName": "Bank account name",
     "form.pay.onlineBanking.bankAccountNumber": "Bank account number",
     "form.help.header": "How to solve a problem?",
