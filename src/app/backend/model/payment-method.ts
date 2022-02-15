@@ -2,8 +2,7 @@ export enum PaymentMethodName {
     BankCard = 'BankCard',
     PaymentTerminal = 'PaymentTerminal',
     DigitalWallet = 'DigitalWallet',
-    MobileCommerce = 'MobileCommerce',
-    OnlineBanking = 'OnlineBanking'
+    MobileCommerce = 'MobileCommerce'
 }
 
 export abstract class PaymentMethod {
