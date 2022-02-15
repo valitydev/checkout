@@ -11,13 +11,13 @@ import { ReactSVG } from 'react-svg';
 import { Amount } from '../common-fields';
 import { toFieldsConfig } from '../fields-config';
 import { Field, InjectedFormProps, reduxForm, WrappedFieldProps } from 'redux-form';
-import { isError } from '../common-fields/error-predicate';
 import { Locale } from 'checkout/locale';
 import { Validator } from 'redux-form/lib/Field';
 import { useMemo } from 'react';
 import { PayButton } from 'checkout/components/app/modal-container/modal/form-container/pay-button';
 import { pay } from 'checkout/actions';
 import { ServiceProviderMetadata, ServiceProviderMetadataField } from 'checkout/backend';
+import { isError } from 'checkout/utils';
 
 const BankLogoWrapper = styled.div`
     margin: auto;
