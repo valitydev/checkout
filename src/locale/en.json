@@ -139,7 +139,7 @@
     "error.yandex.pay.event.error.MERCHANT_DOMAIN_ERROR": "Yandex Pay payment error (MERCHANT_DOMAIN_ERROR)",
     "error.yandex.pay.event.error.INSECURE_MERCHANT_DOMAIN": "Yandex Pay payment error (INSECURE_MERCHANT_DOMAIN)",
     "error.yandex.pay.event.error.unknown": "Yandex Pay payment error",
-    "InvalidPaymentTool": "Invalid payment tool",
+    "InvalidPaymentTool": "Invalid payment instrument",
     "AccountLimitsExceeded": "Account limit is exceeded",
     "InsufficientFunds": "Insufficient funds",
     "PreauthorizationFailed": "Pre-authorization failed",
