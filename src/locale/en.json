@@ -38,7 +38,7 @@
     "form.input.amount.placeholder": "Amount",
     "form.button.next.label": "Next",
     "form.button.use.other.card.label": "Use a different card",
-    "form.button.use.other.wallet.label": "Use a different phone number",
+    "form.button.use.other.wallet.label": "Use a different account ID",
     "form.button.use.other.mobileCommerce.label": "Use a different phone number",
     "form.button.use.other.default.label": "Use different details",
     "form.button.pay.again.label": "Try again",
