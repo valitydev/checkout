@@ -29,3 +29,4 @@ export * from './samsungpay';
 export * from './mobile-commerce';
 export * from './terminal-providers';
 export * from './online-banking';
+export * from './service-provider';

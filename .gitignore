@@ -3,4 +3,3 @@
 Dockerfile
 .DS_Store
 /.cache-loader/
-/src/app/api-codegen

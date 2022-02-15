@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "postinstall": "npm run codegen",
     "clear": "rimraf dist && rimraf .cache-loader",
     "build": "npm run clear && webpack --mode production --colors --progress --config config/webpack.prod.js",
     "start": "npm run clear && webpack-dev-server --mode development --colors --progress --config config/webpack.dev.js --port 7050 --host ::",
@@ -12,8 +11,7 @@
     "fix": "npm run lint:fix; npm run prettier:fix",
     "prettier:fix": "prettier \"**\" --write",
     "prettier:check": "prettier \"**\" --list-different",
-    "lint:fix": "tslint \"src/**/*.@(ts|tsx)\" -e \"**/*.d.ts\"",
-    "codegen": "ts-node --project tools/tsconfig.json tools/swagger-codegen.ts"
+    "lint:fix": "tslint \"src/**/*.@(ts|tsx)\" -e \"**/*.d.ts\""
   },
   "license": "Apache-2.0",
   "dependencies": {
@@ -28,7 +26,6 @@
     "kjua": "^0.9.0",
     "libphonenumber-js": "1.9.6",
     "lodash-es": "~4.17.15",
-    "portable-fetch": "^3.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-redux": "7.2.6",
@@ -41,7 +38,6 @@
     "styled-components": "5.3.3",
     "ts-polyfill": "~3.8.2",
     "uri-template": "1.0.3",
-    "url": "^0.11.0",
     "url-polyfill": "~1.0.11",
     "uuid": "~8.3.2",
     "whatwg-fetch": "~2.0.3"
@@ -91,7 +87,6 @@
     "thread-loader": "~2.1.2",
     "ts-jest": "~23.10.5",
     "ts-loader": "~5.3.3",
-    "ts-node": "^10.4.0",
     "tslint": "~5.11.0",
     "tslint-config-prettier": "~1.18.0",
     "tslint-immutable": "~4.5.1",

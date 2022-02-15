@@ -1,6 +1,6 @@
 import { FormInfo, FormName } from './form-info';
 import { PaymentStatus } from './payment-status';
-import { ServiceProvider } from 'checkout/api-codegen/payments';
+import { ServiceProvider } from 'checkout/backend';
 
 export class OnlineBankingAccountFormInfo extends FormInfo {
     name = FormName.onlineBankingAccountForm;

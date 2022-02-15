@@ -2,9 +2,9 @@ import * as React from 'react';
 import { setViewInfoHeight } from 'checkout/actions';
 import { FilteredList } from 'checkout/components';
 import styled from 'checkout/styled-components';
-import { ServiceProvider } from 'checkout/api-codegen/payments';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { BankLogo } from 'checkout/components/app/modal-container/modal/form-container/online-banking-form/bank-logo';
+import { ServiceProvider } from 'checkout/backend';
 
 const StyledFilteredList: typeof FilteredList = styled(FilteredList)`
     max-height: 615px;

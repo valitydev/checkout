@@ -1,6 +1,5 @@
-import { fetchCapi } from '.';
+import { fetchCapi, ServiceProvider } from '.';
 import v from './capi-version';
-import { ServiceProvider } from 'checkout/api-codegen/payments';
 
 export const getServiceProviderByID = (
     capiEndpoint: string,
