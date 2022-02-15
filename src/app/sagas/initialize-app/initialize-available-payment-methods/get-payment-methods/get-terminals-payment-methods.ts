@@ -1,19 +1,23 @@
-import { OnlineBankingPaymentMethod, PaymentMethod, PaymentMethodName } from 'checkout/state';
+import { PaymentMethodName } from 'checkout/state';
 import { logUnavailableWithConfig } from './log-unavailable-with-config';
-import { TerminalProviders } from 'checkout/backend';
+import { getServiceProviderByID, ServiceProvider, TerminalProviderCategories } from 'checkout/backend';
+import { all, call, select } from 'redux-saga/effects';
+import { groupBy } from 'lodash-es';
+import { getAccessTokenSelector, getCapiEndpointSelector } from 'checkout/selectors';
 
-const mapPaymentMethodNameByProvider: { [P in TerminalProviders]: PaymentMethodName } = {
+const mapPaymentMethodNameByCategory: { [P in TerminalProviderCategories]: PaymentMethodName } = {
     euroset: PaymentMethodName.Euroset,
     qps: PaymentMethodName.QPS,
-    uzcard: PaymentMethodName.Uzcard
+    uzcard: PaymentMethodName.Uzcard,
+    onlinebanking: PaymentMethodName.OnlineBanking
 };
 
-export const getTerminalsPaymentMethods = (
-    methods: { [P in TerminalProviders | 'onlineBanking']?: boolean } = {},
-    providers: TerminalProviders[],
+export function* getTerminalsPaymentMethods(
+    methods: { [P in TerminalProviderCategories]?: boolean } = {},
+    providers: string[],
     paymentFlowHold: boolean,
     recurring: boolean
-): PaymentMethod[] => {
+) {
     if (paymentFlowHold) {
         logUnavailableWithConfig('terminals', 'paymentFlowHold');
         return [];
@@ -22,20 +26,17 @@ export const getTerminalsPaymentMethods = (
         logUnavailableWithConfig('terminals', 'recurring');
         return [];
     }
-    return Object.values<PaymentMethod>(
-        providers.reduce<{ [P in keyof typeof methods]?: PaymentMethod }>((acc, provider) => {
-            if (typeof provider === 'string' && provider.includes(providers as any) && methods[provider]) {
-                acc[provider] = { name: mapPaymentMethodNameByProvider[provider] };
-            } else if (methods.onlineBanking) {
-                acc.onlineBanking = {
-                    name: PaymentMethodName.OnlineBanking,
-                    serviceProviders: [
-                        ...((acc.onlineBanking as OnlineBankingPaymentMethod)?.serviceProviders || []),
-                        provider
-                    ]
-                } as PaymentMethod;
-            }
-            return acc;
-        }, {})
+    const token = yield select(getAccessTokenSelector);
+    const capiEndpoint = yield select(getCapiEndpointSelector);
+    const serviceProviders: ServiceProvider[] = yield all(
+        providers.map((id) => call(getServiceProviderByID, capiEndpoint, token, id))
     );
-};
+    const availableServiceProvidersGroups = groupBy(
+        serviceProviders.filter(({ category }) => methods[category]),
+        'category'
+    );
+    return Object.entries(availableServiceProvidersGroups).map(([category, serviceProvidersGroup]) => ({
+        name: mapPaymentMethodNameByCategory[category],
+        serviceProviders: serviceProvidersGroup
+    }));
+}

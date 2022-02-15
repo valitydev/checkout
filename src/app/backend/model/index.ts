@@ -27,6 +27,6 @@ export * from './payment-error';
 export * from './invoice-status';
 export * from './samsungpay';
 export * from './mobile-commerce';
-export * from './terminal-providers';
+export * from './terminal-provider-categories';
 export * from './online-banking';
 export * from './service-provider';

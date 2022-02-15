@@ -1,7 +1,7 @@
 import { PaymentMethod, PaymentMethodName } from './payment-method';
-import { TerminalProviders } from './terminal-providers';
+import { TerminalProviderCategories } from './terminal-provider-categories';
 
 export class PaymentTerminal extends PaymentMethod {
     method: PaymentMethodName.PaymentTerminal;
-    providers: TerminalProviders[];
+    providers: TerminalProviderCategories[];
 }
