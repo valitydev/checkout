@@ -6,10 +6,10 @@ import { State } from 'checkout/state';
 import { CardTypeIcon } from './card-type-icon';
 import { validateCardNumber } from './validate-card-number';
 import { Card, Input } from 'checkout/components';
-import { isError } from '../../../common-fields/error-predicate';
 import { Locale } from 'checkout/locale';
 import { formatCardNumber } from './format-card-number';
 import styled from 'checkout/styled-components';
+import { isError } from 'checkout/utils';
 
 const InputContainer = styled.div`
     width: 100%;

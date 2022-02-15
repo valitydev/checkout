@@ -8,6 +8,7 @@ import { WalletFormProps } from './wallet-form-props';
 import { FormGroup } from '../form-group';
 import {
     FormName,
+    KnownDigitalWalletProviders,
     ModalForms,
     ModalName,
     ModalState,
@@ -18,10 +19,12 @@ import {
 } from 'checkout/state';
 import { PayButton } from '../pay-button';
 import { Header } from '../header';
-import { Amount, Email, Phone } from '../common-fields';
+import { Amount } from '../common-fields';
 import { toFieldsConfig } from '../fields-config';
 import { findNamed } from 'checkout/utils';
 import { pay, setViewInfoError } from 'checkout/actions';
+import { WalletProviderLogo } from './wallet-provider-logo';
+import { WalletProviderFormGroup } from './wallet-provider-form-group';
 
 const toWalletFormInfo = (m: ModalState[]) => {
     const info = (findNamed(m, ModalName.modalForms) as ModalForms).formsInfo;
@@ -50,10 +53,11 @@ class WalletFormDef extends React.Component<Props> {
         this.submit = this.submit.bind(this);
     }
 
-    init(values: WalletFormValues) {
+    init(values: WalletFormValues, activeProvider: KnownDigitalWalletProviders) {
         this.props.initialize({
-            email: get(values, 'email'),
-            amount: get(values, 'amount')
+            email: values?.email,
+            amount: values?.amount,
+            provider: activeProvider
         });
     }
 
@@ -64,13 +68,13 @@ class WalletFormDef extends React.Component<Props> {
 
     componentWillMount() {
         const {
-            walletFormInfo: { paymentStatus },
+            walletFormInfo: { paymentStatus, activeProvider },
             formValues
         } = this.props;
         this.props.setViewInfoError(false);
         switch (paymentStatus) {
             case PaymentStatus.pristine:
-                this.init(formValues);
+                this.init(formValues, activeProvider);
                 break;
             case PaymentStatus.needRetry:
                 this.submit(formValues);
@@ -87,20 +91,16 @@ class WalletFormDef extends React.Component<Props> {
     render() {
         const {
             handleSubmit,
-            fieldsConfig: { email, amount }
+            fieldsConfig: { amount },
+            walletFormInfo: { activeProvider },
+            locale
         } = this.props;
         return (
             <form onSubmit={handleSubmit(this.submit)} id="wallet-form">
                 <div>
-                    <Header title={this.props.locale['form.header.pay.qiwi.label']} />
-                    <FormGroup>
-                        <Phone />
-                    </FormGroup>
-                    {email.visible && (
-                        <FormGroup>
-                            <Email />
-                        </FormGroup>
-                    )}
+                    <Header title={locale['digital.wallet.providers'][activeProvider].name} />
+                    <WalletProviderLogo provider={activeProvider} />
+                    <WalletProviderFormGroup provider={activeProvider} />
                     {amount.visible && (
                         <FormGroup>
                             <Amount cost={amount.cost} />

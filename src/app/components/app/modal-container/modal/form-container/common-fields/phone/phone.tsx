@@ -5,10 +5,10 @@ import { Field, WrappedFieldProps } from 'redux-form';
 import { State } from 'checkout/state';
 import { Input } from '../../input';
 import { Locale } from 'checkout/locale';
-import { isError } from '../error-predicate';
 import { validatePhone } from './validate-phone';
 import { formatPhoneNumber } from './format-phone-number';
 import { Phone as PhoneIcon } from 'checkout/components';
+import { isError } from 'checkout/utils';
 
 export interface PhoneProps {
     locale: Locale;
