@@ -5,12 +5,12 @@ import { Field, WrappedFieldProps } from 'redux-form';
 import { Input } from 'checkout/components';
 import { getPlaceholder } from './get-placeholder';
 import { validateAmount } from './validate-amount';
-import { isError } from '../error-predicate';
 import { Locale } from 'checkout/locale';
 import { InvoiceTemplateLineCostRange, InvoiceTemplateLineCostUnlim } from 'checkout/backend';
 import { State } from 'checkout/state';
 import { formatAmount } from './format-amount';
 import { Amount as AmountIcon } from 'checkout/components';
+import { isError } from 'checkout/utils';
 
 interface OwnProps {
     cost: InvoiceTemplateLineCostRange | InvoiceTemplateLineCostUnlim;

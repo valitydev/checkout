@@ -1,7 +1,6 @@
 import { number } from 'card-validator';
+import { replaceFullWidthChars } from 'checkout/utils';
 import { get } from 'lodash-es';
-
-import { replaceFullWidthChars } from '../../../common-fields/format-utils';
 
 export function formatCVC(value: string, cardNumber: string): string {
     value = replaceFullWidthChars(value);

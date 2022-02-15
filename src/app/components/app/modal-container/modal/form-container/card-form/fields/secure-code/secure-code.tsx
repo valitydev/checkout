@@ -8,9 +8,9 @@ import { Input } from '../../../input';
 import { validateSecureCode } from './validate-secure-code';
 import { State, FormName } from 'checkout/state';
 import { Locale } from 'checkout/locale';
-import { isError } from '../../../common-fields/error-predicate';
 import { formatCVC } from './format-cvc';
 import { Lock } from 'checkout/components';
+import { isError } from 'checkout/utils';
 
 export interface SecureCodeProps {
     locale: Locale;
