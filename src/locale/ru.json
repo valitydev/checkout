@@ -38,7 +38,7 @@
     "form.input.amount.placeholder": "Сумма к оплате",
     "form.button.next.label": "Далее",
     "form.button.use.other.card.label": "Использовать другую карту",
-    "form.button.use.other.wallet.label": "Ввести другой номер телефона",
+    "form.button.use.other.wallet.label": "Ввести другой идентификатор аккаунта",
     "form.button.use.other.mobileCommerce.label": "Ввести другой номер телефона",
     "form.button.use.other.default.label": "Попробовать с другими данными",
     "form.button.pay.again.label": "Попробовать ещё раз",
@@ -91,7 +91,7 @@
                 "Нажмите “Попробовать еще раз”.",
                 "Убедитесь, что вы вводите верный проверочный код из SMS или списка паролей.",
                 "Убедитесь, что вы нажимаете кнопку “Подтвердить” на странице банка или платежной организации.",
-                "Если ошибка повторяется обратитесь в свой банк или платежную организацию."
+                "Если ошибка повторяется, обратитесь в свой банк или платежную организацию."
             ]
         },
         "RejectedByIssuer": {
@@ -105,17 +105,20 @@
         },
         "PaymentRejected": {
             "text": "Оплата не прошла: проведение платежа запрещено.",
-            "steps": ["Попробуйте использовать другую карту или счет.", "Обратитесь в службу поддержки."]
+            "steps": [
+                "Попробуйте использовать другую карту или счет.",
+                "Обратитесь в службу поддержки."
+            ]
         }
     },
     "error.apple.pay.unknown": "Неизвестная ошибка Apple Pay",
     "error.apple.pay.cancel": "Интерфейс оплаты Apple Pay отклонен",
     "error.apple.pay.session.create": "Не удалось создать сессию Apple Pay",
-    "error.payment.request.cancel": "Интерфейс оплаты отклонен",
-    "error.google.pay.cancel": "Интерфейс оплаты Google Pay отклонен",
+    "error.payment.request.cancel": "Интерфейс оплаты отменен",
+    "error.google.pay.cancel": "Интерфейс оплаты Google Pay отменен",
     "error.google.pay.unknown": "Неизвестная ошибка Google Pay",
-    "error.samsung.pay.cancel": "Интерфейс оплаты Samsung Pay отклонен",
-    "error.samsung.pay.not.available": "Интерфейс оплаты Samsung Pay payment не доступен",
+    "error.samsung.pay.cancel": "Интерфейс оплаты Samsung Pay отменен",
+    "error.samsung.pay.not.available": "Интерфейс оплаты Samsung Pay не доступен",
     "error.yandex.pay.unknown": "Неизвестная ошибка Yandex Pay",
     "error.yandex.pay.unavailable": "Оплата Yandex Pay недоступна",
     "error.yandex.pay.event.abort.no.reason": "Оплата Yandex Pay отменена",
@@ -139,7 +142,7 @@
     "InvalidPaymentTool": "Недопустимое средство оплаты",
     "AccountLimitsExceeded": "Превышен лимит",
     "InsufficientFunds": "Недостаточно средств",
-    "PreauthorizationFailed": "Неудачная преавторизиция",
+    "PreauthorizationFailed": "Неудачная предавторизация",
     "RejectedByIssuer": "Отклонено эмитентом",
     "PaymentRejected": "Платёж отклонен",
     "digital.wallet.providers": {
