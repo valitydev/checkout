@@ -34,3 +34,6 @@ dist
 
 # IDEA
 .idea
+
+# API
+/src/app/api-codegen

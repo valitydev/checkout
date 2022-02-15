@@ -24,6 +24,7 @@ import { shake } from 'checkout/styled-components/animations';
 import { stylableTransition, ENTER, LEAVE, ACTIVE } from 'checkout/styled-transition';
 import { MobileCommerceReceiptForm } from './mobile-commerce-receipt-form';
 import { OnlineBankingForm } from './online-banking-form';
+import { OnlineBankingAccountForm } from './online-banking-account-form';
 import { NoAvailablePaymentMethodForm } from './no-available-payment-method-form';
 import { WalletProviders } from './wallet-providers';
 
@@ -221,6 +222,8 @@ class FormContainerDef extends React.Component<FormContainerProps, { height: num
                 return <MobileCommerceReceiptForm key={name} />;
             case FormName.onlineBankingForm:
                 return <OnlineBankingForm key={name} />;
+            case FormName.onlineBankingAccountForm:
+                return <OnlineBankingAccountForm key={name} />;
             case FormName.noAvailablePaymentMethodForm:
                 return <NoAvailablePaymentMethodForm key={name} />;
             default:
