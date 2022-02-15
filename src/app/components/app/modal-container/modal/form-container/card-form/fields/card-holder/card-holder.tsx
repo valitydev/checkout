@@ -6,9 +6,9 @@ import { State } from 'checkout/state';
 import { Input } from '../../../input';
 import { validateCardHolder } from './validate-card-holder';
 import { Locale } from 'checkout/locale';
-import { isError } from '../../../common-fields/error-predicate';
 import { formatCardHolder } from './format-card-holder';
 import { User } from 'checkout/components';
+import { isError } from 'checkout/utils';
 
 export interface CardHolderProps {
     locale: Locale;
