@@ -1,12 +1,10 @@
-import { RegisteredField } from 'redux-form';
 import { PayableFormValues } from 'checkout/state';
-
-export interface WalletFormFields {
-    phone: RegisteredField;
-    email: RegisteredField;
-    amount?: RegisteredField;
-}
+import { KnownDigitalWalletProviders } from '../payment-method';
 
 export interface WalletFormValues extends PayableFormValues {
-    phone: string;
+    provider: KnownDigitalWalletProviders;
+}
+
+export interface SticpayWalletFormValues extends WalletFormValues {
+    sticpayAccount: string;
 }

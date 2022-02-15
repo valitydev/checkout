@@ -145,5 +145,13 @@
     "InsufficientFunds": "Недостаточно средств",
     "PreauthorizationFailed": "Неудачная преавторизиция",
     "RejectedByIssuer": "Отклонено эмитентом",
-    "PaymentRejected": "Платёж отклонен"
+    "PaymentRejected": "Платёж отклонен",
+    "digital.wallet.providers": {
+        "sticpay": {
+            "name": "Sticpay",
+            "fields": {
+                "account": "Sticpay account (email)"
+            }
+        }
+    }
 }

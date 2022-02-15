@@ -148,5 +148,13 @@
     "InsufficientFunds": "Insufficient funds",
     "PreauthorizationFailed": "Preauthorization failed",
     "RejectedByIssuer": "Rejected by issuer",
-    "PaymentRejected": "Payment rejected"
+    "PaymentRejected": "Payment rejected",
+    "digital.wallet.providers": {
+        "sticpay": {
+            "name": "Sticpay",
+            "fields": {
+                "account": "Sticpay account (email)"
+            }
+        }
+    }
 }

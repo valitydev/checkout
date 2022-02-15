@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { Field, WrappedFieldProps } from 'redux-form';
 
 import { State } from 'checkout/state';
-import { formatEmail, isError, validateEmail } from 'checkout/utils';
-import { Input } from '../../input';
 import { Locale } from 'checkout/locale';
 import { Letter } from 'checkout/components';
+import { formatEmail, isError, validateEmail } from 'checkout/utils';
+import { Input } from '../../input';
 
 export interface EmailDefProps {
     locale: Locale;
@@ -18,21 +18,21 @@ const getCustomInput = (props: EmailDefProps, fieldProps: WrappedFieldProps) => 
         {...fieldProps.meta}
         error={isError(fieldProps.meta)}
         icon={<Letter />}
-        placeholder={props.locale['form.input.email.placeholder']}
+        placeholder={props.locale['digital.wallet.providers'].sticpay.fields.account}
         mark={true}
         type="email"
-        id="email-input"
+        id="sticpay-account-input"
         onInput={formatEmail}
         autocomplete="email"
     />
 );
 
-export const EmailDef: React.FC<EmailDefProps> = (props) => (
-    <Field name="email" component={getCustomInput.bind(null, props)} validate={validateEmail} />
+export const SticpayAccountDef: React.FC<EmailDefProps> = (props) => (
+    <Field name="sticpayAccount" component={getCustomInput.bind(null, props)} validate={validateEmail} />
 );
 
 const mapStateToProps = (state: State) => ({
     locale: state.config.locale
 });
 
-export const Email = connect(mapStateToProps)(EmailDef);
+export const SticpayAccount = connect(mapStateToProps)(SticpayAccountDef);
