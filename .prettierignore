@@ -34,3 +34,6 @@ dist
 
 # IDEA
 .idea
+
+# Crowdin formats json in his own way
+src/locale/*.json
