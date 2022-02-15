@@ -105,7 +105,10 @@
         },
         "PaymentRejected": {
             "text": "Payment failed: your payment has been rejected.",
-            "steps": ["Please try using a different card or bank account.", "Please contact support of the website."]
+            "steps": [
+                "Please try using a different card or bank account.",
+                "Please contact support of the website."
+            ]
         }
     },
     "error.apple.pay.unknown": "Unknown error - Apple Pay",
