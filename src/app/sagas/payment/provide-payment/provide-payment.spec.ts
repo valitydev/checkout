@@ -5,8 +5,8 @@ import { PaymentMethodName } from 'checkout/state';
 import { payWithGooglePay } from './pay-with-google-pay';
 import { payWithSamsungPay } from './pay-with-samsung-pay';
 import { payWithBankCard } from './pay-with-bank-card';
-import { payWithDigitalWalletQiwi } from './pay-with-digital-wallet-qiwi';
 import { payWithTerminalEuroset } from './pay-with-terminal-euroset';
+import { payWithDigitalWallet } from './pay-with-digital-wallet';
 
 describe('providePayment', () => {
     const c = 'ConfigStateMock' as any;
@@ -51,7 +51,7 @@ describe('providePayment', () => {
         const method = PaymentMethodName.DigitalWallet;
         const iterator = providePayment(method, c, m, a, v);
         const actual = iterator.next().value;
-        const expected = call(payWithDigitalWalletQiwi, c, m, a, values);
+        const expected = call(payWithDigitalWallet, c, m, a, values);
         expect(actual).toEqual(expected);
     });
 
