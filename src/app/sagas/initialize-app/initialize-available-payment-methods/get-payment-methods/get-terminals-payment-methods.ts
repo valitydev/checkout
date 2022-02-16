@@ -2,7 +2,7 @@ import { PaymentMethodName } from 'checkout/state';
 import { logUnavailableWithConfig } from './log-unavailable-with-config';
 import { ServiceProvider, TerminalProviderCategories } from 'checkout/backend';
 import { groupBy } from 'lodash-es';
-import { assertMetadata } from 'checkout/sagas/initialize-app/initialize-available-payment-methods/get-payment-methods/assert-metadata';
+import { assertMetadata } from './assert-metadata';
 
 const mapPaymentMethodNameByCategory: { [P in TerminalProviderCategories]: PaymentMethodName } = {
     euroset: PaymentMethodName.Euroset,
