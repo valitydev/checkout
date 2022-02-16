@@ -18,9 +18,9 @@ import { toFieldsConfig } from '../fields-config';
 import { Field, InjectedFormProps, reduxForm, WrappedFieldProps } from 'redux-form';
 import { Locale } from 'checkout/locale';
 import { Validator } from 'redux-form/lib/Field';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { PayButton } from 'checkout/components/app/modal-container/modal/form-container/pay-button';
-import { pay } from 'checkout/actions';
+import { pay, setViewInfoError } from 'checkout/actions';
 import { ServiceProviderMetadata, ServiceProviderMetadataField } from 'checkout/backend';
 import { isError } from 'checkout/utils';
 import { LOGO_BY_SERVICE_PROVIDER_ID } from 'checkout/constants';
@@ -73,6 +73,15 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
     const dispatch = useAppDispatch();
     const logo = LOGO_BY_SERVICE_PROVIDER_ID[serviceProvider?.id];
 
+    useEffect(() => {
+        dispatch(setViewInfoError(false));
+    }, []);
+    useEffect(() => {
+        if (props.submitFailed) {
+            dispatch(setViewInfoError(true));
+        }
+    }, [props.submitFailed]);
+
     const submit = (values: OnlineBankingAccountFormValues) => {
         (document.activeElement as HTMLElement)?.blur();
         dispatch(
@@ -115,5 +124,5 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
 
 export const OnlineBankingAccountForm = reduxForm({
     form: FormName.onlineBankingAccountForm,
-    destroyOnUnmount: false
+    destroyOnUnmount: true
 })(OnlineBankingAccountFormRef);
