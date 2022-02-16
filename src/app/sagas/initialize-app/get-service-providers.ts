@@ -6,7 +6,6 @@ import {
     ServiceProvider
 } from 'checkout/backend';
 import { all, call } from 'redux-saga/effects';
-import { assertMetadata } from 'checkout/sagas/initialize-app/service-providers/assert-metadata';
 
 export function* getServiceProviders(paymentMethods: PaymentMethod[], endpoint: string, accessToken: string) {
     const paymentTerminal = paymentMethods.find(
@@ -18,6 +17,5 @@ export function* getServiceProviders(paymentMethods: PaymentMethod[], endpoint: 
     const serviceProviders: ServiceProvider[] = yield all(
         paymentTerminal.providers.map((id) => call(getServiceProviderByID, endpoint, accessToken, id))
     );
-    serviceProviders.forEach((serviceProvider) => assertMetadata(serviceProvider.id, serviceProvider.metadata));
     return serviceProviders;
 }

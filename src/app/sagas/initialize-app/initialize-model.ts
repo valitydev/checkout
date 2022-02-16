@@ -21,7 +21,7 @@ import {
 } from 'checkout/config';
 import { InitializeModelCompleted, SetEventsAction, TypeKeys } from 'checkout/actions';
 import { State } from 'checkout/state';
-import { getServiceProviders } from './service-providers';
+import { getServiceProviders } from './get-service-providers';
 
 export interface ModelChunk {
     invoiceTemplate?: InvoiceTemplate;
