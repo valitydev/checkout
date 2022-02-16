@@ -18,7 +18,7 @@ import { PayButton } from 'checkout/components/app/modal-container/modal/form-co
 import { pay } from 'checkout/actions';
 import { ServiceProviderMetadata, ServiceProviderMetadataField } from 'checkout/backend';
 import { isError } from 'checkout/utils';
-import { LOGO_BY_SERVICE_PROVIDER_ID } from 'constants/logo-by-service-provider-id';
+import { LOGO_BY_SERVICE_PROVIDER_ID } from 'checkout/constants';
 
 const BankLogoWrapper = styled.div`
     margin: auto;

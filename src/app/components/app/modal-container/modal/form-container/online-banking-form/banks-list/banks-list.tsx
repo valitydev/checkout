@@ -5,7 +5,7 @@ import styled from 'checkout/styled-components';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { BankLogo } from '../bank-logo';
 import { ServiceProvider } from 'checkout/backend';
-import { LOGO_BY_SERVICE_PROVIDER_ID } from 'constants/logo-by-service-provider-id';
+import { LOGO_BY_SERVICE_PROVIDER_ID } from 'checkout/constants';
 
 const StyledFilteredList: typeof FilteredList = styled(FilteredList)`
     max-height: 615px;
