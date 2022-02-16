@@ -87,6 +87,6 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         euroset: setDefault(resolveBoolean(euroset, 'euroset'), allTerminals),
         uzcard: setDefault(resolveBoolean(uzcard, 'uzcard'), allTerminals),
         qps: setDefault(resolveBoolean(qps, 'qps'), allTerminals),
-        onlineBanking: setDefault(resolveBoolean(onlineBanking, 'onlineBanking'), false)
+        onlineBanking: setDefault(resolveBoolean(onlineBanking, 'onlineBanking'), true)
     };
 };
