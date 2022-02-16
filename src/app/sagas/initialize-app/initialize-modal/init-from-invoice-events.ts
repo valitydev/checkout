@@ -7,7 +7,7 @@ import {
 } from 'checkout/backend';
 import { ModalState, PaymentMethod } from 'checkout/state';
 import { PaymentMethodName } from 'checkout/config';
-import { providePaymentInteraction } from '../../provide-modal';
+import { provideInteraction } from '../../provide-modal';
 import { toModalResult } from './to-modal-result';
 import { toInitialState } from './to-initial-state';
 import { getLastChange } from 'checkout/utils';
@@ -40,7 +40,7 @@ export function* initFromInvoiceEvents(
     const change = getLastChange(events);
     switch (change.changeType) {
         case InvoiceChangeType.PaymentInteractionRequested:
-            return yield call(providePaymentInteraction, change as PaymentInteractionRequested);
+            return yield call(provideInteraction, change as PaymentInteractionRequested);
         case InvoiceChangeType.PaymentStarted:
         case InvoiceChangeType.InvoiceStatusChanged:
             return toModalResult();

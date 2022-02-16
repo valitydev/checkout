@@ -6,13 +6,7 @@ import { FormName, ModalForms, ModalName, ResultFormInfo, ResultState, ResultTyp
 import { goToFormInfo, setResult } from 'checkout/actions';
 import { ResultFormProps } from './result-form-props';
 import { findNamed } from 'checkout/utils';
-import {
-    makeContentCustomer,
-    makeContentError,
-    makeContentInvoice,
-    ResultFormContent,
-    ResultFormType
-} from './make-content';
+import { makeContentError, makeContentInvoice, ResultFormContent, ResultFormType } from './make-content';
 import { ActionBlock } from './action-block';
 import { IntegrationType } from 'checkout/config';
 import { getErrorCodeFromEvents } from '../get-error-code-from-changes';
@@ -92,8 +86,6 @@ class ResultFormDef extends React.Component<ResultFormProps> {
                     case IntegrationType.invoice:
                     case IntegrationType.invoiceTemplate:
                         return makeContentInvoice(locale, events.events, events.status, error);
-                    case IntegrationType.customer:
-                        return makeContentCustomer(locale, events.events, events.status);
                 }
         }
     }

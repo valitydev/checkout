@@ -3,7 +3,6 @@ import {
     InvoiceTemplate,
     PaymentMethod,
     Invoice,
-    getCustomerEvents,
     getInvoiceEvents,
     getInvoicePaymentMethods,
     getInvoicePaymentMethodsByTemplateID,
@@ -11,13 +10,7 @@ import {
     getInvoiceByID,
     Event
 } from 'checkout/backend';
-import {
-    CustomerInitConfig,
-    InitConfig,
-    IntegrationType,
-    InvoiceInitConfig,
-    InvoiceTemplateInitConfig
-} from 'checkout/config';
+import { InitConfig, IntegrationType, InvoiceInitConfig, InvoiceTemplateInitConfig } from 'checkout/config';
 import { InitializeModelCompleted, SetEventsAction, TypeKeys } from 'checkout/actions';
 import { State } from 'checkout/state';
 
@@ -50,13 +43,6 @@ export function* resolveInvoice(endpoint: string, config: InvoiceInitConfig) {
     return { paymentMethods, events, invoiceAccessToken: token, invoice };
 }
 
-export function* resolveCustomer(endpoint: string, config: CustomerInitConfig) {
-    const token = config.customerAccessToken;
-    const id = config.customerID;
-    const events = yield call(getCustomerEvents, endpoint, token, id);
-    return { events };
-}
-
 export function* resolveIntegrationType(endpoint: string, config: InitConfig) {
     let chunk;
     switch (config.integrationType) {
@@ -65,9 +51,6 @@ export function* resolveIntegrationType(endpoint: string, config: InitConfig) {
             break;
         case IntegrationType.invoice:
             chunk = yield call(resolveInvoice, endpoint, config as any);
-            break;
-        case IntegrationType.customer:
-            chunk = yield call(resolveCustomer, endpoint, config as any);
             break;
     }
     return chunk;

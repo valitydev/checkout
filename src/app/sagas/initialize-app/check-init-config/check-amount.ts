@@ -60,7 +60,6 @@ export const checkAmount = (t: IntegrationType, m: ModelState, amount: number): 
         case IntegrationType.invoiceTemplate:
             return checkAmountCapableForTemplate(amount, m.invoiceTemplate);
         case IntegrationType.invoice:
-        case IntegrationType.customer:
             return {
                 available: false,
                 reason: UnavailableReason.capability,

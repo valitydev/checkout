@@ -201,11 +201,5 @@ export const checkInitialPaymentMethod = (initConfig: InitConfig, paymentMethods
         case IntegrationType.invoiceTemplate:
         case IntegrationType.invoice:
             return checkForInvoiceAndTemplate(initConfig, paymentMethods);
-        case IntegrationType.customer:
-            return {
-                available: false,
-                reason: UnavailableReason.capability,
-                message: "Param 'initialPaymentMethod' is only available for invoice and invoice template integration"
-            };
     }
 };

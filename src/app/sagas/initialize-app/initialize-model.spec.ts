@@ -1,15 +1,13 @@
 import { all, call, put, select } from 'redux-saga/effects';
 import { initializeModel } from './initialize-model';
 import { TypeKeys } from 'checkout/actions';
-import { CustomerInitConfig, IntegrationType, InvoiceInitConfig, InvoiceTemplateInitConfig } from 'checkout/config';
+import { IntegrationType, InvoiceInitConfig, InvoiceTemplateInitConfig } from 'checkout/config';
 import {
-    resolveCustomer,
     resolveIntegrationType,
     resolveInvoice,
     resolveInvoiceTemplate
 } from 'checkout/sagas/initialize-app/initialize-model';
 import {
-    getCustomerEvents,
     getInvoiceByID,
     getInvoiceEvents,
     getInvoicePaymentMethods,
@@ -30,12 +28,6 @@ const initConfigInvoice = {
     invoiceID: 'invoiceIDTest',
     invoiceAccessToken: 'testTokenInvoice'
 } as InvoiceInitConfig;
-
-const initConfigCustomer = {
-    integrationType: IntegrationType.customer,
-    customerID: 'customerIDTest',
-    customerAccessToken: 'testTokenCustomer'
-} as CustomerInitConfig;
 
 describe('initializeModel', () => {
     const iterator = initializeModel(endpoint, initConfigInvoiceTemplate);
@@ -72,13 +64,6 @@ describe('resolveIntegrationType', () => {
         const iterator = resolveIntegrationType(endpoint, initConfigInvoice);
         const actual = iterator.next().value;
         const expected = call(resolveInvoice, endpoint, initConfigInvoice);
-        expect(actual).toEqual(expected);
-    });
-
-    it('should call resolveCustomer', () => {
-        const iterator = resolveIntegrationType(endpoint, initConfigCustomer);
-        const actual = iterator.next().value;
-        const expected = call(resolveCustomer, endpoint, initConfigCustomer);
         expect(actual).toEqual(expected);
     });
 });
@@ -133,26 +118,6 @@ describe('resolveInvoice', () => {
             invoiceAccessToken: initConfigInvoice.invoiceAccessToken,
             invoice
         };
-        expect(actual.value).toEqual(expected);
-        expect(actual.done).toBe(true);
-    });
-});
-
-describe('resolveCustomer', () => {
-    const iterator = resolveCustomer(endpoint, initConfigCustomer);
-
-    it('should fetch customer events', () => {
-        const actual = iterator.next().value;
-        const token = initConfigCustomer.customerAccessToken;
-        const id = initConfigCustomer.customerID;
-        const expected = call(getCustomerEvents, endpoint, token, id);
-        expect(actual).toEqual(expected);
-    });
-
-    it('should return model chunk', () => {
-        const customerEvents = 'events mock';
-        const actual = iterator.next(customerEvents);
-        const expected = { events: customerEvents };
         expect(actual.value).toEqual(expected);
         expect(actual.done).toBe(true);
     });

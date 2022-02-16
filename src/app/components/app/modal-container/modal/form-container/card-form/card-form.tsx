@@ -23,7 +23,6 @@ import { PayButton } from '../pay-button';
 import { Header } from '../header/header';
 import { toFieldsConfig } from '../fields-config';
 import { Amount, Email } from '../common-fields';
-import { IntegrationType } from 'checkout/config';
 
 const toCardFormInfo = (modals: ModalState[]) => {
     const info = (findNamed(modals, ModalName.modalForms) as ModalForms).formsInfo;
@@ -82,7 +81,7 @@ class CardFormDef extends React.Component<Props> {
         return (
             <form onSubmit={handleSubmit(this.submit)} id="card-form">
                 <div>
-                    <Header title={this.getHeaderTitle()} />
+                    <Header title={this.props.locale['form.header.pay.card.label']} />
                     <FormGroup>
                         <CardNumber />
                     </FormGroup>
@@ -113,15 +112,7 @@ class CardFormDef extends React.Component<Props> {
 
     private submit(values: CardFormValues) {
         (document.activeElement as HTMLElement).blur();
-        switch (this.props.integrationType) {
-            case IntegrationType.invoice:
-            case IntegrationType.invoiceTemplate:
-                this.props.pay({ method: PaymentMethodName.BankCard, values });
-                break;
-            case IntegrationType.customer:
-                this.props.subscribe(values);
-                break;
-        }
+        this.props.pay({ method: PaymentMethodName.BankCard, values });
     }
 
     private init(values: CardFormValues) {
@@ -129,16 +120,6 @@ class CardFormDef extends React.Component<Props> {
             email: get(values, 'email'),
             amount: get(values, 'amount')
         });
-    }
-
-    private getHeaderTitle(): string {
-        switch (this.props.integrationType) {
-            case IntegrationType.invoice:
-            case IntegrationType.invoiceTemplate:
-                return this.props.locale['form.header.pay.card.label'];
-            case IntegrationType.customer:
-                return this.props.locale['form.header.pay.card.customer.label'];
-        }
     }
 }
 

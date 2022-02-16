@@ -3,8 +3,7 @@ import { PaymentMethod, EventsState } from 'checkout/state';
 import { InitializeModalCompleted, TypeKeys } from 'checkout/actions';
 import { InitConfig, IntegrationType } from 'checkout/config';
 import { toInitialState } from './to-initial-state';
-import { initFromInvoiceEvents } from './intit-from-invoice-events';
-import { initFromCustomerEvents } from './init-from-customer-events';
+import { initFromInvoiceEvents } from './init-from-invoice-events';
 
 type Effects = CallEffect | PutEffect<InitializeModalCompleted>;
 
@@ -21,9 +20,6 @@ export function* initializeModal(
             break;
         case IntegrationType.invoice:
             initializedModals = yield call(initFromInvoiceEvents, events.events, methods, initialPaymentMethod);
-            break;
-        case IntegrationType.customer:
-            initializedModals = initFromCustomerEvents(events.events);
             break;
         default:
             throw { code: 'error.unsupported.integration.type' };

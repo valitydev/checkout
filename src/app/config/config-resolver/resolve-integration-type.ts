@@ -10,10 +10,6 @@ const typesDef = [
     {
         type: IntegrationType.invoice,
         requiredFields: ['invoiceID', 'invoiceAccessToken']
-    },
-    {
-        type: IntegrationType.customer,
-        requiredFields: ['customerID', 'customerAccessToken']
     }
 ];
 

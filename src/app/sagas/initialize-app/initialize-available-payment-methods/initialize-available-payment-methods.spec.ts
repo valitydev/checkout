@@ -1,7 +1,6 @@
 import { call, put, select } from 'redux-saga/effects';
 import { initializeAvailablePaymentMethods } from './initialize-available-payment-methods';
 import { IntegrationType } from 'checkout/config';
-import { init } from './initialize-available-payment-methods';
 import { toAvailablePaymentMethods } from './to-available-payment-methods';
 import { setPriority } from './set-priority';
 import { TypeKeys } from 'checkout/actions';
@@ -9,20 +8,6 @@ import { TypeKeys } from 'checkout/actions';
 describe('initializeAvailablePaymentMethods', () => {
     const paymentMethods = 'paymentMethodsMock' as any;
     const amountInfo = 'amountInfoMock' as any;
-
-    describe('customer integration', () => {
-        const config = {
-            initConfig: {
-                integrationType: IntegrationType.customer
-            }
-        } as any;
-        const iterator = initializeAvailablePaymentMethods(config, paymentMethods, amountInfo);
-
-        it('should return null', () => {
-            const actual = iterator.next().value;
-            expect(actual).toBeNull();
-        });
-    });
 
     describe('invoice integration', () => {
         const config = {
@@ -35,7 +20,7 @@ describe('initializeAvailablePaymentMethods', () => {
 
         it('should call init', () => {
             const actual = iterator.next().value;
-            const expected = call(init, config, paymentMethods, amountInfo);
+            const expected = call(initializeAvailablePaymentMethods, config, paymentMethods, amountInfo);
             expect(actual).toEqual(expected);
         });
     });
@@ -51,7 +36,7 @@ describe('initializeAvailablePaymentMethods', () => {
 
         it('should call init', () => {
             const actual = iterator.next().value;
-            const expected = call(init, config, paymentMethods, amountInfo);
+            const expected = call(initializeAvailablePaymentMethods, config, paymentMethods, amountInfo);
             expect(actual).toEqual(expected);
         });
     });
@@ -63,7 +48,7 @@ describe('init', () => {
     const amountInfo = 'amountInfoMock' as any;
     const methods = 'methodsMock' as any;
     const prioritizedMethods = 'prioritizedMethodsMock' as any;
-    const iterator = init(config, paymentMethods, amountInfo);
+    const iterator = initializeAvailablePaymentMethods(config, paymentMethods, amountInfo);
 
     it('should call toAvailablePaymentMethods', () => {
         const actual = iterator.next().value;
