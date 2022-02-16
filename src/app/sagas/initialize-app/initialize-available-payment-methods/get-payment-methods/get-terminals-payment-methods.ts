@@ -10,7 +10,7 @@ const mapPaymentMethodNameByCategory: { [P in TerminalProviderCategories]: Payme
     onlinebanking: PaymentMethodName.OnlineBanking
 };
 
-export function* getTerminalsPaymentMethods(
+export function getTerminalsPaymentMethods(
     methods: { [P in TerminalProviderCategories]?: boolean } = {},
     serviceProviders: ServiceProvider[],
     paymentFlowHold: boolean,

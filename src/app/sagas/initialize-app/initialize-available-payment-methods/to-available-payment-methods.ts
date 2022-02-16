@@ -38,8 +38,7 @@ export function* toAvailablePaymentMethods(
                 break;
             case PaymentMethodName.PaymentTerminal:
                 result = result.concat(
-                    yield call(
-                        getTerminalsPaymentMethods,
+                    getTerminalsPaymentMethods(
                         { euroset, qps, uzcard, onlinebanking },
                         serviceProviders,
                         paymentFlowHold,
