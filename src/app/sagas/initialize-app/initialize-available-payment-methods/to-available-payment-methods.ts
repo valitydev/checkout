@@ -4,7 +4,7 @@ import {
     PaymentMethod as PaymentMethodState,
     PaymentMethodName as PaymentMethodNameState
 } from 'checkout/state';
-import { DigitalWallet, PaymentMethod, PaymentMethodName, PaymentTerminal } from 'checkout/backend';
+import { DigitalWallet, PaymentMethod, PaymentMethodName, ServiceProvider } from 'checkout/backend';
 import { Config } from 'checkout/config';
 import { bankCardToMethods } from './bank-card-to-methods';
 import { getDigitalWalletPaymentMethods, getTerminalsPaymentMethods } from './get-payment-methods';
@@ -12,7 +12,8 @@ import { getDigitalWalletPaymentMethods, getTerminalsPaymentMethods } from './ge
 export function* toAvailablePaymentMethods(
     paymentMethods: PaymentMethod[],
     config: Config,
-    amountInfo: AmountInfoState
+    amountInfo: AmountInfoState,
+    serviceProviders: ServiceProvider[]
 ): Iterator<CallEffect | PaymentMethodState[]> {
     let result: PaymentMethodState[] = [];
     const {
@@ -40,7 +41,7 @@ export function* toAvailablePaymentMethods(
                     yield call(
                         getTerminalsPaymentMethods,
                         { euroset, qps, uzcard, onlinebanking },
-                        (method as PaymentTerminal).providers,
+                        serviceProviders,
                         paymentFlowHold,
                         recurring
                     )

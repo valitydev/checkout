@@ -9,7 +9,11 @@ import {
     getInvoicePaymentMethodsByTemplateID,
     getInvoiceTemplateByID,
     getInvoiceByID,
-    Event
+    Event,
+    ServiceProvider,
+    getServiceProviderByID,
+    PaymentMethodName,
+    PaymentTerminal
 } from 'checkout/backend';
 import {
     CustomerInitConfig,
@@ -27,6 +31,7 @@ export interface ModelChunk {
     paymentMethods?: PaymentMethod[];
     invoiceAccessToken?: string;
     invoice?: Invoice;
+    serviceProviders?: ServiceProvider[];
 }
 
 export function* resolveInvoiceTemplate(endpoint: string, config: InvoiceTemplateInitConfig) {
@@ -36,7 +41,8 @@ export function* resolveInvoiceTemplate(endpoint: string, config: InvoiceTemplat
         call(getInvoiceTemplateByID, endpoint, token, id),
         call(getInvoicePaymentMethodsByTemplateID, endpoint, token, id)
     ]);
-    return { paymentMethods, invoiceTemplate };
+    const serviceProviders = yield call(getServiceProviders, paymentMethods, endpoint, token);
+    return { paymentMethods, invoiceTemplate, serviceProviders };
 }
 
 export function* resolveInvoice(endpoint: string, config: InvoiceInitConfig) {
@@ -47,7 +53,8 @@ export function* resolveInvoice(endpoint: string, config: InvoiceInitConfig) {
         call(getInvoiceEvents, endpoint, token, id),
         call(getInvoicePaymentMethods, endpoint, token, id)
     ]);
-    return { paymentMethods, events, invoiceAccessToken: token, invoice };
+    const serviceProviders = yield call(getServiceProviders, paymentMethods, endpoint, token);
+    return { paymentMethods, events, invoiceAccessToken: token, invoice, serviceProviders };
 }
 
 export function* resolveCustomer(endpoint: string, config: CustomerInitConfig) {
@@ -55,6 +62,19 @@ export function* resolveCustomer(endpoint: string, config: CustomerInitConfig) {
     const id = config.customerID;
     const events = yield call(getCustomerEvents, endpoint, token, id);
     return { events };
+}
+
+export function* getServiceProviders(paymentMethods: PaymentMethod[], endpoint: string, accessToken: string) {
+    const paymentTerminal = paymentMethods.find(
+        (m) => m.method === PaymentMethodName.PaymentTerminal
+    ) as PaymentTerminal;
+    if (!paymentTerminal) {
+        return [];
+    }
+    const serviceProviders: ServiceProvider[] = yield all(
+        paymentTerminal.providers.map((id) => call(getServiceProviderByID, endpoint, accessToken, id))
+    );
+    return serviceProviders;
 }
 
 export function* resolveIntegrationType(endpoint: string, config: InitConfig) {

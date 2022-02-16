@@ -66,7 +66,7 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
     const { serviceProvider } = formInfo;
     const metadata: ServiceProviderMetadata = serviceProvider?.metadata;
     const dispatch = useAppDispatch();
-    const logo = LOGO_BY_SERVICE_PROVIDER_ID[serviceProvider.id];
+    const logo = LOGO_BY_SERVICE_PROVIDER_ID[serviceProvider?.id];
 
     const submit = (values: PayableFormValues) => {
         (document.activeElement as HTMLElement)?.blur();
