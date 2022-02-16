@@ -10,10 +10,7 @@ import {
     getInvoiceTemplateByID,
     getInvoiceByID,
     Event,
-    ServiceProvider,
-    getServiceProviderByID,
-    PaymentMethodName,
-    PaymentTerminal
+    ServiceProvider
 } from 'checkout/backend';
 import {
     CustomerInitConfig,
@@ -24,6 +21,7 @@ import {
 } from 'checkout/config';
 import { InitializeModelCompleted, SetEventsAction, TypeKeys } from 'checkout/actions';
 import { State } from 'checkout/state';
+import { getServiceProviders } from './service-providers';
 
 export interface ModelChunk {
     invoiceTemplate?: InvoiceTemplate;
@@ -62,19 +60,6 @@ export function* resolveCustomer(endpoint: string, config: CustomerInitConfig) {
     const id = config.customerID;
     const events = yield call(getCustomerEvents, endpoint, token, id);
     return { events };
-}
-
-export function* getServiceProviders(paymentMethods: PaymentMethod[], endpoint: string, accessToken: string) {
-    const paymentTerminal = paymentMethods.find(
-        (m) => m.method === PaymentMethodName.PaymentTerminal
-    ) as PaymentTerminal;
-    if (!paymentTerminal) {
-        return [];
-    }
-    const serviceProviders: ServiceProvider[] = yield all(
-        paymentTerminal.providers.map((id) => call(getServiceProviderByID, endpoint, accessToken, id))
-    );
-    return serviceProviders;
 }
 
 export function* resolveIntegrationType(endpoint: string, config: InitConfig) {
