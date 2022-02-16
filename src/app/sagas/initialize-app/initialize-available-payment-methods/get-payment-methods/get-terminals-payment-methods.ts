@@ -1,18 +1,18 @@
-import { PaymentMethodName } from 'checkout/state';
+import { KnownProviderCategories, PaymentMethodName } from 'checkout/state';
 import { logUnavailableWithConfig } from './log-unavailable-with-config';
-import { ServiceProvider, TerminalProviderCategories } from 'checkout/backend';
+import { ServiceProvider } from 'checkout/backend';
 import { groupBy } from 'lodash-es';
 import { assertMetadata } from './assert-metadata';
 
-const mapPaymentMethodNameByCategory: { [P in TerminalProviderCategories]: PaymentMethodName } = {
-    euroset: PaymentMethodName.Euroset,
-    qps: PaymentMethodName.QPS,
-    uzcard: PaymentMethodName.Uzcard,
-    onlinebanking: PaymentMethodName.OnlineBanking
+const mapProviderCategoryToPaymentMethodName: { [P in KnownProviderCategories]: PaymentMethodName } = {
+    [KnownProviderCategories.Euroset]: PaymentMethodName.Euroset,
+    [KnownProviderCategories.QPS]: PaymentMethodName.QPS,
+    [KnownProviderCategories.Uzcard]: PaymentMethodName.Uzcard,
+    [KnownProviderCategories.OnlineBanking]: PaymentMethodName.OnlineBanking
 };
 
 export function getTerminalsPaymentMethods(
-    methods: { [P in TerminalProviderCategories]?: boolean } = {},
+    methods: { [P in KnownProviderCategories]?: boolean } = {},
     serviceProviders: ServiceProvider[],
     paymentFlowHold: boolean,
     recurring: boolean
@@ -31,7 +31,7 @@ export function getTerminalsPaymentMethods(
         'category'
     );
     return Object.entries(availableServiceProvidersGroups).map(([category, serviceProvidersGroup]) => ({
-        name: mapPaymentMethodNameByCategory[category],
+        name: mapProviderCategoryToPaymentMethodName[category],
         serviceProviders: serviceProvidersGroup
     }));
 }
