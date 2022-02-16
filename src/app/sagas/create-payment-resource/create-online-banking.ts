@@ -3,12 +3,13 @@ import { createPaymentResource, PaymentResource, PaymentToolType } from 'checkou
 
 export function* createOnlineBanking(
     endpoint: string,
+    provider: string,
     metadata: any,
     token: string
 ): Iterator<CallEffect | PaymentResource> {
     const paymentTool = {
         paymentToolType: PaymentToolType.PaymentTerminalData,
-        provider: 'onlinebanking',
+        provider,
         metadata
     };
     return yield call(createPaymentResource, endpoint, token, paymentTool);

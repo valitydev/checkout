@@ -3,7 +3,12 @@ import * as React from 'react';
 import { Header } from '../header';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getCurrentModalFormSelector } from 'checkout/selectors/get-current-modal-form-selector';
-import { FormName, OnlineBankingAccountFormInfo, PayableFormValues, PaymentMethodName } from 'checkout/state';
+import {
+    FormName,
+    OnlineBankingAccountFormInfo,
+    OnlineBankingAccountFormValues,
+    PaymentMethodName
+} from 'checkout/state';
 import { FormGroup } from '../form-group';
 import { Input } from 'checkout/components';
 import styled from 'checkout/styled-components';
@@ -68,9 +73,14 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
     const dispatch = useAppDispatch();
     const logo = LOGO_BY_SERVICE_PROVIDER_ID[serviceProvider?.id];
 
-    const submit = (values: PayableFormValues) => {
+    const submit = (values: OnlineBankingAccountFormValues) => {
         (document.activeElement as HTMLElement)?.blur();
-        dispatch(pay({ method: PaymentMethodName.OnlineBanking, values }));
+        dispatch(
+            pay({
+                method: PaymentMethodName.OnlineBanking,
+                values: { ...values, provider: serviceProvider.id } as OnlineBankingAccountFormValues
+            })
+        );
     };
 
     return (

@@ -4,7 +4,8 @@ import { Config } from 'checkout/config';
 import { makePayment } from './make-payment';
 import { createOnlineBanking } from '../../create-payment-resource';
 
-const createPaymentResource = (endpoint: string, metadata: any) => createOnlineBanking.bind(null, endpoint, metadata);
+const createPaymentResource = (endpoint: string, provider: string, metadata: any) =>
+    createOnlineBanking.bind(null, endpoint, provider, metadata);
 
 export function* payWithOnlineBanking(
     c: Config,
@@ -12,6 +13,6 @@ export function* payWithOnlineBanking(
     a: AmountInfoState,
     v: OnlineBankingAccountFormValues
 ): Iterator<CallEffect> {
-    const fn = createPaymentResource(c.appConfig.capiEndpoint, v.metadata);
+    const fn = createPaymentResource(c.appConfig.capiEndpoint, v.provider, v.metadata);
     yield call(makePayment, c, m, v, a, fn);
 }
