@@ -18,6 +18,7 @@ import { PayButton } from 'checkout/components/app/modal-container/modal/form-co
 import { pay } from 'checkout/actions';
 import { ServiceProviderMetadata, ServiceProviderMetadataField } from 'checkout/backend';
 import { isError } from 'checkout/utils';
+import { LOGO_BY_SERVICE_PROVIDER_ID } from 'constants/logo-by-service-provider-id';
 
 const BankLogoWrapper = styled.div`
     margin: auto;
@@ -65,6 +66,7 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
     const { serviceProvider } = formInfo;
     const metadata: ServiceProviderMetadata = serviceProvider?.metadata;
     const dispatch = useAppDispatch();
+    const logo = LOGO_BY_SERVICE_PROVIDER_ID[serviceProvider.id];
 
     const submit = (values: PayableFormValues) => {
         (document.activeElement as HTMLElement)?.blur();
@@ -75,9 +77,9 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
         !!metadata && (
             <form onSubmit={props.handleSubmit(submit)}>
                 <Header title={serviceProvider.brandName} />
-                {!!metadata.logo && (
+                {!!logo && (
                     <BankLogoWrapper>
-                        <StyledLogo src={metadata.logo.src} />
+                        <StyledLogo src={logo.src} />
                     </BankLogoWrapper>
                 )}
                 {metadata.form?.map((field) => (

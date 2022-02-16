@@ -5,6 +5,7 @@ import styled from 'checkout/styled-components';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { BankLogo } from '../bank-logo';
 import { ServiceProvider } from 'checkout/backend';
+import { LOGO_BY_SERVICE_PROVIDER_ID } from 'constants/logo-by-service-provider-id';
 
 const StyledFilteredList: typeof FilteredList = styled(FilteredList)`
     max-height: 615px;
@@ -19,10 +20,13 @@ export const BanksList: React.FC<{ items: ServiceProvider[]; select?: (item: Ser
             placeholder={locale['form.onlineBanking.search']}
             values={props.items}
             filter={(search, { brandName }) => brandName.toLocaleLowerCase().includes(search.toLowerCase().trim())}
-            item={({ brandName, metadata }, { idx }) => ({
-                title: brandName,
-                icon: <BankLogo index={idx} src={metadata.logo?.src} color={metadata.logo?.backgroundColor} />
-            })}
+            item={({ id, brandName }, { idx }) => {
+                const logo = LOGO_BY_SERVICE_PROVIDER_ID[id];
+                return {
+                    title: brandName,
+                    icon: <BankLogo index={idx} src={logo?.src} color={logo?.backgroundColor} />
+                };
+            }}
             search={() => dispatch(setViewInfoHeight(null))}
             select={(item) => props.select(item)}
         />

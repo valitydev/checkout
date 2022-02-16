@@ -9,7 +9,8 @@
         "lib": ["ESNext", "DOM"],
         "baseUrl": ".",
         "paths": {
-            "checkout/*": ["./src/app/*", "./src/locale/*"]
+            "checkout/*": ["./src/app/*", "./src/locale/*"],
+            "constants/*": ["./src/constants/*"]
         },
         "pretty": true,
         "noUnusedLocals": true,

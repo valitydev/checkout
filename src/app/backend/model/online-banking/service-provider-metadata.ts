@@ -6,9 +6,5 @@ export interface ServiceProviderMetadataField {
 }
 
 export interface ServiceProviderMetadata {
-    logo?: {
-        src: string;
-        backgroundColor?: string;
-    };
     form?: ServiceProviderMetadataField[];
 }
