@@ -20,7 +20,7 @@ describe('initializeAvailablePaymentMethods', () => {
 
         it('should call init', () => {
             const actual = iterator.next().value;
-            const expected = call(initializeAvailablePaymentMethods, config, paymentMethods, amountInfo);
+            const expected = call(initializeAvailablePaymentMethods, config, paymentMethods, amountInfo, []);
             expect(actual).toEqual(expected);
         });
     });
@@ -36,7 +36,7 @@ describe('initializeAvailablePaymentMethods', () => {
 
         it('should call init', () => {
             const actual = iterator.next().value;
-            const expected = call(initializeAvailablePaymentMethods, config, paymentMethods, amountInfo);
+            const expected = call(initializeAvailablePaymentMethods, config, paymentMethods, amountInfo, []);
             expect(actual).toEqual(expected);
         });
     });
@@ -48,7 +48,7 @@ describe('init', () => {
     const amountInfo = 'amountInfoMock' as any;
     const methods = 'methodsMock' as any;
     const prioritizedMethods = 'prioritizedMethodsMock' as any;
-    const iterator = initializeAvailablePaymentMethods(config, paymentMethods, amountInfo);
+    const iterator = initializeAvailablePaymentMethods(config, paymentMethods, amountInfo, []);
 
     it('should call toAvailablePaymentMethods', () => {
         const actual = iterator.next().value;
