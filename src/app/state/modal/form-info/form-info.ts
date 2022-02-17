@@ -16,6 +16,8 @@ export enum FormName {
     mobileCommerceForm = 'mobileCommerceForm',
     mobileCommerceReceiptForm = 'mobileCommerceReceiptForm',
     redirectInteractionForm = 'redirectInteractionForm',
+    onlineBankingForm = 'onlineBankingForm',
+    onlineBankingAccountForm = 'onlineBankingAccountForm',
     noAvailablePaymentMethodForm = 'noAvailablePaymentMethodForm'
 }
 

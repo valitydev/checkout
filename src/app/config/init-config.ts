@@ -28,4 +28,5 @@ export class InitConfig {
     recurring?: boolean;
     theme?: string;
     metadata?: object;
+    onlineBanking?: boolean;
 }

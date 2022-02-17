@@ -7,3 +7,4 @@ export * from './create-google-pay';
 export * from './create-mobile-commerce';
 export * from './create-yandex-pay';
 export * from './create-digital-wallet';
+export * from './create-online-banking';

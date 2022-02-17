@@ -32,7 +32,7 @@ describe('All payment methods', () => {
         }
     } as any;
     const paymentMethods = [bankCard, digitalWallet, paymentTerminal, mobileCommerce];
-    const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo);
+    const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo, []);
 
     it('should call bankCardToMethods', () => {
         const actual = iterator.next().value;
@@ -62,7 +62,7 @@ describe('BankCard', () => {
             brandless: false
         }
     } as any;
-    const iterator = toAvailablePaymentMethods([bankCard], config, amountInfo);
+    const iterator = toAvailablePaymentMethods([bankCard], config, amountInfo, []);
 
     it('should call bankCardToMethods', () => {
         const actual = iterator.next().value;
@@ -88,7 +88,7 @@ describe('DigitalWallet', () => {
                 brandless: false
             }
         } as any;
-        const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo);
+        const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo, []);
 
         it('should return PaymentMethodState with DigitalWallet', () => {
             const actual = iterator.next();
@@ -107,7 +107,7 @@ describe('DigitalWallet', () => {
                 brandless: false
             }
         } as any;
-        const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo);
+        const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo, []);
 
         it('should return PaymentMethodState without DigitalWallet', () => {
             const actual = iterator.next([bankCardState] as any);
@@ -129,7 +129,7 @@ describe('PaymentTerminal', () => {
                 brandless: false
             }
         } as any;
-        const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo);
+        const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo, []);
 
         it('should return PaymentMethodState with Euroset', () => {
             const actual = iterator.next();
@@ -149,7 +149,7 @@ describe('PaymentTerminal', () => {
                 brandless: false
             }
         } as any;
-        const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo);
+        const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo, []);
 
         it('should return PaymentMethodState without PaymentTerminal', () => {
             const actual = iterator.next();
@@ -168,7 +168,7 @@ describe('PaymentTerminal', () => {
                 brandless: false
             }
         } as any;
-        const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo);
+        const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo, []);
 
         it('should return PaymentMethodState without PaymentTerminal', () => {
             const actual = iterator.next();
@@ -187,7 +187,7 @@ describe('MobileCommerce', () => {
                 mobileCommerce: true
             }
         } as any;
-        const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo);
+        const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo, []);
 
         it('should return PaymentMethodState with MobileCommerce', () => {
             const actual = iterator.next();
@@ -203,7 +203,7 @@ describe('MobileCommerce', () => {
                 mobileCommerce: false
             }
         } as any;
-        const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo);
+        const iterator = toAvailablePaymentMethods(paymentMethods, config, amountInfo, []);
 
         it('should return PaymentMethodState without MobileCommerce', () => {
             const actual = iterator.next([bankCardState] as any);

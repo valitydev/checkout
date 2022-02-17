@@ -39,6 +39,7 @@ export interface Theme {
         font: {
             infoBlock: string;
         };
+        iconBackgrounds: string[];
     };
     gradients: {
         form: ReturnType<typeof css>;

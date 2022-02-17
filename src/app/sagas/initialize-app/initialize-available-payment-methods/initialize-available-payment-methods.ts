@@ -1,5 +1,5 @@
 import { call, CallEffect, put, PutEffect, select, SelectEffect } from 'redux-saga/effects';
-import { PaymentMethod } from 'checkout/backend';
+import { PaymentMethod, ServiceProvider } from 'checkout/backend';
 import { Config, IntegrationType } from 'checkout/config';
 import { InitializeAvailablePaymentMethodsCompleted, TypeKeys } from 'checkout/actions';
 import { PaymentMethod as PaymentMethodState, ConfigState, State, AmountInfoState } from 'checkout/state';
@@ -15,9 +15,10 @@ export type InitializeEffect =
 export function* init(
     config: Config,
     paymentMethods: PaymentMethod[],
-    amountInfo: AmountInfoState
+    amountInfo: AmountInfoState,
+    serviceProviders: ServiceProvider[]
 ): Iterator<InitializeEffect> {
-    const methods = yield call(toAvailablePaymentMethods, paymentMethods, config, amountInfo);
+    const methods = yield call(toAvailablePaymentMethods, paymentMethods, config, amountInfo, serviceProviders);
     const prioritizedMethods = yield call(setPriority, methods);
     yield put({
         type: TypeKeys.INITIALIZE_AVAILABLE_PAYMENT_METHODS_COMPLETED,
@@ -31,12 +32,13 @@ type Effects = CallEffect | SelectEffect | PaymentMethod[];
 export function* initializeAvailablePaymentMethods(
     config: ConfigState,
     paymentMethods: PaymentMethod[],
-    amountInfo: AmountInfoState
+    amountInfo: AmountInfoState,
+    serviceProviders: ServiceProvider[]
 ): Iterator<Effects> {
     switch (config.initConfig.integrationType) {
         case IntegrationType.customer:
             return null;
         default:
-            return yield call(init, config, paymentMethods, amountInfo);
+            return yield call(init, config, paymentMethods, amountInfo, serviceProviders);
     }
 }

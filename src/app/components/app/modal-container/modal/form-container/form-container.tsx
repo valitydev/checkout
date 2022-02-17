@@ -23,6 +23,8 @@ import { device } from 'checkout/utils/device';
 import { shake } from 'checkout/styled-components/animations';
 import { stylableTransition, ENTER, LEAVE, ACTIVE } from 'checkout/styled-transition';
 import { MobileCommerceReceiptForm } from './mobile-commerce-receipt-form';
+import { OnlineBankingForm } from './online-banking-form';
+import { OnlineBankingAccountForm } from './online-banking-account-form';
 import { NoAvailablePaymentMethodForm } from './no-available-payment-method-form';
 import { WalletProviders } from './wallet-providers';
 
@@ -146,7 +148,10 @@ const mapDispatchToProps = (dispatch: Dispatch): Partial<FormContainerProps> => 
     setViewInfoHeight: bindActionCreators(setViewInfoHeight, dispatch)
 });
 
-class FormContainerDef extends React.Component<FormContainerProps> {
+class FormContainerDef extends React.Component<FormContainerProps, { height: number }> {
+    state = {
+        height: 0
+    };
     private contentElement: HTMLDivElement;
 
     componentDidMount() {
@@ -158,17 +163,15 @@ class FormContainerDef extends React.Component<FormContainerProps> {
         window.removeEventListener('resize', this.setHeight);
     }
 
-    componentDidUpdate(prevProps: FormContainerProps) {
-        if (prevProps.activeFormInfo.name !== this.props.activeFormInfo.name) {
-            this.setHeight();
-        }
+    componentDidUpdate() {
+        this.setHeight();
     }
 
     render() {
         const { activeFormInfo, viewInfo } = this.props;
         return (
             <Container>
-                <Form error={viewInfo.error} height={viewInfo.height}>
+                <Form error={viewInfo.error} height={this.state.height}>
                     <div ref={this.setContentElement}>
                         <FormContainerAnimation
                             component="div"
@@ -217,6 +220,10 @@ class FormContainerDef extends React.Component<FormContainerProps> {
                 return <MobileCommerceForm key={name} />;
             case FormName.mobileCommerceReceiptForm:
                 return <MobileCommerceReceiptForm key={name} />;
+            case FormName.onlineBankingForm:
+                return <OnlineBankingForm key={name} />;
+            case FormName.onlineBankingAccountForm:
+                return <OnlineBankingAccountForm key={name} />;
             case FormName.noAvailablePaymentMethodForm:
                 return <NoAvailablePaymentMethodForm key={name} />;
             default:
@@ -229,9 +236,9 @@ class FormContainerDef extends React.Component<FormContainerProps> {
     };
 
     private setHeight = () => {
-        const height = this.contentElement ? this.contentElement.clientHeight : 0;
-        if (height !== this.props.viewInfo.height) {
-            this.props.setViewInfoHeight(height);
+        const height = this.contentElement?.clientHeight || 0;
+        if (height !== this.state.height) {
+            this.setState({ height });
         }
     };
 }

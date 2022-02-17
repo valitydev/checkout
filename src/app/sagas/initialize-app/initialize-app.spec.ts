@@ -64,7 +64,8 @@ describe('initialize', () => {
             initializeAvailablePaymentMethods,
             { ...configChunk, initConfig },
             model.paymentMethods,
-            amountInfo
+            amountInfo,
+            []
         );
         expect(actual).toEqual(expected);
     });
