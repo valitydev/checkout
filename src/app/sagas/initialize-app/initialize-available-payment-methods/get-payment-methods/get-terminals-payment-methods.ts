@@ -1,19 +1,22 @@
-import { PaymentMethod, PaymentMethodName } from 'checkout/state';
+import { KnownProviderCategories, PaymentMethodName } from 'checkout/state';
 import { logUnavailableWithConfig } from './log-unavailable-with-config';
-import { TerminalProviders } from '../../../../backend';
+import { ServiceProvider } from 'checkout/backend';
+import { groupBy } from 'lodash-es';
+import { assertMetadata } from './assert-metadata';
 
-const mapPaymentMethodNameByProvider: { [P in TerminalProviders]: PaymentMethodName } = {
-    euroset: PaymentMethodName.Euroset,
-    qps: PaymentMethodName.QPS,
-    uzcard: PaymentMethodName.Uzcard
+const mapProviderCategoryToPaymentMethodName: { [P in KnownProviderCategories]: PaymentMethodName } = {
+    [KnownProviderCategories.Euroset]: PaymentMethodName.Euroset,
+    [KnownProviderCategories.QPS]: PaymentMethodName.QPS,
+    [KnownProviderCategories.Uzcard]: PaymentMethodName.Uzcard,
+    [KnownProviderCategories.OnlineBanking]: PaymentMethodName.OnlineBanking
 };
 
-export const getTerminalsPaymentMethods = (
-    methods: { [P in TerminalProviders]?: boolean } = {},
-    providers: TerminalProviders[],
+export function getTerminalsPaymentMethods(
+    methods: { [P in KnownProviderCategories]?: boolean } = {},
+    serviceProviders: ServiceProvider[],
     paymentFlowHold: boolean,
     recurring: boolean
-): PaymentMethod[] => {
+) {
     if (paymentFlowHold) {
         logUnavailableWithConfig('terminals', 'paymentFlowHold');
         return [];
@@ -22,12 +25,13 @@ export const getTerminalsPaymentMethods = (
         logUnavailableWithConfig('terminals', 'recurring');
         return [];
     }
-    return providers
-        .filter(
-            (p) =>
-                (p === 'qps' && methods.qps) ||
-                (p === 'euroset' && methods.euroset) ||
-                (p === 'uzcard' && methods.uzcard)
-        )
-        .map((p) => ({ name: mapPaymentMethodNameByProvider[p] }));
-};
+    serviceProviders.forEach((serviceProvider) => assertMetadata(serviceProvider.id, serviceProvider.metadata));
+    const availableServiceProvidersGroups = groupBy(
+        serviceProviders.filter(({ category }) => methods[category]),
+        'category'
+    );
+    return Object.entries(availableServiceProvidersGroups).map(([category, serviceProvidersGroup]) => ({
+        name: mapProviderCategoryToPaymentMethodName[category],
+        serviceProviders: serviceProvidersGroup
+    }));
+}

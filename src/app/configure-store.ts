@@ -15,6 +15,7 @@ import {
     eventsReducer
 } from './reducers';
 import rootSaga from 'checkout/sagas/root-saga';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 export function configureStore(initState: any): Store<State> {
     const sagaMiddleware = createSagaMiddleware();
@@ -37,3 +38,6 @@ export function configureStore(initState: any): Store<State> {
     sagaMiddleware.run(rootSaga);
     return store;
 }
+
+export const useAppDispatch = () => useDispatch();
+export const useAppSelector: TypedUseSelectorHook<State> = useSelector;

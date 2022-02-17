@@ -3,6 +3,7 @@ import { PaymentMethod, PaymentMethodName } from 'checkout/state';
 const paymentMethodPriorityDesc: PaymentMethodName[] = [
     PaymentMethodName.BankCard,
     PaymentMethodName.ApplePay,
+    PaymentMethodName.OnlineBanking,
     PaymentMethodName.DigitalWallet,
     PaymentMethodName.Euroset,
     PaymentMethodName.GooglePay,

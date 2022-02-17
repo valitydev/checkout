@@ -8,11 +8,13 @@ import {
     getInvoicePaymentMethodsByTemplateID,
     getInvoiceTemplateByID,
     getInvoiceByID,
-    Event
+    Event,
+    ServiceProvider
 } from 'checkout/backend';
 import { InitConfig, IntegrationType, InvoiceInitConfig, InvoiceTemplateInitConfig } from 'checkout/config';
 import { InitializeModelCompleted, SetEventsAction, TypeKeys } from 'checkout/actions';
 import { State } from 'checkout/state';
+import { getServiceProviders } from './get-service-providers';
 
 export interface ModelChunk {
     invoiceTemplate?: InvoiceTemplate;
@@ -20,6 +22,7 @@ export interface ModelChunk {
     paymentMethods?: PaymentMethod[];
     invoiceAccessToken?: string;
     invoice?: Invoice;
+    serviceProviders?: ServiceProvider[];
 }
 
 export function* resolveInvoiceTemplate(endpoint: string, config: InvoiceTemplateInitConfig) {
@@ -29,7 +32,8 @@ export function* resolveInvoiceTemplate(endpoint: string, config: InvoiceTemplat
         call(getInvoiceTemplateByID, endpoint, token, id),
         call(getInvoicePaymentMethodsByTemplateID, endpoint, token, id)
     ]);
-    return { paymentMethods, invoiceTemplate };
+    const serviceProviders = yield call(getServiceProviders, paymentMethods, endpoint, token);
+    return { paymentMethods, invoiceTemplate, serviceProviders };
 }
 
 export function* resolveInvoice(endpoint: string, config: InvoiceInitConfig) {
@@ -40,7 +44,8 @@ export function* resolveInvoice(endpoint: string, config: InvoiceInitConfig) {
         call(getInvoiceEvents, endpoint, token, id),
         call(getInvoicePaymentMethods, endpoint, token, id)
     ]);
-    return { paymentMethods, events, invoiceAccessToken: token, invoice };
+    const serviceProviders = yield call(getServiceProviders, paymentMethods, endpoint, token);
+    return { paymentMethods, events, invoiceAccessToken: token, invoice, serviceProviders };
 }
 
 export function* resolveIntegrationType(endpoint: string, config: InitConfig) {

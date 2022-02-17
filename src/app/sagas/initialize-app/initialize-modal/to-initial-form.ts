@@ -12,7 +12,8 @@ import {
     UzcardFormInfo,
     NoAvailablePaymentMethodFormInfo,
     DigitalWalletPaymentMethod,
-    WalletProvidersFormInfo
+    WalletProvidersFormInfo,
+    OnlineBankingFormInfo
 } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { assertUnreachable } from 'checkout/utils';
@@ -43,6 +44,8 @@ export const toInitialForm = (method: PaymentMethod): FormInfo => {
                 return new WalletFormInfo(providers[0]);
             }
             return new WalletProvidersFormInfo();
+        case PaymentMethodName.OnlineBanking:
+            return new OnlineBankingFormInfo();
         default:
             assertUnreachable(method.name);
             console.error(`${logPrefix} Unsupported initial form for method ${method.name}`);

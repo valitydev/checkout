@@ -33,7 +33,8 @@ export function* initialize(userInitConfig: InitConfig) {
         initializeAvailablePaymentMethods,
         { ...configChunk, initConfig },
         model.paymentMethods,
-        amountInfo
+        amountInfo,
+        model.serviceProviders
     );
     yield call(initializeModal, initConfig, events, methods);
 }
