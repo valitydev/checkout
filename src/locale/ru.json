@@ -52,9 +52,13 @@
     "form.payment.method.name.bank.label": "Интернет-банк",
     "form.payment.method.name.mobile.commerce.label": "Счет телефона",
     "form.payment.method.name.others.label": "Другие способы оплаты",
+    "form.payment.method.name.onlineBanking.label": "Online banking",
     "form.interaction.redirect.text": "Следуйте инструкциям формы оплаты",
     "form.interaction.redirect.button.text": "Открыть форму оплаты",
     "form.interaction.redirect.wait.text": "Ожидание результата оплаты от формы",
+    "form.onlineBanking.search": "Search",
+    "form.pay.onlineBanking.bankAccountName": "Bank account name",
+    "form.pay.onlineBanking.bankAccountNumber": "Bank account number",
     "form.help.header": "Как решить проблему?",
     "form.help.codes": {
         "InvalidPaymentTool": {
