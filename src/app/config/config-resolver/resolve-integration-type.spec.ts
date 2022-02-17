@@ -40,17 +40,3 @@ it('should return invoiceTemplate integration type', () => {
     };
     expect(result).toEqual(expected);
 });
-
-it('should return customer integration type', () => {
-    const result = resolveIntegrationType({
-        customerID: 'mock customer',
-        customerAccessToken: 'mock token',
-        someField: 'someValue'
-    } as any);
-    const expected = {
-        integrationType: IntegrationType.customer,
-        customerID: 'mock customer',
-        customerAccessToken: 'mock token'
-    };
-    expect(result).toEqual(expected);
-});

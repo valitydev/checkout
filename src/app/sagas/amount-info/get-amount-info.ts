@@ -9,7 +9,5 @@ export const getAmountInfo = (initConfig: InitConfig, model: ModelState): Amount
             return resolveInvoice(model.invoice);
         case IntegrationType.invoiceTemplate:
             return resolveInvoiceTemplate(model.invoiceTemplate, initConfig.amount);
-        case IntegrationType.customer:
-            return null;
     }
 };

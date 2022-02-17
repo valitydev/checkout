@@ -9,7 +9,6 @@ export const getErrorCodeFromEvents = (events: Event[], integrationType: Integra
     switch (integrationType) {
         case IntegrationType.invoice:
         case IntegrationType.invoiceTemplate:
-        case IntegrationType.customer:
             return getCode(events);
     }
     throw new Error('Unknown integration type.');

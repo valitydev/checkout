@@ -11,6 +11,5 @@ export interface CardFormProps {
     formValues: CardFormValues;
     fieldsConfig: FieldsConfig;
     pay: (payload: PaymentRequestedPayload) => any;
-    subscribe: (v: CardFormValues) => any;
     setViewInfoError: (hasError: boolean) => any;
 }

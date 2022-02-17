@@ -11,6 +11,4 @@ export * from './get-invoice-events';
 export * from './create-invoice-with-template';
 export * from './create-payment-resource';
 export * from './create-payment';
-export * from './get-customer-events';
-export * from './create-binding';
 export * from './get-service-provider-by-id';

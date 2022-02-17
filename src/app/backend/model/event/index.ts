@@ -7,4 +7,3 @@ export * from './payment-started';
 export * from './payment-status-changed';
 export * from './invoice-change-type';
 export * from './invoice-event';
-export * from './customer-event';

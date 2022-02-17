@@ -56,11 +56,5 @@ export const checkBankCard = (initConfig: InitConfig, paymentMethods: PaymentMet
         case IntegrationType.invoiceTemplate:
         case IntegrationType.invoice:
             return checkForInvoiceAndTemplate(paymentMethods);
-        case IntegrationType.customer:
-            return {
-                available: false,
-                reason: UnavailableReason.capability,
-                message: "Param 'bankCard' is only available for invoice and invoice template integration"
-            };
     }
 };

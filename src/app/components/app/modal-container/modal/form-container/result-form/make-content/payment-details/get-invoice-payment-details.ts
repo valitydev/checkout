@@ -34,8 +34,6 @@ const getPaymentToolDetails = (e: InvoiceEvent[]): PaymentToolDetails => {
     switch (payer.payerType) {
         case PayerType.PaymentResourcePayer:
             return (payer as PaymentResourcePayer).paymentToolDetails;
-        case PayerType.CustomerPayer:
-            throw new Error('Unsupported CustomerPayer');
     }
     throw new Error('Unsupported PayerType');
 };

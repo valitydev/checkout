@@ -33,11 +33,3 @@ it('invoice template integration type should call resolveInvoiceTemplate', () =>
     expect(resolveInvoiceTemplateMock.mock.calls.length).toBe(1);
     expect(resolveInvoiceTemplateMock.mock.calls[0]).toEqual([model.invoiceTemplate, initConfig.amount]);
 });
-
-it('customer integration type should return null', () => {
-    const initConfig = {
-        integrationType: IntegrationType.customer
-    } as any;
-    const actual = getAmountInfo(initConfig, null);
-    expect(actual).toBeNull();
-});

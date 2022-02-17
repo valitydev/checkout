@@ -4,7 +4,6 @@ import {
     TypeKeys,
     InitializeAppFailed,
     PaymentFailed,
-    SubscriptionFailed,
     FinishInteractionFailed
 } from 'checkout/actions';
 import { ErrorStatus, ErrorState } from 'checkout/state';
@@ -15,7 +14,6 @@ type ErrorReducerAction =
     | AcceptError
     | InitializeAppFailed
     | PaymentFailed
-    | SubscriptionFailed
     | FinishInteractionFailed
     | SetAcceptedError;
 
@@ -24,7 +22,6 @@ export function errorReducer(s: ErrorState = null, action: ErrorReducerAction): 
         case TypeKeys.SET_ERROR:
         case TypeKeys.INITIALIZE_APP_FAILED:
         case TypeKeys.PAYMENT_FAILED:
-        case TypeKeys.SUBSCRIPTION_FAILED:
         case TypeKeys.FINISH_INTERACTION_FAILED:
             console.error(action.payload);
             return {
