@@ -52,9 +52,13 @@
     "form.payment.method.name.bank.label": "Online banking",
     "form.payment.method.name.mobile.commerce.label": "Phone account",
     "form.payment.method.name.others.label": "All payment methods",
+    "form.payment.method.name.onlineBanking.label": "Online banking",
     "form.interaction.redirect.text": "Please follow the instructions on the payment page",
     "form.interaction.redirect.button.text": "Open payment page",
     "form.interaction.redirect.wait.text": "Waiting from payment result",
+    "form.onlineBanking.search": "Search",
+    "form.pay.onlineBanking.bankAccountName": "Bank account name",
+    "form.pay.onlineBanking.bankAccountNumber": "Bank account number",
     "form.help.header": "How to solve a problem?",
     "form.help.codes": {
         "InvalidPaymentTool": {
