@@ -149,7 +149,7 @@
     "RejectedByIssuer": "Rejected by issuing bank",
     "PaymentRejected": "Payment is rejected",
     "digital.wallet.providers": {
-        "sticpay": {
+        "Sticpay": {
             "name": "Sticpay",
             "fields": {
                 "account": "Sticpay account (email)"

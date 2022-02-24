@@ -6,7 +6,7 @@ import { assertUnreachable } from 'checkout/utils';
 
 const getID = (formValues: WalletFormValues): string => {
     switch (formValues.provider) {
-        case KnownDigitalWalletProviders.sticpay:
+        case KnownDigitalWalletProviders.Sticpay:
             return (formValues as SticpayWalletFormValues).sticpayAccount;
         default:
             assertUnreachable(formValues.provider);

@@ -6,7 +6,7 @@ import { SticpayAccount } from './fields';
 
 export const WalletProviderFormGroup: React.FC<{ provider: KnownDigitalWalletProviders }> = (props) => {
     switch (props.provider) {
-        case KnownDigitalWalletProviders.sticpay:
+        case KnownDigitalWalletProviders.Sticpay:
             return (
                 <FormGroup>
                     <SticpayAccount />

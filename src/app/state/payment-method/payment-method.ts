@@ -6,7 +6,7 @@ export interface PaymentMethod {
 }
 
 export enum KnownDigitalWalletProviders {
-    sticpay = 'sticpay'
+    Sticpay = 'Sticpay'
 }
 
 export interface DigitalWalletPaymentMethod extends PaymentMethod {
