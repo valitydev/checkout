@@ -1,4 +1,5 @@
 import * as React from 'react';
+import template from 'lodash-es/template';
 
 import { InvoiceEvent, PaymentToolDetailsType } from 'checkout/backend';
 import { Locale } from 'checkout/locale';
@@ -12,9 +13,8 @@ const getPaymentMethodDescription = (l: Locale, e: InvoiceEvent[]): string => {
         case PaymentToolDetailsType.PaymentToolDetailsBankCard:
             return `${l['form.final.success.card.text']} ${details.info}`;
         case PaymentToolDetailsType.PaymentToolDetailsDigitalWallet:
-            return `${l['form.final.success.wallet.text']} ${details.info}`;
         case PaymentToolDetailsType.PaymentToolDetailsPaymentTerminal:
-            return `${l['form.final.success.terminal.text']} ${details.info}`;
+            return template(l['form.final.success.provider.text'])({ provider: details.info });
         default:
             console.warn(`${logPrefix} Unsupported PaymentToolDetailsType`, details);
             return '';
