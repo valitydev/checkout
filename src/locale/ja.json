@@ -1,5 +1,5 @@
 {
-    "info.order.label": "Order details",
+    "info.order.label": "注文詳細",
     "info.email.label": "Eメール",
     "info.modal.mobile.commerce.description.steps": [
         "提供された電話番号にメッセージが送信されました。 支払いを確認するには、携帯電話事業者からのSMSに記載されている手順に従ってください。このタブは閉じることができます。",
@@ -8,16 +8,16 @@
     "info.modal.no.available.payment.method": "利用できる支払方法はありません",
     "footer.pay.label": "Secure payment with",
     "form.header.payment.methods.label": "お支払い方法を選択してください",
-    "form.header.payment.method.groups.label": "Please choose a payment method",
+    "form.header.payment.method.groups.label": "お支払い方法を選択してください",
     "form.header.pay.card.label": "カードで支払う",
     "form.header.pay.bank.label": "オンラインバンキングで入金する",
     "form.header.pay.mobile.commerce.label": "携帯電話アカウントで支払います。",
     "form.header.final.success.label": "支払い完了",
-    "form.header.final.invoice.paid.label": "Fully paid",
+    "form.header.final.invoice.paid.label": "全額支払い済み",
     "form.header.final.invoice.paid.already.label": "すでに支払い済み",
     "form.header.final.invoice.cancelled.label": "請求書がキャンセルされました",
     "form.header.final.invoice.fulfilled.label": "請求書は支払い済みです",
-    "form.header.final.started.label": "Pending",
+    "form.header.final.started.label": "保留中",
     "form.header.final.failed.label": "未払い",
     "form.header.final.refunded.label": "返金済み",
     "form.header.final.pending.label": "保留中",
@@ -25,7 +25,7 @@
     "form.final.failed.cancelled.text": "支払いがキャンセルされました",
     "form.final.success.card.text": "カードで支払い済",
     "form.final.started.pay.text": "支払いは保留中です",
-    "form.final.success.provider.text": "Paid with <%= provider %>",
+    "form.final.success.provider.text": "<%= provider %>で支払い済み",
     "form.final.success.check.text": "領収書がメールアドレスに送信されました",
     "form.final.need.help": "問題を解決するには？",
     "form.input.phone.placeholder": "電話番号",
@@ -34,23 +34,23 @@
     "form.input.secure.placeholder": "CVV",
     "form.input.cardholder.placeholder": "クレジットカード名義人氏名",
     "form.input.email.placeholder": "Email",
-    "form.input.amount.placeholder": "Amount",
-    "form.button.next.label": "Next",
+    "form.input.amount.placeholder": "金額",
+    "form.button.next.label": "次",
     "form.button.use.other.card.label": "別のカードを使用",
     "form.button.use.other.wallet.label": "別のアカウントIDを使用",
     "form.button.use.other.mobileCommerce.label": "他の電話番号を使用する",
     "form.button.use.other.default.label": "他の詳細情報を使う",
     "form.button.pay.again.label": "もう一度お試しください",
-    "form.button.pay.label": "Pay",
-    "form.payment.method.name.card.label": "Card",
+    "form.button.pay.label": "支払う",
+    "form.payment.method.name.card.label": "カード",
     "form.payment.method.name.apple.pay.label": "Apple Pay",
     "form.payment.method.name.google.pay.label": "Google Pay",
     "form.payment.method.name.samsung.pay.label": "Samsung Pay",
     "form.payment.method.name.yandex.pay.label": "Yandex Pay",
-    "form.payment.method.name.wallet.label": "E-wallets",
-    "form.payment.method.name.bank.label": "Online banking",
+    "form.payment.method.name.wallet.label": "eウォレット",
+    "form.payment.method.name.bank.label": "オンラインバンキング",
     "form.payment.method.name.mobile.commerce.label": "電話アカウント",
-    "form.payment.method.name.others.label": "All payment methods",
+    "form.payment.method.name.others.label": "すべての支払い方法",
     "form.payment.method.name.onlineBanking.label": "オンラインバンキング",
     "form.interaction.redirect.text": "支払いページの指示に従ってください",
     "form.interaction.redirect.button.text": "支払いページを開く",
@@ -149,9 +149,9 @@
     "PaymentRejected": "支払いが却下されました",
     "digital.wallet.providers": {
         "Sticpay": {
-            "name": "Sticpay",
+            "name": "Stickpay",
             "fields": {
-                "account": "Sticpay account (email)"
+                "account": "Stickpayアカウント (email)"
             }
         }
     }
