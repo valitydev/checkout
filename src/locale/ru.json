@@ -25,7 +25,7 @@
     "form.final.failed.cancelled.text": "Платеж был отменен",
     "form.final.success.card.text": "Оплачено картой",
     "form.final.started.pay.text": "Платёж в процессе",
-    "form.final.success.provider.text": "Paid with <%= provider %>",
+    "form.final.success.provider.text": "Оплачено с помощью <%= provider %>",
     "form.final.success.check.text": "Чек отправлен вам на email",
     "form.final.need.help": "Как решить проблему?",
     "form.input.phone.placeholder": "Телефон",

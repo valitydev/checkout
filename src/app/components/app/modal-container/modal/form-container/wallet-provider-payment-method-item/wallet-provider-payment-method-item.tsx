@@ -15,7 +15,7 @@ const toWalletProvider = (props: SticpayPaymentMethodItemProps) =>
 
 const Icon: React.FC<{ provider: KnownDigitalWalletProviders }> = ({ provider }) => {
     switch (provider) {
-        case KnownDigitalWalletProviders.sticpay:
+        case KnownDigitalWalletProviders.Sticpay:
             return <ReactSVG src="/assets/wallet-providers/logos/sticpay.svg" />;
         default:
             assertUnreachable(provider);

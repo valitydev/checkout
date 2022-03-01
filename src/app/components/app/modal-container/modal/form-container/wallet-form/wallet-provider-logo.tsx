@@ -6,7 +6,7 @@ import { assertUnreachable } from 'checkout/utils';
 
 export const Logo: React.FC<{ provider: KnownDigitalWalletProviders }> = ({ provider }) => {
     switch (provider) {
-        case KnownDigitalWalletProviders.sticpay:
+        case KnownDigitalWalletProviders.Sticpay:
             return <ReactSVG src="/assets/wallet-providers/logos/sticpay.svg" />;
         default:
             assertUnreachable(provider);
@@ -20,6 +20,7 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+    height: 48px;
 `;
 
 export const WalletProviderLogo: React.FC<{ provider: KnownDigitalWalletProviders }> = (props) => (

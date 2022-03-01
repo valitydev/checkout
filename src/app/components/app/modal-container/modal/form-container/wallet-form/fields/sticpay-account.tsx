@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Field, WrappedFieldProps } from 'redux-form';
 
-import { State } from 'checkout/state';
+import { KnownDigitalWalletProviders, State } from 'checkout/state';
 import { Locale } from 'checkout/locale';
 import { Letter } from 'checkout/components';
 import { formatEmail, isError, validateEmail } from 'checkout/utils';
@@ -18,7 +18,7 @@ const getCustomInput = (props: EmailDefProps, fieldProps: WrappedFieldProps) => 
         {...fieldProps.meta}
         error={isError(fieldProps.meta)}
         icon={<Letter />}
-        placeholder={props.locale['digital.wallet.providers'].sticpay.fields.account}
+        placeholder={props.locale['digital.wallet.providers'][KnownDigitalWalletProviders.Sticpay].fields.account}
         mark={true}
         type="email"
         id="sticpay-account-input"
