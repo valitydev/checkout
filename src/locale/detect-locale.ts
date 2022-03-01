@@ -1,6 +1,6 @@
 import { isIE } from './is-ie';
 
-const locales = ['ru', 'en'];
+const locales = ['ru', 'en', 'ja'];
 
 export const detectLocale = (locale: string = 'auto'): string => {
     let result;
