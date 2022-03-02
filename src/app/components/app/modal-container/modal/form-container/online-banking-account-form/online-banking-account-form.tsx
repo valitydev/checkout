@@ -1,4 +1,8 @@
 import * as React from 'react';
+import { Validator } from 'redux-form/lib/Field';
+import { useEffect, useMemo } from 'react';
+import { Field, InjectedFormProps, reduxForm, WrappedFieldProps } from 'redux-form';
+import { ReactSVG } from 'react-svg';
 
 import { Header } from '../header';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
@@ -12,16 +16,12 @@ import {
 import { FormGroup } from '../form-group';
 import { Input } from 'checkout/components';
 import styled from 'checkout/styled-components';
-import { ReactSVG } from 'react-svg';
 import { Amount } from '../common-fields';
 import { toFieldsConfig } from '../fields-config';
-import { Field, InjectedFormProps, reduxForm, WrappedFieldProps } from 'redux-form';
 import { Locale } from 'checkout/locale';
-import { Validator } from 'redux-form/lib/Field';
-import { useEffect, useMemo } from 'react';
-import { PayButton } from 'checkout/components/app/modal-container/modal/form-container/pay-button';
+import { PayButton } from '../pay-button';
 import { pay, setViewInfoError } from 'checkout/actions';
-import { ServiceProviderMetadata, ServiceProviderMetadataField } from 'checkout/backend';
+import { metadataNamespace, ServiceProviderMetadata, ServiceProviderMetadataField } from 'checkout/backend';
 import { isError } from 'checkout/utils';
 import { LOGO_BY_SERVICE_PROVIDER_ID } from 'checkout/constants';
 
@@ -101,16 +101,11 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
                         <StyledLogo src={logo.src} />
                     </BankLogoWrapper>
                 )}
-                {metadata.form?.map((field) => (
+                {metadata[metadataNamespace].form?.map((field) => (
                     <FormGroup key={field.name}>
                         <FormField field={field} />
                     </FormGroup>
                 ))}
-                {/*{email.visible && (*/}
-                {/*    <FormGroup>*/}
-                {/*        <Email />*/}
-                {/*    </FormGroup>*/}
-                {/*)}*/}
                 {amount.visible && (
                     <FormGroup>
                         <Amount cost={amount.cost} />

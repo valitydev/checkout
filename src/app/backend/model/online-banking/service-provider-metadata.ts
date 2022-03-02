@@ -1,3 +1,5 @@
+export const metadataNamespace = 'dev.vality.checkout';
+
 export interface ServiceProviderMetadataField {
     name: string;
     type: JSX.IntrinsicElements['input']['type'];
@@ -6,5 +8,7 @@ export interface ServiceProviderMetadataField {
 }
 
 export interface ServiceProviderMetadata {
-    form?: ServiceProviderMetadataField[];
+    metadataNamespace: {
+        form?: ServiceProviderMetadataField[];
+    };
 }
