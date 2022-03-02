@@ -21,7 +21,7 @@ import { toFieldsConfig } from '../fields-config';
 import { Locale } from 'checkout/locale';
 import { PayButton } from '../pay-button';
 import { pay, setViewInfoError } from 'checkout/actions';
-import { metadataNamespace, ServiceProviderMetadata, ServiceProviderMetadataField } from 'checkout/backend';
+import { METADATA_NAMESPACE, ServiceProviderMetadata, ServiceProviderMetadataField } from 'checkout/backend';
 import { isError } from 'checkout/utils';
 import { LOGO_BY_SERVICE_PROVIDER_ID } from 'checkout/constants';
 
@@ -101,7 +101,7 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
                         <StyledLogo src={logo.src} />
                     </BankLogoWrapper>
                 )}
-                {metadata[metadataNamespace].form?.map((field) => (
+                {metadata[METADATA_NAMESPACE].form?.map((field) => (
                     <FormGroup key={field.name}>
                         <FormField field={field} />
                     </FormGroup>

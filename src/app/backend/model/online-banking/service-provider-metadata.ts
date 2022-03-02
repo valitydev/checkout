@@ -1,4 +1,4 @@
-export const metadataNamespace = 'dev.vality.checkout';
+export const METADATA_NAMESPACE = 'dev.vality.checkout';
 
 export interface ServiceProviderMetadataField {
     name: string;
@@ -8,7 +8,7 @@ export interface ServiceProviderMetadataField {
 }
 
 export interface ServiceProviderMetadata {
-    metadataNamespace: {
+    METADATA_NAMESPACE: {
         form?: ServiceProviderMetadataField[];
     };
 }
