@@ -8,7 +8,6 @@ import SecureIcon from './secure-icon.svg';
 import VisaIcon from './visa-icon.svg';
 import McIcon from './mc-icon.svg';
 import PciDssIcon from './pci-dss-icon.svg';
-import MirAcceptIcon from './mir-accept.svg';
 import { device } from 'checkout/utils/device';
 import styled, { css } from 'checkout/styled-components';
 
@@ -89,11 +88,6 @@ const StyledPciDssIcon = styled(PciDssIcon)`
     ${iconGap}
     ${fixPosition}
     ${fillIconWhite}
-`;
-
-const StyledMirAcceptIcon = styled(MirAcceptIcon)`
-    ${iconGap}
-    ${fixPosition}
 `;
 
 const LogoWrapper = styled.div`
