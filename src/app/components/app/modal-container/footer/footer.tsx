@@ -2,9 +2,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 
-import { State } from 'checkout/state';
+import { PaymentMethodName, State } from 'checkout/state';
 import { Locale } from 'checkout/locale';
-import { Config } from 'checkout/config';
 import SecureIcon from './secure-icon.svg';
 import VisaIcon from './visa-icon.svg';
 import McIcon from './mc-icon.svg';
@@ -104,19 +103,21 @@ const LogoWrapper = styled.div`
 
 export interface FooterProps {
     locale: Locale;
-    config: Config;
+    brandless: boolean;
+    isPaymentMethodBankCard: boolean;
     className?: string;
 }
 
 const mapStateToProps = (state: State) => ({
     locale: state.config.locale,
-    config: state.config
+    brandless: state.config.appConfig.brandless,
+    isPaymentMethodBankCard: !!state.availablePaymentMethods.find((m) => m.name === PaymentMethodName.BankCard)
 });
 
 const FooterDef: React.FC<FooterProps> = (props) => (
     <FooterWrapper className={props.className}>
         <SafePaymentContainer>
-            {!props.config.appConfig.brandless && (
+            {!props.brandless && (
                 <SafePayment>
                     <StyledSecureIcon />
                     <Label>{props.locale['footer.pay.label']}</Label>
@@ -130,12 +131,13 @@ const FooterDef: React.FC<FooterProps> = (props) => (
                     </LogoWrapper>
                 </SafePayment>
             )}
-            <SafeLogos>
-                <StyledVisaIcon />
-                <StyledMcIcon />
-                <StyledMirAcceptIcon />
-                <StyledPciDssIcon />
-            </SafeLogos>
+            {props.isPaymentMethodBankCard && (
+                <SafeLogos>
+                    <StyledVisaIcon />
+                    <StyledMcIcon />
+                    <StyledPciDssIcon />
+                </SafeLogos>
+            )}
         </SafePaymentContainer>
     </FooterWrapper>
 );
