@@ -10,4 +10,5 @@ export { default as Letter } from './letter.svg';
 export { default as Lock } from './lock.svg';
 export { default as Phone } from './phone.svg';
 export { default as User } from './user.svg';
+export { default as Bank } from './bank.svg';
 export * from './card';
