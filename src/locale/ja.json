@@ -157,7 +157,7 @@
         "Venuspoint": {
             "name": "Venus Point",
             "fields": {
-                "account": "Venus Pointアカウント (email)",
+                "account": "Venus Point account (email)",
                 "password": "Venus Point account password"
             }
         }
