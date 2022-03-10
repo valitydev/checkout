@@ -153,6 +153,13 @@
             "fields": {
                 "account": "Sticpay account (email)"
             }
+        },
+        "Venuspoint": {
+            "name": "Venus Point",
+            "fields": {
+                "account": "Venus Point account (email)",
+                "password": "Venus Point account password"
+            }
         }
     }
 }

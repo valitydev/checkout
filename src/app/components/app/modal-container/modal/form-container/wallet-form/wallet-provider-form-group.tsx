@@ -2,7 +2,7 @@ import * as React from 'react';
 import { KnownDigitalWalletProviders } from 'checkout/state';
 import { assertUnreachable } from 'checkout/utils';
 import { FormGroup } from '../form-group';
-import { SticpayAccount } from './fields';
+import { SticpayAccount, VenusPointAccount, VenusPointPassword } from './fields';
 
 export const WalletProviderFormGroup: React.FC<{ provider: KnownDigitalWalletProviders }> = (props) => {
     switch (props.provider) {
@@ -11,6 +11,17 @@ export const WalletProviderFormGroup: React.FC<{ provider: KnownDigitalWalletPro
                 <FormGroup>
                     <SticpayAccount />
                 </FormGroup>
+            );
+        case KnownDigitalWalletProviders.Venuspoint:
+            return (
+                <>
+                    <FormGroup>
+                        <VenusPointAccount />
+                    </FormGroup>
+                    <FormGroup>
+                        <VenusPointPassword />
+                    </FormGroup>
+                </>
             );
         default:
             assertUnreachable(props.provider);
