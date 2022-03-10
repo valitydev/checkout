@@ -1,13 +1,15 @@
 import * as React from 'react';
-import { ReactSVG } from 'react-svg';
 import styled from 'styled-components';
 import { KnownDigitalWalletProviders } from 'checkout/state';
 import { assertUnreachable } from 'checkout/utils';
+import { VenuspointLogo, SticpayLogo } from 'checkout/components/ui';
 
 export const Logo: React.FC<{ provider: KnownDigitalWalletProviders }> = ({ provider }) => {
     switch (provider) {
         case KnownDigitalWalletProviders.Sticpay:
-            return <ReactSVG src="/assets/wallet-providers/logos/sticpay.svg" />;
+            return <SticpayLogo />;
+        case KnownDigitalWalletProviders.Venuspoint:
+            return <VenuspointLogo />;
         default:
             assertUnreachable(provider);
     }

@@ -1,13 +1,28 @@
 import { call, CallEffect } from 'redux-saga/effects';
-import { KnownDigitalWalletProviders, SticpayWalletFormValues, WalletFormValues } from 'checkout/state';
+import * as md5 from 'md5';
+
+import {
+    KnownDigitalWalletProviders,
+    SticpayWalletFormValues,
+    VenusPointWalletFormValues,
+    WalletFormValues
+} from 'checkout/state';
 import { PaymentResource, PaymentToolType, createPaymentResource } from 'checkout/backend';
 import { replaceSpaces } from './replace-spaces';
 import { assertUnreachable } from 'checkout/utils';
 
-const getID = (formValues: WalletFormValues): string => {
+const getPaymentToolDetails = (formValues: WalletFormValues): { id: string; token?: string } => {
     switch (formValues.provider) {
         case KnownDigitalWalletProviders.Sticpay:
-            return (formValues as SticpayWalletFormValues).sticpayAccount;
+            return {
+                id: replaceSpaces((formValues as SticpayWalletFormValues).sticpayAccount)
+            };
+        case KnownDigitalWalletProviders.Venuspoint:
+            const venusPointFormValues = formValues as VenusPointWalletFormValues;
+            return {
+                id: replaceSpaces(venusPointFormValues.venusPointAccount),
+                token: md5(replaceSpaces(venusPointFormValues.venusPointPassword))
+            };
         default:
             assertUnreachable(formValues.provider);
     }
@@ -21,7 +36,7 @@ export function* createDigitalWallet(
     const paymentTool = {
         paymentToolType: PaymentToolType.DigitalWalletData,
         provider: formValues.provider,
-        id: replaceSpaces(getID(formValues))
+        ...getPaymentToolDetails(formValues)
     };
     return yield call(createPaymentResource, endpoint, token, paymentTool);
 }

@@ -8,3 +8,8 @@ export interface WalletFormValues extends PayableFormValues {
 export interface SticpayWalletFormValues extends WalletFormValues {
     sticpayAccount: string;
 }
+
+export interface VenusPointWalletFormValues extends WalletFormValues {
+    venusPointAccount: string;
+    venusPointPassword: string;
+}

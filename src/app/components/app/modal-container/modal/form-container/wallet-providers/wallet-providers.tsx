@@ -42,14 +42,14 @@ class WalletProvidersDef extends React.Component<WalletProvidersProps> {
             <form ref={this.formRef}>
                 <div>
                     <Header title={locale['form.header.payment.methods.label']} />
-                    {providers.map((provider) => {
+                    {providers.map((provider) => (
                         <WalletProviderPaymentMethodItem
                             key={provider}
                             previous={FormName.walletProviders}
                             setFormInfo={this.props.setFormInfo}
                             provider={provider}
-                        />;
-                    })}
+                        />
+                    ))}
                 </div>
             </form>
         );
