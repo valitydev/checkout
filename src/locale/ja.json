@@ -149,16 +149,16 @@
     "PaymentRejected": "支払いが却下されました",
     "digital.wallet.providers": {
         "Sticpay": {
-            "name": "Stickpay",
+            "name": "Sticpay",
             "fields": {
-                "account": "Stickpayアカウント (email)"
+                "account": "Sticpayアカウント (メールアドレス)"
             }
         },
         "Venuspoint": {
             "name": "Venus Point",
             "fields": {
-                "account": "Venus Pointアカウント (email)",
-                "password": "Venus Point account password"
+                "account": "Venus Pointアカウント (メールアドレス)",
+                "password": "Venus Pointパスワード"
             }
         }
     }
