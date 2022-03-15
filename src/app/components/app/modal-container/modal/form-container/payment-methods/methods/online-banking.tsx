@@ -1,19 +1,28 @@
 import * as React from 'react';
 
-import { MethodProps } from './method-props';
 import { Method } from './method';
 import { Title } from './title';
 import { Text } from './text';
 import { Icon } from './icon/icon';
-import { OnlineBankingFormInfo } from 'checkout/state';
+import { FormInfo, FormName, OnlineBankingFormInfo, OnlineBankingSubtype } from 'checkout/state';
+import { Locale } from 'checkout/locale';
 
-const toOnlineBanking = (props: MethodProps) => props.setFormInfo(new OnlineBankingFormInfo(props.prevFormName));
+interface OnlineBankingProps {
+    subtype: OnlineBankingSubtype;
+    locale: Locale;
+    setFormInfo: (formInfo: FormInfo) => any;
+}
 
-export const OnlineBanking: React.FC<MethodProps> = (props) => (
+const toOnlineBanking = (props: OnlineBankingProps) =>
+    props.setFormInfo(new OnlineBankingFormInfo(props.subtype, FormName.paymentMethods));
+
+const getTitle = (l: Locale, subtype: OnlineBankingSubtype) => l[`form.payment.method.name.${subtype}.label`];
+
+export const OnlineBanking: React.FC<OnlineBankingProps> = (props) => (
     <Method onClick={toOnlineBanking.bind(null, props)}>
         <Icon name="online-banking" />
         <Text>
-            <Title>{props.locale['form.payment.method.name.onlineBanking.label']}</Title>
+            <Title>{getTitle(props.locale, props.subtype)}</Title>
         </Text>
     </Method>
 );

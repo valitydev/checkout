@@ -36,7 +36,11 @@ const Method: React.FC<MethodProps> = (props) => {
         case PaymentMethodName.MobileCommerce:
             return <MobileCommerce {...props} />;
         case PaymentMethodName.OnlineBanking:
-            return <OnlineBanking {...props} />;
+            return <OnlineBanking subtype="onlineBanking" locale={props.locale} setFormInfo={props.setFormInfo} />;
+        case PaymentMethodName.NetBanking:
+            return <OnlineBanking subtype="netBanking" locale={props.locale} setFormInfo={props.setFormInfo} />;
+        case PaymentMethodName.UPI:
+            return null;
         case PaymentMethodName.DigitalWallet:
             const { providers } = props.method as DigitalWalletPaymentMethod;
             if (providers.length === 1) {

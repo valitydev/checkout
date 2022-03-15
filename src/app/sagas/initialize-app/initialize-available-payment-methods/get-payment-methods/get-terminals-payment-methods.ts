@@ -1,22 +1,51 @@
-import { KnownProviderCategories, PaymentMethodName } from 'checkout/state';
-import { logUnavailableWithConfig } from './log-unavailable-with-config';
-import { ServiceProvider } from 'checkout/backend';
-import { groupBy } from 'lodash-es';
-import { assertMetadata } from './assert-metadata';
+import groupBy from 'lodash-es/groupBy';
 
-const mapProviderCategoryToPaymentMethodName: { [P in KnownProviderCategories]: PaymentMethodName } = {
-    [KnownProviderCategories.Euroset]: PaymentMethodName.Euroset,
-    [KnownProviderCategories.QPS]: PaymentMethodName.QPS,
-    [KnownProviderCategories.Uzcard]: PaymentMethodName.Uzcard,
-    [KnownProviderCategories.OnlineBanking]: PaymentMethodName.OnlineBanking
+import { KnownProviderCategories, PaymentMethod, PaymentMethodName } from 'checkout/state';
+import { ServiceProvider } from 'checkout/backend';
+import { logUnavailableWithConfig } from './log-unavailable-with-config';
+import { assertUnreachable } from 'checkout/utils';
+
+type InitConfigChunk = {
+    onlineBanking: boolean;
+    netBanking: boolean;
+    qps: boolean;
+    paymentFlowHold: boolean;
+    recurring: boolean;
 };
 
-export function getTerminalsPaymentMethods(
-    methods: { [P in KnownProviderCategories]?: boolean } = {},
+const categoryReducer = ({ onlineBanking, netBanking, qps }: Partial<InitConfigChunk>) => (
+    result: PaymentMethod[],
+    [category, serviceProviders]: [KnownProviderCategories, ServiceProvider[]]
+) => {
+    let paymentMethod;
+    switch (category) {
+        case KnownProviderCategories.OnlineBanking:
+            paymentMethod = onlineBanking && {
+                name: PaymentMethodName.OnlineBanking,
+                serviceProviders
+            };
+            break;
+        case KnownProviderCategories.NetBanking:
+            paymentMethod = netBanking && {
+                name: PaymentMethodName.NetBanking,
+                serviceProviders
+            };
+            break;
+        case KnownProviderCategories.UPI:
+            paymentMethod = qps && {
+                name: PaymentMethodName.UPI
+            };
+            break;
+        default:
+            assertUnreachable(category);
+    }
+    return paymentMethod ? result.concat([paymentMethod]) : result;
+};
+
+export const getTerminalsPaymentMethods = (
     serviceProviders: ServiceProvider[],
-    paymentFlowHold: boolean,
-    recurring: boolean
-) {
+    { paymentFlowHold, recurring, onlineBanking, netBanking, qps }: InitConfigChunk
+): PaymentMethod[] => {
     if (paymentFlowHold) {
         logUnavailableWithConfig('terminals', 'paymentFlowHold');
         return [];
@@ -25,13 +54,6 @@ export function getTerminalsPaymentMethods(
         logUnavailableWithConfig('terminals', 'recurring');
         return [];
     }
-    serviceProviders.forEach((serviceProvider) => assertMetadata(serviceProvider.id, serviceProvider.metadata));
-    const availableServiceProvidersGroups = groupBy(
-        serviceProviders.filter(({ category }) => methods[category]),
-        'category'
-    );
-    return Object.entries(availableServiceProvidersGroups).map(([category, serviceProvidersGroup]) => ({
-        name: mapProviderCategoryToPaymentMethodName[category],
-        serviceProviders: serviceProvidersGroup
-    }));
-}
+    const groupedByCategory = Object.entries(groupBy(serviceProviders, 'category'));
+    return groupedByCategory.reduce(categoryReducer({ onlineBanking, netBanking, qps }), []);
+};

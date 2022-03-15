@@ -8,6 +8,7 @@ import { DigitalWallet, PaymentMethod, PaymentMethodName, ServiceProvider } from
 import { Config } from 'checkout/config';
 import { bankCardToMethods } from './bank-card-to-methods';
 import { getDigitalWalletPaymentMethods, getTerminalsPaymentMethods } from './get-payment-methods';
+import { assertUnreachable } from 'checkout/utils';
 
 export function* toAvailablePaymentMethods(
     paymentMethods: PaymentMethod[],
@@ -16,7 +17,7 @@ export function* toAvailablePaymentMethods(
     serviceProviders: ServiceProvider[]
 ): Iterator<CallEffect | PaymentMethodState[]> {
     let result: PaymentMethodState[] = [];
-    const { wallets, euroset, qps, uzcard, onlineBanking, paymentFlowHold, recurring } = config.initConfig;
+    const { wallets, onlineBanking, netBanking, qps, paymentFlowHold, recurring } = config.initConfig;
     for (const method of paymentMethods) {
         switch (method.method) {
             case PaymentMethodName.BankCard:
@@ -30,12 +31,13 @@ export function* toAvailablePaymentMethods(
                 break;
             case PaymentMethodName.PaymentTerminal:
                 result = result.concat(
-                    getTerminalsPaymentMethods(
-                        { euroset, qps, uzcard, onlinebanking: onlineBanking },
-                        serviceProviders,
+                    getTerminalsPaymentMethods(serviceProviders, {
+                        onlineBanking,
+                        netBanking,
+                        qps,
                         paymentFlowHold,
                         recurring
-                    )
+                    })
                 );
                 break;
             case PaymentMethodName.MobileCommerce:
@@ -43,6 +45,8 @@ export function* toAvailablePaymentMethods(
                     result = result.concat([{ name: PaymentMethodNameState.MobileCommerce }]);
                 }
                 break;
+            default:
+                assertUnreachable(method.method);
         }
     }
     return result;

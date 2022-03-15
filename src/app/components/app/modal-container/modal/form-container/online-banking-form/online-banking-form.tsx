@@ -1,26 +1,47 @@
 import * as React from 'react';
 
-import { OnlineBankingAccountFormInfo } from 'checkout/state';
+import {
+    OnlineBankingAccountFormInfo,
+    OnlineBankingFormInfo,
+    OnlineBankingPaymentMethod,
+    OnlineBankingSubtype,
+    PaymentMethodName
+} from 'checkout/state';
+import { Locale } from 'checkout/locale';
 import { goToFormInfo } from 'checkout/actions';
 import { Header } from '../header';
 import { BanksList } from './banks-list';
-import { getCurrentModalFormSelector } from 'checkout/selectors/get-current-modal-form-selector';
-import { getOnlineBankingPaymentMethodSelector } from 'checkout/selectors/get-online-banking-payment-method-selector';
+import { getActiveModalFormSelector, getAvailablePaymentMethodSelector } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 
-export const OnlineBankingForm: React.FC = () => {
-    const paymentMethod = useAppSelector(getOnlineBankingPaymentMethodSelector);
-    const locale = useAppSelector((s) => s.config.locale);
-    const formInfo = useAppSelector(getCurrentModalFormSelector);
-    const dispatch = useAppDispatch();
+const getTitle = (l: Locale, subtype: OnlineBankingSubtype) => l[`form.payment.method.name.${subtype}.label`];
 
+const getPaymentMethodName = (subtype: OnlineBankingSubtype): PaymentMethodName => {
+    switch (subtype) {
+        case 'netBanking':
+            return PaymentMethodName.NetBanking;
+        case 'onlineBanking':
+            return PaymentMethodName.OnlineBanking;
+    }
+};
+
+export const OnlineBankingForm: React.FC = () => {
+    const locale = useAppSelector((s) => s.config.locale);
+    const { name, subtype } = useAppSelector<OnlineBankingFormInfo>(getActiveModalFormSelector);
+    const paymentMethod = useAppSelector<OnlineBankingPaymentMethod>(
+        getAvailablePaymentMethodSelector(getPaymentMethodName(subtype))
+    );
+    const serviceProviders = paymentMethod?.serviceProviders;
+    const dispatch = useAppDispatch();
     return (
         <form>
-            <Header title={locale['form.payment.method.name.onlineBanking.label']} />
-            <BanksList
-                items={paymentMethod.serviceProviders}
-                select={(item) => dispatch(goToFormInfo(new OnlineBankingAccountFormInfo(item, formInfo.name)))}
-            />
+            <Header title={getTitle(locale, subtype)} />
+            {serviceProviders ? (
+                <BanksList
+                    items={paymentMethod.serviceProviders}
+                    select={(item) => dispatch(goToFormInfo(new OnlineBankingAccountFormInfo(item, name)))}
+                />
+            ) : null}
         </form>
     );
 };

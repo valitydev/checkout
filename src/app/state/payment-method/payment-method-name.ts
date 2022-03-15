@@ -9,5 +9,7 @@ export enum PaymentMethodName {
     YandexPay = 'YandexPay',
     MobileCommerce = 'MobileCommerce',
     DigitalWallet = 'DigitalWallet',
-    OnlineBanking = 'OnlineBanking'
+    OnlineBanking = 'OnlineBanking',
+    NetBanking = 'NetBanking',
+    UPI = 'UPI'
 }

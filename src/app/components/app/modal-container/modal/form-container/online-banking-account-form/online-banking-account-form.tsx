@@ -5,7 +5,7 @@ import { Field, InjectedFormProps, reduxForm, WrappedFieldProps } from 'redux-fo
 
 import { Header } from '../header';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { getCurrentModalFormSelector } from 'checkout/selectors/get-current-modal-form-selector';
+import { getActiveModalFormSelector } from 'checkout/selectors';
 import {
     FormName,
     OnlineBankingAccountFormInfo,
@@ -55,7 +55,7 @@ const FormField: React.FC<{ field: ServiceProviderMetadataField }> = ({ field })
 };
 
 const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
-    const formInfo = useAppSelector(getCurrentModalFormSelector) as OnlineBankingAccountFormInfo;
+    const formInfo = useAppSelector<OnlineBankingAccountFormInfo>(getActiveModalFormSelector);
     const { amount } = useAppSelector((s) => toFieldsConfig(s.config.initConfig, s.model.invoiceTemplate));
     const { serviceProvider } = formInfo;
     const metadata = serviceProvider?.metadata;
