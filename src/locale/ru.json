@@ -10,8 +10,8 @@
     "form.header.payment.methods.label": "Выберите способ оплаты",
     "form.header.payment.method.groups.label": "Выберите способ оплаты",
     "form.header.pay.card.label": "Оплата банковской картой",
-    "form.header.pay.bank.label": "Оплата через интернет-банк",
     "form.header.pay.mobile.commerce.label": "Оплата со счета телефона",
+    "form.header.pay.upi.label": "Unified payment interface",
     "form.header.final.success.label": "Успешная оплата",
     "form.header.final.invoice.paid.label": "Оплачено",
     "form.header.final.invoice.paid.already.label": "Уже оплачено",
@@ -58,6 +58,11 @@
     "form.onlineBanking.search": "Поиск",
     "form.pay.onlineBanking.bankAccountName": "Название банковского счета",
     "form.pay.onlineBanking.bankAccountNumber": "Номер банковского счета",
+    "form.pay.upi.payerVirtualAddress": "Payer Virtual Address",
+    "form.pay.upi.instruction": [
+        "You can make payment via BHIM, PhonePe, Tez, ICICI, SBI and other UPI apps.",
+        "Example: username@ybl testname@upi userbnk@sbi etc."
+    ],
     "form.help.header": "Как решить проблему?",
     "form.help.codes": {
         "InvalidPaymentTool": {

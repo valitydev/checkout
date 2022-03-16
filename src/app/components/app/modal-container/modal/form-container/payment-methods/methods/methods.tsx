@@ -14,6 +14,7 @@ import { Uzcard } from './uzcard';
 import { YandexPay } from './yandex-pay';
 import { WalletProviderPaymentMethodItem } from '../../wallet-provider-payment-method-item';
 import { OnlineBanking } from './online-banking';
+import { UPIPaymentMethodItem } from './upi-payment-method-item';
 
 const Method: React.FC<MethodProps> = (props) => {
     switch (props.method.name) {
@@ -40,7 +41,7 @@ const Method: React.FC<MethodProps> = (props) => {
         case PaymentMethodName.NetBanking:
             return <OnlineBanking subtype="netBanking" locale={props.locale} setFormInfo={props.setFormInfo} />;
         case PaymentMethodName.UPI:
-            return null;
+            return <UPIPaymentMethodItem previous={FormName.paymentMethods} setFormInfo={props.setFormInfo} />;
         case PaymentMethodName.DigitalWallet:
             const { providers } = props.method as DigitalWalletPaymentMethod;
             if (providers.length === 1) {

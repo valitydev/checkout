@@ -27,7 +27,9 @@ export const checkBankCard = (initConfig: InitConfig, paymentMethods: PaymentMet
         uzcard,
         qps,
         mobileCommerce,
-        onlineBanking
+        onlineBanking,
+        netBanking,
+        upi
     } = initConfig;
     const activePaymentMethods: { [N in AppPaymentMethodName]: boolean } = {
         BankCard: applePay,
@@ -40,7 +42,9 @@ export const checkBankCard = (initConfig: InitConfig, paymentMethods: PaymentMet
         SamsungPay: samsungPay,
         YandexPay: yandexPay,
         MobileCommerce: mobileCommerce,
-        OnlineBanking: onlineBanking
+        OnlineBanking: onlineBanking,
+        NetBanking: netBanking,
+        UPI: upi
     };
     if (!Object.values(activePaymentMethods).includes(true)) {
         return {

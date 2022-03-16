@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { FormInfo, FormName, KnownDigitalWalletProviders, WalletFormInfo } from 'checkout/state';
-import { PaymentMethodItemContainer } from './payment-method-item-container';
 import { assertUnreachable } from 'checkout/utils';
-import { VenuspointLogo, SticpayLogo } from 'checkout/components/ui';
+import { VenuspointLogo, SticpayLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
 
 export interface WalletProviderPaymentMethodItemProps {
     previous?: FormName;

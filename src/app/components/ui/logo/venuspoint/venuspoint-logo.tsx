@@ -10,6 +10,6 @@ const Container = styled.div`
 
 export const VenuspointLogo: React.FC = () => (
     <Container>
-        <img src="/assets/wallet-providers/logos/venuspoint.png" />
+        <img src="/assets/payment-service-providers/logos/venuspoint.png" />
     </Container>
 );

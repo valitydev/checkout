@@ -27,6 +27,7 @@ import { OnlineBankingForm } from './online-banking-form';
 import { OnlineBankingAccountForm } from './online-banking-account-form';
 import { NoAvailablePaymentMethodForm } from './no-available-payment-method-form';
 import { WalletProviders } from './wallet-providers';
+import { UPIForm } from './upi-form';
 
 const Container = styled.div`
     padding: 0 5px;
@@ -226,6 +227,8 @@ class FormContainerDef extends React.Component<FormContainerProps, { height: num
                 return <OnlineBankingAccountForm key={name} />;
             case FormName.noAvailablePaymentMethodForm:
                 return <NoAvailablePaymentMethodForm key={name} />;
+            case FormName.upiForm:
+                return <UPIForm key={name} />;
             default:
                 return null;
         }
