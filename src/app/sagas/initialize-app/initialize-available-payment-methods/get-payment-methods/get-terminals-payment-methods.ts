@@ -8,12 +8,12 @@ import { assertUnreachable } from 'checkout/utils';
 type InitConfigChunk = {
     onlineBanking: boolean;
     netBanking: boolean;
-    qps: boolean;
+    upi: boolean;
     paymentFlowHold: boolean;
     recurring: boolean;
 };
 
-const categoryReducer = ({ onlineBanking, netBanking, qps }: Partial<InitConfigChunk>) => (
+const categoryReducer = ({ onlineBanking, netBanking, upi }: Partial<InitConfigChunk>) => (
     result: PaymentMethod[],
     [category, serviceProviders]: [KnownProviderCategories, ServiceProvider[]]
 ) => {
@@ -34,7 +34,7 @@ const categoryReducer = ({ onlineBanking, netBanking, qps }: Partial<InitConfigC
             }
             break;
         case KnownProviderCategories.UPI:
-            if (qps) {
+            if (upi) {
                 result = result.concat([paymentMethod]);
             }
             break;
@@ -46,7 +46,7 @@ const categoryReducer = ({ onlineBanking, netBanking, qps }: Partial<InitConfigC
 
 export const getTerminalsPaymentMethods = (
     serviceProviders: ServiceProvider[],
-    { paymentFlowHold, recurring, onlineBanking, netBanking, qps }: InitConfigChunk
+    { paymentFlowHold, recurring, onlineBanking, netBanking, upi }: InitConfigChunk
 ): PaymentMethod[] => {
     if (paymentFlowHold) {
         logUnavailableWithConfig('terminals', 'paymentFlowHold');
@@ -57,5 +57,5 @@ export const getTerminalsPaymentMethods = (
         return [];
     }
     const groupedByCategory = Object.entries(groupBy(serviceProviders, 'category'));
-    return groupedByCategory.reduce(categoryReducer({ onlineBanking, netBanking, qps }), []);
+    return groupedByCategory.reduce(categoryReducer({ onlineBanking, netBanking, upi }), []);
 };
