@@ -11,7 +11,7 @@ import { assertUnreachable } from 'checkout/utils';
 import { payWithTerminalUzcard } from './pay-with-terminal-uzcard';
 import { payWithYandexPay } from './pay-with-yandex-pay';
 import { payWithDigitalWallet } from './pay-with-digital-wallet';
-import { payWithOnlineBanking } from './pay-with-online-banking';
+import { payWithPaymentTerminal } from './pay-with-payment-terminal';
 
 const getPayFn = (method: PaymentMethodName) => {
     switch (method) {
@@ -35,8 +35,8 @@ const getPayFn = (method: PaymentMethodName) => {
             return call.bind(null, payWithMobileCommerce);
         case PaymentMethodName.DigitalWallet:
             return call.bind(null, payWithDigitalWallet);
-        case PaymentMethodName.OnlineBanking:
-            return call.bind(null, payWithOnlineBanking);
+        case PaymentMethodName.PaymentTerminal:
+            return call.bind(null, payWithPaymentTerminal);
         default:
             assertUnreachable(method);
             throw { code: 'error.unsupported.payment.method' };

@@ -17,29 +17,31 @@ const categoryReducer = ({ onlineBanking, netBanking, qps }: Partial<InitConfigC
     result: PaymentMethod[],
     [category, serviceProviders]: [KnownProviderCategories, ServiceProvider[]]
 ) => {
-    let paymentMethod;
+    let paymentMethod = {
+        name: PaymentMethodName.PaymentTerminal,
+        category,
+        serviceProviders
+    };
     switch (category) {
         case KnownProviderCategories.OnlineBanking:
-            paymentMethod = onlineBanking && {
-                name: PaymentMethodName.OnlineBanking,
-                serviceProviders
-            };
+            if (onlineBanking) {
+                result = result.concat([paymentMethod]);
+            }
             break;
         case KnownProviderCategories.NetBanking:
-            paymentMethod = netBanking && {
-                name: PaymentMethodName.NetBanking,
-                serviceProviders
-            };
+            if (netBanking) {
+                result = result.concat([paymentMethod]);
+            }
             break;
         case KnownProviderCategories.UPI:
-            paymentMethod = qps && {
-                name: PaymentMethodName.UPI
-            };
+            if (qps) {
+                result = result.concat([paymentMethod]);
+            }
             break;
         default:
             assertUnreachable(category);
     }
-    return paymentMethod ? result.concat([paymentMethod]) : result;
+    return result;
 };
 
 export const getTerminalsPaymentMethods = (

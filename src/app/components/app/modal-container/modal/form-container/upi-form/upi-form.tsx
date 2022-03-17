@@ -3,16 +3,18 @@ import { useEffect } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { setViewInfoError } from 'checkout/actions';
-import { FormName } from 'checkout/state';
+import { pay, setViewInfoError } from 'checkout/actions';
+import { FormName, PaymentMethodName, PaymentTerminalFormValues, UPIFormInfo, UPIFormValues } from 'checkout/state';
 import { Header } from '../header';
 import { PayButton } from '../pay-button';
 import { Logo } from './logo';
 import { FormGroup } from '../form-group';
 import { PayerVirtualAddressField } from './payer-virtual-address-field';
 import { InstructionItem } from './instruction-item';
+import { getActiveModalFormSelector } from 'checkout/selectors';
 
 const UPIFormRef: React.FC<InjectedFormProps> = (props) => {
+    const { serviceProvider } = useAppSelector<UPIFormInfo>(getActiveModalFormSelector);
     const dispatch = useAppDispatch();
     const locale = useAppSelector((s) => s.config.locale);
 
@@ -26,8 +28,19 @@ const UPIFormRef: React.FC<InjectedFormProps> = (props) => {
         }
     }, [props.submitFailed]);
 
-    const submit = () => {
+    const submit = ({ payerVirtualAddress }: UPIFormValues) => {
         (document.activeElement as HTMLElement)?.blur();
+        dispatch(
+            pay({
+                method: PaymentMethodName.PaymentTerminal,
+                values: {
+                    metadata: {
+                        payerVirtualAddress
+                    },
+                    provider: serviceProvider.id
+                } as PaymentTerminalFormValues
+            })
+        );
     };
 
     return (

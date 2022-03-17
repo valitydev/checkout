@@ -1,7 +1,7 @@
 import { call, CallEffect } from 'redux-saga/effects';
 import { createPaymentResource, PaymentResource, PaymentToolType } from 'checkout/backend';
 
-export function* createOnlineBanking(
+export function* createPaymentTerminal(
     endpoint: string,
     provider: string,
     metadata: any,

@@ -6,12 +6,7 @@ import { Field, InjectedFormProps, reduxForm, WrappedFieldProps } from 'redux-fo
 import { Header } from '../header';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getActiveModalFormSelector } from 'checkout/selectors';
-import {
-    FormName,
-    OnlineBankingAccountFormInfo,
-    OnlineBankingAccountFormValues,
-    PaymentMethodName
-} from 'checkout/state';
+import { FormName, OnlineBankingAccountFormInfo, PaymentTerminalFormValues, PaymentMethodName } from 'checkout/state';
 import { FormGroup } from '../form-group';
 import { Input } from 'checkout/components';
 import { Amount } from '../common-fields';
@@ -72,12 +67,12 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
         }
     }, [props.submitFailed]);
 
-    const submit = (values: OnlineBankingAccountFormValues) => {
+    const submit = (values: PaymentTerminalFormValues) => {
         (document.activeElement as HTMLElement)?.blur();
         dispatch(
             pay({
-                method: PaymentMethodName.OnlineBanking,
-                values: { ...values, provider: serviceProvider.id } as OnlineBankingAccountFormValues
+                method: PaymentMethodName.PaymentTerminal,
+                values: { ...values, provider: serviceProvider.id } as PaymentTerminalFormValues
             })
         );
     };

@@ -1,4 +1,3 @@
-import { logPrefix } from 'checkout/log-messages';
 import {
     CardFormInfo,
     FormInfo,
@@ -14,7 +13,9 @@ import {
     DigitalWalletPaymentMethod,
     WalletProvidersFormInfo,
     OnlineBankingFormInfo,
-    UPIFormInfo
+    UPIFormInfo,
+    PaymentTerminalPaymentMethod,
+    KnownProviderCategories
 } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { assertUnreachable } from 'checkout/utils';
@@ -45,15 +46,20 @@ export const toInitialForm = (method: PaymentMethod): FormInfo => {
                 return new WalletFormInfo(providers[0]);
             }
             return new WalletProvidersFormInfo();
-        case PaymentMethodName.OnlineBanking:
-            return new OnlineBankingFormInfo('onlineBanking');
-        case PaymentMethodName.NetBanking:
-            return new OnlineBankingFormInfo('netBanking');
-        case PaymentMethodName.UPI:
-            return new UPIFormInfo();
+        case PaymentMethodName.PaymentTerminal:
+            const { category, serviceProviders } = method as PaymentTerminalPaymentMethod;
+            switch (category) {
+                case KnownProviderCategories.OnlineBanking:
+                case KnownProviderCategories.NetBanking:
+                    return new OnlineBankingFormInfo(category);
+                case KnownProviderCategories.UPI:
+                    return new UPIFormInfo(serviceProviders[0]);
+                default:
+                    assertUnreachable(category);
+            }
+            break;
         default:
             assertUnreachable(method.name);
-            console.error(`${logPrefix} Unsupported initial form for method ${method.name}`);
             return new NoAvailablePaymentMethodFormInfo();
     }
 };

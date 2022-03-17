@@ -1,41 +1,24 @@
 import * as React from 'react';
 
-import {
-    OnlineBankingAccountFormInfo,
-    OnlineBankingFormInfo,
-    OnlineBankingPaymentMethod,
-    OnlineBankingSubtype,
-    PaymentMethodName
-} from 'checkout/state';
+import { OnlineBankingAccountFormInfo, OnlineBankingFormInfo, KnownProviderCategories } from 'checkout/state';
 import { Locale } from 'checkout/locale';
 import { goToFormInfo } from 'checkout/actions';
 import { Header } from '../header';
 import { BanksList } from './banks-list';
-import { getActiveModalFormSelector, getAvailablePaymentMethodSelector } from 'checkout/selectors';
+import { getActiveModalFormSelector, getAvailableTerminalPaymentMethodSelector } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 
-const getTitle = (l: Locale, subtype: OnlineBankingSubtype) => l[`form.payment.method.name.${subtype}.label`];
-
-const getPaymentMethodName = (subtype: OnlineBankingSubtype): PaymentMethodName => {
-    switch (subtype) {
-        case 'netBanking':
-            return PaymentMethodName.NetBanking;
-        case 'onlineBanking':
-            return PaymentMethodName.OnlineBanking;
-    }
-};
+const getTitle = (l: Locale, category: KnownProviderCategories) => l[`form.payment.method.name.${category}.label`];
 
 export const OnlineBankingForm: React.FC = () => {
     const locale = useAppSelector((s) => s.config.locale);
-    const { name, subtype } = useAppSelector<OnlineBankingFormInfo>(getActiveModalFormSelector);
-    const paymentMethod = useAppSelector<OnlineBankingPaymentMethod>(
-        getAvailablePaymentMethodSelector(getPaymentMethodName(subtype))
-    );
+    const { name, category } = useAppSelector<OnlineBankingFormInfo>(getActiveModalFormSelector);
+    const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(category));
     const serviceProviders = paymentMethod?.serviceProviders;
     const dispatch = useAppDispatch();
     return (
         <form>
-            <Header title={getTitle(locale, subtype)} />
+            <Header title={getTitle(locale, category)} />
             {serviceProviders ? (
                 <BanksList
                     items={paymentMethod.serviceProviders}
