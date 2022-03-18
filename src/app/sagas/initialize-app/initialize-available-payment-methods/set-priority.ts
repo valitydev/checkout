@@ -1,21 +1,45 @@
-import { PaymentMethod, PaymentMethodName } from 'checkout/state';
+import {
+    KnownProviderCategories,
+    PaymentMethod,
+    PaymentMethodName,
+    PaymentTerminalPaymentMethod
+} from 'checkout/state';
+import { assertUnreachable } from 'checkout/utils';
 
-const paymentMethodPriorityDesc: PaymentMethodName[] = [
-    PaymentMethodName.BankCard,
-    PaymentMethodName.ApplePay,
-    PaymentMethodName.OnlineBanking,
-    PaymentMethodName.DigitalWallet,
-    PaymentMethodName.Euroset,
-    PaymentMethodName.GooglePay,
-    PaymentMethodName.YandexPay,
-    PaymentMethodName.SamsungPay,
-    PaymentMethodName.QPS,
-    PaymentMethodName.MobileCommerce,
-    PaymentMethodName.Uzcard
-];
+const getPriority = (method: PaymentMethod): number => {
+    switch (method.name) {
+        case PaymentMethodName.BankCard:
+            return 1;
+        case PaymentMethodName.PaymentTerminal:
+            const { category } = method as PaymentTerminalPaymentMethod;
+            switch (category) {
+                case KnownProviderCategories.OnlineBanking:
+                    return 2;
+                case KnownProviderCategories.NetBanking:
+                    return 3;
+                case KnownProviderCategories.UPI:
+                    return 4;
+                default:
+                    assertUnreachable(category);
+            }
+        case PaymentMethodName.DigitalWallet:
+            return 5;
+        case PaymentMethodName.Euroset:
+        case PaymentMethodName.QPS:
+        case PaymentMethodName.MobileCommerce:
+        case PaymentMethodName.GooglePay:
+        case PaymentMethodName.ApplePay:
+        case PaymentMethodName.SamsungPay:
+        case PaymentMethodName.YandexPay:
+        case PaymentMethodName.Uzcard:
+            return 6;
+        default:
+            assertUnreachable(method.name);
+    }
+};
 
 export const setPriority = (methods: PaymentMethod[]): PaymentMethod[] =>
     methods.map((method) => ({
         ...method,
-        priority: paymentMethodPriorityDesc.findIndex((m) => m === method.name) + 1
+        priority: getPriority(method)
     }));

@@ -10,8 +10,8 @@
     "form.header.payment.methods.label": "お支払い方法を選択してください",
     "form.header.payment.method.groups.label": "お支払い方法を選択してください",
     "form.header.pay.card.label": "カードで支払う",
-    "form.header.pay.bank.label": "オンラインバンキングで入金する",
     "form.header.pay.mobile.commerce.label": "携帯電話アカウントで支払います。",
+    "form.header.pay.upi.label": "Unified payment interface",
     "form.header.final.success.label": "支払い完了",
     "form.header.final.invoice.paid.label": "全額支払い済み",
     "form.header.final.invoice.paid.already.label": "すでに支払い済み",
@@ -48,16 +48,21 @@
     "form.payment.method.name.samsung.pay.label": "Samsung Pay",
     "form.payment.method.name.yandex.pay.label": "Yandex Pay",
     "form.payment.method.name.wallet.label": "eウォレット",
-    "form.payment.method.name.bank.label": "オンラインバンキング",
     "form.payment.method.name.mobile.commerce.label": "電話アカウント",
     "form.payment.method.name.others.label": "すべての支払い方法",
-    "form.payment.method.name.onlineBanking.label": "オンラインバンキング",
+    "form.payment.method.name.onlinebanking.label": "オンラインバンキング",
+    "form.payment.method.name.netbanking.label": "オンラインバンキング",
     "form.interaction.redirect.text": "支払いページの指示に従ってください",
     "form.interaction.redirect.button.text": "支払いページを開く",
     "form.interaction.redirect.wait.text": "支払い結果待機中",
     "form.onlineBanking.search": "検索",
     "form.pay.onlineBanking.bankAccountName": "銀行口座名義",
     "form.pay.onlineBanking.bankAccountNumber": "銀行口座番号",
+    "form.pay.upi.payerVirtualAddress": "Payer Virtual Address",
+    "form.pay.upi.instruction": [
+        "You can make payment via BHIM, PhonePe, Tez, ICICI, SBI and other UPI apps.",
+        "Example: username@ybl testname@upi userbnk@sbi etc."
+    ],
     "form.help.header": "問題を解決するには？",
     "form.help.codes": {
         "InvalidPaymentTool": {

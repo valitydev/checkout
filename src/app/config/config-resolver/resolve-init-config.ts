@@ -54,6 +54,8 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         uzcard,
         qps,
         onlineBanking,
+        netBanking,
+        upi,
         ...restParams
     } = userConfig;
     checkUnknown(resolvedIntegrationType, restParams);
@@ -87,6 +89,8 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         euroset: setDefault(resolveBoolean(euroset, 'euroset'), allTerminals),
         uzcard: setDefault(resolveBoolean(uzcard, 'uzcard'), allTerminals),
         qps: setDefault(resolveBoolean(qps, 'qps'), allTerminals),
-        onlineBanking: setDefault(resolveBoolean(onlineBanking, 'onlineBanking'), true)
+        onlineBanking: setDefault(resolveBoolean(onlineBanking, 'onlineBanking'), true),
+        netBanking: setDefault(resolveBoolean(netBanking, 'netBanking'), true),
+        upi: setDefault(resolveBoolean(upi, 'upi'), true)
     };
 };

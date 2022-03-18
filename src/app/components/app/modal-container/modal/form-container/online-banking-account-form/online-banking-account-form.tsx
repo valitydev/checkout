@@ -5,13 +5,8 @@ import { Field, InjectedFormProps, reduxForm, WrappedFieldProps } from 'redux-fo
 
 import { Header } from '../header';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { getCurrentModalFormSelector } from 'checkout/selectors/get-current-modal-form-selector';
-import {
-    FormName,
-    OnlineBankingAccountFormInfo,
-    OnlineBankingAccountFormValues,
-    PaymentMethodName
-} from 'checkout/state';
+import { getActiveModalFormSelector } from 'checkout/selectors';
+import { FormName, OnlineBankingAccountFormInfo, PaymentTerminalFormValues, PaymentMethodName } from 'checkout/state';
 import { FormGroup } from '../form-group';
 import { Input } from 'checkout/components';
 import { Amount } from '../common-fields';
@@ -55,7 +50,7 @@ const FormField: React.FC<{ field: ServiceProviderMetadataField }> = ({ field })
 };
 
 const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
-    const formInfo = useAppSelector(getCurrentModalFormSelector) as OnlineBankingAccountFormInfo;
+    const formInfo = useAppSelector<OnlineBankingAccountFormInfo>(getActiveModalFormSelector);
     const { amount } = useAppSelector((s) => toFieldsConfig(s.config.initConfig, s.model.invoiceTemplate));
     const { serviceProvider } = formInfo;
     const metadata = serviceProvider?.metadata;
@@ -72,12 +67,12 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
         }
     }, [props.submitFailed]);
 
-    const submit = (values: OnlineBankingAccountFormValues) => {
+    const submit = (values: PaymentTerminalFormValues) => {
         (document.activeElement as HTMLElement)?.blur();
         dispatch(
             pay({
-                method: PaymentMethodName.OnlineBanking,
-                values: { ...values, provider: serviceProvider.id } as OnlineBankingAccountFormValues
+                method: PaymentMethodName.PaymentTerminal,
+                values: { ...values, provider: serviceProvider.id } as PaymentTerminalFormValues
             })
         );
     };

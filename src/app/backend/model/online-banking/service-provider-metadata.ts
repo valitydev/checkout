@@ -8,7 +8,7 @@ export interface ServiceProviderMetadataField {
 }
 
 export interface ServiceProviderMetadata {
-    METADATA_NAMESPACE: {
+    [METADATA_NAMESPACE]: {
         form?: ServiceProviderMetadataField[];
     };
 }

@@ -10,8 +10,8 @@
     "form.header.payment.methods.label": "Please choose a payment method",
     "form.header.payment.method.groups.label": "Please choose a payment method",
     "form.header.pay.card.label": "Pay with a card",
-    "form.header.pay.bank.label": "Pay with Online Banking",
     "form.header.pay.mobile.commerce.label": "Pay with mobile phone account",
+    "form.header.pay.upi.label": "Unified payment interface",
     "form.header.final.success.label": "Successful payment",
     "form.header.final.invoice.paid.label": "Fully paid",
     "form.header.final.invoice.paid.already.label": "Already fully paid",
@@ -48,16 +48,21 @@
     "form.payment.method.name.samsung.pay.label": "Samsung Pay",
     "form.payment.method.name.yandex.pay.label": "Yandex Pay",
     "form.payment.method.name.wallet.label": "E-wallets",
-    "form.payment.method.name.bank.label": "Online banking",
     "form.payment.method.name.mobile.commerce.label": "Phone account",
     "form.payment.method.name.others.label": "All payment methods",
-    "form.payment.method.name.onlineBanking.label": "Online banking",
+    "form.payment.method.name.onlinebanking.label": "Online banking",
+    "form.payment.method.name.netbanking.label": "Net banking",
     "form.interaction.redirect.text": "Please follow the instructions on the payment page",
     "form.interaction.redirect.button.text": "Open payment page",
     "form.interaction.redirect.wait.text": "Waiting from payment result",
     "form.onlineBanking.search": "Search",
     "form.pay.onlineBanking.bankAccountName": "Bank account name",
     "form.pay.onlineBanking.bankAccountNumber": "Bank account number",
+    "form.pay.upi.payerVirtualAddress": "Payer Virtual Address",
+    "form.pay.upi.instruction": [
+        "You can make payment via BHIM, PhonePe, Tez, ICICI, SBI and other UPI apps.",
+        "Example: username@ybl testname@upi userbnk@sbi etc."
+    ],
     "form.help.header": "How to solve a problem?",
     "form.help.codes": {
         "InvalidPaymentTool": {

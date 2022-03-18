@@ -29,4 +29,6 @@ export class InitConfig {
     theme?: string;
     metadata?: object;
     onlineBanking?: boolean;
+    netBanking?: boolean;
+    upi?: boolean;
 }

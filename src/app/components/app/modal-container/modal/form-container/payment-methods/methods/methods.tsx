@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { DigitalWalletPaymentMethod, FormName, PaymentMethod, PaymentMethodName } from 'checkout/state';
+import {
+    DigitalWalletPaymentMethod,
+    FormName,
+    KnownProviderCategories,
+    PaymentMethod,
+    PaymentMethodName,
+    PaymentTerminalPaymentMethod
+} from 'checkout/state';
 import { assertUnreachable } from 'checkout/utils';
 import { Euroset } from './euroset';
 import { Wallets } from './wallets';
@@ -14,6 +21,7 @@ import { Uzcard } from './uzcard';
 import { YandexPay } from './yandex-pay';
 import { WalletProviderPaymentMethodItem } from '../../wallet-provider-payment-method-item';
 import { OnlineBanking } from './online-banking';
+import { UPIPaymentMethodItem } from './upi-payment-method-item';
 
 const Method: React.FC<MethodProps> = (props) => {
     switch (props.method.name) {
@@ -35,8 +43,24 @@ const Method: React.FC<MethodProps> = (props) => {
             return <YandexPay {...props} />;
         case PaymentMethodName.MobileCommerce:
             return <MobileCommerce {...props} />;
-        case PaymentMethodName.OnlineBanking:
-            return <OnlineBanking {...props} />;
+        case PaymentMethodName.PaymentTerminal:
+            const { category, serviceProviders } = props.method as PaymentTerminalPaymentMethod;
+            switch (category) {
+                case KnownProviderCategories.OnlineBanking:
+                case KnownProviderCategories.NetBanking:
+                    return <OnlineBanking category={category} locale={props.locale} setFormInfo={props.setFormInfo} />;
+                case KnownProviderCategories.UPI:
+                    return (
+                        <UPIPaymentMethodItem
+                            serviceProvider={serviceProviders[0]}
+                            previous={FormName.paymentMethods}
+                            setFormInfo={props.setFormInfo}
+                        />
+                    );
+                default:
+                    assertUnreachable(category);
+                    return null;
+            }
         case PaymentMethodName.DigitalWallet:
             const { providers } = props.method as DigitalWalletPaymentMethod;
             if (providers.length === 1) {
@@ -61,7 +85,7 @@ export const Methods: React.FC<{ methods: PaymentMethod[]; props: Omit<MethodPro
 }) => (
     <>
         {methods.map((method) => (
-            <Method key={method.name} method={method} {...props} />
+            <Method key={method.name + method.priority} method={method} {...props} />
         ))}
     </>
 );
