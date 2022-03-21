@@ -49,17 +49,12 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         samsungPay,
         yandexPay,
         mobileCommerce,
-        terminals,
-        euroset,
-        uzcard,
-        qps,
         onlineBanking,
         netBanking,
         upi,
         ...restParams
     } = userConfig;
     checkUnknown(resolvedIntegrationType, restParams);
-    const allTerminals = setDefault(resolveBoolean(terminals, 'terminals'), true);
     return {
         ...resolvedIntegrationType,
         name: resolveString(name, 'name'),
@@ -86,9 +81,6 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         samsungPay: setDefault(resolveBoolean(samsungPay, 'samsungPay'), true),
         yandexPay: setDefault(resolveBoolean(yandexPay, 'yandexPay'), true),
         mobileCommerce: setDefault(resolveBoolean(mobileCommerce, 'mobileCommerce'), true),
-        euroset: setDefault(resolveBoolean(euroset, 'euroset'), allTerminals),
-        uzcard: setDefault(resolveBoolean(uzcard, 'uzcard'), allTerminals),
-        qps: setDefault(resolveBoolean(qps, 'qps'), allTerminals),
         onlineBanking: setDefault(resolveBoolean(onlineBanking, 'onlineBanking'), true),
         netBanking: setDefault(resolveBoolean(netBanking, 'netBanking'), true),
         upi: setDefault(resolveBoolean(upi, 'upi'), true)

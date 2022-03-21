@@ -3,17 +3,13 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
 import { CardForm } from './card-form';
-import { FormName, ModalForms, ModalName, State, SlideDirection, FormInfo, InteractionFormInfo } from 'checkout/state';
+import { FormName, ModalForms, ModalName, State, SlideDirection, FormInfo } from 'checkout/state';
 import { PaymentMethods } from './payment-methods';
 import { FormContainerProps } from './form-container-props';
 import { FormLoader } from './form-loader';
 import { ResultForm } from './result-form';
 import { WalletForm } from './wallet-form';
 import { MobileCommerceForm } from './mobile-commerce-form';
-import { EurosetForm } from './euroset-form';
-import { UzcardForm } from './uzcard-form';
-import { QPSForm } from './qps-forms';
-import { InteractionForm } from './interaction-form';
 import { TokenProviderForm } from './token-provider-form';
 import { findNamed } from 'checkout/utils';
 import { Help } from './help';
@@ -200,21 +196,10 @@ class FormContainerDef extends React.Component<FormContainerProps, { height: num
                 return <WalletForm key={name} />;
             case FormName.walletProviders:
                 return <WalletProviders key={name} />;
-            case FormName.eurosetForm:
-                return <EurosetForm key={name} />;
-            case FormName.uzcardForm:
-                return <UzcardForm key={name} />;
-            case FormName.qpsForm:
-                return <QPSForm key={name} />;
             case FormName.resultForm:
                 return <ResultForm key={name} />;
             case FormName.helpForm:
                 return <Help key={name} />;
-            case FormName.interactionForm:
-                const {
-                    interaction: { interactionType }
-                } = info as InteractionFormInfo;
-                return <InteractionForm key={`${name}-${interactionType}`} />;
             case FormName.tokenProviderForm:
                 return <TokenProviderForm key={name} />;
             case FormName.mobileCommerceForm:

@@ -8,7 +8,7 @@ import eastern from './eastern';
 
 const themes = [main, coral, persianGreen, solitude, eastern];
 
-export const DEFAULT_THEME = main;
+export const DEFAULT_THEME = eastern;
 
 export interface WithThemeProps {
     theme: Theme;

@@ -4,11 +4,8 @@ import {
     PaymentMethod,
     PaymentMethodName,
     MobileCommerceFormInfo,
-    EurosetFormInfo,
     WalletFormInfo,
     TokenProviderFormInfo,
-    QPSFormInfo,
-    UzcardFormInfo,
     NoAvailablePaymentMethodFormInfo,
     DigitalWalletPaymentMethod,
     WalletProvidersFormInfo,
@@ -24,12 +21,6 @@ export const toInitialForm = (method: PaymentMethod): FormInfo => {
     switch (method.name) {
         case PaymentMethodName.BankCard:
             return new CardFormInfo();
-        case PaymentMethodName.Euroset:
-            return new EurosetFormInfo();
-        case PaymentMethodName.Uzcard:
-            return new UzcardFormInfo();
-        case PaymentMethodName.QPS:
-            return new QPSFormInfo();
         case PaymentMethodName.ApplePay:
             return new TokenProviderFormInfo(BankCardTokenProvider.applepay);
         case PaymentMethodName.GooglePay:

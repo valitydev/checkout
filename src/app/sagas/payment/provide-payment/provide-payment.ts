@@ -2,13 +2,10 @@ import { call, CallEffect } from 'redux-saga/effects';
 import { AmountInfoState, ConfigState, ModelState, PayableFormValues, PaymentMethodName } from 'checkout/state';
 import { payWithApplePay } from './pay-with-apple-pay';
 import { payWithBankCard } from './pay-with-bank-card';
-import { payWithTerminalEuroset } from './pay-with-terminal-euroset';
 import { payWithGooglePay } from './pay-with-google-pay';
 import { payWithSamsungPay } from './pay-with-samsung-pay';
 import { payWithMobileCommerce } from './pay-with-mobile-commerce';
-import { payWithTerminalQPS } from './pay-with-terminal-qps';
 import { assertUnreachable } from 'checkout/utils';
-import { payWithTerminalUzcard } from './pay-with-terminal-uzcard';
 import { payWithYandexPay } from './pay-with-yandex-pay';
 import { payWithDigitalWallet } from './pay-with-digital-wallet';
 import { payWithPaymentTerminal } from './pay-with-payment-terminal';
@@ -25,12 +22,6 @@ const getPayFn = (method: PaymentMethodName) => {
             return call.bind(null, payWithYandexPay);
         case PaymentMethodName.BankCard:
             return call.bind(null, payWithBankCard);
-        case PaymentMethodName.Euroset:
-            return call.bind(null, payWithTerminalEuroset);
-        case PaymentMethodName.Uzcard:
-            return call.bind(null, payWithTerminalUzcard);
-        case PaymentMethodName.QPS:
-            return call.bind(null, payWithTerminalQPS);
         case PaymentMethodName.MobileCommerce:
             return call.bind(null, payWithMobileCommerce);
         case PaymentMethodName.DigitalWallet:

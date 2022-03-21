@@ -4,7 +4,6 @@ import {
     FormInfo,
     FormName,
     PaymentMethodsFormInfo,
-    EurosetFormInfo,
     MobileCommerceFormInfo,
     TokenProviderFormInfo
 } from 'checkout/state';
@@ -16,8 +15,6 @@ const toInitialFormInfo = (isMultiMethods: boolean, initialPaymentMethod: Paymen
     switch (initialPaymentMethod) {
         case PaymentMethodName.bankCard:
             return new CardFormInfo(previous);
-        case PaymentMethodName.terminalEuroset:
-            return new EurosetFormInfo(previous);
         case PaymentMethodName.applePay:
             return new TokenProviderFormInfo(BankCardTokenProvider.applepay, previous);
         case PaymentMethodName.googlePay:

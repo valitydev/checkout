@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import get from 'lodash-es/get';
 
 import { Overlay } from './overlay';
 import { ModalContainer } from './modal-container';
@@ -39,7 +38,7 @@ class AppDef extends React.Component<AppProps> {
 const mapStateToProps = (state: State) => ({
     initConfig: state.config.initConfig,
     theme: state.config.initConfig.theme,
-    fixedTheme: get(state.config, 'appConfig.fixedTheme'),
+    fixedTheme: state.config?.appConfig?.fixedTheme,
     initializeApp: state.initializeApp
 });
 

@@ -14,8 +14,7 @@ it('should return resolved init config', () => {
         email: 'test@test.com',
         redirectUrl: 'some url',
         initialPaymentMethod: 'bankCard',
-        theme: 'main',
-        euroset: 'false'
+        theme: 'main'
     };
 
     const actual = resolveInitConfig(param);
@@ -35,9 +34,6 @@ it('should return resolved init config', () => {
         holdExpiration: HoldExpirationType.cancel,
         locale: 'auto',
         initialPaymentMethod: PaymentMethodName.bankCard,
-        euroset: false,
-        uzcard: true,
-        qps: true,
         requireCardHolder: false,
         obscureCardCvv: true,
         amount: 1000,
