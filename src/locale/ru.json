@@ -156,14 +156,14 @@
         "Sticpay": {
             "name": "Sticpay",
             "fields": {
-                "account": "Sticpay account (email)"
+                "account": "Account (email)"
             }
         },
         "Venuspoint": {
             "name": "Venus Point",
             "fields": {
-                "account": "Venus Point account (email)",
-                "password": "Venus Point account password"
+                "account": "Account (email)",
+                "password": "Account password"
             }
         }
     }
