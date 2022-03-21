@@ -156,14 +156,14 @@
         "Sticpay": {
             "name": "Sticpay",
             "fields": {
-                "account": "アカウント (メールアドレス)"
+                "account": "Account (email)"
             }
         },
         "Venuspoint": {
             "name": "Venus Point",
             "fields": {
-                "account": "アカウント (メールアドレス)",
-                "password": "パスワード"
+                "account": "Account (email)",
+                "password": "Account password"
             }
         }
     }
