@@ -8,8 +8,6 @@ import SamsungPay from './samsung-pay.svg';
 import Terminals from './terminals.svg';
 import Wallets from './wallets.svg';
 import MobileCommerce from './mobile-commerce.svg';
-import QPS from './qps.svg';
-import Uzcard from './uzcard.svg';
 import YandexPay from './yandex-pay.svg';
 import OnlineBanking from './online-banking.svg';
 
@@ -22,8 +20,6 @@ const IconClasses = {
     terminals: Terminals,
     wallets: Wallets,
     'mobile-commerce': MobileCommerce,
-    qps: QPS,
-    uzcard: Uzcard,
     'online-banking': OnlineBanking
 };
 

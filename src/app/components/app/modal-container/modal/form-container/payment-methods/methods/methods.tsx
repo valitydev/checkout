@@ -8,16 +8,13 @@ import {
     PaymentTerminalPaymentMethod
 } from 'checkout/state';
 import { assertUnreachable } from 'checkout/utils';
-import { Euroset } from './euroset';
 import { Wallets } from './wallets';
 import { ApplePay } from './apple-pay';
 import { BankCard } from './bank-card';
 import { GooglePay } from './google-pay';
 import { MethodProps } from './method-props';
 import { SamsungPay } from './samsung-pay';
-import { QPS } from './qps';
 import { MobileCommerce } from './mobile-commerce';
-import { Uzcard } from './uzcard';
 import { YandexPay } from './yandex-pay';
 import { WalletProviderPaymentMethodItem } from '../../wallet-provider-payment-method-item';
 import { OnlineBanking } from './online-banking';
@@ -25,12 +22,6 @@ import { UPIPaymentMethodItem } from './upi-payment-method-item';
 
 const Method: React.FC<MethodProps> = (props) => {
     switch (props.method.name) {
-        case PaymentMethodName.Euroset:
-            return <Euroset {...props} />;
-        case PaymentMethodName.Uzcard:
-            return <Uzcard {...props} />;
-        case PaymentMethodName.QPS:
-            return <QPS {...props} />;
         case PaymentMethodName.BankCard:
             return <BankCard {...props} />;
         case PaymentMethodName.ApplePay:

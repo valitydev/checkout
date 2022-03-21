@@ -24,14 +24,11 @@ const getPriority = (method: PaymentMethod): number => {
             }
         case PaymentMethodName.DigitalWallet:
             return 5;
-        case PaymentMethodName.Euroset:
-        case PaymentMethodName.QPS:
         case PaymentMethodName.MobileCommerce:
         case PaymentMethodName.GooglePay:
         case PaymentMethodName.ApplePay:
         case PaymentMethodName.SamsungPay:
         case PaymentMethodName.YandexPay:
-        case PaymentMethodName.Uzcard:
             return 6;
         default:
             assertUnreachable(method.name);

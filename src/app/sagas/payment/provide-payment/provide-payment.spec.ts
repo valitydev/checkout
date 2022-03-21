@@ -5,7 +5,6 @@ import { PaymentMethodName } from 'checkout/state';
 import { payWithGooglePay } from './pay-with-google-pay';
 import { payWithSamsungPay } from './pay-with-samsung-pay';
 import { payWithBankCard } from './pay-with-bank-card';
-import { payWithTerminalEuroset } from './pay-with-terminal-euroset';
 import { payWithDigitalWallet } from './pay-with-digital-wallet';
 
 describe('providePayment', () => {
@@ -52,14 +51,6 @@ describe('providePayment', () => {
         const iterator = providePayment(method, c, m, a, v);
         const actual = iterator.next().value;
         const expected = call(payWithDigitalWallet, c, m, a, values);
-        expect(actual).toEqual(expected);
-    });
-
-    it('provide payment with Euroset', () => {
-        const method = PaymentMethodName.Euroset;
-        const iterator = providePayment(method, c, m, a, v);
-        const actual = iterator.next().value;
-        const expected = call(payWithTerminalEuroset, c, m, a, values);
         expect(actual).toEqual(expected);
     });
 });

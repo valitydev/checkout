@@ -1,13 +1,6 @@
-import {
-    EventInteractionObject,
-    InteractionFormInfo,
-    ModalForms,
-    ModalInteraction,
-    ModalInteractionType
-} from 'checkout/state';
+import { EventInteractionObject, ModalForms, ModalInteraction, ModalInteractionType } from 'checkout/state';
 import { InteractionType, PaymentInteractionRequested, Redirect } from 'checkout/backend';
-import { select, SelectEffect } from 'redux-saga/effects';
-import { isInteractionPopOutSelector } from '../../selectors';
+import { SelectEffect } from 'redux-saga/effects';
 
 export function* provideInteraction(
     change: PaymentInteractionRequested
@@ -15,9 +8,6 @@ export function* provideInteraction(
     const { userInteraction } = change;
     switch (userInteraction.interactionType) {
         case InteractionType.Redirect:
-            if (yield select(isInteractionPopOutSelector)) {
-                return new ModalForms([new InteractionFormInfo(userInteraction)], true);
-            }
             return new ModalInteraction(
                 {
                     type: ModalInteractionType.EventInteraction,
@@ -25,10 +15,6 @@ export function* provideInteraction(
                 } as EventInteractionObject,
                 true
             );
-        case InteractionType.PaymentTerminalReceipt:
-        case InteractionType.QrCodeDisplayRequest:
-            const formInfo = new InteractionFormInfo(userInteraction);
-            return new ModalForms([formInfo], true);
         default:
             throw { code: 'error.unsupported.user.interaction.type' };
     }
