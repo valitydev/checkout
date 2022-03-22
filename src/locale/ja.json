@@ -150,6 +150,10 @@
     "RejectedByIssuer": "信用状発行銀行に拒否されました",
     "PaymentRejected": "支払いが却下されました",
     "digital.wallet.providers": {
+        "sign.up": {
+            "description": "アカウントをお持ちではありませんか?",
+            "link": "会員登録"
+        },
         "Sticpay": {
             "name": "Sticpay",
             "fields": {
