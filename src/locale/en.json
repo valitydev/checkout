@@ -150,6 +150,10 @@
     "RejectedByIssuer": "Rejected by issuing bank",
     "PaymentRejected": "Payment is rejected",
     "digital.wallet.providers": {
+        "sign.up": {
+            "description": "Don't have an account?",
+            "link": "Sign up"
+        },
         "Sticpay": {
             "name": "Sticpay",
             "fields": {

@@ -150,6 +150,10 @@
     "RejectedByIssuer": "Отклонено эмитентом",
     "PaymentRejected": "Платёж отклонен",
     "digital.wallet.providers": {
+        "sign.up": {
+            "description": "У вас нет аккаунта?",
+            "link": "Регистрация"
+        },
         "Sticpay": {
             "name": "Sticpay",
             "fields": {

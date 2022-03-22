@@ -39,7 +39,8 @@ const theme: Theme = {
         font: {
             infoBlock: palette.White
         },
-        iconBackgrounds: ['#B25AC3', '#54CB59', '#38C1CD', '#5B9FFF', '#CAC557']
+        iconBackgrounds: ['#B25AC3', '#54CB59', '#38C1CD', '#5B9FFF', '#CAC557'],
+        link: '#0038FF'
     },
     gradients: {
         form: css`linear-gradient(45deg, ${palette.Eastern} -20%, ${palette.Emarald} 90%)`,

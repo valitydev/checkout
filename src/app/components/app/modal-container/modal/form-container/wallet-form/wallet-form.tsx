@@ -25,6 +25,7 @@ import { findNamed } from 'checkout/utils';
 import { pay, setViewInfoError } from 'checkout/actions';
 import { WalletProviderLogo } from './wallet-provider-logo';
 import { WalletProviderFormGroup } from './wallet-provider-form-group';
+import { SignUp } from './sign-up';
 
 const toWalletFormInfo = (m: ModalState[]) => {
     const info = (findNamed(m, ModalName.modalForms) as ModalForms).formsInfo;
@@ -108,6 +109,7 @@ class WalletFormDef extends React.Component<Props> {
                     )}
                 </div>
                 <PayButton />
+                <SignUp locale={locale} provider={activeProvider} />
             </form>
         );
     }
