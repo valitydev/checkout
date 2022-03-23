@@ -58,7 +58,7 @@ function isEventToWait(event: InvoiceEvent): boolean {
     );
 }
 
-const POLLING_TIME_MS = 60 * 1000;
+const POLLING_TIME_MS = 60 * 1000 * 5;
 const POLLING_INTEVAL_MS = 1000;
 const EVENTS_WAIT_POLLING_TIME_MS = 10 * 60 * 1000;
 const EVENTS_WAIT_INTERVAL_MS = 5 * 1000;
