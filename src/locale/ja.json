@@ -163,7 +163,7 @@
         "Venuspoint": {
             "name": "Venus Point",
             "fields": {
-                "account": "アカウント (メールアドレス)",
+                "account": "アカウント",
                 "password": "パスワード"
             }
         }
