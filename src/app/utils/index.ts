@@ -17,3 +17,4 @@ export * from './get-ya-pay-payment-data';
 export * from './email';
 export * from './format-utils';
 export * from './is-error-predicate';
+export * from './interaction-form';

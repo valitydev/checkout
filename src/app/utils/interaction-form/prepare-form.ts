@@ -20,12 +20,16 @@ const toMethod = (request: BrowserRequest): 'POST' | 'GET' => {
     }
 };
 
-export const prepareForm = (origin: string, request: BrowserRequest): HTMLFormElement => {
+export const prepareForm = (
+    origin: string,
+    request: BrowserRequest,
+    target: '_self' | '_blank' = '_self'
+): HTMLFormElement => {
     const form = document.createElement('form');
     form.action = request.uriTemplate;
     form.method = toMethod(request);
     toInputs(origin, request).forEach((input) => form.appendChild(input));
-    form.setAttribute('target', '_self');
+    form.setAttribute('target', target);
     form.style.visibility = 'hidden';
     return form;
 };

@@ -31,6 +31,7 @@ function* getLastEventID() {
 function* poll(endpoint: string, token: string, invoiceID: string, interval = 1000) {
     let lastEventID = yield call(getLastEventID);
     let lastEvent = null;
+    let events = [];
     while (!isStop(lastEvent)) {
         yield delay(interval);
         let chunk: InvoiceEvent[] = [];
@@ -45,8 +46,9 @@ function* poll(endpoint: string, token: string, invoiceID: string, interval = 10
         } as SetEventsAction);
         lastEvent = last(chunk);
         lastEventID = lastEvent ? lastEvent.id : lastEventID;
+        events = yield select((state: State) => state.events);
     }
-    return lastEvent;
+    return [lastEvent, events];
 }
 
 function isEventToWait(event: InvoiceEvent): boolean {
@@ -56,27 +58,28 @@ function isEventToWait(event: InvoiceEvent): boolean {
     );
 }
 
-const POLLING_TIME_MS = 60 * 1000;
+const POLLING_TIME_MS = 60 * 1000 * 5;
 const POLLING_INTEVAL_MS = 1000;
 const EVENTS_WAIT_POLLING_TIME_MS = 10 * 60 * 1000;
 const EVENTS_WAIT_INTERVAL_MS = 5 * 1000;
 
 export function* pollInvoiceEvents(endpoint: string, token: string, invoiceID: string) {
-    let result: InvoiceEvent;
-    for (let i = 1; !result && i < 6; i += 1) {
-        [result] = yield race<any>([
+    let lastEvent: InvoiceEvent;
+    let events: InvoiceEvent[];
+    for (let i = 1; !lastEvent && i < 6; i += 1) {
+        [[lastEvent, events]] = yield race<any>([
             call(poll, endpoint, token, invoiceID),
             delay(POLLING_TIME_MS * i, POLLING_INTEVAL_MS * 2 ** i)
         ]);
     }
-    if (isEventToWait(result)) {
-        yield call(provideFromInvoiceEvent, result);
-        [result] = yield race([
+    if (isEventToWait(lastEvent)) {
+        yield call(provideFromInvoiceEvent, events);
+        [lastEvent] = yield race([
             call(poll, endpoint, token, invoiceID, EVENTS_WAIT_INTERVAL_MS),
             delay(EVENTS_WAIT_POLLING_TIME_MS)
         ]);
     }
-    if (result) {
+    if (lastEvent) {
         return yield put({
             type: TypeKeys.EVENTS_POLLED
         } as SetEventsAction);

@@ -1,4 +1,3 @@
-import last from 'lodash-es/last';
 import { call, CallEffect, ForkEffect, put, select, takeLatest } from 'redux-saga/effects';
 import { goToFormInfo, TypeKeys } from 'checkout/actions';
 import { ConfigState, ModelState, ResultFormInfo, ResultType, State, EventsStatus } from 'checkout/state';
@@ -8,11 +7,10 @@ import { provideFromInvoiceEvent } from '../provide-modal';
 
 function* finishInvoice(capiEndpoint: string, token: string, invoiceID: string) {
     yield call(pollInvoiceEvents, capiEndpoint, token, invoiceID);
-    const invoiceEventsStatus = yield select((state: State) => state.events.status);
-    switch (invoiceEventsStatus) {
+    const { status, events } = yield select((state: State) => state.events);
+    switch (status) {
         case EventsStatus.polled:
-            const event = yield select((state: State) => last(state.events.events));
-            yield call(provideFromInvoiceEvent, event);
+            yield call(provideFromInvoiceEvent, events);
             break;
         case EventsStatus.timeout:
             yield put(goToFormInfo(new ResultFormInfo(ResultType.processed)));
