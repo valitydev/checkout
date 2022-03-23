@@ -10,8 +10,7 @@ import {
     State,
     TokenizedInteractionObject
 } from 'checkout/state';
-import { findNamed } from 'checkout/utils';
-import { prepareForm } from './interaction-form';
+import { findNamed, prepareForm } from 'checkout/utils';
 import styled from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 

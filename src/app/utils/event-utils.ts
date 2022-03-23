@@ -25,7 +25,7 @@ export const getLastChange = (e: EventLike[]): ChangeLike => {
     return last(event.changes);
 };
 
-export const findChange = (e: EventLike[], foundType: string): ChangeLike => {
+export const findChange = <T>(e: EventLike[], foundType: string): T => {
     if (!e || e.length === 0 || !foundType) {
         return null;
     }

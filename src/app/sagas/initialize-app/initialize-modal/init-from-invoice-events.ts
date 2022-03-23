@@ -3,14 +3,16 @@ import {
     PaymentInteractionRequested,
     PaymentStatusChanged,
     PaymentStatuses,
-    InvoiceEvent
+    InvoiceEvent,
+    PaymentStarted,
+    PaymentResourcePayer
 } from 'checkout/backend';
 import { ModalState, PaymentMethod } from 'checkout/state';
 import { PaymentMethodName } from 'checkout/config';
 import { provideInteraction } from '../../provide-modal';
 import { toModalResult } from './to-modal-result';
 import { toInitialState } from './to-initial-state';
-import { getLastChange } from 'checkout/utils';
+import { findChange, getLastChange } from 'checkout/utils';
 import { call, CallEffect } from 'redux-saga/effects';
 
 const initFormPaymentStatusChanged = (
@@ -40,7 +42,10 @@ export function* initFromInvoiceEvents(
     const change = getLastChange(events);
     switch (change.changeType) {
         case InvoiceChangeType.PaymentInteractionRequested:
-            return yield call(provideInteraction, change as PaymentInteractionRequested);
+            const paymentStarted = findChange<PaymentStarted>(events, 'PaymentStarted');
+            const payer = paymentStarted && (paymentStarted?.payment?.payer as PaymentResourcePayer);
+            const paymentToolDetails = payer && payer?.paymentToolDetails;
+            return yield call(provideInteraction, change as PaymentInteractionRequested, paymentToolDetails);
         case InvoiceChangeType.PaymentStarted:
         case InvoiceChangeType.InvoiceStatusChanged:
             return toModalResult();

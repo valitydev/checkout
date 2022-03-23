@@ -2,7 +2,7 @@ import { ModalName, ModalState } from '../modal-state';
 import { BrowserRequest } from 'checkout/backend';
 
 export enum ModalInteractionType {
-    TokenizedInteraction = 'TokenizedInteraction',
+    TokenizedInteraction = 'TokenizedInteraction', // TODO not need anymore
     EventInteraction = 'EventInteraction'
 }
 

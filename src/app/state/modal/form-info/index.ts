@@ -14,3 +14,4 @@ export * from './online-banking-account-form-info';
 export * from './no-available-payment-method-form-info';
 export * from './wallet-providers-form-info';
 export * from './upi-form-info';
+export * from './redirect-form-info';
