@@ -151,8 +151,8 @@
     "PaymentRejected": "支払いが却下されました",
     "digital.wallet.providers": {
         "sign.up": {
-            "description": "Don't have an account?",
-            "link": "Sign up"
+            "description": "アカウントをお持ちではありませんか?",
+            "link": "会員登録"
         },
         "Sticpay": {
             "name": "Sticpay",
