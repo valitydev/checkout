@@ -1,5 +1,4 @@
 import { call, CallEffect, ForkEffect, put, PutEffect, select, SelectEffect, takeLatest } from 'redux-saga/effects';
-import last from 'lodash-es/last';
 import {
     GoToFormInfo,
     goToFormInfo,
@@ -14,8 +13,8 @@ import { EventsStatus, ResultFormInfo, ResultType, State } from 'checkout/state'
 import { provideFromInvoiceEvent } from '../provide-modal';
 
 export function* paymentComplete(): Iterator<SelectEffect | CallEffect | PutEffect<PaymentCompleted>> {
-    const event = yield select((state: State) => last(state.events.events));
-    yield call(provideFromInvoiceEvent, event);
+    const events = yield select((state: State) => state.events.events);
+    yield call(provideFromInvoiceEvent, events);
     yield put({ type: TypeKeys.PAYMENT_COMPLETED } as PaymentCompleted);
 }
 

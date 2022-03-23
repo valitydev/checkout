@@ -8,13 +8,19 @@ import {
 } from 'checkout/state';
 import {
     InteractionType,
+    InvoiceChangeType,
+    InvoiceEvent,
     PaymentInteractionRequested,
+    PaymentResourcePayer,
+    PaymentStarted,
     PaymentToolDetails,
     PaymentToolDetailsPaymentTerminal,
     PaymentToolDetailsType,
     Redirect
 } from 'checkout/backend';
 import { SelectEffect } from 'redux-saga/effects';
+import last from 'lodash-es/last';
+import { findChange } from 'checkout/utils';
 
 const toModalInteraction = (userInteraction: Redirect): ModalInteraction =>
     new ModalInteraction(
@@ -29,15 +35,15 @@ const providePaymentTerminalPaymentTool = (
     userInteraction: Redirect,
     paymentToolDetails: PaymentToolDetailsPaymentTerminal
 ) => {
-    switch (paymentToolDetails.provider) {
-        case 'India UPI': // TODO add typing for this
+    switch (paymentToolDetails.detailsType) {
+        case PaymentToolDetailsType.PaymentToolDetailsPaymentTerminal:
             return new ModalForms([new RedirectFormInfo(userInteraction.request)], true);
         default:
             return toModalInteraction(userInteraction);
     }
 };
 
-const provideRedirect = (userInteraction: Redirect, paymentToolDetails?: PaymentToolDetails): ModalState => {
+const provideRedirect = (userInteraction: Redirect, paymentToolDetails: PaymentToolDetails): ModalState => {
     if (!paymentToolDetails) {
         return toModalInteraction(userInteraction);
     }
@@ -52,11 +58,22 @@ const provideRedirect = (userInteraction: Redirect, paymentToolDetails?: Payment
     }
 };
 
+const getPaymentToolDetails = (events: InvoiceEvent[]): PaymentToolDetails => {
+    const paymentStarted = findChange<PaymentStarted>(events, 'PaymentStarted');
+    const payer = paymentStarted && (paymentStarted?.payment?.payer as PaymentResourcePayer);
+    return payer && payer?.paymentToolDetails;
+};
+
 export function* provideInteraction(
-    change: PaymentInteractionRequested,
-    paymentToolDetails?: PaymentToolDetails
+    events: InvoiceEvent[]
 ): IterableIterator<ModalForms | ModalInteraction | SelectEffect> {
-    const { userInteraction } = change;
+    const lastEvent = last(events);
+    const change = last(lastEvent.changes);
+    if (change.changeType !== InvoiceChangeType.PaymentInteractionRequested) {
+        throw { code: 'error.wrong.event' };
+    }
+    const { userInteraction } = change as PaymentInteractionRequested;
+    const paymentToolDetails = getPaymentToolDetails(events);
     switch (userInteraction.interactionType) {
         case InteractionType.Redirect:
             return provideRedirect(userInteraction as Redirect, paymentToolDetails);
