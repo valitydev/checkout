@@ -151,8 +151,8 @@
     "PaymentRejected": "Платёж отклонен",
     "digital.wallet.providers": {
         "sign.up": {
-            "description": "Don't have an account?",
-            "link": "Sign up"
+            "description": "У вас нет аккаунта?",
+            "link": "Регистрация"
         },
         "Sticpay": {
             "name": "Sticpay",
