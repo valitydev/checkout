@@ -7,7 +7,6 @@ import { TypeKeys } from 'checkout/actions';
 
 describe('initializeAvailablePaymentMethods', () => {
     const paymentMethods = 'paymentMethodsMock' as any;
-    const amountInfo = 'amountInfoMock' as any;
 
     describe('invoice integration', () => {
         const config = {
@@ -16,11 +15,11 @@ describe('initializeAvailablePaymentMethods', () => {
             }
         } as any;
 
-        const iterator = initializeAvailablePaymentMethods(config, paymentMethods, amountInfo, []);
+        const iterator = initializeAvailablePaymentMethods(config, paymentMethods, []);
 
         it('should call init', () => {
             const actual = iterator.next().value;
-            const expected = call(initializeAvailablePaymentMethods, config, paymentMethods, amountInfo, []);
+            const expected = call(initializeAvailablePaymentMethods, config, paymentMethods, []);
             expect(actual).toEqual(expected);
         });
     });
@@ -32,11 +31,11 @@ describe('initializeAvailablePaymentMethods', () => {
             }
         } as any;
 
-        const iterator = initializeAvailablePaymentMethods(config, paymentMethods, amountInfo, []);
+        const iterator = initializeAvailablePaymentMethods(config, paymentMethods, []);
 
         it('should call init', () => {
             const actual = iterator.next().value;
-            const expected = call(initializeAvailablePaymentMethods, config, paymentMethods, amountInfo, []);
+            const expected = call(initializeAvailablePaymentMethods, config, paymentMethods, []);
             expect(actual).toEqual(expected);
         });
     });
@@ -45,14 +44,13 @@ describe('initializeAvailablePaymentMethods', () => {
 describe('init', () => {
     const config = 'config' as any;
     const paymentMethods = 'paymentMethodsMock' as any;
-    const amountInfo = 'amountInfoMock' as any;
     const methods = 'methodsMock' as any;
     const prioritizedMethods = 'prioritizedMethodsMock' as any;
-    const iterator = initializeAvailablePaymentMethods(config, paymentMethods, amountInfo, []);
+    const iterator = initializeAvailablePaymentMethods(config, paymentMethods, []);
 
     it('should call toAvailablePaymentMethods', () => {
         const actual = iterator.next().value;
-        const expected = call(toAvailablePaymentMethods, paymentMethods, config, amountInfo, []);
+        const expected = call(toAvailablePaymentMethods, paymentMethods, config, []);
         expect(actual).toEqual(expected);
     });
 

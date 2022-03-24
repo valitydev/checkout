@@ -5,10 +5,10 @@ import { loadConfig } from './load-config';
 import { checkInitConfig } from './check-init-config';
 import { initializeModel } from './initialize-model';
 import { initializeModal } from './initialize-modal';
-import { initializeAmountInfo } from './initialize-amount-info';
 import { initializeAvailablePaymentMethods } from './initialize-available-payment-methods';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
+import { initializeAmountInfo } from './initialize-amount-info';
 
 type InitializeAppPutEffect = InitializeAppCompleted | InitializeAppFailed;
 
@@ -28,12 +28,11 @@ export function* initialize(userInitConfig: InitConfig) {
     }
     const { model, events } = yield call(initializeModel, configChunk.appConfig.capiEndpoint, userInitConfig);
     const initConfig = yield call(checkInitConfig, userInitConfig, model);
-    const amountInfo = yield call(initializeAmountInfo, initConfig, model);
+    yield call(initializeAmountInfo, initConfig, model);
     const methods = yield call(
         initializeAvailablePaymentMethods,
         { ...configChunk, initConfig },
         model.paymentMethods,
-        amountInfo,
         model.serviceProviders
     );
     yield call(initializeModal, initConfig, events, methods);

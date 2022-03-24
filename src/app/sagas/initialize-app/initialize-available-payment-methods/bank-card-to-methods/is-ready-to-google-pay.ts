@@ -2,7 +2,6 @@ import { call, CallEffect } from 'redux-saga/effects';
 
 import { isGooglePaymentClientAvailable } from '../../../../../environment';
 import { logPrefix } from 'checkout/log-messages';
-import { AmountInfoState } from 'checkout/state';
 import { loadThirdPartLib } from './load-third-part-lib';
 
 async function isReadyToPay(): Promise<boolean> {
@@ -27,7 +26,7 @@ async function isReadyToPay(): Promise<boolean> {
     }
 }
 
-export function* isReadyToGooglePay(_amountInfo: AmountInfoState): Iterator<CallEffect | boolean> {
+export function* isReadyToGooglePay(): Iterator<CallEffect | boolean> {
     if (yield call(loadThirdPartLib, 'https://pay.google.com/gp/p/js/pay.js')) {
         return yield call(isReadyToPay);
     }

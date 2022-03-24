@@ -5,7 +5,6 @@ import { tokenProvidersToMethods } from './token-providers-to-methods';
 import { PaymentMethodName as PaymentMethodNameState } from 'checkout/state';
 
 const config = { initConfig: { bankCard: true } } as any;
-const amountInfo = 'amountInfoMock' as any;
 
 describe('bankCard with tokenProviders', () => {
     const bankCard = {
@@ -14,11 +13,11 @@ describe('bankCard with tokenProviders', () => {
         tokenProviders: ['applepay', 'googlepay']
     } as BankCard;
 
-    const iterator = bankCardToMethods(bankCard, config, amountInfo);
+    const iterator = bankCardToMethods(bankCard, config);
 
     it('should call tokenProvidersToMethods', () => {
         const actual = iterator.next().value;
-        const expected = call(tokenProvidersToMethods, bankCard.tokenProviders, config, amountInfo);
+        const expected = call(tokenProvidersToMethods, bankCard.tokenProviders, config);
         expect(actual).toEqual(expected);
     });
 
@@ -34,7 +33,7 @@ describe('bankCard without tokenProviders', () => {
         paymentSystems: ['mastercard', 'nspkmir', 'visa', 'visaelectron']
     } as BankCard;
 
-    const iterator = bankCardToMethods(bankCard, config, amountInfo);
+    const iterator = bankCardToMethods(bankCard, config);
 
     it('should return PaymentMethodNameState BankCard', () => {
         const actual = iterator.next().value;
