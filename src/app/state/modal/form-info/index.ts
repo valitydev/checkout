@@ -15,3 +15,4 @@ export * from './no-available-payment-method-form-info';
 export * from './wallet-providers-form-info';
 export * from './upi-form-info';
 export * from './redirect-form-info';
+export * from './payment-terminal-bank-card-form-info';

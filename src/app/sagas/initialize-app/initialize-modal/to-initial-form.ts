@@ -12,7 +12,8 @@ import {
     OnlineBankingFormInfo,
     UPIFormInfo,
     PaymentTerminalPaymentMethod,
-    KnownProviderCategories
+    KnownProviderCategories,
+    PaymentTerminalBankCardFormInfo
 } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { assertUnreachable } from 'checkout/utils';
@@ -38,13 +39,15 @@ export const toInitialForm = (method: PaymentMethod): FormInfo => {
             }
             return new WalletProvidersFormInfo();
         case PaymentMethodName.PaymentTerminal:
-            const { category, serviceProviders } = method as PaymentTerminalPaymentMethod;
+            const { category } = method as PaymentTerminalPaymentMethod;
             switch (category) {
                 case KnownProviderCategories.OnlineBanking:
                 case KnownProviderCategories.NetBanking:
                     return new OnlineBankingFormInfo(category);
                 case KnownProviderCategories.UPI:
-                    return new UPIFormInfo(serviceProviders[0]);
+                    return new UPIFormInfo(category);
+                case KnownProviderCategories.BankCard:
+                    return new PaymentTerminalBankCardFormInfo(category);
                 default:
                     assertUnreachable(category);
             }

@@ -25,6 +25,7 @@ import { NoAvailablePaymentMethodForm } from './no-available-payment-method-form
 import { WalletProviders } from './wallet-providers';
 import { UPIForm } from './upi-form';
 import { RedirectForm } from './redirect-form';
+import { PaymentTerminalBankCardForm } from './payment-terminal-bank-card-form';
 
 const Container = styled.div`
     padding: 0 5px;
@@ -217,6 +218,8 @@ class FormContainerDef extends React.Component<FormContainerProps, { height: num
                 return <UPIForm key={name} />;
             case FormName.redirectForm:
                 return <RedirectForm key={name} />;
+            case FormName.paymentTerminalBankCard:
+                return <PaymentTerminalBankCardForm key={name} />;
             default:
                 return null;
         }
