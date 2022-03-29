@@ -1,1 +1,1 @@
-export * from './provider-selector';
+export * from './provider-selector-field';
