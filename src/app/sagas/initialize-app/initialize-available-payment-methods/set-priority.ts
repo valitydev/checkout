@@ -13,23 +13,25 @@ const getPriority = (method: PaymentMethod): number => {
         case PaymentMethodName.PaymentTerminal:
             const { category } = method as PaymentTerminalPaymentMethod;
             switch (category) {
-                case KnownProviderCategories.OnlineBanking:
+                case KnownProviderCategories.BankCard:
                     return 2;
-                case KnownProviderCategories.NetBanking:
+                case KnownProviderCategories.OnlineBanking:
                     return 3;
-                case KnownProviderCategories.UPI:
+                case KnownProviderCategories.NetBanking:
                     return 4;
+                case KnownProviderCategories.UPI:
+                    return 5;
                 default:
                     assertUnreachable(category);
             }
         case PaymentMethodName.DigitalWallet:
-            return 5;
+            return 6;
         case PaymentMethodName.MobileCommerce:
         case PaymentMethodName.GooglePay:
         case PaymentMethodName.ApplePay:
         case PaymentMethodName.SamsungPay:
         case PaymentMethodName.YandexPay:
-            return 6;
+            return 7;
         default:
             assertUnreachable(method.name);
     }

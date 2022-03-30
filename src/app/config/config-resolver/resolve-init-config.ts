@@ -52,6 +52,7 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         onlineBanking,
         netBanking,
         upi,
+        paymentTerminalBankCard,
         ...restParams
     } = userConfig;
     checkUnknown(resolvedIntegrationType, restParams);
@@ -83,6 +84,7 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         mobileCommerce: setDefault(resolveBoolean(mobileCommerce, 'mobileCommerce'), true),
         onlineBanking: setDefault(resolveBoolean(onlineBanking, 'onlineBanking'), true),
         netBanking: setDefault(resolveBoolean(netBanking, 'netBanking'), true),
-        upi: setDefault(resolveBoolean(upi, 'upi'), true)
+        upi: setDefault(resolveBoolean(upi, 'upi'), true),
+        paymentTerminalBankCard: setDefault(resolveBoolean(paymentTerminalBankCard, 'paymentTerminalBankCard'), true)
     };
 };

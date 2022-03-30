@@ -60,6 +60,7 @@
         "You can make payment via BHIM, PhonePe, Tez, ICICI, SBI and other UPI apps.",
         "Example: username@ybl testname@upi userbnk@sbi etc."
     ],
+    "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Select payment system:",
     "form.help.header": "How to solve a problem?",
     "form.help.codes": {
         "InvalidPaymentTool": {

@@ -28,4 +28,5 @@ export class InitConfig {
     onlineBanking?: boolean;
     netBanking?: boolean;
     upi?: boolean;
+    paymentTerminalBankCard?: boolean;
 }

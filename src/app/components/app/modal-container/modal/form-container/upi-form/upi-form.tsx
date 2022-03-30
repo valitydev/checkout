@@ -11,12 +11,14 @@ import { Logo } from './logo';
 import { FormGroup } from '../form-group';
 import { PayerVirtualAddressField } from './payer-virtual-address-field';
 import { InstructionItem } from './instruction-item';
-import { getActiveModalFormSelector } from 'checkout/selectors';
+import { getActiveModalFormSelector, getAvailableTerminalPaymentMethodSelector } from 'checkout/selectors';
 
 const UPIFormRef: React.FC<InjectedFormProps> = (props) => {
-    const { serviceProvider } = useAppSelector<UPIFormInfo>(getActiveModalFormSelector);
-    const dispatch = useAppDispatch();
     const locale = useAppSelector((s) => s.config.locale);
+    const { category } = useAppSelector<UPIFormInfo>(getActiveModalFormSelector);
+    const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(category));
+    const serviceProvider = paymentMethod?.serviceProviders[0];
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(setViewInfoError(false));
