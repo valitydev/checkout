@@ -19,6 +19,7 @@ interface OwnProps {
 export interface AmountProps {
     cost: InvoiceTemplateLineCostRange | InvoiceTemplateLineCostUnlim;
     locale: Locale;
+    localeCode: string;
 }
 
 const getCustomInput = (props: AmountProps, fieldProps: WrappedFieldProps) => (
@@ -27,7 +28,7 @@ const getCustomInput = (props: AmountProps, fieldProps: WrappedFieldProps) => (
         {...fieldProps.meta}
         icon={<AmountIcon />}
         error={isError(fieldProps.meta)}
-        placeholder={getPlaceholder(props.cost, props.locale['form.input.amount.placeholder'])}
+        placeholder={getPlaceholder(props.cost, props.locale['form.input.amount.placeholder'], props.localeCode)}
         mark={true}
         type="tel"
         id="amount-input"
@@ -45,7 +46,8 @@ const AmountDef: React.FC<AmountProps> = (props) => (
 
 const mapStateToProps = (state: State, ownProps: OwnProps) => ({
     cost: ownProps.cost,
-    locale: state.config.locale
+    locale: state.config.locale,
+    localeCode: state.config.initConfig.locale
 });
 
 export const Amount = connect(mapStateToProps)(AmountDef);

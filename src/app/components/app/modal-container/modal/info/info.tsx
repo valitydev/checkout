@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { State } from 'checkout/state';
-import { formatAmount, FormattedAmount } from 'checkout/utils';
+import { formatAmount } from 'checkout/utils';
 import { Locale } from 'checkout/locale';
 import { device } from 'checkout/utils/device';
 import styled from 'checkout/styled-components';
@@ -80,58 +80,40 @@ export interface InfoProps {
     name: string;
     description: string;
     email: string;
-    formattedAmount: FormattedAmount;
+    formattedAmount: string;
 }
 
-const mapStateToProps = (s: State) => {
-    const {
-        config: { initConfig, locale }
-    } = s;
-    return {
-        locale,
-        name: initConfig.name,
-        description: initConfig.description,
-        email: initConfig.email,
-        formattedAmount: formatAmount(s.amountInfo)
-    };
-};
+const mapStateToProps = ({ config: { initConfig, locale }, amountInfo }: State): InfoProps => ({
+    locale,
+    name: initConfig.name,
+    description: initConfig.description,
+    email: initConfig.email,
+    formattedAmount: formatAmount(amountInfo)
+});
 
-const InfoDef: React.FC<InfoProps> = (props) => {
-    const { formattedAmount, locale, name, description, email } = props;
-    return (
-        <InfoWrapper>
-            <div>
-                {name ? <CompanyName id="company-name-label">{name}</CompanyName> : false}
-                {formattedAmount ? (
-                    <Amount>
-                        {formattedAmount.value}
-                        <span>
-                            &nbsp;
-                            {formattedAmount.symbol}
-                        </span>
-                    </Amount>
-                ) : (
-                    false
-                )}
-                {description ? (
-                    <div>
-                        <Order>{locale['info.order.label']}</Order>
-                        <ProductDescription id="product-description">{description}</ProductDescription>
-                    </div>
-                ) : (
-                    false
-                )}
-                {email ? (
-                    <div>
-                        <Order>{locale['info.email.label']}</Order>
-                        <Email>{email}</Email>
-                    </div>
-                ) : (
-                    false
-                )}
-            </div>
-        </InfoWrapper>
-    );
-};
+const InfoDef: React.FC<InfoProps> = ({ formattedAmount, locale, name, description, email }) => (
+    <InfoWrapper>
+        <div>
+            {name ? <CompanyName id="company-name-label">{name}</CompanyName> : false}
+            {formattedAmount ? <Amount>{formattedAmount}</Amount> : false}
+            {description ? (
+                <div>
+                    <Order>{locale['info.order.label']}</Order>
+                    <ProductDescription id="product-description">{description}</ProductDescription>
+                </div>
+            ) : (
+                false
+            )}
+            {email ? (
+                <div>
+                    <Order>{locale['info.email.label']}</Order>
+                    <Email>{email}</Email>
+                </div>
+            ) : (
+                false
+            )}
+        </div>
+    </InfoWrapper>
+);
 
 export const Info = connect(mapStateToProps)(InfoDef);

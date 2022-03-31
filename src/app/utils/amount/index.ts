@@ -1,2 +1,2 @@
-export * from './amount-formatter';
 export * from './converters';
+export * from './format-amount';

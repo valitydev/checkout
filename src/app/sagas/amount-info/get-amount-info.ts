@@ -6,8 +6,8 @@ import { AmountInfoState, ModelState } from 'checkout/state';
 export const getAmountInfo = (initConfig: InitConfig, model: ModelState): AmountInfoState => {
     switch (initConfig.integrationType) {
         case IntegrationType.invoice:
-            return resolveInvoice(model.invoice);
+            return resolveInvoice(model.invoice, initConfig.locale);
         case IntegrationType.invoiceTemplate:
-            return resolveInvoiceTemplate(model.invoiceTemplate, initConfig.amount);
+            return resolveInvoiceTemplate(model.invoiceTemplate, initConfig.amount, initConfig.locale);
     }
 };
