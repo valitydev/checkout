@@ -3,7 +3,6 @@ import * as React from 'react';
 import { FormName, PaymentMethodName, TokenProviderFormInfo } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend';
 import { MethodProps } from './method-props';
-import { MethodSimple } from './mthod-simple';
 import { Method } from './method';
 import { Icon } from './icon/icon';
 import { Title } from './title';
@@ -21,7 +20,7 @@ const TokenProviderFormLink: React.FC<MethodProps> = (props) => (
 const pay = (props: MethodProps) => props.pay({ method: PaymentMethodName.YandexPay });
 
 const YandexPayButton: React.FC<MethodProps> = (props) => (
-    <MethodSimple onClick={pay.bind(null, props)} id="yandex-pay-payment-method">
+    <Method onClick={pay.bind(null, props)} id="yandex-pay-payment-method">
         <svg width="100%" height="40" viewBox="0 0 60 24" fill="none">
             <rect width="24.0254" height="24" rx="12" fill="#FC3F1D" />
             <path
@@ -41,7 +40,7 @@ const YandexPayButton: React.FC<MethodProps> = (props) => (
                 fill="black"
             />
         </svg>
-    </MethodSimple>
+    </Method>
 );
 
 export const YandexPay: React.FC<MethodProps> = (props) =>

@@ -13,10 +13,36 @@ import {
     UPIFormInfo,
     PaymentTerminalPaymentMethod,
     KnownProviderCategories,
-    PaymentTerminalBankCardFormInfo
+    PaymentTerminalBankCardFormInfo,
+    PaymentMethodsFormInfo
 } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { assertUnreachable } from 'checkout/utils';
+
+const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalPaymentMethod) => {
+    switch (category) {
+        case KnownProviderCategories.OnlineBanking:
+        case KnownProviderCategories.NetBanking:
+            if (serviceProviders.length === 1) {
+                return new PaymentMethodsFormInfo();
+            }
+            return new OnlineBankingFormInfo(category);
+        case KnownProviderCategories.UPI:
+            return new UPIFormInfo(category);
+        case KnownProviderCategories.BankCard:
+            return new PaymentTerminalBankCardFormInfo(category);
+        default:
+            assertUnreachable(category);
+            return null;
+    }
+};
+
+const toDigitalWalletForms = ({ providers }: DigitalWalletPaymentMethod) => {
+    if (providers.length === 1) {
+        return new WalletFormInfo(providers[0]);
+    }
+    return new WalletProvidersFormInfo();
+};
 
 export const toInitialForm = (method: PaymentMethod): FormInfo => {
     switch (method.name) {
@@ -33,25 +59,9 @@ export const toInitialForm = (method: PaymentMethod): FormInfo => {
         case PaymentMethodName.MobileCommerce:
             return new MobileCommerceFormInfo();
         case PaymentMethodName.DigitalWallet:
-            const { providers } = method as DigitalWalletPaymentMethod;
-            if (providers.length === 1) {
-                return new WalletFormInfo(providers[0]);
-            }
-            return new WalletProvidersFormInfo();
+            return toDigitalWalletForms(method as DigitalWalletPaymentMethod);
         case PaymentMethodName.PaymentTerminal:
-            const { category } = method as PaymentTerminalPaymentMethod;
-            switch (category) {
-                case KnownProviderCategories.OnlineBanking:
-                case KnownProviderCategories.NetBanking:
-                    return new OnlineBankingFormInfo(category);
-                case KnownProviderCategories.UPI:
-                    return new UPIFormInfo(category);
-                case KnownProviderCategories.BankCard:
-                    return new PaymentTerminalBankCardFormInfo(category);
-                default:
-                    assertUnreachable(category);
-            }
-            break;
+            return toPaymentTerminalForms(method as PaymentTerminalPaymentMethod);
         default:
             assertUnreachable(method.name);
             return new NoAvailablePaymentMethodFormInfo();

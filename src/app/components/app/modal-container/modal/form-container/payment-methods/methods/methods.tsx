@@ -33,9 +33,13 @@ const Method: React.FC<MethodProps> = (props) => {
         case PaymentMethodName.MobileCommerce:
             return <MobileCommerce {...props} />;
         case PaymentMethodName.PaymentTerminal:
-            const { category } = props.method as PaymentTerminalPaymentMethod;
             return (
-                <PaymentTerminalMethodItems category={category} locale={props.locale} setFormInfo={props.setFormInfo} />
+                <PaymentTerminalMethodItems
+                    method={props.method as PaymentTerminalPaymentMethod}
+                    locale={props.locale}
+                    setFormInfo={props.setFormInfo}
+                    pay={props.pay}
+                />
             );
         case PaymentMethodName.DigitalWallet:
             const { providers } = props.method as DigitalWalletPaymentMethod;
