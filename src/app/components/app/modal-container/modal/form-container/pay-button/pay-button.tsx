@@ -22,7 +22,7 @@ const PayButtonDef: React.FC<PayButtonProps> = (props) => (
 
 const toLabel = ({ locale }: ConfigState, amountInfo: AmountInfoState): string => {
     const amount = formatAmount(amountInfo);
-    const amountLabel = amount ? ` ${amount.value} ${amount.symbol}` : '';
+    const amountLabel = amount ? ` ${amount}` : '';
     return `${locale['form.button.pay.label']}${amountLabel}`;
 };
 

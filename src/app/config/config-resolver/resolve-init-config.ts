@@ -8,6 +8,7 @@ import { HoldExpirationType } from 'checkout/backend';
 import { PaymentMethodName } from 'checkout/config/payment-method-name';
 import { DEFAULT_THEME } from 'checkout/themes';
 import { resolveObject } from './resolve-object';
+import { detectLocale } from '../../../locale';
 
 const setDefault = <P, D>(userParam: P, defaultValue: D): P | D =>
     userParam === null || userParam === undefined ? defaultValue : userParam;
@@ -70,7 +71,7 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
             resolveString(holdExpiration, 'holdExpiration') as HoldExpirationType,
             HoldExpirationType.cancel
         ),
-        locale: setDefault(resolveString(locale, 'locale'), 'auto'),
+        locale: detectLocale(resolveString(locale, 'locale')),
         initialPaymentMethod: resolveString(initialPaymentMethod, 'initialPaymentMethod') as PaymentMethodName,
         recurring: setDefault(resolveBoolean(recurring, 'recurring'), false),
         theme: setDefault(resolveString(theme, 'theme'), DEFAULT_THEME.name),

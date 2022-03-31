@@ -9,7 +9,7 @@ it('InvoiceTemplateLineCostFixed should return amount', () => {
             currency: 'RUB'
         }
     } as any;
-    const actual = getAmountFromSingleLine(singleLine, 111);
+    const actual = getAmountFromSingleLine(singleLine, 111, 'ru');
     const expected = {
         status: AmountInfoStatus.final,
         currencyCode: 'RUB',
@@ -31,7 +31,7 @@ describe('InvoiceTemplateLineCostRange', () => {
     } as any;
 
     it('with amountConfig should return final status', () => {
-        const actual = getAmountFromSingleLine(singleLine, 111);
+        const actual = getAmountFromSingleLine(singleLine, 111, 'ru');
         const expected = {
             status: AmountInfoStatus.final,
             currencyCode: 'RUB',
@@ -41,7 +41,7 @@ describe('InvoiceTemplateLineCostRange', () => {
     });
 
     it('without amountConfig should return notKnown status', () => {
-        const actual = getAmountFromSingleLine(singleLine, null);
+        const actual = getAmountFromSingleLine(singleLine, null, 'ru');
         const expected = {
             status: AmountInfoStatus.notKnown,
             currencyCode: 'RUB'
@@ -58,7 +58,7 @@ describe('InvoiceTemplateLineCostUnlim', () => {
     } as any;
 
     it('with amountConfig should return final status', () => {
-        const actual = getAmountFromSingleLine(singleLine, 111);
+        const actual = getAmountFromSingleLine(singleLine, 111, 'ru');
         const expected = {
             status: AmountInfoStatus.final,
             currencyCode: 'RUB',
@@ -68,7 +68,7 @@ describe('InvoiceTemplateLineCostUnlim', () => {
     });
 
     it('without amountConfig should return notKnown status', () => {
-        const actual = getAmountFromSingleLine(singleLine, null);
+        const actual = getAmountFromSingleLine(singleLine, null, 'ru');
         const expected = {
             status: AmountInfoStatus.notKnown,
             currencyCode: 'RUB'

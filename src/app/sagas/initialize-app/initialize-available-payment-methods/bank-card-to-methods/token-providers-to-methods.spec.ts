@@ -5,8 +5,6 @@ import { PaymentMethodName as PaymentMethodNameState } from 'checkout/state';
 import { isReadyToApplePay } from './is-ready-to-apple-pay';
 import { isReadyToGooglePay } from './is-ready-to-google-pay';
 
-const amountInfo = 'amountInfoMock' as any;
-
 describe('Apple Pay provider', () => {
     const providers = [BankCardTokenProvider.applepay];
     const config = {
@@ -20,7 +18,7 @@ describe('Apple Pay provider', () => {
     } as any;
 
     describe('apple pay available', () => {
-        const iterator = tokenProvidersToMethods(providers, config, amountInfo);
+        const iterator = tokenProvidersToMethods(providers, config);
 
         it('should call isReadyToApplePay', () => {
             const actual = iterator.next().value;
@@ -37,7 +35,7 @@ describe('Apple Pay provider', () => {
     });
 
     describe('apple pay unavailable', () => {
-        const iterator = tokenProvidersToMethods(providers, config, amountInfo);
+        const iterator = tokenProvidersToMethods(providers, config);
 
         it('should call isReadyToApplePay', () => {
             const actual = iterator.next().value;
@@ -62,11 +60,11 @@ describe('Google Pay provider', () => {
     } as any;
 
     describe('google pay available', () => {
-        const iterator = tokenProvidersToMethods(providers, config, amountInfo);
+        const iterator = tokenProvidersToMethods(providers, config);
 
         it('should call isReadyToGooglePay', () => {
             const actual = iterator.next().value;
-            const expected = call(isReadyToGooglePay, amountInfo);
+            const expected = call(isReadyToGooglePay);
             expect(actual).toEqual(expected);
         });
 
@@ -79,11 +77,11 @@ describe('Google Pay provider', () => {
     });
 
     describe('google pay unavailable', () => {
-        const iterator = tokenProvidersToMethods(providers, config, amountInfo);
+        const iterator = tokenProvidersToMethods(providers, config);
 
         it('should call isReadyToGooglePay', () => {
             const actual = iterator.next().value;
-            const expected = call(isReadyToGooglePay, amountInfo);
+            const expected = call(isReadyToGooglePay);
             expect(actual).toEqual(expected);
         });
 
@@ -104,7 +102,7 @@ describe('Samsung Pay provider', () => {
     } as any;
 
     describe('samsung pay available', () => {
-        const iterator = tokenProvidersToMethods(providers, config, amountInfo);
+        const iterator = tokenProvidersToMethods(providers, config);
 
         it('should return PaymentMethodNameState SamsungPay', () => {
             const actual = iterator.next(true);
@@ -115,7 +113,7 @@ describe('Samsung Pay provider', () => {
     });
 
     describe('samsung pay unavailable', () => {
-        const iterator = tokenProvidersToMethods([], config, amountInfo);
+        const iterator = tokenProvidersToMethods([], config);
 
         it('should return []', () => {
             const actual = iterator.next(true);

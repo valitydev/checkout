@@ -34,7 +34,7 @@ it('should return amount', () => {
         currency: 'RUB',
         templateType: 'InvoiceTemplateMultiLine'
     } as any;
-    const actual = getAmountFromMultiLine(multiLine);
+    const actual = getAmountFromMultiLine(multiLine, 'ru');
     const expected = {
         status: AmountInfoStatus.final,
         currencyCode: 'RUB',

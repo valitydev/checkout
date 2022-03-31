@@ -1,9 +1,5 @@
 import { call, CallEffect } from 'redux-saga/effects';
-import {
-    AmountInfoState,
-    PaymentMethod as PaymentMethodState,
-    PaymentMethodName as PaymentMethodNameState
-} from 'checkout/state';
+import { PaymentMethod as PaymentMethodState, PaymentMethodName as PaymentMethodNameState } from 'checkout/state';
 import { DigitalWallet, PaymentMethod, PaymentMethodName, ServiceProvider } from 'checkout/backend';
 import { Config } from 'checkout/config';
 import { bankCardToMethods } from './bank-card-to-methods';
@@ -13,7 +9,6 @@ import { assertUnreachable } from 'checkout/utils';
 export function* toAvailablePaymentMethods(
     paymentMethods: PaymentMethod[],
     config: Config,
-    amountInfo: AmountInfoState,
     serviceProviders: ServiceProvider[]
 ): Iterator<CallEffect | PaymentMethodState[]> {
     let result: PaymentMethodState[] = [];
@@ -29,7 +24,7 @@ export function* toAvailablePaymentMethods(
     for (const method of paymentMethods) {
         switch (method.method) {
             case PaymentMethodName.BankCard:
-                const bankCardMethods = yield call(bankCardToMethods, method as any, config, amountInfo);
+                const bankCardMethods = yield call(bankCardToMethods, method as any, config);
                 result = result.concat(bankCardMethods);
                 break;
             case PaymentMethodName.DigitalWallet:

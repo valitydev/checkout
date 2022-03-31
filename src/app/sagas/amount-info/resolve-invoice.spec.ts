@@ -6,7 +6,7 @@ it('should return amount', () => {
         amount: 10000,
         currency: 'RUB'
     } as any;
-    const actual = resolveInvoice(invoice);
+    const actual = resolveInvoice(invoice, 'ru');
     const expected = {
         status: AmountInfoStatus.final,
         currencyCode: 'RUB',

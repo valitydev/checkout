@@ -3,11 +3,15 @@ import { getAmountFromSingleLine } from './get-amount-from-single-line';
 import { getAmountFromMultiLine } from './get-amount-from-multi-line';
 import { AmountInfoState } from 'checkout/state';
 
-export const resolveInvoiceTemplate = (invoiceTemplate: InvoiceTemplate, configAmount: number): AmountInfoState => {
+export const resolveInvoiceTemplate = (
+    invoiceTemplate: InvoiceTemplate,
+    configAmount: number,
+    locale: string
+): AmountInfoState => {
     switch (invoiceTemplate.details.templateType) {
         case TemplateType.InvoiceTemplateSingleLine:
-            return getAmountFromSingleLine(invoiceTemplate.details as InvoiceTemplateSingleLine, configAmount);
+            return getAmountFromSingleLine(invoiceTemplate.details as InvoiceTemplateSingleLine, configAmount, locale);
         case TemplateType.InvoiceTemplateMultiLine:
-            return getAmountFromMultiLine(invoiceTemplate.details as InvoiceTemplateMultiLine);
+            return getAmountFromMultiLine(invoiceTemplate.details as InvoiceTemplateMultiLine, locale);
     }
 };

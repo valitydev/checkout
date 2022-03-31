@@ -19,7 +19,6 @@
     "@sentry/tracing": "~6.13.2",
     "card-validator": "8.1.1",
     "credit-card-type": "9.1.0",
-    "currency-formatter": "~1.2.1",
     "date-fns": "~1.28.5",
     "fingerprintjs2": "~2.1.0",
     "ismobilejs": "~0.4.1",
