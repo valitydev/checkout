@@ -23,10 +23,7 @@
     "form.header.final.pending.label": "В процессе",
     "form.header.final.cancelled.label": "Отменен",
     "form.final.failed.cancelled.text": "Платеж был отменен",
-    "form.final.success.card.text": "Оплачено картой",
     "form.final.started.pay.text": "Платёж в процессе",
-    "form.final.success.provider.text": "Оплачено с помощью <%= provider %>",
-    "form.final.success.check.text": "Чек отправлен вам на email",
     "form.final.need.help": "Как решить проблему?",
     "form.input.phone.placeholder": "Телефон",
     "form.input.card.placeholder": "Номер карты",
@@ -61,6 +58,9 @@
         "Example: username@ybl testname@upi userbnk@sbi etc."
     ],
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Select payment system:",
+    "form.pay.redirect.description": "Please press “Continue” to proceed. You will be redirected to the payment page.",
+    "form.pay.redirect.description.btn.continue": "Continue",
+    "form.pay.redirect.description.btn.cancel": "Cancel",
     "form.help.header": "Как решить проблему?",
     "form.help.codes": {
         "InvalidPaymentTool": {
