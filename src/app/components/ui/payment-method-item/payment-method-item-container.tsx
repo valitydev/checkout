@@ -11,4 +11,8 @@ export const PaymentMethodItemContainer = styled.li`
     cursor: pointer;
     height: 80px;
     margin-bottom: 10px;
+    transition: all 0.3s;
+    :hover {
+        border-color: ${({ theme }) => theme.color.primary[1]};
+    }
 `;

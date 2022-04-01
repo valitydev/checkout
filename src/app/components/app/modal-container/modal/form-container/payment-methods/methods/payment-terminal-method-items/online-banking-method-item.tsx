@@ -4,25 +4,55 @@ import { Method } from '../method';
 import { Title } from '../title';
 import { Text } from '../text';
 import { Icon } from '../icon/icon';
-import { FormInfo, FormName, KnownProviderCategories, OnlineBankingFormInfo } from 'checkout/state';
+import {
+    FormInfo,
+    FormName,
+    KnownProviderCategories,
+    OnlineBankingFormInfo,
+    PaymentMethodName,
+    PaymentTerminalFormValues,
+    PaymentTerminalPaymentMethod
+} from 'checkout/state';
 import { Locale } from 'checkout/locale';
+import { PaymentRequestedPayload } from 'checkout/actions';
+
+type SetFormInfoAction = (formInfo: FormInfo) => any;
+type PayAction = (payload: PaymentRequestedPayload) => any;
 
 interface OnlineBankingProps {
-    category: KnownProviderCategories;
+    method: PaymentTerminalPaymentMethod;
     locale: Locale;
-    setFormInfo: (formInfo: FormInfo) => any;
+    setFormInfo: SetFormInfoAction;
+    pay: PayAction;
 }
 
-const toOnlineBanking = (props: OnlineBankingProps) =>
-    props.setFormInfo(new OnlineBankingFormInfo(props.category, FormName.paymentMethods));
+const toOnlineBanking = (category: KnownProviderCategories, setFormInfo: SetFormInfoAction) =>
+    setFormInfo(new OnlineBankingFormInfo(category, FormName.paymentMethods));
+
+const payWithPaymentTerminal = (provider: string, pay: PayAction) =>
+    pay({
+        method: PaymentMethodName.PaymentTerminal,
+        values: {
+            provider
+        } as PaymentTerminalFormValues
+    });
+
+const provideMethod = (
+    { serviceProviders, category }: PaymentTerminalPaymentMethod,
+    pay: PayAction,
+    setFormInfo: SetFormInfoAction
+) =>
+    serviceProviders.length === 1
+        ? payWithPaymentTerminal(serviceProviders[0].id, pay)
+        : toOnlineBanking(category, setFormInfo);
 
 const getTitle = (l: Locale, category: KnownProviderCategories) => l[`form.payment.method.name.${category}.label`];
 
-export const OnlineBankingMethodItem: React.FC<OnlineBankingProps> = (props) => (
-    <Method onClick={toOnlineBanking.bind(null, props)}>
+export const OnlineBankingMethodItem: React.FC<OnlineBankingProps> = ({ locale, method, pay, setFormInfo }) => (
+    <Method onClick={() => provideMethod(method, pay, setFormInfo)}>
         <Icon name="online-banking" />
         <Text>
-            <Title>{getTitle(props.locale, props.category)}</Title>
+            <Title>{getTitle(locale, method.category)}</Title>
         </Text>
     </Method>
 );
