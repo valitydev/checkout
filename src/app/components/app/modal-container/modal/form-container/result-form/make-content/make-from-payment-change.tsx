@@ -2,9 +2,8 @@ import { Locale } from 'checkout/locale';
 import { InvoiceEvent, LogicError, PaymentError, PaymentStatusChanged, PaymentStatuses } from 'checkout/backend';
 import { ResultFormContent } from './result-form-content';
 import { getFailedDescription } from './get-failed-description';
-import { getSuccessDescription } from './get-success-description';
 import { getLastChange } from 'checkout/utils';
-import { ResultFormType } from 'checkout/components/app/modal-container/modal/form-container/result-form/make-content/result-form-content';
+import { ResultFormType } from './result-form-content';
 
 export const refunded = (l: Locale): ResultFormContent => ({
     hasActions: false,
@@ -35,11 +34,10 @@ export const failed = (l: Locale, e: PaymentError | LogicError): ResultFormConte
     type: ResultFormType.ERROR
 });
 
-const processed = (l: Locale, e: InvoiceEvent[]): ResultFormContent => ({
+const processed = (l: Locale): ResultFormContent => ({
     hasActions: false,
     hasDone: true,
     header: l['form.header.final.success.label'],
-    description: getSuccessDescription(l, e),
     type: ResultFormType.SUCCESS
 });
 
@@ -50,7 +48,7 @@ export const makeFromPaymentChange = (l: Locale, e: InvoiceEvent[]) => {
             return failed(l, change.error);
         case PaymentStatuses.processed:
         case PaymentStatuses.captured:
-            return processed(l, e);
+            return processed(l);
         case PaymentStatuses.cancelled:
             return cancelled(l);
         case PaymentStatuses.pending:
