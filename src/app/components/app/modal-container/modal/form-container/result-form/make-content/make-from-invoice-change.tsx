@@ -2,7 +2,6 @@ import { InvoiceEvent, InvoiceStatusChanged, InvoiceStatuses, LogicError, LogicE
 import { Locale } from 'checkout/locale';
 import { ResultFormContent, ResultFormType } from './result-form-content';
 import { getLastChange } from 'checkout/utils';
-import { getSuccessDescription } from './get-success-description';
 
 const refunded = (l: Locale): ResultFormContent => ({
     hasActions: false,
@@ -11,19 +10,17 @@ const refunded = (l: Locale): ResultFormContent => ({
     type: ResultFormType.WARNING
 });
 
-const alreadyPaid = (l: Locale, e: InvoiceEvent[]): ResultFormContent => ({
+const alreadyPaid = (l: Locale): ResultFormContent => ({
     hasActions: false,
     hasDone: false,
     header: l['form.header.final.invoice.paid.already.label'],
-    description: getSuccessDescription(l, e),
     type: ResultFormType.SUCCESS
 });
 
-const paid = (l: Locale, e: InvoiceEvent[]): ResultFormContent => ({
+const paid = (l: Locale): ResultFormContent => ({
     hasActions: false,
     hasDone: true,
     header: l['form.header.final.invoice.paid.label'],
-    description: getSuccessDescription(l, e),
     type: ResultFormType.SUCCESS
 });
 
@@ -34,11 +31,10 @@ const cancelled = (l: Locale): ResultFormContent => ({
     type: ResultFormType.ERROR
 });
 
-const fulfilled = (l: Locale, e: InvoiceEvent[]): ResultFormContent => ({
+const fulfilled = (l: Locale): ResultFormContent => ({
     hasActions: false,
     hasDone: false,
     header: l['form.header.final.invoice.fulfilled.label'],
-    description: getSuccessDescription(l, e),
     type: ResultFormType.SUCCESS
 });
 
@@ -47,13 +43,13 @@ export const makeFromInvoiceChange = (l: Locale, e: InvoiceEvent[], error: Logic
     switch (change.status) {
         case InvoiceStatuses.paid:
             if (error && error.code === LogicErrorCode.invalidInvoiceStatus) {
-                return alreadyPaid(l, e);
+                return alreadyPaid(l);
             }
-            return paid(l, e);
+            return paid(l);
         case InvoiceStatuses.cancelled:
             return cancelled(l);
         case InvoiceStatuses.fulfilled:
-            return fulfilled(l, e);
+            return fulfilled(l);
         case InvoiceStatuses.refunded:
             return refunded(l);
     }
