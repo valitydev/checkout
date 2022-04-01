@@ -61,6 +61,9 @@
         "Example: username@ybl testname@upi userbnk@sbi etc."
     ],
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Выберите платежную систему:",
+    "form.pay.redirect.description": "Нажмите “Продолжить” для продолжения процесса платежа. Вы будете перенаправлены на страницу оплаты.",
+    "form.pay.redirect.description.btn.continue": "Продолжить",
+    "form.pay.redirect.description.btn.cancel": "Отмена",
     "form.help.header": "Как решить проблему?",
     "form.help.codes": {
         "InvalidPaymentTool": {
