@@ -23,10 +23,7 @@
     "form.header.final.pending.label": "保留中",
     "form.header.final.cancelled.label": "キャンセル済",
     "form.final.failed.cancelled.text": "支払いがキャンセルされました",
-    "form.final.success.card.text": "カードで支払い済",
     "form.final.started.pay.text": "支払いは保留中です",
-    "form.final.success.provider.text": "<%= provider %>で支払い済み",
-    "form.final.success.check.text": "領収書がメールアドレスに送信されました",
     "form.final.need.help": "問題を解決するには？",
     "form.input.phone.placeholder": "電話番号",
     "form.input.card.placeholder": "カード番号",
@@ -61,6 +58,9 @@
         "Example: username@ybl testname@upi userbnk@sbi etc."
     ],
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Select payment system:",
+    "form.pay.redirect.description": "Please press “Continue” to proceed. You will be redirected to the payment page.",
+    "form.pay.redirect.description.btn.continue": "Continue",
+    "form.pay.redirect.description.btn.cancel": "Cancel",
     "form.help.header": "問題を解決するには？",
     "form.help.codes": {
         "InvalidPaymentTool": {
