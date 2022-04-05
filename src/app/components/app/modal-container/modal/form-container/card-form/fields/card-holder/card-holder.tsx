@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import { Field, WrappedFieldProps } from 'redux-form';
 
 import { State } from 'checkout/state';
-import { Input } from '../../../input';
 import { validateCardHolder } from './validate-card-holder';
 import { Locale } from 'checkout/locale';
 import { formatCardHolder } from './format-card-holder';
-import { User } from 'checkout/components';
+import { User, Input } from 'checkout/components';
 import { isError } from 'checkout/utils';
 
 export interface CardHolderProps {

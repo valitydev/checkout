@@ -5,7 +5,7 @@ import { Field, Validator, WrappedFieldProps } from 'redux-form';
 import { Locale } from 'checkout/locale';
 import { ServiceProviderMetadataField } from 'checkout/backend';
 import { isError } from 'checkout/utils';
-import { Input } from '../../app/modal-container/modal/form-container/input';
+import { Input } from 'checkout/components';
 
 const WrappedInput: React.FC<WrappedFieldProps & {
     locale: Locale;

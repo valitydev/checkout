@@ -4,12 +4,11 @@ import { Field, WrappedFieldProps, formValueSelector } from 'redux-form';
 import { number } from 'card-validator';
 import { get } from 'lodash-es';
 
-import { Input } from '../../../input';
 import { validateSecureCode } from './validate-secure-code';
 import { State, FormName } from 'checkout/state';
 import { Locale } from 'checkout/locale';
 import { formatCVC } from './format-cvc';
-import { Lock } from 'checkout/components';
+import { Lock, Input } from 'checkout/components';
 import { isError } from 'checkout/utils';
 
 export interface SecureCodeProps {

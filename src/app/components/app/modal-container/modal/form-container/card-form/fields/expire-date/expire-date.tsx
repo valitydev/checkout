@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import { Field, WrappedFieldProps } from 'redux-form';
 
 import { State } from 'checkout/state';
-import { Input } from '../../../input';
 import { validateExpireDate } from './validate-expire-date';
 import { Locale } from 'checkout/locale';
 import { formatExpiry } from './format-expiry';
-import { Calendar } from 'checkout/components';
+import { Calendar, Input } from 'checkout/components';
 import { isError } from 'checkout/utils';
 
 export interface ExpireDateProps {
