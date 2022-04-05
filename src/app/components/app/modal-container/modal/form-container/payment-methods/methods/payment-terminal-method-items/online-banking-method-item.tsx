@@ -4,20 +4,10 @@ import { Method } from '../method';
 import { Title } from '../title';
 import { Text } from '../text';
 import { Icon } from '../icon/icon';
-import {
-    FormInfo,
-    FormName,
-    KnownProviderCategories,
-    OnlineBankingFormInfo,
-    PaymentMethodName,
-    PaymentTerminalFormValues,
-    PaymentTerminalPaymentMethod
-} from 'checkout/state';
+import { FormName, KnownProviderCategories, OnlineBankingFormInfo, PaymentTerminalPaymentMethod } from 'checkout/state';
 import { Locale } from 'checkout/locale';
-import { PaymentRequestedPayload } from 'checkout/actions';
-
-type SetFormInfoAction = (formInfo: FormInfo) => any;
-type PayAction = (payload: PaymentRequestedPayload) => any;
+import { PayAction, SetFormInfoAction } from './types';
+import { payWithPaymentTerminal } from './pay-with-payment-terminal';
 
 interface OnlineBankingProps {
     method: PaymentTerminalPaymentMethod;
@@ -28,14 +18,6 @@ interface OnlineBankingProps {
 
 const toOnlineBanking = (category: KnownProviderCategories, setFormInfo: SetFormInfoAction) =>
     setFormInfo(new OnlineBankingFormInfo(category, FormName.paymentMethods));
-
-const payWithPaymentTerminal = (provider: string, pay: PayAction) =>
-    pay({
-        method: PaymentMethodName.PaymentTerminal,
-        values: {
-            provider
-        } as PaymentTerminalFormValues
-    });
 
 const provideMethod = (
     { serviceProviders, category }: PaymentTerminalPaymentMethod,

@@ -50,9 +50,6 @@
     "form.payment.method.name.onlinebanking.label": "Онлайн банк",
     "form.payment.method.name.netbanking.label": "Net banking",
     "form.onlineBanking.search": "Поиск",
-    "form.pay.onlineBanking.bankAccountName": "Название банковского счета",
-    "form.pay.onlineBanking.bankAccountNumber": "Номер банковского счета",
-    "form.pay.upi.payerVirtualAddress": "Payer Virtual Address",
     "form.pay.upi.instruction": [
         "You can make payment via BHIM, PhonePe, Tez, ICICI, SBI and other UPI apps.",
         "Example: username@ybl testname@upi userbnk@sbi etc."
@@ -168,5 +165,10 @@
                 "password": "Account password"
             }
         }
+    },
+    "service.provider.meta.fields": {
+        "payerVirtualAddress": "Payer Virtual Address",
+        "bankAccountName": "Название банковского счета",
+        "bankAccountNumber": "Номер банковского счета"
     }
 }

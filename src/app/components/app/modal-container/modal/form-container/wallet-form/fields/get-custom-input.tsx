@@ -2,7 +2,7 @@ import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
 
 import { isError } from 'checkout/utils';
-import { Input } from '../../input';
+import { Input } from 'checkout/components';
 
 export interface CustomInputProps {
     id: string;

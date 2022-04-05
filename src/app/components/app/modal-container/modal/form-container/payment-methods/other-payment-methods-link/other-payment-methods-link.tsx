@@ -2,7 +2,7 @@ import * as React from 'react';
 import { MouseEventHandler } from 'react';
 
 import { Locale } from 'checkout/locale';
-import { Link } from 'checkout/components/ui/link';
+import { Link } from 'checkout/components';
 import styled from 'checkout/styled-components';
 
 const Block = styled.div`

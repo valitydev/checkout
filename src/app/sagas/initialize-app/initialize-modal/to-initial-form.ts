@@ -28,9 +28,9 @@ const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalP
             }
             return new OnlineBankingFormInfo(category);
         case KnownProviderCategories.UPI:
-            return new UPIFormInfo(category);
+            return new UPIFormInfo();
         case KnownProviderCategories.BankCard:
-            return new PaymentTerminalBankCardFormInfo(category);
+            return new PaymentTerminalBankCardFormInfo();
         default:
             assertUnreachable(category);
             return null;

@@ -4,9 +4,8 @@ import { Field, WrappedFieldProps } from 'redux-form';
 
 import { State } from 'checkout/state';
 import { formatEmail, isError, validateEmail } from 'checkout/utils';
-import { Input } from '../../input';
 import { Locale } from 'checkout/locale';
-import { Letter } from 'checkout/components';
+import { Letter, Input } from 'checkout/components';
 
 export interface EmailDefProps {
     locale: Locale;

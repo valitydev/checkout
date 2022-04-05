@@ -1,4 +1,4 @@
-import { KnownProviderCategories, PaymentStatus } from 'checkout/state';
+import { PaymentStatus } from 'checkout/state';
 import { FormInfo, FormName } from './form-info';
 
 export class PaymentTerminalBankCardFormInfo extends FormInfo {
@@ -6,7 +6,7 @@ export class PaymentTerminalBankCardFormInfo extends FormInfo {
     active = true;
     paymentStatus = PaymentStatus.pristine;
 
-    constructor(public category: KnownProviderCategories, previous?: FormName) {
+    constructor(previous?: FormName) {
         super(previous);
     }
 }

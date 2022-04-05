@@ -4,20 +4,22 @@ import { InjectedFormProps, reduxForm } from 'redux-form';
 
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { pay, setViewInfoError } from 'checkout/actions';
-import { FormName, PaymentMethodName, PaymentTerminalFormValues, UPIFormInfo, UPIFormValues } from 'checkout/state';
+import { FormName, KnownProviderCategories, PaymentMethodName, PaymentTerminalFormValues } from 'checkout/state';
 import { Header } from '../header';
 import { PayButton } from '../pay-button';
 import { Logo } from './logo';
 import { FormGroup } from '../form-group';
-import { PayerVirtualAddressField } from './payer-virtual-address-field';
-import { InstructionItem } from './instruction-item';
-import { getActiveModalFormSelector, getAvailableTerminalPaymentMethodSelector } from 'checkout/selectors';
+import { getAvailableTerminalPaymentMethodSelector } from 'checkout/selectors';
+import { METADATA_NAMESPACE } from 'checkout/backend';
+import { Instruction } from './instruction';
+import { MetadataField } from 'checkout/components/ui';
 
 const UPIFormRef: React.FC<InjectedFormProps> = (props) => {
     const locale = useAppSelector((s) => s.config.locale);
-    const { category } = useAppSelector<UPIFormInfo>(getActiveModalFormSelector);
-    const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(category));
+    const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(KnownProviderCategories.UPI));
     const serviceProvider = paymentMethod?.serviceProviders[0];
+    const metadata = serviceProvider?.metadata;
+    const formMetadata = metadata && metadata[METADATA_NAMESPACE]?.form;
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -30,17 +32,12 @@ const UPIFormRef: React.FC<InjectedFormProps> = (props) => {
         }
     }, [props.submitFailed]);
 
-    const submit = ({ payerVirtualAddress }: UPIFormValues) => {
+    const submit = (values: PaymentTerminalFormValues) => {
         (document.activeElement as HTMLElement)?.blur();
         dispatch(
             pay({
                 method: PaymentMethodName.PaymentTerminal,
-                values: {
-                    metadata: {
-                        payerVirtualAddress
-                    },
-                    provider: serviceProvider.id
-                } as PaymentTerminalFormValues
+                values: { ...values, provider: serviceProvider.id } as PaymentTerminalFormValues
             })
         );
     };
@@ -49,11 +46,12 @@ const UPIFormRef: React.FC<InjectedFormProps> = (props) => {
         <form onSubmit={props.handleSubmit(submit)}>
             <Header title={locale['form.header.pay.upi.label']} />
             <Logo />
-            <FormGroup>
-                <PayerVirtualAddressField locale={locale} />
-            </FormGroup>
-            <InstructionItem>{locale['form.pay.upi.instruction'][0]}</InstructionItem>
-            <InstructionItem width="40%">{locale['form.pay.upi.instruction'][1]}</InstructionItem>
+            {formMetadata?.map((fieldMetadata) => (
+                <FormGroup key={fieldMetadata.name}>
+                    <MetadataField locale={locale} metadata={fieldMetadata} />
+                </FormGroup>
+            ))}
+            <Instruction locale={locale} />
             <PayButton />
         </form>
     );
