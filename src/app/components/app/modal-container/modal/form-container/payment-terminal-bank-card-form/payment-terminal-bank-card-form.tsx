@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 
-import { FormName, PaymentTerminalBankCardFormInfo, PaymentTerminalFormValues } from 'checkout/state';
+import { FormName, KnownProviderCategories, PaymentTerminalFormValues } from 'checkout/state';
 import { Header } from '../header';
-import { getActiveModalFormSelector, getAvailableTerminalPaymentMethodSelector } from 'checkout/selectors';
+import { getAvailableTerminalPaymentMethodSelector } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { ProviderSelectorField } from './provider-selector';
 import { InjectedFormProps, reduxForm } from 'redux-form';
@@ -21,8 +21,7 @@ const ProviderSelectorDescription = styled.p`
 
 export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = (props) => {
     const locale = useAppSelector((s) => s.config.locale);
-    const { category } = useAppSelector<PaymentTerminalBankCardFormInfo>(getActiveModalFormSelector);
-    const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(category));
+    const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(KnownProviderCategories.BankCard));
     const serviceProviders = paymentMethod?.serviceProviders;
     const dispatch = useAppDispatch();
 

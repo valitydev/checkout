@@ -1,18 +1,28 @@
 import * as React from 'react';
-import { FormInfo, FormName, KnownProviderCategories } from 'checkout/state';
+import isNil from 'lodash-es/isNil';
+
+import { FormName, PaymentTerminalPaymentMethod } from 'checkout/state';
 import { PaymentMethodItemContainer, UPILogo } from 'checkout/components/ui';
 import { UPIFormInfo } from 'checkout/state/modal/form-info/upi-form-info';
+import { PayAction, SetFormInfoAction } from './types';
+import { payWithPaymentTerminal } from './pay-with-payment-terminal';
 
 export interface UPIPaymentMethodItemProps {
-    setFormInfo: (formInfo: FormInfo) => any;
-    category: KnownProviderCategories;
+    method: PaymentTerminalPaymentMethod;
+    setFormInfo: SetFormInfoAction;
+    pay: PayAction;
 }
 
-const toUPI = (props: UPIPaymentMethodItemProps) =>
-    props.setFormInfo(new UPIFormInfo(props.category, FormName.paymentMethods));
+const toUPI = (setFormInfo: SetFormInfoAction) => setFormInfo(new UPIFormInfo(FormName.paymentMethods));
 
-export const UPIPaymentMethodItem: React.FC<UPIPaymentMethodItemProps> = (props) => (
-    <PaymentMethodItemContainer id="upi-payment-method-item" onClick={toUPI.bind(null, props)}>
+const provideMethod = (
+    { serviceProviders }: PaymentTerminalPaymentMethod,
+    pay: PayAction,
+    setFormInfo: SetFormInfoAction
+) => (isNil(serviceProviders[0].metadata) ? payWithPaymentTerminal(serviceProviders[0].id, pay) : toUPI(setFormInfo));
+
+export const UPIPaymentMethodItem: React.FC<UPIPaymentMethodItemProps> = ({ method, pay, setFormInfo }) => (
+    <PaymentMethodItemContainer id="upi-payment-method-item" onClick={() => provideMethod(method, pay, setFormInfo)}>
         <UPILogo />
     </PaymentMethodItemContainer>
 );

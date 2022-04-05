@@ -3,7 +3,7 @@ export const METADATA_NAMESPACE = 'dev.vality.checkout';
 export interface ServiceProviderMetadataField {
     name: string;
     type: JSX.IntrinsicElements['input']['type'];
-    required?: boolean;
+    required: boolean;
     pattern?: string;
 }
 
