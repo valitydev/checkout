@@ -1,3 +1,5 @@
+import isNil from 'lodash-es/isNil';
+
 import {
     CardFormInfo,
     FormInfo,
@@ -23,12 +25,9 @@ const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalP
     switch (category) {
         case KnownProviderCategories.OnlineBanking:
         case KnownProviderCategories.NetBanking:
-            if (serviceProviders.length === 1) {
-                return new PaymentMethodsFormInfo();
-            }
-            return new OnlineBankingFormInfo(category);
+            return serviceProviders.length === 1 ? new PaymentMethodsFormInfo() : new OnlineBankingFormInfo(category);
         case KnownProviderCategories.UPI:
-            return new UPIFormInfo();
+            return isNil(serviceProviders[0].metadata) ? new PaymentMethodsFormInfo() : new UPIFormInfo();
         case KnownProviderCategories.BankCard:
             return new PaymentTerminalBankCardFormInfo();
         default:
@@ -37,12 +36,8 @@ const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalP
     }
 };
 
-const toDigitalWalletForms = ({ providers }: DigitalWalletPaymentMethod) => {
-    if (providers.length === 1) {
-        return new WalletFormInfo(providers[0]);
-    }
-    return new WalletProvidersFormInfo();
-};
+const toDigitalWalletForms = ({ providers }: DigitalWalletPaymentMethod) =>
+    providers.length === 1 ? new WalletFormInfo(providers[0]) : new WalletProvidersFormInfo();
 
 export const toInitialForm = (method: PaymentMethod): FormInfo => {
     switch (method.name) {
