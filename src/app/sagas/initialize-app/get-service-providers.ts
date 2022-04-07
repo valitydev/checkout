@@ -5,27 +5,38 @@ import {
     PaymentTerminal,
     ServiceProvider
 } from 'checkout/backend';
-import { all, call } from 'redux-saga/effects';
 import { logPrefix } from 'checkout/log-messages';
 
-export function* getServiceProviderByIDAndLog(endpoint: string, accessToken: string, id: string) {
+export async function getServiceProviderOrNull(
+    endpoint: string,
+    accessToken: string,
+    id: string
+): Promise<ServiceProvider | null> {
     try {
-        return yield call(getServiceProviderByID, endpoint, accessToken, id);
+        return await getServiceProviderByID(endpoint, accessToken, id);
     } catch (err) {
         console.error(`${logPrefix} Failed to load provider "${id}".`, err);
         return null;
     }
 }
 
-export function* getServiceProviders(paymentMethods: PaymentMethod[], endpoint: string, accessToken: string) {
-    const paymentTerminal = paymentMethods.find(
-        (m) => m.method === PaymentMethodName.PaymentTerminal
-    ) as PaymentTerminal;
-    if (!paymentTerminal) {
-        return [];
+const providerIDsReducer = (result: string[], method: PaymentMethod): string[] => {
+    switch (method.method) {
+        case PaymentMethodName.PaymentTerminal:
+        case PaymentMethodName.DigitalWallet:
+            return result.concat((method as PaymentTerminal).providers);
     }
-    const serviceProviders: ServiceProvider[] = (yield all(
-        paymentTerminal.providers.map((id) => call(getServiceProviderByIDAndLog, endpoint, accessToken, id))
-    )).filter((p) => !!p);
-    return serviceProviders;
+    return result;
+};
+
+export async function getServiceProviders(
+    paymentMethods: PaymentMethod[],
+    endpoint: string,
+    accessToken: string
+): Promise<ServiceProvider[]> {
+    const providerIDs = paymentMethods.reduce(providerIDsReducer, []);
+    const serviceProvidersOrNull = await Promise.all(
+        providerIDs.map((id) => getServiceProviderOrNull(endpoint, accessToken, id))
+    );
+    return serviceProvidersOrNull.filter((provider) => provider !== null);
 }

@@ -7,8 +7,15 @@ export interface ServiceProviderMetadataField {
     pattern?: string;
 }
 
+export interface ServiceProviderLogo {
+    src: string;
+    width: string;
+    height: string;
+}
+
 export interface ServiceProviderMetadata {
     [METADATA_NAMESPACE]: {
         form?: ServiceProviderMetadataField[];
+        logo?: ServiceProviderLogo;
     };
 }

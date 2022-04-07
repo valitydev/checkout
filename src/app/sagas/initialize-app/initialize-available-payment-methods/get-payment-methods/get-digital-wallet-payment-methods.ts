@@ -1,17 +1,30 @@
-import isArray from 'lodash-es/isArray';
-import intersection from 'lodash-es/intersection';
+import groupBy from 'lodash-es/groupBy';
 
-import { DigitalWallet } from 'checkout/backend';
+import { ServiceProvider } from 'checkout/backend';
 import {
     DigitalWalletPaymentMethod,
     PaymentMethodName as PaymentMethodNameState,
-    KnownDigitalWalletProviders
+    KnownDigitalWalletProviderCategories
 } from 'checkout/state';
 import { logUnavailableWithConfig } from './log-unavailable-with-config';
-import { logPrefix } from 'checkout/log-messages';
+import { assertUnreachable } from 'checkout/utils';
+
+const serviceProviderReducer = (
+    result: ServiceProvider[],
+    [category, serviceProviders]: [KnownDigitalWalletProviderCategories, ServiceProvider[]]
+): ServiceProvider[] => {
+    switch (category) {
+        case KnownDigitalWalletProviderCategories.DigitalWallet:
+            result = result.concat(serviceProviders);
+            break;
+        default:
+            assertUnreachable(category);
+    }
+    return result;
+};
 
 export const getDigitalWalletPaymentMethods = (
-    { providers }: DigitalWallet,
+    serviceProviders: ServiceProvider[],
     isMethod: boolean,
     paymentFlowHold: boolean,
     recurring: boolean
@@ -27,19 +40,12 @@ export const getDigitalWalletPaymentMethods = (
         logUnavailableWithConfig('wallets', 'recurring');
         return [];
     }
-    const noProvidersErrMsg = `${logPrefix} Payment method: DigitalWallet must have providers`;
-    if (!isArray(providers)) {
-        console.error(noProvidersErrMsg);
-        return [];
-    }
-    if (providers.length === 0) {
-        console.error(noProvidersErrMsg);
-        return [];
-    }
-    const knownProviders = intersection(Object.keys(KnownDigitalWalletProviders), providers);
-    if (knownProviders.length === 0) {
-        console.error(`${logPrefix} There are no known providers for DigitalWallet payment method`);
-        return [];
-    }
-    return [{ name: PaymentMethodNameState.DigitalWallet, providers: knownProviders as KnownDigitalWalletProviders[] }];
+    const groupedByCategory = Object.entries(groupBy(serviceProviders, 'category'));
+    const reduced = groupedByCategory.reduce(serviceProviderReducer, []);
+    return [
+        {
+            name: PaymentMethodNameState.DigitalWallet,
+            serviceProviders: reduced
+        }
+    ];
 };

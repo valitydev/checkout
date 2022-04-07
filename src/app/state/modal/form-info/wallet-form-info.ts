@@ -1,12 +1,12 @@
-import { KnownDigitalWalletProviders } from 'checkout/state';
+import { ServiceProvider } from 'checkout/backend';
 import { FormInfo, FormName } from './form-info';
 import { PaymentStatus } from './payment-status';
 
 export class WalletFormInfo extends FormInfo {
     paymentStatus: PaymentStatus;
-    activeProvider: KnownDigitalWalletProviders;
+    activeProvider: ServiceProvider;
 
-    constructor(activeProvider: KnownDigitalWalletProviders, previous?: FormName) {
+    constructor(activeProvider: ServiceProvider, previous?: FormName) {
         super(previous);
         this.name = FormName.walletForm;
         this.active = true;

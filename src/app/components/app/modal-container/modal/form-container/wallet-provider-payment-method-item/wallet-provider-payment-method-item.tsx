@@ -2,18 +2,19 @@ import * as React from 'react';
 import { FormInfo, FormName, KnownDigitalWalletProviders, WalletFormInfo } from 'checkout/state';
 import { assertUnreachable } from 'checkout/utils';
 import { VenuspointLogo, SticpayLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
+import { ServiceProvider } from 'checkout/backend';
 
 export interface WalletProviderPaymentMethodItemProps {
     previous?: FormName;
-    setFormInfo: (formInfo: FormInfo) => any;
-    provider: KnownDigitalWalletProviders;
+    setFormInfo: (formInfo: FormInfo) => void;
+    serviceProvider: ServiceProvider;
 }
 
 const toWalletProvider = (props: WalletProviderPaymentMethodItemProps) =>
-    props.setFormInfo(new WalletFormInfo(props.provider, props.previous));
+    props.setFormInfo(new WalletFormInfo(props.serviceProvider, props.previous));
 
-const Icon: React.FC<{ provider: KnownDigitalWalletProviders }> = ({ provider }) => {
-    switch (provider) {
+const Icon: React.FC<{ serviceProvider: ServiceProvider }> = ({ serviceProvider }) => {
+    switch (serviceProvider.id) {
         case KnownDigitalWalletProviders.Sticpay:
             return <SticpayLogo />;
         case KnownDigitalWalletProviders.Venuspoint:
@@ -25,6 +26,6 @@ const Icon: React.FC<{ provider: KnownDigitalWalletProviders }> = ({ provider })
 
 export const WalletProviderPaymentMethodItem: React.FC<WalletProviderPaymentMethodItemProps> = (props) => (
     <PaymentMethodItemContainer id="wallet-provider-payment-method-item" onClick={toWalletProvider.bind(null, props)}>
-        <Icon provider={props.provider} />
+        <Icon serviceProvider={props.serviceProvider} />
     </PaymentMethodItemContainer>
 );

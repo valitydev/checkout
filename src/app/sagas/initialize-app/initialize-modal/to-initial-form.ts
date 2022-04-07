@@ -36,8 +36,8 @@ const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalP
     }
 };
 
-const toDigitalWalletForms = ({ providers }: DigitalWalletPaymentMethod) =>
-    providers.length === 1 ? new WalletFormInfo(providers[0]) : new WalletProvidersFormInfo();
+const toDigitalWalletForms = ({ serviceProviders }: DigitalWalletPaymentMethod) =>
+    serviceProviders.length === 1 ? new WalletFormInfo(serviceProviders[0]) : new WalletProvidersFormInfo();
 
 export const toInitialForm = (method: PaymentMethod): FormInfo => {
     switch (method.name) {
