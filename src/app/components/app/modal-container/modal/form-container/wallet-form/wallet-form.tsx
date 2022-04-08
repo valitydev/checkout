@@ -27,15 +27,7 @@ import {
 } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getLogoMetadata, MetadataLogo } from 'checkout/components/ui';
-import styled from 'checkout/styled-components';
-
-const LogoContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 48px;
-    margin-bottom: 20px;
-`;
+import { LogoContainer } from './logo-container';
 
 const WalletFormDef: React.FC<InjectedFormProps> = (props) => {
     const locale = useAppSelector(getLocaleSelector);
