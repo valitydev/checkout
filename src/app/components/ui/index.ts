@@ -9,3 +9,4 @@ export * from './payment-method-item';
 export * from './metadata-field';
 export * from './input';
 export * from './button';
+export * from './metadata';

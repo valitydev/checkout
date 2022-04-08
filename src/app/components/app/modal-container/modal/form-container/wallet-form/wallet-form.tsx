@@ -1,20 +1,14 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import get from 'lodash-es/get';
+import { useEffect } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
-import { bindActionCreators, Dispatch } from 'redux';
+import get from 'lodash-es/get';
 
-import { WalletFormProps } from './wallet-form-props';
 import { FormGroup } from '../form-group';
 import {
     FormName,
     KnownDigitalWalletProviders,
-    ModalForms,
-    ModalName,
-    ModalState,
     PaymentMethodName,
     PaymentStatus,
-    State,
     WalletFormInfo,
     WalletFormValues
 } from 'checkout/state';
@@ -22,125 +16,81 @@ import { PayButton } from '../pay-button';
 import { Header } from '../header';
 import { Amount } from '../common-fields';
 import { toFieldsConfig } from '../fields-config';
-import { findNamed } from 'checkout/utils';
 import { pay, setViewInfoError } from 'checkout/actions';
-import { WalletProviderLogo } from './wallet-provider-logo';
 import { WalletProviderFormGroup } from './wallet-provider-form-group';
 import { SignUp } from './sign-up';
-import { getActiveModalFormSelector, getLocaleSelector, getServiceProviderSelector } from 'checkout/selectors';
-import { useAppSelector } from 'checkout/configure-store';
+import {
+    getActiveModalFormSelector,
+    getInitConfigSelector,
+    getLocaleSelector,
+    getModelSelector
+} from 'checkout/selectors';
+import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
+import { getLogoMetadata, MetadataLogo } from 'checkout/components/ui';
+import styled from 'checkout/styled-components';
 
-// const toWalletFormInfo = (m: ModalState[]) => {
-//     const info = (findNamed(m, ModalName.modalForms) as ModalForms).formsInfo;
-//     return findNamed(info, FormName.walletForm);
-// };
-
-// const mapStateToProps = (state: State) => ({
-//     config: state.config,
-//     model: state.model,
-//     formValues: get(state.form, 'walletForm.values'),
-//     locale: state.config.locale,
-//     fieldsConfig: toFieldsConfig(state.config.initConfig, state.model.invoiceTemplate),
-//     walletFormInfo: toWalletFormInfo(state.modals)
-// });
-
-// const mapDispatchToProps = (dispatch: Dispatch) => ({
-//     setViewInfoError: bindActionCreators(setViewInfoError, dispatch),
-//     pay: bindActionCreators(pay, dispatch)
-// });
-
-// type Props = WalletFormProps & InjectedFormProps;
-
-// class WalletFormDef2 extends React.Component<Props> {
-//     constructor(props: Props) {
-//         super(props);
-//         this.submit = this.submit.bind(this);
-//     }
-
-//     init(values: WalletFormValues, activeProvider: KnownDigitalWalletProviders) {
-//         this.props.initialize({
-//             email: values?.email,
-//             amount: values?.amount,
-//             provider: activeProvider
-//         });
-//     }
-
-//     submit(values: WalletFormValues) {
-//         (document.activeElement as HTMLElement).blur();
-//         this.props.pay({ method: PaymentMethodName.DigitalWallet, values });
-//     }
-
-//     componentWillMount() {
-//         const {
-//             walletFormInfo: { paymentStatus, activeProvider },
-//             formValues
-//         } = this.props;
-//         this.props.setViewInfoError(false);
-//         switch (paymentStatus) {
-//             case PaymentStatus.pristine:
-//                 this.init(formValues, activeProvider);
-//                 break;
-//             case PaymentStatus.needRetry:
-//                 this.submit(formValues);
-//                 break;
-//         }
-//     }
-
-//     componentWillReceiveProps(props: Props) {
-//         if (props.submitFailed) {
-//             props.setViewInfoError(true);
-//         }
-//     }
-
-//     render() {
-//         const {
-//             handleSubmit,
-//             fieldsConfig: { amount },
-//             walletFormInfo: { activeProvider },
-//             locale
-//         } = this.props;
-//         return (
-//             <form onSubmit={handleSubmit(this.submit)} id="wallet-form">
-//                 <div>
-//                     <Header title={locale['digital.wallet.providers'][activeProvider].name} />
-//                     <WalletProviderLogo provider={activeProvider} />
-//                     <WalletProviderFormGroup provider={activeProvider} />
-//                     {amount.visible && (
-//                         <FormGroup>
-//                             <Amount cost={amount.cost} />
-//                         </FormGroup>
-//                     )}
-//                 </div>
-//                 <PayButton />
-//                 <SignUp locale={locale} provider={activeProvider} />
-//             </form>
-//         );
-//     }
-// }
-
-// const ReduxForm = reduxForm({
-//     form: FormName.walletForm,
-//     destroyOnUnmount: false
-// })(WalletFormDef2);
-
-// export const WalletForm2 = connect(mapStateToProps, mapDispatchToProps)(ReduxForm as any);
+const LogoContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    margin-bottom: 20px;
+`;
 
 const WalletFormDef: React.FC<InjectedFormProps> = (props) => {
     const locale = useAppSelector(getLocaleSelector);
+    const initConfig = useAppSelector(getInitConfigSelector);
+    const model = useAppSelector(getModelSelector);
     const formInfo = useAppSelector<WalletFormInfo>(getActiveModalFormSelector);
+    const logoMetadata = getLogoMetadata(formInfo.activeProvider);
+    const dispatch = useAppDispatch();
+    const amount = toFieldsConfig(initConfig, model.invoiceTemplate).amount;
+    const formValues = useAppSelector((s) => get(s.form, 'walletForm.values'));
+
+    const submit = (values: WalletFormValues) => {
+        (document.activeElement as HTMLElement)?.blur();
+        dispatch(pay({ method: PaymentMethodName.DigitalWallet, values }));
+    };
+
+    useEffect(() => {
+        dispatch(setViewInfoError(false));
+        switch (formInfo.paymentStatus) {
+            case PaymentStatus.pristine:
+                props.initialize({
+                    amount: formValues?.amount,
+                    provider: formInfo.activeProvider.id
+                });
+                break;
+            case PaymentStatus.needRetry:
+                submit(formValues);
+                break;
+        }
+    }, []);
+
+    useEffect(() => {
+        if (props.submitFailed) {
+            dispatch(setViewInfoError(true));
+        }
+    }, [props.submitFailed]);
+
     return (
-        <form id="wallet-form">
+        <form id="wallet-form" onSubmit={props.handleSubmit(submit)}>
             {formInfo.name === FormName.walletForm && (
                 <div>
                     <Header title={formInfo.activeProvider.brandName} />
-                    <WalletProviderLogo provider={formInfo.activeProvider.id as KnownDigitalWalletProviders} />
+                    {logoMetadata && (
+                        <LogoContainer>
+                            <MetadataLogo metadata={logoMetadata} />
+                        </LogoContainer>
+                    )}
                     <WalletProviderFormGroup provider={formInfo.activeProvider.id as KnownDigitalWalletProviders} />
-                    {/* {amount.visible && (
+                    {amount.visible && (
                         <FormGroup>
                             <Amount cost={amount.cost} />
                         </FormGroup>
-                    )} */}
+                    )}
                     <PayButton />
+                    <SignUp locale={locale} provider={formInfo.activeProvider.id as KnownDigitalWalletProviders} />
                 </div>
             )}
         </form>

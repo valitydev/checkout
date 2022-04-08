@@ -13,7 +13,7 @@ export const WalletProviders: React.FC = () => {
     );
     const dispatch = useAppDispatch();
     return (
-        <>
+        <div>
             <Header title={locale['form.header.payment.methods.label']} />
             {paymentMethod.serviceProviders.map((serviceProvider) => (
                 <WalletProviderPaymentMethodItem
@@ -23,6 +23,6 @@ export const WalletProviders: React.FC = () => {
                     serviceProvider={serviceProvider}
                 />
             ))}
-        </>
+        </div>
     );
 };
