@@ -33,24 +33,23 @@ const WalletFormDef: React.FC<InjectedFormProps> = (props) => {
     const locale = useAppSelector(getLocaleSelector);
     const initConfig = useAppSelector(getInitConfigSelector);
     const model = useAppSelector(getModelSelector);
-    const formInfo = useAppSelector<WalletFormInfo>(getActiveModalFormSelector);
-    const logoMetadata = getLogoMetadata(formInfo.activeProvider);
+    const { activeProvider, paymentStatus } = useAppSelector<WalletFormInfo>(getActiveModalFormSelector);
     const dispatch = useAppDispatch();
-    const amount = toFieldsConfig(initConfig, model.invoiceTemplate).amount;
     const formValues = useAppSelector((s) => get(s.form, 'walletForm.values'));
+    const logoMetadata = getLogoMetadata(activeProvider);
+    const amount = toFieldsConfig(initConfig, model.invoiceTemplate).amount;
 
     const submit = (values: WalletFormValues) => {
-        (document.activeElement as HTMLElement)?.blur();
         dispatch(pay({ method: PaymentMethodName.DigitalWallet, values }));
     };
 
     useEffect(() => {
         dispatch(setViewInfoError(false));
-        switch (formInfo.paymentStatus) {
+        switch (paymentStatus) {
             case PaymentStatus.pristine:
                 props.initialize({
                     amount: formValues?.amount,
-                    provider: formInfo.activeProvider.id
+                    provider: activeProvider.id
                 });
                 break;
             case PaymentStatus.needRetry:
@@ -67,23 +66,23 @@ const WalletFormDef: React.FC<InjectedFormProps> = (props) => {
 
     return (
         <form id="wallet-form" onSubmit={props.handleSubmit(submit)}>
-            {formInfo.name === FormName.walletForm && (
-                <div>
-                    <Header title={formInfo.activeProvider.brandName} />
+            {activeProvider && (
+                <>
+                    <Header title={activeProvider.brandName} />
                     {logoMetadata && (
                         <LogoContainer>
                             <MetadataLogo metadata={logoMetadata} />
                         </LogoContainer>
                     )}
-                    <WalletProviderFormGroup provider={formInfo.activeProvider.id as KnownDigitalWalletProviders} />
+                    <WalletProviderFormGroup provider={activeProvider.id as KnownDigitalWalletProviders} />
                     {amount.visible && (
                         <FormGroup>
                             <Amount cost={amount.cost} />
                         </FormGroup>
                     )}
                     <PayButton />
-                    <SignUp locale={locale} provider={formInfo.activeProvider.id as KnownDigitalWalletProviders} />
-                </div>
+                    <SignUp locale={locale} provider={activeProvider.id as KnownDigitalWalletProviders} />
+                </>
             )}
         </form>
     );
