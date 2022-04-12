@@ -1,1 +1,1 @@
-export * from './get-logo-metadata';
+export * from './get-metadata';

@@ -4,20 +4,12 @@ import { InjectedFormProps, reduxForm } from 'redux-form';
 import get from 'lodash-es/get';
 
 import { FormGroup } from '../form-group';
-import {
-    FormName,
-    KnownDigitalWalletProviders,
-    PaymentMethodName,
-    PaymentStatus,
-    WalletFormInfo,
-    WalletFormValues
-} from 'checkout/state';
+import { FormName, PaymentMethodName, PaymentStatus, WalletFormInfo, WalletFormValues } from 'checkout/state';
 import { PayButton } from '../pay-button';
 import { Header } from '../header';
 import { Amount } from '../common-fields';
 import { toFieldsConfig } from '../fields-config';
 import { pay, setViewInfoError } from 'checkout/actions';
-import { WalletProviderFormGroup } from './wallet-provider-form-group';
 import { SignUp } from './sign-up';
 import {
     getActiveModalFormSelector,
@@ -26,20 +18,27 @@ import {
     getModelSelector
 } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { getLogoMetadata, MetadataLogo } from 'checkout/components/ui';
+import { getMetadata, MetadataField, MetadataLogo } from 'checkout/components/ui';
 import { LogoContainer } from './logo-container';
 
-const WalletFormDef: React.FC<InjectedFormProps> = (props) => {
+const WalletFormDef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
     const locale = useAppSelector(getLocaleSelector);
     const initConfig = useAppSelector(getInitConfigSelector);
     const model = useAppSelector(getModelSelector);
     const { activeProvider, paymentStatus } = useAppSelector<WalletFormInfo>(getActiveModalFormSelector);
     const dispatch = useAppDispatch();
     const formValues = useAppSelector((s) => get(s.form, 'walletForm.values'));
-    const logoMetadata = getLogoMetadata(activeProvider);
+    const { form, logo, signUpLink } = getMetadata(activeProvider);
     const amount = toFieldsConfig(initConfig, model.invoiceTemplate).amount;
 
     const submit = (values: WalletFormValues) => {
+        const { name } = form.find((field) => field.type === 'password');
+        if (name) {
+            const passwordValue = values[name];
+            console.log({
+                [name]: 'md5password' + passwordValue
+            });
+        }
         dispatch(pay({ method: PaymentMethodName.DigitalWallet, values }));
     };
 
@@ -47,7 +46,7 @@ const WalletFormDef: React.FC<InjectedFormProps> = (props) => {
         dispatch(setViewInfoError(false));
         switch (paymentStatus) {
             case PaymentStatus.pristine:
-                props.initialize({
+                initialize({
                     amount: formValues?.amount,
                     provider: activeProvider.id
                 });
@@ -59,29 +58,33 @@ const WalletFormDef: React.FC<InjectedFormProps> = (props) => {
     }, []);
 
     useEffect(() => {
-        if (props.submitFailed) {
+        if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-    }, [props.submitFailed]);
+    }, [submitFailed]);
 
     return (
-        <form id="wallet-form" onSubmit={props.handleSubmit(submit)}>
+        <form id="wallet-form" onSubmit={handleSubmit(submit)}>
             {activeProvider && (
                 <>
                     <Header title={activeProvider.brandName} />
-                    {logoMetadata && (
+                    {logo && (
                         <LogoContainer>
-                            <MetadataLogo metadata={logoMetadata} />
+                            <MetadataLogo metadata={logo} />
                         </LogoContainer>
                     )}
-                    <WalletProviderFormGroup provider={activeProvider.id as KnownDigitalWalletProviders} />
+                    {form?.map((fieldMetadata) => (
+                        <FormGroup key={fieldMetadata.name}>
+                            <MetadataField locale={locale} metadata={fieldMetadata} localeCode={initConfig.locale} />
+                        </FormGroup>
+                    ))}
                     {amount.visible && (
                         <FormGroup>
                             <Amount cost={amount.cost} />
                         </FormGroup>
                     )}
                     <PayButton />
-                    <SignUp locale={locale} provider={activeProvider.id as KnownDigitalWalletProviders} />
+                    {signUpLink && <SignUp locale={locale} link={signUpLink} />}
                 </>
             )}
         </form>

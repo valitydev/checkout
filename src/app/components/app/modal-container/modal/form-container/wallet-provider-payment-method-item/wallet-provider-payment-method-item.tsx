@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { FormInfo, FormName, WalletFormInfo } from 'checkout/state';
-import { getLogoMetadata, MetadataLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
+import { getMetadata, MetadataLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { ServiceProvider } from 'checkout/backend';
 
 export interface WalletProviderPaymentMethodItemProps {
@@ -14,10 +14,10 @@ const toWalletProvider = (props: WalletProviderPaymentMethodItemProps) =>
     props.setFormInfo(new WalletFormInfo(props.serviceProvider, props.previous));
 
 export const WalletProviderPaymentMethodItem: React.FC<WalletProviderPaymentMethodItemProps> = (props) => {
-    const logoMetadata = getLogoMetadata(props.serviceProvider);
+    const { logo } = getMetadata(props.serviceProvider);
     return (
         <PaymentMethodItemContainer onClick={() => toWalletProvider(props)}>
-            {logoMetadata && <MetadataLogo metadata={logoMetadata} />}
+            {logo && <MetadataLogo metadata={logo} />}
         </PaymentMethodItemContainer>
     );
 };
