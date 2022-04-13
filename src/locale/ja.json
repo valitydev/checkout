@@ -151,19 +151,6 @@
         "sign.up": {
             "description": "アカウントをお持ちではありませんか?",
             "link": "会員登録"
-        },
-        "Sticpay": {
-            "name": "Sticpay",
-            "fields": {
-                "account": "アカウント (メールアドレス)"
-            }
-        },
-        "Venuspoint": {
-            "name": "Venus Point",
-            "fields": {
-                "account": "Account",
-                "password": "パスワード"
-            }
         }
     },
     "service.provider.meta.fields": {
