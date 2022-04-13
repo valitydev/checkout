@@ -1,6 +1,6 @@
 import { call, CallEffect } from 'redux-saga/effects';
 import { PaymentMethod as PaymentMethodState, PaymentMethodName as PaymentMethodNameState } from 'checkout/state';
-import { DigitalWallet, PaymentMethod, PaymentMethodName, ServiceProvider } from 'checkout/backend';
+import { PaymentMethod, PaymentMethodName, ServiceProvider } from 'checkout/backend';
 import { Config } from 'checkout/config';
 import { bankCardToMethods } from './bank-card-to-methods';
 import { getDigitalWalletPaymentMethods, getTerminalsPaymentMethods } from './get-payment-methods';
@@ -29,7 +29,7 @@ export function* toAvailablePaymentMethods(
                 break;
             case PaymentMethodName.DigitalWallet:
                 result = result.concat(
-                    getDigitalWalletPaymentMethods(method as DigitalWallet, wallets, paymentFlowHold, recurring)
+                    getDigitalWalletPaymentMethods(serviceProviders, wallets, paymentFlowHold, recurring)
                 );
                 break;
             case PaymentMethodName.PaymentTerminal:

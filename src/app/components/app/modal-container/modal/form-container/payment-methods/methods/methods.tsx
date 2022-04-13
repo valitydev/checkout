@@ -42,11 +42,11 @@ const Method: React.FC<MethodProps> = (props) => {
                 />
             );
         case PaymentMethodName.DigitalWallet:
-            const { providers } = props.method as DigitalWalletPaymentMethod;
-            if (providers.length === 1) {
+            const { serviceProviders } = props.method as DigitalWalletPaymentMethod;
+            if (serviceProviders.length === 1) {
                 return (
                     <WalletProviderPaymentMethodItem
-                        provider={providers[0]}
+                        serviceProvider={serviceProviders[0]}
                         previous={FormName.paymentMethods}
                         setFormInfo={props.setFormInfo}
                     />

@@ -1,30 +1,23 @@
 import * as React from 'react';
-import { FormInfo, FormName, KnownDigitalWalletProviders, WalletFormInfo } from 'checkout/state';
-import { assertUnreachable } from 'checkout/utils';
-import { VenuspointLogo, SticpayLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
+
+import { FormInfo, FormName, WalletFormInfo } from 'checkout/state';
+import { getMetadata, MetadataLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
+import { ServiceProvider } from 'checkout/backend';
 
 export interface WalletProviderPaymentMethodItemProps {
     previous?: FormName;
-    setFormInfo: (formInfo: FormInfo) => any;
-    provider: KnownDigitalWalletProviders;
+    setFormInfo: (formInfo: FormInfo) => void;
+    serviceProvider: ServiceProvider;
 }
 
 const toWalletProvider = (props: WalletProviderPaymentMethodItemProps) =>
-    props.setFormInfo(new WalletFormInfo(props.provider, props.previous));
+    props.setFormInfo(new WalletFormInfo(props.serviceProvider, props.previous));
 
-const Icon: React.FC<{ provider: KnownDigitalWalletProviders }> = ({ provider }) => {
-    switch (provider) {
-        case KnownDigitalWalletProviders.Sticpay:
-            return <SticpayLogo />;
-        case KnownDigitalWalletProviders.Venuspoint:
-            return <VenuspointLogo />;
-        default:
-            assertUnreachable(provider);
-    }
+export const WalletProviderPaymentMethodItem: React.FC<WalletProviderPaymentMethodItemProps> = (props) => {
+    const { logo } = getMetadata(props.serviceProvider);
+    return (
+        <PaymentMethodItemContainer onClick={() => toWalletProvider(props)}>
+            {logo && <MetadataLogo metadata={logo} />}
+        </PaymentMethodItemContainer>
+    );
 };
-
-export const WalletProviderPaymentMethodItem: React.FC<WalletProviderPaymentMethodItemProps> = (props) => (
-    <PaymentMethodItemContainer id="wallet-provider-payment-method-item" onClick={toWalletProvider.bind(null, props)}>
-        <Icon provider={props.provider} />
-    </PaymentMethodItemContainer>
-);

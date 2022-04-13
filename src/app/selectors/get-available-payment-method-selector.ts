@@ -1,4 +1,10 @@
-import { PaymentMethodName, State, KnownProviderCategories, PaymentTerminalPaymentMethod } from 'checkout/state';
+import {
+    PaymentMethodName,
+    State,
+    KnownProviderCategories,
+    PaymentTerminalPaymentMethod,
+    PaymentMethod
+} from 'checkout/state';
 
 export const getAvailableTerminalPaymentMethodSelector = (category: KnownProviderCategories) => (
     state: State
@@ -11,3 +17,7 @@ export const getAvailableTerminalPaymentMethodSelector = (category: KnownProvide
     });
     return found ? (found as PaymentTerminalPaymentMethod) : null;
 };
+
+export const getAvailablePaymentMethodSelector = <T extends PaymentMethod>(methodName: PaymentMethodName) => (
+    s: State
+): T => s.availablePaymentMethods.find((m) => m.name === methodName) as T;

@@ -50,7 +50,7 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
             <ProviderLogo />
             {formMetadata?.map((fieldMetadata) => (
                 <FormGroup key={fieldMetadata.name}>
-                    <MetadataField locale={locale} metadata={fieldMetadata} />
+                    <MetadataField locale={locale} metadata={fieldMetadata} wrappedName="metadata" />
                 </FormGroup>
             ))}
             {amount.visible && (
