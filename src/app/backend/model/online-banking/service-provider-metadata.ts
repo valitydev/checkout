@@ -12,6 +12,7 @@ export interface ServiceProviderMetadataField {
     required: boolean;
     pattern?: string;
     localization?: MetadataFieldLocalization;
+    index?: number;
 }
 
 export interface ServiceProviderLogoMetadata {

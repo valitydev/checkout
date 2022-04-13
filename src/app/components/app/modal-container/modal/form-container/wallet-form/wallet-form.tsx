@@ -18,7 +18,7 @@ import {
     getModelSelector
 } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { getMetadata, MetadataField, MetadataLogo } from 'checkout/components/ui';
+import { getMetadata, MetadataField, MetadataLogo, obscurePassword, sortByIndex } from 'checkout/components/ui';
 import { LogoContainer } from './logo-container';
 
 const WalletFormDef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
@@ -32,14 +32,12 @@ const WalletFormDef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, 
     const amount = toFieldsConfig(initConfig, model.invoiceTemplate).amount;
 
     const submit = (values: WalletFormValues) => {
-        const { name } = form.find((field) => field.type === 'password');
-        if (name) {
-            const passwordValue = values[name];
-            console.log({
-                [name]: 'md5password' + passwordValue
-            });
-        }
-        dispatch(pay({ method: PaymentMethodName.DigitalWallet, values }));
+        dispatch(
+            pay({
+                method: PaymentMethodName.DigitalWallet,
+                values: obscurePassword(form, values)
+            })
+        );
     };
 
     useEffect(() => {
@@ -73,9 +71,9 @@ const WalletFormDef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, 
                             <MetadataLogo metadata={logo} />
                         </LogoContainer>
                     )}
-                    {form?.map((fieldMetadata) => (
-                        <FormGroup key={fieldMetadata.name}>
-                            <MetadataField locale={locale} metadata={fieldMetadata} localeCode={initConfig.locale} />
+                    {form?.sort(sortByIndex).map((m) => (
+                        <FormGroup key={m.name}>
+                            <MetadataField locale={locale} metadata={m} localeCode={initConfig.locale} />
                         </FormGroup>
                     ))}
                     {amount.visible && (

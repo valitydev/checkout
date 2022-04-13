@@ -4,7 +4,7 @@ import { Field, Validator, WrappedFieldProps } from 'redux-form';
 
 import { Locale } from 'checkout/locale';
 import { MetadataFieldLocalization, ServiceProviderMetadataField } from 'checkout/backend';
-import { isError } from 'checkout/utils';
+import { formatEmail, isError, validateEmail } from 'checkout/utils';
 import { Input } from 'checkout/components';
 
 const getPlaceholder = (
@@ -14,8 +14,7 @@ const getPlaceholder = (
     localization?: MetadataFieldLocalization
 ) => {
     if (localization) {
-        const metaLocalization = localization[localeCode];
-        return metaLocalization || fieldName;
+        return localization[localeCode] || localization['en'];
     }
     return locale['service.provider.meta.fields'][fieldName];
 };
@@ -38,7 +37,14 @@ const WrappedInput: React.FC<WrappedFieldProps & {
     />
 );
 
-const createValidator = (required: boolean, pattern?: string): Validator => (value) => {
+const createValidator = (
+    type: JSX.IntrinsicElements['input']['type'],
+    required: boolean,
+    pattern?: string
+): Validator => (value) => {
+    if (type === 'email') {
+        return validateEmail(value);
+    }
     if (pattern) {
         return !new RegExp(pattern).test(value);
     }
@@ -47,24 +53,46 @@ const createValidator = (required: boolean, pattern?: string): Validator => (val
     }
 };
 
+const getAutocomplete = (type: JSX.IntrinsicElements['input']['type']): string | null => {
+    switch (type) {
+        case 'email':
+            return 'email';
+        default:
+            return null;
+    }
+};
+
+const getOnInputHandler = (type: JSX.IntrinsicElements['input']['type']) => {
+    switch (type) {
+        case 'email':
+            return formatEmail;
+        default:
+            return null;
+    }
+};
+
 export interface MetadataFieldProps {
     locale: Locale;
     metadata: ServiceProviderMetadataField;
     localeCode?: string;
+    wrappedName?: string;
 }
 
 export const MetadataField: React.FC<MetadataFieldProps> = ({
     locale,
     metadata: { name, type, required, pattern, localization },
-    localeCode
+    localeCode,
+    wrappedName
 }) => {
-    const validate = useMemo(() => createValidator(required, pattern), [name]);
+    const validate = useMemo(() => createValidator(type, required, pattern), [name]);
     return (
         <Field
-            name={`metadata.${name}`}
+            name={wrappedName ? `${wrappedName}.${name}` : name}
             component={WrappedInput}
             props={{ locale, type, name, localization, localeCode }}
             validate={validate}
+            autocomplete={getAutocomplete(type)}
+            onInput={getOnInputHandler(type)}
         />
     );
 };

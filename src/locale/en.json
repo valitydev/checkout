@@ -151,19 +151,6 @@
         "sign.up": {
             "description": "Don't have an account?",
             "link": "Sign up"
-        },
-        "Sticpay": {
-            "name": "Sticpay",
-            "fields": {
-                "account": "Account (email)"
-            }
-        },
-        "Venuspoint": {
-            "name": "Venus Point",
-            "fields": {
-                "account": "Account",
-                "password": "Account password"
-            }
         }
     },
     "service.provider.meta.fields": {
