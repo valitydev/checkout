@@ -10,7 +10,7 @@ jobs:
             - name: Init
               uses: ./.github/actions/init
             - name: Cache
-              uses: actions/cache@v2
+              uses: actions/cache@v3
               id: cache
               with:
                   path: ./*
@@ -21,7 +21,7 @@ jobs:
         needs: [init]
         steps:
             - name: Cache
-              uses: actions/cache@v2
+              uses: actions/cache@v3
               id: cache
               with:
                   path: ./*
@@ -39,7 +39,7 @@ jobs:
         needs: [init]
         steps:
             - name: Cache
-              uses: actions/cache@v2
+              uses: actions/cache@v3
               id: cache
               with:
                   path: ./*
