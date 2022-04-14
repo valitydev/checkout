@@ -1,56 +1,92 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
+import get from 'lodash-es/get';
 
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { pay, setViewInfoError } from 'checkout/actions';
-import { FormName, KnownProviderCategories, PaymentMethodName, PaymentTerminalFormValues } from 'checkout/state';
+import {
+    FormName,
+    KnownProviderCategories,
+    PaymentMethodName,
+    PaymentStatus,
+    PaymentTerminalFormValues,
+    UPIFormInfo
+} from 'checkout/state';
 import { Header } from '../header';
 import { PayButton } from '../pay-button';
-import { Logo } from './logo';
+import { LogoContainer } from './logo-container';
 import { FormGroup } from '../form-group';
-import { getAvailableTerminalPaymentMethodSelector } from 'checkout/selectors';
-import { METADATA_NAMESPACE } from 'checkout/backend';
+import {
+    getActiveModalFormSelector,
+    getAvailableTerminalPaymentMethodSelector,
+    getInitConfigSelector,
+    getLocaleSelector,
+    getModelSelector
+} from 'checkout/selectors';
 import { Instruction } from './instruction';
-import { MetadataField } from 'checkout/components/ui';
+import { getMetadata, MetadataField, MetadataLogo } from 'checkout/components/ui';
+import { toFieldsConfig } from '../fields-config';
+import { Amount } from '../common-fields';
 
-const UPIFormRef: React.FC<InjectedFormProps> = (props) => {
-    const locale = useAppSelector((s) => s.config.locale);
+const UPIFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
+    const locale = useAppSelector(getLocaleSelector);
+    const initConfig = useAppSelector(getInitConfigSelector);
+    const model = useAppSelector(getModelSelector);
     const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(KnownProviderCategories.UPI));
     const serviceProvider = paymentMethod?.serviceProviders[0];
-    const metadata = serviceProvider?.metadata;
-    const formMetadata = metadata && metadata[METADATA_NAMESPACE]?.form;
+    const formValues = useAppSelector((s) => get(s.form, 'upiForm.values'));
+    const { form, logo } = getMetadata(serviceProvider);
+    const { paymentStatus } = useAppSelector<UPIFormInfo>(getActiveModalFormSelector);
+    const amount = toFieldsConfig(initConfig, model.invoiceTemplate).amount;
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(setViewInfoError(false));
+        switch (paymentStatus) {
+            case PaymentStatus.pristine:
+                initialize({
+                    amount: formValues?.amount,
+                    provider: serviceProvider.id
+                });
+                break;
+            case PaymentStatus.needRetry:
+                submit(formValues);
+                break;
+        }
     }, []);
 
     useEffect(() => {
-        if (props.submitFailed) {
+        if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-    }, [props.submitFailed]);
+    }, [submitFailed]);
 
     const submit = (values: PaymentTerminalFormValues) => {
-        (document.activeElement as HTMLElement)?.blur();
         dispatch(
             pay({
                 method: PaymentMethodName.PaymentTerminal,
-                values: { ...values, provider: serviceProvider.id } as PaymentTerminalFormValues
+                values
             })
         );
     };
 
     return (
-        <form onSubmit={props.handleSubmit(submit)}>
+        <form onSubmit={handleSubmit(submit)}>
             <Header title={locale['form.header.pay.upi.label']} />
-            <Logo />
-            {formMetadata?.map((fieldMetadata) => (
-                <FormGroup key={fieldMetadata.name}>
-                    <MetadataField locale={locale} metadata={fieldMetadata} />
+            <LogoContainer>
+                <MetadataLogo metadata={logo} />
+            </LogoContainer>
+            {form?.map((m) => (
+                <FormGroup key={m.name}>
+                    <MetadataField locale={locale} metadata={m} />
                 </FormGroup>
             ))}
+            {amount.visible && (
+                <FormGroup>
+                    <Amount cost={amount.cost} />
+                </FormGroup>
+            )}
             <Instruction locale={locale} />
             <PayButton />
         </form>
@@ -59,5 +95,5 @@ const UPIFormRef: React.FC<InjectedFormProps> = (props) => {
 
 export const UPIForm = reduxForm({
     form: FormName.upiForm,
-    destroyOnUnmount: true
+    destroyOnUnmount: false
 })(UPIFormRef);
