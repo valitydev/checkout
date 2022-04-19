@@ -1,6 +1,6 @@
 import groupBy from 'lodash-es/groupBy';
 
-import { ServiceProvider } from 'checkout/backend';
+import { METADATA_NAMESPACE, ServiceProvider } from 'checkout/backend';
 import {
     DigitalWalletPaymentMethod,
     PaymentMethodName as PaymentMethodNameState,
@@ -9,13 +9,16 @@ import {
 import { logUnavailableWithConfig } from './log-unavailable-with-config';
 import { assertUnreachable } from 'checkout/utils';
 
-const serviceProviderReducer = (
+const metadataReducer = (result: ServiceProvider[], serviceProvider: ServiceProvider): ServiceProvider[] =>
+    serviceProvider?.metadata?.[METADATA_NAMESPACE] ? result.concat(serviceProvider) : result;
+
+const categoryReducer = (
     result: ServiceProvider[],
     [category, serviceProviders]: [KnownDigitalWalletProviderCategories, ServiceProvider[]]
 ): ServiceProvider[] => {
     switch (category) {
         case KnownDigitalWalletProviderCategories.DigitalWallet:
-            result = result.concat(serviceProviders);
+            result = result.concat(serviceProviders.reduce(metadataReducer, []));
             break;
         default:
             assertUnreachable(category);
@@ -41,7 +44,7 @@ export const getDigitalWalletPaymentMethods = (
         return [];
     }
     const groupedByCategory = Object.entries(groupBy(serviceProviders, 'category'));
-    const reduced = groupedByCategory.reduce(serviceProviderReducer, []);
+    const reduced = groupedByCategory.reduce(categoryReducer, []);
     return [
         {
             name: PaymentMethodNameState.DigitalWallet,
