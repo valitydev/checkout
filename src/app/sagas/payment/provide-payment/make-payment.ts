@@ -7,8 +7,16 @@ import { createPayment } from './create-payment';
 import { pollInvoiceEvents } from '../../poll-events';
 import { TypeKeys } from 'checkout/actions';
 import { SetAcceptedError } from 'checkout/actions/error-actions/set-accepted-error';
+import { serializeUrlParams } from '../../../../serialize-url-params';
 
 type CreatePaymentResourceFn = (invoiceAccessToken: any) => Iterator<PaymentResource>;
+
+const prepareRedirectUrl = (origin: string, invoiceID: string, invoiceAccessToken: string, configRedirectUrl: string) =>
+    `${origin}/v1/checkout.html?${serializeUrlParams({
+        invoiceID,
+        invoiceAccessToken,
+        configRedirectUrl
+    })}`;
 
 export function* makePayment(
     config: Config,
@@ -16,17 +24,30 @@ export function* makePayment(
     values: PayableFormValues,
     amountInfo: AmountInfoState,
     fn: CreatePaymentResourceFn,
-    withPolling = true
+    setRedirect = false
 ) {
-    const { initConfig, appConfig } = config;
+    const { initConfig, appConfig, origin } = config;
     const { capiEndpoint } = appConfig;
     const {
         invoice: { id },
         invoiceAccessToken
     } = yield call(getPayableInvoice, initConfig, capiEndpoint, model, amountInfo, values.amount);
     const paymentResource = yield call(fn, invoiceAccessToken);
+    let redirectUrl;
+    if (setRedirect) {
+        redirectUrl = prepareRedirectUrl(origin, id, invoiceAccessToken, initConfig.redirectUrl);
+    }
     try {
-        yield call(createPayment, capiEndpoint, invoiceAccessToken, id, values.email, paymentResource, initConfig);
+        yield call(
+            createPayment,
+            capiEndpoint,
+            invoiceAccessToken,
+            id,
+            values.email,
+            paymentResource,
+            initConfig,
+            redirectUrl
+        );
     } catch (e) {
         switch (e.code) {
             case LogicErrorCode.invalidInvoiceStatus:
@@ -37,7 +58,5 @@ export function* makePayment(
                 throw e;
         }
     }
-    if (withPolling) {
-        yield call(pollInvoiceEvents, capiEndpoint, invoiceAccessToken, id);
-    }
+    yield call(pollInvoiceEvents, capiEndpoint, invoiceAccessToken, id);
 }

@@ -43,10 +43,14 @@ export const RedirectForm: React.FC = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        const prepared = prepareForm(origin, request, '_blank');
+        const prepared = prepareForm(origin, request, '_self');
         containerRef.current.appendChild(prepared);
         setForm(prepared);
     }, []);
+
+    useEffect(() => {
+        form && form.submit();
+    }, [form]);
 
     const redirect = () => {
         form.submit();

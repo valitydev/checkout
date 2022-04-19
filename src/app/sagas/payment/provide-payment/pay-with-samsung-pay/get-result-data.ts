@@ -8,7 +8,7 @@ import {
 import { Transaction } from 'checkout/backend/model';
 import { listen } from 'cross-origin-communicator';
 import { detectLocale } from '../../../../../locale/detect-locale';
-import { serialize } from '../../../../../initializer/popup-initializer';
+import { serializeUrlParams } from '../../../../../serialize-url-params';
 
 export async function getResultData(transaction: Transaction, serviceId: string, locale: string): Promise<ResultData> {
     const connectTransport = await listen(communicatorInstanceName, 5000);
@@ -20,7 +20,7 @@ export async function getResultData(transaction: Transaction, serviceId: string,
                 href: transaction.href,
                 serviceId,
                 callbackURL: URL,
-                cancelURL: `${URL}?${serialize({ type: Type.ERROR })}`,
+                cancelURL: `${URL}?${serializeUrlParams({ type: Type.ERROR })}`,
                 countryCode: detectLocale(locale),
                 publicKeyMod: transaction.encInfo.mod,
                 publicKeyExp: transaction.encInfo.exp,

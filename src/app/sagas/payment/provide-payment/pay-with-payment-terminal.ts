@@ -14,5 +14,5 @@ export function* payWithPaymentTerminal(
     v: PaymentTerminalFormValues
 ): Iterator<CallEffect> {
     const fn = createPaymentResource(c.appConfig.capiEndpoint, v.provider, v.metadata);
-    yield call(makePayment, c, m, v, a, fn);
+    yield call(makePayment, c, m, v, a, fn, true);
 }

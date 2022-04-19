@@ -19,13 +19,20 @@ export const toPaymentFlow = (c: InitConfig): PaymentFlow => {
     return c.paymentFlowHold ? hold : instant;
 };
 
+const getSessionInfo = (redirectUrl: string) => ({
+    sessionInfo: {
+        redirectUrl
+    }
+});
+
 export function* createPayment(
     endpoint: string,
     token: string,
     invoiceID: string,
     formEmail: string,
     resource: PaymentResource,
-    initConfig: InitConfig
+    initConfig: InitConfig,
+    redirectUrl?: string
 ): Iterator<Effects> {
     const email = initConfig.email || formEmail;
     const { paymentToolToken, paymentSession } = resource;
@@ -37,7 +44,8 @@ export function* createPayment(
             paymentSession,
             contactInfo: {
                 email
-            }
+            },
+            ...(redirectUrl && getSessionInfo(redirectUrl))
         },
         makeRecurrent: initConfig.recurring,
         metadata: initConfig.metadata
