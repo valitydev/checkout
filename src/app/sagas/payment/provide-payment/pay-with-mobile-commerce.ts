@@ -16,7 +16,7 @@ const createPaymentResource = (endpoint: string, formValues: MobileCommerceFormV
 
 export function* payWithMobileCommerce(c: Config, m: ModelState, a: AmountInfoState, v: MobileCommerceFormValues) {
     const fn = createPaymentResource(c.appConfig.capiEndpoint, v);
-    yield call(makePayment, c, m, v, a, fn, false);
+    yield call(makePayment, c, m, v, a, fn);
     yield put({
         type: TypeKeys.SET_MODAL_STATE,
         payload: new ModalForms([new MobileCommerceReceiptFormInfo()], true)
