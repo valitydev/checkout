@@ -35,7 +35,7 @@ const WalletFormDef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, 
         dispatch(
             pay({
                 method: PaymentMethodName.DigitalWallet,
-                values: obscurePassword(form, values)
+                values: form ? obscurePassword(form, values) : values
             })
         );
     };
