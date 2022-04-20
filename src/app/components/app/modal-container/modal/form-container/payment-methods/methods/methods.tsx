@@ -49,6 +49,7 @@ const Method: React.FC<MethodProps> = (props) => {
                         serviceProvider={serviceProviders[0]}
                         previous={FormName.paymentMethods}
                         setFormInfo={props.setFormInfo}
+                        pay={props.pay}
                     />
                 );
             }

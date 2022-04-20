@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormName, PaymentMethodName, DigitalWalletPaymentMethod } from 'checkout/state';
 import { Header } from '../header';
-import { goToFormInfo } from 'checkout/actions';
+import { goToFormInfo, pay } from 'checkout/actions';
 import { WalletProviderPaymentMethodItem } from '../wallet-provider-payment-method-item';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getAvailablePaymentMethodSelector, getLocaleSelector } from 'checkout/selectors';
@@ -21,6 +21,7 @@ export const WalletProviders: React.FC = () => {
                     previous={FormName.walletProviders}
                     setFormInfo={(formInfo) => dispatch(goToFormInfo(formInfo))}
                     serviceProvider={serviceProvider}
+                    pay={(payload) => dispatch(pay(payload))}
                 />
             ))}
         </div>
