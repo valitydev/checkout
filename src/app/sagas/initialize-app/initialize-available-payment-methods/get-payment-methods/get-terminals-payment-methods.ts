@@ -9,12 +9,12 @@ type InitConfigChunk = {
     onlineBanking: boolean;
     netBanking: boolean;
     upi: boolean;
-    paymentTerminalBankCard: boolean;
+    terminalBankCard: boolean;
     paymentFlowHold: boolean;
     recurring: boolean;
 };
 
-const categoryReducer = ({ onlineBanking, netBanking, upi, paymentTerminalBankCard }: Partial<InitConfigChunk>) => (
+const categoryReducer = ({ onlineBanking, netBanking, upi, terminalBankCard }: Partial<InitConfigChunk>) => (
     result: PaymentMethod[],
     [category, serviceProviders]: [KnownProviderCategories, ServiceProvider[]]
 ) => {
@@ -40,7 +40,7 @@ const categoryReducer = ({ onlineBanking, netBanking, upi, paymentTerminalBankCa
             }
             break;
         case KnownProviderCategories.BankCard:
-            if (paymentTerminalBankCard) {
+            if (terminalBankCard) {
                 result = result.concat([paymentMethod]);
             }
             break;
@@ -52,7 +52,7 @@ const categoryReducer = ({ onlineBanking, netBanking, upi, paymentTerminalBankCa
 
 export const getTerminalsPaymentMethods = (
     serviceProviders: ServiceProvider[],
-    { paymentFlowHold, recurring, onlineBanking, netBanking, upi, paymentTerminalBankCard }: InitConfigChunk
+    { paymentFlowHold, recurring, onlineBanking, netBanking, upi, terminalBankCard }: InitConfigChunk
 ): PaymentMethod[] => {
     if (paymentFlowHold) {
         logUnavailableWithConfig('terminals', 'paymentFlowHold');
@@ -63,5 +63,5 @@ export const getTerminalsPaymentMethods = (
         return [];
     }
     const groupedByCategory = Object.entries(groupBy(serviceProviders, 'category'));
-    return groupedByCategory.reduce(categoryReducer({ onlineBanking, netBanking, upi, paymentTerminalBankCard }), []);
+    return groupedByCategory.reduce(categoryReducer({ onlineBanking, netBanking, upi, terminalBankCard }), []);
 };

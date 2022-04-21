@@ -9,9 +9,6 @@ import { findNamed } from 'checkout/utils';
 import { makeContentError, makeContentInvoice, ResultFormContent, ResultFormType } from './make-content';
 import { ActionBlock } from './action-block';
 import { IntegrationType } from 'checkout/config';
-import { getErrorCodeFromEvents } from '../get-error-code-from-changes';
-import { isHelpAvailable } from './is-help-available';
-import { ErrorDescriptionBlock } from './error-description-block';
 import { ResultIcon } from 'checkout/components/app/modal-container/modal/form-container/result-form/result-icons';
 import styled, { css } from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
@@ -59,7 +56,6 @@ const Form = styled.form<{ hasActions: boolean }>`
 class ResultFormDef extends React.Component<ResultFormProps> {
     render() {
         const { header, description, type, hasActions, hasDone } = this.makeContent();
-        const { hasErrorDescription } = this.props;
         if (hasDone) {
             this.props.setResult(ResultState.done);
         }
@@ -69,7 +65,6 @@ class ResultFormDef extends React.Component<ResultFormProps> {
                     <Title type={type}>{header}</Title>
                     <ResultIcon type={type} />
                     {description}
-                    {hasErrorDescription ? <ErrorDescriptionBlock /> : false}
                     {hasActions ? <ActionBlock /> : false}
                 </Container>
             </Form>
@@ -99,9 +94,6 @@ const mapStateToProps = (state: State) => {
         locale: state.config.locale,
         error: state.error ? state.error.error : null,
         resultFormInfo: findNamed(info, FormName.resultForm) as ResultFormInfo,
-        hasErrorDescription: isHelpAvailable(
-            getErrorCodeFromEvents(state.events.events, state.config.initConfig.integrationType)
-        ),
         hasMultiMethods: !!findNamed(info, FormName.paymentMethods)
     };
 };
