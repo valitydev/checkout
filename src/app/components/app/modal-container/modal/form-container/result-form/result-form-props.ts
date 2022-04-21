@@ -10,7 +10,6 @@ export interface ResultFormProps {
     resultFormInfo: ResultFormInfo;
     error: LogicError;
     hasMultiMethods: boolean;
-    hasErrorDescription: boolean;
     setResult: (resultState: ResultState) => any;
     goToFormInfo: (formInfo: FormInfo) => any;
 }
