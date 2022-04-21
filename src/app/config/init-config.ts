@@ -10,6 +10,10 @@ export class InitConfig {
     samsungPay: boolean;
     yandexPay: boolean;
     wallets: boolean;
+    onlineBanking?: boolean;
+    netBanking?: boolean;
+    upi?: boolean;
+    terminalBankCard?: boolean;
     mobileCommerce: boolean;
     paymentFlowHold: boolean;
     holdExpiration: HoldExpirationType;
@@ -25,8 +29,4 @@ export class InitConfig {
     recurring?: boolean;
     theme?: string;
     metadata?: object;
-    onlineBanking?: boolean;
-    netBanking?: boolean;
-    upi?: boolean;
-    paymentTerminalBankCard?: boolean;
 }
