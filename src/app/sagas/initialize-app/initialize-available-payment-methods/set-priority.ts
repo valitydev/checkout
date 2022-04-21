@@ -19,19 +19,21 @@ const getPriority = (method: PaymentMethod): number => {
                     return 3;
                 case KnownProviderCategories.NetBanking:
                     return 4;
-                case KnownProviderCategories.UPI:
+                case KnownProviderCategories.DigitalWallet:
                     return 5;
+                case KnownProviderCategories.UPI:
+                    return 6;
                 default:
                     assertUnreachable(category);
             }
         case PaymentMethodName.DigitalWallet:
-            return 6;
+            return 7;
         case PaymentMethodName.MobileCommerce:
         case PaymentMethodName.GooglePay:
         case PaymentMethodName.ApplePay:
         case PaymentMethodName.SamsungPay:
         case PaymentMethodName.YandexPay:
-            return 7;
+            return 8;
         default:
             assertUnreachable(method.name);
     }

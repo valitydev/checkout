@@ -2,5 +2,6 @@ export enum KnownProviderCategories {
     OnlineBanking = 'onlinebanking',
     NetBanking = 'netbanking',
     UPI = 'upi',
-    BankCard = 'bankcard'
+    BankCard = 'bankcard',
+    DigitalWallet = 'digitalwallet'
 }
