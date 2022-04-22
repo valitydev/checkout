@@ -30,6 +30,8 @@ const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalP
             return isNil(serviceProviders[0].metadata) ? new PaymentMethodsFormInfo() : new UPIFormInfo();
         case KnownProviderCategories.BankCard:
             return new PaymentTerminalBankCardFormInfo();
+        case KnownProviderCategories.DigitalWallet:
+            return new PaymentMethodsFormInfo();
         default:
             assertUnreachable(category);
             return null;

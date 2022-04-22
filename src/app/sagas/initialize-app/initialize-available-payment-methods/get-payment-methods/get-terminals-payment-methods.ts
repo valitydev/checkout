@@ -5,20 +5,27 @@ import { ServiceProvider } from 'checkout/backend';
 import { logUnavailableWithConfig } from './log-unavailable-with-config';
 import { assertUnreachable } from 'checkout/utils';
 
-type InitConfigChunk = {
+interface InitConfigChunk {
     onlineBanking: boolean;
     netBanking: boolean;
     upi: boolean;
     terminalBankCard: boolean;
+    terminalWallets: boolean;
     paymentFlowHold: boolean;
     recurring: boolean;
-};
+}
 
-const categoryReducer = ({ onlineBanking, netBanking, upi, terminalBankCard }: Partial<InitConfigChunk>) => (
+const categoryReducer = ({
+    onlineBanking,
+    netBanking,
+    upi,
+    terminalBankCard,
+    terminalWallets
+}: Partial<InitConfigChunk>) => (
     result: PaymentMethod[],
     [category, serviceProviders]: [KnownProviderCategories, ServiceProvider[]]
 ) => {
-    let paymentMethod = {
+    const paymentMethod = {
         name: PaymentMethodName.PaymentTerminal,
         category,
         serviceProviders
@@ -44,6 +51,11 @@ const categoryReducer = ({ onlineBanking, netBanking, upi, terminalBankCard }: P
                 result = result.concat([paymentMethod]);
             }
             break;
+        case KnownProviderCategories.DigitalWallet:
+            if (terminalWallets) {
+                result = result.concat([paymentMethod]);
+            }
+            break;
         default:
             assertUnreachable(category);
     }
@@ -52,7 +64,7 @@ const categoryReducer = ({ onlineBanking, netBanking, upi, terminalBankCard }: P
 
 export const getTerminalsPaymentMethods = (
     serviceProviders: ServiceProvider[],
-    { paymentFlowHold, recurring, onlineBanking, netBanking, upi, terminalBankCard }: InitConfigChunk
+    { paymentFlowHold, recurring, onlineBanking, netBanking, upi, terminalBankCard, terminalWallets }: InitConfigChunk
 ): PaymentMethod[] => {
     if (paymentFlowHold) {
         logUnavailableWithConfig('terminals', 'paymentFlowHold');
@@ -63,5 +75,8 @@ export const getTerminalsPaymentMethods = (
         return [];
     }
     const groupedByCategory = Object.entries(groupBy(serviceProviders, 'category'));
-    return groupedByCategory.reduce(categoryReducer({ onlineBanking, netBanking, upi, terminalBankCard }), []);
+    return groupedByCategory.reduce(
+        categoryReducer({ onlineBanking, netBanking, upi, terminalBankCard, terminalWallets }),
+        []
+    );
 };

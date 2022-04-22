@@ -14,6 +14,7 @@ export class InitConfig {
     netBanking?: boolean;
     upi?: boolean;
     terminalBankCard?: boolean;
+    terminalWallets?: boolean;
     mobileCommerce: boolean;
     paymentFlowHold: boolean;
     holdExpiration: HoldExpirationType;
