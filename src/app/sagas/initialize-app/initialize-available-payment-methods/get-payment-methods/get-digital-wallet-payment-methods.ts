@@ -1,6 +1,6 @@
 import groupBy from 'lodash-es/groupBy';
 
-import { METADATA_NAMESPACE, ServiceProvider } from 'checkout/backend';
+import { DigitalWallet, METADATA_NAMESPACE, ServiceProvider } from 'checkout/backend';
 import {
     DigitalWalletPaymentMethod,
     PaymentMethodName as PaymentMethodNameState,
@@ -8,6 +8,7 @@ import {
 } from 'checkout/state';
 import { logUnavailableWithConfig } from './log-unavailable-with-config';
 import { assertUnreachable } from 'checkout/utils';
+import { filterByPaymentMethodProviders } from './filter-by-payment-method-providers';
 
 const metadataReducer = (result: ServiceProvider[], serviceProvider: ServiceProvider): ServiceProvider[] =>
     serviceProvider?.metadata?.[METADATA_NAMESPACE] ? result.concat(serviceProvider) : result;
@@ -28,6 +29,7 @@ const categoryReducer = (
 };
 
 export const getDigitalWalletPaymentMethods = (
+    { providers }: DigitalWallet,
     serviceProviders: ServiceProvider[],
     isMethod: boolean,
     paymentFlowHold: boolean,
@@ -44,7 +46,8 @@ export const getDigitalWalletPaymentMethods = (
         logUnavailableWithConfig('wallets', 'recurring');
         return [];
     }
-    const groupedByCategory = Object.entries(groupBy(serviceProviders, 'category'));
+    const filtered = serviceProviders.filter(filterByPaymentMethodProviders(providers));
+    const groupedByCategory = Object.entries(groupBy(filtered, 'category'));
     const reduced = groupedByCategory.reduce(categoryReducer, []);
     return [
         {
