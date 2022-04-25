@@ -1,10 +1,11 @@
 import { call, CallEffect } from 'redux-saga/effects';
 import { PaymentMethod as PaymentMethodState, PaymentMethodName as PaymentMethodNameState } from 'checkout/state';
-import { PaymentMethod, PaymentMethodName, ServiceProvider } from 'checkout/backend';
+import { DigitalWallet, PaymentMethod, PaymentMethodName, PaymentTerminal, ServiceProvider } from 'checkout/backend';
 import { Config } from 'checkout/config';
 import { bankCardToMethods } from './bank-card-to-methods';
 import { getDigitalWalletPaymentMethods, getTerminalsPaymentMethods } from './get-payment-methods';
 import { assertUnreachable } from 'checkout/utils';
+import { terminalDigitalWalletReducer } from './terminal-digital-wallet-reducer';
 
 export function* toAvailablePaymentMethods(
     paymentMethods: PaymentMethod[],
@@ -30,12 +31,18 @@ export function* toAvailablePaymentMethods(
                 break;
             case PaymentMethodName.DigitalWallet:
                 result = result.concat(
-                    getDigitalWalletPaymentMethods(serviceProviders, wallets, paymentFlowHold, recurring)
+                    getDigitalWalletPaymentMethods(
+                        method as DigitalWallet,
+                        serviceProviders,
+                        wallets,
+                        paymentFlowHold,
+                        recurring
+                    )
                 );
                 break;
             case PaymentMethodName.PaymentTerminal:
                 result = result.concat(
-                    getTerminalsPaymentMethods(serviceProviders, {
+                    getTerminalsPaymentMethods(method as PaymentTerminal, serviceProviders, {
                         onlineBanking,
                         netBanking,
                         upi,
@@ -55,5 +62,5 @@ export function* toAvailablePaymentMethods(
                 assertUnreachable(method.method);
         }
     }
-    return result;
+    return result.reduce(terminalDigitalWalletReducer, []);
 }

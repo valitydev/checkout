@@ -1,12 +1,6 @@
 import * as React from 'react';
 
-import {
-    FormInfo,
-    FormName,
-    KnownDigitalWalletProviderCategories,
-    PaymentTerminalFormValues,
-    WalletFormInfo
-} from 'checkout/state';
+import { FormInfo, FormName, PaymentTerminalFormValues, WalletFormInfo } from 'checkout/state';
 import { getMetadata, MetadataLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PaymentMethodName, ServiceProvider } from 'checkout/backend';
 import { PaymentRequestedPayload } from 'checkout/actions';
@@ -30,14 +24,8 @@ const provideTerminalPayment = (pay: PayAction, provider: string) =>
     });
 
 const provideMethod = ({ serviceProvider, setFormInfo, pay, previous }: WalletProviderPaymentMethodItemProps) => {
-    switch (serviceProvider.category) {
-        case KnownDigitalWalletProviderCategories.DigitalWallet:
-            setFormInfo(new WalletFormInfo(serviceProvider, previous));
-            break;
-        case KnownDigitalWalletProviderCategories.TerminalWallet:
-            provideTerminalPayment(pay, serviceProvider.id);
-            break;
-    }
+    const { form } = getMetadata(serviceProvider);
+    form ? setFormInfo(new WalletFormInfo(serviceProvider, previous)) : provideTerminalPayment(pay, serviceProvider.id);
 };
 
 export const WalletProviderPaymentMethodItem: React.FC<WalletProviderPaymentMethodItemProps> = (props) => {

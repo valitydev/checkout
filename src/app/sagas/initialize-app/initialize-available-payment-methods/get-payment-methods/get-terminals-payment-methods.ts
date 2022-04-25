@@ -1,9 +1,10 @@
 import groupBy from 'lodash-es/groupBy';
 
 import { KnownProviderCategories, PaymentMethod, PaymentMethodName } from 'checkout/state';
-import { ServiceProvider } from 'checkout/backend';
+import { PaymentTerminal, ServiceProvider } from 'checkout/backend';
 import { logUnavailableWithConfig } from './log-unavailable-with-config';
 import { assertUnreachable } from 'checkout/utils';
+import { filterByPaymentMethodProviders } from './filter-by-payment-method-providers';
 
 interface InitConfigChunk {
     onlineBanking: boolean;
@@ -63,6 +64,7 @@ const categoryReducer = ({
 };
 
 export const getTerminalsPaymentMethods = (
+    { providers }: PaymentTerminal,
     serviceProviders: ServiceProvider[],
     { paymentFlowHold, recurring, onlineBanking, netBanking, upi, terminalBankCard, terminalWallets }: InitConfigChunk
 ): PaymentMethod[] => {
@@ -74,7 +76,8 @@ export const getTerminalsPaymentMethods = (
         logUnavailableWithConfig('terminals', 'recurring');
         return [];
     }
-    const groupedByCategory = Object.entries(groupBy(serviceProviders, 'category'));
+    const filtered = serviceProviders.filter(filterByPaymentMethodProviders(providers));
+    const groupedByCategory = Object.entries(groupBy(filtered, 'category'));
     return groupedByCategory.reduce(
         categoryReducer({ onlineBanking, netBanking, upi, terminalBankCard, terminalWallets }),
         []
