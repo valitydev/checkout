@@ -19,7 +19,6 @@ const categoryReducer = (
 ): ServiceProvider[] => {
     switch (category) {
         case KnownDigitalWalletProviderCategories.DigitalWallet:
-        case KnownDigitalWalletProviderCategories.TerminalWallet:
             result = result.concat(serviceProviders.reduce(metadataReducer, []));
             break;
         default:

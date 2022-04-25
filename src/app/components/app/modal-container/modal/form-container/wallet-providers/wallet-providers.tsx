@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { FormName, PaymentMethodName, DigitalWalletPaymentMethod } from 'checkout/state';
 import { Header } from '../header';
 import { goToFormInfo, pay } from 'checkout/actions';
@@ -12,6 +13,7 @@ export const WalletProviders: React.FC = () => {
         getAvailablePaymentMethodSelector<DigitalWalletPaymentMethod>(PaymentMethodName.DigitalWallet)
     );
     const dispatch = useAppDispatch();
+
     return (
         <div>
             <Header title={locale['form.header.payment.methods.label']} />
