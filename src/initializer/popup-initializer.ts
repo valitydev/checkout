@@ -8,7 +8,7 @@ import { serializeUrlParams } from '../serialize-url-params';
 export class PopupInitializer extends Initializer {
     open(openConfig: OpenConfig = {}) {
         const url = `${this.origin}/v1/checkout.html?${serializeUrlParams({ ...this.config, ...openConfig })}`;
-        const target = window.open(url);
+        const target = window.open(url, '_blank');
         initialize(target, this.origin, communicatorInstanceName).then((transport) => {
             this.opened();
             transport.on(CommunicatorEvents.finished, () => {
