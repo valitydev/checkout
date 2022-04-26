@@ -1,26 +1,13 @@
 import 'url-polyfill';
 import 'core-js/es6/promise';
-import * as isMobile from 'ismobilejs';
 
 import { domReady } from './dom-ready';
-import { Initializer } from './initializer';
 import { HtmlIntegration } from './html-integration';
 import { PopupInitializer } from './popup-initializer';
-import { IframeInitializer } from './iframe-initializer';
-import { environment, Configurator, isApplePayAvailable } from '../environment';
-
-const isPopupModeConfigTrue = ({ popupMode }: any): boolean => popupMode === true || popupMode === 'true';
-
-const isPopupModeConfigFalse = ({ popupMode }: any): boolean => popupMode === false || popupMode === 'false';
-
-const isPopupMode = (userConfig: any): boolean =>
-    isMobile.any || isPopupModeConfigTrue(userConfig) || (!isPopupModeConfigFalse(userConfig) && isApplePayAvailable());
-
-const getInstance = (origin: string, userConfig: any): Initializer =>
-    isPopupMode(userConfig) ? new PopupInitializer(origin, userConfig) : new IframeInitializer(origin, userConfig);
+import { environment, Configurator } from '../environment';
 
 const init = (origin: string): Configurator => ({
-    configure: (userConfig: any) => getInstance(origin, userConfig)
+    configure: (userConfig: any) => new PopupInitializer(origin, userConfig)
 });
 
 domReady().then((origin) => {

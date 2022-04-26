@@ -11,11 +11,11 @@ import { serializeUrlParams } from '../../../../serialize-url-params';
 
 type CreatePaymentResourceFn = (invoiceAccessToken: any) => Iterator<PaymentResource>;
 
-const prepareRedirectUrl = (origin: string, invoiceID: string, invoiceAccessToken: string, configRedirectUrl: string) =>
+const prepareRedirectUrl = (origin: string, invoiceID: string, invoiceAccessToken: string, redirectUrl: string) =>
     `${origin}/v1/checkout.html?${serializeUrlParams({
         invoiceID,
         invoiceAccessToken,
-        configRedirectUrl
+        redirectUrl
     })}`;
 
 export function* makePayment(

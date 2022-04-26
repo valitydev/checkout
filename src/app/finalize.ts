@@ -8,7 +8,7 @@ import { ResultAction } from 'checkout/actions';
 
 class AppFinalizer {
     static CLOSE_TIMEOUT = 750;
-    static DONE_TIMEOUT = 24000;
+    static DONE_TIMEOUT = 5000;
 
     constructor(private transport: Transport, private checkoutEl: HTMLElement) {}
 
