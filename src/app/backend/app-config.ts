@@ -21,4 +21,5 @@ export class AppConfig {
     brandless: boolean;
     fixedTheme: ThemeName;
     brandName: string;
+    urlShortenerEndpoint: string;
 }
