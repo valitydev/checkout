@@ -1,7 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { AmountInfoState, ModelState, PayableFormValues } from 'checkout/state';
 import { getPayableInvoice } from './get-payable-invoice';
-import { LogicErrorCode, PaymentResource } from 'checkout/backend';
+import { LogicErrorCode, PaymentResource, shortenUrl } from 'checkout/backend';
 import { Config } from 'checkout/config';
 import { createPayment } from './create-payment';
 import { pollInvoiceEvents } from '../../poll-events';
@@ -27,15 +27,20 @@ export function* makePayment(
     setRedirect = false
 ) {
     const { initConfig, appConfig, origin } = config;
-    const { capiEndpoint } = appConfig;
+    const { capiEndpoint, urlShortenerEndpoint } = appConfig;
     const {
-        invoice: { id },
+        invoice: { id, dueDate },
         invoiceAccessToken
     } = yield call(getPayableInvoice, initConfig, capiEndpoint, model, amountInfo, values.amount);
     const paymentResource = yield call(fn, invoiceAccessToken);
-    let redirectUrl;
+    let shortenedRedirectUrl;
     if (setRedirect) {
-        redirectUrl = prepareRedirectUrl(origin, id, invoiceAccessToken, initConfig.redirectUrl);
+        const redirectUrl = prepareRedirectUrl(origin, id, invoiceAccessToken, initConfig.redirectUrl);
+        const { shortenedUrl } = yield call(shortenUrl, urlShortenerEndpoint, invoiceAccessToken, {
+            sourceUrl: redirectUrl,
+            expiresAt: dueDate
+        });
+        shortenedRedirectUrl = shortenedUrl;
     }
     try {
         yield call(
@@ -46,7 +51,7 @@ export function* makePayment(
             values.email,
             paymentResource,
             initConfig,
-            redirectUrl
+            shortenedRedirectUrl
         );
     } catch (e) {
         switch (e.code) {

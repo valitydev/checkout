@@ -29,3 +29,5 @@ export * from './samsungpay';
 export * from './mobile-commerce';
 export * from './online-banking';
 export * from './service-provider';
+export * from './shortened-url-params';
+export * from './shortened-url';
