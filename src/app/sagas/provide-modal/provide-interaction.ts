@@ -37,7 +37,7 @@ const providePaymentTerminalPaymentTool = (
 ) => {
     switch (paymentToolDetails.detailsType) {
         case PaymentToolDetailsType.PaymentToolDetailsPaymentTerminal:
-            return new ModalForms([new RedirectFormInfo(userInteraction.request)], true);
+            return new ModalForms([new RedirectFormInfo(userInteraction.request)], true, true);
         default:
             return toModalInteraction(userInteraction);
     }

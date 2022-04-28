@@ -55,9 +55,6 @@
         "Example: username@ybl testname@upi userbnk@sbi etc."
     ],
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Select payment system:",
-    "form.pay.redirect.description": "Please press “Continue” to proceed. You will be redirected to the payment page.",
-    "form.pay.redirect.description.btn.continue": "Continue",
-    "form.pay.redirect.description.btn.cancel": "Cancel",
     "form.help.header": "問題を解決するには？",
     "form.help.codes": {
         "InvalidPaymentTool": {
