@@ -66,7 +66,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "~6.26.2",
     "babel-preset-env": "~1.7.0",
     "cache-loader": "4.1.0",
-    "compression-webpack-plugin": "~4.0.0",
+    "compression-webpack-plugin": "9.2.0",
     "concurrently": "7.0.0",
     "copy-webpack-plugin": "~5.1.1",
     "cross-origin-communicator": "github:valitydev/cross-origin-communicator#bd13edd80e2d55cffa45c6b7b9ee3744475c5d0d",
