@@ -21,7 +21,8 @@ export function* toAvailablePaymentMethods(
         terminalBankCard,
         terminalWallets,
         paymentFlowHold,
-        recurring
+        recurring,
+        pix
     } = config.initConfig;
     for (const method of paymentMethods) {
         switch (method.method) {
@@ -49,7 +50,8 @@ export function* toAvailablePaymentMethods(
                         terminalBankCard,
                         terminalWallets,
                         paymentFlowHold,
-                        recurring
+                        recurring,
+                        pix
                     })
                 );
                 break;

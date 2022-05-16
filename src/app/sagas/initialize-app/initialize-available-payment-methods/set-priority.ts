@@ -23,17 +23,19 @@ const getPriority = (method: PaymentMethod): number => {
                     return 5;
                 case KnownProviderCategories.UPI:
                     return 6;
+                case KnownProviderCategories.PIX:
+                    return 7;
                 default:
                     assertUnreachable(category);
             }
         case PaymentMethodName.DigitalWallet:
-            return 7;
+            return 8;
         case PaymentMethodName.MobileCommerce:
         case PaymentMethodName.GooglePay:
         case PaymentMethodName.ApplePay:
         case PaymentMethodName.SamsungPay:
         case PaymentMethodName.YandexPay:
-            return 8;
+            return 9;
         default:
             assertUnreachable(method.name);
     }

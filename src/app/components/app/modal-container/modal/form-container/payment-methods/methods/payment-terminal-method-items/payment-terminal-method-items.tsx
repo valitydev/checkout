@@ -8,6 +8,7 @@ import { UPIPaymentMethodItem } from './upi-payment-method-item';
 import { PaymentTerminalBankCardMethodItem } from './payment-terminal-bank-card-method-item';
 import { PayAction, SetFormInfoAction } from './types';
 import { PaymentTerminalDigitalWalletsMethodItem } from './payment-terminal-digital-wallets-method-item';
+import { PaymentTerminalMethodItem } from './payment-terminal-method-item';
 
 export interface PaymentTerminalMethodItemsProps {
     method: PaymentTerminalPaymentMethod;
@@ -28,6 +29,8 @@ export const PaymentTerminalMethodItems: React.FC<PaymentTerminalMethodItemsProp
             return <OnlineBankingMethodItem method={method} locale={locale} setFormInfo={setFormInfo} pay={pay} />;
         case KnownProviderCategories.UPI:
             return <UPIPaymentMethodItem method={method} setFormInfo={setFormInfo} pay={pay} />;
+        case KnownProviderCategories.PIX:
+            return <PaymentTerminalMethodItem method={method} setFormInfo={setFormInfo} pay={pay} />;
         case KnownProviderCategories.BankCard:
             return <PaymentTerminalBankCardMethodItem locale={locale} setFormInfo={setFormInfo} />;
         case KnownProviderCategories.DigitalWallet:

@@ -16,7 +16,8 @@ import {
     PaymentTerminalPaymentMethod,
     KnownProviderCategories,
     PaymentTerminalBankCardFormInfo,
-    PaymentMethodsFormInfo
+    PaymentMethodsFormInfo,
+    PaymentTerminalFormInfo
 } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { assertUnreachable } from 'checkout/utils';
@@ -32,6 +33,8 @@ const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalP
             return new PaymentTerminalBankCardFormInfo();
         case KnownProviderCategories.DigitalWallet:
             return new PaymentMethodsFormInfo();
+        case KnownProviderCategories.PIX:
+            return new PaymentTerminalFormInfo();
         default:
             assertUnreachable(category);
             return null;

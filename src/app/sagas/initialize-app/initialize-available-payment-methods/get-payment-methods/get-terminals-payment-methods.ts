@@ -12,6 +12,7 @@ interface InitConfigChunk {
     upi: boolean;
     terminalBankCard: boolean;
     terminalWallets: boolean;
+    pix: boolean;
     paymentFlowHold: boolean;
     recurring: boolean;
 }
@@ -21,7 +22,8 @@ const categoryReducer = ({
     netBanking,
     upi,
     terminalBankCard,
-    terminalWallets
+    terminalWallets,
+    pix
 }: Partial<InitConfigChunk>) => (
     result: PaymentMethod[],
     [category, serviceProviders]: [KnownProviderCategories, ServiceProvider[]]
@@ -57,6 +59,11 @@ const categoryReducer = ({
                 result = result.concat([paymentMethod]);
             }
             break;
+        case KnownProviderCategories.PIX:
+            if (pix) {
+                result = result.concat([paymentMethod]);
+            }
+            break;
         default:
             assertUnreachable(category);
     }
@@ -66,7 +73,16 @@ const categoryReducer = ({
 export const getTerminalsPaymentMethods = (
     { providers }: PaymentTerminal,
     serviceProviders: ServiceProvider[],
-    { paymentFlowHold, recurring, onlineBanking, netBanking, upi, terminalBankCard, terminalWallets }: InitConfigChunk
+    {
+        paymentFlowHold,
+        recurring,
+        onlineBanking,
+        netBanking,
+        upi,
+        terminalBankCard,
+        terminalWallets,
+        pix
+    }: InitConfigChunk
 ): PaymentMethod[] => {
     if (paymentFlowHold) {
         logUnavailableWithConfig('terminals', 'paymentFlowHold');
@@ -79,7 +95,7 @@ export const getTerminalsPaymentMethods = (
     const filtered = serviceProviders.filter(filterByPaymentMethodProviders(providers));
     const groupedByCategory = Object.entries(groupBy(filtered, 'category'));
     return groupedByCategory.reduce(
-        categoryReducer({ onlineBanking, netBanking, upi, terminalBankCard, terminalWallets }),
+        categoryReducer({ onlineBanking, netBanking, upi, terminalBankCard, terminalWallets, pix }),
         []
     );
 };
