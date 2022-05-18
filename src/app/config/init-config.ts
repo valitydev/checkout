@@ -16,6 +16,7 @@ export class InitConfig {
     terminalBankCard?: boolean;
     terminalWallets?: boolean;
     mobileCommerce: boolean;
+    pix: boolean;
     paymentFlowHold: boolean;
     holdExpiration: HoldExpirationType;
     locale: string;

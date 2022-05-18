@@ -21,10 +21,12 @@ export interface ServiceProviderLogoMetadata {
     height: string;
 }
 
+export interface CheckoutServiceProviderMetadata {
+    form?: ServiceProviderMetadataField[];
+    logo?: ServiceProviderLogoMetadata;
+    signUpLink?: string;
+}
+
 export interface ServiceProviderMetadata {
-    [METADATA_NAMESPACE]: {
-        form?: ServiceProviderMetadataField[];
-        logo?: ServiceProviderLogoMetadata;
-        signUpLink?: string;
-    };
+    [METADATA_NAMESPACE]: CheckoutServiceProviderMetadata;
 }

@@ -11,11 +11,10 @@ import {
     PaymentMethodName,
     PaymentStatus,
     PaymentTerminalFormValues,
-    UPIFormInfo
+    PaymentTerminalFormInfo
 } from 'checkout/state';
 import { Header } from '../header';
 import { PayButton } from '../pay-button';
-import { LogoContainer } from './logo-container';
 import { FormGroup } from '../form-group';
 import {
     getActiveModalFormSelector,
@@ -24,20 +23,20 @@ import {
     getLocaleSelector,
     getModelSelector
 } from 'checkout/selectors';
-import { Instruction } from './instruction';
 import { getMetadata, MetadataField, MetadataLogo } from 'checkout/components/ui';
 import { toFieldsConfig } from '../fields-config';
 import { Amount } from '../common-fields';
+import { LogoContainer } from './logo-container';
 
-const UPIFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
+const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
     const locale = useAppSelector(getLocaleSelector);
     const initConfig = useAppSelector(getInitConfigSelector);
     const model = useAppSelector(getModelSelector);
-    const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(KnownProviderCategories.UPI));
+    const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(KnownProviderCategories.PIX));
     const serviceProvider = paymentMethod?.serviceProviders[0];
-    const formValues = useAppSelector((s) => get(s.form, 'upiForm.values'));
+    const formValues = useAppSelector((s) => get(s.form, 'paymentTerminalForm.values'));
     const { form, logo } = getMetadata(serviceProvider);
-    const { paymentStatus } = useAppSelector<UPIFormInfo>(getActiveModalFormSelector);
+    const { paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
     const amount = toFieldsConfig(initConfig, model.invoiceTemplate).amount;
     const dispatch = useAppDispatch();
 
@@ -73,7 +72,7 @@ const UPIFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, han
 
     return (
         <form onSubmit={handleSubmit(submit)}>
-            <Header title={locale['form.header.pay.upi.label']} />
+            <Header title={serviceProvider?.brandName} />
             <LogoContainer>
                 <MetadataLogo metadata={logo} />
             </LogoContainer>
@@ -87,13 +86,12 @@ const UPIFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, han
                     <Amount cost={amount.cost} />
                 </FormGroup>
             )}
-            <Instruction locale={locale} />
             <PayButton />
         </form>
     );
 };
 
-export const UPIForm = reduxForm({
-    form: FormName.upiForm,
+export const PaymentTerminalForm = reduxForm({
+    form: FormName.paymentTerminalForm,
     destroyOnUnmount: false
-})(UPIFormRef);
+})(PaymentTerminalFormRef);

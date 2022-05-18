@@ -16,7 +16,8 @@ export enum FormName {
     noAvailablePaymentMethodForm = 'noAvailablePaymentMethodForm',
     upiForm = 'upiForm',
     redirectForm = 'redirectForm',
-    paymentTerminalBankCard = 'paymentTerminalBankCard'
+    paymentTerminalBankCard = 'paymentTerminalBankCard',
+    paymentTerminalForm = 'paymentTerminalForm'
 }
 
 export abstract class FormInfo implements Named {
