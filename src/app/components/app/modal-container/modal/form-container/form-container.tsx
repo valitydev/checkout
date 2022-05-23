@@ -27,6 +27,7 @@ import { UPIForm } from './upi-form';
 import { RedirectForm } from './redirect-form';
 import { PaymentTerminalBankCardForm } from './payment-terminal-bank-card-form';
 import { PaymentTerminalForm } from './payment-terminal-form';
+import { QrCodeInteractionForm } from './qr-code-interaction-form';
 
 const Container = styled.div`
     padding: 0 5px;
@@ -223,6 +224,8 @@ class FormContainerDef extends React.Component<FormContainerProps, { height: num
                 return <PaymentTerminalBankCardForm key={name} />;
             case FormName.paymentTerminalForm:
                 return <PaymentTerminalForm key={name} />;
+            case FormName.qrCodeInteractionForm:
+                return <QrCodeInteractionForm key={name} />;
             default:
                 return null;
         }
