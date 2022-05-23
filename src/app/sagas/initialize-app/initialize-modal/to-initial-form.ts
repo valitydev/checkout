@@ -16,23 +16,27 @@ import {
     PaymentTerminalPaymentMethod,
     KnownProviderCategories,
     PaymentTerminalBankCardFormInfo,
-    PaymentMethodsFormInfo,
-    PaymentTerminalFormInfo
+    PaymentTerminalFormInfo,
+    InstantTerminalPaymentFormInfo
 } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { assertUnreachable } from 'checkout/utils';
+import { getMetadata } from 'checkout/components';
 
 const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalPaymentMethod) => {
     switch (category) {
         case KnownProviderCategories.OnlineBanking:
         case KnownProviderCategories.NetBanking:
-            return serviceProviders.length === 1 ? new PaymentMethodsFormInfo() : new OnlineBankingFormInfo(category);
+            return serviceProviders.length === 1
+                ? new InstantTerminalPaymentFormInfo(category)
+                : new OnlineBankingFormInfo(category);
         case KnownProviderCategories.UPI:
-            return isNil(serviceProviders[0].metadata) ? new PaymentMethodsFormInfo() : new UPIFormInfo();
+            const { form } = getMetadata(serviceProviders[0]);
+            return isNil(form) ? new InstantTerminalPaymentFormInfo(category) : new UPIFormInfo();
         case KnownProviderCategories.BankCard:
             return new PaymentTerminalBankCardFormInfo();
         case KnownProviderCategories.DigitalWallet:
-            return new PaymentMethodsFormInfo();
+            return new InstantTerminalPaymentFormInfo(category);
         case KnownProviderCategories.PIX:
             return new PaymentTerminalFormInfo();
         default:
