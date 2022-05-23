@@ -4,6 +4,7 @@ import {
     ModalInteraction,
     ModalInteractionType,
     ModalState,
+    QrCodeInteractionFormInfo,
     RedirectFormInfo
 } from 'checkout/state';
 import {
@@ -16,6 +17,7 @@ import {
     PaymentToolDetails,
     PaymentToolDetailsPaymentTerminal,
     PaymentToolDetailsType,
+    QrCodeDisplayRequest,
     Redirect
 } from 'checkout/backend';
 import { SelectEffect } from 'redux-saga/effects';
@@ -64,6 +66,11 @@ const getPaymentToolDetails = (events: InvoiceEvent[]): PaymentToolDetails => {
     return payer && payer?.paymentToolDetails;
 };
 
+const provideQrCode = (userInteraction: QrCodeDisplayRequest): ModalForms => {
+    const formInfo = new QrCodeInteractionFormInfo(userInteraction);
+    return new ModalForms([formInfo], true);
+};
+
 export function* provideInteraction(
     events: InvoiceEvent[]
 ): IterableIterator<ModalForms | ModalInteraction | SelectEffect> {
@@ -77,6 +84,8 @@ export function* provideInteraction(
     switch (userInteraction.interactionType) {
         case InteractionType.Redirect:
             return provideRedirect(userInteraction as Redirect, paymentToolDetails);
+        case InteractionType.QrCodeDisplayRequest:
+            return provideQrCode(userInteraction as QrCodeDisplayRequest);
         default:
             throw { code: 'error.unsupported.user.interaction.type' };
     }
