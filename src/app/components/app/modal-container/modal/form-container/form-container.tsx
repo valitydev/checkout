@@ -28,6 +28,7 @@ import { RedirectForm } from './redirect-form';
 import { PaymentTerminalBankCardForm } from './payment-terminal-bank-card-form';
 import { PaymentTerminalForm } from './payment-terminal-form';
 import { QrCodeInteractionForm } from './qr-code-interaction-form';
+import { InstantTerminalPaymentForm } from './instant-terminal-payment-form';
 
 const Container = styled.div`
     padding: 0 5px;
@@ -226,6 +227,8 @@ class FormContainerDef extends React.Component<FormContainerProps, { height: num
                 return <PaymentTerminalForm key={name} />;
             case FormName.qrCodeInteractionForm:
                 return <QrCodeInteractionForm key={name} />;
+            case FormName.instantTerminalPaymentFormInfo:
+                return <InstantTerminalPaymentForm key={name} />;
             default:
                 return null;
         }
