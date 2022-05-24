@@ -7,7 +7,6 @@ import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { pay, setViewInfoError } from 'checkout/actions';
 import {
     FormName,
-    KnownProviderCategories,
     PaymentMethodName,
     PaymentStatus,
     PaymentTerminalFormValues,
@@ -32,7 +31,8 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
     const locale = useAppSelector(getLocaleSelector);
     const initConfig = useAppSelector(getInitConfigSelector);
     const model = useAppSelector(getModelSelector);
-    const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(KnownProviderCategories.PIX));
+    const { category } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
+    const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(category));
     const serviceProvider = paymentMethod?.serviceProviders[0];
     const formValues = useAppSelector((s) => get(s.form, 'paymentTerminalForm.values'));
     const { form, logo } = getMetadata(serviceProvider);
@@ -73,9 +73,11 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
     return (
         <form onSubmit={handleSubmit(submit)}>
             <Header title={serviceProvider?.brandName} />
-            <LogoContainer>
-                <MetadataLogo metadata={logo} />
-            </LogoContainer>
+            {logo && (
+                <LogoContainer>
+                    <MetadataLogo metadata={logo} />
+                </LogoContainer>
+            )}
             {form?.map((m) => (
                 <FormGroup key={m.name}>
                     <MetadataField locale={locale} metadata={m} wrappedName="metadata" />

@@ -1,11 +1,16 @@
 import * as React from 'react';
 import isNil from 'lodash-es/isNil';
 
-import { FormName, PaymentTerminalFormInfo, PaymentTerminalPaymentMethod } from 'checkout/state';
+import {
+    FormName,
+    KnownProviderCategories,
+    PaymentTerminalFormInfo,
+    PaymentTerminalPaymentMethod
+} from 'checkout/state';
 import { getMetadata, MetadataLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PayAction, SetFormInfoAction } from './types';
 import { payWithPaymentTerminal } from './pay-with-payment-terminal';
-import { ServiceProviderMetadataField } from 'checkout/backend';
+import { ServiceProvider } from 'checkout/backend';
 
 export interface PaymentTerminalMethodItemProps {
     method: PaymentTerminalPaymentMethod;
@@ -13,23 +18,23 @@ export interface PaymentTerminalMethodItemProps {
     pay: PayAction;
 }
 
-const toPaymentTerminal = (setFormInfo: SetFormInfoAction) =>
-    setFormInfo(new PaymentTerminalFormInfo(FormName.paymentMethods));
+const toPaymentTerminal = (category: KnownProviderCategories, setFormInfo: SetFormInfoAction) =>
+    setFormInfo(new PaymentTerminalFormInfo(category, FormName.paymentMethods));
 
-const provideMethod = (
-    form: ServiceProviderMetadataField[],
-    serviceProviderID: string,
-    pay: PayAction,
-    setFormInfo: SetFormInfoAction
-) => (isNil(form) ? payWithPaymentTerminal(serviceProviderID, pay) : toPaymentTerminal(setFormInfo));
+const provideMethod = (serviceProvider: ServiceProvider, pay: PayAction, setFormInfo: SetFormInfoAction) => {
+    const { form } = getMetadata(serviceProvider);
+    return isNil(form)
+        ? payWithPaymentTerminal(serviceProvider.id, pay)
+        : toPaymentTerminal(serviceProvider.category as KnownProviderCategories, setFormInfo);
+};
 
 export const PaymentTerminalMethodItem: React.FC<PaymentTerminalMethodItemProps> = ({ method, pay, setFormInfo }) => {
     const serviceProvider = method.serviceProviders[0];
-    const { logo, form } = getMetadata(serviceProvider);
+    const { logo } = getMetadata(serviceProvider);
     return (
         <PaymentMethodItemContainer
             id={`${serviceProvider.id}-payment-method-item`}
-            onClick={() => provideMethod(form, serviceProvider.id, pay, setFormInfo)}>
+            onClick={() => provideMethod(serviceProvider, pay, setFormInfo)}>
             {logo && <MetadataLogo metadata={logo} />}
         </PaymentMethodItemContainer>
     );
