@@ -12,7 +12,6 @@ import {
     DigitalWalletPaymentMethod,
     WalletProvidersFormInfo,
     OnlineBankingFormInfo,
-    UPIFormInfo,
     PaymentTerminalPaymentMethod,
     KnownProviderCategories,
     PaymentTerminalBankCardFormInfo,
@@ -26,19 +25,21 @@ import { getMetadata } from 'checkout/components';
 const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalPaymentMethod) => {
     switch (category) {
         case KnownProviderCategories.OnlineBanking:
-        case KnownProviderCategories.NetBanking:
-            return serviceProviders.length === 1
-                ? new InstantTerminalPaymentFormInfo(category)
-                : new OnlineBankingFormInfo(category);
-        case KnownProviderCategories.UPI:
-            const { form } = getMetadata(serviceProviders[0]);
-            return isNil(form) ? new InstantTerminalPaymentFormInfo(category) : new UPIFormInfo();
+            if (serviceProviders.length === 1) {
+                const { form } = getMetadata(serviceProviders[0]);
+                return isNil(form)
+                    ? new InstantTerminalPaymentFormInfo(category)
+                    : new PaymentTerminalFormInfo(category);
+            }
+            return new OnlineBankingFormInfo(category);
         case KnownProviderCategories.BankCard:
             return new PaymentTerminalBankCardFormInfo();
         case KnownProviderCategories.DigitalWallet:
+        case KnownProviderCategories.NetBanking:
+        case KnownProviderCategories.UPI:
             return new InstantTerminalPaymentFormInfo(category);
         case KnownProviderCategories.PIX:
-            return new PaymentTerminalFormInfo();
+            return new PaymentTerminalFormInfo(category);
         default:
             assertUnreachable(category);
             return null;
