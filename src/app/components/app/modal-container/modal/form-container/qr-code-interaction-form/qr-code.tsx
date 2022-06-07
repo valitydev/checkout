@@ -1,11 +1,17 @@
 import * as React from 'react';
 import * as kjua from 'kjua';
+import styled from 'checkout/styled-components';
+
+const Container = styled.div`
+    display: flex;
+    justify-content: center;
+`;
 
 export const QRCode: React.FC<{ text: string }> = ({ text }) => (
-    <div
+    <Container
         dangerouslySetInnerHTML={{
             __html: kjua({
-                size: 300,
+                size: 296,
                 fill: '#2596A1',
                 rounded: 100,
                 crisp: true,
