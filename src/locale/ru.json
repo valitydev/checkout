@@ -55,6 +55,7 @@
         "Example: username@ybl testname@upi userbnk@sbi etc."
     ],
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Выберите платежную систему:",
+    "form.qr.code": "Отсканируйте QR код",
     "form.help.header": "Как решить проблему?",
     "form.help.codes": {
         "InvalidPaymentTool": {
