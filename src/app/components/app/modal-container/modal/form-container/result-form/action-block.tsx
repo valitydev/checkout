@@ -56,6 +56,7 @@ export interface ActionBlockProps {
     startedInfo: FormInfo;
     hasMultiMethods: boolean;
     hasErrorDescription: boolean;
+    redirectUrl: string;
     prepareToRetry: (resetFormData: boolean) => any;
     forgetPaymentAttempt: () => any;
 }
@@ -71,8 +72,13 @@ class ActionBlockDef extends React.Component<ActionBlockProps> {
         this.props.forgetPaymentAttempt();
     };
 
+    redirectToWebsite = (redirectUrl: string) => (e: any) => {
+        e.preventDefault();
+        window.open(redirectUrl, '_self');
+    };
+
     render() {
-        const { locale, startedInfo, hasMultiMethods } = this.props;
+        const { locale, startedInfo, hasMultiMethods, redirectUrl } = this.props;
         return (
             <ErrorBlock>
                 {retryCapability(startedInfo) && (
@@ -90,6 +96,11 @@ class ActionBlockDef extends React.Component<ActionBlockProps> {
                         {locale['form.payment.method.name.others.label']}
                     </OthersButton>
                 )}
+                {redirectUrl && (
+                    <OthersButton onClick={this.redirectToWebsite(redirectUrl)}>
+                        {locale['form.button.back.to.website']}
+                    </OthersButton>
+                )}
             </ErrorBlock>
         );
     }
@@ -103,7 +114,8 @@ const mapStateToProps = (s: State) => {
         hasMultiMethods: !!findNamed(info, FormName.paymentMethods),
         hasErrorDescription: isHelpAvailable(
             getErrorCodeFromEvents(s.events.events, s.config.initConfig.integrationType)
-        )
+        ),
+        redirectUrl: s.config.initConfig?.redirectUrl
     };
 };
 

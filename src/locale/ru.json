@@ -32,6 +32,7 @@
     "form.input.cardholder.placeholder": "Имя держателя карты",
     "form.input.email.placeholder": "Email",
     "form.input.amount.placeholder": "Сумма к оплате",
+    "form.button.back.to.website": "Вернуться на сайт",
     "form.button.next.label": "Далее",
     "form.button.use.other.card.label": "Использовать другую карту",
     "form.button.use.other.wallet.label": "Ввести другой идентификатор аккаунта",
