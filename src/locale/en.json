@@ -32,6 +32,7 @@
     "form.input.cardholder.placeholder": "Cardholder name",
     "form.input.email.placeholder": "Email",
     "form.input.amount.placeholder": "Amount",
+    "form.button.back.to.website": "Back to website",
     "form.button.next.label": "Next",
     "form.button.use.other.card.label": "Use a different card",
     "form.button.use.other.wallet.label": "Use a different account ID",

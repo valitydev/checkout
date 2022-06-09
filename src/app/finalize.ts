@@ -2,7 +2,6 @@ import * as ReactDOM from 'react-dom';
 import { Transport } from 'cross-origin-communicator';
 import { State } from './state';
 import { ResultState } from 'checkout/state';
-import { isSafetyUrl } from 'checkout/utils';
 import { CommunicatorEvents } from '../communicator-constants';
 import { ResultAction } from 'checkout/actions';
 
@@ -28,7 +27,7 @@ class AppFinalizer {
             setTimeout(() => {
                 this.destroy(CommunicatorEvents.finished);
                 if (inFrame) {
-                    redirectUrl && isSafetyUrl(redirectUrl) ? location.replace(redirectUrl) : window.close();
+                    redirectUrl ? window.open(redirectUrl, '_self') : window.close();
                 }
             }, AppFinalizer.CLOSE_TIMEOUT);
         }, AppFinalizer.DONE_TIMEOUT - AppFinalizer.CLOSE_TIMEOUT);

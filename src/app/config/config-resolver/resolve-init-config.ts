@@ -9,6 +9,7 @@ import { PaymentMethodName } from 'checkout/config/payment-method-name';
 import { DEFAULT_THEME } from 'checkout/themes';
 import { resolveObject } from './resolve-object';
 import { detectLocale } from '../../../locale';
+import { resolveRedirectUrl } from './resolve-redirect-url';
 
 const setDefault = <P, D>(userParam: P, defaultValue: D): P | D =>
     userParam === null || userParam === undefined ? defaultValue : userParam;
@@ -67,7 +68,7 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         amount: resolveInteger(amount, 'amount'),
         obscureCardCvv: resolveBoolean(obscureCardCvv, 'obscureCardCvv'),
         requireCardHolder: resolveBoolean(requireCardHolder, 'requireCardHolder'),
-        redirectUrl: resolveString(redirectUrl, 'redirectUrl'),
+        redirectUrl: resolveRedirectUrl(resolveString(redirectUrl, 'redirectUrl')),
         paymentFlowHold: setDefault(resolveBoolean(paymentFlowHold, 'paymentFlowHold'), false),
         holdExpiration: setDefault(
             resolveString(holdExpiration, 'holdExpiration') as HoldExpirationType,
