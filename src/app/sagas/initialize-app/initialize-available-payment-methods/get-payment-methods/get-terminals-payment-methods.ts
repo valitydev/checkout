@@ -64,6 +64,9 @@ const categoryReducer = ({
                 result = result.concat([paymentMethod]);
             }
             break;
+        case KnownProviderCategories.PaymentTerminal:
+            result = result.concat([paymentMethod]);
+            break;
         default:
             assertUnreachable(category);
     }

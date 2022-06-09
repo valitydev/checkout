@@ -4,5 +4,6 @@ export enum KnownProviderCategories {
     UPI = 'upi',
     BankCard = 'bankcard',
     DigitalWallet = 'digitalwallet',
-    PIX = 'pix'
+    PIX = 'pix',
+    PaymentTerminal = 'paymentterminal'
 }

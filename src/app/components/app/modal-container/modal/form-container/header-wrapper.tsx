@@ -7,4 +7,5 @@ export const HeaderWrapper = styled.div`
     flex-wrap: nowrap;
     align-items: center;
     position: relative;
+    height: 20px;
 `;

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 import get from 'lodash-es/get';
+import styled from 'checkout/styled-components';
 
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { pay, setViewInfoError } from 'checkout/actions';
@@ -27,6 +28,13 @@ import { toFieldsConfig } from '../fields-config';
 import { Amount } from '../common-fields';
 import { LogoContainer } from './logo-container';
 
+const Container = styled.div`
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`;
+
 const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
     const locale = useAppSelector(getLocaleSelector);
     const initConfig = useAppSelector(getInitConfigSelector);
@@ -42,16 +50,20 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
 
     useEffect(() => {
         dispatch(setViewInfoError(false));
-        switch (paymentStatus) {
-            case PaymentStatus.pristine:
-                initialize({
-                    amount: formValues?.amount,
-                    provider: serviceProvider.id
-                });
-                break;
-            case PaymentStatus.needRetry:
-                submit(formValues);
-                break;
+        if (form) {
+            switch (paymentStatus) {
+                case PaymentStatus.pristine:
+                    initialize({
+                        amount: formValues?.amount,
+                        provider: serviceProvider.id
+                    });
+                    break;
+                case PaymentStatus.needRetry:
+                    submit(formValues);
+                    break;
+            }
+        } else {
+            submit({ provider: serviceProvider.id });
         }
     }, []);
 
@@ -72,23 +84,28 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
 
     return (
         <form onSubmit={handleSubmit(submit)}>
-            <Header title={serviceProvider?.brandName} />
-            {logo && (
-                <LogoContainer>
-                    <MetadataLogo metadata={logo} />
-                </LogoContainer>
-            )}
-            {form?.map((m) => (
-                <FormGroup key={m.name}>
-                    <MetadataField locale={locale} metadata={m} wrappedName="metadata" />
-                </FormGroup>
-            ))}
-            {amount.visible && (
-                <FormGroup>
-                    <Amount cost={amount.cost} />
-                </FormGroup>
-            )}
-            <PayButton />
+            <Container>
+                <div>
+                    <Header title={serviceProvider?.brandName} />
+                    {logo && (
+                        <LogoContainer>
+                            <MetadataLogo metadata={logo} />
+                        </LogoContainer>
+                    )}
+                    {form &&
+                        form?.map((m) => (
+                            <FormGroup key={m.name}>
+                                <MetadataField locale={locale} metadata={m} wrappedName="metadata" />
+                            </FormGroup>
+                        ))}
+                    {amount.visible && (
+                        <FormGroup>
+                            <Amount cost={amount.cost} />
+                        </FormGroup>
+                    )}
+                </div>
+                {form && <PayButton />}
+            </Container>
         </form>
     );
 };

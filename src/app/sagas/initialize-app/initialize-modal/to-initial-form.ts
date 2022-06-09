@@ -1,5 +1,3 @@
-import isNil from 'lodash-es/isNil';
-
 import {
     CardFormInfo,
     FormInfo,
@@ -20,16 +18,12 @@ import {
 } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { assertUnreachable } from 'checkout/utils';
-import { getMetadata } from 'checkout/components';
 
 const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalPaymentMethod) => {
     switch (category) {
         case KnownProviderCategories.OnlineBanking:
             if (serviceProviders.length === 1) {
-                const { form } = getMetadata(serviceProviders[0]);
-                return isNil(form)
-                    ? new InstantTerminalPaymentFormInfo(category)
-                    : new PaymentTerminalFormInfo(category);
+                return new PaymentTerminalFormInfo(category);
             }
             return new OnlineBankingFormInfo(category);
         case KnownProviderCategories.BankCard:
@@ -39,6 +33,7 @@ const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalP
         case KnownProviderCategories.UPI:
             return new InstantTerminalPaymentFormInfo(category);
         case KnownProviderCategories.PIX:
+        case KnownProviderCategories.PaymentTerminal:
             return new PaymentTerminalFormInfo(category);
         default:
             assertUnreachable(category);
