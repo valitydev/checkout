@@ -32,6 +32,7 @@
     "form.input.cardholder.placeholder": "クレジットカード名義人氏名",
     "form.input.email.placeholder": "Email",
     "form.input.amount.placeholder": "金額",
+    "form.button.back.to.website": "Back to website",
     "form.button.next.label": "次",
     "form.button.use.other.card.label": "別のカードを使用",
     "form.button.use.other.wallet.label": "別のアカウントIDを使用",
