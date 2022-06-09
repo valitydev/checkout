@@ -30,6 +30,7 @@ export const PaymentTerminalMethodItems: React.FC<PaymentTerminalMethodItemsProp
         case KnownProviderCategories.UPI:
             return <UPIPaymentMethodItem method={method} setFormInfo={setFormInfo} pay={pay} />;
         case KnownProviderCategories.PIX:
+        case KnownProviderCategories.PaymentTerminal:
             return <PaymentTerminalMethodItem method={method} setFormInfo={setFormInfo} pay={pay} />;
         case KnownProviderCategories.BankCard:
             return <PaymentTerminalBankCardMethodItem locale={locale} setFormInfo={setFormInfo} />;

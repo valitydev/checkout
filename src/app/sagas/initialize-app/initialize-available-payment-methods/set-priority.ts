@@ -25,6 +25,8 @@ const getPriority = (method: PaymentMethod): number => {
                     return 6;
                 case KnownProviderCategories.PIX:
                     return 7;
+                case KnownProviderCategories.PaymentTerminal:
+                    return 7;
                 default:
                     assertUnreachable(category);
             }

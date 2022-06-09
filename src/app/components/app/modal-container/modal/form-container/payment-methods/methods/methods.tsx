@@ -65,8 +65,8 @@ export const Methods: React.FC<{ methods: PaymentMethod[]; props: Omit<MethodPro
     props
 }) => (
     <>
-        {methods.map((method) => (
-            <Method key={method.name + method.priority} method={method} {...props} />
+        {methods.map((method, index) => (
+            <Method key={index} method={method} {...props} />
         ))}
     </>
 );
