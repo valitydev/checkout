@@ -154,7 +154,7 @@
     },
     "service.provider.meta.fields": {
         "payerVirtualAddress": "Payer Virtual Address",
-        "bankAccountName": "Bank account name",
-        "bankAccountNumber": "Bank account number"
+        "bankAccountName": "銀行口座名義",
+        "bankAccountNumber": "銀行口座番号"
     }
 }
