@@ -151,10 +151,5 @@
             "description": "Don't have an account?",
             "link": "Sign up"
         }
-    },
-    "service.provider.meta.fields": {
-        "payerVirtualAddress": "Payer Virtual Address",
-        "bankAccountName": "Bank account name",
-        "bankAccountNumber": "Bank account number"
     }
 }

@@ -73,7 +73,7 @@ const WalletFormDef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, 
                     )}
                     {form?.sort(sortByIndex).map((m) => (
                         <FormGroup key={m.name}>
-                            <MetadataField locale={locale} metadata={m} localeCode={initConfig.locale} />
+                            <MetadataField metadata={m} localeCode={initConfig.locale} />
                         </FormGroup>
                     ))}
                     {amount.visible && (

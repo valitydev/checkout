@@ -2,36 +2,25 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import { Field, Validator, WrappedFieldProps } from 'redux-form';
 
-import { Locale } from 'checkout/locale';
 import { MetadataFieldLocalization, ServiceProviderMetadataField } from 'checkout/backend';
 import { formatEmail, isError, validateEmail } from 'checkout/utils';
 import { Input } from 'checkout/components';
 
-const getPlaceholder = (
-    fieldName: string,
-    locale: Locale,
-    localeCode: string,
-    localization?: MetadataFieldLocalization
-) => {
-    if (localization) {
-        return localization[localeCode] || localization['en'];
-    }
-    return locale['service.provider.meta.fields'][fieldName];
-};
+const getPlaceholder = (localeCode: string, localization: MetadataFieldLocalization) =>
+    localization[localeCode] || localization['en'];
 
 const WrappedInput: React.FC<WrappedFieldProps & {
-    locale: Locale;
     type: string;
     name: string;
     localization: MetadataFieldLocalization;
     localeCode: string;
-}> = ({ locale, type, name, input, meta, localeCode, localization }) => (
+}> = ({ type, name, input, meta, localeCode, localization }) => (
     <Input
         {...input}
         {...meta}
         name={name}
         type={type}
-        placeholder={getPlaceholder(name, locale, localeCode, localization)}
+        placeholder={getPlaceholder(localeCode, localization)}
         mark={true}
         error={isError(meta)}
     />
@@ -72,14 +61,12 @@ const getOnInputHandler = (type: JSX.IntrinsicElements['input']['type']) => {
 };
 
 export interface MetadataFieldProps {
-    locale: Locale;
     metadata: ServiceProviderMetadataField;
     localeCode?: string;
     wrappedName?: string;
 }
 
 export const MetadataField: React.FC<MetadataFieldProps> = ({
-    locale,
     metadata: { name, type, required, pattern, localization },
     localeCode,
     wrappedName
@@ -89,7 +76,7 @@ export const MetadataField: React.FC<MetadataFieldProps> = ({
         <Field
             name={wrappedName ? `${wrappedName}.${name}` : name}
             component={WrappedInput}
-            props={{ locale, type, name, localization, localeCode }}
+            props={{ type, name, localization, localeCode }}
             validate={validate}
             autocomplete={getAutocomplete(type)}
             onInput={getOnInputHandler(type)}
