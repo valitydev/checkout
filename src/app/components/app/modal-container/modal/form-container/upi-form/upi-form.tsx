@@ -79,7 +79,7 @@ const UPIFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, han
             </LogoContainer>
             {form?.map((m) => (
                 <FormGroup key={m.name}>
-                    <MetadataField locale={locale} metadata={m} wrappedName="metadata" />
+                    <MetadataField metadata={m} wrappedName="metadata" />
                 </FormGroup>
             ))}
             {amount.visible && (

@@ -151,10 +151,5 @@
             "description": "アカウントをお持ちではありませんか?",
             "link": "会員登録"
         }
-    },
-    "service.provider.meta.fields": {
-        "payerVirtualAddress": "Payer Virtual Address",
-        "bankAccountName": "銀行口座名義",
-        "bankAccountNumber": "銀行口座番号"
     }
 }

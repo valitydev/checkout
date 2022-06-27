@@ -16,7 +16,6 @@ import { METADATA_NAMESPACE } from 'checkout/backend';
 import { ProviderLogo } from './provider-logo';
 
 const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
-    const locale = useAppSelector((s) => s.config.locale);
     const formInfo = useAppSelector<OnlineBankingAccountFormInfo>(getActiveModalFormSelector);
     const { amount } = useAppSelector((s) => toFieldsConfig(s.config.initConfig, s.model.invoiceTemplate));
     const { serviceProvider } = formInfo;
@@ -50,7 +49,7 @@ const OnlineBankingAccountFormRef: React.FC<InjectedFormProps> = (props) => {
             <ProviderLogo />
             {formMetadata?.map((fieldMetadata) => (
                 <FormGroup key={fieldMetadata.name}>
-                    <MetadataField locale={locale} metadata={fieldMetadata} wrappedName="metadata" />
+                    <MetadataField metadata={fieldMetadata} wrappedName="metadata" />
                 </FormGroup>
             ))}
             {amount.visible && (

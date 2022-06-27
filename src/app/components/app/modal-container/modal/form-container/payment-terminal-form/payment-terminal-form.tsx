@@ -20,7 +20,6 @@ import {
     getActiveModalFormSelector,
     getAvailableTerminalPaymentMethodSelector,
     getInitConfigSelector,
-    getLocaleSelector,
     getModelSelector
 } from 'checkout/selectors';
 import { getMetadata, MetadataField, MetadataLogo } from 'checkout/components/ui';
@@ -36,7 +35,6 @@ const Container = styled.div`
 `;
 
 const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
-    const locale = useAppSelector(getLocaleSelector);
     const initConfig = useAppSelector(getInitConfigSelector);
     const model = useAppSelector(getModelSelector);
     const { category } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
@@ -95,7 +93,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                     {form &&
                         form?.map((m) => (
                             <FormGroup key={m.name}>
-                                <MetadataField locale={locale} metadata={m} wrappedName="metadata" />
+                                <MetadataField metadata={m} wrappedName="metadata" localeCode={initConfig.locale} />
                             </FormGroup>
                         ))}
                     {amount.visible && (

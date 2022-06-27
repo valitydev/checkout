@@ -151,10 +151,5 @@
             "description": "У вас нет аккаунта?",
             "link": "Регистрация"
         }
-    },
-    "service.provider.meta.fields": {
-        "payerVirtualAddress": "Payer Virtual Address",
-        "bankAccountName": "Название банковского счета",
-        "bankAccountNumber": "Номер банковского счета"
     }
 }
