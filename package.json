@@ -15,6 +15,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
+    "@dinero.js/currencies": "^2.0.0-alpha.8",
     "@sentry/react": "^7.3.0",
     "@sentry/tracing": "^7.3.0",
     "card-validator": "8.1.1",
