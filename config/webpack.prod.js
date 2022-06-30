@@ -1,15 +1,14 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const CompressionPlugin = require('compression-webpack-plugin');
 const checkoutConfig = require('./checkout-config');
 const initializerConfig = require('./initializer-config');
 const samsungPayConfig = require('./samsung-pay-config');
 const prepareOutputConfig = require('./prepare-output-config');
 const commonConfig = require('./common-config');
-const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 
 const commonProdConfig = {
+    devtool: 'source-map',
     plugins: [
         new webpack.optimize.ModuleConcatenationPlugin(),
         new webpack.DefinePlugin({
@@ -19,25 +18,7 @@ const commonProdConfig = {
         }),
         new BundleAnalyzerPlugin({
             analyzerMode: 'disabled'
-        }),
-        new CompressionPlugin({
-            filename: '[path].gz[query]',
-            algorithm: 'gzip',
-            test: /\.js$|\.css$|\.html$|\.json$/,
-            threshold: 10240,
-            minRatio: 0.8
-        }),
-        ...(process.env.SENTRY_AUTH_TOKEN
-            ? [
-                  new SentryWebpackPlugin({
-                      authToken: process.env.SENTRY_AUTH_TOKEN,
-                      org: 'vality',
-                      project: 'checkout',
-                      include: './dist',
-                      ignore: ['node_modules', 'webpack.config.js']
-                  })
-              ]
-            : [])
+        })
     ]
 };
 
