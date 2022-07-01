@@ -32,7 +32,7 @@
     "form.input.cardholder.placeholder": "クレジットカード名義人氏名",
     "form.input.email.placeholder": "Email",
     "form.input.amount.placeholder": "金額",
-    "form.button.back.to.website": "ウェブサイトに戻る",
+    "form.button.back.to.website": "サイトに戻る",
     "form.button.next.label": "次",
     "form.button.use.other.card.label": "別のカードを使用",
     "form.button.use.other.wallet.label": "別のアカウントIDを使用",
@@ -56,7 +56,7 @@
         "Example: username@ybl testname@upi userbnk@sbi etc."
     ],
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Select payment system:",
-    "form.qr.code": "Scan QR code",
+    "form.qr.code": "Please scan the QR code with your banking app to complete the payment",
     "form.help.header": "問題を解決するには？",
     "form.help.codes": {
         "InvalidPaymentTool": {
@@ -80,7 +80,7 @@
         "InsufficientFunds": {
             "text": "支払い失敗：資金が足りません。",
             "steps": [
-                "カードと口座の残高をご確認ください。 ",
+                "カードと口座の残高をご確認ください。",
                 "資金が不足している場合は、アカウントにチャージしてください。",
                 "精算に戻って「再試行」を押してください。",
                 "エラーが解決しない場合は、別のカードまたは銀行口座をお使いください。"
