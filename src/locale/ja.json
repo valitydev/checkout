@@ -56,7 +56,7 @@
         "Example: username@ybl testname@upi userbnk@sbi etc."
     ],
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Select payment system:",
-    "form.qr.code": "Scan QR code",
+    "form.qr.code": "Please scan the QR code with your banking app to complete the payment",
     "form.help.header": "問題を解決するには？",
     "form.help.codes": {
         "InvalidPaymentTool": {
@@ -80,7 +80,7 @@
         "InsufficientFunds": {
             "text": "支払い失敗：資金が足りません。",
             "steps": [
-                "カードと口座の残高をご確認ください。 ",
+                "Please check your card or account balance.",
                 "資金が不足している場合は、アカウントにチャージしてください。",
                 "精算に戻って「再試行」を押してください。",
                 "エラーが解決しない場合は、別のカードまたは銀行口座をお使いください。"
