@@ -56,7 +56,7 @@
         "Example: username@ybl testname@upi userbnk@sbi etc."
     ],
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Выберите платежную систему:",
-    "form.qr.code": "Отсканируйте QR код",
+    "form.qr.code": "Please scan the QR code with your banking app to complete the payment",
     "form.help.header": "Как решить проблему?",
     "form.help.codes": {
         "InvalidPaymentTool": {
@@ -80,7 +80,7 @@
         "InsufficientFunds": {
             "text": "Оплата не прошла: на вашем счете недостаточно средств.",
             "steps": [
-                "Проверьте баланс карты или счета.",
+                "Please check your card or account balance.",
                 "Если средств недостаточно, пополните счет.",
                 "Вернитесь на платежную форму и нажмите “Попробовать ещё раз”.",
                 "Если ошибка повторяется, попробуйте использовать другую карту или счет."
