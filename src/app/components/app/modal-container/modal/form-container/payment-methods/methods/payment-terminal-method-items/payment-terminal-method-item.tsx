@@ -7,7 +7,7 @@ import {
     PaymentTerminalFormInfo,
     PaymentTerminalPaymentMethod
 } from 'checkout/state';
-import { getMetadata, MetadataLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
+import { getMetadata, MetadataLogo, MetadataTitle, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PayAction, SetFormInfoAction } from './types';
 import { payWithPaymentTerminal } from './pay-with-payment-terminal';
 import { ServiceProvider } from 'checkout/backend';
@@ -16,6 +16,7 @@ export interface PaymentTerminalMethodItemProps {
     method: PaymentTerminalPaymentMethod;
     setFormInfo: SetFormInfoAction;
     pay: PayAction;
+    localeCode: string;
 }
 
 const toPaymentTerminal = (category: KnownProviderCategories, setFormInfo: SetFormInfoAction) =>
@@ -28,13 +29,19 @@ const provideMethod = (serviceProvider: ServiceProvider, pay: PayAction, setForm
         : toPaymentTerminal(serviceProvider.category as KnownProviderCategories, setFormInfo);
 };
 
-export const PaymentTerminalMethodItem: React.FC<PaymentTerminalMethodItemProps> = ({ method, pay, setFormInfo }) => {
+export const PaymentTerminalMethodItem: React.FC<PaymentTerminalMethodItemProps> = ({
+    method,
+    pay,
+    setFormInfo,
+    localeCode
+}) => {
     const serviceProvider = method.serviceProviders[0];
-    const { logo } = getMetadata(serviceProvider);
+    const { logo, title } = getMetadata(serviceProvider);
     return (
         <PaymentMethodItemContainer
             id={`${serviceProvider.id}-payment-method-item`}
             onClick={() => provideMethod(serviceProvider, pay, setFormInfo)}>
+            {title && <MetadataTitle metadata={title} localeCode={localeCode} />}
             {logo && <MetadataLogo metadata={logo} />}
         </PaymentMethodItemContainer>
     );

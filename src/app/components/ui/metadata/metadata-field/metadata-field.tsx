@@ -2,17 +2,17 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import { Field, Validator, WrappedFieldProps } from 'redux-form';
 
-import { MetadataFieldLocalization, ServiceProviderMetadataField } from 'checkout/backend';
+import { MetadataTextLocalization, ServiceProviderMetadataField } from 'checkout/backend';
 import { formatEmail, isError, validateEmail } from 'checkout/utils';
 import { Input } from 'checkout/components';
 
-const getPlaceholder = (localeCode: string, localization: MetadataFieldLocalization) =>
+const getPlaceholder = (localeCode: string, localization: MetadataTextLocalization) =>
     localization[localeCode] || localization['en'];
 
 const WrappedInput: React.FC<WrappedFieldProps & {
     type: string;
     name: string;
-    localization: MetadataFieldLocalization;
+    localization: MetadataTextLocalization;
     localeCode: string;
 }> = ({ type, name, input, meta, localeCode, localization }) => (
     <Input

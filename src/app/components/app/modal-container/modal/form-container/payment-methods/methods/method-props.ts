@@ -10,4 +10,5 @@ export interface MethodProps {
     emailPrefilled: boolean;
     method: PaymentMethod;
     prevFormName: FormName;
+    localeCode: string;
 }

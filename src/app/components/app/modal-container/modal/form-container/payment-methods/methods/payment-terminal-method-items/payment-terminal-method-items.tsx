@@ -15,13 +15,15 @@ export interface PaymentTerminalMethodItemsProps {
     locale: Locale;
     setFormInfo: SetFormInfoAction;
     pay: PayAction;
+    localeCode: string;
 }
 
 export const PaymentTerminalMethodItems: React.FC<PaymentTerminalMethodItemsProps> = ({
     method,
     locale,
     setFormInfo,
-    pay
+    pay,
+    localeCode
 }) => {
     switch (method.category) {
         case KnownProviderCategories.OnlineBanking:
@@ -31,11 +33,19 @@ export const PaymentTerminalMethodItems: React.FC<PaymentTerminalMethodItemsProp
             return <UPIPaymentMethodItem method={method} setFormInfo={setFormInfo} pay={pay} />;
         case KnownProviderCategories.PIX:
         case KnownProviderCategories.PaymentTerminal:
-            return <PaymentTerminalMethodItem method={method} setFormInfo={setFormInfo} pay={pay} />;
+        case KnownProviderCategories.DigitalWallet:
+            return (
+                <PaymentTerminalMethodItem
+                    method={method}
+                    setFormInfo={setFormInfo}
+                    pay={pay}
+                    localeCode={localeCode}
+                />
+            );
         case KnownProviderCategories.BankCard:
             return <PaymentTerminalBankCardMethodItem locale={locale} setFormInfo={setFormInfo} />;
-        case KnownProviderCategories.DigitalWallet:
-            return <PaymentTerminalDigitalWalletsMethodItem method={method} locale={locale} pay={pay} />;
+        // case KnownProviderCategories.DigitalWallet:
+        //     return <PaymentTerminalDigitalWalletsMethodItem method={method} locale={locale} pay={pay} />;
         default:
             assertUnreachable(method.category);
             return null;
