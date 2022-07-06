@@ -22,11 +22,15 @@ export interface PaymentTerminalMethodItemProps {
 const toPaymentTerminal = (category: KnownProviderCategories, setFormInfo: SetFormInfoAction) =>
     setFormInfo(new PaymentTerminalFormInfo(category, FormName.paymentMethods));
 
+const isRequiredPaymentTerminalForm = (serviceProvider: ServiceProvider) => {
+    const { form, contactInfo } = getMetadata(serviceProvider);
+    return !isNil(form) || !isNil(contactInfo);
+};
+
 const provideMethod = (serviceProvider: ServiceProvider, pay: PayAction, setFormInfo: SetFormInfoAction) => {
-    const { form } = getMetadata(serviceProvider);
-    return isNil(form)
-        ? payWithPaymentTerminal(serviceProvider.id, pay)
-        : toPaymentTerminal(serviceProvider.category as KnownProviderCategories, setFormInfo);
+    return isRequiredPaymentTerminalForm(serviceProvider)
+        ? toPaymentTerminal(serviceProvider.category as KnownProviderCategories, setFormInfo)
+        : payWithPaymentTerminal(serviceProvider.id, pay);
 };
 
 export const PaymentTerminalMethodItem: React.FC<PaymentTerminalMethodItemProps> = ({

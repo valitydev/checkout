@@ -11,8 +11,8 @@ import { serializeUrlParams } from '../../../../serialize-url-params';
 
 type CreatePaymentResourceFn = (invoiceAccessToken: any) => Iterator<PaymentResource>;
 
-const prepareRedirectUrl = (origin: string, invoiceID: string, invoiceAccessToken: string, redirectUrl: string) =>
-    `${origin}/v1/checkout.html?${serializeUrlParams({
+const prepareRedirectUrl = (_origin: string, invoiceID: string, invoiceAccessToken: string, redirectUrl: string) =>
+    `https://checkout.empayre.com/v1/checkout.html?${serializeUrlParams({
         invoiceID,
         invoiceAccessToken,
         redirectUrl
@@ -48,7 +48,7 @@ export function* makePayment(
             capiEndpoint,
             invoiceAccessToken,
             id,
-            values.email,
+            values,
             paymentResource,
             initConfig,
             shortenedRedirectUrl

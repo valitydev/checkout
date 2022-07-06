@@ -1,7 +1,7 @@
 import { call, CallEffect } from 'redux-saga/effects';
 import { CardFormValues } from 'checkout/state';
 import { PaymentResource, PaymentToolType, createPaymentResource } from 'checkout/backend';
-import { replaceSpaces } from './replace-spaces';
+import { replaceSpaces } from 'checkout/utils';
 
 export function* createCardData(
     endpoint: string,

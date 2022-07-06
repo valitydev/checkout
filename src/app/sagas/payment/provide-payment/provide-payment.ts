@@ -41,6 +41,6 @@ export function* providePayment(
     a: AmountInfoState,
     v: PayableFormValues
 ): Iterator<CallEffect> {
-    const values = v ? v : { amount: null, email: null };
+    const values = v ? v : { amount: null, email: null, phoneNumber: null };
     yield getPayFn(method)(c, m, a, values);
 }

@@ -10,6 +10,8 @@ import {
 } from 'checkout/backend';
 import { Payment, PaymentFlowInstant } from 'checkout/backend/model';
 import { InitConfig } from 'checkout/config';
+import { PayableFormValues } from 'checkout/state';
+import { replaceSpaces } from 'checkout/utils';
 
 type Effects = CallEffect | Payment;
 
@@ -29,12 +31,11 @@ export function* createPayment(
     endpoint: string,
     token: string,
     invoiceID: string,
-    formEmail: string,
+    formValue: PayableFormValues,
     resource: PaymentResource,
     initConfig: InitConfig,
     redirectUrl?: string
 ): Iterator<Effects> {
-    const email = initConfig.email || formEmail;
     const { paymentToolToken, paymentSession } = resource;
     const params = {
         flow: toPaymentFlow(initConfig),
@@ -43,7 +44,8 @@ export function* createPayment(
             paymentToolToken,
             paymentSession,
             contactInfo: {
-                email
+                email: initConfig.email || formValue.email,
+                phoneNumber: initConfig.phoneNumber || replaceSpaces(formValue.phoneNumber)
             },
             ...(redirectUrl && getSessionInfo(redirectUrl))
         },

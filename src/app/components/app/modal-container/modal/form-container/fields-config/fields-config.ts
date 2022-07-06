@@ -12,8 +12,13 @@ export interface EmailConfig extends ItemConfig {
     value?: string;
 }
 
+export interface PhoneNumberConfig extends ItemConfig {
+    value?: string;
+}
+
 export interface FieldsConfig {
     amount: AmountConfig;
     email: EmailConfig;
     cardHolder: ItemConfig;
+    phoneNumber: PhoneNumberConfig;
 }
