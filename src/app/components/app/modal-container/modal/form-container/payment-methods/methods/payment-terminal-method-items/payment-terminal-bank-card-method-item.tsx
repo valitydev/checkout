@@ -1,11 +1,10 @@
 import * as React from 'react';
 
 import { Method } from '../method';
-import { Title } from '../title';
-import { Icon } from '../icon/icon';
 import { FormName, PaymentTerminalBankCardFormInfo } from 'checkout/state';
 import { Locale } from 'checkout/locale';
 import { SetFormInfoAction } from './types';
+import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
 
 export interface PaymentTerminalBankCardMethodItemProps {
     locale: Locale;
@@ -17,7 +16,7 @@ const toPaymentTerminalBankCard = (props: PaymentTerminalBankCardMethodItemProps
 
 export const PaymentTerminalBankCardMethodItem: React.FC<PaymentTerminalBankCardMethodItemProps> = (props) => (
     <Method onClick={toPaymentTerminalBankCard.bind(null, props)} id="payment-terminal-bank-card-method-item">
-        <Icon name="bank-card" />
-        <Title>{props.locale['form.payment.method.name.card.label']}</Title>
+        <PaymentMethodIcon name="bank-card" />
+        <PaymentMethodTitle>{props.locale['form.payment.method.name.card.label']}</PaymentMethodTitle>
     </Method>
 );

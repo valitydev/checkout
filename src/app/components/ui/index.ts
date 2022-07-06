@@ -4,7 +4,7 @@ export * from './link';
 export * from './loader';
 export * from './icon';
 export * from './round-icon';
-export * from './payment-method-item';
 export * from './input';
 export * from './button';
 export * from './metadata';
+export * from './payment-method';

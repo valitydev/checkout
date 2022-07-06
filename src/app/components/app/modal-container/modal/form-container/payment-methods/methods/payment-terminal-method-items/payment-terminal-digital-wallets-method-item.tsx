@@ -1,8 +1,7 @@
 import * as React from 'react';
 
 import { Method } from '../method';
-import { Title } from '../title';
-import { Icon } from '../icon/icon';
+import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
 import { Locale } from 'checkout/locale';
 import { PayAction } from './types';
 import { payWithPaymentTerminal } from './pay-with-payment-terminal';
@@ -22,7 +21,7 @@ export const PaymentTerminalDigitalWalletsMethodItem: React.FC<PaymentTerminalDi
     <Method
         onClick={() => payWithPaymentTerminal(method.serviceProviders[0].id, pay)}
         id="payment-terminal-digital-wallets-method-item">
-        <Icon name="wallets" />
-        <Title>{locale['form.payment.method.name.wallet.label']}</Title>
+        <PaymentMethodIcon name="wallets" />
+        <PaymentMethodTitle>{locale['form.payment.method.name.wallet.label']}</PaymentMethodTitle>
     </Method>
 );

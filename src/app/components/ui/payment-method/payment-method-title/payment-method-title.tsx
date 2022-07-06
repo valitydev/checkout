@@ -1,6 +1,6 @@
 import styled from 'checkout/styled-components';
 
-export const Title = styled.div`
+export const PaymentMethodTitle = styled.div`
     font-weight: 900;
     text-transform: uppercase;
     font-size: 11px;

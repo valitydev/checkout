@@ -1,9 +1,7 @@
 import * as React from 'react';
 
 import { Method } from '../method';
-import { Title } from '../title';
 import { Text } from '../text';
-import { Icon } from '../icon/icon';
 import {
     FormName,
     KnownProviderCategories,
@@ -16,6 +14,7 @@ import { PayAction, SetFormInfoAction } from './types';
 import { payWithPaymentTerminal } from './pay-with-payment-terminal';
 import { getMetadata } from 'checkout/components/ui';
 import { ServiceProvider } from 'checkout/backend';
+import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
 
 interface OnlineBankingProps {
     method: PaymentTerminalPaymentMethod;
@@ -49,9 +48,9 @@ const getTitle = (l: Locale, category: KnownProviderCategories) => l[`form.payme
 
 export const OnlineBankingMethodItem: React.FC<OnlineBankingProps> = ({ locale, method, pay, setFormInfo }) => (
     <Method onClick={() => provideMethod(method, pay, setFormInfo)}>
-        <Icon name="online-banking" />
+        <PaymentMethodIcon name="online-banking" />
         <Text>
-            <Title>{getTitle(locale, method.category)}</Title>
+            <PaymentMethodTitle>{getTitle(locale, method.category)}</PaymentMethodTitle>
         </Text>
     </Method>
 );
