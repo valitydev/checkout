@@ -16,14 +16,14 @@ export interface ServiceProviderMetadataField {
     index?: number;
 }
 
-export interface ServiceProviderLogoMetadata {
+export interface ServiceProviderIconMetadata {
     src: string;
     width: string;
     height: string;
 }
 
 export interface ServiceProviderTitleMetadata {
-    icon: 'wallets' | 'online-banking';
+    icon: 'wallets' | 'online-banking' | 'bank-card';
     localization?: MetadataTextLocalization;
 }
 
@@ -34,7 +34,7 @@ export interface ServiceProviderContactInfo {
 
 export interface CheckoutServiceProviderMetadata {
     form?: ServiceProviderMetadataField[];
-    logo?: ServiceProviderLogoMetadata;
+    logo?: ServiceProviderIconMetadata;
     title?: ServiceProviderTitleMetadata;
     signUpLink?: string;
     contactInfo?: ServiceProviderContactInfo;
