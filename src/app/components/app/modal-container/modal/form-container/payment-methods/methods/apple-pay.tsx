@@ -4,17 +4,16 @@ import { MethodProps } from './method-props';
 import { TokenProviderFormInfo, FormName, PaymentMethodName } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { Method } from './method';
-import { Title } from './title';
 import styled from 'checkout/styled-components';
-import { Icon } from './icon/icon';
+import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
 
 const toTokenProvider = (props: MethodProps) =>
     props.setFormInfo(new TokenProviderFormInfo(BankCardTokenProvider.applepay, FormName.paymentMethods));
 
 const TokenProviderFormLink: React.FC<MethodProps> = (props) => (
     <Method onClick={toTokenProvider.bind(null, props)} id="apple-pay-payment-method">
-        <Icon name="apple-pay" />
-        <Title>{props.locale['form.payment.method.name.apple.pay.label']}</Title>
+        <PaymentMethodIcon name="apple-pay" />
+        <PaymentMethodTitle>{props.locale['form.payment.method.name.apple.pay.label']}</PaymentMethodTitle>
     </Method>
 );
 

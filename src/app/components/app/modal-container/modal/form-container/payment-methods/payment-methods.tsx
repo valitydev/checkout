@@ -19,6 +19,7 @@ export interface PaymentMethodsProps {
     setFormInfo: (formInfo: FormInfo) => any;
     setViewInfoHeight: (height: number) => any;
     pay: (payload: PaymentRequestedPayload) => any;
+    localeCode: string;
 }
 
 export interface PaymentMethodsState {
@@ -29,7 +30,8 @@ const mapStateToProps = (s: State): Partial<PaymentMethodsProps> => ({
     locale: s.config.locale,
     methods: s.availablePaymentMethods.sort((m1, m2) => (m1.priority > m2.priority ? 1 : -1)),
     amountPrefilled: s.amountInfo.status === AmountInfoStatus.final,
-    emailPrefilled: !!s.config.initConfig.email
+    emailPrefilled: !!s.config.initConfig.email,
+    localeCode: s.config.initConfig.locale
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): Partial<PaymentMethodsProps> => ({
@@ -61,7 +63,7 @@ class PaymentMethodsDef extends React.Component<PaymentMethodsProps, PaymentMeth
     };
 
     render() {
-        const { locale, setFormInfo, methods, pay, amountPrefilled, emailPrefilled } = this.props;
+        const { locale, setFormInfo, methods, pay, amountPrefilled, emailPrefilled, localeCode } = this.props;
         const visibleMethods = this.state.isShowAllMethods
             ? methods
             : methods.slice(0, PaymentMethodsDef.visibilityThreshold);
@@ -79,6 +81,7 @@ class PaymentMethodsDef extends React.Component<PaymentMethodsProps, PaymentMeth
                         amountPrefilled={amountPrefilled}
                         emailPrefilled={emailPrefilled}
                         prevFormName={FormName.paymentMethods}
+                        localeCode={localeCode}
                     />
                     {visibleMethods.length < methods.length && (
                         <OtherPaymentMethodsLink onClick={this.showAllMethods} locale={locale} />

@@ -1,6 +1,5 @@
 {
     "info.order.label": "Ваш заказ",
-    "info.email.label": "Email",
     "info.modal.mobile.commerce.description.steps": [
         "На указанный номер телефона отправлено сообщение. Для подтверждения платежа выполните действия, указанные в SMS от оператора. Вы можете закрыть текущее окно.",
         "Обычно оплата происходит в течение нескольких минут, в редких случаях процесс может затянуться до 3х дней. Как только платеж пройдет, вам поступит сообщение от оператора связи."
@@ -45,11 +44,8 @@
     "form.payment.method.name.google.pay.label": "Google Pay",
     "form.payment.method.name.samsung.pay.label": "Samsung Pay",
     "form.payment.method.name.yandex.pay.label": "Yandex Pay",
-    "form.payment.method.name.wallet.label": "Электронные кошельки",
     "form.payment.method.name.mobile.commerce.label": "Счет телефона",
     "form.payment.method.name.others.label": "Другие способы оплаты",
-    "form.payment.method.name.onlinebanking.label": "Онлайн банк",
-    "form.payment.method.name.netbanking.label": "Net banking",
     "form.onlineBanking.search": "Поиск",
     "form.pay.upi.instruction": [
         "You can make payment via BHIM, PhonePe, Tez, ICICI, SBI and other UPI apps.",

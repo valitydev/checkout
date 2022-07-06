@@ -4,16 +4,15 @@ import { MethodProps } from './method-props';
 import { FormName, PaymentMethodName, TokenProviderFormInfo } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { Method } from './method';
-import { Title } from './title';
-import { Icon } from './icon/icon';
+import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
 
 const toTokenProvider = (props: MethodProps) =>
     props.setFormInfo(new TokenProviderFormInfo(BankCardTokenProvider.googlepay, FormName.paymentMethods));
 
 const TokenProviderFormLink: React.FC<MethodProps> = (props) => (
     <Method onClick={toTokenProvider.bind(null, props)} id="google-pay-payment-method">
-        <Icon name="google-pay" />
-        <Title>{props.locale['form.payment.method.name.google.pay.label']}</Title>
+        <PaymentMethodIcon name="google-pay" />
+        <PaymentMethodTitle>{props.locale['form.payment.method.name.google.pay.label']}</PaymentMethodTitle>
     </Method>
 );
 

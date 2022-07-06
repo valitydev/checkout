@@ -22,6 +22,7 @@ export interface MethodsProps {
     amountPrefilled: boolean;
     emailPrefilled: boolean;
     prevFormName: FormName;
+    localeCode: string;
 }
 
 export const MethodsList: React.FC<MethodsProps> = ({ methods, ...props }) => (

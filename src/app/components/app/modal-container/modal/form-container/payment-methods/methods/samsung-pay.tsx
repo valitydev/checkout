@@ -4,16 +4,15 @@ import { MethodProps } from './method-props';
 import { FormName, PaymentMethodName, TokenProviderFormInfo } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { Method } from './method';
-import { Title } from './title';
-import { Icon } from './icon/icon';
+import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
 
 const toTokenProvider = (props: MethodProps) =>
     props.setFormInfo(new TokenProviderFormInfo(BankCardTokenProvider.samsungpay, FormName.paymentMethods));
 
 const TokenProviderFormLink: React.FC<MethodProps> = (props) => (
     <Method onClick={toTokenProvider.bind(null, props)} id="samsung-pay-payment-method">
-        <Icon name="samsung-pay" />
-        <Title>{props.locale['form.payment.method.name.samsung.pay.label']}</Title>
+        <PaymentMethodIcon name="samsung-pay" />
+        <PaymentMethodTitle>{props.locale['form.payment.method.name.samsung.pay.label']}</PaymentMethodTitle>
     </Method>
 );
 

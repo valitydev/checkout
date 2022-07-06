@@ -4,16 +4,15 @@ import { FormName, PaymentMethodName, TokenProviderFormInfo } from 'checkout/sta
 import { BankCardTokenProvider } from 'checkout/backend';
 import { MethodProps } from './method-props';
 import { Method } from './method';
-import { Icon } from './icon/icon';
-import { Title } from './title';
+import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
 
 const toTokenProvider = (props: MethodProps) =>
     props.setFormInfo(new TokenProviderFormInfo(BankCardTokenProvider.yandexpay, FormName.paymentMethods));
 
 const TokenProviderFormLink: React.FC<MethodProps> = (props) => (
     <Method onClick={toTokenProvider.bind(null, props)} id="yandex-pay-payment-method">
-        <Icon name="yandex-pay" />
-        <Title>{props.locale['form.payment.method.name.yandex.pay.label']}</Title>
+        <PaymentMethodIcon name="yandex-pay" />
+        <PaymentMethodTitle>{props.locale['form.payment.method.name.yandex.pay.label']}</PaymentMethodTitle>
     </Method>
 );
 

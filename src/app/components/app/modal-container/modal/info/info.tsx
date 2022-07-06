@@ -66,20 +66,10 @@ const ProductDescription = styled.div`
     margin-bottom: 20px;
 `;
 
-const Email = styled.div`
-    font-weight: 500;
-    font-size: 16px;
-    color: ${({ theme }) => theme.color.font.infoBlock};
-    letter-spacing: 0;
-    line-height: 20px;
-    margin-bottom: 20px;
-`;
-
 export interface InfoProps {
     locale: Locale;
     name: string;
     description: string;
-    email: string;
     formattedAmount: string;
 }
 
@@ -87,11 +77,10 @@ const mapStateToProps = ({ config: { initConfig, locale }, amountInfo }: State):
     locale,
     name: initConfig.name,
     description: initConfig.description,
-    email: initConfig.email,
     formattedAmount: formatAmount(amountInfo)
 });
 
-const InfoDef: React.FC<InfoProps> = ({ formattedAmount, locale, name, description, email }) => (
+const InfoDef: React.FC<InfoProps> = ({ formattedAmount, locale, name, description }) => (
     <InfoWrapper>
         <div>
             {name ? <CompanyName id="company-name-label">{name}</CompanyName> : false}
@@ -100,14 +89,6 @@ const InfoDef: React.FC<InfoProps> = ({ formattedAmount, locale, name, descripti
                 <div>
                     <Order>{locale['info.order.label']}</Order>
                     <ProductDescription id="product-description">{description}</ProductDescription>
-                </div>
-            ) : (
-                false
-            )}
-            {email ? (
-                <div>
-                    <Order>{locale['info.email.label']}</Order>
-                    <Email>{email}</Email>
                 </div>
             ) : (
                 false

@@ -1,6 +1,5 @@
 {
     "info.order.label": "Detalhe do Pagamento",
-    "info.email.label": "Email",
     "info.modal.mobile.commerce.description.steps": [
         "A message has been sent to the phone number provided. To confirm the payment, please follow the steps indicated in the SMS from the mobile operator. This tab can be closed.",
         "Usually payment takes a few minutes, in rare cases, the process may take up to 3 days. Once payment is processed, you will receive a message from the mobile operator."
@@ -45,11 +44,8 @@
     "form.payment.method.name.google.pay.label": "Google Pay",
     "form.payment.method.name.samsung.pay.label": "Samsung Pay",
     "form.payment.method.name.yandex.pay.label": "Yandex Pay",
-    "form.payment.method.name.wallet.label": "E-wallets",
     "form.payment.method.name.mobile.commerce.label": "Phone account",
     "form.payment.method.name.others.label": "All payment methods",
-    "form.payment.method.name.onlinebanking.label": "Online banking",
-    "form.payment.method.name.netbanking.label": "Net banking",
     "form.onlineBanking.search": "Search",
     "form.pay.upi.instruction": [
         "You can make payment via BHIM, PhonePe, Tez, ICICI, SBI and other UPI apps.",

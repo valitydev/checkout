@@ -3,18 +3,17 @@ import * as React from 'react';
 import { FormName, WalletProvidersFormInfo } from 'checkout/state';
 import { MethodProps } from './method-props';
 import { Method } from './method';
-import { Title } from './title';
 import { Text } from './text';
-import { Icon } from './icon/icon';
+import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
 
 const toWalletProviders = (props: MethodProps) =>
     props.setFormInfo(new WalletProvidersFormInfo(FormName.paymentMethods));
 
 export const Wallets: React.FC<MethodProps> = (props) => (
     <Method onClick={toWalletProviders.bind(null, props)} id="wallets-payment-method">
-        <Icon name="wallets" />
+        <PaymentMethodIcon name="wallets" />
         <Text>
-            <Title>{props.locale['form.payment.method.name.wallet.label']}</Title>
+            <PaymentMethodTitle>{props.locale['form.payment.method.name.wallet.label']}</PaymentMethodTitle>
         </Text>
     </Method>
 );

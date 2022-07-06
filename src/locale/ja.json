@@ -1,6 +1,5 @@
 {
     "info.order.label": "注文詳細",
-    "info.email.label": "Eメール",
     "info.modal.mobile.commerce.description.steps": [
         "提供された電話番号にメッセージが送信されました。 支払いを確認するには、携帯電話事業者からのSMSに記載されている手順に従ってください。このタブは閉じることができます。",
         "通常、支払いには数分かかりますが、手続きとしてまれに3日かかる場合があります。 支払いが処理されると、携帯電話事業者からメッセージが届きます。"
@@ -45,11 +44,8 @@
     "form.payment.method.name.google.pay.label": "Google Pay",
     "form.payment.method.name.samsung.pay.label": "Samsung Pay",
     "form.payment.method.name.yandex.pay.label": "Yandex Pay",
-    "form.payment.method.name.wallet.label": "eウォレット",
     "form.payment.method.name.mobile.commerce.label": "電話アカウント",
     "form.payment.method.name.others.label": "すべての支払い方法",
-    "form.payment.method.name.onlinebanking.label": "オンラインバンキング",
-    "form.payment.method.name.netbanking.label": "Net banking",
     "form.onlineBanking.search": "検索",
     "form.pay.upi.instruction": [
         "You can make payment via BHIM, PhonePe, Tez, ICICI, SBI and other UPI apps.",
