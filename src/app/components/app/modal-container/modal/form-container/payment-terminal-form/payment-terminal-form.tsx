@@ -24,7 +24,7 @@ import {
     getModelSelector
 } from 'checkout/selectors';
 import { getMetadata, MetadataField, MetadataLogo } from 'checkout/components/ui';
-import { toFieldsConfig } from '../fields-config';
+import { toAmountConfig, toEmailConfig, toPhoneNumberConfig } from '../fields-config';
 import { Amount, Email, Phone } from '../common-fields';
 import { LogoContainer } from './logo-container';
 import { ServiceProviderContactInfo, ServiceProviderMetadataField } from 'checkout/backend';
@@ -48,7 +48,9 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
     const formValues = useAppSelector((s) => get(s.form, 'paymentTerminalForm.values'));
     const { form, contactInfo, logo } = getMetadata(serviceProvider);
     const { paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
-    const amount = toFieldsConfig(initConfig, model.invoiceTemplate).amount;
+    const amount = toAmountConfig(initConfig, model.invoiceTemplate);
+    const email = toEmailConfig(initConfig.email);
+    const phoneNumber = toPhoneNumberConfig(initConfig.phoneNumber);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -106,12 +108,12 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                             <Amount cost={amount.cost} />
                         </FormGroup>
                     )}
-                    {contactInfo?.email && (
+                    {email.visible && contactInfo?.email && (
                         <FormGroup>
                             <Email />
                         </FormGroup>
                     )}
-                    {contactInfo?.phoneNumber && (
+                    {phoneNumber.visible && contactInfo?.phoneNumber && (
                         <FormGroup>
                             <Phone />
                         </FormGroup>

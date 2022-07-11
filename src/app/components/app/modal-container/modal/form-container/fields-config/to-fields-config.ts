@@ -39,8 +39,7 @@ export const toAmountConfig = (c: InitConfig, template: InvoiceTemplate): Amount
 };
 
 export const toPhoneNumberConfig = (phoneNumber: string): PhoneNumberConfig => {
-    // TODO need to implement
-    return null;
+    return phoneNumber ? { visible: false, value: phoneNumber } : { visible: true };
 };
 
 export const toEmailConfig = (email: string): EmailConfig => {
