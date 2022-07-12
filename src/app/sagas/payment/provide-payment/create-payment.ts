@@ -11,7 +11,7 @@ import {
 import { Payment, PaymentFlowInstant } from 'checkout/backend/model';
 import { InitConfig } from 'checkout/config';
 import { PayableFormValues } from 'checkout/state';
-import { replaceSpaces } from 'checkout/utils';
+import { getContactInfo } from './get-contact-info';
 
 type Effects = CallEffect | Payment;
 
@@ -43,10 +43,7 @@ export function* createPayment(
             payerType: PayerType.PaymentResourcePayer,
             paymentToolToken,
             paymentSession,
-            contactInfo: {
-                email: initConfig.email || formValue.email,
-                phoneNumber: initConfig.phoneNumber || replaceSpaces(formValue.phoneNumber)
-            },
+            contactInfo: getContactInfo(initConfig, formValue),
             ...(redirectUrl && getSessionInfo(redirectUrl))
         },
         makeRecurrent: initConfig.recurring,
