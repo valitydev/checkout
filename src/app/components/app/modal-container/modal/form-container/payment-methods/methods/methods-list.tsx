@@ -21,6 +21,7 @@ export interface MethodsProps {
     pay: (payload: PaymentRequestedPayload) => any;
     amountPrefilled: boolean;
     emailPrefilled: boolean;
+    phoneNumberPrefilled: boolean;
     prevFormName: FormName;
     localeCode: string;
 }

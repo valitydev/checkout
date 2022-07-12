@@ -13,6 +13,8 @@ export interface PaymentTerminalMethodItemsProps {
     setFormInfo: SetFormInfoAction;
     pay: PayAction;
     localeCode: string;
+    emailPrefilled: boolean;
+    phoneNumberPrefilled: boolean;
 }
 
 export const PaymentTerminalMethodItems: React.FC<PaymentTerminalMethodItemsProps> = ({
@@ -20,7 +22,9 @@ export const PaymentTerminalMethodItems: React.FC<PaymentTerminalMethodItemsProp
     locale,
     setFormInfo,
     pay,
-    localeCode
+    localeCode,
+    emailPrefilled,
+    phoneNumberPrefilled
 }) => {
     switch (method.category) {
         case KnownProviderCategories.UPI:
@@ -35,6 +39,8 @@ export const PaymentTerminalMethodItems: React.FC<PaymentTerminalMethodItemsProp
                     setFormInfo={setFormInfo}
                     pay={pay}
                     localeCode={localeCode}
+                    emailPrefilled={emailPrefilled}
+                    phoneNumberPrefilled={phoneNumberPrefilled}
                 />
             );
         case KnownProviderCategories.BankCard:

@@ -48,7 +48,7 @@ export function* makePayment(
             capiEndpoint,
             invoiceAccessToken,
             id,
-            values.email,
+            values,
             paymentResource,
             initConfig,
             shortenedRedirectUrl

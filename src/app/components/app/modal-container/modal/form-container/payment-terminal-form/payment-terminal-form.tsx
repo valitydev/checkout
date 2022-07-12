@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 import get from 'lodash-es/get';
+import isNil from 'lodash-es/isNil';
 import styled from 'checkout/styled-components';
 
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
@@ -23,9 +24,10 @@ import {
     getModelSelector
 } from 'checkout/selectors';
 import { getMetadata, MetadataField, MetadataLogo } from 'checkout/components/ui';
-import { toFieldsConfig } from '../fields-config';
-import { Amount } from '../common-fields';
+import { toAmountConfig, toEmailConfig, toPhoneNumberConfig } from '../fields-config';
+import { Amount, Email, Phone } from '../common-fields';
 import { LogoContainer } from './logo-container';
+import { ServiceProviderContactInfo, ServiceProviderMetadataField } from 'checkout/backend';
 
 const Container = styled.div`
     min-height: 300px;
@@ -34,6 +36,9 @@ const Container = styled.div`
     justify-content: space-between;
 `;
 
+const isInstantPayment = (form: ServiceProviderMetadataField[], contactInfo: ServiceProviderContactInfo) =>
+    isNil(form) && isNil(contactInfo);
+
 const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
     const initConfig = useAppSelector(getInitConfigSelector);
     const model = useAppSelector(getModelSelector);
@@ -41,14 +46,16 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
     const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(category));
     const serviceProvider = paymentMethod?.serviceProviders[0];
     const formValues = useAppSelector((s) => get(s.form, 'paymentTerminalForm.values'));
-    const { form, logo } = getMetadata(serviceProvider);
+    const { form, contactInfo, logo } = getMetadata(serviceProvider);
     const { paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
-    const amount = toFieldsConfig(initConfig, model.invoiceTemplate).amount;
+    const amount = toAmountConfig(initConfig, model.invoiceTemplate);
+    const email = toEmailConfig(initConfig.email);
+    const phoneNumber = toPhoneNumberConfig(initConfig.phoneNumber);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(setViewInfoError(false));
-        if (form) {
+        if (!isInstantPayment(form, contactInfo)) {
             switch (paymentStatus) {
                 case PaymentStatus.pristine:
                     initialize({
@@ -101,8 +108,18 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                             <Amount cost={amount.cost} />
                         </FormGroup>
                     )}
+                    {email.visible && contactInfo?.email && (
+                        <FormGroup>
+                            <Email />
+                        </FormGroup>
+                    )}
+                    {phoneNumber.visible && contactInfo?.phoneNumber && (
+                        <FormGroup>
+                            <Phone />
+                        </FormGroup>
+                    )}
                 </div>
-                {form && <PayButton />}
+                {!isInstantPayment(form, contactInfo) && <PayButton />}
             </Container>
         </form>
     );
