@@ -38,13 +38,14 @@ export const Button = styled.button<{ color?: ButtonType }>`
                   }
               `
             : css`
-                  :hover,
-                  :active {
-                      border-color: ${theme.color.secondary[1.1]};
+                  :hover {
+                      color: ${theme.color.primary[1.1]};
+                      border-color: ${theme.color.primary[1.1]};
                   }
 
                   :active {
-                      color: ${theme.color.secondary[1.1]};
+                      color: ${theme.color.primary[1.2]};
+                      border-color: ${theme.color.primary[1.2]};
                   }
               `};
 `;

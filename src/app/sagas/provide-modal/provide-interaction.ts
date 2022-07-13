@@ -20,7 +20,6 @@ import {
     QrCodeDisplayRequest,
     Redirect
 } from 'checkout/backend';
-import { SelectEffect } from 'redux-saga/effects';
 import last from 'lodash-es/last';
 import { findChange } from 'checkout/utils';
 
@@ -71,9 +70,7 @@ const provideQrCode = (userInteraction: QrCodeDisplayRequest): ModalForms => {
     return new ModalForms([formInfo], true);
 };
 
-export function* provideInteraction(
-    events: InvoiceEvent[]
-): IterableIterator<ModalForms | ModalInteraction | SelectEffect> {
+export function provideInteraction(events: InvoiceEvent[]): ModalState {
     const lastEvent = last(events);
     const change = last(lastEvent.changes);
     if (change.changeType !== InvoiceChangeType.PaymentInteractionRequested) {
