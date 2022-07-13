@@ -39,6 +39,8 @@
     "form.button.use.other.default.label": "Попробовать с другими данными",
     "form.button.pay.again.label": "Попробовать ещё раз",
     "form.button.pay.label": "Оплатить",
+    "form.button.copy.label": "Copy",
+    "form.button.copied.label": "Copied!",
     "form.payment.method.name.card.label": "Банковская карта",
     "form.payment.method.name.apple.pay.label": "Apple Pay",
     "form.payment.method.name.google.pay.label": "Google Pay",
