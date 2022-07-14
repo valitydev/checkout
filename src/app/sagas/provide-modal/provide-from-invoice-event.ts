@@ -1,13 +1,13 @@
-import { put, PutEffect } from 'redux-saga/effects';
-import { InvoiceEvent, InvoiceChangeType } from 'checkout/backend';
+import { put, PutEffect, select, SelectEffect } from 'redux-saga/effects';
+import { InvoiceEvent, InvoiceChangeType, ServiceProvider } from 'checkout/backend';
 import { Direction, GoToFormInfo, TypeKeys, SetModalState } from 'checkout/actions';
-import { ResultFormInfo, ResultType } from 'checkout/state';
+import { ResultFormInfo, ResultType, State } from 'checkout/state';
 import { provideInteraction } from './provide-interaction';
 import { getLastChange } from 'checkout/utils';
 
 type SetStateFromEvents = GoToFormInfo | SetModalState;
 
-function toPayload(events: InvoiceEvent[]): SetStateFromEvents {
+function toPayload(events: InvoiceEvent[], serviceProviders: ServiceProvider[]): SetStateFromEvents {
     const change = getLastChange(events);
     switch (change.changeType) {
         case InvoiceChangeType.PaymentStatusChanged:
@@ -22,13 +22,16 @@ function toPayload(events: InvoiceEvent[]): SetStateFromEvents {
         case InvoiceChangeType.PaymentInteractionRequested:
             return {
                 type: TypeKeys.SET_MODAL_STATE,
-                payload: provideInteraction(events)
+                payload: provideInteraction(events, serviceProviders)
             };
         default:
             throw { code: 'error.unsupported.invoice.change.type' };
     }
 }
 
-export function* provideFromInvoiceEvent(events: InvoiceEvent[]): IterableIterator<PutEffect<SetStateFromEvents>> {
-    return yield put<SetStateFromEvents>(toPayload(events));
+export function* provideFromInvoiceEvent(
+    events: InvoiceEvent[]
+): IterableIterator<SelectEffect | PutEffect<SetStateFromEvents>> {
+    const serviceProviders = yield select((s: State) => s.model?.serviceProviders);
+    return yield put<SetStateFromEvents>(toPayload(events, serviceProviders));
 }
