@@ -39,7 +39,7 @@
     "form.button.use.other.default.label": "Use dados diferentes",
     "form.button.pay.again.label": "Tente de novo",
     "form.button.pay.label": "Pagar",
-    "form.button.copy.label": "Copiar",
+    "form.button.copy.label": "Copiar código PIX",
     "form.button.copied.label": "Сopiado!",
     "form.payment.method.name.card.label": "Card",
     "form.payment.method.name.apple.pay.label": "Apple Pay",
