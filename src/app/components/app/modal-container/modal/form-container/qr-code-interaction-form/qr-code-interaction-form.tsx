@@ -33,11 +33,11 @@ export const QrCodeInteractionForm: React.FC = () => {
 
     return (
         <Container>
-            <Instruction>{locale['form.qr.code']}</Instruction>
-            <QRCode text={request.qrCode} />
-            <Hr />
             <Input defaultValue={request.qrCode} readOnly={true}></Input>
             <CopyToClipboardButton data={request.qrCode} />
+            <Hr />
+            <Instruction>{locale['form.qr.code']}</Instruction>
+            <QRCode text={request.qrCode} />
         </Container>
     );
 };
