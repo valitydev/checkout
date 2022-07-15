@@ -1,4 +1,4 @@
-import { validatePhone } from 'checkout/utils';
+import { validatePhoneByNumberLength } from 'checkout/utils';
 
 export const resolvePhoneNumber = (phoneNumber: string | null): string | null =>
-    !validatePhone(phoneNumber) ? phoneNumber : null;
+    !validatePhoneByNumberLength(phoneNumber) ? phoneNumber : null;
