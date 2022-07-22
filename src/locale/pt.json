@@ -140,10 +140,10 @@
     "error.yandex.pay.event.error.unknown": "Yandex Pay payment error",
     "InvalidPaymentTool": "Invalid payment instrument",
     "AccountLimitsExceeded": "Account limit is exceeded",
-    "InsufficientFunds": "Insufficient funds",
-    "PreauthorizationFailed": "Pre-authorization failed",
+    "InsufficientFunds": "Sem fundos",
+    "PreauthorizationFailed": "A pre-autorização falhou",
     "RejectedByIssuer": "Rejected by issuing bank",
-    "PaymentRejected": "Payment is rejected",
+    "PaymentRejected": "Pagamento rejeitado",
     "digital.wallet.providers": {
         "sign.up": {
             "description": "Don't have an account?",
