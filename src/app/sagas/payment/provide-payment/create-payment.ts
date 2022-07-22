@@ -10,6 +10,8 @@ import {
 } from 'checkout/backend';
 import { Payment, PaymentFlowInstant } from 'checkout/backend/model';
 import { InitConfig } from 'checkout/config';
+import { PayableFormValues } from 'checkout/state';
+import { getContactInfo } from './get-contact-info';
 
 type Effects = CallEffect | Payment;
 
@@ -29,12 +31,11 @@ export function* createPayment(
     endpoint: string,
     token: string,
     invoiceID: string,
-    formEmail: string,
+    formValue: PayableFormValues,
     resource: PaymentResource,
     initConfig: InitConfig,
     redirectUrl?: string
 ): Iterator<Effects> {
-    const email = initConfig.email || formEmail;
     const { paymentToolToken, paymentSession } = resource;
     const params = {
         flow: toPaymentFlow(initConfig),
@@ -42,9 +43,7 @@ export function* createPayment(
             payerType: PayerType.PaymentResourcePayer,
             paymentToolToken,
             paymentSession,
-            contactInfo: {
-                email
-            },
+            contactInfo: getContactInfo(initConfig, formValue),
             ...(redirectUrl && getSessionInfo(redirectUrl))
         },
         makeRecurrent: initConfig.recurring,

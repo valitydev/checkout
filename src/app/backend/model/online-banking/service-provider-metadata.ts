@@ -32,12 +32,17 @@ export interface ServiceProviderContactInfo {
     phoneNumber: boolean;
 }
 
+export interface UserInteractionMetadata {
+    type: 'frame' | 'self';
+}
+
 export interface CheckoutServiceProviderMetadata {
     form?: ServiceProviderMetadataField[];
     logo?: ServiceProviderIconMetadata;
     title?: ServiceProviderTitleMetadata;
     signUpLink?: string;
     contactInfo?: ServiceProviderContactInfo;
+    userInteraction?: UserInteractionMetadata;
 }
 
 export interface ServiceProviderMetadata {

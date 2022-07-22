@@ -6,7 +6,7 @@ import { State } from 'checkout/state';
 import { Locale } from 'checkout/locale';
 import { validatePhone } from './validate-phone';
 import { formatPhoneNumber } from './format-phone-number';
-import { Phone as PhoneIcon, Input } from 'checkout/components';
+import { Input } from 'checkout/components';
 import { isError } from 'checkout/utils';
 
 export interface PhoneProps {
@@ -18,7 +18,6 @@ const getCustomInput = (props: PhoneProps, fieldProps: WrappedFieldProps) => (
         {...fieldProps.input}
         {...fieldProps.meta}
         error={isError(fieldProps.meta)}
-        icon={<PhoneIcon />}
         placeholder={props.locale['form.input.phone.placeholder']}
         mark={true}
         type="tel"
@@ -30,7 +29,7 @@ const getCustomInput = (props: PhoneProps, fieldProps: WrappedFieldProps) => (
 );
 
 export const PhoneDef: React.FC<PhoneProps> = (props) => (
-    <Field name="phone" component={getCustomInput.bind(null, props)} validate={validatePhone} />
+    <Field name="phoneNumber" component={getCustomInput.bind(null, props)} validate={validatePhone} />
 );
 
 const mapStateToProps = (state: State) => ({

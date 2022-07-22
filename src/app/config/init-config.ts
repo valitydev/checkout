@@ -24,6 +24,7 @@ export class InitConfig {
     name?: string;
     description?: string;
     email?: string;
+    phoneNumber?: string;
     amount?: number;
     obscureCardCvv?: boolean;
     requireCardHolder?: boolean;

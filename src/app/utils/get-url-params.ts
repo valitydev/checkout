@@ -24,7 +24,8 @@ const parseValue = (value: string): URLParams[keyof URLParams] => {
         case 'null':
             return null;
         default:
-            if (value !== '' && !isNaN(value as any)) {
+            // Checking '+' character for skip phone number parsing to float
+            if (value !== '' && !value.startsWith('+') && !isNaN(value as any)) {
                 return parseFloat(value);
             }
             return value;

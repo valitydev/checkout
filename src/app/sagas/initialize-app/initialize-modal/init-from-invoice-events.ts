@@ -1,21 +1,21 @@
-import { InvoiceChangeType, InvoiceEvent } from 'checkout/backend';
+import { InvoiceChangeType, InvoiceEvent, ServiceProvider } from 'checkout/backend';
 import { ModalState, PaymentMethod } from 'checkout/state';
 import { PaymentMethodName } from 'checkout/config';
 import { provideInteraction } from '../../provide-modal';
 import { toModalResult } from './to-modal-result';
 import { toInitialState } from './to-initial-state';
 import { getLastChange } from 'checkout/utils';
-import { call, CallEffect } from 'redux-saga/effects';
 
-export function* initFromInvoiceEvents(
+export function initFromInvoiceEvents(
     events: InvoiceEvent[],
     methods: PaymentMethod[],
-    initialPaymentMethod: PaymentMethodName
-): IterableIterator<ModalState | CallEffect> {
+    initialPaymentMethod: PaymentMethodName,
+    serviceProviders: ServiceProvider[]
+): ModalState {
     const change = getLastChange(events);
     switch (change.changeType) {
         case InvoiceChangeType.PaymentInteractionRequested:
-            return yield call(provideInteraction, events);
+            return provideInteraction(events, serviceProviders);
         case InvoiceChangeType.PaymentStarted:
         case InvoiceChangeType.InvoiceStatusChanged:
         case InvoiceChangeType.PaymentStatusChanged:

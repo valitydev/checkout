@@ -40,6 +40,8 @@ const Method: React.FC<MethodProps> = (props) => {
                     setFormInfo={props.setFormInfo}
                     pay={props.pay}
                     localeCode={props.localeCode}
+                    emailPrefilled={props.emailPrefilled}
+                    phoneNumberPrefilled={props.phoneNumberPrefilled}
                 />
             );
         case PaymentMethodName.DigitalWallet:

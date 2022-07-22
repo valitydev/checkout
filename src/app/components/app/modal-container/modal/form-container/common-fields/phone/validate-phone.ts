@@ -1,5 +1,5 @@
-import { validatePhone as _validatePhone } from 'checkout/utils';
+import { validatePhoneByNumberLength } from 'checkout/utils';
 
 export function validatePhone(value: string): boolean {
-    return _validatePhone(value);
+    return validatePhoneByNumberLength(value);
 }

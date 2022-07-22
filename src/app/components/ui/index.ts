@@ -8,3 +8,5 @@ export * from './input';
 export * from './button';
 export * from './metadata';
 export * from './payment-method';
+export * from './hr';
+export * from './copy-to-clipboard-button';

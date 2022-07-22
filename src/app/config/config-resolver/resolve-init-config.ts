@@ -10,6 +10,8 @@ import { DEFAULT_THEME } from 'checkout/themes';
 import { resolveObject } from './resolve-object';
 import { detectLocale } from '../../../locale';
 import { resolveRedirectUrl } from './resolve-redirect-url';
+import { resolveEmail } from './resolve-email';
+import { resolvePhoneNumber } from './resolve-phone-number';
 
 const setDefault = <P, D>(userParam: P, defaultValue: D): P | D =>
     userParam === null || userParam === undefined ? defaultValue : userParam;
@@ -33,6 +35,7 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         name,
         description,
         email,
+        phoneNumber,
         amount,
         obscureCardCvv,
         requireCardHolder,
@@ -64,7 +67,8 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         ...resolvedIntegrationType,
         name: resolveString(name, 'name'),
         description: resolveString(description, 'description'),
-        email: resolveString(email, 'email'),
+        email: resolveEmail(resolveString(email, 'email')),
+        phoneNumber: resolvePhoneNumber(resolveString(phoneNumber, 'phoneNumber')),
         amount: resolveInteger(amount, 'amount'),
         obscureCardCvv: resolveBoolean(obscureCardCvv, 'obscureCardCvv'),
         requireCardHolder: resolveBoolean(requireCardHolder, 'requireCardHolder'),

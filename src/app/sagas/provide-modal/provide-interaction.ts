@@ -18,11 +18,12 @@ import {
     PaymentToolDetailsPaymentTerminal,
     PaymentToolDetailsType,
     QrCodeDisplayRequest,
-    Redirect
+    Redirect,
+    ServiceProvider
 } from 'checkout/backend';
-import { SelectEffect } from 'redux-saga/effects';
 import last from 'lodash-es/last';
 import { findChange } from 'checkout/utils';
+import { getMetadata } from 'checkout/components/ui';
 
 const toModalInteraction = (userInteraction: Redirect): ModalInteraction =>
     new ModalInteraction(
@@ -35,17 +36,22 @@ const toModalInteraction = (userInteraction: Redirect): ModalInteraction =>
 
 const providePaymentTerminalPaymentTool = (
     userInteraction: Redirect,
-    paymentToolDetails: PaymentToolDetailsPaymentTerminal
+    { provider }: PaymentToolDetailsPaymentTerminal,
+    serviceProviders: ServiceProvider[]
 ) => {
-    switch (paymentToolDetails.detailsType) {
-        case PaymentToolDetailsType.PaymentToolDetailsPaymentTerminal:
-            return new ModalForms([new RedirectFormInfo(userInteraction.request)], true, true);
-        default:
-            return toModalInteraction(userInteraction);
+    const serviceProvider = serviceProviders.find((p) => p.id === provider);
+    const metadata = getMetadata(serviceProvider);
+    if (metadata?.userInteraction?.type === 'frame') {
+        return toModalInteraction(userInteraction);
     }
+    return new ModalForms([new RedirectFormInfo(userInteraction.request)], true, true);
 };
 
-const provideRedirect = (userInteraction: Redirect, paymentToolDetails: PaymentToolDetails): ModalState => {
+const provideRedirect = (
+    userInteraction: Redirect,
+    paymentToolDetails: PaymentToolDetails,
+    serviceProviders: ServiceProvider[]
+): ModalState => {
     if (!paymentToolDetails) {
         return toModalInteraction(userInteraction);
     }
@@ -53,7 +59,8 @@ const provideRedirect = (userInteraction: Redirect, paymentToolDetails: PaymentT
         case PaymentToolDetailsType.PaymentToolDetailsPaymentTerminal:
             return providePaymentTerminalPaymentTool(
                 userInteraction,
-                paymentToolDetails as PaymentToolDetailsPaymentTerminal
+                paymentToolDetails as PaymentToolDetailsPaymentTerminal,
+                serviceProviders
             );
         default:
             return toModalInteraction(userInteraction);
@@ -71,9 +78,7 @@ const provideQrCode = (userInteraction: QrCodeDisplayRequest): ModalForms => {
     return new ModalForms([formInfo], true);
 };
 
-export function* provideInteraction(
-    events: InvoiceEvent[]
-): IterableIterator<ModalForms | ModalInteraction | SelectEffect> {
+export function provideInteraction(events: InvoiceEvent[], serviceProviders: ServiceProvider[]): ModalState {
     const lastEvent = last(events);
     const change = last(lastEvent.changes);
     if (change.changeType !== InvoiceChangeType.PaymentInteractionRequested) {
@@ -83,7 +88,7 @@ export function* provideInteraction(
     const paymentToolDetails = getPaymentToolDetails(events);
     switch (userInteraction.interactionType) {
         case InteractionType.Redirect:
-            return provideRedirect(userInteraction as Redirect, paymentToolDetails);
+            return provideRedirect(userInteraction as Redirect, paymentToolDetails, serviceProviders);
         case InteractionType.QrCodeDisplayRequest:
             return provideQrCode(userInteraction as QrCodeDisplayRequest);
         default:

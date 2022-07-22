@@ -5,7 +5,7 @@ import {
     InvoiceTemplateSingleLine
 } from 'checkout/backend';
 import { InitConfig, IntegrationType } from 'checkout/config';
-import { AmountConfig, EmailConfig, FieldsConfig } from './fields-config';
+import { AmountConfig, EmailConfig, FieldsConfig, PhoneNumberConfig } from './fields-config';
 
 const toSingleLineAmountConfig = (c: InvoiceTemplateSingleLine): AmountConfig => {
     const result = { visible: false } as AmountConfig;
@@ -30,7 +30,7 @@ const toTemplateAmountConfig = (c: InitConfig, t: InvoiceTemplate): AmountConfig
     return { visible: false };
 };
 
-const toAmountConfig = (c: InitConfig, template: InvoiceTemplate): AmountConfig => {
+export const toAmountConfig = (c: InitConfig, template: InvoiceTemplate): AmountConfig => {
     switch (c.integrationType) {
         case IntegrationType.invoiceTemplate:
             return toTemplateAmountConfig(c, template);
@@ -38,16 +38,21 @@ const toAmountConfig = (c: InitConfig, template: InvoiceTemplate): AmountConfig 
     return { visible: false };
 };
 
-const toEmailConfig = (email: string): EmailConfig => {
+export const toPhoneNumberConfig = (phoneNumber: string): PhoneNumberConfig => {
+    return phoneNumber ? { visible: false, value: phoneNumber } : { visible: true };
+};
+
+export const toEmailConfig = (email: string): EmailConfig => {
     return email ? { visible: false, value: email } : { visible: true };
 };
 
-const toCardHolderConfig = (requireCardHolder: boolean | null) => ({
+export const toCardHolderConfig = (requireCardHolder: boolean | null) => ({
     visible: requireCardHolder === null ? true : requireCardHolder
 });
 
 export const toFieldsConfig = (c: InitConfig, t: InvoiceTemplate): FieldsConfig => ({
     amount: toAmountConfig(c, t),
     email: toEmailConfig(c.email),
-    cardHolder: toCardHolderConfig(c.requireCardHolder)
+    cardHolder: toCardHolderConfig(c.requireCardHolder),
+    phoneNumber: toPhoneNumberConfig(c.phoneNumber)
 });

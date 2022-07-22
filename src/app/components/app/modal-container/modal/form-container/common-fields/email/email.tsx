@@ -5,7 +5,7 @@ import { Field, WrappedFieldProps } from 'redux-form';
 import { State } from 'checkout/state';
 import { formatEmail, isError, validateEmail } from 'checkout/utils';
 import { Locale } from 'checkout/locale';
-import { Letter, Input } from 'checkout/components';
+import { Input } from 'checkout/components';
 
 export interface EmailDefProps {
     locale: Locale;
@@ -16,7 +16,6 @@ const getCustomInput = (props: EmailDefProps, fieldProps: WrappedFieldProps) => 
         {...fieldProps.input}
         {...fieldProps.meta}
         error={isError(fieldProps.meta)}
-        icon={<Letter />}
         placeholder={props.locale['form.input.email.placeholder']}
         mark={true}
         type="email"

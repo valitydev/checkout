@@ -7,11 +7,19 @@ import { getActiveModalFormSelector, getLocaleSelector } from 'checkout/selector
 import { QRCode } from './qr-code';
 import { QrCodeInteractionFormInfo } from 'checkout/state';
 import { finishInteraction } from 'checkout/actions';
+import { CopyToClipboardButton, Hr, Input } from 'checkout/components/ui';
 
 const Instruction = styled.p`
     font-weight: 500;
     line-height: 24px;
     text-align: center;
+    margin: 0;
+`;
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 `;
 
 export const QrCodeInteractionForm: React.FC = () => {
@@ -24,9 +32,12 @@ export const QrCodeInteractionForm: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <Container>
+            <Input defaultValue={request.qrCode} readOnly={true}></Input>
+            <CopyToClipboardButton data={request.qrCode} />
+            <Hr />
             <Instruction>{locale['form.qr.code']}</Instruction>
             <QRCode text={request.qrCode} />
-        </>
+        </Container>
     );
 };

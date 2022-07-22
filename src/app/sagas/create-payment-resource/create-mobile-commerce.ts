@@ -1,8 +1,7 @@
 import { call, CallEffect } from 'redux-saga/effects';
 import { MobileCommerceFormValues } from 'checkout/state';
 import { PaymentResource, PaymentToolType, createPaymentResource } from 'checkout/backend';
-import { replaceSpaces } from './replace-spaces';
-import { getPhoneCountryCode } from 'checkout/utils';
+import { getPhoneCountryCode, replaceSpaces } from 'checkout/utils';
 
 export function* createMobileCommerce(
     endpoint: string,

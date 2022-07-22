@@ -18,3 +18,4 @@ export * from './email';
 export * from './format-utils';
 export * from './is-error-predicate';
 export * from './interaction-form';
+export * from './replace-spaces';

@@ -13,8 +13,7 @@ import {
     PaymentTerminalPaymentMethod,
     KnownProviderCategories,
     PaymentTerminalBankCardFormInfo,
-    PaymentTerminalFormInfo,
-    InstantTerminalPaymentFormInfo
+    PaymentTerminalFormInfo
 } from 'checkout/state';
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { assertUnreachable } from 'checkout/utils';
@@ -31,7 +30,6 @@ const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalP
         case KnownProviderCategories.DigitalWallet:
         case KnownProviderCategories.NetBanking:
         case KnownProviderCategories.UPI:
-            return new InstantTerminalPaymentFormInfo(category);
         case KnownProviderCategories.PIX:
         case KnownProviderCategories.PaymentTerminal:
             return new PaymentTerminalFormInfo(category);
