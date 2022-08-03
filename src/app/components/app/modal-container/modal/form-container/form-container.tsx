@@ -19,16 +19,12 @@ import { device } from 'checkout/utils/device';
 import { shake } from 'checkout/styled-components/animations';
 import { stylableTransition, ENTER, LEAVE, ACTIVE } from 'checkout/styled-transition';
 import { MobileCommerceReceiptForm } from './mobile-commerce-receipt-form';
-import { OnlineBankingForm } from './online-banking-form';
-import { OnlineBankingAccountForm } from './online-banking-account-form';
 import { NoAvailablePaymentMethodForm } from './no-available-payment-method-form';
 import { WalletProviders } from './wallet-providers';
-import { UPIForm } from './upi-form';
 import { RedirectForm } from './redirect-form';
 import { PaymentTerminalBankCardForm } from './payment-terminal-bank-card-form';
 import { PaymentTerminalForm } from './payment-terminal-form';
 import { QrCodeInteractionForm } from './qr-code-interaction-form';
-import { InstantTerminalPaymentForm } from './instant-terminal-payment-form';
 
 const Container = styled.div`
     padding: 0 5px;
@@ -211,14 +207,8 @@ class FormContainerDef extends React.Component<FormContainerProps, { height: num
                 return <MobileCommerceForm key={name} />;
             case FormName.mobileCommerceReceiptForm:
                 return <MobileCommerceReceiptForm key={name} />;
-            case FormName.onlineBankingForm:
-                return <OnlineBankingForm key={name} />;
-            case FormName.onlineBankingAccountForm:
-                return <OnlineBankingAccountForm key={name} />;
             case FormName.noAvailablePaymentMethodForm:
                 return <NoAvailablePaymentMethodForm key={name} />;
-            case FormName.upiForm:
-                return <UPIForm key={name} />;
             case FormName.redirectForm:
                 return <RedirectForm key={name} />;
             case FormName.paymentTerminalBankCard:
@@ -227,8 +217,6 @@ class FormContainerDef extends React.Component<FormContainerProps, { height: num
                 return <PaymentTerminalForm key={name} />;
             case FormName.qrCodeInteractionForm:
                 return <QrCodeInteractionForm key={name} />;
-            case FormName.instantTerminalPaymentFormInfo:
-                return <InstantTerminalPaymentForm key={name} />;
             default:
                 return null;
         }

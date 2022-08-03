@@ -9,7 +9,6 @@ import {
     NoAvailablePaymentMethodFormInfo,
     DigitalWalletPaymentMethod,
     WalletProvidersFormInfo,
-    OnlineBankingFormInfo,
     PaymentTerminalPaymentMethod,
     KnownProviderCategories,
     PaymentTerminalBankCardFormInfo,
@@ -18,13 +17,8 @@ import {
 import { BankCardTokenProvider } from 'checkout/backend/model';
 import { assertUnreachable } from 'checkout/utils';
 
-const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalPaymentMethod) => {
+const toPaymentTerminalForms = ({ category }: PaymentTerminalPaymentMethod) => {
     switch (category) {
-        case KnownProviderCategories.OnlineBanking:
-            if (serviceProviders.length === 1) {
-                return new PaymentTerminalFormInfo(category);
-            }
-            return new OnlineBankingFormInfo(category);
         case KnownProviderCategories.BankCard:
             return new PaymentTerminalBankCardFormInfo();
         case KnownProviderCategories.DigitalWallet:
@@ -32,6 +26,7 @@ const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalP
         case KnownProviderCategories.UPI:
         case KnownProviderCategories.PIX:
         case KnownProviderCategories.PaymentTerminal:
+        case KnownProviderCategories.OnlineBanking:
             return new PaymentTerminalFormInfo(category);
         default:
             assertUnreachable(category);

@@ -11,15 +11,11 @@ export enum FormName {
     helpForm = 'helpForm',
     mobileCommerceForm = 'mobileCommerceForm',
     mobileCommerceReceiptForm = 'mobileCommerceReceiptForm',
-    onlineBankingForm = 'onlineBankingForm',
-    onlineBankingAccountForm = 'onlineBankingAccountForm',
     noAvailablePaymentMethodForm = 'noAvailablePaymentMethodForm',
-    upiForm = 'upiForm',
     redirectForm = 'redirectForm',
     paymentTerminalBankCard = 'paymentTerminalBankCard',
     paymentTerminalForm = 'paymentTerminalForm',
-    qrCodeInteractionForm = 'qrCodeInteractionForm',
-    instantTerminalPaymentFormInfo = 'instantTerminalPaymentFormInfo'
+    qrCodeInteractionForm = 'qrCodeInteractionForm'
 }
 
 export abstract class FormInfo implements Named {

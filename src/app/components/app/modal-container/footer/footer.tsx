@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 
-import { PaymentMethodName, State } from 'checkout/state';
-import { Locale } from 'checkout/locale';
+import { PaymentMethodName } from 'checkout/state';
 import SecureIcon from './secure-icon.svg';
 import VisaIcon from './visa-icon.svg';
 import McIcon from './mc-icon.svg';
 import PciDssIcon from './pci-dss-icon.svg';
 import { device } from 'checkout/utils/device';
 import styled, { css } from 'checkout/styled-components';
+import { useAppSelector } from 'checkout/configure-store';
+import { getAppConfigSelector, getAvailablePaymentMethodSelector, getLocaleSelector } from 'checkout/selectors';
 
 const FooterWrapper = styled.footer`
     padding: 30px 25px;
@@ -95,45 +95,35 @@ const LogoWrapper = styled.div`
     fill: #fff;
 `;
 
-export interface FooterProps {
-    locale: Locale;
-    brandless: boolean;
-    isPaymentMethodBankCard: boolean;
-    className?: string;
-}
-
-const mapStateToProps = (state: State) => ({
-    locale: state.config.locale,
-    brandless: state.config.appConfig.brandless,
-    isPaymentMethodBankCard: !!state.availablePaymentMethods.find((m) => m.name === PaymentMethodName.BankCard)
-});
-
-const FooterDef: React.FC<FooterProps> = (props) => (
-    <FooterWrapper className={props.className}>
-        <SafePaymentContainer>
-            {!props.brandless && (
-                <SafePayment>
-                    <StyledSecureIcon />
-                    <Label>{props.locale['footer.pay.label']}</Label>
-                    <LogoWrapper>
-                        <ReactSVG
-                            src="/assets/logo.svg"
-                            beforeInjection={(svg) => {
-                                svg.setAttribute('style', 'height: 24px; width: auto');
-                            }}
-                        />
-                    </LogoWrapper>
-                </SafePayment>
-            )}
-            {props.isPaymentMethodBankCard && (
-                <SafeLogos>
-                    <StyledVisaIcon />
-                    <StyledMcIcon />
-                    <StyledPciDssIcon />
-                </SafeLogos>
-            )}
-        </SafePaymentContainer>
-    </FooterWrapper>
-);
-
-export const Footer = connect(mapStateToProps)(FooterDef);
+export const Footer: React.FC = () => {
+    const locale = useAppSelector(getLocaleSelector);
+    const brandless = useAppSelector(getAppConfigSelector).brandless;
+    const isPaymentMethodBankCard = useAppSelector(getAvailablePaymentMethodSelector(PaymentMethodName.BankCard));
+    return (
+        <FooterWrapper>
+            <SafePaymentContainer>
+                {!brandless && (
+                    <SafePayment>
+                        <StyledSecureIcon />
+                        <Label>{locale['footer.pay.label']}</Label>
+                        <LogoWrapper>
+                            <ReactSVG
+                                src="/assets/logo.svg"
+                                beforeInjection={(svg) => {
+                                    svg.setAttribute('style', 'height: 24px; width: auto');
+                                }}
+                            />
+                        </LogoWrapper>
+                    </SafePayment>
+                )}
+                {isPaymentMethodBankCard && (
+                    <SafeLogos>
+                        <StyledVisaIcon />
+                        <StyledMcIcon />
+                        <StyledPciDssIcon />
+                    </SafeLogos>
+                )}
+            </SafePaymentContainer>
+        </FooterWrapper>
+    );
+};
