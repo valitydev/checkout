@@ -5,3 +5,4 @@ export * from './get-locale-selector';
 export * from './get-service-provider-selector';
 export * from './get-init-config-selector';
 export * from './get-model-selector';
+export * from './get-app-config-selector';
