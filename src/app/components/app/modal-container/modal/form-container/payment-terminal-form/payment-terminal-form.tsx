@@ -36,8 +36,23 @@ const Container = styled.div`
     justify-content: space-between;
 `;
 
-const isInstantPayment = (form: ServiceProviderMetadataField[], contactInfo: ServiceProviderContactInfo) =>
-    isNil(form) && isNil(contactInfo);
+const isContactInfoRequired = (
+    contactInfo: ServiceProviderContactInfo,
+    emailFieldVisible: boolean,
+    phoneNumberFieldVisible: boolean
+): boolean => {
+    if (isNil(contactInfo)) {
+        return false;
+    }
+    return emailFieldVisible || phoneNumberFieldVisible;
+};
+
+const isInstantPayment = (
+    form: ServiceProviderMetadataField[],
+    contactInfo: ServiceProviderContactInfo,
+    emailFieldVisible: boolean,
+    phoneNumberFieldVisible: boolean
+) => isNil(form) && !isContactInfoRequired(contactInfo, emailFieldVisible, phoneNumberFieldVisible);
 
 const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
     const initConfig = useAppSelector(getInitConfigSelector);
@@ -55,7 +70,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
 
     useEffect(() => {
         dispatch(setViewInfoError(false));
-        if (!isInstantPayment(form, contactInfo)) {
+        if (!isInstantPayment(form, contactInfo, email.visible, phoneNumber.visible)) {
             switch (paymentStatus) {
                 case PaymentStatus.pristine:
                     initialize({
@@ -119,7 +134,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                         </FormGroup>
                     )}
                 </div>
-                {!isInstantPayment(form, contactInfo) && <PayButton />}
+                {!isInstantPayment(form, contactInfo, email.visible, phoneNumber.visible) && <PayButton />}
             </Container>
         </form>
     );
