@@ -18,12 +18,10 @@ export function* initialize(userInitConfig: InitConfig) {
     const configChunk = yield call(loadConfig, userInitConfig.locale);
     if (configChunk.appConfig.sentryDsn) {
         Sentry.init({
+            environment: 'production',
             dsn: configChunk.appConfig.sentryDsn,
             integrations: [new Integrations.BrowserTracing()],
-
-            // We recommend adjusting this value in production, or using tracesSampler
-            // for finer control
-            tracesSampleRate: 1.0
+            tracesSampleRate: 0.5
         });
     }
     const { model, events } = yield call(initializeModel, configChunk.appConfig.capiEndpoint, userInitConfig);
