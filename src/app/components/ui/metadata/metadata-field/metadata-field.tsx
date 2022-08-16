@@ -3,8 +3,39 @@ import { useMemo } from 'react';
 import { Field, Validator, WrappedFieldProps } from 'redux-form';
 
 import { MetadataTextLocalization, ServiceProviderMetadataField } from 'checkout/backend';
-import { formatEmail, isError, validateEmail } from 'checkout/utils';
+import { formatEmail, formatPhoneNumber, isError, validateEmail, validatePhone } from 'checkout/utils';
 import { Input } from 'checkout/components';
+
+const getAutocomplete = (type: JSX.IntrinsicElements['input']['type']): string | null => {
+    switch (type) {
+        case 'email':
+            return 'email';
+        case 'tel':
+            return 'tel';
+        default:
+            return null;
+    }
+};
+
+const getOnInputHandler = (type: JSX.IntrinsicElements['input']['type']) => {
+    switch (type) {
+        case 'email':
+            return formatEmail;
+        case 'tel':
+            return formatPhoneNumber;
+        default:
+            return null;
+    }
+};
+
+const getOnFocusHandler = (type: JSX.IntrinsicElements['input']['type']) => {
+    switch (type) {
+        case 'tel':
+            return formatPhoneNumber;
+        default:
+            return null;
+    }
+};
 
 const getPlaceholder = (localeCode: string, localization: MetadataTextLocalization) =>
     localization[localeCode] || localization['en'];
@@ -23,6 +54,9 @@ const WrappedInput: React.FC<WrappedFieldProps & {
         placeholder={getPlaceholder(localeCode, localization)}
         mark={true}
         error={isError(meta)}
+        onInput={getOnInputHandler(type)}
+        onFocus={getOnFocusHandler(type)}
+        autocomplete={getAutocomplete(type)}
     />
 );
 
@@ -34,29 +68,14 @@ const createValidator = (
     if (type === 'email') {
         return validateEmail(value);
     }
+    if (type === 'tel') {
+        return validatePhone(value);
+    }
     if (pattern) {
         return !new RegExp(pattern).test(value);
     }
     if (required) {
         return !value || !value.trim();
-    }
-};
-
-const getAutocomplete = (type: JSX.IntrinsicElements['input']['type']): string | null => {
-    switch (type) {
-        case 'email':
-            return 'email';
-        default:
-            return null;
-    }
-};
-
-const getOnInputHandler = (type: JSX.IntrinsicElements['input']['type']) => {
-    switch (type) {
-        case 'email':
-            return formatEmail;
-        default:
-            return null;
     }
 };
 
@@ -78,8 +97,6 @@ export const MetadataField: React.FC<MetadataFieldProps> = ({
             component={WrappedInput}
             props={{ type, name, localization, localeCode }}
             validate={validate}
-            autocomplete={getAutocomplete(type)}
-            onInput={getOnInputHandler(type)}
         />
     );
 };
