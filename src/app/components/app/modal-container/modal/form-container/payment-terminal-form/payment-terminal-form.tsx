@@ -28,6 +28,7 @@ import { toAmountConfig, toEmailConfig, toPhoneNumberConfig } from '../fields-co
 import { Amount, Email, Phone } from '../common-fields';
 import { LogoContainer } from './logo-container';
 import { ServiceProviderContactInfo, ServiceProviderMetadataField } from 'checkout/backend';
+import { formatMetadataValue } from './format-metadata-value';
 
 const Container = styled.div`
     min-height: 300px;
@@ -97,7 +98,10 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
         dispatch(
             pay({
                 method: PaymentMethodName.PaymentTerminal,
-                values
+                values: {
+                    ...values,
+                    metadata: formatMetadataValue(form, values?.metadata)
+                } as PaymentTerminalFormValues
             })
         );
     };
