@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 import get from 'lodash-es/get';
-import isNil from 'lodash-es/isNil';
 import styled from 'checkout/styled-components';
 
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
@@ -27,8 +26,9 @@ import { getMetadata, MetadataField, MetadataLogo } from 'checkout/components/ui
 import { toAmountConfig, toEmailConfig, toPhoneNumberConfig } from '../fields-config';
 import { Amount, Email, Phone } from '../common-fields';
 import { LogoContainer } from './logo-container';
-import { ServiceProviderContactInfo, ServiceProviderMetadataField } from 'checkout/backend';
 import { formatMetadataValue } from './format-metadata-value';
+import { sortByIndex } from './sort-by-index';
+import { isInstantPayment } from './is-instant-payment';
 
 const Container = styled.div`
     min-height: 300px;
@@ -36,24 +36,6 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: space-between;
 `;
-
-const isContactInfoRequired = (
-    contactInfo: ServiceProviderContactInfo,
-    emailFieldVisible: boolean,
-    phoneNumberFieldVisible: boolean
-): boolean => {
-    if (isNil(contactInfo)) {
-        return false;
-    }
-    return emailFieldVisible || phoneNumberFieldVisible;
-};
-
-const isInstantPayment = (
-    form: ServiceProviderMetadataField[],
-    contactInfo: ServiceProviderContactInfo,
-    emailFieldVisible: boolean,
-    phoneNumberFieldVisible: boolean
-) => isNil(form) && !isContactInfoRequired(contactInfo, emailFieldVisible, phoneNumberFieldVisible);
 
 const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
     const initConfig = useAppSelector(getInitConfigSelector);
@@ -117,7 +99,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                         </LogoContainer>
                     )}
                     {form &&
-                        form?.map((m) => (
+                        form?.sort(sortByIndex).map((m) => (
                             <FormGroup key={m.name}>
                                 <MetadataField metadata={m} wrappedName="metadata" localeCode={initConfig.locale} />
                             </FormGroup>
