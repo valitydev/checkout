@@ -1,4 +1,7 @@
+import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
 import { put, call, CallEffect, ForkEffect, PutEffect, takeLatest } from 'redux-saga/effects';
+
 import { TypeKeys, InitializeAppFailed, InitializeAppRequested, InitializeAppCompleted } from 'checkout/actions';
 import { InitConfig } from 'checkout/config';
 import { loadConfig } from './load-config';
@@ -6,8 +9,7 @@ import { checkInitConfig } from './check-init-config';
 import { initializeModel } from './initialize-model';
 import { initializeModal } from './initialize-modal';
 import { initializeAvailablePaymentMethods } from './initialize-available-payment-methods';
-import * as Sentry from '@sentry/react';
-import { Integrations } from '@sentry/tracing';
+
 import { initializeAmountInfo } from './initialize-amount-info';
 
 type InitializeAppPutEffect = InitializeAppCompleted | InitializeAppFailed;
@@ -21,7 +23,8 @@ export function* initialize(userInitConfig: InitConfig) {
             environment: 'production',
             dsn: configChunk.appConfig.sentryDsn,
             integrations: [new Integrations.BrowserTracing()],
-            tracesSampleRate: 0.5
+            tracesSampleRate: 0.5,
+            release: configChunk.env.version
         });
     }
     const { model, events } = yield call(initializeModel, configChunk.appConfig.capiEndpoint, userInitConfig);
