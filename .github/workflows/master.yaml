@@ -20,6 +20,12 @@ jobs:
               uses: ./.github/actions/init
             - name: Build
               run: npm run build
+            - name: Set checkout version
+              uses: jossef/action-set-json-field@v2
+              with:
+                  file: ./dist/env.json
+                  field: version
+                  value: ${{ github.sha }}
             - name: Deploy image
               uses: valitydev/action-deploy-docker@v1.0.16
               with:
