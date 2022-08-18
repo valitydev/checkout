@@ -1,9 +1,19 @@
 import { FormEvent } from 'react';
 import { AsYouType } from 'libphonenumber-js/min';
 
-const format = (value: string): string => (value.slice(0, 1) === '+' ? new AsYouType().input(value) : '+');
+export const formatOnInput = (value: string): string => {
+    if (value === '') {
+        return value;
+    }
+    if (value.slice(0, 1) === '+') {
+        return new AsYouType().input(value);
+    }
+    return `+${value}`;
+};
 
-export const formatPhoneNumber = (e: FormEvent<HTMLInputElement>) => {
+export const formatOnFocus = (value: string): string => (value === '' ? '+' : value);
+
+export const formatPhoneNumber = (e: FormEvent<HTMLInputElement>, formatter = formatOnInput) => {
     const target = e.currentTarget as HTMLInputElement;
-    target.value = format(target.value);
+    target.value = formatter(target.value);
 };
