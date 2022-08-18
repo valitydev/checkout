@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { useMemo } from 'react';
 import { Field, Validator, WrappedFieldProps } from 'redux-form';
+import isNil from 'lodash-es/isNil';
+import partialRight from 'lodash-es/partialRight';
 
 import { MetadataTextLocalization, ServiceProviderMetadataField } from 'checkout/backend';
-import { formatEmail, formatPhoneNumber, isError, validateEmail, validatePhone } from 'checkout/utils';
+import { formatEmail, formatPhoneNumber, isError, formatOnFocus, validateEmail, validatePhone } from 'checkout/utils';
 import { Input } from 'checkout/components';
 
 const getAutocomplete = (type: JSX.IntrinsicElements['input']['type']): string | null => {
@@ -31,7 +33,7 @@ const getOnInputHandler = (type: JSX.IntrinsicElements['input']['type']) => {
 const getOnFocusHandler = (type: JSX.IntrinsicElements['input']['type']) => {
     switch (type) {
         case 'tel':
-            return formatPhoneNumber;
+            return partialRight(formatPhoneNumber, formatOnFocus);
         default:
             return null;
     }
@@ -45,6 +47,7 @@ const WrappedInput: React.FC<WrappedFieldProps & {
     name: string;
     localization: MetadataTextLocalization;
     localeCode: string;
+    required: boolean;
 }> = ({ type, name, input, meta, localeCode, localization }) => (
     <Input
         {...input}
@@ -65,6 +68,9 @@ const createValidator = (
     required: boolean,
     pattern?: string
 ): Validator => (value) => {
+    if (!required && isNil(value)) {
+        return undefined;
+    }
     if (type === 'email') {
         return validateEmail(value);
     }
@@ -95,7 +101,7 @@ export const MetadataField: React.FC<MetadataFieldProps> = ({
         <Field
             name={wrappedName ? `${wrappedName}.${name}` : name}
             component={WrappedInput}
-            props={{ type, name, localization, localeCode }}
+            props={{ type, name, localization, localeCode, required }}
             validate={validate}
         />
     );
