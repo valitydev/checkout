@@ -7,7 +7,7 @@
     "info.modal.no.available.payment.method": "利用できる支払方法はありません",
     "footer.pay.label": "Secure payment with",
     "form.header.payment.methods.label": "お支払い方法を選択してください",
-    "form.header.payment.method.groups.label": "お支払い方法を選択してください",
+    "form.header.netbanking.label": "Please choose a bank",
     "form.header.pay.card.label": "カードで支払う",
     "form.header.pay.mobile.commerce.label": "携帯電話アカウントで支払います。",
     "form.header.pay.upi.label": "Unified payment interface",
