@@ -1,3 +1,5 @@
+import isNil from 'lodash-es/isNil';
+
 import {
     PaymentMethodName,
     State,
@@ -9,6 +11,9 @@ import {
 export const getAvailableTerminalPaymentMethodSelector = (category: KnownProviderCategories) => (
     state: State
 ): PaymentTerminalPaymentMethod | null => {
+    if (isNil(category)) {
+        return null;
+    }
     const found = state.availablePaymentMethods.find((m) => {
         if (m.name !== PaymentMethodName.PaymentTerminal) {
             return false;

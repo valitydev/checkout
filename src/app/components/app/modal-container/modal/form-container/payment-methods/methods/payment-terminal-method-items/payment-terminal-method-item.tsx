@@ -5,12 +5,14 @@ import {
     FormName,
     KnownProviderCategories,
     PaymentTerminalFormInfo,
-    PaymentTerminalPaymentMethod
+    PaymentTerminalPaymentMethod,
+    PaymentTerminalSelectorFormInfo
 } from 'checkout/state';
-import { getMetadata, MetadataLogo, MetadataTitle, PaymentMethodItemContainer } from 'checkout/components/ui';
+import { getMetadata, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PayAction, SetFormInfoAction } from './types';
 import { payWithPaymentTerminal } from './pay-with-payment-terminal';
 import { ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
+import { Content } from './content';
 
 export interface PaymentTerminalMethodItemProps {
     method: PaymentTerminalPaymentMethod;
@@ -21,8 +23,11 @@ export interface PaymentTerminalMethodItemProps {
     phoneNumberPrefilled: boolean;
 }
 
-const toPaymentTerminal = (category: KnownProviderCategories, setFormInfo: SetFormInfoAction) =>
-    setFormInfo(new PaymentTerminalFormInfo(category, FormName.paymentMethods));
+const toPaymentTerminalSelector = (category: KnownProviderCategories, setFormInfo: SetFormInfoAction) =>
+    setFormInfo(new PaymentTerminalSelectorFormInfo(category, FormName.paymentMethods));
+
+const toPaymentTerminal = (serviceProviderID: string, setFormInfo: SetFormInfoAction) =>
+    setFormInfo(new PaymentTerminalFormInfo(serviceProviderID, FormName.paymentMethods));
 
 const isRequiredEmail = (contactInfo: ServiceProviderContactInfo, emailPrefilled: boolean): boolean =>
     !isNil(contactInfo) && contactInfo.email === true && !emailPrefilled;
@@ -44,15 +49,21 @@ const isRequiredPaymentTerminalForm = (
 };
 
 const provideMethod = (
-    serviceProvider: ServiceProvider,
+    method: PaymentTerminalPaymentMethod,
     pay: PayAction,
     setFormInfo: SetFormInfoAction,
     emailPrefilled: boolean,
     phoneNumberPrefilled: boolean
 ) => {
-    return isRequiredPaymentTerminalForm(serviceProvider, emailPrefilled, phoneNumberPrefilled)
-        ? toPaymentTerminal(serviceProvider.category as KnownProviderCategories, setFormInfo)
-        : payWithPaymentTerminal(serviceProvider.id, pay);
+    if (method.serviceProviders.length === 1) {
+        const serviceProvider = method.serviceProviders[0];
+        return isRequiredPaymentTerminalForm(serviceProvider, emailPrefilled, phoneNumberPrefilled)
+            ? toPaymentTerminal(serviceProvider.id, setFormInfo)
+            : payWithPaymentTerminal(serviceProvider.id, pay);
+    }
+    if (method.serviceProviders.length > 1) {
+        return toPaymentTerminalSelector(method.category, setFormInfo);
+    }
 };
 
 export const PaymentTerminalMethodItem: React.FC<PaymentTerminalMethodItemProps> = ({
@@ -62,15 +73,10 @@ export const PaymentTerminalMethodItem: React.FC<PaymentTerminalMethodItemProps>
     localeCode,
     emailPrefilled,
     phoneNumberPrefilled
-}) => {
-    const serviceProvider = method.serviceProviders[0];
-    const { logo, title } = getMetadata(serviceProvider);
-    return (
-        <PaymentMethodItemContainer
-            id={`${serviceProvider.id}-payment-method-item`}
-            onClick={() => provideMethod(serviceProvider, pay, setFormInfo, emailPrefilled, phoneNumberPrefilled)}>
-            {title && <MetadataTitle metadata={title} localeCode={localeCode} />}
-            {logo && <MetadataLogo metadata={logo} />}
-        </PaymentMethodItemContainer>
-    );
-};
+}) => (
+    <PaymentMethodItemContainer
+        id={`${Math.floor(Math.random() * 100)}-payment-method-item`}
+        onClick={() => provideMethod(method, pay, setFormInfo, emailPrefilled, phoneNumberPrefilled)}>
+        <Content method={method} localeCode={localeCode} />
+    </PaymentMethodItemContainer>
+);
