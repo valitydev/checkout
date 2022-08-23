@@ -18,9 +18,9 @@ import { PayButton } from '../pay-button';
 import { FormGroup } from '../form-group';
 import {
     getActiveModalFormSelector,
-    getAvailableTerminalPaymentMethodSelector,
     getInitConfigSelector,
-    getModelSelector
+    getModelSelector,
+    getServiceProviderSelector
 } from 'checkout/selectors';
 import { getMetadata, MetadataField, MetadataLogo } from 'checkout/components/ui';
 import { toAmountConfig, toEmailConfig, toPhoneNumberConfig } from '../fields-config';
@@ -38,17 +38,15 @@ const Container = styled.div`
 `;
 
 const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
+    const { providerID, paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
+    const serviceProvider = useAppSelector(getServiceProviderSelector(providerID));
+    const { form, contactInfo, logo } = getMetadata(serviceProvider);
     const initConfig = useAppSelector(getInitConfigSelector);
     const model = useAppSelector(getModelSelector);
-    const { category } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
-    const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(category));
-    const serviceProvider = paymentMethod?.serviceProviders[0];
-    const formValues = useAppSelector((s) => get(s.form, 'paymentTerminalForm.values'));
-    const { form, contactInfo, logo } = getMetadata(serviceProvider);
-    const { paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
     const amount = toAmountConfig(initConfig, model.invoiceTemplate);
     const email = toEmailConfig(initConfig.email);
     const phoneNumber = toPhoneNumberConfig(initConfig.phoneNumber);
+    const formValues = useAppSelector((s) => get(s.form, 'paymentTerminalForm.values'));
     const dispatch = useAppDispatch();
 
     useEffect(() => {

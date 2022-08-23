@@ -31,8 +31,8 @@ export const PaymentTerminalMethodItems: React.FC<PaymentTerminalMethodItemsProp
         case KnownProviderCategories.PIX:
         case KnownProviderCategories.PaymentTerminal:
         case KnownProviderCategories.DigitalWallet:
-        case KnownProviderCategories.OnlineBanking:
         case KnownProviderCategories.NetBanking:
+        case KnownProviderCategories.OnlineBanking:
             return (
                 <PaymentTerminalMethodItem
                     method={method}

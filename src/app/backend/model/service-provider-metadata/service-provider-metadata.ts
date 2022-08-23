@@ -8,8 +8,8 @@ export interface MetadataTextLocalization {
 }
 
 export interface ServiceProviderMetadataField {
-    name: string;
     type: JSX.IntrinsicElements['input']['type'];
+    name: string;
     required: boolean;
     pattern?: string;
     localization?: MetadataTextLocalization;
