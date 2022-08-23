@@ -7,7 +7,7 @@
     "info.modal.no.available.payment.method": "Sem opções de pagamento disponível",
     "footer.pay.label": "Secure payment with",
     "form.header.payment.methods.label": "Por favor escolha seu método de pagamento",
-    "form.header.payment.method.groups.label": "Por favor escolha seu método de pagamento",
+    "form.header.netbanking.label": "Please choose a bank",
     "form.header.pay.card.label": "Pay with a card",
     "form.header.pay.mobile.commerce.label": "Pay with mobile phone account",
     "form.header.pay.upi.label": "Unified payment interface",
