@@ -1,8 +1,8 @@
 import styled from 'checkout/styled-components';
 
-export const FormGroup = styled.div`
+export const FormGroup = styled.div<{ direction?: 'column' | 'row' }>`
     display: flex;
     flex-wrap: nowrap;
-    flex-direction: column;
+    flex-direction: ${({ direction }) => direction || 'row'};
     margin-bottom: 10px;
 `;
