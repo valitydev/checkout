@@ -101,7 +101,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                     )}
                     {form &&
                         form?.sort(sortByIndex).map((m) => (
-                            <FormGroup key={m.name}>
+                            <FormGroup key={m.name} direction={'column'}>
                                 <MetadataField metadata={m} wrappedName="metadata" localeCode={initConfig.locale} />
                                 {m.name === 'VPA' && <VpaInstruction locale={locale} />}
                             </FormGroup>
