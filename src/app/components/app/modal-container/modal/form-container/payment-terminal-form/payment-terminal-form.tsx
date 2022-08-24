@@ -19,6 +19,7 @@ import { FormGroup } from '../form-group';
 import {
     getActiveModalFormSelector,
     getInitConfigSelector,
+    getLocaleSelector,
     getModelSelector,
     getServiceProviderSelector
 } from 'checkout/selectors';
@@ -29,6 +30,7 @@ import { LogoContainer } from './logo-container';
 import { formatMetadataValue } from './format-metadata-value';
 import { sortByIndex } from './sort-by-index';
 import { isInstantPayment } from './is-instant-payment';
+import { VpaInstruction } from './vpa-instruction';
 
 const Container = styled.div`
     min-height: 300px;
@@ -38,6 +40,7 @@ const Container = styled.div`
 `;
 
 const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
+    const locale = useAppSelector(getLocaleSelector);
     const { providerID, paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
     const serviceProvider = useAppSelector(getServiceProviderSelector(providerID));
     const { form, contactInfo, logo } = getMetadata(serviceProvider);
@@ -100,6 +103,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                         form?.sort(sortByIndex).map((m) => (
                             <FormGroup key={m.name}>
                                 <MetadataField metadata={m} wrappedName="metadata" localeCode={initConfig.locale} />
+                                {m.name === 'VPA' && <VpaInstruction locale={locale} />}
                             </FormGroup>
                         ))}
                     {amount.visible && (
