@@ -43,7 +43,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
     const locale = useAppSelector(getLocaleSelector);
     const { providerID, paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
     const serviceProvider = useAppSelector(getServiceProviderSelector(providerID));
-    const { form, contactInfo, logo } = getMetadata(serviceProvider);
+    const { form, contactInfo, logo, paymentSessionInfo } = getMetadata(serviceProvider);
     const initConfig = useAppSelector(getInitConfigSelector);
     const model = useAppSelector(getModelSelector);
     const amount = toAmountConfig(initConfig, model.invoiceTemplate);
@@ -58,8 +58,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
             switch (paymentStatus) {
                 case PaymentStatus.pristine:
                     initialize({
-                        amount: formValues?.amount,
-                        provider: serviceProvider.id
+                        amount: formValues?.amount
                     });
                     break;
                 case PaymentStatus.needRetry:
@@ -67,7 +66,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                     break;
             }
         } else {
-            submit({ provider: serviceProvider.id });
+            submit();
         }
     }, []);
 
@@ -77,12 +76,14 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
         }
     }, [submitFailed]);
 
-    const submit = (values: PaymentTerminalFormValues) => {
+    const submit = (values?: PaymentTerminalFormValues) => {
         dispatch(
             pay({
                 method: PaymentMethodName.PaymentTerminal,
                 values: {
                     ...values,
+                    provider: serviceProvider.id,
+                    paymentSessionInfo,
                     metadata: formatMetadataValue(form, values?.metadata)
                 } as PaymentTerminalFormValues
             })

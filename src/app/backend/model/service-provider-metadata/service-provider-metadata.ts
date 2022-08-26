@@ -36,6 +36,12 @@ export interface UserInteractionMetadata {
     type: 'frame' | 'self';
 }
 
+export interface PaymentSessionInfoMetadata {
+    redirectUrlInfo: {
+        type: 'self' | 'outer';
+    };
+}
+
 export interface CheckoutServiceProviderMetadata {
     form?: ServiceProviderMetadataField[];
     logo?: ServiceProviderIconMetadata;
@@ -43,6 +49,7 @@ export interface CheckoutServiceProviderMetadata {
     signUpLink?: string;
     contactInfo?: ServiceProviderContactInfo;
     userInteraction?: UserInteractionMetadata;
+    paymentSessionInfo?: PaymentSessionInfoMetadata;
 }
 
 export interface ServiceProviderMetadata {
