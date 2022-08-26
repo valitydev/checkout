@@ -51,7 +51,7 @@
     "form.onlineBanking.search": "Search",
     "form.pay.upi.instruction": [
         "You can make payment via BHIM, PhonePe, Tez, ICICI, SBI and other UPI apps.",
-        "Example: username@ybl testname@upi userbnk@sbi etc."
+        "Example: xxxxx@ybl xxxxx@icicibank xxxx@paytm xxxx@ibl etc."
     ],
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Select payment system:",
     "form.qr.code": "Please scan the QR code with your banking app to complete the payment",
