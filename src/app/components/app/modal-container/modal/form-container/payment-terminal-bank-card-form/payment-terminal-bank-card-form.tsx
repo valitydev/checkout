@@ -30,7 +30,7 @@ export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ su
     const serviceProviders = paymentMethod?.serviceProviders;
     const email = toEmailConfig(initConfig.email);
     const phoneNumber = toPhoneNumberConfig(initConfig.phoneNumber);
-    const { contactInfo } = getMetadata(serviceProviders && serviceProviders[0]);
+    const { contactInfo, paymentSessionInfo } = getMetadata(serviceProviders && serviceProviders[0]);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -47,7 +47,10 @@ export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ su
         dispatch(
             pay({
                 method: PaymentMethodName.PaymentTerminal,
-                values
+                values: {
+                    ...values,
+                    paymentSessionInfo
+                } as PaymentTerminalFormValues
             })
         );
     };
