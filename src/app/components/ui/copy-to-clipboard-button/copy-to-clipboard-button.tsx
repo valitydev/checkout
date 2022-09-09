@@ -5,7 +5,10 @@ import { useAppSelector } from 'checkout/configure-store';
 import { getLocaleSelector } from 'checkout/selectors';
 import { Button } from '../button';
 
-export const CopyToClipboardButton: React.FC<{ data: string; timeout?: number }> = ({ data, timeout = 3000 }) => {
+export const CopyToClipboardButton: React.FC<{ onClick: () => void; timeout?: number }> = ({
+    timeout = 3000,
+    onClick
+}) => {
     const locale = useAppSelector(getLocaleSelector);
     const [label, setLabel] = useState(locale['form.button.copy.label']);
 
@@ -16,10 +19,14 @@ export const CopyToClipboardButton: React.FC<{ data: string; timeout?: number }>
         return () => clearTimeout(timer);
     }, [label]);
 
-    const copyToClipboard = (qrCode: string) => {
-        navigator.clipboard.writeText(qrCode);
+    const handleOnClick = () => {
+        onClick();
         setLabel(locale['form.button.copied.label']);
     };
 
-    return <Button onClick={() => copyToClipboard(data)}>{label}</Button>;
+    return (
+        <Button id="copy-to-clipboard-btn" onClick={() => handleOnClick()}>
+            {label}
+        </Button>
+    );
 };

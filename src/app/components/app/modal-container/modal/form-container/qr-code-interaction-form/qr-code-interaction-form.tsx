@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import styled from 'checkout/styled-components';
 
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
@@ -23,6 +23,7 @@ const Container = styled.div`
 `;
 
 export const QrCodeInteractionForm: React.FC = () => {
+    const qrCodeInputRef = useRef(null);
     const locale = useAppSelector(getLocaleSelector);
     const { request } = useAppSelector<QrCodeInteractionFormInfo>(getActiveModalFormSelector);
     const dispatch = useAppDispatch();
@@ -31,10 +32,15 @@ export const QrCodeInteractionForm: React.FC = () => {
         dispatch(finishInteraction());
     }, []);
 
+    const copyToClipboard = () => {
+        qrCodeInputRef.current.select();
+        document.execCommand('copy');
+    };
+
     return (
         <Container>
-            <Input defaultValue={request.qrCode} readOnly={true}></Input>
-            <CopyToClipboardButton data={request.qrCode} />
+            <Input id="qr-code-input" inputRef={qrCodeInputRef} defaultValue={request.qrCode} readOnly={true}></Input>
+            <CopyToClipboardButton onClick={() => copyToClipboard()} />
             <Hr />
             <Instruction>{locale['form.qr.code']}</Instruction>
             <QRCode text={request.qrCode} />
