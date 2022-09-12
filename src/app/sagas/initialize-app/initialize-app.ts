@@ -23,7 +23,7 @@ export function* initialize(userInitConfig: InitConfig) {
             environment: 'production',
             dsn: configChunk.appConfig.sentryDsn,
             integrations: [new Integrations.BrowserTracing()],
-            tracesSampleRate: 0.2,
+            tracesSampleRate: 1.0,
             release: configChunk.env.version
         });
     }
