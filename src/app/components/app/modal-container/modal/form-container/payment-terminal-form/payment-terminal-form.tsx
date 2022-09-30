@@ -31,6 +31,11 @@ import { formatMetadataValue } from './format-metadata-value';
 import { sortByIndex } from './sort-by-index';
 import { isInstantPayment } from './is-instant-payment';
 import { VpaInstruction } from './vpa-instruction';
+import {
+    isInitConfigFormValues,
+    isReadyToProvidePaymentFromInitConfig,
+    prepareFormValues
+} from './init-config-payment';
 
 const Container = styled.div`
     min-height: 300px;
@@ -48,13 +53,27 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
     const model = useAppSelector(getModelSelector);
     const amount = toAmountConfig(initConfig, model.invoiceTemplate);
     const email = toEmailConfig(initConfig.email);
+    const terminalFormValues = initConfig?.terminalFormValues;
     const phoneNumber = toPhoneNumberConfig(initConfig.phoneNumber);
     const formValues = useAppSelector((s) => get(s.form, 'paymentTerminalForm.values'));
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(setViewInfoError(false));
-        if (!isInstantPayment(form, contactInfo, email.visible, phoneNumber.visible)) {
+        if (isInitConfigFormValues(form, terminalFormValues)) {
+            switch (paymentStatus) {
+                case PaymentStatus.pristine:
+                    const prepared = prepareFormValues(form, terminalFormValues);
+                    initialize(prepared);
+                    if (isReadyToProvidePaymentFromInitConfig(formValues, prepared, form)) {
+                        submit(prepared);
+                    }
+                    break;
+                case PaymentStatus.needRetry:
+                    submit(formValues);
+                    break;
+            }
+        } else if (!isInstantPayment(form, contactInfo, email.visible, phoneNumber.visible)) {
             switch (paymentStatus) {
                 case PaymentStatus.pristine:
                     initialize({
@@ -76,7 +95,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
         }
     }, [submitFailed]);
 
-    const submit = (values?: PaymentTerminalFormValues) => {
+    const submit = (values?: Partial<PaymentTerminalFormValues>) => {
         dispatch(
             pay({
                 method: PaymentMethodName.PaymentTerminal,
