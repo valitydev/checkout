@@ -16,6 +16,20 @@ export interface ServiceProviderMetadataField {
     index?: number;
 }
 
+export interface MetadataSelectSource {
+    type: 'countrySubdivisions';
+    countryCode?: string;
+}
+
+export interface ServiceProviderMetadataSelect {
+    type: 'select';
+    name: string;
+    required: boolean;
+    src: MetadataSelectSource;
+    localization?: MetadataTextLocalization;
+    index?: number;
+}
+
 export interface ServiceProviderIconMetadata {
     src: string;
     width: string;
@@ -43,7 +57,7 @@ export interface PaymentSessionInfoMetadata {
 }
 
 export interface CheckoutServiceProviderMetadata {
-    form?: ServiceProviderMetadataField[];
+    form?: ServiceProviderMetadataField[] | ServiceProviderMetadataSelect[];
     logo?: ServiceProviderIconMetadata;
     title?: ServiceProviderTitleMetadata;
     signUpLink?: string;
