@@ -36,6 +36,7 @@ import {
     isReadyToProvidePaymentFromInitConfig,
     prepareFormValues
 } from './init-config-payment';
+import { MetadataSelect } from './metadata-select';
 
 const Container = styled.div`
     min-height: 300px;
@@ -122,7 +123,16 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                     {form &&
                         form?.sort(sortByIndex).map((m) => (
                             <FormGroup key={m.name} direction={'column'}>
-                                <MetadataField metadata={m} wrappedName="metadata" localeCode={initConfig.locale} />
+                                {m.type === 'select' && (
+                                    <MetadataSelect
+                                        metadata={m}
+                                        wrappedName="metadata"
+                                        localeCode={initConfig.locale}
+                                    />
+                                )}
+                                {m.type !== 'select' && (
+                                    <MetadataField metadata={m} wrappedName="metadata" localeCode={initConfig.locale} />
+                                )}
                                 {m.name === 'VPA' && <VpaInstruction locale={locale} />}
                             </FormGroup>
                         ))}

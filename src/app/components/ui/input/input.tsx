@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Marks } from './marks';
+import { Marks } from '../marks';
 import { default as styled, css } from 'checkout/styled-components';
 import { MutableRefObject } from 'react';
 
