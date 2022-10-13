@@ -24,6 +24,8 @@ export const makeContentInvoice = (
                     return makeFromPaymentChange(l, e);
                 case InvoiceChangeType.PaymentStarted:
                     return makeFromPaymentStarted(l, e);
+                case InvoiceChangeType.PaymentInteractionRequested:
+                    return makeFromPaymentStarted(l, e);
             }
             throw new Error('Unsupported invoice ChangeType');
         case EventsStatus.timeout:

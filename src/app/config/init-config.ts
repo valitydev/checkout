@@ -33,4 +33,5 @@ export class InitConfig {
     theme?: string;
     metadata?: object;
     terminalFormValues?: object;
+    skipUserInteraction?: boolean;
 }
