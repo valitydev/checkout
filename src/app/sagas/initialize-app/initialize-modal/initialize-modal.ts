@@ -20,7 +20,13 @@ export function* initializeModal(
             break;
         case IntegrationType.invoice:
             const serviceProviders = yield select((s: State) => s.model?.serviceProviders);
-            initializedModals = initFromInvoiceEvents(events.events, methods, initialPaymentMethod, serviceProviders);
+            initializedModals = initFromInvoiceEvents(
+                events.events,
+                methods,
+                initialPaymentMethod,
+                serviceProviders,
+                initConfig.skipUserInteraction
+            );
             break;
         default:
             throw { code: 'error.unsupported.integration.type' };

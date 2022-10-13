@@ -10,12 +10,13 @@ export function initFromInvoiceEvents(
     events: InvoiceEvent[],
     methods: PaymentMethod[],
     initialPaymentMethod: PaymentMethodName,
-    serviceProviders: ServiceProvider[]
+    serviceProviders: ServiceProvider[],
+    skipUserInteraction: boolean
 ): ModalState {
     const change = getLastChange(events);
     switch (change.changeType) {
         case InvoiceChangeType.PaymentInteractionRequested:
-            return provideInteraction(events, serviceProviders);
+            return skipUserInteraction ? toModalResult() : provideInteraction(events, serviceProviders);
         case InvoiceChangeType.PaymentStarted:
         case InvoiceChangeType.InvoiceStatusChanged:
         case InvoiceChangeType.PaymentStatusChanged:

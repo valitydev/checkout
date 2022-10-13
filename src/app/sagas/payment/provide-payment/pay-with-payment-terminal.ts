@@ -14,7 +14,8 @@ const prepareSelfRedirectUrl = (origin: string, invoiceID: string, invoiceAccess
     `${origin}/v1/checkout.html?${serializeUrlParams({
         invoiceID,
         invoiceAccessToken,
-        redirectUrl
+        redirectUrl,
+        skipUserInteraction: true
     })}`;
 
 const prepareRedirectUrl = (

@@ -61,6 +61,7 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         terminalBankCard,
         terminalWallets,
         pix,
+        skipUserInteraction,
         ...restParams
     } = userConfig;
     checkUnknown(resolvedIntegrationType, restParams);
@@ -97,6 +98,7 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         upi: setDefault(resolveBoolean(upi, 'upi'), true),
         terminalBankCard: setDefault(resolveBoolean(terminalBankCard, 'terminalBankCard'), true),
         terminalWallets: setDefault(resolveBoolean(terminalWallets, 'terminalWallets'), true),
-        pix: setDefault(resolveBoolean(pix, 'pix'), true)
+        pix: setDefault(resolveBoolean(pix, 'pix'), true),
+        skipUserInteraction: setDefault(resolveBoolean(skipUserInteraction, 'skipUserInteraction'), false)
     };
 };
