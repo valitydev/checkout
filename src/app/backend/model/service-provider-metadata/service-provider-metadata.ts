@@ -50,6 +50,11 @@ export interface UserInteractionMetadata {
     type: 'frame' | 'self';
 }
 
+export interface QrCodeFormMetadata {
+    isCopyCodeBlock: boolean;
+    qrCodeRedirect: 'mobile' | 'none';
+}
+
 export interface PaymentSessionInfoMetadata {
     redirectUrlInfo: {
         type: 'self' | 'outer';
@@ -63,6 +68,7 @@ export interface CheckoutServiceProviderMetadata {
     signUpLink?: string;
     contactInfo?: ServiceProviderContactInfo;
     userInteraction?: UserInteractionMetadata;
+    qrCodeForm?: QrCodeFormMetadata;
     paymentSessionInfo?: PaymentSessionInfoMetadata;
 }
 

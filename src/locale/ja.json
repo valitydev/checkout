@@ -54,7 +54,7 @@
         "Example: xxxxx@ybl xxxxx@icicibank xxxx@paytm xxxx@ibl etc."
     ],
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Select payment system:",
-    "form.qr.code": "Please scan the QR code with your banking app to complete the payment",
+    "form.qr.code": "Please scan the QR code with your banking app or phone camera to complete the payment",
     "form.help.header": "問題を解決するには？",
     "form.help.codes": {
         "InvalidPaymentTool": {
