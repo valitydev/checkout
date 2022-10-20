@@ -25,8 +25,8 @@ const Container = styled.div`
     gap: 16px;
 `;
 
-const isQrCodeRedirect = (qrCodeForm: QrCodeFormMetadata) =>
-    (isMobile(window.navigator).phone || isMobile(window.navigator).tablet) && qrCodeForm.qrCodeRedirect === 'mobile';
+const isQrCodeRedirect = ({ qrCodeRedirect }: QrCodeFormMetadata) =>
+    (isMobile(window.navigator).phone || isMobile(window.navigator).tablet) && qrCodeRedirect === 'mobile';
 
 export const QrCodeInteractionForm: React.FC = () => {
     const qrCodeInputRef = useRef(null);
