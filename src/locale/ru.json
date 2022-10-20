@@ -54,7 +54,7 @@
         "Example: xxxxx@ybl xxxxx@icicibank xxxx@paytm xxxx@ibl etc."
     ],
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Выберите платежную систему:",
-    "form.qr.code": "Отсканируйте QR-код с помощью банковского приложения, чтобы завершить платеж",
+    "form.qr.code": "Для оплаты отсканируйте QR-код в мобильном приложении банка или штатной камерой телефона",
     "form.help.header": "Как решить проблему?",
     "form.help.codes": {
         "InvalidPaymentTool": {

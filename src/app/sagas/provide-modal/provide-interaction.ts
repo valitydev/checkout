@@ -22,6 +22,7 @@ import {
     ServiceProvider
 } from 'checkout/backend';
 import last from 'lodash-es/last';
+import isNil from 'lodash-es/isNil';
 import { findChange } from 'checkout/utils';
 import { getMetadata } from 'checkout/components/ui';
 
@@ -34,12 +35,7 @@ const toModalInteraction = (userInteraction: Redirect): ModalInteraction =>
         true
     );
 
-const providePaymentTerminalPaymentTool = (
-    userInteraction: Redirect,
-    { provider }: PaymentToolDetailsPaymentTerminal,
-    serviceProviders: ServiceProvider[]
-) => {
-    const serviceProvider = serviceProviders.find((p) => p.id === provider);
+const providePaymentTerminalPaymentTool = (userInteraction: Redirect, serviceProvider: ServiceProvider) => {
     const metadata = getMetadata(serviceProvider);
     if (metadata?.userInteraction?.type === 'frame') {
         return toModalInteraction(userInteraction);
@@ -47,24 +43,11 @@ const providePaymentTerminalPaymentTool = (
     return new ModalForms([new RedirectFormInfo(userInteraction.request)], true, true);
 };
 
-const provideRedirect = (
-    userInteraction: Redirect,
-    paymentToolDetails: PaymentToolDetails,
-    serviceProviders: ServiceProvider[]
-): ModalState => {
-    if (!paymentToolDetails) {
+const provideRedirect = (userInteraction: Redirect, activeServiceProvider: ServiceProvider | null): ModalState => {
+    if (isNil(activeServiceProvider)) {
         return toModalInteraction(userInteraction);
     }
-    switch (paymentToolDetails.detailsType) {
-        case PaymentToolDetailsType.PaymentToolDetailsPaymentTerminal:
-            return providePaymentTerminalPaymentTool(
-                userInteraction,
-                paymentToolDetails as PaymentToolDetailsPaymentTerminal,
-                serviceProviders
-            );
-        default:
-            return toModalInteraction(userInteraction);
-    }
+    return providePaymentTerminalPaymentTool(userInteraction, activeServiceProvider);
 };
 
 const getPaymentToolDetails = (events: InvoiceEvent[]): PaymentToolDetails => {
@@ -73,9 +56,27 @@ const getPaymentToolDetails = (events: InvoiceEvent[]): PaymentToolDetails => {
     return payer && payer?.paymentToolDetails;
 };
 
-const provideQrCode = (userInteraction: QrCodeDisplayRequest): ModalForms => {
-    const formInfo = new QrCodeInteractionFormInfo(userInteraction);
+const provideQrCode = (
+    userInteraction: QrCodeDisplayRequest,
+    activeServiceProvider: ServiceProvider | null
+): ModalForms => {
+    let providerID = null;
+    if (activeServiceProvider) {
+        providerID = activeServiceProvider.id;
+    }
+    const formInfo = new QrCodeInteractionFormInfo(userInteraction, providerID);
     return new ModalForms([formInfo], true);
+};
+
+const getActiveServiceProvider = (
+    serviceProviders: ServiceProvider[],
+    paymentToolDetails: PaymentToolDetails
+): ServiceProvider | null => {
+    if (paymentToolDetails.detailsType === PaymentToolDetailsType.PaymentToolDetailsPaymentTerminal) {
+        const provider = (paymentToolDetails as PaymentToolDetailsPaymentTerminal).provider;
+        return serviceProviders.find((p) => p.id === provider);
+    }
+    return null;
 };
 
 export function provideInteraction(events: InvoiceEvent[], serviceProviders: ServiceProvider[]): ModalState {
@@ -86,11 +87,12 @@ export function provideInteraction(events: InvoiceEvent[], serviceProviders: Ser
     }
     const { userInteraction } = change as PaymentInteractionRequested;
     const paymentToolDetails = getPaymentToolDetails(events);
+    const activeServiceProvider = getActiveServiceProvider(serviceProviders, paymentToolDetails);
     switch (userInteraction.interactionType) {
         case InteractionType.Redirect:
-            return provideRedirect(userInteraction as Redirect, paymentToolDetails, serviceProviders);
+            return provideRedirect(userInteraction as Redirect, activeServiceProvider);
         case InteractionType.QrCodeDisplayRequest:
-            return provideQrCode(userInteraction as QrCodeDisplayRequest);
+            return provideQrCode(userInteraction as QrCodeDisplayRequest, activeServiceProvider);
         default:
             throw { code: 'error.unsupported.user.interaction.type' };
     }
