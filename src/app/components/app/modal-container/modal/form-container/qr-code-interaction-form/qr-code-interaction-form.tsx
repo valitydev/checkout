@@ -4,11 +4,16 @@ import styled from 'checkout/styled-components';
 import isMobile from 'ismobilejs';
 
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { getActiveModalFormSelector, getLocaleSelector, getServiceProviderSelector } from 'checkout/selectors';
+import {
+    getActiveModalFormSelector,
+    getInitConfigSelector,
+    getLocaleSelector,
+    getServiceProviderSelector
+} from 'checkout/selectors';
 import { QRCode } from './qr-code';
 import { QrCodeInteractionFormInfo } from 'checkout/state';
 import { finishInteraction } from 'checkout/actions';
-import { CopyToClipboardButton, getMetadata, Hr, Input } from 'checkout/components/ui';
+import { Button, CopyToClipboardButton, getMetadata, Hr, Input } from 'checkout/components/ui';
 import { QrCodeFormMetadata } from 'checkout/backend';
 
 const Instruction = styled.p`
@@ -34,6 +39,7 @@ export const QrCodeInteractionForm: React.FC = () => {
     const { request, providerID } = useAppSelector<QrCodeInteractionFormInfo>(getActiveModalFormSelector);
     const serviceProvider = useAppSelector(getServiceProviderSelector(providerID));
     const { qrCodeForm } = getMetadata(serviceProvider);
+    const initConfig = useAppSelector(getInitConfigSelector);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -61,6 +67,14 @@ export const QrCodeInteractionForm: React.FC = () => {
             )}
             <Instruction>{locale['form.qr.code']}</Instruction>
             <QRCode text={request.qrCode} />
+            {initConfig.redirectUrl && (
+                <>
+                    <Hr />
+                    <Button id="copy-to-clipboard-btn" onClick={() => window.open(initConfig.redirectUrl, '_self')}>
+                        {locale['form.button.back.to.website']}
+                    </Button>
+                </>
+            )}
         </Container>
     );
 };
