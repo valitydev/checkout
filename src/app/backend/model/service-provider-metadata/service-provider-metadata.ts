@@ -7,6 +7,11 @@ export interface MetadataTextLocalization {
     pt?: string;
 }
 
+export interface MetadataFieldFormatter {
+    type: 'numbersOnly';
+    maxLength?: number;
+}
+
 export interface ServiceProviderMetadataField {
     type: JSX.IntrinsicElements['input']['type'];
     name: string;
@@ -14,6 +19,7 @@ export interface ServiceProviderMetadataField {
     pattern?: string;
     localization?: MetadataTextLocalization;
     index?: number;
+    formatter?: MetadataFieldFormatter;
 }
 
 export interface MetadataSelectSource {
