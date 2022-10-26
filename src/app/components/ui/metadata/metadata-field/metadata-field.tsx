@@ -4,7 +4,13 @@ import { Field, Validator, WrappedFieldProps } from 'redux-form';
 import isNil from 'lodash-es/isNil';
 import partialRight from 'lodash-es/partialRight';
 
-import { MetadataFieldFormatter, MetadataTextLocalization, ServiceProviderMetadataField } from 'checkout/backend';
+import {
+    AttributeInputMode,
+    AttributeType,
+    MetadataFieldFormatter,
+    MetadataTextLocalization,
+    ServiceProviderMetadataField
+} from 'checkout/backend';
 import { formatPhoneNumber, isError, formatOnFocus, validateEmail, validatePhone } from 'checkout/utils';
 import { Input } from 'checkout/components';
 import { getInputTypeFormatter, getMetadataFieldFormatter } from './formatters';
@@ -40,13 +46,14 @@ const getPlaceholder = (localeCode: string, localization: MetadataTextLocalizati
     localization[localeCode] || localization['en'];
 
 const WrappedInput: React.FC<WrappedFieldProps & {
-    type: string;
+    type: AttributeType;
     name: string;
     localization: MetadataTextLocalization;
     localeCode: string;
     required: boolean;
-    formatter?: ServiceProviderMetadataField['formatter'];
-}> = ({ type, name, input, meta, localeCode, localization, formatter }) => (
+    formatter: MetadataFieldFormatter;
+    inputMode: AttributeInputMode;
+}> = ({ type, name, input, meta, localeCode, localization, formatter, inputMode }) => (
     <Input
         {...input}
         {...meta}
@@ -58,6 +65,7 @@ const WrappedInput: React.FC<WrappedFieldProps & {
         onInput={getOnInputHandler(type, formatter)}
         onFocus={getOnFocusHandler(type)}
         autocomplete={getAutocomplete(type)}
+        inputMode={inputMode}
     />
 );
 
@@ -90,7 +98,7 @@ export interface MetadataFieldProps {
 }
 
 export const MetadataField: React.FC<MetadataFieldProps> = ({
-    metadata: { name, type, required, pattern, localization, formatter },
+    metadata: { name, type, required, pattern, localization, formatter, inputMode },
     localeCode,
     wrappedName
 }) => {
@@ -99,7 +107,7 @@ export const MetadataField: React.FC<MetadataFieldProps> = ({
         <Field
             name={wrappedName ? `${wrappedName}.${name}` : name}
             component={WrappedInput}
-            props={{ type, name, localization, localeCode, required, formatter }}
+            props={{ type, name, localization, localeCode, required, formatter, inputMode }}
             validate={validate}
         />
     );

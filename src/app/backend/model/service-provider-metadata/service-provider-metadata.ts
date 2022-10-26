@@ -12,14 +12,18 @@ export interface MetadataFieldFormatter {
     maxLength?: number;
 }
 
+export type AttributeType = JSX.IntrinsicElements['input']['type'];
+export type AttributeInputMode = JSX.IntrinsicElements['input']['inputMode'];
+
 export interface ServiceProviderMetadataField {
-    type: JSX.IntrinsicElements['input']['type'];
+    type: AttributeType;
     name: string;
     required: boolean;
     pattern?: string;
     localization?: MetadataTextLocalization;
     index?: number;
     formatter?: MetadataFieldFormatter;
+    inputMode?: AttributeInputMode;
 }
 
 export interface MetadataSelectSource {
