@@ -70,7 +70,7 @@ export const QrCodeInteractionForm: React.FC = () => {
             {initConfig.redirectUrl && (
                 <>
                     <Hr />
-                    <Button id="copy-to-clipboard-btn" onClick={() => window.open(initConfig.redirectUrl, '_self')}>
+                    <Button id="back-to-website-btn" onClick={() => window.open(initConfig.redirectUrl, '_self')}>
                         {locale['form.button.back.to.website']}
                     </Button>
                 </>
