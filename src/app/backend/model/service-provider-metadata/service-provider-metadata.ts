@@ -24,6 +24,7 @@ export interface ServiceProviderMetadataField {
     index?: number;
     formatter?: MetadataFieldFormatter;
     inputMode?: AttributeInputMode;
+    addon?: 'vpa';
 }
 
 export interface MetadataSelectSource {
