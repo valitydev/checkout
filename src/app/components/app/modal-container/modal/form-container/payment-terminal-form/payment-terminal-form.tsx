@@ -133,7 +133,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                                 {m.type !== 'select' && (
                                     <MetadataField metadata={m} wrappedName="metadata" localeCode={initConfig.locale} />
                                 )}
-                                {m.name === 'VPA' && <VpaInstruction locale={locale} />}
+                                {m?.addon === 'vpa' && <VpaInstruction locale={locale} />}
                             </FormGroup>
                         ))}
                     {amount.visible && (
