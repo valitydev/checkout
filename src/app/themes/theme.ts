@@ -21,11 +21,6 @@ export interface Theme {
         error: string;
         focus: string;
     };
-    select: {
-        border: string;
-        placeholder: string;
-        error: string;
-    };
     icons: {
         success: string;
         error: string;

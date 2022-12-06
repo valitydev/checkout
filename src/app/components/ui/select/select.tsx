@@ -8,7 +8,7 @@ const StyledSelect = styled.select<{ isError: boolean; isPristine: boolean }>`
     height: 48px;
     box-sizing: border-box;
     border-radius: 8px;
-    border: 1px solid ${({ theme }) => theme.select.border};
+    border: 1px solid ${({ theme }) => theme.input.border};
     font-weight: 500;
     font-size: 16px;
     letter-spacing: 0;
@@ -21,14 +21,14 @@ const StyledSelect = styled.select<{ isError: boolean; isPristine: boolean }>`
     ${({ isError }) => {
         if (isError) {
             return css`
-                border-color: ${({ theme }) => theme.select.error};
+                border-color: ${({ theme }) => theme.input.error};
             `;
         }
     }}
     ${({ isPristine }) => {
         if (isPristine) {
             return css`
-                color: ${({ theme }) => theme.select.placeholder};
+                color: ${({ theme }) => theme.input.placeholder};
             `;
         }
     }}

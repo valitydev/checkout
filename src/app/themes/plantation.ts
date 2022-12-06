@@ -43,11 +43,6 @@ const theme: Theme = {
         error: palette.Cinnabar,
         focus: palette.Zeus
     },
-    select: {
-        border: palette.Loblolly,
-        placeholder: palette.RegentGray,
-        error: palette.Cinnabar
-    },
     icons: {
         success: palette.SeaNymph,
         error: palette.CopperRose,
