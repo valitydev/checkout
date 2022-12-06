@@ -1,16 +1,10 @@
-import * as React from 'react';
-
 import { Locale } from 'checkout/locale';
 import { InvoiceEvent } from 'checkout/backend';
 import { ResultFormContent, ResultFormType } from './result-form-content';
 import { getInvoicePaymentDetails } from './payment-details';
-import { Text } from './text';
 
-const getDescription = (description: string, e: InvoiceEvent[]): JSX.Element => (
-    <Text>
-        {description} {getInvoicePaymentDetails(e).info}.
-    </Text>
-);
+const getDescription = (description: string, e: InvoiceEvent[]): string =>
+    `${description} ${getInvoicePaymentDetails(e).info}.`;
 
 const started = (l: Locale, e: InvoiceEvent[]): ResultFormContent => ({
     hasActions: false,

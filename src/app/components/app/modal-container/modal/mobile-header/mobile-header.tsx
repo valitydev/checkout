@@ -32,7 +32,7 @@ const Text = styled.div`
     font-size: 16px;
     letter-spacing: 0;
     line-height: 20px;
-    color: ${({ theme }) => theme.color.neutral[0.9]};
+    color: ${({ theme }) => theme.font.primaryColor};
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: center;

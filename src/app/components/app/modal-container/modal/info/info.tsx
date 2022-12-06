@@ -26,7 +26,7 @@ const CompanyName = styled.h4`
     display: none;
     font-weight: 500;
     font-size: 16px;
-    color: ${({ theme }) => theme.color.font.infoBlock};
+    color: ${({ theme }) => theme.font.primaryColor};
     letter-spacing: 0;
     line-height: 20px;
     margin: 0 0 30px;
@@ -39,7 +39,7 @@ const CompanyName = styled.h4`
 const Amount = styled.h1`
     font-weight: 500;
     font-size: 30px;
-    color: ${({ theme }) => theme.color.font.infoBlock};
+    color: ${({ theme }) => theme.font.primaryColor};
     letter-spacing: 0;
     line-height: 35px;
     margin: 0 0 20px;
@@ -49,7 +49,7 @@ const Amount = styled.h1`
 const Order = styled.div`
     font-weight: 900;
     font-size: 11px;
-    color: ${({ theme }) => theme.color.font.infoBlock};
+    color: ${({ theme }) => theme.font.primaryColor};
     opacity: 0.4;
     letter-spacing: 2px;
     line-height: 15px;
@@ -60,7 +60,7 @@ const Order = styled.div`
 const ProductDescription = styled.div`
     font-weight: 500;
     font-size: 16px;
-    color: ${({ theme }) => theme.color.font.infoBlock};
+    color: ${({ theme }) => theme.font.primaryColor};
     letter-spacing: 0;
     line-height: 20px;
     margin-bottom: 20px;

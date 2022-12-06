@@ -20,7 +20,7 @@ class AppDef extends React.Component<AppProps> {
 
     render() {
         const { initialized, error } = this.props.initializeApp;
-        const theme = getTheme(this.props.fixedTheme || this.props.theme);
+        const theme = getTheme(this.props.theme || this.props.fixedTheme);
         return (
             <ThemeProvider theme={theme}>
                 <>

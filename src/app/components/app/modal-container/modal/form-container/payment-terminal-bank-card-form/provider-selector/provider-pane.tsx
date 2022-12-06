@@ -10,20 +10,20 @@ const ProviderPaneContainer = styled.div<{ isActive: boolean; isError: boolean }
     width: 78px;
     height: 46px;
     border-radius: 8px;
-    border: 1px solid ${({ theme }) => theme.color.neutral[0.2]};
+    border: 1px solid ${({ theme }) => theme.paymentMethodItem.border};
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     :hover {
-        border-color: ${({ theme }) => theme.color.primary[1]};
+        border-color: ${({ theme }) => theme.paymentMethodItem.hover};
     }
 
     ${({ isActive }) => {
         if (isActive) {
             return css`
-                border: 2px solid ${({ theme }) => theme.color.primary[1]};
+                border: 2px solid ${({ theme }) => theme.paymentMethodItem.hover};
             `;
         }
     }}
@@ -31,7 +31,7 @@ const ProviderPaneContainer = styled.div<{ isActive: boolean; isError: boolean }
     ${({ isError }) => {
         if (isError) {
             return css`
-                border-color: ${({ theme }) => theme.color.error[1]};
+                border-color: ${({ theme }) => theme.paymentMethodItem.error};
             `;
         }
     }}

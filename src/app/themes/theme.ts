@@ -3,54 +3,49 @@ import { ThemeName } from './theme-name';
 
 export interface Theme {
     name: ThemeName;
-    color: {
-        neutral: {
-            0: string;
-            0.1: string;
-            0.2: string;
-            0.3: string;
-            0.8: string;
-            0.9: string;
-            1: string;
-        };
-        primary: {
-            1: string;
-            1.1: string;
-            1.2: string;
-        };
-        secondary: {
-            0.9: string;
-            1: string;
-            1.1: string;
-        };
-        error: {
-            1: string;
-        };
-        warning: {
-            1: string;
-        };
-        info: {};
-        success: {
-            1?: string;
-        };
-        focus: {
-            1: string;
-        };
-        font: {
-            infoBlock: string;
-        };
-        iconBackgrounds: string[];
-        link: string;
-    };
-    gradients: {
-        form: ReturnType<typeof css>;
-        loader: string[][];
-    };
     font: {
         family: string;
+        primaryColor: string;
     };
     background: {
-        image: boolean;
-        color: ReturnType<typeof css>;
+        gradient: ReturnType<typeof css>;
+        loader: string[][];
+    };
+    form: {
+        background: string;
+        border: string;
+    };
+    input: {
+        border: string;
+        placeholder: string;
+        error: string;
+        focus: string;
+    };
+    icons: {
+        success: string;
+        error: string;
+        warn: string;
+        checkmark: string;
+    };
+    divider: string;
+    externalLink: string;
+    paymentMethodItem: {
+        border: string;
+        hover: string;
+        color: string;
+        error: string;
+    };
+    chevronBack: {
+        color: string;
+        hover: string;
+    };
+    button: {
+        text: string;
+        color: string;
+        hover: string;
+    };
+    linkButton: {
+        color: string;
+        hover: string;
     };
 }

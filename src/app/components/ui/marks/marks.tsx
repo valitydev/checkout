@@ -35,7 +35,7 @@ const CheckmarkIcon = styled(Checkmark)`
     width: 13px;
     margin: 19px 15px 0 19px;
     g {
-        stroke: ${({ theme }) => theme.color.primary[1]};
+        stroke: ${({ theme }) => theme.icons.checkmark};
     }
 `;
 
