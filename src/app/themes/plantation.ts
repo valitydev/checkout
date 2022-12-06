@@ -62,7 +62,8 @@ const theme: Theme = {
         hover: palette.Zeus
     },
     button: {
-        text: palette.Zeus,
+        primaryText: palette.Zeus,
+        outlineText: palette.Zeus,
         color: palette.Mustard,
         hover: palette.LightningYellow
     },

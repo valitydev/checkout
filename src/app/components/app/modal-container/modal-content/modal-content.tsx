@@ -57,12 +57,6 @@ const Animation = styled(stylableTransition)`
     }
 `;
 
-const StyledFooter = styled(Footer)`
-    @media ${device.mobile} {
-        display: none;
-    }
-`;
-
 export interface ModalContentProps {
     activeModal: ModalState;
     finishInteraction: () => any;
@@ -103,7 +97,7 @@ class ModalContentDef extends React.Component<ModalContentProps> {
                 return (
                     <>
                         <Modal />
-                        <StyledFooter />
+                        <Footer />
                     </>
                 );
             case ModalName.modalInteraction:

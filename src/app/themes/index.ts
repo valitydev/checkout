@@ -1,8 +1,9 @@
 import { Theme } from './theme';
 import { ThemeName } from './theme-name';
 import plantation from './plantation';
+import rhino from './rhino';
 
-const themes = [plantation];
+const themes = [plantation, rhino];
 
 export const DEFAULT_THEME = plantation;
 

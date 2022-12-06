@@ -5,7 +5,6 @@
         "通常、支払いには数分かかりますが、手続きとしてまれに3日かかる場合があります。 支払いが処理されると、携帯電話事業者からメッセージが届きます。"
     ],
     "info.modal.no.available.payment.method": "利用できる支払方法はありません",
-    "footer.pay.label": "Secure payment with",
     "form.header.payment.methods.label": "お支払い方法を選択してください",
     "form.header.netbanking.label": "Please choose a bank",
     "form.header.pay.card.label": "カードで支払う",

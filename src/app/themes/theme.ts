@@ -40,7 +40,8 @@ export interface Theme {
         hover: string;
     };
     button: {
-        text: string;
+        primaryText: string;
+        outlineText: string;
         color: string;
         hover: string;
     };

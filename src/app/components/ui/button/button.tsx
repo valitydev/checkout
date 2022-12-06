@@ -19,7 +19,7 @@ export const Button = styled.button<{ color?: ButtonType }>`
         color === 'primary'
             ? css`
                   border-radius: 32px;
-                  color: ${theme.button.text};
+                  color: ${theme.button.primaryText};
                   border: 2px solid ${({ theme }) => theme.button.color};
                   background: ${theme.button.color};
 
@@ -31,7 +31,7 @@ export const Button = styled.button<{ color?: ButtonType }>`
             : css`
                   border-radius: 4px;
                   background: #fff;
-                  color: ${theme.button.text};
+                  color: ${theme.button.outlineText};
                   border: 2px solid ${({ theme }) => theme.button.color};
 
                   :hover {

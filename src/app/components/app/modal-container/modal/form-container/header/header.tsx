@@ -8,7 +8,6 @@ import { FormInfo, ModalForms, ModalName, ModalState, State } from 'checkout/sta
 import { ChevronBack } from '../chevron-back';
 import { Title } from 'checkout/components/app/modal-container/modal/form-container/title';
 import { HeaderWrapper } from '../header-wrapper';
-import { device } from 'checkout/utils/device';
 import styled from 'checkout/styled-components';
 
 const BackButton = styled(ChevronBack)`
@@ -19,11 +18,6 @@ const BackButton = styled(ChevronBack)`
     cursor: pointer;
     position: absolute;
     width: 20px;
-    display: none;
-
-    @media ${device.desktop} {
-        display: flex;
-    }
 
     svg {
         height: 15px;

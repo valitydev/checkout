@@ -5,7 +5,6 @@
         "Usually payment takes a few minutes, in rare cases, the process may take up to 3 days. Once payment is processed, you will receive a message from the mobile operator."
     ],
     "info.modal.no.available.payment.method": "No available payment methods",
-    "footer.pay.label": "Secure payment with",
     "form.header.payment.methods.label": "Please choose a payment method",
     "form.header.netbanking.label": "Please choose a bank",
     "form.header.pay.card.label": "Pay with a card",
