@@ -1,25 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import * as bg1 from './backgrounds/1.jpg';
-import * as bg2 from './backgrounds/2.jpg';
-import * as bg3 from './backgrounds/3.jpg';
-import * as bg4 from './backgrounds/4.jpg';
-import * as bg5 from './backgrounds/5.jpg';
-import * as bg6 from './backgrounds/6.jpg';
-import * as bg7 from './backgrounds/7.jpg';
-import * as bg8 from './backgrounds/8.jpg';
-import * as bg9 from './backgrounds/9.jpg';
-
 import { ResultState, State } from 'checkout/state';
 import styled, { css } from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 import { stylableTransition, APPEAR, LEAVE, ACTIVE } from 'checkout/styled-transition';
 import { fadein, fadeout } from 'checkout/styled-components/animations';
-
-const backgrounds = [bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9];
-// нужно подготовить фон, чтобы он не перерендеревался
-const bg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
 
 const Animation = styled(stylableTransition)`
     ${APPEAR} {
@@ -60,28 +46,9 @@ const OverlayBg = styled.div<{ inFrame: boolean }>`
                 }
             `;
         }
-        return theme.background.image
-            ? css`
-                  :before {
-                      content: '';
-                      display: block;
-                      position: absolute;
-                      left: 0;
-                      top: 0;
-                      width: 100%;
-                      height: 100%;
-                      background-image: ${theme.background.color};
-                      opacity: 0.35;
-                  }
-
-                  @media ${device.desktop} {
-                      background: transparent url(${bg}) bottom center;
-                      background-size: cover;
-                  }
-              `
-            : css`
-                  background: ${theme.background.color};
-              `;
+        return css`
+            background: ${theme.background.gradient};
+        `;
     }}
 `;
 

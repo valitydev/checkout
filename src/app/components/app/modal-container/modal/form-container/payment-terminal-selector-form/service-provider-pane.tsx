@@ -9,10 +9,10 @@ const PaneContainer = styled.div`
 
     height: 64px;
     border-radius: 8px;
-    border: 1px solid ${({ theme }) => theme.color.neutral[0.2]};
+    border: 1px solid ${({ theme }) => theme.paymentMethodItem.border};
 
     :hover {
-        border-color: ${({ theme }) => theme.color.primary[1]};
+        border-color: ${({ theme }) => theme.paymentMethodItem.hover};
     }
 
     display: flex;

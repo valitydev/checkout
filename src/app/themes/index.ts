@@ -1,14 +1,10 @@
 import { Theme } from './theme';
 import { ThemeName } from './theme-name';
-import main from './main';
-import coral from './coral';
-import persianGreen from './persian-green';
-import solitude from './solitude';
-import eastern from './eastern';
+import plantation from './plantation';
 
-const themes = [main, coral, persianGreen, solitude, eastern];
+const themes = [plantation];
 
-export const DEFAULT_THEME = eastern;
+export const DEFAULT_THEME = plantation;
 
 export interface WithThemeProps {
     theme: Theme;

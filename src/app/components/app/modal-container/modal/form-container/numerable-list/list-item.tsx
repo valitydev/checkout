@@ -8,7 +8,7 @@ const Item = styled.li`
     position: relative;
     margin-bottom: 20px;
     font-size: 16px;
-    color: ${({ theme }) => theme.color.neutral[0.9]};
+    color: ${({ theme }) => theme.font.primaryColor};
     letter-spacing: 0;
     line-height: 20px;
 
@@ -20,7 +20,7 @@ const Item = styled.li`
 const Num = styled.div`
     display: inline-block;
     margin-right: 15px;
-    color: ${({ theme }) => theme.color.secondary[1]};
+    color: ${({ theme }) => theme.font.primaryColor};
 `;
 
 const Text = styled.div`

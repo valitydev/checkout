@@ -5,11 +5,11 @@ import styled from 'checkout/styled-components';
 
 const ChevronBackWrapper = styled.div`
     g {
-        stroke: ${({ theme }) => theme.color.primary[1]};
+        stroke: ${({ theme }) => theme.chevronBack.color};
     }
     :hover {
         g {
-            stroke: ${({ theme }) => theme.color.primary[1.2]};
+            stroke: ${({ theme }) => theme.chevronBack.hover};
         }
     }
 `;

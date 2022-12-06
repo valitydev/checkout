@@ -4,10 +4,7 @@ import { css } from 'checkout/styled-components';
 type ButtonType = 'primary' | 'default';
 
 export const Button = styled.button<{ color?: ButtonType }>`
-    color: ${({ theme }) => theme.color.secondary[0.9]};
-    background: #fff;
     text-align: center;
-    border-radius: 4px;
     padding: 12px;
     font-weight: 500;
     font-size: 16px;
@@ -17,35 +14,28 @@ export const Button = styled.button<{ color?: ButtonType }>`
     cursor: pointer;
     width: 100%;
     outline: none;
-    border: 2px solid ${({ theme }) => theme.color.secondary[0.9]};
 
     ${({ theme, color }) =>
         color === 'primary'
             ? css`
                   border-radius: 32px;
-                  color: #fff;
-                  border-color: ${theme.color.primary[1]};
-                  background: ${theme.color.primary[1]};
+                  color: ${theme.button.text};
+                  border: 2px solid ${({ theme }) => theme.button.color};
+                  background: ${theme.button.color};
 
                   :hover {
-                      background: ${theme.color.primary[1.1]};
-                      border-color: ${theme.color.primary[1.1]};
-                  }
-
-                  :active {
-                      background: ${theme.color.primary[1.2]};
-                      border-color: ${theme.color.primary[1.2]};
+                      background: ${theme.button.hover};
+                      border-color: ${theme.button.hover};
                   }
               `
             : css`
-                  :hover {
-                      color: ${theme.color.primary[1.1]};
-                      border-color: ${theme.color.primary[1.1]};
-                  }
+                  border-radius: 4px;
+                  background: #fff;
+                  color: ${theme.button.text};
+                  border: 2px solid ${({ theme }) => theme.button.color};
 
-                  :active {
-                      color: ${theme.color.primary[1.2]};
-                      border-color: ${theme.color.primary[1.2]};
+                  :hover {
+                      border-color: ${theme.button.hover};
                   }
               `};
 `;

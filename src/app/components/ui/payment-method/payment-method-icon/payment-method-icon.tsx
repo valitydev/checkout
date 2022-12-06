@@ -38,6 +38,6 @@ export const PaymentMethodIcon = styled<React.FC<{ name: name; className?: strin
     margin-right: 15px;
 
     path {
-        fill: ${({ theme }) => theme.color.secondary[0.9]};
+        fill: ${({ theme }) => theme.paymentMethodItem.color};
     }
 `;

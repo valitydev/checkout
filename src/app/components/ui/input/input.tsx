@@ -28,11 +28,9 @@ const StyledInput = styled.input<{ hasIcon?: boolean }>`
     height: 48px;
     box-sizing: border-box;
     border-radius: 8px;
-    border: 1px solid ${({ theme }) => theme.color.neutral[0.2]};
-    box-shadow: 0 0 0 0 #fff;
+    border: 1px solid ${({ theme }) => theme.input.border};
     font-weight: 500;
     font-size: 16px;
-    color: ${({ theme }) => theme.color.neutral[0.9]};
     letter-spacing: 0;
     padding-left: ${({ hasIcon }) => `${hasIcon ? CONTENT_OFFSET + ICON_SIZE + TEXT_ICON_OFFSET : CONTENT_OFFSET}px`};
     padding-right: ${CONTENT_OFFSET}px;
@@ -41,13 +39,13 @@ const StyledInput = styled.input<{ hasIcon?: boolean }>`
     outline: none;
 
     ::placeholder {
-        color: ${({ theme }) => theme.color.neutral[0.3]};
+        color: ${({ theme }) => theme.input.placeholder};
+        opacity: 1;
     }
 
     :focus {
-        border-color: ${({ theme }) => theme.color.focus[1]} !important;
-        border-width: 2px !important;
-        box-shadow: 0 0 4px 0 ${({ theme }) => theme.color.focus[1]} !important;
+        border-color: ${({ theme }) => theme.input.focus};
+        border-width: 2px;
         padding-left: ${({ hasIcon }) =>
             `${(hasIcon ? CONTENT_OFFSET + ICON_SIZE + TEXT_ICON_OFFSET : CONTENT_OFFSET) - 1}px`};
         padding-right: ${CONTENT_OFFSET - 1}px;
@@ -66,7 +64,7 @@ const InputWrapper = styled.div<{ error?: any; mark?: boolean }>`
         props.error &&
         css`
             ${StyledInput} {
-                border-color: ${props.theme.color.error[1]};
+                border-color: ${props.theme.input.error};
             }
         `};
 

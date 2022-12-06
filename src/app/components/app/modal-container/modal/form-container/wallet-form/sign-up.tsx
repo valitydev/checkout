@@ -13,7 +13,7 @@ const SignUpText = styled.p`
 const SignUpLink = styled.a`
     text-decoration: underline;
     cursor: pointer;
-    color: ${({ theme }) => theme.color.link};
+    color: ${({ theme }) => theme.externalLink};
 `;
 
 const SignUpContainer = styled.div`

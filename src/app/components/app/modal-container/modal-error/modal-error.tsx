@@ -24,14 +24,14 @@ const Title = styled.h2`
     text-align: center;
     font-weight: 500;
     margin: 0;
-    color: ${({ theme }) => theme.color.error[1]};
+    color: ${({ theme }) => theme.font.primaryColor};
 `;
 
 const Message = styled.p`
     margin: 0;
     padding-top: 25px;
     font-size: 16px;
-    color: ${({ theme }) => theme.color.neutral[0.8]};
+    color: ${({ theme }) => theme.font.primaryColor};
 `;
 
 interface ModalErrorProps {

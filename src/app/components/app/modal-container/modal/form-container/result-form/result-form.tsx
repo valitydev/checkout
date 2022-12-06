@@ -6,27 +6,36 @@ import { FormName, ModalForms, ModalName, ResultFormInfo, ResultState, ResultTyp
 import { goToFormInfo, setResult } from 'checkout/actions';
 import { ResultFormProps } from './result-form-props';
 import { findNamed } from 'checkout/utils';
-import { makeContentError, makeContentInvoice, ResultFormContent, ResultFormType } from './make-content';
+import { makeContentError, makeContentInvoice, ResultFormContent } from './make-content';
 import { ActionBlock } from './action-block';
 import { IntegrationType } from 'checkout/config';
-import { ResultIcon } from 'checkout/components/app/modal-container/modal/form-container/result-form/result-icons';
+import { ResultIcon } from './result-icons';
 import styled, { css } from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 
-const Title = styled.h2<{ type: ResultFormType }>`
+const Title = styled.h2`
     font-weight: 500;
-    font-size: 30px;
-    color: ${({ theme, type }) => (type === ResultFormType.ERROR ? theme.color.error[1] : theme.color.neutral[0.9])};
-    letter-spacing: 0;
-    line-height: 35px;
+    font-size: 32px;
+    color: ${({ theme }) => theme.font.primaryColor};
+    line-height: 48px;
     text-align: center;
-    padding: 0;
-    margin: 0 0 30px;
+    margin: 0;
+`;
+
+const Description = styled.p`
+    font-weight: 500;
+    font-size: 16px;
+    color: ${({ theme }) => theme.font.primaryColor};
+    line-height: 24px;
+    text-align: center;
+    margin: 0;
 `;
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 24px;
 `;
 
 const Form = styled.form<{ hasActions: boolean }>`
@@ -62,9 +71,9 @@ class ResultFormDef extends React.Component<ResultFormProps> {
         return (
             <Form hasActions={hasActions}>
                 <Container>
-                    <Title type={type}>{header}</Title>
                     <ResultIcon type={type} />
-                    {description}
+                    <Title>{header}</Title>
+                    <Description> {description}</Description>
                     {hasActions ? <ActionBlock /> : false}
                 </Container>
             </Form>

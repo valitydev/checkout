@@ -39,7 +39,7 @@ const Container = styled.div`
 const Form = styled.div<{ error?: any; height?: number }>`
     background: #fff;
     border-radius: 16px;
-    box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.25);
+    border: 1px solid ${({ theme }) => theme.form.border};
     padding: 30px 20px;
     position: relative;
     overflow: hidden;
