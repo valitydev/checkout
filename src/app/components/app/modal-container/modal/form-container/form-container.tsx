@@ -28,7 +28,7 @@ import { QrCodeInteractionForm } from './qr-code-interaction-form';
 import { PaymentTerminalSelectorForm } from './payment-terminal-selector-form';
 
 const Container = styled.div`
-    padding: 0 5px;
+    padding: 0 8px 32px 8px;
 
     @media ${device.desktop} {
         width: 360px;

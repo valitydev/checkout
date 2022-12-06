@@ -31,6 +31,7 @@ export class InitConfig {
     initialPaymentMethod?: PaymentMethodName;
     recurring?: boolean;
     theme?: string;
+    brandless?: boolean;
     metadata?: object;
     terminalFormValues?: object;
     skipUserInteraction?: boolean;

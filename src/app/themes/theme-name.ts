@@ -1,3 +1,4 @@
 export enum ThemeName {
-    plantation = 'plantation'
+    plantation = 'plantation',
+    rhino = 'rhino'
 }
