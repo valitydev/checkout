@@ -5,7 +5,6 @@
         "Обычно оплата происходит в течение нескольких минут, в редких случаях процесс может затянуться до 3х дней. Как только платеж пройдет, вам поступит сообщение от оператора связи."
     ],
     "info.modal.no.available.payment.method": "Отсутствуют доступные методы оплаты",
-    "footer.pay.label": "Безопасная оплата с",
     "form.header.payment.methods.label": "Выберите способ оплаты",
     "form.header.netbanking.label": "Please choose a bank",
     "form.header.pay.card.label": "Оплата банковской картой",
