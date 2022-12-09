@@ -43,7 +43,6 @@ export const QrCodeInteractionForm: React.FC = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        console.info('qrCodeForm metadata', JSON.stringify(qrCodeForm));
         isQrCodeRedirect(qrCodeForm) && window.open(request.qrCode, '_self');
         dispatch(finishInteraction());
     }, []);
