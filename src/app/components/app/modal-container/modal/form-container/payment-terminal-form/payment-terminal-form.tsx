@@ -49,7 +49,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
     const locale = useAppSelector(getLocaleSelector);
     const { providerID, paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
     const serviceProvider = useAppSelector(getServiceProviderSelector(providerID));
-    const { form, contactInfo, logo, paymentSessionInfo } = getMetadata(serviceProvider);
+    const { form, contactInfo, logo, paymentSessionInfo, prefilledMetadataValues } = getMetadata(serviceProvider);
     const initConfig = useAppSelector(getInitConfigSelector);
     const model = useAppSelector(getModelSelector);
     const amount = toAmountConfig(initConfig, model.invoiceTemplate);
@@ -97,17 +97,19 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
     }, [submitFailed]);
 
     const submit = (values?: Partial<PaymentTerminalFormValues>) => {
-        dispatch(
-            pay({
-                method: PaymentMethodName.PaymentTerminal,
-                values: {
-                    ...values,
-                    provider: serviceProvider.id,
-                    paymentSessionInfo,
-                    metadata: formatMetadataValue(form, values?.metadata)
-                } as PaymentTerminalFormValues
-            })
-        );
+        const payload = {
+            method: PaymentMethodName.PaymentTerminal,
+            values: {
+                ...values,
+                provider: serviceProvider.id,
+                paymentSessionInfo,
+                metadata: {
+                    ...prefilledMetadataValues,
+                    ...formatMetadataValue(form, values?.metadata)
+                }
+            } as PaymentTerminalFormValues
+        };
+        dispatch(pay(payload));
     };
 
     return (

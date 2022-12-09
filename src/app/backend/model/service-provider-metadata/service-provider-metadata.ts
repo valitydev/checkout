@@ -72,6 +72,10 @@ export interface PaymentSessionInfoMetadata {
     };
 }
 
+export interface PrefilledMetadataValues {
+    [key: string]: string | number | boolean;
+}
+
 export interface CheckoutServiceProviderMetadata {
     form?: ServiceProviderMetadataField[] | ServiceProviderMetadataSelect[];
     logo?: ServiceProviderIconMetadata;
@@ -81,6 +85,7 @@ export interface CheckoutServiceProviderMetadata {
     userInteraction?: UserInteractionMetadata;
     qrCodeForm?: QrCodeFormMetadata;
     paymentSessionInfo?: PaymentSessionInfoMetadata;
+    prefilledMetadataValues?: PrefilledMetadataValues;
 }
 
 export interface ServiceProviderMetadata {
