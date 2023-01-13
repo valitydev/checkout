@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import get from 'lodash-es/get';
 
 import {
@@ -13,6 +14,7 @@ import {
 import { findNamed, prepareForm } from 'checkout/utils';
 import styled from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
+import { finishInteraction } from 'checkout/actions';
 
 const Container = styled.div`
     height: 100%; // for cross-browser 100vh
@@ -21,8 +23,8 @@ const Container = styled.div`
     background: #fff;
 
     @media ${device.desktop} {
-        height: 690px;
-        width: 680px;
+        height: 768px;
+        width: 768px;
         position: relative;
         border-radius: 16px;
         overflow: hidden;
@@ -48,6 +50,7 @@ const IFrame = styled.iframe`
 export interface UserInteractionModalProps {
     modal: ModalInteraction;
     origin: string;
+    finishInteraction: () => void;
 }
 
 class UserInteractionModalDef extends React.Component<UserInteractionModalProps> {
@@ -56,13 +59,15 @@ class UserInteractionModalDef extends React.Component<UserInteractionModalProps>
     componentDidMount() {
         const {
             origin,
-            modal: { interactionObject }
+            modal: { interactionObject },
+            finishInteraction
         } = this.props;
         if (interactionObject.type === ModalInteractionType.EventInteraction) {
             const form = prepareForm(origin, (interactionObject as EventInteractionObject).request);
             this.iFrameElement.contentWindow.document.body.appendChild(form);
             form.submit();
         }
+        finishInteraction();
     }
 
     render() {
@@ -88,4 +93,8 @@ const mapStateToProps = (state: State) => ({
     origin: state.config.origin
 });
 
-export const UserInteractionModal = connect(mapStateToProps)(UserInteractionModalDef);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    finishInteraction: bindActionCreators(finishInteraction, dispatch)
+});
+
+export const UserInteractionModal = connect(mapStateToProps, mapDispatchToProps)(UserInteractionModalDef);

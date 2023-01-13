@@ -1,14 +1,10 @@
 import * as React from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
 import { Modal } from '../modal';
 import { Footer } from '../footer';
 import { UserInteractionModal } from '../user-interaction-modal';
-import { ModalName, ModalState, State, ModalInteraction } from 'checkout/state';
-import { finishInteraction } from 'checkout/actions';
-import { ModalLoader } from 'checkout/components/app/modal-container/modal-loader';
-import { Close } from 'checkout/components/app/modal-container/modal/close';
+import { ModalName, ModalState, State } from 'checkout/state';
 import styled from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 import { stylableTransition, LEAVE, ENTER, ACTIVE } from 'checkout/styled-transition';
@@ -60,37 +56,23 @@ const Animation = styled(stylableTransition)`
 export interface ModalContentProps {
     activeModal: ModalState;
     finishInteraction: () => any;
-    inFrame?: boolean;
 }
 
 class ModalContentDef extends React.Component<ModalContentProps> {
-    componentWillMount() {
-        window.addEventListener('message', (e) => {
-            if (e.data === 'finish-interaction') {
-                this.props.finishInteraction();
-            }
-        });
-    }
-
     render() {
         const {
-            activeModal: { name },
-            inFrame
+            activeModal: { name }
         } = this.props;
         return (
             <Animation enter={1000} leave={500}>
-                <div key={name}>
-                    {!inFrame && <Close />}
-                    {this.renderContent()}
-                </div>
+                <div key={name}>{this.renderContent()}</div>
             </Animation>
         );
     }
 
     renderContent() {
         const {
-            activeModal: { name },
-            activeModal
+            activeModal: { name }
         } = this.props;
         switch (name) {
             case ModalName.modalForms:
@@ -101,12 +83,7 @@ class ModalContentDef extends React.Component<ModalContentProps> {
                     </>
                 );
             case ModalName.modalInteraction:
-                return (
-                    <>
-                        <UserInteractionModal />
-                        {(activeModal as ModalInteraction).pollingEvents && <ModalLoader />}
-                    </>
-                );
+                return <UserInteractionModal />;
             default:
                 return null;
         }
@@ -117,8 +94,4 @@ const mapStateToProps = (state: State) => ({
     activeModal: state.modals.find((modal) => modal.active)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    finishInteraction: bindActionCreators(finishInteraction, dispatch)
-});
-
-export const ModalContent = connect(mapStateToProps, mapDispatchToProps)(ModalContentDef);
+export const ModalContent = connect(mapStateToProps)(ModalContentDef);
