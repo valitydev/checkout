@@ -2,7 +2,7 @@ import { Locale } from 'checkout/locale';
 import { ResultFormContent, ResultFormType } from './result-form-content';
 
 const started = (l: Locale): ResultFormContent => ({
-    hasActions: false,
+    hasActions: true,
     hasDone: false,
     header: l['form.header.final.started.label'],
     description: l['form.final.started.pay.text'],
