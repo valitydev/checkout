@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Close } from 'checkout/components/app/modal-container/modal/close';
 import styled from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 
@@ -35,15 +34,13 @@ const Message = styled.p`
 `;
 
 interface ModalErrorProps {
-    inFrame: boolean;
     error?: { message?: string; code?: string };
 }
 
-export const ModalError: React.FC<ModalErrorProps> = ({ error, inFrame }) => {
+export const ModalError: React.FC<ModalErrorProps> = ({ error }) => {
     const errorMessage = error && (error.message || error.code);
     return (
         <ModalErrorWrapper>
-            {!inFrame && <Close />}
             <Title>Initialization failure</Title>
             {errorMessage && (
                 <Message>

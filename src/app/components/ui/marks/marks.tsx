@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Checkmark, BoldCross } from 'checkout/components/ui/icon';
+import { Checkmark } from 'checkout/components/ui/icon';
 import styled, { css } from 'checkout/styled-components';
 import { stylableTransition, APPEAR, ENTER, LEAVE } from 'checkout/styled-transition';
 import { fadein, fadeout } from 'checkout/styled-components/animations';
@@ -39,22 +39,12 @@ const CheckmarkIcon = styled(Checkmark)`
     }
 `;
 
-const ErrorCrossIcon = styled(BoldCross)`
-    ${iconStyle};
-    height: 18px;
-    width: 18px;
-    margin: 15px 15px 0 19px;
-    transform: scale(0.7);
-`;
-
 interface MarksProps {
     active: boolean;
     pristine: boolean;
     error: boolean;
 }
 
-export const Marks: React.FC<MarksProps> = (props) => (
-    <FadeAnimation>
-        {!props.active && (props.error ? <ErrorCrossIcon /> : !props.pristine && <CheckmarkIcon />)}
-    </FadeAnimation>
+export const Marks: React.FC<MarksProps> = ({ active, error, pristine }) => (
+    <FadeAnimation>{!active && !error && !pristine && <CheckmarkIcon />}</FadeAnimation>
 );

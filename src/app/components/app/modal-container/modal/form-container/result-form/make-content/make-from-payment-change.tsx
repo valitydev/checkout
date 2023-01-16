@@ -13,7 +13,7 @@ export const refunded = (l: Locale): ResultFormContent => ({
 });
 
 export const pending = (l: Locale): ResultFormContent => ({
-    hasActions: false,
+    hasActions: true,
     hasDone: false,
     header: l['form.header.final.pending.label'],
     type: ResultFormType.WARNING
