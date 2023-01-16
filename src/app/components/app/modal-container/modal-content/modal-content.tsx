@@ -55,7 +55,6 @@ const Animation = styled(stylableTransition)`
 
 export interface ModalContentProps {
     activeModal: ModalState;
-    finishInteraction: () => any;
 }
 
 class ModalContentDef extends React.Component<ModalContentProps> {
