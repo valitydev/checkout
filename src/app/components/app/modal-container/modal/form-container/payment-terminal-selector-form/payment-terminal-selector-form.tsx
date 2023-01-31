@@ -14,20 +14,14 @@ import {
     getAvailableTerminalPaymentMethodSelector,
     getLocaleSelector
 } from 'checkout/selectors';
-import { ServiceProviderPane } from './service-provider-pane';
 import { goToFormInfo } from 'checkout/actions';
 import { Locale } from 'checkout/locale';
+import { ServiceProvidersGrid } from './service-providers-grid';
 
 const Container = styled.div`
-    min-height: 300px;
+    min-height: 346px;
     display: flex;
     flex-direction: column;
-`;
-
-const Grid = styled.div`
-    display: grid;
-    grid-gap: 16px;
-    grid-template-columns: 1fr 1fr;
 `;
 
 const navigate = (providerID: string) =>
@@ -39,15 +33,17 @@ export const PaymentTerminalSelectorForm: React.FC = () => {
     const locale = useAppSelector(getLocaleSelector);
     const { category } = useAppSelector<PaymentTerminalSelectorFormInfo>(getActiveModalFormSelector);
     const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(category));
+    const serviceProviders = paymentMethod?.serviceProviders;
     const dispatch = useAppDispatch();
     return (
         <Container>
             <Header title={toHeader(locale, category)} />
-            <Grid>
-                {paymentMethod?.serviceProviders.map((p, i) => (
-                    <ServiceProviderPane key={i} serviceProvider={p} onClick={(id) => dispatch(navigate(id))} />
-                ))}
-            </Grid>
+            {serviceProviders && (
+                <ServiceProvidersGrid
+                    serviceProviders={serviceProviders}
+                    onPaneClick={(id) => dispatch(navigate(id))}
+                />
+            )}
         </Container>
     );
 };

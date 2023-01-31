@@ -26,6 +26,7 @@ const PaneLabel = styled.p`
     font-size: 12px;
     line-height: 20px;
     margin: 0;
+    user-select: none;
 `;
 
 const PaneLogoContainer = styled.div`

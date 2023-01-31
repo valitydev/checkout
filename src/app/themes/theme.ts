@@ -35,9 +35,9 @@ export interface Theme {
         color: string;
         error: string;
     };
-    chevronBack: {
+    chevronButton: {
         color: string;
-        hover: string;
+        disabled: string;
     };
     button: {
         primaryText: string;
