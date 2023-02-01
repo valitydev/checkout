@@ -47,7 +47,7 @@
     "form.payment.method.name.yandex.pay.label": "Yandex Pay",
     "form.payment.method.name.mobile.commerce.label": "Phone account",
     "form.payment.method.name.others.label": "All payment methods",
-    "form.onlineBanking.search": "Search",
+    "form.serviceProvidersGrid.search": "Search",
     "form.pay.upi.instruction": [
         "You can make payment via BHIM, PhonePe, Tez, ICICI, SBI and other UPI apps.",
         "Example: xxxxx@ybl xxxxx@icicibank xxxx@paytm xxxx@ibl etc."
