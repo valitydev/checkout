@@ -9,6 +9,10 @@ import { useGridPages } from './use-grid-pages';
 import { useAppSelector } from 'checkout/configure-store';
 import { getLocaleSelector } from 'checkout/selectors';
 
+const GridContainer = styled.div`
+    height: 312px;
+`;
+
 const Grid = styled.div`
     width: 100%;
     display: grid;
@@ -24,7 +28,7 @@ const Flex = styled.div`
     justify-content: space-between;
 `;
 
-const ITEMS_ON_PAGE = 6;
+const ITEMS_ON_PAGE = 8;
 
 export interface ServiceProvidersGridProps {
     serviceProviders: ServiceProvider[];
@@ -43,16 +47,18 @@ export const ServiceProvidersGrid: React.FC<ServiceProvidersGridProps> = ({ serv
     }, []);
 
     const isSearchAvailable = useMemo(() => serviceProviders.length > ITEMS_ON_PAGE, [serviceProviders]);
-    const placeholder = useMemo(() => `${locale['form.onlineBanking.search']}...`, []);
+    const placeholder = useMemo(() => `${locale['form.serviceProvidersGrid.search']}...`, []);
 
     return (
         <Flex>
             {isSearchAvailable && <Input placeholder={placeholder} onChange={onChange} />}
-            <Grid>
-                {pageItems.map((p, i) => (
-                    <ServiceProviderPane key={i} serviceProvider={p} onClick={onPaneClick} />
-                ))}
-            </Grid>
+            <GridContainer>
+                <Grid>
+                    {pageItems.map((p, i) => (
+                        <ServiceProviderPane key={i} serviceProvider={p} onClick={onPaneClick} />
+                    ))}
+                </Grid>
+            </GridContainer>
             {totalPages > 1 && (
                 <PageNavigation
                     previous={previous}
