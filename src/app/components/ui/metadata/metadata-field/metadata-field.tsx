@@ -42,8 +42,13 @@ const getOnFocusHandler = (type: JSX.IntrinsicElements['input']['type']) => {
     }
 };
 
-const getPlaceholder = (localeCode: string, localization: MetadataTextLocalization) =>
-    localization[localeCode] || localization['en'];
+const getPlaceholder = (localeCode: string, localization: MetadataTextLocalization) => {
+    if (isNil(localization)) {
+        console.error('Metadata localization is not defined');
+        return '';
+    }
+    return localization[localeCode] || localization['en'];
+};
 
 const WrappedInput: React.FC<WrappedFieldProps & {
     type: AttributeType;

@@ -17,7 +17,8 @@ const palette = {
     Clementine: '#ef7000',
     Gorse: '#fdec4a',
     Rhino: '#33436B',
-    BlueCharcoal: '#000C1F'
+    BlueCharcoal: '#000C1F',
+    Silver: '#979797'
 };
 
 const theme: Theme = {
@@ -57,9 +58,9 @@ const theme: Theme = {
         color: palette.CodGray,
         error: palette.Cinnabar
     },
-    chevronBack: {
+    chevronButton: {
         color: palette.CodGray,
-        hover: palette.CodGray
+        disabled: palette.Silver
     },
     button: {
         primaryText: palette.White,

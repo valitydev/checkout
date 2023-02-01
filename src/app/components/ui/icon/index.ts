@@ -4,6 +4,7 @@ export { default as Calendar } from './calendar.svg';
 export { default as Card } from './card.svg';
 export { default as Checkmark } from './checkmark.svg';
 export { default as ChevronLeft } from './chevron-left.svg';
+export { default as ChevronRight } from './chevron-right.svg';
 export { default as Cross } from './cross.svg';
 export { default as Letter } from './letter.svg';
 export { default as Lock } from './lock.svg';

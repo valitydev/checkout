@@ -17,7 +17,8 @@ const palette = {
     Cinnabar: '#E75542',
     SeaNymph: '#71A19D',
     BlueRibbon: '#0038FF',
-    Candlelight: '#ffe05c'
+    Candlelight: '#ffe05c',
+    Silver: '#979797'
 };
 
 const theme: Theme = {
@@ -57,9 +58,9 @@ const theme: Theme = {
         color: palette.Zeus,
         error: palette.Cinnabar
     },
-    chevronBack: {
+    chevronButton: {
         color: palette.Zeus,
-        hover: palette.Zeus
+        disabled: palette.Silver
     },
     button: {
         primaryText: palette.Zeus,

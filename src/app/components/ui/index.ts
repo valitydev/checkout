@@ -10,3 +10,4 @@ export * from './payment-method';
 export * from './hr';
 export * from './copy-to-clipboard-button';
 export * from './select';
+export * from './chevron-button';
