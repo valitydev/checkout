@@ -25,6 +25,7 @@ export interface ServiceProviderMetadataField {
     formatter?: MetadataFieldFormatter;
     inputMode?: AttributeInputMode;
     addon?: 'vpa';
+    replaceValuePattern?: string;
 }
 
 export interface MetadataSelectSource {
