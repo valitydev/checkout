@@ -1,0 +1,152 @@
+{
+    "info.order.label": "주문 세부 사항",
+    "info.modal.mobile.commerce.description.steps": [
+        "A message has been sent to the phone number provided. To confirm the payment, please follow the steps indicated in the SMS from the mobile operator. This tab can be closed.",
+        "Usually payment takes a few minutes, in rare cases, the process may take up to 3 days. Once payment is processed, you will receive a message from the mobile operator."
+    ],
+    "info.modal.no.available.payment.method": "사용 가능한 결제 수단이 없습니다",
+    "form.header.payment.methods.label": "결제 수단을 선택하십시오",
+    "form.header.netbanking.label": "Please choose a bank",
+    "form.header.pay.card.label": "Pay with a card",
+    "form.header.pay.mobile.commerce.label": "Pay with mobile phone account",
+    "form.header.pay.upi.label": "Unified payment interface",
+    "form.header.final.success.label": "결제 성공",
+    "form.header.final.invoice.paid.label": "전액 결제됨",
+    "form.header.final.invoice.paid.already.label": "이미 전액 결제됨",
+    "form.header.final.invoice.cancelled.label": "송장이 취소되었습니다",
+    "form.header.final.invoice.fulfilled.label": "송장이 결제되었습니다",
+    "form.header.final.started.label": "대기 중",
+    "form.header.final.failed.label": "미결제",
+    "form.header.final.refunded.label": "환불됨",
+    "form.header.final.pending.label": "대기 중",
+    "form.header.final.cancelled.label": "취소됨",
+    "form.final.failed.cancelled.text": "결제가 취소되었습니다",
+    "form.final.started.pay.text": "결제가 대기 중입니다",
+    "form.final.need.help": "문제가 생기셨습니까?",
+    "form.input.phone.placeholder": "Phone number",
+    "form.input.card.placeholder": "Card number",
+    "form.input.expiry.placeholder": "MM / YY",
+    "form.input.secure.placeholder": "CVV",
+    "form.input.cardholder.placeholder": "Cardholder name",
+    "form.input.email.placeholder": "이메일",
+    "form.input.amount.placeholder": "합계",
+    "form.button.back.to.website": "웹사이트로 돌아가기",
+    "form.button.next.label": "다음",
+    "form.button.use.other.card.label": "Use a different card",
+    "form.button.use.other.wallet.label": "Use a different account ID",
+    "form.button.use.other.mobileCommerce.label": "Use a different phone number",
+    "form.button.use.other.default.label": "세부 사항 변경하기",
+    "form.button.pay.again.label": "다시 시도해주십시오",
+    "form.button.pay.label": "결제",
+    "form.button.copy.label": "복사",
+    "form.button.copied.label": "복사됨!",
+    "form.payment.method.name.card.label": "Card",
+    "form.payment.method.name.apple.pay.label": "Apple Pay",
+    "form.payment.method.name.google.pay.label": "Google Pay",
+    "form.payment.method.name.samsung.pay.label": "Samsung Pay",
+    "form.payment.method.name.yandex.pay.label": "Yandex Pay",
+    "form.payment.method.name.mobile.commerce.label": "Phone account",
+    "form.payment.method.name.others.label": "모든 결제 수단",
+    "form.serviceProvidersGrid.search": "Search",
+    "form.pay.upi.instruction": [
+        "You can make payment via BHIM, PhonePe, Tez, ICICI, SBI and other UPI apps.",
+        "Example: xxxxx@ybl xxxxx@icicibank xxxx@paytm xxxx@ibl etc."
+    ],
+    "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Select payment system:",
+    "form.qr.code": "은행 앱으로 QR 코드를 스캔하여 결제를 완료하십시오",
+    "form.help.header": "문제가 생기셨습니까?",
+    "form.help.codes": {
+        "InvalidPaymentTool": {
+            "text": "결제 실패: 잘못된 결제 데이터가 입력되었습니다.",
+            "steps": [
+                "이전 단계로 돌아가십시오.",
+                "유효한 카드 또는 계좌번호를 입력했는지 확인하십시오.",
+                "다시 “결제”를 누르십시오.",
+                "오류가 계속될 경우, 다른 카드나 계좌를 사용해 보십시오."
+            ]
+        },
+        "AccountLimitsExceeded": {
+            "text": "Payment failed: limits set by you exceeded.",
+            "steps": [
+                "Please login to your online banking or back office account.",
+                "Please change limit settings and country restrictions.",
+                "Please return to checkout and press “Try again”.",
+                "If error persists please contact your bank or payment institution."
+            ]
+        },
+        "InsufficientFunds": {
+            "text": "Payment failed: insufficient funds.",
+            "steps": [
+                "Please check your card or account balance.",
+                "If the funds are insufficient, please top up your account.",
+                "Please return to checkout and press “Try again”.",
+                "If error persists please try using a different card or bank account."
+            ]
+        },
+        "PreauthorizationFailed": {
+            "text": "Payment failed: can’t verify confirmation code.",
+            "steps": [
+                "Please press “Try again”.",
+                "Please check if you are entering correct payment password or SMS authentication code.",
+                "Please check if you press a button 'To confirm' on the bank page or payment institution page.",
+                "If error persists please contact your bank or payment institution."
+            ]
+        },
+        "RejectedByIssuer": {
+            "text": "Payment failed: your payment institution has rejected the payment.",
+            "steps": [
+                "Please check there are no limits or country rectrictions on the side of your online banking or bank back office.",
+                "Please check if your card or bank account is enabled for online payments.",
+                "Please contact your bank or payment institution.",
+                "Please try using a different card or bank account."
+            ]
+        },
+        "PaymentRejected": {
+            "text": "Payment failed: your payment has been rejected.",
+            "steps": [
+                "Please try using a different card or bank account.",
+                "Please contact support of the website."
+            ]
+        }
+    },
+    "error.apple.pay.unknown": "Unknown error - Apple Pay",
+    "error.apple.pay.cancel": "Apple Pay payment is cancelled",
+    "error.apple.pay.session.create": "Failed to create Apple Pay session",
+    "error.payment.request.cancel": "Payment is cancelled",
+    "error.google.pay.cancel": "Google Pay payment is cancelled",
+    "error.google.pay.unknown": "Unknown error - Google Pay ",
+    "error.samsung.pay.cancel": "Samsung Pay payment is cancelled",
+    "error.samsung.pay.not.available": "Samsung Pay payment is not available",
+    "error.yandex.pay.unknown": "Unknown error - Yandex Pay",
+    "error.yandex.pay.unavailable": "Yandex Pay payment is unavailable",
+    "error.yandex.pay.event.abort.no.reason": "Yandex Pay payment is cancelled",
+    "error.yandex.pay.event.abort.close": "Yandex Pay is cancelled",
+    "error.yandex.pay.event.abort.timeout": "Yandex Pay is cancelled (timeout)",
+    "error.yandex.pay.event.abort.unknown": "Yandex Pay is cancelled",
+    "error.yandex.pay.event.error.no.reason": "Yandex Pay payment error",
+    "error.yandex.pay.event.error.CODE_CHECK_FAILED": "Yandex Pay payment error (CODE_CHECK_FAILED)",
+    "error.yandex.pay.event.error.AMOUNT_LIMIT_EXCEEDED": "Yandex Pay payment error (AMOUNT_LIMIT_EXCEEDED)",
+    "error.yandex.pay.event.error.CARD_NOT_FOUND": "Yandex Pay payment error (CARD_NOT_FOUND)",
+    "error.yandex.pay.event.error.INVALID_AMOUNT": "Yandex Pay payment error (INVALID_AMOUNT)",
+    "error.yandex.pay.event.error.INVALID_COUNTRY": "Yandex Pay payment error (INVALID_COUNTRY)",
+    "error.yandex.pay.event.error.INVALID_CURRENCY": "Yandex Pay payment error (INVALID_CURRENCY)",
+    "error.yandex.pay.event.error.INVALID_VERSION": "Yandex Pay payment error (INVALID_VERSION)",
+    "error.yandex.pay.event.error.MERCHANT_NOT_FOUND": "Yandex Pay payment error (MERCHANT_NOT_FOUND)",
+    "error.yandex.pay.event.error.GATEWAY_NOT_FOUND": "Yandex Pay payment error (GATEWAY_NOT_FOUND)",
+    "error.yandex.pay.event.error.CARD_NETWORK_NOT_SUPPORTED": "Yandex Pay payment error (CARD_NETWORK_NOT_SUPPORTED)",
+    "error.yandex.pay.event.error.MERCHANT_DOMAIN_ERROR": "Yandex Pay payment error (MERCHANT_DOMAIN_ERROR)",
+    "error.yandex.pay.event.error.INSECURE_MERCHANT_DOMAIN": "Yandex Pay payment error (INSECURE_MERCHANT_DOMAIN)",
+    "error.yandex.pay.event.error.unknown": "Yandex Pay payment error",
+    "InvalidPaymentTool": "잘못된 결제 수단",
+    "AccountLimitsExceeded": "Account limit is exceeded",
+    "InsufficientFunds": "Insufficient funds",
+    "PreauthorizationFailed": "Pre-authorization failed",
+    "RejectedByIssuer": "Rejected by issuing bank",
+    "PaymentRejected": "Payment is rejected",
+    "digital.wallet.providers": {
+        "sign.up": {
+            "description": "Don't have an account?",
+            "link": "Sign up"
+        }
+    }
+}
