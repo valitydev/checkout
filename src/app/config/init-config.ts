@@ -35,4 +35,5 @@ export class InitConfig {
     metadata?: object;
     terminalFormValues?: object;
     skipUserInteraction?: boolean;
+    isExternalIDIncluded?: boolean;
 }

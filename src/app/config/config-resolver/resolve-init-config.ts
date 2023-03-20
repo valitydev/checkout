@@ -63,6 +63,7 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         terminalWallets,
         pix,
         skipUserInteraction,
+        isExternalIDIncluded,
         ...restParams
     } = userConfig;
     checkUnknown(resolvedIntegrationType, restParams);
@@ -101,6 +102,7 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         terminalBankCard: setDefault(resolveBoolean(terminalBankCard, 'terminalBankCard'), true),
         terminalWallets: setDefault(resolveBoolean(terminalWallets, 'terminalWallets'), true),
         pix: setDefault(resolveBoolean(pix, 'pix'), true),
-        skipUserInteraction: setDefault(resolveBoolean(skipUserInteraction, 'skipUserInteraction'), false)
+        skipUserInteraction: setDefault(resolveBoolean(skipUserInteraction, 'skipUserInteraction'), false),
+        isExternalIDIncluded: setDefault(resolveBoolean(isExternalIDIncluded, 'isExternalIDIncluded'), false)
     };
 };

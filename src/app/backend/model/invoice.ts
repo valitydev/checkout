@@ -15,4 +15,5 @@ export class Invoice {
     status: InvoiceStatus;
     reason: string;
     cart: InvoiceLine[];
+    externalID: string;
 }

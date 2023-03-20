@@ -11,6 +11,7 @@ import { isHelpAvailable } from './is-help-available';
 import { getErrorCodeFromEvents } from '../get-error-code-from-changes';
 import { Link } from 'checkout/components/ui/link';
 import styled from 'checkout/styled-components';
+import { InitConfig } from 'checkout/config';
 
 const OthersButton = styled(Link)`
     padding-top: 12px;
@@ -56,9 +57,9 @@ export interface ActionBlockProps {
     startedInfo: FormInfo;
     hasMultiMethods: boolean;
     hasErrorDescription: boolean;
-    redirectUrl: string;
     prepareToRetry: (resetFormData: boolean) => any;
     forgetPaymentAttempt: () => any;
+    initConfig: InitConfig;
 }
 
 class ActionBlockDef extends React.Component<ActionBlockProps> {
@@ -78,26 +79,30 @@ class ActionBlockDef extends React.Component<ActionBlockProps> {
     };
 
     render() {
-        const { locale, startedInfo, hasMultiMethods, redirectUrl } = this.props;
+        const { locale, startedInfo, hasMultiMethods, initConfig } = this.props;
         return (
             <ErrorBlock>
-                {retryCapability(startedInfo) && (
-                    <Button color="primary" onClick={(e) => this.retry(e)} id="retry-btn">
-                        {locale['form.button.pay.again.label']}
-                    </Button>
+                {!initConfig.isExternalIDIncluded && (
+                    <>
+                        {retryCapability(startedInfo) && (
+                            <Button color="primary" onClick={(e) => this.retry(e)} id="retry-btn">
+                                {locale['form.button.pay.again.label']}
+                            </Button>
+                        )}
+                        {payOtherCapability(startedInfo) && (
+                            <Button onClick={(e) => this.retry(e, true)} id="reenter-btn">
+                                {toReenterButtonText(startedInfo, locale)}
+                            </Button>
+                        )}
+                        {hasMultiMethods && (
+                            <OthersButton onClick={this.goToPaymentMethods}>
+                                {locale['form.payment.method.name.others.label']}
+                            </OthersButton>
+                        )}
+                    </>
                 )}
-                {payOtherCapability(startedInfo) && (
-                    <Button onClick={(e) => this.retry(e, true)} id="reenter-btn">
-                        {toReenterButtonText(startedInfo, locale)}
-                    </Button>
-                )}
-                {hasMultiMethods && (
-                    <OthersButton onClick={this.goToPaymentMethods}>
-                        {locale['form.payment.method.name.others.label']}
-                    </OthersButton>
-                )}
-                {redirectUrl && (
-                    <OthersButton onClick={this.redirectToWebsite(redirectUrl)}>
+                {initConfig.redirectUrl && (
+                    <OthersButton onClick={this.redirectToWebsite(initConfig.redirectUrl)}>
                         {locale['form.button.back.to.website']}
                     </OthersButton>
                 )}
@@ -115,7 +120,7 @@ const mapStateToProps = (s: State) => {
         hasErrorDescription: isHelpAvailable(
             getErrorCodeFromEvents(s.events.events, s.config.initConfig.integrationType)
         ),
-        redirectUrl: s.config.initConfig?.redirectUrl
+        initConfig: s.config.initConfig
     };
 };
 
