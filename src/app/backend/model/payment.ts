@@ -13,4 +13,5 @@ export class Payment {
     payer: Payer;
     status: PaymentStatus;
     error: PaymentError;
+    externalID: string;
 }

@@ -15,6 +15,11 @@ import { getContactInfo } from './get-contact-info';
 
 type Effects = CallEffect | Payment;
 
+type InvoiceContext = {
+    invoiceID: string;
+    externalID?: string;
+};
+
 export const toPaymentFlow = (c: InitConfig): PaymentFlow => {
     const instant: PaymentFlowInstant = { type: FlowType.PaymentFlowInstant };
     const hold: PaymentFlowHold = { type: FlowType.PaymentFlowHold, onHoldExpiration: c.holdExpiration };
@@ -30,7 +35,7 @@ const getSessionInfo = (redirectUrl: string) => ({
 export function* createPayment(
     endpoint: string,
     token: string,
-    invoiceID: string,
+    { invoiceID, externalID }: InvoiceContext,
     formValue: PayableFormValues,
     resource: PaymentResource,
     initConfig: InitConfig,
@@ -47,7 +52,8 @@ export function* createPayment(
             ...(redirectUrl && getSessionInfo(redirectUrl))
         },
         makeRecurrent: initConfig.recurring,
-        metadata: initConfig.metadata
+        metadata: initConfig.metadata,
+        externalID: initConfig.isExternalIDIncluded ? externalID : undefined
     };
     return yield call(request, endpoint, token, invoiceID, params);
 }

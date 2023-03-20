@@ -27,7 +27,7 @@ export function* makePayment(
     const { initConfig, appConfig } = config;
     const { capiEndpoint } = appConfig;
     const {
-        invoice: { id, dueDate },
+        invoice: { id, dueDate, externalID },
         invoiceAccessToken
     } = yield call(getPayableInvoice, initConfig, capiEndpoint, model, amountInfo, values.amount);
     const paymentResource = yield call(fn, invoiceAccessToken);
@@ -40,7 +40,7 @@ export function* makePayment(
             createPayment,
             capiEndpoint,
             invoiceAccessToken,
-            id,
+            { invoiceID: id, externalID },
             values,
             paymentResource,
             initConfig,
