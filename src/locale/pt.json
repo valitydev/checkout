@@ -16,7 +16,7 @@
     "form.header.final.invoice.cancelled.label": "Fatura está cancelada",
     "form.header.final.invoice.fulfilled.label": "Fatura foi paga",
     "form.header.final.started.label": "Pendente",
-    "form.header.final.failed.label": "Por pagar",
+    "form.header.final.failed.label": "Erro no pagamento",
     "form.header.final.refunded.label": "Reembolsado",
     "form.header.final.pending.label": "Pendente",
     "form.header.final.cancelled.label": "Cancelado",
