@@ -1,24 +1,34 @@
 import isNil from 'lodash-es/isNil';
 
 import { InitConfig } from 'checkout/config';
-import { PayableFormValues } from 'checkout/state';
+import { PayableFormValues, PaymentTerminalFormValues } from 'checkout/state';
 import { replaceSpaces } from 'checkout/utils';
 
-const getPhoneNumber = (phoneNumber: string | null): string | undefined => {
-    if (isNil(phoneNumber)) {
-        return undefined;
+const getPhoneNumber = (formValues: PayableFormValues): string | undefined => {
+    const metadata = (formValues as PaymentTerminalFormValues)?.metadata;
+    let phoneNumber;
+    if (!isNil(metadata) && !isNil(metadata?.phoneNumber)) {
+        phoneNumber = metadata.phoneNumber;
     }
-    return replaceSpaces(phoneNumber);
+    if (!isNil(formValues.phoneNumber)) {
+        phoneNumber = formValues.phoneNumber;
+    }
+    return isNil(phoneNumber) ? undefined : replaceSpaces(phoneNumber);
 };
 
-const getEmail = (email: string | null): string | undefined => {
-    if (isNil(email)) {
-        return undefined;
+const getEmail = (formValues: PayableFormValues): string | undefined => {
+    const metadata = (formValues as PaymentTerminalFormValues)?.metadata;
+    let email;
+    if (!isNil(metadata) && !isNil(metadata?.email)) {
+        email = metadata.email;
     }
-    return email;
+    if (!isNil(formValues.email)) {
+        email = formValues.email;
+    }
+    return isNil(email) ? undefined : replaceSpaces(email);
 };
 
-export const getContactInfo = (initConfig: InitConfig, { email, phoneNumber }: PayableFormValues) => ({
-    email: initConfig.email || getEmail(email),
-    phoneNumber: initConfig.phoneNumber || getPhoneNumber(phoneNumber)
+export const getContactInfo = (initConfig: InitConfig, formValues: PayableFormValues) => ({
+    email: initConfig.email || getEmail(formValues),
+    phoneNumber: initConfig.phoneNumber || getPhoneNumber(formValues)
 });
