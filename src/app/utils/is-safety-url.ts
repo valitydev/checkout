@@ -1,4 +1,4 @@
-import isNil from 'lodash-es/isNil';
+import isNil from './is-nil';
 
 export const isSafetyUrl = (url: string): boolean => {
     if (isNil(url)) {

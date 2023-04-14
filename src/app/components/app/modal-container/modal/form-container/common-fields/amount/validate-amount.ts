@@ -1,5 +1,5 @@
-import toNumber from 'lodash-es/toNumber';
-import isNumber from 'lodash-es/isNumber';
+import toNumber from 'checkout/utils/to-number';
+import isNumber from 'checkout/utils/is-number';
 import { CostType, InvoiceTemplateLineCostRange, InvoiceTemplateLineCostUnlim } from 'checkout/backend';
 
 function validate(amount: number, min?: number, max?: number): boolean {

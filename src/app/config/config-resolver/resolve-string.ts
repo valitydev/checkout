@@ -1,12 +1,11 @@
-import isString from 'lodash-es/isString';
-import isEmpty from 'lodash-es/isEmpty';
+import isString from 'checkout/utils/is-string';
 import { getMessageInvalidValue } from '../../log-messages';
 
 const getString = (userString: any): string => {
     let result = null;
     if (isString(userString)) {
         const trimmed = userString.trim();
-        if (!isEmpty(trimmed)) {
+        if (trimmed !== '') {
             result = trimmed;
         }
     }

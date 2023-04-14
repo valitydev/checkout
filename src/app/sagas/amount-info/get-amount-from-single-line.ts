@@ -1,4 +1,4 @@
-import isNumber from 'lodash-es/isNumber';
+import isNumber from 'checkout/utils/is-number';
 import {
     CostType,
     InvoiceTemplateLineCostFixed,

@@ -1,4 +1,4 @@
-import toNumber from 'lodash-es/toNumber';
+import toNumber from 'checkout/utils/to-number';
 import { AmountInfoState, AmountInfoStatus } from 'checkout/state';
 
 const format = (formAmount: string): string => formAmount.replace(/\s/g, '').replace(/,/g, '.');
