@@ -1,5 +1,4 @@
 import 'url-polyfill';
-import 'core-js/es6/promise';
 
 import { domReady } from './dom-ready';
 import { HtmlIntegration } from './html-integration';
