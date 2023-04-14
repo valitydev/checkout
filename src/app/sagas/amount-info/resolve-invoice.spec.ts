@@ -10,7 +10,8 @@ it('should return amount', () => {
     const expected = {
         status: AmountInfoStatus.final,
         currencyCode: 'RUB',
-        minorValue: 10000
+        minorValue: 10000,
+        locale: 'ru'
     };
     expect(actual).toEqual(expected);
 });

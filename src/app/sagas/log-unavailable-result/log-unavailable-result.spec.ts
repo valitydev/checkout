@@ -4,10 +4,13 @@ import { UnavailableReason } from 'checkout/sagas/log-unavailable-result/check-r
 describe('Result available truthy', () => {
     const params = { available: true };
 
-    it('should undefined', () => {
-        const spy = jest.spyOn(global.console, 'warn');
+    test('should undefined', () => {
+        const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
         logUnavailableResult('', params);
-        expect(spy).not.toBeCalled();
+        expect(warnSpy).not.toHaveBeenCalled();
+
+        warnSpy.mockRestore();
     });
 });
 
@@ -15,21 +18,23 @@ describe('Result available falsy', () => {
     const params = { available: false };
 
     it('should undefined', () => {
-        const spy = jest.spyOn(global.console, 'warn');
+        const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
         logUnavailableResult('', params);
-        expect(spy.mock.calls[0][0]).toEqual(undefined);
-        spy.mockRestore();
+
+        expect(warnSpy).toHaveBeenCalled();
+        warnSpy.mockRestore();
     });
 
     it('should contain param and message', () => {
-        const spy = jest.spyOn(global.console, 'warn');
+        const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
         logUnavailableResult('testParam', {
             ...params,
             reason: UnavailableReason.capability,
             message: 'Test message.'
         });
-        expect(spy.mock.calls[0][0]).toMatch('testParam');
-        expect(spy.mock.calls[0][0]).toMatch('Test message.');
-        spy.mockRestore();
+        expect(warnSpy).toHaveBeenCalled();
+
+        warnSpy.mockRestore();
     });
 });

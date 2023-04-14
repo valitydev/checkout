@@ -99,7 +99,13 @@ it('Encoded param name', () => {
 });
 
 it('Symbols without & in param', () => {
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
     const url = 'http://test.com/test?symbols=!@#$%^*()_+~`/|\\';
     const actual = getUrlParams(url);
+
+    expect(errorSpy).toHaveBeenCalled();
     expect(actual).toEqual({ symbols: '!@#$%^*()_+~`/|\\' });
+
+    errorSpy.mockRestore();
 });
