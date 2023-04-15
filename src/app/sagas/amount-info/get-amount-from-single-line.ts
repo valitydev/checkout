@@ -4,7 +4,7 @@ import {
     InvoiceTemplateLineCostFixed,
     InvoiceTemplateLineCostRange,
     InvoiceTemplateSingleLine
-} from 'checkout/backend';
+} from 'checkout/backend/model';
 import { AmountInfoState, AmountInfoStatus } from 'checkout/state';
 
 const getStatus = (configAmount: number) =>

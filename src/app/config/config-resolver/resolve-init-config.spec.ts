@@ -24,6 +24,7 @@ it('should return resolved init config', () => {
         invoiceAccessToken: 'some token',
         wallets: true,
         bankCard: true,
+        brandless: true,
         applePay: true,
         googlePay: true,
         samsungPay: true,
@@ -32,7 +33,8 @@ it('should return resolved init config', () => {
         paymentFlowHold: false,
         recurring: false,
         holdExpiration: HoldExpirationType.cancel,
-        locale: 'auto',
+        isExternalIDIncluded: false,
+        locale: 'en',
         initialPaymentMethod: PaymentMethodName.bankCard,
         requireCardHolder: false,
         obscureCardCvv: true,
@@ -42,8 +44,17 @@ it('should return resolved init config', () => {
         // @ts-ignore
         metadata: undefined,
         name: 'some name',
-        redirectUrl: 'some url',
-        theme: 'main'
+        netBanking: true,
+        onlineBanking: true,
+        phoneNumber: null,
+        pix: true,
+        redirectUrl: null,
+        theme: 'main',
+        skipUserInteraction: false,
+        terminalBankCard: true,
+        terminalFormValues: undefined,
+        terminalWallets: true,
+        upi: true
     };
     expect(actual).toEqual(expected);
 });

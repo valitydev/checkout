@@ -13,6 +13,7 @@ it('InvoiceTemplateLineCostFixed should return amount', () => {
     const expected = {
         status: AmountInfoStatus.final,
         currencyCode: 'RUB',
+        locale: 'ru',
         minorValue: 149900
     };
     expect(actual).toEqual(expected);
@@ -35,7 +36,8 @@ describe('InvoiceTemplateLineCostRange', () => {
         const expected = {
             status: AmountInfoStatus.final,
             currencyCode: 'RUB',
-            minorValue: 111
+            minorValue: 111,
+            locale: 'ru'
         };
         expect(actual).toEqual(expected);
     });
@@ -44,7 +46,9 @@ describe('InvoiceTemplateLineCostRange', () => {
         const actual = getAmountFromSingleLine(singleLine, null, 'ru');
         const expected = {
             status: AmountInfoStatus.notKnown,
-            currencyCode: 'RUB'
+            currencyCode: 'RUB',
+            locale: 'ru',
+            minorValue: undefined
         };
         expect(actual).toEqual(expected);
     });
@@ -62,7 +66,8 @@ describe('InvoiceTemplateLineCostUnlim', () => {
         const expected = {
             status: AmountInfoStatus.final,
             currencyCode: 'RUB',
-            minorValue: 111
+            minorValue: 111,
+            locale: 'ru'
         };
         expect(actual).toEqual(expected);
     });
@@ -71,7 +76,8 @@ describe('InvoiceTemplateLineCostUnlim', () => {
         const actual = getAmountFromSingleLine(singleLine, null, 'ru');
         const expected = {
             status: AmountInfoStatus.notKnown,
-            currencyCode: 'RUB'
+            currencyCode: 'RUB',
+            locale: 'ru'
         };
         expect(actual).toEqual(expected);
     });

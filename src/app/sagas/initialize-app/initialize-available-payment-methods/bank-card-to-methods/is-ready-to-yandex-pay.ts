@@ -1,6 +1,6 @@
 import { call, CallEffect, race, delay } from 'redux-saga/effects';
 
-import { getYaPayPaymentData } from 'checkout/utils';
+import { getYaPayPaymentData } from 'checkout/utils/get-ya-pay-payment-data';
 import { logPrefix } from 'checkout/log-messages';
 
 import { isYandexPayAvailable } from '../../../../../environment';
