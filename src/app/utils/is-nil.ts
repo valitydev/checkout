@@ -14,7 +14,7 @@
  * isNil(NaN)
  * // => false
  */
-function isNil(value) {
+function isNil(value: any): value is null | undefined {
     return value == null;
 }
 

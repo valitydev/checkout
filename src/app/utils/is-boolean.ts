@@ -14,7 +14,7 @@ import isObjectLike from './is-object-like';
  * isBoolean(null)
  * // => false
  */
-function isBoolean(value) {
+function isBoolean(value?: any): value is boolean {
     return value === true || value === false || (isObjectLike(value) && getTag(value) == '[object Boolean]');
 }
 

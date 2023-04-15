@@ -19,7 +19,7 @@
  * isObject(null)
  * // => false
  */
-function isObject(value) {
+function isObject(value?: any): boolean {
     const type = typeof value;
     return value != null && (type === 'object' || type === 'function');
 }

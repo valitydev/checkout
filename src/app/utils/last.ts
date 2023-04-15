@@ -8,7 +8,7 @@
  * last([1, 2, 3])
  * // => 3
  */
-function last<T>(array: Array<T> | null | undefined): T | undefined {
+function last<T>(array: T[] | null | undefined): T | undefined {
     const length = array == null ? 0 : array.length;
     return length ? array[length - 1] : undefined;
 }
