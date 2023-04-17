@@ -3,28 +3,39 @@ import { getMessageInvalidValue } from 'checkout/log-messages';
 
 jest.mock('../../log-messages');
 const getMessageInvalidValueMock = getMessageInvalidValue as any;
-const spy = jest.spyOn(global.console, 'warn');
 
 it('wrong param value should return null', () => {
-    spy.mockReset();
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
     const actual = resolveString(null, 'someField');
     expect(actual).toEqual(null);
+    expect(warnSpy).not.toHaveBeenCalled();
+
+    warnSpy.mockRestore();
 });
 
 it('wrong param value should log warn message', () => {
-    spy.mockReset();
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
     const logMock = 'some log';
     getMessageInvalidValueMock.mockReturnValueOnce(logMock);
     resolveString(999, 'someField');
-    expect(spy.mock.calls[0][0]).toEqual(logMock);
+
+    expect(warnSpy.mock.calls[0][0]).toEqual(logMock);
+
+    warnSpy.mockReset();
 });
 
 it('empty string should log warn message', () => {
-    spy.mockReset();
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
     const logMock = 'some log';
     getMessageInvalidValueMock.mockReturnValueOnce(logMock);
     resolveString(' ', 'someField');
-    expect(spy.mock.calls[0][0]).toEqual(logMock);
+
+    expect(warnSpy.mock.calls[0][0]).toEqual(logMock);
+
+    warnSpy.mockReset();
 });
 
 it('string param should return trimmed string', () => {

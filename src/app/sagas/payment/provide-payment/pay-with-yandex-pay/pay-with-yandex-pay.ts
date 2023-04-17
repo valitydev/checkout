@@ -2,7 +2,7 @@ import { call, CallEffect, SelectEffect } from 'redux-saga/effects';
 
 import { AmountInfoState, ModelState, TokenProviderFormValues } from 'checkout/state';
 import { Config } from 'checkout/config';
-import { getYaPayPaymentData } from 'checkout/utils';
+import { getYaPayPaymentData } from 'checkout/utils/get-ya-pay-payment-data';
 
 import { createYandexPay } from '../../../create-payment-resource';
 import { makePayment } from '../make-payment';

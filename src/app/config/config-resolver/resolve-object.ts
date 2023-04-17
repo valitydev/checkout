@@ -1,4 +1,4 @@
-import isString from 'lodash-es/isString';
+import isString from 'checkout/utils/is-string';
 import { getMessageInvalidValue } from '../../log-messages';
 
 const getObject = (inputObject: object | string): object => {

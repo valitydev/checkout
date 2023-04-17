@@ -1,5 +1,5 @@
-import isBoolean from 'lodash-es/isBoolean';
-import isString from 'lodash-es/isString';
+import isBoolean from 'checkout/utils/is-boolean';
+import isString from 'checkout/utils/is-string';
 import { getMessageInvalidValue } from '../../log-messages';
 
 const toBoolean = (str: string): boolean => {

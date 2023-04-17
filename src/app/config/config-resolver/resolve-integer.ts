@@ -1,10 +1,9 @@
-import isInteger from 'lodash-es/isInteger';
-import toNumber from 'lodash-es/toNumber';
-import isNumber from 'lodash-es/isNumber';
-import isString from 'lodash-es/isString';
+import toNumber from 'checkout/utils/to-number';
+import isNumber from 'checkout/utils/is-number';
+import isString from 'checkout/utils/is-string';
 import { getMessageInvalidValue } from '../../log-messages';
 
-const getFromNumber = (userInteger: number): number | null => (isInteger(userInteger) ? userInteger : undefined);
+const getFromNumber = (userInteger: number): number | null => (Number.isInteger(userInteger) ? userInteger : undefined);
 
 const getFromString = (userInteger: string): number | null => getFromNumber(toNumber(userInteger));
 

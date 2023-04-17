@@ -1,4 +1,4 @@
-import isString from 'lodash-es/isString';
+import isString from 'checkout/utils/is-string';
 import { TemplateExpression, parse } from 'uri-template';
 
 const hasTerminationUriParam = (expression: TemplateExpression): boolean =>

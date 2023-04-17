@@ -33,6 +33,8 @@ jobs:
                   cache: 'npm'
             - name: Check
               run: npm run check
+            - name: Run tests
+              run: npm run test
     build:
         name: Build
         runs-on: ubuntu-latest

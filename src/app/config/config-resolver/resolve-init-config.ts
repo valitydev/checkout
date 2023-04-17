@@ -4,7 +4,7 @@ import { InitConfig } from '../init-config';
 import { resolveIntegrationType } from './resolve-integration-type';
 import { UserConfig } from './user-config';
 import { resolveString } from './resolve-string';
-import { HoldExpirationType } from 'checkout/backend';
+import { HoldExpirationType } from 'checkout/backend/model';
 import { PaymentMethodName } from 'checkout/config/payment-method-name';
 import { DEFAULT_THEME } from 'checkout/themes';
 import { resolveObject } from './resolve-object';

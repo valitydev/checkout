@@ -1,4 +1,4 @@
-import { isContainCardNumber } from 'checkout/utils';
+import { isContainCardNumber } from 'checkout/utils/is-contain-card-number';
 
 /**
  * 2 to 63 because domain name can be from 2 characters to 63 characters only by RFC 1035

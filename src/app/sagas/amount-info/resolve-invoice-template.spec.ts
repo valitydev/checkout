@@ -17,7 +17,7 @@ it('InvoiceTemplateSingleLine should call getAmountFromSingleLine', () => {
     } as any;
     getAmountFromSingleLineMocked.mockReturnValueOnce(singleLine.details);
     resolveInvoiceTemplate(singleLine, 111, 'ru');
-    expect(getAmountFromSingleLineMocked).toBeCalledWith(singleLine.details, 111);
+    expect(getAmountFromSingleLineMocked).toBeCalledWith(singleLine.details, 111, 'ru');
 });
 
 it('InvoiceTemplateMultiLine should call getAmountFromMultiLine', () => {
@@ -28,5 +28,5 @@ it('InvoiceTemplateMultiLine should call getAmountFromMultiLine', () => {
     } as any;
     getAmountFromMultiLineMocked.mockReturnValueOnce(multiLine.details);
     resolveInvoiceTemplate(multiLine, 111, 'ru');
-    expect(getAmountFromMultiLineMocked).toBeCalledWith(multiLine.details);
+    expect(getAmountFromMultiLineMocked).toBeCalledWith(multiLine.details, 'ru');
 });

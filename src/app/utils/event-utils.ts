@@ -1,5 +1,4 @@
-import last from 'lodash-es/last';
-import clone from 'lodash-es/clone';
+import last from 'checkout/utils/last';
 
 interface ChangeLike {
     changeType: any;
@@ -30,7 +29,8 @@ export const findChange = <T>(e: EventLike[], foundType: string): T => {
         return null;
     }
     let result = null;
-    const found = clone(e)
+    const found = e
+        .slice()
         .reverse()
         .find((event) => {
             const changes = event.changes.reverse();

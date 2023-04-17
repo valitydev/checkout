@@ -1,4 +1,4 @@
-import last from 'lodash-es/last';
+import last from 'checkout/utils/last';
 import {
     InvoiceEvent,
     InvoiceChangeType,

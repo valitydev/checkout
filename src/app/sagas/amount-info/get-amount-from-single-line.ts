@@ -1,10 +1,10 @@
-import isNumber from 'lodash-es/isNumber';
+import isNumber from 'checkout/utils/is-number';
 import {
     CostType,
     InvoiceTemplateLineCostFixed,
     InvoiceTemplateLineCostRange,
     InvoiceTemplateSingleLine
-} from 'checkout/backend';
+} from 'checkout/backend/model';
 import { AmountInfoState, AmountInfoStatus } from 'checkout/state';
 
 const getStatus = (configAmount: number) =>

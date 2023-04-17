@@ -1,4 +1,4 @@
-import intersection from 'lodash-es/intersection';
+import intersection from 'checkout/utils/intersection';
 import { IntegrationType } from '../integration-type';
 import { UserConfig } from './user-config';
 

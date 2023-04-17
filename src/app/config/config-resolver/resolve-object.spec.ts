@@ -3,39 +3,54 @@ import { getMessageInvalidValue } from 'checkout/log-messages';
 
 jest.mock('../../log-messages');
 const getMessageInvalidValueMock = getMessageInvalidValue as any;
-const spy = jest.spyOn(global.console, 'warn');
 
 it('wrong param value should return null', () => {
-    spy.mockReset();
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
     const actual = resolveObject(null, 'someField');
+
+    expect(warnSpy).not.toHaveBeenCalled();
     expect(actual).toEqual(null);
+
+    warnSpy.mockRestore();
 });
 
 it('wrong param value should log warn message', () => {
-    spy.mockReset();
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
     const logMock = 'some log';
     getMessageInvalidValueMock.mockReturnValueOnce(logMock);
     const actual = resolveObject([], 'someField');
-    expect(spy.mock.calls[0][0]).toEqual(logMock);
+    expect(warnSpy.mock.calls[0][0]).toEqual(logMock);
     expect(actual).toEqual(null);
+
+    warnSpy.mockRestore();
 });
 
 it('string should log warn message', () => {
-    spy.mockReset();
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
     const logMock = 'some log';
     getMessageInvalidValueMock.mockReturnValueOnce(logMock);
     const actual = resolveObject(' string ', 'someField');
-    expect(spy.mock.calls[0][0]).toEqual(logMock);
+
+    expect(warnSpy.mock.calls[0][0]).toEqual(logMock);
     expect(actual).toEqual(null);
+
+    warnSpy.mockRestore();
 });
 
 it('stringify array should log warn message', () => {
-    spy.mockReset();
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
     const logMock = 'some log';
     getMessageInvalidValueMock.mockReturnValueOnce(logMock);
     const actual = resolveObject('[]', 'someField');
-    expect(spy.mock.calls[0][0]).toEqual(logMock);
+
+    expect(warnSpy.mock.calls[0][0]).toEqual(logMock);
     expect(actual).toEqual(null);
+
+    warnSpy.mockRestore();
 });
 
 it('object param should return object', () => {
