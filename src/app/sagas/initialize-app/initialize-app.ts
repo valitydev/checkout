@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/react';
-import { Integrations } from '@sentry/tracing';
 import { put, call, CallEffect, ForkEffect, PutEffect, takeLatest } from 'redux-saga/effects';
 
 import { TypeKeys, InitializeAppFailed, InitializeAppRequested, InitializeAppCompleted } from 'checkout/actions';
@@ -22,7 +21,7 @@ export function* initialize(userInitConfig: InitConfig) {
         Sentry.init({
             environment: 'production',
             dsn: configChunk.appConfig.sentryDsn,
-            integrations: [new Integrations.BrowserTracing()],
+            integrations: [new Sentry.BrowserTracing()],
             tracesSampleRate: 0.1,
             release: configChunk.env.version
         });

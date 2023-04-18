@@ -22,7 +22,7 @@ import { pay, setViewInfoError } from 'checkout/actions';
 import { PayButton } from '../pay-button';
 import { Header } from '../header/header';
 import { toFieldsConfig } from '../fields-config';
-import { Amount, Email } from '../common-fields';
+import { Amount } from '../common-fields';
 
 const toCardFormInfo = (modals: ModalState[]) => {
     const info = (findNamed(modals, ModalName.modalForms) as ModalForms).formsInfo;
@@ -75,7 +75,7 @@ class CardFormDef extends React.Component<Props> {
     render() {
         const {
             handleSubmit,
-            fieldsConfig: { email, amount, cardHolder }
+            fieldsConfig: { amount, cardHolder }
         } = this.props;
         return (
             <form onSubmit={handleSubmit(this.submit)} id="card-form">
@@ -91,11 +91,6 @@ class CardFormDef extends React.Component<Props> {
                     {cardHolder.visible && (
                         <FormGroup>
                             <CardHolder />
-                        </FormGroup>
-                    )}
-                    {email.visible && (
-                        <FormGroup>
-                            <Email />
                         </FormGroup>
                     )}
                     {amount.visible && (

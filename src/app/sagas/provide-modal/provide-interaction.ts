@@ -45,7 +45,9 @@ const providePaymentTerminalPaymentTool = (userInteraction: Redirect, servicePro
 
 const provideRedirect = (userInteraction: Redirect, activeServiceProvider: ServiceProvider | null): ModalState => {
     if (isNil(activeServiceProvider)) {
-        return toModalInteraction(userInteraction);
+        // Temporary disable modal interaction
+        // return toModalInteraction(userInteraction);
+        return new ModalForms([new RedirectFormInfo(userInteraction.request)], true, true);
     }
     return providePaymentTerminalPaymentTool(userInteraction, activeServiceProvider);
 };
