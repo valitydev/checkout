@@ -4,19 +4,9 @@ import { AmountInfoState, ModelState, PaymentTerminalFormValues } from 'checkout
 import { Config } from 'checkout/config';
 import { makePayment } from './make-payment';
 import { createPaymentTerminal } from '../../create-payment-resource';
-import { PaymentSessionInfoMetadata, ShortenedUrlParams, shortenUrl } from 'checkout/backend';
-import { serializeUrlParams } from '../../../../serialize-url-params';
-
-const createPaymentResource = (endpoint: string, provider: string, metadata: any) =>
-    createPaymentTerminal.bind(null, endpoint, provider, metadata);
-
-const prepareSelfRedirectUrl = (origin: string, invoiceID: string, invoiceAccessToken: string, redirectUrl: string) =>
-    `${origin}/v1/checkout.html?${serializeUrlParams({
-        invoiceID,
-        invoiceAccessToken,
-        redirectUrl,
-        skipUserInteraction: true
-    })}`;
+import { PaymentSessionInfoMetadata } from 'checkout/backend';
+import { prepareSelfRedirectUrl } from './prepare-self-redirect-url';
+import { shorten } from './shorten';
 
 const prepareRedirectUrl = (
     paymentSessionInfo: PaymentSessionInfoMetadata,
@@ -27,7 +17,7 @@ const prepareRedirectUrl = (
 ): { url: string; needShort: boolean } => {
     const selfRedirect = {
         needShort: true,
-        url: prepareSelfRedirectUrl(origin, invoiceID, invoiceAccessToken, initConfigRedirectUrl)
+        url: prepareSelfRedirectUrl(origin, invoiceID, invoiceAccessToken, initConfigRedirectUrl, true)
     };
     if (!paymentSessionInfo || !paymentSessionInfo?.redirectUrlInfo) {
         return selfRedirect;
@@ -39,13 +29,6 @@ const prepareRedirectUrl = (
             return selfRedirect;
     }
 };
-
-const shorten = (
-    urlShortenerEndpoint: string,
-    invoiceAccessToken: string,
-    params: ShortenedUrlParams
-): Promise<string> =>
-    shortenUrl(urlShortenerEndpoint, invoiceAccessToken, params).then(({ shortenedUrl }) => shortenedUrl);
 
 const createRedirectUrl = (
     { initConfig, origin, appConfig }: Config,
@@ -65,6 +48,9 @@ const createRedirectUrl = (
           })
         : Promise.resolve(url);
 };
+
+const createPaymentResource = (endpoint: string, provider: string, metadata: any) =>
+    createPaymentTerminal.bind(null, endpoint, provider, metadata);
 
 export function* payWithPaymentTerminal(
     c: Config,
