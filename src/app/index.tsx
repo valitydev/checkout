@@ -24,7 +24,7 @@ initialize().then((res) => {
     });
     ReactDOM.render(
         <Provider store={store}>
-            <App />
+            <App config={config} />
         </Provider>,
         app
     );

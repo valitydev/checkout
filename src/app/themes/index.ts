@@ -11,7 +11,7 @@ export interface WithThemeProps {
     theme: Theme;
 }
 
-export function getTheme(themeName: ThemeName): Theme {
+export function getTheme(themeName: string): Theme {
     return themes.find(({ name }) => name === themeName) || DEFAULT_THEME;
 }
 
