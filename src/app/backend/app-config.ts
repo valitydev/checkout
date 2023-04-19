@@ -22,4 +22,5 @@ export class AppConfig {
     fixedTheme: ThemeName;
     brandName: string;
     urlShortenerEndpoint: string;
+    sentryDsn: string;
 }

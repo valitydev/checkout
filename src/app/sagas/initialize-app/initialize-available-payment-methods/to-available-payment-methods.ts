@@ -1,17 +1,23 @@
-import { call, CallEffect } from 'redux-saga/effects';
 import { PaymentMethod as PaymentMethodState, PaymentMethodName as PaymentMethodNameState } from 'checkout/state';
-import { DigitalWallet, PaymentMethod, PaymentMethodName, PaymentTerminal, ServiceProvider } from 'checkout/backend';
-import { Config } from 'checkout/config';
+import {
+    BankCard,
+    DigitalWallet,
+    PaymentMethod,
+    PaymentMethodName,
+    PaymentTerminal,
+    ServiceProvider
+} from 'checkout/backend';
+import { InitConfig } from 'checkout/config';
 import { bankCardToMethods } from './bank-card-to-methods';
 import { getDigitalWalletPaymentMethods, getTerminalsPaymentMethods } from './get-payment-methods';
 import { assertUnreachable } from 'checkout/utils';
 import { terminalDigitalWalletReducer } from './terminal-digital-wallet-reducer';
 
-export function* toAvailablePaymentMethods(
+export function toAvailablePaymentMethods(
     paymentMethods: PaymentMethod[],
-    config: Config,
+    initConfig: InitConfig,
     serviceProviders: ServiceProvider[]
-): Iterator<CallEffect | PaymentMethodState[]> {
+): PaymentMethodState[] {
     let result: PaymentMethodState[] = [];
     const {
         wallets,
@@ -23,11 +29,11 @@ export function* toAvailablePaymentMethods(
         paymentFlowHold,
         recurring,
         pix
-    } = config.initConfig;
+    } = initConfig;
     for (const method of paymentMethods) {
         switch (method.method) {
             case PaymentMethodName.BankCard:
-                const bankCardMethods = yield call(bankCardToMethods, method as any, config);
+                const bankCardMethods = bankCardToMethods(method as BankCard, initConfig);
                 result = result.concat(bankCardMethods);
                 break;
             case PaymentMethodName.DigitalWallet:
@@ -56,7 +62,7 @@ export function* toAvailablePaymentMethods(
                 );
                 break;
             case PaymentMethodName.MobileCommerce:
-                if (config.initConfig.mobileCommerce) {
+                if (initConfig.mobileCommerce) {
                     result = result.concat([{ name: PaymentMethodNameState.MobileCommerce }]);
                 }
                 break;

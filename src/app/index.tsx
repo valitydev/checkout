@@ -11,8 +11,9 @@ import { finalize } from './finalize';
 import { initialize } from './initialize';
 
 import './styles/font-face.css';
+import { getAppConfig } from './backend';
 
-initialize().then((res) => {
+Promise.all([initialize(), getAppConfig()]).then(([res, appConfig]) => {
     const [transport, config] = res;
     const app = document.getElementById('app');
     const store = configureStore({ config });
@@ -24,7 +25,7 @@ initialize().then((res) => {
     });
     ReactDOM.render(
         <Provider store={store}>
-            <App config={config} />
+            <App initConfig={config.initConfig} appConfig={appConfig} />
         </Provider>,
         app
     );

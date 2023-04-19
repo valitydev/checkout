@@ -1,87 +1,112 @@
-import { AppConfig, Env, getAppConfig, getEnv, getLocale } from 'checkout/backend';
-import { Config, InitConfig } from 'checkout/config';
-import { Locale } from 'checkout/locale';
 import { useEffect, useReducer } from 'react';
+import * as Sentry from '@sentry/react';
 
-export type InitialState = {
+import { AppConfig, getEnv, getLocale } from 'checkout/backend';
+import { InitConfig } from 'checkout/config';
+import { Locale } from 'checkout/locale';
+import isNil from 'checkout/utils/is-nil';
+
+export type InitialData = {
     initConfig: InitConfig;
     appConfig: AppConfig;
     locale: Locale;
-    env: Env;
+    isSentryInit: boolean;
 };
 
 type State =
-    | { status: 'INIT' }
-    | { status: 'LOADING'; data: Partial<InitialState> }
-    | { status: 'SUCCESS'; data: InitialState }
-    | { status: 'FAILURE'; error: unknown };
+    | { status: 'LOADING'; data: Partial<InitialData> }
+    | { status: 'SUCCESS'; data: InitialData }
+    | { status: 'FAILURE'; data: null; error: unknown };
 
 type Action =
-    | { type: 'SET_INIT_CONFIG'; payload: InitConfig }
-    | { type: 'FETCH_REMOTE_CONFIGS_SUCCESS'; payload: { appConfig: AppConfig; locale: Locale; env: Env } }
-    | { type: 'INITIALIZE_SUCCESS' }
-    | { type: 'INITIALIZE_FAILURE'; error: unknown };
+    | { type: 'FETCH_LOCALE_SUCCESS'; payload: Locale }
+    | { type: 'SENTRY_INIT_SUCCESS' }
+    | { type: 'APP_INIT_SUCCESS' }
+    | { type: 'APP_INIT_FAILURE'; error: unknown };
+
+const isInitialData = (data: Partial<InitialData>): data is InitialData =>
+    !isNil(data.appConfig) && !isNil(data.initConfig) && !isNil(data.locale);
+
+const ERROR_MSG = 'Invalid state';
 
 const dataFetchReducer = (state: State, action: Action): State => {
     switch (action.type) {
-        case 'SET_INIT_CONFIG':
-            return {
-                ...state,
-                data: {
-                    initConfig: action.payload
-                },
-                status: 'LOADING'
-            };
-        case 'FETCH_REMOTE_CONFIGS_SUCCESS':
+        case 'FETCH_LOCALE_SUCCESS':
             return {
                 ...state,
                 data: {
                     ...state.data,
-                    appConfig: action.payload.appConfig,
-                    env: action.payload.env,
-                    locale: action.payload.locale
+                    locale: action.payload
                 },
                 status: 'LOADING'
             };
-        case 'INITIALIZE_SUCCESS':
+        case 'SENTRY_INIT_SUCCESS':
             return {
                 ...state,
-                status: 'SUCCESS'
+                data: {
+                    ...state.data,
+                    isSentryInit: true
+                },
+                status: 'LOADING'
             };
-        case 'INITIALIZE_FAILURE':
+        case 'APP_INIT_SUCCESS':
+            if (!isInitialData(state.data)) throw new Error(ERROR_MSG);
             return {
                 ...state,
+                status: 'SUCCESS',
+                data: state.data
+            };
+        case 'APP_INIT_FAILURE':
+            return {
+                ...state,
+                status: 'FAILURE',
                 error: action.error,
-                status: 'FAILURE'
+                data: null
             };
     }
 };
 
-const fetchConfigs = async (localeName: string) => {
-    const appConfig = await getAppConfig();
+const initSentry = async (dsn: string) => {
     const env = await getEnv();
-    const locale = await getLocale(localeName);
-    return { appConfig, env, locale };
+    Sentry.init({
+        environment: 'production',
+        dsn,
+        integrations: [new Sentry.BrowserTracing()],
+        tracesSampleRate: 0.1,
+        release: env.version
+    });
 };
 
-export const useInitializeApp = ({ initConfig }: Config) => {
+type InitAppProps = {
+    initConfig: InitConfig;
+    appConfig: AppConfig;
+};
+
+export const useInitializeApp = ({ initConfig, appConfig }: InitAppProps) => {
     const [state, dispatch] = useReducer(dataFetchReducer, {
-        status: 'INIT'
+        status: 'LOADING',
+        data: {
+            initConfig,
+            appConfig,
+            isSentryInit: false
+        }
     });
 
     useEffect(() => {
-        dispatch({ payload: initConfig, type: 'SET_INIT_CONFIG' });
-        const fetchData = async () => {
+        const init = async () => {
             try {
-                const configs = await fetchConfigs(initConfig.locale);
-                dispatch({ payload: configs, type: 'FETCH_REMOTE_CONFIGS_SUCCESS' });
-
-                dispatch({ type: 'INITIALIZE_SUCCESS' });
+                const locale = await getLocale(initConfig.locale);
+                dispatch({ type: 'FETCH_LOCALE_SUCCESS', payload: locale });
+                if (appConfig.sentryDsn) {
+                    await initSentry(appConfig.sentryDsn);
+                    dispatch({ type: 'SENTRY_INIT_SUCCESS' });
+                }
+                dispatch({ type: 'APP_INIT_SUCCESS' });
             } catch (error) {
-                dispatch({ error, type: 'INITIALIZE_FAILURE' });
+                dispatch({ type: 'APP_INIT_FAILURE', error });
             }
         };
-        fetchData();
+        init();
     }, []);
 
     return state;

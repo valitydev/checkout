@@ -17,7 +17,7 @@ export function* initializeAvailablePaymentMethods(
     paymentMethods: PaymentMethod[],
     serviceProviders: ServiceProvider[]
 ): Iterator<InitializeEffect> {
-    const methods = yield call(toAvailablePaymentMethods, paymentMethods, config, serviceProviders);
+    const methods = yield call(toAvailablePaymentMethods, paymentMethods, config.initConfig, serviceProviders);
     const prioritizedMethods = yield call(setPriority, methods);
     yield put({
         type: TypeKeys.INITIALIZE_AVAILABLE_PAYMENT_METHODS_COMPLETED,
