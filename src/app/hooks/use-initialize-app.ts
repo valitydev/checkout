@@ -23,7 +23,7 @@ export type InitialData = {
 
 type State =
     | { status: 'LOADING'; data: Partial<InitialData> }
-    | { status: 'SUCCESS' | 'LOADING'; data: InitialData }
+    | { status: 'SUCCESS'; data: InitialData }
     | { status: 'FAILURE'; data: null; error: unknown };
 
 type Action =

@@ -16,13 +16,7 @@ import {
 import { Header } from '../header';
 import { PayButton } from '../pay-button';
 import { FormGroup } from '../form-group';
-import {
-    getActiveModalFormSelector,
-    getInitConfigSelector,
-    getLocaleSelector,
-    getModelSelector,
-    getServiceProviderSelector
-} from 'checkout/selectors';
+import { getActiveModalFormSelector } from 'checkout/selectors';
 import { getMetadata, MetadataField, MetadataLogo } from 'checkout/components/ui';
 import { toAmountConfig, toEmailConfig, toPhoneNumberConfig } from '../fields-config';
 import { Amount, Email, Phone } from '../common-fields';
@@ -48,15 +42,13 @@ const Container = styled.div`
 `;
 
 const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
-    const config = useContext(InitialContext);
-    console.log('PaymentTerminalFormRef read context', config);
-
-    const locale = useAppSelector(getLocaleSelector);
+    const initContext = useContext(InitialContext);
+    const locale = initContext.locale;
+    const initConfig = initContext.initConfig;
+    const model = initContext.model;
     const { providerID, paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
-    const serviceProvider = useAppSelector(getServiceProviderSelector(providerID));
+    const serviceProvider = initContext.model.serviceProviders.find((value) => value.id === providerID);
     const { form, contactInfo, logo, paymentSessionInfo, prefilledMetadataValues } = getMetadata(serviceProvider);
-    const initConfig = useAppSelector(getInitConfigSelector);
-    const model = useAppSelector(getModelSelector);
     const amount = toAmountConfig(initConfig, model.invoiceTemplate);
     const email = toEmailConfig(initConfig.email);
     const terminalFormValues = initConfig?.terminalFormValues;
