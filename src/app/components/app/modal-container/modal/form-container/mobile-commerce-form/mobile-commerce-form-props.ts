@@ -8,6 +8,7 @@ export interface MobileCommerceFormProps {
     locale: Locale;
     fieldsConfig: FieldsConfig;
     formValues: MobileCommerceFormValues;
+    localeCode: string;
     setViewInfoError: (hasError: boolean) => any;
     pay: (payload: PaymentRequestedPayload) => any;
 }

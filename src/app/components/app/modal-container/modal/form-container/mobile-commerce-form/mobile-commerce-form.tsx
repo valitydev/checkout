@@ -34,7 +34,8 @@ const mapStateToProps = (state: State) => ({
     formValues: get(state.form, 'mobileCommerceForm.values'),
     locale: state.config.locale,
     fieldsConfig: toFieldsConfig(state.config.initConfig, state.model.invoiceTemplate),
-    mobileCommerceFormInfo: toMobileCommerceFormInfo(state.modals)
+    mobileCommerceFormInfo: toMobileCommerceFormInfo(state.modals),
+    localeCode: state.config.initConfig.locale
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -94,16 +95,16 @@ class MobileCommerceFormDef extends React.Component<Props> {
                 <div>
                     <Header title={this.props.locale['form.header.pay.mobile.commerce.label']} />
                     <FormGroup>
-                        <Phone />
+                        <Phone locale={this.props.locale} />
                     </FormGroup>
                     {email.visible && (
                         <FormGroup>
-                            <Email />
+                            <Email locale={this.props.locale} />
                         </FormGroup>
                     )}
                     {amount.visible && (
                         <FormGroup>
-                            <Amount cost={amount.cost} />
+                            <Amount cost={amount.cost} locale={this.props.locale} localeCode={this.props.localeCode} />
                         </FormGroup>
                     )}
                 </div>

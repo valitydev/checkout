@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 
 import { FormName, KnownProviderCategories, PaymentTerminalFormValues } from 'checkout/state';
 import { Header } from '../header';
-import { getAvailableTerminalPaymentMethodSelector, getInitConfigSelector } from 'checkout/selectors';
+import { getAvailableTerminalPaymentMethodSelector } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { ProviderSelectorField } from './provider-selector';
 import { pay, setViewInfoError } from 'checkout/actions';
@@ -16,6 +16,8 @@ import { FormGroup } from '../form-group';
 import { Email, Phone } from '../common-fields';
 import { getMetadata } from 'checkout/components';
 
+import { InitialContext } from '../../../../initial-context';
+
 const ProviderSelectorDescription = styled.p`
     font-size: 16px;
     font-weight: 500;
@@ -24,8 +26,9 @@ const ProviderSelectorDescription = styled.p`
 `;
 
 export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ submitFailed, handleSubmit }) => {
-    const initConfig = useAppSelector(getInitConfigSelector);
-    const locale = useAppSelector((s) => s.config.locale);
+    const initContext = useContext(InitialContext);
+    const locale = initContext.locale;
+    const initConfig = initContext.initConfig;
     const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(KnownProviderCategories.BankCard));
     const serviceProviders = paymentMethod?.serviceProviders;
     const email = toEmailConfig(initConfig.email);
@@ -60,12 +63,12 @@ export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ su
             <Header title={locale['form.header.pay.card.label']} />
             {email.visible && contactInfo?.email && (
                 <FormGroup>
-                    <Email />
+                    <Email locale={locale} />
                 </FormGroup>
             )}
             {phoneNumber.visible && contactInfo?.phoneNumber && (
                 <FormGroup>
-                    <Phone />
+                    <Phone locale={locale} />
                 </FormGroup>
             )}
             <ProviderSelectorDescription>

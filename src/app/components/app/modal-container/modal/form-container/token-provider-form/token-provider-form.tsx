@@ -32,7 +32,8 @@ const mapStateToProps = (state: State) => ({
     tokenProviderFormInfo: toFormInfo(state.modals),
     locale: state.config.locale,
     fieldsConfig: toFieldsConfig(state.config.initConfig, state.model.invoiceTemplate),
-    formValues: get(state.form, 'tokenProviderForm.values')
+    formValues: get(state.form, 'tokenProviderForm.values'),
+    localeCode: state.config.initConfig.locale
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -89,12 +90,12 @@ export class TokenProviderFormDef extends React.Component<Props> {
                     <Header title={getTitle(provider)} />
                     {email.visible && (
                         <FormGroup>
-                            <Email />
+                            <Email locale={this.props.locale} />
                         </FormGroup>
                     )}
                     {amount.visible && (
                         <FormGroup>
-                            <Amount cost={amount.cost} />
+                            <Amount cost={amount.cost} locale={this.props.locale} localeCode={this.props.localeCode} />
                         </FormGroup>
                     )}
                 </div>

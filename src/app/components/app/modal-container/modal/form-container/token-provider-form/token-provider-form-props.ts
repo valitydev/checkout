@@ -10,4 +10,5 @@ export interface TokenProviderFormProps {
     formValues: TokenProviderFormValues;
     setViewInfoError: (hasError: boolean) => any;
     pay: (payload: PaymentRequestedPayload) => any;
+    localeCode: string;
 }

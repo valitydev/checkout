@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 import get from 'lodash-es/get';
 
@@ -11,19 +11,17 @@ import { Amount } from '../common-fields';
 import { toFieldsConfig } from '../fields-config';
 import { pay, setViewInfoError } from 'checkout/actions';
 import { SignUp } from './sign-up';
-import {
-    getActiveModalFormSelector,
-    getInitConfigSelector,
-    getLocaleSelector,
-    getModelSelector
-} from 'checkout/selectors';
+import { getActiveModalFormSelector, getModelSelector } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getMetadata, MetadataField, MetadataLogo, obscurePassword, sortByIndex } from 'checkout/components/ui';
 import { LogoContainer } from './logo-container';
 
+import { InitialContext } from '../../../../initial-context';
+
 const WalletFormDef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
-    const locale = useAppSelector(getLocaleSelector);
-    const initConfig = useAppSelector(getInitConfigSelector);
+    const initContext = useContext(InitialContext);
+    const locale = initContext.locale;
+    const initConfig = initContext.initConfig;
     const model = useAppSelector(getModelSelector);
     const { activeProvider, paymentStatus } = useAppSelector<WalletFormInfo>(getActiveModalFormSelector);
     const dispatch = useAppDispatch();
@@ -78,7 +76,7 @@ const WalletFormDef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, 
                     ))}
                     {amount.visible && (
                         <FormGroup>
-                            <Amount cost={amount.cost} />
+                            <Amount cost={amount.cost} locale={locale} localeCode={initConfig.locale} />
                         </FormGroup>
                     )}
                     <PayButton />

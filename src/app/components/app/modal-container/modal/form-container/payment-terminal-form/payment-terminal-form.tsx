@@ -137,17 +137,17 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                         ))}
                     {amount.visible && (
                         <FormGroup>
-                            <Amount cost={amount.cost} />
+                            <Amount cost={amount.cost} locale={locale} localeCode={initConfig.locale} />
                         </FormGroup>
                     )}
                     {email.visible && contactInfo?.email && (
                         <FormGroup>
-                            <Email />
+                            <Email locale={locale} />
                         </FormGroup>
                     )}
                     {phoneNumber.visible && contactInfo?.phoneNumber && (
                         <FormGroup>
-                            <Phone />
+                            <Phone locale={locale} />
                         </FormGroup>
                     )}
                 </div>

@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { Field, WrappedFieldProps } from 'redux-form';
 
-import { State } from 'checkout/state';
 import { validateExpireDate } from './validate-expire-date';
 import { Locale } from 'checkout/locale';
 import { formatExpiry } from './format-expiry';
@@ -13,13 +11,13 @@ export interface ExpireDateProps {
     locale: Locale;
 }
 
-const getCustomInput = (props: ExpireDateProps, fieldProps: WrappedFieldProps) => (
+const WrappedInput = ({ input, meta, locale }: WrappedFieldProps & ExpireDateProps) => (
     <Input
-        {...fieldProps.input}
-        {...fieldProps.meta}
-        error={isError(fieldProps.meta)}
+        {...input}
+        {...meta}
+        error={isError(meta)}
         icon={<Calendar />}
-        placeholder={props.locale['form.input.expiry.placeholder']}
+        placeholder={locale['form.input.expiry.placeholder']}
         mark={true}
         type="tel"
         id="expire-date-input"
@@ -28,12 +26,6 @@ const getCustomInput = (props: ExpireDateProps, fieldProps: WrappedFieldProps) =
     />
 );
 
-export const ExpireDateDef: React.FC<ExpireDateProps> = (props) => (
-    <Field name="expireDate" component={getCustomInput.bind(null, props)} validate={validateExpireDate} />
+export const ExpireDate = ({ locale }: ExpireDateProps) => (
+    <Field name="expireDate" component={WrappedInput} props={{ locale }} validate={validateExpireDate} />
 );
-
-const mapStateToProps = (state: State) => ({
-    locale: state.config.locale
-});
-
-export const ExpireDate = connect(mapStateToProps)(ExpireDateDef);

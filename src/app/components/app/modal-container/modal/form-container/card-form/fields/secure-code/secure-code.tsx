@@ -1,11 +1,8 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { Field, WrappedFieldProps, formValueSelector } from 'redux-form';
+import { Field, WrappedFieldProps } from 'redux-form';
 import { number } from 'card-validator';
-import { get } from 'lodash-es';
 
 import { validateSecureCode } from './validate-secure-code';
-import { State, FormName } from 'checkout/state';
 import { Locale } from 'checkout/locale';
 import { formatCVC } from './format-cvc';
 import { Lock, Input } from 'checkout/components';
@@ -17,35 +14,31 @@ export interface SecureCodeProps {
     cardNumber: string;
 }
 
-const getCustomInput = (props: SecureCodeProps, fieldProps: WrappedFieldProps) => (
+const getPlaceholder = (cardNumber: string | null, locale: Locale) => {
+    const name = number(cardNumber)?.card?.code.name;
+    return name || locale['form.input.secure.placeholder'];
+};
+
+const WrappedInput = ({ input, meta, locale, obscureCardCvv, cardNumber }: WrappedFieldProps & SecureCodeProps) => (
     <Input
-        {...fieldProps.input}
-        {...fieldProps.meta}
-        error={isError(fieldProps.meta)}
+        {...input}
+        {...meta}
+        error={isError(meta)}
         icon={<Lock />}
-        placeholder={get(number(props.cardNumber), 'card.code.name', props.locale['form.input.secure.placeholder'])}
+        placeholder={getPlaceholder(cardNumber, locale)}
         mark={true}
-        type={props.obscureCardCvv ? 'password' : 'tel'}
+        type={obscureCardCvv ? 'password' : 'tel'}
         id="secure-code-input"
         autocomplete="cc-csc"
     />
 );
 
-export const SecureCodeDef: React.FC<SecureCodeProps> = (props) => (
+export const SecureCode = ({ locale, obscureCardCvv, cardNumber }: SecureCodeProps) => (
     <Field
         name="secureCode"
-        component={getCustomInput.bind(null, props)}
+        component={WrappedInput}
+        props={{ locale, obscureCardCvv, cardNumber }}
         validate={validateSecureCode}
         normalize={(value, _p, { cardNumber }) => formatCVC(value, cardNumber)}
     />
 );
-
-const selector = formValueSelector(FormName.cardForm);
-
-const mapStateToProps = (state: State) => ({
-    locale: state.config.locale,
-    obscureCardCvv: state.config.initConfig.obscureCardCvv,
-    cardNumber: selector(state, 'cardNumber')
-});
-
-export const SecureCode = connect(mapStateToProps)(SecureCodeDef);
