@@ -5,6 +5,7 @@ import {
     PaymentMethodName,
     PaymentTerminalPaymentMethod
 } from 'checkout/state';
+import isNil from 'checkout/utils/is-nil';
 
 export const terminalDigitalWalletReducer = (
     acc: PaymentMethod[],
@@ -26,7 +27,7 @@ export const terminalDigitalWalletReducer = (
         const paymentTerminal = methods.find(
             (m) => m.name === PaymentMethodName.PaymentTerminal
         ) as PaymentTerminalPaymentMethod;
-        if (paymentTerminal.category === KnownProviderCategories.DigitalWallet) {
+        if (!isNil(paymentTerminal) && paymentTerminal.category === KnownProviderCategories.DigitalWallet) {
             digitalWallet.serviceProviders = digitalWallet.serviceProviders.concat(paymentTerminal.serviceProviders);
             return acc.concat(digitalWallet);
         }

@@ -2,12 +2,11 @@ import * as React from 'react';
 import styled from 'checkout/styled-components';
 import { ServiceProvider } from 'checkout/backend';
 import { ServiceProviderPane } from './service-provider-pane';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 import { PageNavigation } from './page-navigation';
 import { Input } from 'checkout/components';
 import { useGridPages } from './use-grid-pages';
-import { useAppSelector } from 'checkout/configure-store';
-import { getLocaleSelector } from 'checkout/selectors';
+import { InitialContext } from '../../../../initial-context';
 
 const GridContainer = styled.div`
     height: 312px;
@@ -36,7 +35,7 @@ export interface ServiceProvidersGridProps {
 }
 
 export const ServiceProvidersGrid: React.FC<ServiceProvidersGridProps> = ({ serviceProviders, onPaneClick }) => {
-    const locale = useAppSelector(getLocaleSelector);
+    const { locale } = useContext(InitialContext);
     const [{ totalPages, page, isNext, isPrevious, pageItems }, { next, previous, filter }] = useGridPages(
         serviceProviders,
         ITEMS_ON_PAGE

@@ -11,7 +11,7 @@ import { Amount } from '../common-fields';
 import { toFieldsConfig } from '../fields-config';
 import { pay, setViewInfoError } from 'checkout/actions';
 import { SignUp } from './sign-up';
-import { getActiveModalFormSelector, getModelSelector } from 'checkout/selectors';
+import { getActiveModalFormSelector } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getMetadata, MetadataField, MetadataLogo, obscurePassword, sortByIndex } from 'checkout/components/ui';
 import { LogoContainer } from './logo-container';
@@ -19,15 +19,16 @@ import { LogoContainer } from './logo-container';
 import { InitialContext } from '../../../../initial-context';
 
 const WalletFormDef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
-    const initContext = useContext(InitialContext);
-    const locale = initContext.locale;
-    const initConfig = initContext.initConfig;
-    const model = useAppSelector(getModelSelector);
+    const {
+        locale,
+        initConfig,
+        model: { invoiceTemplate }
+    } = useContext(InitialContext);
     const { activeProvider, paymentStatus } = useAppSelector<WalletFormInfo>(getActiveModalFormSelector);
     const dispatch = useAppDispatch();
     const formValues = useAppSelector((s) => get(s.form, 'walletForm.values'));
     const { form, logo, signUpLink } = getMetadata(activeProvider);
-    const amount = toFieldsConfig(initConfig, model.invoiceTemplate).amount;
+    const amount = toFieldsConfig(initConfig, invoiceTemplate).amount;
 
     const submit = (values: WalletFormValues) => {
         dispatch(

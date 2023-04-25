@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import styled from 'checkout/styled-components';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 
@@ -9,14 +10,12 @@ import {
     PaymentTerminalFormInfo,
     PaymentTerminalSelectorFormInfo
 } from 'checkout/state';
-import {
-    getActiveModalFormSelector,
-    getAvailableTerminalPaymentMethodSelector,
-    getLocaleSelector
-} from 'checkout/selectors';
+import { getActiveModalFormSelector, getAvailableTerminalPaymentMethodSelector } from 'checkout/selectors';
 import { goToFormInfo } from 'checkout/actions';
 import { Locale } from 'checkout/locale';
 import { ServiceProvidersGrid } from './service-providers-grid';
+
+import { InitialContext } from '../../../../initial-context';
 
 const Container = styled.div`
     min-height: 346px;
@@ -30,7 +29,7 @@ const navigate = (providerID: string) =>
 const toHeader = (locale: Locale, category: KnownProviderCategories) => locale[`form.header.${category}.label`];
 
 export const PaymentTerminalSelectorForm: React.FC = () => {
-    const locale = useAppSelector(getLocaleSelector);
+    const { locale } = useContext(InitialContext);
     const { category } = useAppSelector<PaymentTerminalSelectorFormInfo>(getActiveModalFormSelector);
     const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(category));
     const serviceProviders = paymentMethod?.serviceProviders;

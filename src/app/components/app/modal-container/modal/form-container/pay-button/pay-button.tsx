@@ -20,8 +20,8 @@ const toLabel = (locale: Locale, amountInfo: AmountInfoState): string => {
 };
 
 export const PayButton = () => {
-    const initContext = useContext(InitialContext);
-    const label = toLabel(initContext.locale, initContext.amountInfo);
+    const { locale, amountInfo } = useContext(InitialContext);
+    const label = toLabel(locale, amountInfo);
     return (
         <PayButtonWrapper type="submit" color="primary" id="pay-btn">
             {label}

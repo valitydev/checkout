@@ -26,9 +26,7 @@ const ProviderSelectorDescription = styled.p`
 `;
 
 export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ submitFailed, handleSubmit }) => {
-    const initContext = useContext(InitialContext);
-    const locale = initContext.locale;
-    const initConfig = initContext.initConfig;
+    const { locale, initConfig } = useContext(InitialContext);
     const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(KnownProviderCategories.BankCard));
     const serviceProviders = paymentMethod?.serviceProviders;
     const email = toEmailConfig(initConfig.email);

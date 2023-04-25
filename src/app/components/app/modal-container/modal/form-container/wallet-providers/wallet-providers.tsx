@@ -1,14 +1,16 @@
 import * as React from 'react';
+import { useContext } from 'react';
 
 import { FormName, PaymentMethodName, DigitalWalletPaymentMethod } from 'checkout/state';
 import { Header } from '../header';
 import { goToFormInfo, pay } from 'checkout/actions';
 import { WalletProviderPaymentMethodItem } from '../wallet-provider-payment-method-item';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { getAvailablePaymentMethodSelector, getLocaleSelector } from 'checkout/selectors';
+import { getAvailablePaymentMethodSelector } from 'checkout/selectors';
+import { InitialContext } from '../../../../initial-context';
 
 export const WalletProviders: React.FC = () => {
-    const locale = useAppSelector(getLocaleSelector);
+    const { locale } = useContext(InitialContext);
     const paymentMethod = useAppSelector(
         getAvailablePaymentMethodSelector<DigitalWalletPaymentMethod>(PaymentMethodName.DigitalWallet)
     );
