@@ -1,107 +1,48 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
+import { useContext, useMemo, useState } from 'react';
 
-import { FormInfo, PaymentMethod, State, FormName } from 'checkout/state';
-import { Locale } from 'checkout/locale';
-import { goToFormInfo, pay as payAction, PaymentRequestedPayload, setViewInfoHeight } from 'checkout/actions';
+import { AmountInfoStatus, FormName, PaymentMethod } from 'checkout/state';
+import { goToFormInfo, pay } from 'checkout/actions';
+import { useAppDispatch } from 'checkout/configure-store';
 import { MethodsList } from './methods';
 import { OtherPaymentMethodsLink } from './other-payment-methods-link';
-import { AmountInfoStatus } from 'checkout/state/amount-info/amount-info-type';
 import { Title } from '../title';
 import { HeaderWrapper } from '../header-wrapper';
 
-export interface PaymentMethodsProps {
-    locale: Locale;
-    methods: PaymentMethod[];
-    amountPrefilled: boolean;
-    emailPrefilled: boolean;
-    phoneNumberPrefilled: boolean;
-    setFormInfo: (formInfo: FormInfo) => any;
-    setViewInfoHeight: (height: number) => any;
-    pay: (payload: PaymentRequestedPayload) => any;
-    localeCode: string;
-}
+import { InitialContext } from '../../../../initial-context';
 
-export interface PaymentMethodsState {
-    isShowAllMethods: boolean;
-}
+const sortByPriority = (methods: PaymentMethod[]): PaymentMethod[] =>
+    methods.sort((m1, m2) => (m1.priority > m2.priority ? 1 : -1));
 
-const mapStateToProps = (s: State): Partial<PaymentMethodsProps> => ({
-    locale: s.config.locale,
-    methods: s.availablePaymentMethods.sort((m1, m2) => (m1.priority > m2.priority ? 1 : -1)),
-    amountPrefilled: s.amountInfo.status === AmountInfoStatus.final,
-    emailPrefilled: !!s.config.initConfig.email,
-    phoneNumberPrefilled: !!s.config.initConfig.phoneNumber,
-    localeCode: s.config.initConfig.locale
-});
+const sliceMethods = (methods: PaymentMethod[], showAll: boolean, limit = 3) =>
+    showAll ? methods : methods.slice(0, limit);
 
-const mapDispatchToProps = (dispatch: Dispatch): Partial<PaymentMethodsProps> => ({
-    setFormInfo: bindActionCreators(goToFormInfo, dispatch),
-    setViewInfoHeight: bindActionCreators(setViewInfoHeight, dispatch),
-    pay: bindActionCreators(payAction, dispatch)
-});
+export const PaymentMethods = () => {
+    const { locale, initConfig, availablePaymentMethods, amountInfo } = useContext(InitialContext);
+    const [isShowAll, setIsShowAll] = useState(false);
+    const allMethods = useMemo(() => sortByPriority(availablePaymentMethods), [availablePaymentMethods]);
+    const visibleMethods = useMemo(() => sliceMethods(allMethods, isShowAll), [allMethods, isShowAll]);
+    const dispatch = useAppDispatch();
 
-class PaymentMethodsDef extends React.Component<PaymentMethodsProps, PaymentMethodsState> {
-    static readonly visibilityThreshold = 3;
-
-    state = {
-        isShowAllMethods: false
-    };
-
-    private formRef = React.createRef<HTMLFormElement>();
-
-    componentDidUpdate(prevProps: PaymentMethodsProps, prevState: PaymentMethodsState) {
-        if (
-            prevState.isShowAllMethods !== this.state.isShowAllMethods ||
-            prevProps.methods.length !== this.props.methods.length
-        ) {
-            this.props.setViewInfoHeight(this.formRef.current.clientHeight);
-        }
-    }
-
-    showAllMethods = () => {
-        this.setState({ isShowAllMethods: true });
-    };
-
-    render() {
-        const {
-            locale,
-            setFormInfo,
-            methods,
-            pay,
-            amountPrefilled,
-            emailPrefilled,
-            phoneNumberPrefilled,
-            localeCode
-        } = this.props;
-        const visibleMethods = this.state.isShowAllMethods
-            ? methods
-            : methods.slice(0, PaymentMethodsDef.visibilityThreshold);
-        return (
-            <form ref={this.formRef}>
-                <div>
-                    <HeaderWrapper>
-                        <Title>{locale['form.header.payment.methods.label']}</Title>
-                    </HeaderWrapper>
-                    <MethodsList
-                        methods={visibleMethods}
-                        locale={locale}
-                        setFormInfo={setFormInfo}
-                        pay={pay}
-                        amountPrefilled={amountPrefilled}
-                        emailPrefilled={emailPrefilled}
-                        phoneNumberPrefilled={phoneNumberPrefilled}
-                        prevFormName={FormName.paymentMethods}
-                        localeCode={localeCode}
-                    />
-                    {visibleMethods.length < methods.length && (
-                        <OtherPaymentMethodsLink onClick={this.showAllMethods} locale={locale} />
-                    )}
-                </div>
-            </form>
-        );
-    }
-}
-
-export const PaymentMethods = connect(mapStateToProps, mapDispatchToProps)(PaymentMethodsDef);
+    return (
+        <form>
+            <HeaderWrapper>
+                <Title>{locale['form.header.payment.methods.label']}</Title>
+            </HeaderWrapper>
+            <MethodsList
+                methods={visibleMethods}
+                locale={locale}
+                setFormInfo={(formInfo) => dispatch(goToFormInfo(formInfo))}
+                pay={(payload) => dispatch(pay(payload))}
+                amountPrefilled={amountInfo.status === AmountInfoStatus.final}
+                emailPrefilled={!!initConfig.email}
+                phoneNumberPrefilled={!!initConfig.phoneNumber}
+                prevFormName={FormName.paymentMethods}
+                localeCode={initConfig.locale}
+            />
+            {visibleMethods.length < allMethods.length && (
+                <OtherPaymentMethodsLink onClick={() => setIsShowAll(true)} locale={locale} />
+            )}
+        </form>
+    );
+};
