@@ -9,7 +9,6 @@ import { FormContainerProps } from './form-container-props';
 import { FormLoader } from './form-loader';
 import { ResultForm } from './result-form';
 import { WalletForm } from './wallet-form';
-import { TokenProviderForm } from './token-provider-form';
 import { findNamed } from 'checkout/utils';
 import { setViewInfoHeight } from 'checkout/actions';
 import styled, { css } from 'checkout/styled-components';
@@ -197,8 +196,6 @@ class FormContainerDef extends React.Component<FormContainerProps, { height: num
                 return <WalletProviders key={name} />;
             case FormName.resultForm:
                 return <ResultForm key={name} />;
-            case FormName.tokenProviderForm:
-                return <TokenProviderForm key={name} />;
             case FormName.noAvailablePaymentMethodForm:
                 return <NoAvailablePaymentMethodForm key={name} />;
             case FormName.redirectForm:

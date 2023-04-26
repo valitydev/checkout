@@ -11,8 +11,7 @@ const Container = styled.div`
 `;
 
 export const NoAvailablePaymentMethodForm = () => {
-    const initContext = useContext(InitialContext);
-    const locale = initContext.locale;
+    const { locale } = useContext(InitialContext);
     return (
         <Container>
             <Text centered={true}>{locale['info.modal.no.available.payment.method']}</Text>

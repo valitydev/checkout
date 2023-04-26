@@ -8,12 +8,8 @@ import {
 } from 'checkout/state';
 import { assertUnreachable } from 'checkout/utils';
 import { Wallets } from './wallets';
-import { ApplePay } from './apple-pay';
 import { BankCard } from './bank-card';
-import { GooglePay } from './google-pay';
 import { MethodProps } from './method-props';
-import { SamsungPay } from './samsung-pay';
-import { YandexPay } from './yandex-pay';
 import { WalletProviderPaymentMethodItem } from '../../wallet-provider-payment-method-item';
 import { PaymentTerminalMethodItems } from './payment-terminal-method-items';
 
@@ -21,14 +17,6 @@ const Method: React.FC<MethodProps> = (props) => {
     switch (props.method.name) {
         case PaymentMethodName.BankCard:
             return <BankCard {...props} />;
-        case PaymentMethodName.ApplePay:
-            return <ApplePay {...props} />;
-        case PaymentMethodName.GooglePay:
-            return <GooglePay {...props} />;
-        case PaymentMethodName.SamsungPay:
-            return <SamsungPay {...props} />;
-        case PaymentMethodName.YandexPay:
-            return <YandexPay {...props} />;
         case PaymentMethodName.PaymentTerminal:
             return (
                 <PaymentTerminalMethodItems

@@ -45,7 +45,7 @@ const toReenterButtonText = (startedInfo: FormInfo, locale: Locale): string => {
 };
 
 const payOtherCapability = (startedInfo: FormInfo): boolean =>
-    startedInfo && startedInfo.name !== FormName.tokenProviderForm && startedInfo.name !== FormName.paymentMethods;
+    startedInfo && startedInfo.name !== FormName.paymentMethods;
 
 const retryCapability = (startedInfo: FormInfo): boolean =>
     startedInfo && startedInfo.name !== FormName.paymentMethods && startedInfo.name !== FormName.walletProviders;

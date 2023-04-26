@@ -1,12 +1,5 @@
 import { PaymentMethod as PaymentMethodState } from 'checkout/state';
-import {
-    BankCard,
-    DigitalWallet,
-    PaymentMethod,
-    PaymentMethodName,
-    PaymentTerminal,
-    ServiceProvider
-} from 'checkout/backend';
+import { DigitalWallet, PaymentMethod, PaymentMethodName, PaymentTerminal, ServiceProvider } from 'checkout/backend';
 import { InitConfig } from 'checkout/config';
 import { bankCardToMethods } from './bank-card-to-methods';
 import { getDigitalWalletPaymentMethods, getTerminalsPaymentMethods } from './get-payment-methods';
@@ -33,7 +26,7 @@ export function toAvailablePaymentMethods(
     for (const method of paymentMethods) {
         switch (method.method) {
             case PaymentMethodName.BankCard:
-                const bankCardMethods = bankCardToMethods(method as BankCard, initConfig);
+                const bankCardMethods = bankCardToMethods(initConfig);
                 result = result.concat(bankCardMethods);
                 break;
             case PaymentMethodName.DigitalWallet:

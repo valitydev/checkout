@@ -4,7 +4,6 @@ import {
     PaymentMethod,
     PaymentMethodName,
     WalletFormInfo,
-    TokenProviderFormInfo,
     NoAvailablePaymentMethodFormInfo,
     DigitalWalletPaymentMethod,
     WalletProvidersFormInfo,
@@ -14,7 +13,6 @@ import {
     PaymentTerminalFormInfo,
     PaymentTerminalSelectorFormInfo
 } from 'checkout/state';
-import { BankCardTokenProvider } from 'checkout/backend/model';
 import { assertUnreachable } from 'checkout/utils';
 
 const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalPaymentMethod) => {
@@ -44,14 +42,6 @@ export const toInitialForm = (method: PaymentMethod): FormInfo => {
     switch (method.name) {
         case PaymentMethodName.BankCard:
             return new CardFormInfo();
-        case PaymentMethodName.ApplePay:
-            return new TokenProviderFormInfo(BankCardTokenProvider.applepay);
-        case PaymentMethodName.GooglePay:
-            return new TokenProviderFormInfo(BankCardTokenProvider.googlepay);
-        case PaymentMethodName.SamsungPay:
-            return new TokenProviderFormInfo(BankCardTokenProvider.samsungpay);
-        case PaymentMethodName.YandexPay:
-            return new TokenProviderFormInfo(BankCardTokenProvider.yandexpay);
         case PaymentMethodName.DigitalWallet:
             return toDigitalWalletForms(method as DigitalWalletPaymentMethod);
         case PaymentMethodName.PaymentTerminal:

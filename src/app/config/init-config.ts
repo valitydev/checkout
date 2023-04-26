@@ -9,10 +9,6 @@ export class InitConfig {
     invoiceTemplateID?: string;
     invoiceTemplateAccessToken?: string;
     bankCard?: boolean;
-    applePay?: boolean;
-    googlePay?: boolean;
-    samsungPay?: boolean;
-    yandexPay?: boolean;
     wallets?: boolean;
     onlineBanking?: boolean;
     netBanking?: boolean;
