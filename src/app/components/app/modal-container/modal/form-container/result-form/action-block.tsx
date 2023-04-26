@@ -39,8 +39,6 @@ const toReenterButtonText = (startedInfo: FormInfo, locale: Locale): string => {
             return locale['form.button.use.other.card.label'];
         case FormName.walletForm:
             return locale['form.button.use.other.wallet.label'];
-        case FormName.mobileCommerceForm:
-            return locale['form.button.use.other.mobileCommerce.label'];
         default:
             return locale['form.button.use.other.default.label'];
     }

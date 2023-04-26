@@ -13,7 +13,6 @@ import { BankCard } from './bank-card';
 import { GooglePay } from './google-pay';
 import { MethodProps } from './method-props';
 import { SamsungPay } from './samsung-pay';
-import { MobileCommerce } from './mobile-commerce';
 import { YandexPay } from './yandex-pay';
 import { WalletProviderPaymentMethodItem } from '../../wallet-provider-payment-method-item';
 import { PaymentTerminalMethodItems } from './payment-terminal-method-items';
@@ -30,8 +29,6 @@ const Method: React.FC<MethodProps> = (props) => {
             return <SamsungPay {...props} />;
         case PaymentMethodName.YandexPay:
             return <YandexPay {...props} />;
-        case PaymentMethodName.MobileCommerce:
-            return <MobileCommerce {...props} />;
         case PaymentMethodName.PaymentTerminal:
             return (
                 <PaymentTerminalMethodItems

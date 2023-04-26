@@ -18,7 +18,7 @@ import { LogoContainer } from './logo-container';
 
 import { InitialContext } from '../../../../initial-context';
 
-const WalletFormDef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
+const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
     const {
         locale,
         initConfig,

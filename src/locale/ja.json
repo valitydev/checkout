@@ -1,14 +1,9 @@
 {
     "info.order.label": "注文詳細",
-    "info.modal.mobile.commerce.description.steps": [
-        "提供された電話番号にメッセージが送信されました。 支払いを確認するには、携帯電話事業者からのSMSに記載されている手順に従ってください。このタブは閉じることができます。",
-        "通常、支払いには数分かかりますが、手続きとしてまれに3日かかる場合があります。 支払いが処理されると、携帯電話事業者からメッセージが届きます。"
-    ],
     "info.modal.no.available.payment.method": "利用できる支払方法はありません",
     "form.header.payment.methods.label": "お支払い方法を選択してください",
     "form.header.netbanking.label": "Please choose a bank",
     "form.header.pay.card.label": "カードで支払う",
-    "form.header.pay.mobile.commerce.label": "携帯電話アカウントで支払います。",
     "form.header.pay.upi.label": "Unified payment interface",
     "form.header.final.success.label": "支払い完了",
     "form.header.final.invoice.paid.label": "全額支払い済み",
@@ -45,7 +40,6 @@
     "form.payment.method.name.google.pay.label": "Google Pay",
     "form.payment.method.name.samsung.pay.label": "Samsung Pay",
     "form.payment.method.name.yandex.pay.label": "Yandex Pay",
-    "form.payment.method.name.mobile.commerce.label": "電話アカウント",
     "form.payment.method.name.others.label": "すべての支払い方法",
     "form.serviceProvidersGrid.search": "検索",
     "form.pay.upi.instruction": [

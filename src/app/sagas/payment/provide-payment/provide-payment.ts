@@ -4,7 +4,6 @@ import { payWithApplePay } from './pay-with-apple-pay';
 import { payWithBankCard } from './pay-with-bank-card';
 import { payWithGooglePay } from './pay-with-google-pay';
 import { payWithSamsungPay } from './pay-with-samsung-pay';
-import { payWithMobileCommerce } from './pay-with-mobile-commerce';
 import { assertUnreachable } from 'checkout/utils';
 import { payWithYandexPay } from './pay-with-yandex-pay';
 import { payWithDigitalWallet } from './pay-with-digital-wallet';
@@ -22,8 +21,6 @@ const getPayFn = (method: PaymentMethodName) => {
             return call.bind(null, payWithYandexPay);
         case PaymentMethodName.BankCard:
             return call.bind(null, payWithBankCard);
-        case PaymentMethodName.MobileCommerce:
-            return call.bind(null, payWithMobileCommerce);
         case PaymentMethodName.DigitalWallet:
             return call.bind(null, payWithDigitalWallet);
         case PaymentMethodName.PaymentTerminal:

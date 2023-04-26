@@ -3,7 +3,6 @@ import {
     FormInfo,
     PaymentMethod,
     PaymentMethodName,
-    MobileCommerceFormInfo,
     WalletFormInfo,
     TokenProviderFormInfo,
     NoAvailablePaymentMethodFormInfo,
@@ -53,8 +52,6 @@ export const toInitialForm = (method: PaymentMethod): FormInfo => {
             return new TokenProviderFormInfo(BankCardTokenProvider.samsungpay);
         case PaymentMethodName.YandexPay:
             return new TokenProviderFormInfo(BankCardTokenProvider.yandexpay);
-        case PaymentMethodName.MobileCommerce:
-            return new MobileCommerceFormInfo();
         case PaymentMethodName.DigitalWallet:
             return toDigitalWalletForms(method as DigitalWalletPaymentMethod);
         case PaymentMethodName.PaymentTerminal:

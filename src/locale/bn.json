@@ -1,14 +1,9 @@
 {
     "info.order.label": "",
-    "info.modal.mobile.commerce.description.steps": [
-        "",
-        ""
-    ],
     "info.modal.no.available.payment.method": "",
     "form.header.payment.methods.label": "",
     "form.header.netbanking.label": "",
     "form.header.pay.card.label": "",
-    "form.header.pay.mobile.commerce.label": "",
     "form.header.pay.upi.label": "",
     "form.header.final.success.label": "",
     "form.header.final.invoice.paid.label": "",
@@ -45,7 +40,6 @@
     "form.payment.method.name.google.pay.label": "",
     "form.payment.method.name.samsung.pay.label": "",
     "form.payment.method.name.yandex.pay.label": "",
-    "form.payment.method.name.mobile.commerce.label": "",
     "form.payment.method.name.others.label": "",
     "form.serviceProvidersGrid.search": "",
     "form.pay.upi.instruction": [

@@ -19,7 +19,6 @@ export class InitConfig {
     upi?: boolean;
     terminalBankCard?: boolean;
     terminalWallets?: boolean;
-    mobileCommerce?: boolean;
     pix?: boolean;
     paymentFlowHold?: boolean;
     holdExpiration?: HoldExpirationType;

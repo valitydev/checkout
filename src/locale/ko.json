@@ -1,14 +1,9 @@
 {
     "info.order.label": "주문 세부 사항",
-    "info.modal.mobile.commerce.description.steps": [
-        "A message has been sent to the phone number provided. To confirm the payment, please follow the steps indicated in the SMS from the mobile operator. This tab can be closed.",
-        "Usually payment takes a few minutes, in rare cases, the process may take up to 3 days. Once payment is processed, you will receive a message from the mobile operator."
-    ],
     "info.modal.no.available.payment.method": "사용 가능한 결제 수단이 없습니다",
     "form.header.payment.methods.label": "결제 수단을 선택하십시오",
     "form.header.netbanking.label": "Please choose a bank",
     "form.header.pay.card.label": "Pay with a card",
-    "form.header.pay.mobile.commerce.label": "Pay with mobile phone account",
     "form.header.pay.upi.label": "Unified payment interface",
     "form.header.final.success.label": "결제 성공",
     "form.header.final.invoice.paid.label": "전액 결제됨",
@@ -45,7 +40,6 @@
     "form.payment.method.name.google.pay.label": "Google Pay",
     "form.payment.method.name.samsung.pay.label": "Samsung Pay",
     "form.payment.method.name.yandex.pay.label": "Yandex Pay",
-    "form.payment.method.name.mobile.commerce.label": "Phone account",
     "form.payment.method.name.others.label": "모든 결제 수단",
     "form.serviceProvidersGrid.search": "Search",
     "form.pay.upi.instruction": [

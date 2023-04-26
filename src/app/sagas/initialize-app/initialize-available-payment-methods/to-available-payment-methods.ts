@@ -1,4 +1,4 @@
-import { PaymentMethod as PaymentMethodState, PaymentMethodName as PaymentMethodNameState } from 'checkout/state';
+import { PaymentMethod as PaymentMethodState } from 'checkout/state';
 import {
     BankCard,
     DigitalWallet,
@@ -60,11 +60,6 @@ export function toAvailablePaymentMethods(
                         pix
                     })
                 );
-                break;
-            case PaymentMethodName.MobileCommerce:
-                if (initConfig.mobileCommerce) {
-                    result = result.concat([{ name: PaymentMethodNameState.MobileCommerce }]);
-                }
                 break;
             default:
                 assertUnreachable(method.method);
