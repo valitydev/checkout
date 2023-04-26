@@ -29,7 +29,6 @@ it('should return resolved init config', () => {
         googlePay: true,
         samsungPay: true,
         yandexPay: true,
-        mobileCommerce: true,
         paymentFlowHold: false,
         recurring: false,
         holdExpiration: HoldExpirationType.cancel,
