@@ -48,61 +48,6 @@
     ],
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "",
     "form.qr.code": "",
-    "form.help.header": "",
-    "form.help.codes": {
-        "InvalidPaymentTool": {
-            "text": "",
-            "steps": [
-                "",
-                "",
-                "",
-                ""
-            ]
-        },
-        "AccountLimitsExceeded": {
-            "text": "",
-            "steps": [
-                "",
-                "",
-                "",
-                ""
-            ]
-        },
-        "InsufficientFunds": {
-            "text": "",
-            "steps": [
-                "",
-                "",
-                "",
-                ""
-            ]
-        },
-        "PreauthorizationFailed": {
-            "text": "",
-            "steps": [
-                "",
-                "",
-                "",
-                ""
-            ]
-        },
-        "RejectedByIssuer": {
-            "text": "",
-            "steps": [
-                "",
-                "",
-                "",
-                ""
-            ]
-        },
-        "PaymentRejected": {
-            "text": "",
-            "steps": [
-                "",
-                ""
-            ]
-        }
-    },
     "error.apple.pay.unknown": "",
     "error.apple.pay.cancel": "",
     "error.apple.pay.session.create": "",

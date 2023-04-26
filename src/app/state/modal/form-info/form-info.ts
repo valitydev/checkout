@@ -8,7 +8,6 @@ export enum FormName {
     walletForm = 'walletForm',
     walletProviders = 'walletProviders',
     tokenProviderForm = 'tokenProviderForm',
-    helpForm = 'helpForm',
     noAvailablePaymentMethodForm = 'noAvailablePaymentMethodForm',
     redirectForm = 'redirectForm',
     paymentTerminalBankCard = 'paymentTerminalBankCard',

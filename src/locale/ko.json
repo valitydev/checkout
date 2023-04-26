@@ -48,61 +48,6 @@
     ],
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Select payment system:",
     "form.qr.code": "은행 앱으로 QR 코드를 스캔하여 결제를 완료하십시오",
-    "form.help.header": "문제가 생기셨습니까?",
-    "form.help.codes": {
-        "InvalidPaymentTool": {
-            "text": "결제 실패: 잘못된 결제 데이터가 입력되었습니다.",
-            "steps": [
-                "이전 단계로 돌아가십시오.",
-                "유효한 카드 또는 계좌번호를 입력했는지 확인하십시오.",
-                "다시 “결제”를 누르십시오.",
-                "오류가 계속될 경우, 다른 카드나 계좌를 사용해 보십시오."
-            ]
-        },
-        "AccountLimitsExceeded": {
-            "text": "Payment failed: limits set by you exceeded.",
-            "steps": [
-                "Please login to your online banking or back office account.",
-                "Please change limit settings and country restrictions.",
-                "Please return to checkout and press “Try again”.",
-                "If error persists please contact your bank or payment institution."
-            ]
-        },
-        "InsufficientFunds": {
-            "text": "Payment failed: insufficient funds.",
-            "steps": [
-                "Please check your card or account balance.",
-                "If the funds are insufficient, please top up your account.",
-                "Please return to checkout and press “Try again”.",
-                "If error persists please try using a different card or bank account."
-            ]
-        },
-        "PreauthorizationFailed": {
-            "text": "Payment failed: can’t verify confirmation code.",
-            "steps": [
-                "Please press “Try again”.",
-                "Please check if you are entering correct payment password or SMS authentication code.",
-                "Please check if you press a button 'To confirm' on the bank page or payment institution page.",
-                "If error persists please contact your bank or payment institution."
-            ]
-        },
-        "RejectedByIssuer": {
-            "text": "Payment failed: your payment institution has rejected the payment.",
-            "steps": [
-                "Please check there are no limits or country rectrictions on the side of your online banking or bank back office.",
-                "Please check if your card or bank account is enabled for online payments.",
-                "Please contact your bank or payment institution.",
-                "Please try using a different card or bank account."
-            ]
-        },
-        "PaymentRejected": {
-            "text": "Payment failed: your payment has been rejected.",
-            "steps": [
-                "Please try using a different card or bank account.",
-                "Please contact support of the website."
-            ]
-        }
-    },
     "error.apple.pay.unknown": "Unknown error - Apple Pay",
     "error.apple.pay.cancel": "Apple Pay payment is cancelled",
     "error.apple.pay.session.create": "Failed to create Apple Pay session",
