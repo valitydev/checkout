@@ -27,6 +27,7 @@ const Method: React.FC<MethodProps> = (props) => {
                     localeCode={props.localeCode}
                     emailPrefilled={props.emailPrefilled}
                     phoneNumberPrefilled={props.phoneNumberPrefilled}
+                    context={props.context}
                 />
             );
         case PaymentMethodName.DigitalWallet:
@@ -38,6 +39,7 @@ const Method: React.FC<MethodProps> = (props) => {
                         previous={FormName.paymentMethods}
                         setFormInfo={props.setFormInfo}
                         pay={props.pay}
+                        context={props.context}
                     />
                 );
             }

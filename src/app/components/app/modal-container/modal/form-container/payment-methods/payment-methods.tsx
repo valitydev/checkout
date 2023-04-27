@@ -18,7 +18,8 @@ const sliceMethods = (methods: PaymentMethod[], showAll: boolean, limit = 3) =>
     showAll ? methods : methods.slice(0, limit);
 
 export const PaymentMethods = () => {
-    const { locale, initConfig, availablePaymentMethods, amountInfo } = useContext(InitialContext);
+    const context = useContext(InitialContext);
+    const { locale, initConfig, availablePaymentMethods, amountInfo } = context;
     const [isShowAll, setIsShowAll] = useState(false);
     const allMethods = useMemo(() => sortByPriority(availablePaymentMethods), [availablePaymentMethods]);
     const visibleMethods = useMemo(() => sliceMethods(allMethods, isShowAll), [allMethods, isShowAll]);
@@ -39,6 +40,7 @@ export const PaymentMethods = () => {
                 phoneNumberPrefilled={!!initConfig.phoneNumber}
                 prevFormName={FormName.paymentMethods}
                 localeCode={initConfig.locale}
+                context={context}
             />
             {visibleMethods.length < allMethods.length && (
                 <OtherPaymentMethodsLink onClick={() => setIsShowAll(true)} locale={locale} />

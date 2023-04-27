@@ -42,11 +42,12 @@ const Container = styled.div`
 `;
 
 const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
+    const context = useContext(InitialContext);
     const {
         locale,
         initConfig,
         model: { serviceProviders, invoiceTemplate }
-    } = useContext(InitialContext);
+    } = context;
     const { providerID, paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
     const serviceProvider = serviceProviders.find((value) => value.id === providerID);
     const { form, contactInfo, logo, paymentSessionInfo, prefilledMetadataValues } = getMetadata(serviceProvider);
@@ -105,7 +106,8 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                     ...prefilledMetadataValues,
                     ...formatMetadataValue(form, values?.metadata)
                 }
-            } as PaymentTerminalFormValues
+            } as PaymentTerminalFormValues,
+            context
         };
         dispatch(pay(payload));
     };

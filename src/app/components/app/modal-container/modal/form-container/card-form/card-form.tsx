@@ -15,11 +15,12 @@ import { getActiveModalFormSelector } from 'checkout/selectors';
 import { InitialContext } from '../../../../initial-context';
 
 const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
+    const context = useContext(InitialContext);
     const {
         locale,
         initConfig,
         model: { invoiceTemplate }
-    } = useContext(InitialContext);
+    } = context;
     const { paymentStatus } = useAppSelector<CardFormInfo>(getActiveModalFormSelector);
     const cardHolder = toCardHolderConfig(initConfig.requireCardHolder);
     const amount = toAmountConfig(initConfig, invoiceTemplate);
@@ -47,7 +48,7 @@ const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormPro
     }, [submitFailed]);
 
     const submit = (values: CardFormValues) => {
-        dispatch(pay({ method: PaymentMethodName.BankCard, values }));
+        dispatch(pay({ method: PaymentMethodName.BankCard, values, context }));
     };
 
     return (

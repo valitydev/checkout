@@ -1,9 +1,19 @@
 import { AbstractAction, TypeKeys } from 'checkout/actions';
-import { PayableFormValues, PaymentMethodName } from 'checkout/state';
-import { LogicError } from 'checkout/backend';
+import { AmountInfoState, ModelState, PayableFormValues, PaymentMethodName } from 'checkout/state';
+import { AppConfig, LogicError } from 'checkout/backend';
+import { InitConfig } from 'checkout/config';
+
+export type AppContext = {
+    initConfig: InitConfig;
+    appConfig: AppConfig;
+    origin: string;
+    amountInfo: AmountInfoState;
+    model: ModelState;
+};
 
 export interface PaymentRequestedPayload {
     method: PaymentMethodName;
+    context: AppContext;
     values?: PayableFormValues;
 }
 

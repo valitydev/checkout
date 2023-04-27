@@ -19,11 +19,12 @@ import { LogoContainer } from './logo-container';
 import { InitialContext } from '../../../../initial-context';
 
 const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
+    const context = useContext(InitialContext);
     const {
         locale,
         initConfig,
         model: { invoiceTemplate }
-    } = useContext(InitialContext);
+    } = context;
     const { activeProvider, paymentStatus } = useAppSelector<WalletFormInfo>(getActiveModalFormSelector);
     const dispatch = useAppDispatch();
     const formValues = useAppSelector((s) => get(s.form, 'walletForm.values'));
@@ -34,7 +35,8 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
         dispatch(
             pay({
                 method: PaymentMethodName.DigitalWallet,
-                values: form ? obscurePassword(form, values) : values
+                values: form ? obscurePassword(form, values) : values,
+                context
             })
         );
     };

@@ -24,14 +24,9 @@ type PayEffect = SelectEffect | CallEffect | PutEffect<PayPutEffect>;
 
 export function* pay(action: PaymentRequested): Iterator<PayEffect> {
     try {
-        const { config, model, amountInfo }: State = yield select((s: State) => ({
-            config: s.config,
-            model: s.model,
-            amountInfo: s.amountInfo
-        }));
-        const { values, method } = action.payload;
+        const { values, method, context } = action.payload;
         yield put({ type: TypeKeys.PREPARE_TO_PAY } as PrepareToPay);
-        yield call(providePayment, method, config, model, amountInfo, values);
+        yield call(providePayment, method, context, values);
         const invoiceEventsStatus = yield select((state: State) => state.events.status);
         switch (invoiceEventsStatus) {
             case EventsStatus.polled:

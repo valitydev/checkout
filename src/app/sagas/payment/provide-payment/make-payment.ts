@@ -1,11 +1,10 @@
 import { call, put } from 'redux-saga/effects';
-import { AmountInfoState, ModelState, PayableFormValues } from 'checkout/state';
+import { PayableFormValues } from 'checkout/state';
 import { getPayableInvoice } from './get-payable-invoice';
 import { LogicErrorCode, PaymentResource } from 'checkout/backend';
-import { Config } from 'checkout/config';
 import { createPayment } from './create-payment';
 import { pollInvoiceEvents } from '../../poll-events';
-import { TypeKeys } from 'checkout/actions';
+import { AppContext, TypeKeys } from 'checkout/actions';
 import { SetAcceptedError } from 'checkout/actions/error-actions/set-accepted-error';
 
 type CreatePaymentResourceFn = (invoiceAccessToken: any) => Iterator<PaymentResource>;
@@ -17,14 +16,12 @@ type CreateRedirectUrlFn = (
 ) => Promise<string | null>;
 
 export function* makePayment(
-    config: Config,
-    model: ModelState,
+    context: AppContext,
     values: PayableFormValues,
-    amountInfo: AmountInfoState,
     fn: CreatePaymentResourceFn,
     createRedirectUrlFn: CreateRedirectUrlFn = null
 ) {
-    const { initConfig, appConfig } = config;
+    const { initConfig, appConfig, model, amountInfo } = context;
     const { capiEndpoint } = appConfig;
     const {
         invoice: { id, dueDate, externalID },

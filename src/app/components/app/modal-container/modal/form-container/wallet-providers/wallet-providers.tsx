@@ -10,7 +10,8 @@ import { getAvailablePaymentMethodSelector } from 'checkout/selectors';
 import { InitialContext } from '../../../../initial-context';
 
 export const WalletProviders: React.FC = () => {
-    const { locale } = useContext(InitialContext);
+    const context = useContext(InitialContext);
+    const { locale } = context;
     const paymentMethod = useAppSelector(
         getAvailablePaymentMethodSelector<DigitalWalletPaymentMethod>(PaymentMethodName.DigitalWallet)
     );
@@ -26,6 +27,7 @@ export const WalletProviders: React.FC = () => {
                     setFormInfo={(formInfo) => dispatch(goToFormInfo(formInfo))}
                     serviceProvider={serviceProvider}
                     pay={(payload) => dispatch(pay(payload))}
+                    context={context}
                 />
             ))}
         </div>

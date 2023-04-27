@@ -13,6 +13,7 @@ import { PayAction, SetFormInfoAction } from './types';
 import { payWithPaymentTerminal } from './pay-with-payment-terminal';
 import { ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
 import { Content } from './content';
+import { AppContext } from 'checkout/actions';
 
 export interface PaymentTerminalMethodItemProps {
     method: PaymentTerminalPaymentMethod;
@@ -21,6 +22,7 @@ export interface PaymentTerminalMethodItemProps {
     localeCode: string;
     emailPrefilled: boolean;
     phoneNumberPrefilled: boolean;
+    context: AppContext;
 }
 
 const toPaymentTerminalSelector = (category: KnownProviderCategories, setFormInfo: SetFormInfoAction) =>
@@ -53,30 +55,32 @@ const provideMethod = (
     pay: PayAction,
     setFormInfo: SetFormInfoAction,
     emailPrefilled: boolean,
-    phoneNumberPrefilled: boolean
+    phoneNumberPrefilled: boolean,
+    context: AppContext
 ) => {
     if (method.serviceProviders.length === 1) {
         const serviceProvider = method.serviceProviders[0];
         return isRequiredPaymentTerminalForm(serviceProvider, emailPrefilled, phoneNumberPrefilled)
             ? toPaymentTerminal(serviceProvider.id, setFormInfo)
-            : payWithPaymentTerminal(serviceProvider.id, pay);
+            : payWithPaymentTerminal(context, serviceProvider.id, pay);
     }
     if (method.serviceProviders.length > 1) {
         return toPaymentTerminalSelector(method.category, setFormInfo);
     }
 };
 
-export const PaymentTerminalMethodItem: React.FC<PaymentTerminalMethodItemProps> = ({
+export const PaymentTerminalMethodItem = ({
     method,
     pay,
     setFormInfo,
     localeCode,
     emailPrefilled,
-    phoneNumberPrefilled
-}) => (
+    phoneNumberPrefilled,
+    context
+}: PaymentTerminalMethodItemProps) => (
     <PaymentMethodItemContainer
         id={`${Math.floor(Math.random() * 100)}-payment-method-item`}
-        onClick={() => provideMethod(method, pay, setFormInfo, emailPrefilled, phoneNumberPrefilled)}>
+        onClick={() => provideMethod(method, pay, setFormInfo, emailPrefilled, phoneNumberPrefilled, context)}>
         <Content method={method} localeCode={localeCode} />
     </PaymentMethodItemContainer>
 );

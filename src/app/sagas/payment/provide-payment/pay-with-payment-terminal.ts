@@ -1,12 +1,12 @@
 import { call, CallEffect } from 'redux-saga/effects';
 
-import { AmountInfoState, ModelState, PaymentTerminalFormValues } from 'checkout/state';
-import { Config } from 'checkout/config';
+import { PaymentTerminalFormValues } from 'checkout/state';
 import { makePayment } from './make-payment';
 import { createPaymentTerminal } from '../../create-payment-resource';
 import { PaymentSessionInfoMetadata } from 'checkout/backend';
 import { prepareSelfRedirectUrl } from './prepare-self-redirect-url';
 import { shorten } from './shorten';
+import { AppContext } from 'checkout/actions';
 
 const prepareRedirectUrl = (
     paymentSessionInfo: PaymentSessionInfoMetadata,
@@ -31,7 +31,7 @@ const prepareRedirectUrl = (
 };
 
 const createRedirectUrl = (
-    { initConfig, origin, appConfig }: Config,
+    { initConfig, appConfig, origin }: AppContext,
     paymentSessionInfo: PaymentSessionInfoMetadata
 ) => (invoiceID: string, invoiceAccessToken: string, invoiceDueDate: string): Promise<string | null> => {
     const { url, needShort } = prepareRedirectUrl(
@@ -52,12 +52,7 @@ const createRedirectUrl = (
 const createPaymentResource = (endpoint: string, provider: string, metadata: any) =>
     createPaymentTerminal.bind(null, endpoint, provider, metadata);
 
-export function* payWithPaymentTerminal(
-    c: Config,
-    m: ModelState,
-    a: AmountInfoState,
-    v: PaymentTerminalFormValues
-): Iterator<CallEffect> {
-    const fn = createPaymentResource(c.appConfig.capiEndpoint, v.provider, v.metadata);
-    yield call(makePayment, c, m, v, a, fn, createRedirectUrl(c, v.paymentSessionInfo));
+export function* payWithPaymentTerminal(context: AppContext, v: PaymentTerminalFormValues): Iterator<CallEffect> {
+    const fn = createPaymentResource(context.appConfig.capiEndpoint, v.provider, v.metadata);
+    yield call(makePayment, context, v, fn, createRedirectUrl(context, v.paymentSessionInfo));
 }

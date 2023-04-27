@@ -1,9 +1,10 @@
 import { call, CallEffect } from 'redux-saga/effects';
-import { AmountInfoState, ConfigState, ModelState, PayableFormValues, PaymentMethodName } from 'checkout/state';
+import { PayableFormValues, PaymentMethodName } from 'checkout/state';
 import { payWithBankCard } from './pay-with-bank-card';
 import { assertUnreachable } from 'checkout/utils';
 import { payWithDigitalWallet } from './pay-with-digital-wallet';
 import { payWithPaymentTerminal } from './pay-with-payment-terminal';
+import { AppContext } from 'checkout/actions';
 
 const getPayFn = (method: PaymentMethodName) => {
     switch (method) {
@@ -21,11 +22,9 @@ const getPayFn = (method: PaymentMethodName) => {
 
 export function* providePayment(
     method: PaymentMethodName,
-    c: ConfigState,
-    m: ModelState,
-    a: AmountInfoState,
+    context: AppContext,
     v: PayableFormValues
 ): Iterator<CallEffect> {
     const values = v ? v : { amount: null, email: null, phoneNumber: null };
-    yield getPayFn(method)(c, m, a, values);
+    yield getPayFn(method)(context, values);
 }

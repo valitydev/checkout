@@ -3,7 +3,7 @@ import * as React from 'react';
 import { FormInfo, PaymentMethod, FormName } from 'checkout/state';
 import { Locale } from 'checkout/locale';
 import { Methods } from './methods';
-import { PaymentRequestedPayload } from 'checkout/actions';
+import { AppContext, PaymentRequestedPayload } from 'checkout/actions';
 import styled from 'checkout/styled-components';
 import { stylableTransition } from 'checkout/styled-transition';
 
@@ -24,6 +24,7 @@ export interface MethodsProps {
     phoneNumberPrefilled: boolean;
     prevFormName: FormName;
     localeCode: string;
+    context: AppContext;
 }
 
 export const MethodsList: React.FC<MethodsProps> = ({ methods, ...props }) => (
