@@ -7,7 +7,7 @@ import { Locale } from 'checkout/locale';
 import isNil from 'checkout/utils/is-nil';
 import { fetchModel, InitModelParams, Model } from './fetch-model';
 
-import { getAmountInfo } from '../sagas/amount-info';
+import { getAmountInfo } from './amount-info';
 import { AmountInfoState, PaymentMethod } from 'checkout/state';
 import { initAvailablePaymentMethods } from './init-available-payment-methods';
 import { getOrigin } from '../../get-origin';

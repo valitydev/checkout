@@ -11,7 +11,7 @@ import {
     getInvoicePaymentMethodsByTemplateID
 } from 'checkout/backend';
 
-import { getServiceProviders } from '../sagas/initialize-app/get-service-providers';
+import { getServiceProviders } from './get-service-providers';
 
 export type Model = {
     invoiceTemplate?: InvoiceTemplate;

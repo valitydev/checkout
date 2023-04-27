@@ -6,7 +6,7 @@ import { InitConfig } from 'checkout/config';
 import { loadConfig } from './load-config';
 import { checkInitConfig } from './check-init-config';
 import { initializeModel } from './initialize-model';
-import { initializeModal } from './initialize-modal';
+import { initializeModal } from '../initialize-modal';
 import { initializeAvailablePaymentMethods } from './initialize-available-payment-methods';
 
 import { initializeAmountInfo } from './initialize-amount-info';
