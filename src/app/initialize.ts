@@ -2,7 +2,6 @@ import { listen, Transport } from 'cross-origin-communicator';
 import * as creditCardType from 'credit-card-type';
 
 import { getUrlParams } from 'checkout/utils';
-import { isInFrame } from '../is-in-iframe';
 import { getOrigin } from '../get-origin';
 import { StubTransport } from './stub-transport';
 import { Config, resolveInitConfig } from 'checkout/config';
@@ -51,7 +50,6 @@ export const initialize = async (): Promise<[Transport, Config]> => {
     try {
         const config: Config = {
             origin: getOrigin(),
-            inFrame: isInFrame(),
             initConfig: resolveInitConfig(params)
         };
         return [transport, config];
