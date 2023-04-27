@@ -49,9 +49,11 @@ const IFrame = styled.iframe`
 
 export const UserInteractionModal = () => {
     const iFrameElement = useRef(null);
-    const { origin } = useContext(InitialContext);
-    const { modal } = useAppSelector((s) => ({
-        modal: findNamed(s.modals, ModalName.modalInteraction) as ModalInteraction
+    const { origin, appConfig } = useContext(InitialContext);
+    const { modal, invoiceID, invoiceAccessToken } = useAppSelector((s) => ({
+        modal: findNamed(s.modals, ModalName.modalInteraction) as ModalInteraction,
+        invoiceID: s.model?.invoice?.id,
+        invoiceAccessToken: s.model?.invoiceAccessToken
     }));
     const dispatch = useAppDispatch();
 
@@ -62,7 +64,7 @@ export const UserInteractionModal = () => {
             iFrameElement.current.contentWindow.document.body.appendChild(form);
             form.submit();
         }
-        dispatch(finishInteraction());
+        dispatch(finishInteraction(appConfig.capiEndpoint, invoiceID, invoiceAccessToken));
     }, []);
 
     const src = useMemo(() => {

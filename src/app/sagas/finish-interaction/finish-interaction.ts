@@ -1,8 +1,7 @@
-import { call, CallEffect, ForkEffect, put, select, takeLatest } from 'redux-saga/effects';
-import { goToFormInfo, TypeKeys } from 'checkout/actions';
-import { ConfigState, ModelState, ResultFormInfo, ResultType, State, EventsStatus } from 'checkout/state';
+import { call, ForkEffect, put, select, takeLatest } from 'redux-saga/effects';
+import { FinishInteractionRequested, goToFormInfo, TypeKeys } from 'checkout/actions';
+import { ResultFormInfo, ResultType, State, EventsStatus } from 'checkout/state';
 import { pollInvoiceEvents } from '../poll-events';
-import { IntegrationType } from 'checkout/config';
 import { provideFromInvoiceEvent } from '../provide-modal';
 
 function* finishInvoice(capiEndpoint: string, token: string, invoiceID: string) {
@@ -18,30 +17,15 @@ function* finishInvoice(capiEndpoint: string, token: string, invoiceID: string) 
     }
 }
 
-function* resolve(config: ConfigState, model: ModelState): Iterator<CallEffect> {
-    const {
-        initConfig,
-        appConfig: { capiEndpoint }
-    } = config;
-    switch (initConfig.integrationType) {
-        case IntegrationType.invoice:
-        case IntegrationType.invoiceTemplate:
-            const {
-                invoiceAccessToken,
-                invoice: { id }
-            } = model;
-            return yield call(finishInvoice, capiEndpoint, invoiceAccessToken, id);
-    }
-}
-
-export function* finishInteraction() {
+export function* finishInteraction({
+    payload: { capiEndpoint, invoiceID, invoiceAccessToken }
+}: FinishInteractionRequested): Iterator<any> {
     try {
-        const { config, model } = yield select((s: State) => ({ config: s.config, model: s.model }));
         yield put({
             type: TypeKeys.SET_MODAL_INTERACTION_POLLING,
             payload: true
         });
-        yield call(resolve, config, model);
+        yield call(finishInvoice, capiEndpoint, invoiceAccessToken, invoiceID);
         yield put({
             type: TypeKeys.SET_MODAL_INTERACTION_POLLING,
             payload: false
