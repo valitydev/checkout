@@ -1,20 +1,20 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
-import get from 'lodash-es/get';
+import { useContext, useEffect, useMemo, useRef } from 'react';
 
 import {
     EventInteractionObject,
     ModalInteraction,
     ModalInteractionType,
     ModalName,
-    State,
     TokenizedInteractionObject
 } from 'checkout/state';
 import { findNamed, prepareForm } from 'checkout/utils';
 import styled from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 import { finishInteraction } from 'checkout/actions';
+import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
+
+import { InitialContext } from '../../initial-context';
 
 const Container = styled.div`
     height: 100%; // for cross-browser 100vh
@@ -47,54 +47,36 @@ const IFrame = styled.iframe`
     }
 `;
 
-export interface UserInteractionModalProps {
-    modal: ModalInteraction;
-    origin: string;
-    finishInteraction: () => void;
-}
+export const UserInteractionModal = () => {
+    const iFrameElement = useRef(null);
+    const { origin } = useContext(InitialContext);
+    const { modal } = useAppSelector((s) => ({
+        modal: findNamed(s.modals, ModalName.modalInteraction) as ModalInteraction
+    }));
+    const dispatch = useAppDispatch();
 
-class UserInteractionModalDef extends React.Component<UserInteractionModalProps> {
-    private iFrameElement: HTMLIFrameElement;
-
-    componentDidMount() {
-        const {
-            origin,
-            modal: { interactionObject },
-            finishInteraction
-        } = this.props;
+    useEffect(() => {
+        const interactionObject = modal.interactionObject;
         if (interactionObject.type === ModalInteractionType.EventInteraction) {
             const form = prepareForm(origin, (interactionObject as EventInteractionObject).request);
-            this.iFrameElement.contentWindow.document.body.appendChild(form);
+            iFrameElement.current.contentWindow.document.body.appendChild(form);
             form.submit();
         }
-        finishInteraction();
-    }
+        dispatch(finishInteraction());
+    }, []);
 
-    render() {
-        const interactionObject = get(this.props.modal, 'interactionObject');
+    const src = useMemo(() => {
+        const interactionObject = modal?.interactionObject;
         let src: string;
         if (interactionObject && interactionObject.type === ModalInteractionType.TokenizedInteraction) {
             src = (interactionObject as TokenizedInteractionObject).uri;
         }
-        return (
-            <Container key="3ds" id="interact-container">
-                <IFrame id="interactionFrame" ref={this.setIFrameElement} src={src} />
-            </Container>
-        );
-    }
+        return src;
+    }, [modal]);
 
-    private setIFrameElement = (element: HTMLIFrameElement) => {
-        this.iFrameElement = element;
-    };
-}
-
-const mapStateToProps = (state: State) => ({
-    modal: findNamed(state.modals, ModalName.modalInteraction),
-    origin: state.config.origin
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    finishInteraction: bindActionCreators(finishInteraction, dispatch)
-});
-
-export const UserInteractionModal = connect(mapStateToProps, mapDispatchToProps)(UserInteractionModalDef);
+    return (
+        <Container key="3ds" id="interact-container">
+            <IFrame id="interactionFrame" ref={iFrameElement} src={src} />
+        </Container>
+    );
+};

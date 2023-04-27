@@ -10,6 +10,7 @@ import { fetchModel, InitModelParams, Model } from './fetch-model';
 import { getAmountInfo } from '../sagas/amount-info';
 import { AmountInfoState, PaymentMethod } from 'checkout/state';
 import { toAvailablePaymentMethods } from '../sagas/initialize-app/initialize-available-payment-methods/to-available-payment-methods';
+import { getOrigin } from '../../get-origin';
 
 export type InitialData = {
     initConfig: InitConfig;
@@ -19,6 +20,7 @@ export type InitialData = {
     model: Model;
     amountInfo: AmountInfoState;
     availablePaymentMethods: PaymentMethod[];
+    origin: string;
 };
 
 type State =
@@ -33,7 +35,8 @@ type Action =
     | { type: 'SET_AMOUNT_INFO'; payload: AmountInfoState }
     | { type: 'SET_AVAILABLE_PAYMENT_METHODS'; payload: PaymentMethod[] }
     | { type: 'APP_INIT_SUCCESS' }
-    | { type: 'APP_INIT_FAILURE'; error: unknown };
+    | { type: 'APP_INIT_FAILURE'; error: unknown }
+    | { type: 'SET_ORIGIN'; payload: string };
 
 type InitAppProps = {
     initConfig: InitConfig;
@@ -104,6 +107,15 @@ const dataFetchReducer = (state: State, action: Action): State => {
                 error: action.error,
                 data: null
             };
+        case 'SET_ORIGIN':
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    origin: action.payload
+                },
+                status: 'LOADING'
+            };
     }
 };
 
@@ -161,6 +173,7 @@ export const useInitializeApp = ({ initConfig, appConfig }: InitAppProps) => {
                     model.serviceProviders
                 );
                 dispatch({ type: 'SET_AVAILABLE_PAYMENT_METHODS', payload: availablePaymentMethods });
+                dispatch({ type: 'SET_ORIGIN', payload: getOrigin() });
                 dispatch({ type: 'APP_INIT_SUCCESS' });
             } catch (error) {
                 dispatch({ type: 'APP_INIT_FAILURE', error });

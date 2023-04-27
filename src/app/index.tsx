@@ -13,8 +13,7 @@ import { initialize } from './initialize';
 import './styles/font-face.css';
 import { getAppConfig } from './backend';
 
-Promise.all([initialize(), getAppConfig()]).then(([res, appConfig]) => {
-    const [transport, config] = res;
+Promise.all([initialize(), getAppConfig()]).then(([[transport, config], appConfig]) => {
     const app = document.getElementById('app');
     const store = configureStore({ config });
     store.subscribe(() => {

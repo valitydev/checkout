@@ -2,7 +2,6 @@ import { listen, Transport } from 'cross-origin-communicator';
 import * as creditCardType from 'credit-card-type';
 
 import { getUrlParams } from 'checkout/utils';
-import { getOrigin } from '../get-origin';
 import { StubTransport } from './stub-transport';
 import { Config, resolveInitConfig } from 'checkout/config';
 import { CommunicatorEvents, communicatorInstanceName } from '../communicator-constants';
@@ -49,7 +48,6 @@ export const initialize = async (): Promise<[Transport, Config]> => {
     const [transport, params] = await resolveInitParams();
     try {
         const config: Config = {
-            origin: getOrigin(),
             initConfig: resolveInitConfig(params)
         };
         return [transport, config];
