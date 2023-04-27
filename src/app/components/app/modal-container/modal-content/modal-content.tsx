@@ -1,13 +1,18 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 
 import { Modal } from '../modal';
 import { Footer } from '../footer';
 import { UserInteractionModal } from '../user-interaction-modal';
-import { ModalName, ModalState, State } from 'checkout/state';
+import { ModalName, State } from 'checkout/state';
 import styled from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 import { stylableTransition, LEAVE, ENTER, ACTIVE } from 'checkout/styled-transition';
+import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
+import { useContext, useEffect, useMemo } from 'react';
+import { initializeModal } from 'checkout/actions';
+import isNil from 'checkout/utils/is-nil';
+
+import { InitialContext } from '../../initial-context';
 
 const interactionTransitionTime = '0.5s';
 
@@ -53,44 +58,37 @@ const Animation = styled(stylableTransition)`
     }
 `;
 
-export interface ModalContentProps {
-    activeModal: ModalState;
-}
+export const ModalContent = () => {
+    const { initConfig, model, availablePaymentMethods } = useContext(InitialContext);
+    const modals = useAppSelector((s: State) => s.modals);
+    const dispatch = useAppDispatch();
 
-class ModalContentDef extends React.Component<ModalContentProps> {
-    render() {
-        const {
-            activeModal: { name }
-        } = this.props;
-        return (
-            <Animation enter={1000} leave={500}>
-                <div key={name}>{this.renderContent()}</div>
-            </Animation>
-        );
-    }
-
-    renderContent() {
-        const {
-            activeModal: { name }
-        } = this.props;
-        switch (name) {
-            case ModalName.modalForms:
-                return (
-                    <>
-                        <Modal />
-                        <Footer />
-                    </>
-                );
-            case ModalName.modalInteraction:
-                return <UserInteractionModal />;
-            default:
-                return null;
+    const activeModalName = useMemo(() => {
+        if (isNil(modals)) {
+            return null;
         }
-    }
-}
+        return modals.find((modal) => modal.active).name;
+    }, [modals]);
 
-const mapStateToProps = (state: State) => ({
-    activeModal: state.modals.find((modal) => modal.active)
-});
+    useEffect(() => {
+        dispatch(initializeModal(initConfig, model?.events, availablePaymentMethods));
+    }, []);
 
-export const ModalContent = connect(mapStateToProps)(ModalContentDef);
+    return (
+        <>
+            {!isNil(modals) && (
+                <Animation enter={1000} leave={500}>
+                    <div key={activeModalName}>
+                        {activeModalName === ModalName.modalForms && (
+                            <>
+                                <Modal />
+                                <Footer />
+                            </>
+                        )}
+                        {activeModalName === ModalName.modalInteraction && <UserInteractionModal />}
+                    </div>
+                </Animation>
+            )}
+        </>
+    );
+};

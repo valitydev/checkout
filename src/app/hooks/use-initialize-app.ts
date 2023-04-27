@@ -10,6 +10,7 @@ import { fetchModel, InitModelParams, Model } from './fetch-model';
 import { getAmountInfo } from '../sagas/amount-info';
 import { AmountInfoState, PaymentMethod } from 'checkout/state';
 import { toAvailablePaymentMethods } from '../sagas/initialize-app/initialize-available-payment-methods/to-available-payment-methods';
+import { setPriority } from '../sagas/initialize-app/initialize-available-payment-methods/set-priority';
 import { getOrigin } from '../../get-origin';
 
 export type InitialData = {
@@ -172,7 +173,7 @@ export const useInitializeApp = ({ initConfig, appConfig }: InitAppProps) => {
                     initConfig,
                     model.serviceProviders
                 );
-                dispatch({ type: 'SET_AVAILABLE_PAYMENT_METHODS', payload: availablePaymentMethods });
+                dispatch({ type: 'SET_AVAILABLE_PAYMENT_METHODS', payload: setPriority(availablePaymentMethods) });
                 dispatch({ type: 'SET_ORIGIN', payload: getOrigin() });
                 dispatch({ type: 'APP_INIT_SUCCESS' });
             } catch (error) {

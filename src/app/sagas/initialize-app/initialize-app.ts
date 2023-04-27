@@ -35,7 +35,10 @@ export function* initialize(userInitConfig: InitConfig) {
         model.paymentMethods,
         model.serviceProviders
     );
-    yield call(initializeModal, initConfig, events, methods);
+    yield call(initializeModal, {
+        type: TypeKeys.INITIALIZE_MODAL_REQUESTED,
+        payload: { initConfig, events: events.events, methods }
+    } as any);
 }
 
 export function* initializeApp(action: InitializeAppRequested): Iterator<InitializeAppEffect> {

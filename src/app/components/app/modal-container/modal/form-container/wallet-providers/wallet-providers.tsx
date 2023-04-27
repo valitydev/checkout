@@ -5,16 +5,18 @@ import { FormName, PaymentMethodName, DigitalWalletPaymentMethod } from 'checkou
 import { Header } from '../header';
 import { goToFormInfo, pay } from 'checkout/actions';
 import { WalletProviderPaymentMethodItem } from '../wallet-provider-payment-method-item';
-import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { getAvailablePaymentMethodSelector } from 'checkout/selectors';
+import { useAppDispatch } from 'checkout/configure-store';
 import { InitialContext } from '../../../../initial-context';
+
+const getAvailablePaymentMethod = (
+    availablePaymentMethods,
+    methodName: PaymentMethodName
+): DigitalWalletPaymentMethod => availablePaymentMethods.find((m) => m.name === methodName);
 
 export const WalletProviders: React.FC = () => {
     const context = useContext(InitialContext);
-    const { locale } = context;
-    const paymentMethod = useAppSelector(
-        getAvailablePaymentMethodSelector<DigitalWalletPaymentMethod>(PaymentMethodName.DigitalWallet)
-    );
+    const { locale, availablePaymentMethods } = context;
+    const paymentMethod = getAvailablePaymentMethod(availablePaymentMethods, PaymentMethodName.DigitalWallet);
     const dispatch = useAppDispatch();
 
     return (

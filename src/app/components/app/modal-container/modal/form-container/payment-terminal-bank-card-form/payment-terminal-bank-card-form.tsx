@@ -4,8 +4,7 @@ import { InjectedFormProps, reduxForm } from 'redux-form';
 
 import { FormName, KnownProviderCategories, PaymentTerminalFormValues } from 'checkout/state';
 import { Header } from '../header';
-import { getAvailableTerminalPaymentMethodSelector } from 'checkout/selectors';
-import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
+import { useAppDispatch } from 'checkout/configure-store';
 import { ProviderSelectorField } from './provider-selector';
 import { pay, setViewInfoError } from 'checkout/actions';
 import { PayButton } from '../pay-button';
@@ -17,6 +16,7 @@ import { Email, Phone } from '../common-fields';
 import { getMetadata } from 'checkout/components';
 
 import { InitialContext } from '../../../../initial-context';
+import { getAvailableTerminalPaymentMethod } from '../get-available-terminal-payment-method';
 
 const ProviderSelectorDescription = styled.p`
     font-size: 16px;
@@ -27,8 +27,8 @@ const ProviderSelectorDescription = styled.p`
 
 export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ submitFailed, handleSubmit }) => {
     const context = useContext(InitialContext);
-    const { locale, initConfig } = context;
-    const paymentMethod = useAppSelector(getAvailableTerminalPaymentMethodSelector(KnownProviderCategories.BankCard));
+    const { locale, initConfig, availablePaymentMethods } = context;
+    const paymentMethod = getAvailableTerminalPaymentMethod(availablePaymentMethods, KnownProviderCategories.BankCard);
     const serviceProviders = paymentMethod?.serviceProviders;
     const email = toEmailConfig(initConfig.email);
     const phoneNumber = toPhoneNumberConfig(initConfig.phoneNumber);

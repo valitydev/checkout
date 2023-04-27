@@ -66,4 +66,14 @@ const mapStateToProps = (state: State) => ({
     initializeApp: state.initializeApp
 });
 
-export const ModalContainer = connect(mapStateToProps)(ModalContainerDef);
+export const _ModalContainer = connect(mapStateToProps)(ModalContainerDef);
+
+export const ModalContainer = () => {
+    return (
+        <Animation enter={750} appear={750} leave={750}>
+            <Container>
+                <ModalContent />
+            </Container>
+        </Animation>
+    );
+};

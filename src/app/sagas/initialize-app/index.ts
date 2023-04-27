@@ -1,1 +1,1 @@
-export * from './initialize-app';
+export * from './initialize-modal';
