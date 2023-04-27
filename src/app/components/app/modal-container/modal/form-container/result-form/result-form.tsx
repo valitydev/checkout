@@ -1,17 +1,16 @@
 import * as React from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
-
-import { FormName, ModalForms, ModalName, ResultFormInfo, ResultState, ResultType, State } from 'checkout/state';
-import { goToFormInfo, setResult } from 'checkout/actions';
-import { ResultFormProps } from './result-form-props';
+import { useContext, useEffect, useMemo } from 'react';
+import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
+import { FormName, ModalForms, ModalName, ResultFormInfo, ResultState, ResultType } from 'checkout/state';
+import { setResult } from 'checkout/actions';
 import { findNamed } from 'checkout/utils';
-import { makeContentError, makeContentInvoice, ResultFormContent } from './make-content';
+import { makeContentError, makeContentInvoice } from './make-content';
 import { ActionBlock } from './action-block';
-import { IntegrationType } from 'checkout/config';
 import { ResultIcon } from './result-icons';
 import styled, { css } from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
+
+import { InitialContext } from '../../../../initial-context';
 
 const Title = styled.h2`
     font-weight: 500;
@@ -62,54 +61,42 @@ const Form = styled.form<{ hasActions: boolean }>`
     }
 `;
 
-class ResultFormDef extends React.Component<ResultFormProps> {
-    render() {
-        const { header, description, type, hasActions, hasDone } = this.makeContent();
-        if (hasDone) {
-            this.props.setResult(ResultState.done);
-        }
-        return (
-            <Form hasActions={hasActions}>
-                <Container>
-                    <ResultIcon type={type} />
-                    <Title>{header}</Title>
-                    <Description> {description}</Description>
-                    {hasActions ? <ActionBlock /> : false}
-                </Container>
-            </Form>
-        );
-    }
+export const ResultForm = () => {
+    const { locale } = useContext(InitialContext);
+    const { resultFormInfo, error, events } = useAppSelector((s) => {
+        const info = (findNamed(s.modals, ModalName.modalForms) as ModalForms).formsInfo;
+        return {
+            resultFormInfo: findNamed(info, FormName.resultForm) as ResultFormInfo,
+            hasMultiMethods: !!findNamed(info, FormName.paymentMethods),
+            events: s.events,
+            error: s.error ? s.error.error : null
+        };
+    });
+    const dispatch = useAppDispatch();
 
-    private makeContent(): ResultFormContent {
-        const { locale, events, error, resultFormInfo, integrationType } = this.props;
+    const { hasActions, type, header, description, hasDone } = useMemo(() => {
         switch (resultFormInfo.resultType) {
             case ResultType.error:
                 return makeContentError(locale, error);
             case ResultType.processed:
-                switch (integrationType) {
-                    case IntegrationType.invoice:
-                    case IntegrationType.invoiceTemplate:
-                        return makeContentInvoice(locale, events.events, events.status, error);
-                }
+                return makeContentInvoice(locale, events.events, events.status, error);
         }
-    }
-}
+    }, [resultFormInfo, locale, error, events]);
 
-const mapStateToProps = (state: State) => {
-    const info = (findNamed(state.modals, ModalName.modalForms) as ModalForms).formsInfo;
-    return {
-        events: state.events,
-        integrationType: state.config.initConfig.integrationType,
-        locale: state.config.locale,
-        error: state.error ? state.error.error : null,
-        resultFormInfo: findNamed(info, FormName.resultForm) as ResultFormInfo,
-        hasMultiMethods: !!findNamed(info, FormName.paymentMethods)
-    };
+    useEffect(() => {
+        if (hasDone) {
+            dispatch(setResult(ResultState.done));
+        }
+    }, [hasDone]);
+
+    return (
+        <Form hasActions={hasActions}>
+            <Container>
+                <ResultIcon type={type} />
+                <Title>{header}</Title>
+                <Description> {description}</Description>
+                {hasActions ? <ActionBlock /> : false}
+            </Container>
+        </Form>
+    );
 };
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    setResult: bindActionCreators(setResult, dispatch),
-    goToFormInfo: bindActionCreators(goToFormInfo, dispatch)
-});
-
-export const ResultForm = connect(mapStateToProps, mapDispatchToProps)(ResultFormDef);
