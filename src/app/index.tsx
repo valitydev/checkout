@@ -16,15 +16,22 @@ import { getAppConfig } from './backend';
 Promise.all([initialize(), getAppConfig()]).then(([[transport, config], appConfig]) => {
     const app = document.getElementById('app');
     const store = configureStore({ config });
+    const initConfig = config.initConfig;
     store.subscribe(() => {
         const state = store.getState();
         if (state.result) {
-            finalize(state, transport as Transport, app, bindActionCreators(setResult, store.dispatch));
+            finalize(
+                state,
+                transport as Transport,
+                app,
+                bindActionCreators(setResult, store.dispatch),
+                initConfig.redirectUrl
+            );
         }
     });
     ReactDOM.render(
         <Provider store={store}>
-            <App initConfig={config.initConfig} appConfig={appConfig} />
+            <App initConfig={initConfig} appConfig={appConfig} />
         </Provider>,
         app
     );

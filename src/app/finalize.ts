@@ -38,7 +38,8 @@ export function finalize(
     state: State,
     transport: Transport,
     checkoutEl: HTMLElement,
-    setResult: (resultState: ResultState) => ResultAction
+    setResult: (resultState: ResultState) => ResultAction,
+    redirectUrl: string
 ) {
     const finalizer = new AppFinalizer(transport, checkoutEl);
     switch (state.result) {
@@ -46,11 +47,6 @@ export function finalize(
             finalizer.close();
             break;
         case ResultState.done:
-            const {
-                config: {
-                    initConfig: { redirectUrl }
-                }
-            } = state;
             finalizer.done(redirectUrl, setResult);
             break;
     }

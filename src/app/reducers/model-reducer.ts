@@ -1,15 +1,10 @@
 import { ModelState } from 'checkout/state';
-import { TypeKeys, InitializeModelCompleted, InvoiceCreated } from 'checkout/actions';
+import { TypeKeys, InvoiceCreated } from 'checkout/actions';
 
-type ModelReducerAction = InitializeModelCompleted | InvoiceCreated;
+type ModelReducerAction = InvoiceCreated;
 
 export function modelReducer(s: ModelState = null, action: ModelReducerAction): ModelState {
     switch (action.type) {
-        case TypeKeys.INITIALIZE_MODEL_COMPLETED:
-            return {
-                ...s,
-                ...action.payload
-            };
         case TypeKeys.INVOICE_CREATED:
             return {
                 ...s,

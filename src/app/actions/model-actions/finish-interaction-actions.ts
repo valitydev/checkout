@@ -1,5 +1,5 @@
 import { AbstractAction, TypeKeys } from 'checkout/actions';
-import { LogicError } from 'checkout/backend';
+import { LogicError, ServiceProvider } from 'checkout/backend';
 
 export interface FinishInteractionRequested extends AbstractAction<FinishInteractionPayload> {
     type: TypeKeys.FINISH_INTERACTION_REQUESTED;
@@ -19,13 +19,20 @@ export type FinishInteractionPayload = {
     capiEndpoint: string;
     invoiceID: string;
     invoiceAccessToken: string;
+    serviceProviders: ServiceProvider[];
 };
 
-export const finishInteraction = (capiEndpoint: string, invoiceID: string, invoiceAccessToken: string) => ({
+export const finishInteraction = (
+    capiEndpoint: string,
+    invoiceID: string,
+    invoiceAccessToken: string,
+    serviceProviders: ServiceProvider[]
+) => ({
     type: TypeKeys.FINISH_INTERACTION_REQUESTED,
     payload: {
         capiEndpoint,
         invoiceID,
-        invoiceAccessToken
+        invoiceAccessToken,
+        serviceProviders
     }
 });

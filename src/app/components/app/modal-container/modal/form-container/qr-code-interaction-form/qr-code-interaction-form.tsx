@@ -47,7 +47,7 @@ export const QrCodeInteractionForm: React.FC = () => {
 
     useEffect(() => {
         isQrCodeRedirect(qrCodeForm) && window.open(request.qrCode, '_self');
-        dispatch(finishInteraction(appConfig.capiEndpoint, invoiceID, invoiceAccessToken));
+        dispatch(finishInteraction(appConfig.capiEndpoint, invoiceID, invoiceAccessToken, model.serviceProviders));
     }, []);
 
     const copyToClipboard = () => {

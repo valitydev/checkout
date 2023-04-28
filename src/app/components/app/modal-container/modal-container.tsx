@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { State, ResultState, InitializeAppState } from 'checkout/state';
+import { State, ResultState } from 'checkout/state';
 import { ModalContent } from './modal-content';
 import { ModalError } from './modal-error';
 import styled from 'checkout/styled-components';
@@ -42,7 +42,7 @@ const Container = styled.div`
 
 export interface ModalContainerProps {
     result: ResultState;
-    initializeApp: InitializeAppState;
+    initializeApp: any;
 }
 
 class ModalContainerDef extends React.Component<ModalContainerProps> {
@@ -62,8 +62,8 @@ class ModalContainerDef extends React.Component<ModalContainerProps> {
 }
 
 const mapStateToProps = (state: State) => ({
-    result: state.result,
-    initializeApp: state.initializeApp
+    result: state.result
+    // initializeApp: state.initializeApp
 });
 
 export const _ModalContainer = connect(mapStateToProps)(ModalContainerDef);

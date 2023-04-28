@@ -71,7 +71,7 @@ export const ModalContent = () => {
     }, [modals]);
 
     useEffect(() => {
-        dispatch(initializeModal(initConfig, model?.events, availablePaymentMethods));
+        dispatch(initializeModal(initConfig, model?.events, availablePaymentMethods, model.serviceProviders));
     }, []);
 
     return (
