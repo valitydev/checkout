@@ -177,6 +177,7 @@ export const useInitializeApp = ({ initConfig, appConfig }: InitAppProps) => {
                 dispatch({ type: 'APP_INIT_SUCCESS' });
             } catch (error) {
                 dispatch({ type: 'APP_INIT_FAILURE', error });
+                console.error('APP_INIT_FAILURE', error);
             }
         };
         init();

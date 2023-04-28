@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Loader } from '../../ui/loader';
+import { Loader } from '../ui/loader';
 import styled from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 import { growth } from 'checkout/styled-components/animations';

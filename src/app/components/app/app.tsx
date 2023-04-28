@@ -10,6 +10,7 @@ import { InitialContext } from './initial-context';
 import { InitConfig } from 'checkout/config';
 import { AppConfig } from 'checkout/backend';
 import { useInitializeApp, useTheme } from 'checkout/hooks';
+import { ModalError } from './modal-error';
 
 export type AppProps = {
     initConfig: InitConfig;
@@ -19,7 +20,6 @@ export type AppProps = {
 export function App({ initConfig, appConfig }: AppProps) {
     const theme = useTheme(appConfig.fixedTheme, initConfig.theme);
     const state = useInitializeApp({ initConfig, appConfig });
-
     return (
         <ThemeProvider theme={theme}>
             <GlobalStyle theme={theme} />
@@ -31,6 +31,7 @@ export function App({ initConfig, appConfig }: AppProps) {
                     </InitialContext.Provider>
                 )}
                 {state.status === 'LOADING' && <LayoutLoader />}
+                {state.status === 'FAILURE' && <ModalError error={state.error} />}
             </AppWrapper>
         </ThemeProvider>
     );

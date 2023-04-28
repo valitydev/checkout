@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useMemo } from 'react';
 import styled from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 
@@ -7,7 +8,7 @@ const ModalErrorWrapper = styled.div`
     height: 100%;
     width: 100%;
     background: #fff;
-    padding: 50px 60px 60px;
+    padding: 48px;
     box-sizing: border-box;
 
     @media ${device.desktop} {
@@ -28,33 +29,31 @@ const Title = styled.h2`
 
 const Message = styled.p`
     margin: 0;
-    padding-top: 25px;
-    font-size: 16px;
+    padding-top: 24px;
+    font-size: 12px;
     color: ${({ theme }) => theme.font.primaryColor};
 `;
 
+const isObject = (value: unknown): value is object => typeof value === 'object' && value !== null;
+
 interface ModalErrorProps {
-    error?: { message?: string; code?: string };
+    error: unknown;
 }
 
 export const ModalError: React.FC<ModalErrorProps> = ({ error }) => {
-    const errorMessage = error && (error.message || error.code);
+    const errorMessage = useMemo(() => {
+        if (error instanceof Error) {
+            return `${error.name}: ${error.message}`;
+        } else if (isObject(error)) {
+            return JSON.stringify(error);
+        }
+        return 'Unknown error';
+    }, [error]);
+
     return (
         <ModalErrorWrapper>
             <Title>Initialization failure</Title>
-            {errorMessage && (
-                <Message>
-                    {error.code && error.message ? (
-                        <>
-                            {error.code}
-                            <br />
-                            {error.message}
-                        </>
-                    ) : (
-                        errorMessage
-                    )}
-                </Message>
-            )}
+            <Message>{errorMessage}</Message>
         </ModalErrorWrapper>
     );
 };
