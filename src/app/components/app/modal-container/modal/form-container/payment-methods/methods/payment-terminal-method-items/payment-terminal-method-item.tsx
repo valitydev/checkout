@@ -1,19 +1,14 @@
 import * as React from 'react';
 import isNil from 'lodash-es/isNil';
 
-import {
-    FormName,
-    KnownProviderCategories,
-    PaymentTerminalFormInfo,
-    PaymentTerminalPaymentMethod,
-    PaymentTerminalSelectorFormInfo
-} from 'checkout/state';
+import { FormName, PaymentTerminalFormInfo, PaymentTerminalSelectorFormInfo } from 'checkout/state';
 import { getMetadata, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PayAction, SetFormInfoAction } from './types';
 import { payWithPaymentTerminal } from './pay-with-payment-terminal';
 import { ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
 import { Content } from './content';
 import { AppContext } from 'checkout/actions';
+import { KnownProviderCategories, PaymentTerminalPaymentMethod } from 'checkout/hooks/init-available-payment-methods';
 
 export interface PaymentTerminalMethodItemProps {
     method: PaymentTerminalPaymentMethod;

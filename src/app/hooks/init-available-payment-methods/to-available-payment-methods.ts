@@ -1,4 +1,4 @@
-import { PaymentMethod as PaymentMethodState } from 'checkout/state';
+import { PaymentMethod as PaymentMethodState } from './types';
 import { DigitalWallet, PaymentMethod, PaymentMethodName, PaymentTerminal, ServiceProvider } from 'checkout/backend';
 import { InitConfig } from 'checkout/config';
 import { bankCardToMethods } from './bank-card-to-methods';

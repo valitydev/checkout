@@ -1,7 +1,7 @@
 import { AbstractAction, TypeKeys } from 'checkout/actions';
 import { InitConfig } from 'checkout/config';
-import { PaymentMethod } from 'checkout/state';
 import { Event, ServiceProvider } from 'checkout/backend';
+import { PaymentMethod } from 'checkout/hooks/init-available-payment-methods';
 
 export type InitializeModalRequestedPayload = {
     initConfig: InitConfig;

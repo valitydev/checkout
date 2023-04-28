@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 
-import { FormName, KnownProviderCategories, PaymentTerminalFormValues } from 'checkout/state';
+import { FormName, PaymentTerminalFormValues } from 'checkout/state';
 import { Header } from '../header';
 import { useAppDispatch } from 'checkout/configure-store';
 import { ProviderSelectorField } from './provider-selector';
@@ -17,6 +17,7 @@ import { getMetadata } from 'checkout/components';
 
 import { InitialContext } from '../../../../initial-context';
 import { getAvailableTerminalPaymentMethod } from '../get-available-terminal-payment-method';
+import { KnownProviderCategories } from 'checkout/hooks/init-available-payment-methods';
 
 const ProviderSelectorDescription = styled.p`
     font-size: 16px;

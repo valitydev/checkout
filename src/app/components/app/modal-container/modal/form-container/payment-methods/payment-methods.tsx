@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext, useMemo, useState } from 'react';
 
-import { FormName, PaymentMethod } from 'checkout/state';
+import { FormName } from 'checkout/state';
 import { goToFormInfo, pay } from 'checkout/actions';
 import { useAppDispatch } from 'checkout/configure-store';
 import { MethodsList } from './methods';
@@ -10,6 +10,7 @@ import { Title } from '../title';
 import { HeaderWrapper } from '../header-wrapper';
 
 import { InitialContext } from '../../../../initial-context';
+import { PaymentMethod } from 'checkout/hooks/init-available-payment-methods';
 
 const sortByPriority = (methods: PaymentMethod[]): PaymentMethod[] =>
     methods.sort((m1, m2) => (m1.priority > m2.priority ? 1 : -1));

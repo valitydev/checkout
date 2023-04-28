@@ -5,7 +5,7 @@ import {
     DigitalWalletPaymentMethod,
     PaymentMethodName as PaymentMethodNameState,
     KnownDigitalWalletProviderCategories
-} from 'checkout/state';
+} from '../types';
 import { logUnavailableWithConfig } from './log-unavailable-with-config';
 import { assertUnreachable } from 'checkout/utils';
 import { filterByPaymentMethodProviders } from './filter-by-payment-method-providers';

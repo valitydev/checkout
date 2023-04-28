@@ -1,17 +1,17 @@
 import * as React from 'react';
-import {
-    DigitalWalletPaymentMethod,
-    FormName,
-    PaymentMethod,
-    PaymentMethodName,
-    PaymentTerminalPaymentMethod
-} from 'checkout/state';
+import { FormName } from 'checkout/state';
 import { assertUnreachable } from 'checkout/utils';
 import { Wallets } from './wallets';
 import { BankCard } from './bank-card';
 import { MethodProps } from './method-props';
 import { WalletProviderPaymentMethodItem } from '../../wallet-provider-payment-method-item';
 import { PaymentTerminalMethodItems } from './payment-terminal-method-items';
+import {
+    DigitalWalletPaymentMethod,
+    PaymentMethod,
+    PaymentMethodName,
+    PaymentTerminalPaymentMethod
+} from 'checkout/hooks/init-available-payment-methods';
 
 const Method: React.FC<MethodProps> = (props) => {
     switch (props.method.name) {

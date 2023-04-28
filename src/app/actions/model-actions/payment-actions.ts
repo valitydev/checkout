@@ -1,9 +1,10 @@
 import { AbstractAction, TypeKeys } from 'checkout/actions';
-import { PayableFormValues, PaymentMethodName } from 'checkout/state';
+import { PayableFormValues } from 'checkout/state';
 import { AppConfig, LogicError } from 'checkout/backend';
 import { InitConfig } from 'checkout/config';
 import { Model } from 'checkout/hooks/fetch-model';
 import { AmountInfo } from 'checkout/hooks/amount-info';
+import { PaymentMethodName } from 'checkout/hooks/init-available-payment-methods';
 
 export type AppContext = {
     initConfig: InitConfig;

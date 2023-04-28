@@ -1,9 +1,4 @@
-import {
-    KnownProviderCategories,
-    PaymentMethod,
-    PaymentMethodName,
-    PaymentTerminalPaymentMethod
-} from 'checkout/state';
+import { KnownProviderCategories, PaymentMethod, PaymentMethodName, PaymentTerminalPaymentMethod } from './types';
 import { assertUnreachable } from 'checkout/utils';
 
 const getPriority = (method: PaymentMethod): number => {

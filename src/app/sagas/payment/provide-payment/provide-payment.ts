@@ -1,10 +1,11 @@
 import { call, CallEffect } from 'redux-saga/effects';
-import { PayableFormValues, PaymentMethodName } from 'checkout/state';
+import { PayableFormValues } from 'checkout/state';
 import { payWithBankCard } from './pay-with-bank-card';
 import { assertUnreachable } from 'checkout/utils';
 import { payWithDigitalWallet } from './pay-with-digital-wallet';
 import { payWithPaymentTerminal } from './pay-with-payment-terminal';
 import { AppContext } from 'checkout/actions';
+import { PaymentMethodName } from 'checkout/hooks/init-available-payment-methods';
 
 const getPayFn = (method: PaymentMethodName) => {
     switch (method) {

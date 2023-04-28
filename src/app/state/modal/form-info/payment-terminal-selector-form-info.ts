@@ -1,4 +1,4 @@
-import { KnownProviderCategories } from 'checkout/state';
+import { KnownProviderCategories } from 'checkout/hooks/init-available-payment-methods';
 import { FormInfo, FormName } from './form-info';
 
 export class PaymentTerminalSelectorFormInfo extends FormInfo {

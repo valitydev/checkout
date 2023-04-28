@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { FormName, PaymentMethodName, DigitalWalletPaymentMethod } from 'checkout/state';
+import { FormName } from 'checkout/state';
 import { Header } from '../header';
 import { goToFormInfo, pay } from 'checkout/actions';
 import { WalletProviderPaymentMethodItem } from '../wallet-provider-payment-method-item';
 import { useAppDispatch } from 'checkout/configure-store';
 import { InitialContext } from '../../../../initial-context';
+import { DigitalWalletPaymentMethod, PaymentMethodName } from 'checkout/hooks/init-available-payment-methods';
 
 const getAvailablePaymentMethod = (
     availablePaymentMethods,

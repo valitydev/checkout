@@ -1,10 +1,11 @@
 import { InvoiceChangeType, InvoiceEvent, ServiceProvider } from 'checkout/backend';
-import { ModalState, PaymentMethod } from 'checkout/state';
+import { ModalState } from 'checkout/state';
 import { PaymentMethodName } from 'checkout/config';
 import { provideInteraction } from '../provide-modal';
 import { toModalResult } from './to-modal-result';
 import { toInitialState } from './to-initial-state';
 import { getLastChange } from 'checkout/utils';
+import { PaymentMethod } from 'checkout/hooks/init-available-payment-methods';
 
 export function initFromInvoiceEvents(
     events: InvoiceEvent[],

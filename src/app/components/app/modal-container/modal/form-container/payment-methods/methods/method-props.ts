@@ -1,6 +1,7 @@
 import { Locale } from 'checkout/locale';
-import { FormInfo, PaymentMethod, FormName } from 'checkout/state';
+import { FormInfo, FormName } from 'checkout/state';
 import { AppContext, PaymentRequestedPayload } from 'checkout/actions';
+import { PaymentMethod } from 'checkout/hooks/init-available-payment-methods';
 
 export interface MethodProps {
     locale: Locale;

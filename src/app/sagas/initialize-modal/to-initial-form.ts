@@ -1,14 +1,16 @@
 import {
-    CardFormInfo,
-    FormInfo,
+    DigitalWalletPaymentMethod,
+    KnownProviderCategories,
     PaymentMethod,
     PaymentMethodName,
+    PaymentTerminalPaymentMethod
+} from 'checkout/hooks/init-available-payment-methods';
+import {
+    CardFormInfo,
+    FormInfo,
     WalletFormInfo,
     NoAvailablePaymentMethodFormInfo,
-    DigitalWalletPaymentMethod,
     WalletProvidersFormInfo,
-    PaymentTerminalPaymentMethod,
-    KnownProviderCategories,
     PaymentTerminalBankCardFormInfo,
     PaymentTerminalFormInfo,
     PaymentTerminalSelectorFormInfo

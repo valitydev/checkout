@@ -4,7 +4,7 @@ import { InjectedFormProps, reduxForm } from 'redux-form';
 import get from 'lodash-es/get';
 
 import { FormGroup } from '../form-group';
-import { FormName, PaymentMethodName, PaymentStatus, WalletFormInfo, WalletFormValues } from 'checkout/state';
+import { FormName, PaymentStatus, WalletFormInfo, WalletFormValues } from 'checkout/state';
 import { PayButton } from '../pay-button';
 import { Header } from '../header';
 import { Amount } from '../common-fields';
@@ -17,6 +17,7 @@ import { getMetadata, MetadataField, MetadataLogo, obscurePassword, sortByIndex 
 import { LogoContainer } from './logo-container';
 
 import { InitialContext } from '../../../../initial-context';
+import { PaymentMethodName } from 'checkout/hooks/init-available-payment-methods';
 
 const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
     const context = useContext(InitialContext);

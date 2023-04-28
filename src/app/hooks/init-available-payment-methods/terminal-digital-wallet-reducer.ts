@@ -4,7 +4,7 @@ import {
     PaymentMethod,
     PaymentMethodName,
     PaymentTerminalPaymentMethod
-} from 'checkout/state';
+} from './types';
 import isNil from 'checkout/utils/is-nil';
 
 export const terminalDigitalWalletReducer = (

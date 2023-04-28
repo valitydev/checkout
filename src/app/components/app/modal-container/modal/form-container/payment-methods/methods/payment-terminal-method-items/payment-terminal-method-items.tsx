@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { KnownProviderCategories, PaymentTerminalPaymentMethod } from 'checkout/state';
+import { KnownProviderCategories, PaymentTerminalPaymentMethod } from 'checkout/hooks/init-available-payment-methods';
 import { assertUnreachable } from 'checkout/utils';
 import { Locale } from 'checkout/locale';
 import { PaymentTerminalBankCardMethodItem } from './payment-terminal-bank-card-method-item';

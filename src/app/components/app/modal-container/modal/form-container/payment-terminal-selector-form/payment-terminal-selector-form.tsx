@@ -4,12 +4,7 @@ import styled from 'checkout/styled-components';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 
 import { Header } from '../header';
-import {
-    FormName,
-    KnownProviderCategories,
-    PaymentTerminalFormInfo,
-    PaymentTerminalSelectorFormInfo
-} from 'checkout/state';
+import { FormName, PaymentTerminalFormInfo, PaymentTerminalSelectorFormInfo } from 'checkout/state';
 import { getActiveModalFormSelector } from 'checkout/selectors';
 import { goToFormInfo } from 'checkout/actions';
 import { Locale } from 'checkout/locale';
@@ -17,6 +12,7 @@ import { ServiceProvidersGrid } from './service-providers-grid';
 
 import { InitialContext } from '../../../../initial-context';
 import { getAvailableTerminalPaymentMethod } from '../get-available-terminal-payment-method';
+import { KnownProviderCategories } from 'checkout/hooks/init-available-payment-methods';
 
 const Container = styled.div`
     min-height: 346px;

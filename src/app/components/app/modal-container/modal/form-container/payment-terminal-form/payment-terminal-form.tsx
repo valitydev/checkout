@@ -6,13 +6,7 @@ import styled from 'checkout/styled-components';
 
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { pay, setViewInfoError } from 'checkout/actions';
-import {
-    FormName,
-    PaymentMethodName,
-    PaymentStatus,
-    PaymentTerminalFormValues,
-    PaymentTerminalFormInfo
-} from 'checkout/state';
+import { FormName, PaymentStatus, PaymentTerminalFormValues, PaymentTerminalFormInfo } from 'checkout/state';
 import { Header } from '../header';
 import { PayButton } from '../pay-button';
 import { FormGroup } from '../form-group';
@@ -33,6 +27,7 @@ import {
 import { MetadataSelect } from './metadata-select';
 
 import { InitialContext } from '../../../../initial-context';
+import { PaymentMethodName } from 'checkout/hooks/init-available-payment-methods';
 
 const Container = styled.div`
     min-height: 300px;

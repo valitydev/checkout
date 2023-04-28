@@ -8,7 +8,7 @@ import isNil from 'checkout/utils/is-nil';
 import { fetchModel, InitModelParams, Model } from './fetch-model';
 
 import { AmountInfo, getAmountInfo } from './amount-info';
-import { PaymentMethod } from 'checkout/state';
+import { PaymentMethod } from './init-available-payment-methods';
 import { initAvailablePaymentMethods } from './init-available-payment-methods';
 import { getOrigin } from '../../get-origin';
 

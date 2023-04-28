@@ -3,7 +3,7 @@ import {
     PaymentMethod,
     PaymentMethodName,
     PaymentTerminalPaymentMethod
-} from 'checkout/state';
+} from 'checkout/hooks/init-available-payment-methods';
 import isNil from 'checkout/utils/is-nil';
 
 export const getAvailableTerminalPaymentMethod = (
