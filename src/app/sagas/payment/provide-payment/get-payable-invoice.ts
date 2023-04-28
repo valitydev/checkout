@@ -1,9 +1,10 @@
 import { call, CallEffect, select } from 'redux-saga/effects';
 import { InitConfig, InvoiceTemplateInitConfig } from 'checkout/config';
-import { AmountInfoState, State } from 'checkout/state';
+import { State } from 'checkout/state';
 import { createInvoiceWithTemplate } from './create-invoice-with-template';
 import { Invoice, InvoiceTemplate } from 'checkout/backend';
 import { Model } from 'checkout/hooks/fetch-model';
+import { AmountInfo } from 'checkout/hooks/amount-info';
 
 type Effects = CallEffect | InvoiceAndToken;
 
@@ -16,7 +17,7 @@ export function* createInvoice(
     initConfig: InvoiceTemplateInitConfig,
     endpoint: string,
     invoiceTemplate: InvoiceTemplate,
-    amountInfo: AmountInfoState,
+    amountInfo: AmountInfo,
     formAmount: string
 ) {
     const { invoiceTemplateAccessToken } = initConfig;
@@ -39,7 +40,7 @@ export function* getPayableInvoice(
     initConfig: InitConfig,
     endpoint: string,
     model: Model,
-    amountInfo: AmountInfoState,
+    amountInfo: AmountInfo,
     formAmount: string
 ): Iterator<Effects> {
     const { invoice, invoiceTemplate, invoiceAccessToken } = model;

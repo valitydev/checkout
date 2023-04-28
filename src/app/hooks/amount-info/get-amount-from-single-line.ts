@@ -5,16 +5,15 @@ import {
     InvoiceTemplateLineCostRange,
     InvoiceTemplateSingleLine
 } from 'checkout/backend/model';
-import { AmountInfoState, AmountInfoStatus } from 'checkout/state';
+import { AmountInfo } from './types';
 
-const getStatus = (configAmount: number) =>
-    isNumber(configAmount) ? AmountInfoStatus.final : AmountInfoStatus.notKnown;
+const getStatus = (configAmount: number) => (isNumber(configAmount) ? 'final' : 'notKnown');
 
 export const getAmountFromSingleLine = (
     details: InvoiceTemplateSingleLine,
     configAmount: number,
     locale: string
-): AmountInfoState => {
+): AmountInfo => {
     const price = details.price;
     if (!price) {
         return null;
@@ -23,7 +22,7 @@ export const getAmountFromSingleLine = (
         case CostType.InvoiceTemplateLineCostFixed:
             const fixed = price as InvoiceTemplateLineCostFixed;
             return {
-                status: AmountInfoStatus.final,
+                status: 'final',
                 minorValue: fixed.amount,
                 currencyCode: fixed.currency,
                 locale

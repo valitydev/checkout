@@ -1,5 +1,4 @@
 import { getAmountFromMultiLine } from './get-amount-from-multi-line';
-import { AmountInfoStatus } from 'checkout/state';
 
 it('should return amount', () => {
     const multiLine = {
@@ -36,7 +35,7 @@ it('should return amount', () => {
     } as any;
     const actual = getAmountFromMultiLine(multiLine, 'ru');
     const expected = {
-        status: AmountInfoStatus.final,
+        status: 'final',
         currencyCode: 'RUB',
         minorValue: 1000000,
         locale: 'ru'

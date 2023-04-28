@@ -1,5 +1,4 @@
 import { getAmountFromSingleLine } from './get-amount-from-single-line';
-import { AmountInfoStatus } from 'checkout/state';
 
 it('InvoiceTemplateLineCostFixed should return amount', () => {
     const singleLine = {
@@ -11,7 +10,7 @@ it('InvoiceTemplateLineCostFixed should return amount', () => {
     } as any;
     const actual = getAmountFromSingleLine(singleLine, 111, 'ru');
     const expected = {
-        status: AmountInfoStatus.final,
+        status: 'final',
         currencyCode: 'RUB',
         locale: 'ru',
         minorValue: 149900
@@ -34,7 +33,7 @@ describe('InvoiceTemplateLineCostRange', () => {
     it('with amountConfig should return final status', () => {
         const actual = getAmountFromSingleLine(singleLine, 111, 'ru');
         const expected = {
-            status: AmountInfoStatus.final,
+            status: 'final',
             currencyCode: 'RUB',
             minorValue: 111,
             locale: 'ru'
@@ -45,7 +44,7 @@ describe('InvoiceTemplateLineCostRange', () => {
     it('without amountConfig should return notKnown status', () => {
         const actual = getAmountFromSingleLine(singleLine, null, 'ru');
         const expected = {
-            status: AmountInfoStatus.notKnown,
+            status: 'notKnown',
             currencyCode: 'RUB',
             locale: 'ru',
             minorValue: undefined
@@ -64,7 +63,7 @@ describe('InvoiceTemplateLineCostUnlim', () => {
     it('with amountConfig should return final status', () => {
         const actual = getAmountFromSingleLine(singleLine, 111, 'ru');
         const expected = {
-            status: AmountInfoStatus.final,
+            status: 'final',
             currencyCode: 'RUB',
             minorValue: 111,
             locale: 'ru'
@@ -75,7 +74,7 @@ describe('InvoiceTemplateLineCostUnlim', () => {
     it('without amountConfig should return notKnown status', () => {
         const actual = getAmountFromSingleLine(singleLine, null, 'ru');
         const expected = {
-            status: AmountInfoStatus.notKnown,
+            status: 'notKnown',
             currencyCode: 'RUB',
             locale: 'ru'
         };

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { AmountInfoState } from 'checkout/state';
 import { formatAmount } from 'checkout/utils';
 import { Button } from 'checkout/components';
 import styled from 'checkout/styled-components';
 import { Locale } from 'checkout/locale';
+import { AmountInfo } from 'checkout/hooks/amount-info';
 
 import { InitialContext } from '../../../../initial-context';
 
@@ -13,7 +13,7 @@ const PayButtonWrapper = styled(Button)`
     margin-top: 20px;
 `;
 
-const toLabel = (locale: Locale, amountInfo: AmountInfoState): string => {
+const toLabel = (locale: Locale, amountInfo: AmountInfo): string => {
     const amount = formatAmount(amountInfo);
     const amountLabel = amount ? ` ${amount}` : '';
     return `${locale['form.button.pay.label']}${amountLabel}`;

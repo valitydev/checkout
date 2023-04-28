@@ -8,5 +8,4 @@ export * from './state';
 export * from './forms';
 export * from './modal';
 export * from './payment-method';
-export * from './amount-info';
 export * from './events-state';

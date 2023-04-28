@@ -1,8 +1,8 @@
 import { Invoice } from 'checkout/backend';
-import { AmountInfoState, AmountInfoStatus } from 'checkout/state';
+import { AmountInfo } from './types';
 
-export const resolveInvoice = ({ amount, currency }: Invoice, locale: string): AmountInfoState => ({
-    status: AmountInfoStatus.final,
+export const resolveInvoice = ({ amount, currency }: Invoice, locale: string): AmountInfo => ({
+    status: 'final',
     minorValue: amount,
     currencyCode: currency,
     locale

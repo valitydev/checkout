@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext, useMemo, useState } from 'react';
 
-import { AmountInfoStatus, FormName, PaymentMethod } from 'checkout/state';
+import { FormName, PaymentMethod } from 'checkout/state';
 import { goToFormInfo, pay } from 'checkout/actions';
 import { useAppDispatch } from 'checkout/configure-store';
 import { MethodsList } from './methods';
@@ -35,7 +35,7 @@ export const PaymentMethods = () => {
                 locale={locale}
                 setFormInfo={(formInfo) => dispatch(goToFormInfo(formInfo))}
                 pay={(payload) => dispatch(pay(payload))}
-                amountPrefilled={amountInfo.status === AmountInfoStatus.final}
+                amountPrefilled={amountInfo.status === 'final'}
                 emailPrefilled={!!initConfig.email}
                 phoneNumberPrefilled={!!initConfig.phoneNumber}
                 prevFormName={FormName.paymentMethods}

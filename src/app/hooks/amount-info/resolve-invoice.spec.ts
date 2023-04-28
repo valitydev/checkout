@@ -1,5 +1,4 @@
 import { resolveInvoice } from './resolve-invoice';
-import { AmountInfoStatus } from 'checkout/state';
 
 it('should return amount', () => {
     const invoice = {
@@ -8,7 +7,7 @@ it('should return amount', () => {
     } as any;
     const actual = resolveInvoice(invoice, 'ru');
     const expected = {
-        status: AmountInfoStatus.final,
+        status: 'final',
         currencyCode: 'RUB',
         minorValue: 10000,
         locale: 'ru'

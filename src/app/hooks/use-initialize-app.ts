@@ -7,8 +7,8 @@ import { Locale } from 'checkout/locale';
 import isNil from 'checkout/utils/is-nil';
 import { fetchModel, InitModelParams, Model } from './fetch-model';
 
-import { getAmountInfo } from './amount-info';
-import { AmountInfoState, PaymentMethod } from 'checkout/state';
+import { AmountInfo, getAmountInfo } from './amount-info';
+import { PaymentMethod } from 'checkout/state';
 import { initAvailablePaymentMethods } from './init-available-payment-methods';
 import { getOrigin } from '../../get-origin';
 
@@ -18,7 +18,7 @@ export type InitialData = {
     locale: Locale;
     isSentryInit: boolean;
     model: Model;
-    amountInfo: AmountInfoState;
+    amountInfo: AmountInfo;
     availablePaymentMethods: PaymentMethod[];
     origin: string;
 };
@@ -32,7 +32,7 @@ type Action =
     | { type: 'FETCH_LOCALE_SUCCESS'; payload: Locale }
     | { type: 'SENTRY_INIT_SUCCESS' }
     | { type: 'FETCH_MODEL_SUCCESS'; payload: Model }
-    | { type: 'SET_AMOUNT_INFO'; payload: AmountInfoState }
+    | { type: 'SET_AMOUNT_INFO'; payload: AmountInfo }
     | { type: 'SET_AVAILABLE_PAYMENT_METHODS'; payload: PaymentMethod[] }
     | { type: 'APP_INIT_SUCCESS' }
     | { type: 'APP_INIT_FAILURE'; error: unknown }

@@ -1,16 +1,16 @@
 import { call, CallEffect, put, PutEffect } from 'redux-saga/effects';
 import { InvoiceTemplate, createInvoiceWithTemplate as request, InvoiceAndToken } from 'checkout/backend';
 import { InvoiceCreated, TypeKeys } from 'checkout/actions';
-import { AmountInfoState, AmountInfoStatus } from 'checkout/state';
 import { toMinorAmount } from 'checkout/utils';
+import { AmountInfo } from 'checkout/hooks/amount-info';
 
 export type Effects = CallEffect | PutEffect<InvoiceCreated>;
 
-export const getAmount = (amountInfo: AmountInfoState, formAmount: string): number => {
+export const getAmount = (amountInfo: AmountInfo, formAmount: string): number => {
     switch (amountInfo.status) {
-        case AmountInfoStatus.final:
+        case 'final':
             return amountInfo.minorValue;
-        case AmountInfoStatus.notKnown:
+        case 'notKnown':
             return toMinorAmount(formAmount);
     }
 };
@@ -19,7 +19,7 @@ export function* createInvoiceWithTemplate(
     endpoint: string,
     token: string,
     template: InvoiceTemplate,
-    amountInfo: AmountInfoState,
+    amountInfo: AmountInfo,
     formAmount: string
 ): Iterator<Effects> {
     const params = {

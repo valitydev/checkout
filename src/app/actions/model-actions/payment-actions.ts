@@ -1,14 +1,15 @@
 import { AbstractAction, TypeKeys } from 'checkout/actions';
-import { AmountInfoState, PayableFormValues, PaymentMethodName } from 'checkout/state';
+import { PayableFormValues, PaymentMethodName } from 'checkout/state';
 import { AppConfig, LogicError } from 'checkout/backend';
 import { InitConfig } from 'checkout/config';
 import { Model } from 'checkout/hooks/fetch-model';
+import { AmountInfo } from 'checkout/hooks/amount-info';
 
 export type AppContext = {
     initConfig: InitConfig;
     appConfig: AppConfig;
     origin: string;
-    amountInfo: AmountInfoState;
+    amountInfo: AmountInfo;
     model: Model;
 };
 
