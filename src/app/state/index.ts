@@ -1,5 +1,4 @@
 export * from './result-state';
-export * from './config-state';
 export * from './model-state';
 export * from './error-state';
 export * from './forms-state';

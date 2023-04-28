@@ -1,5 +1,5 @@
 import { call, CallEffect, select } from 'redux-saga/effects';
-import { InitConfig, InvoiceTemplateInitConfig } from 'checkout/config';
+import { InitConfig } from 'checkout/config';
 import { State } from 'checkout/state';
 import { createInvoiceWithTemplate } from './create-invoice-with-template';
 import { Invoice, InvoiceTemplate } from 'checkout/backend';
@@ -14,7 +14,7 @@ interface InvoiceAndToken {
 }
 
 export function* createInvoice(
-    initConfig: InvoiceTemplateInitConfig,
+    initConfig: InitConfig,
     endpoint: string,
     invoiceTemplate: InvoiceTemplate,
     amountInfo: AmountInfo,
