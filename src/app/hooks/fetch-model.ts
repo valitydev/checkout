@@ -12,6 +12,7 @@ import {
 } from 'checkout/backend';
 
 import { getServiceProviders } from './get-service-providers';
+import { InitConfig } from 'checkout/config';
 
 export type Model = {
     invoiceTemplate?: InvoiceTemplate;
@@ -32,10 +33,9 @@ type InvoiceParams = {
     invoiceID: string;
     invoiceAccessToken: string;
 };
-export type InitModelParams = InvoiceParams | InvoiceTemplateParams;
 
-const isInvoiceParams = (params: InitModelParams): params is InvoiceParams => params.integrationType === 'invoice';
-const isInvoiceTemplateParams = (params: InitModelParams): params is InvoiceTemplateParams =>
+const isInvoiceParams = (params: InitConfig): params is InvoiceParams => params.integrationType === 'invoice';
+const isInvoiceTemplateParams = (params: InitConfig): params is InvoiceTemplateParams =>
     params.integrationType === 'invoiceTemplate';
 
 const resolveInvoiceTemplate = async (
@@ -60,12 +60,12 @@ const resolveInvoice = async (endpoint: string, { invoiceID, invoiceAccessToken 
     return { paymentMethods, invoice, events, serviceProviders, invoiceAccessToken };
 };
 
-export const fetchModel = async (endpoint: string, params: InitModelParams): Promise<Model> => {
-    if (isInvoiceParams(params)) {
-        return resolveInvoice(endpoint, params);
+export const fetchModel = async (endpoint: string, initConfig: InitConfig): Promise<Model> => {
+    if (isInvoiceParams(initConfig)) {
+        return resolveInvoice(endpoint, initConfig);
     }
-    if (isInvoiceTemplateParams(params)) {
-        return resolveInvoiceTemplate(endpoint, params);
+    if (isInvoiceTemplateParams(initConfig)) {
+        return resolveInvoiceTemplate(endpoint, initConfig);
     }
     throw new Error('Incorrect init model params');
 };

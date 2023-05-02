@@ -23,12 +23,12 @@ export function App({ initParams }: AppProps) {
             <GlobalStyle theme={theme} />
             <AppWrapper>
                 <Overlay />
+                {state.status === 'INIT' && <LayoutLoader />}
                 {state.status === 'SUCCESS' && (
                     <InitialContext.Provider value={state.data}>
                         <ModalContainer />
                     </InitialContext.Provider>
                 )}
-                {state.status === 'LOADING' && <LayoutLoader />}
                 {state.status === 'FAILURE' && <ModalError error={state.error} />}
             </AppWrapper>
         </ThemeProvider>
