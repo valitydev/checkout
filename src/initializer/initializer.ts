@@ -1,7 +1,6 @@
 import mapValues from 'lodash-es/mapValues';
 import isFunction from 'lodash-es/isFunction';
-
-import { OpenConfig } from '../app/config';
+import { InitConfig } from 'checkout/config';
 
 const mapBoolean = (obj: object): object =>
     mapValues(obj, (value: any) => {
@@ -43,7 +42,7 @@ export abstract class Initializer {
         this.finished = initCallback(userConfig.finished);
     }
 
-    abstract open(config?: OpenConfig): void;
+    abstract open(config?: InitConfig): void;
 
     abstract close(): void;
 }

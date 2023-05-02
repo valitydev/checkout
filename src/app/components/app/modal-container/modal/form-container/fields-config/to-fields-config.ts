@@ -4,7 +4,7 @@ import {
     InvoiceTemplateLineCostUnlim,
     InvoiceTemplateSingleLine
 } from 'checkout/backend';
-import { InitConfig, IntegrationType } from 'checkout/config';
+import { InitConfig } from 'checkout/config';
 import { AmountConfig, EmailConfig, FieldsConfig, PhoneNumberConfig } from './fields-config';
 
 const toSingleLineAmountConfig = (c: InvoiceTemplateSingleLine): AmountConfig => {
@@ -32,7 +32,7 @@ const toTemplateAmountConfig = (c: InitConfig, t: InvoiceTemplate): AmountConfig
 
 export const toAmountConfig = (c: InitConfig, template: InvoiceTemplate): AmountConfig => {
     switch (c.integrationType) {
-        case IntegrationType.invoiceTemplate:
+        case 'invoiceTemplate':
             return toTemplateAmountConfig(c, template);
     }
     return { visible: false };

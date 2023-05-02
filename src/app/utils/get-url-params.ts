@@ -1,6 +1,6 @@
 import { splitByFirst } from './split-by-first';
 
-interface URLParams {
+export interface URLParams {
     [param: string]: boolean | string | number | null | undefined;
 }
 

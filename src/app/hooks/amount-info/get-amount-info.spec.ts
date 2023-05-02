@@ -1,6 +1,5 @@
 import { resolveInvoice } from './resolve-invoice';
 import { getAmountInfo } from './get-amount-info';
-import { IntegrationType } from 'checkout/config';
 import { resolveInvoiceTemplate } from './resolve-invoice-template';
 
 jest.mock('./resolve-invoice');
@@ -11,7 +10,7 @@ const resolveInvoiceTemplateMock = resolveInvoiceTemplate as any;
 
 it('invoice integration type should call resolveInvoice', () => {
     const initConfig = {
-        integrationType: IntegrationType.invoice
+        integrationType: 'invoice'
     } as any;
     const model = {
         invoice: 'invoiceMock'
@@ -23,7 +22,7 @@ it('invoice integration type should call resolveInvoice', () => {
 
 it('invoice template integration type should call resolveInvoiceTemplate', () => {
     const initConfig = {
-        integrationType: IntegrationType.invoiceTemplate,
+        integrationType: 'invoiceTemplate',
         amount: 999
     } as any;
     const model = {

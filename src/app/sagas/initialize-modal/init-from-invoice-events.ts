@@ -1,6 +1,5 @@
 import { InvoiceChangeType, InvoiceEvent, ServiceProvider } from 'checkout/backend';
 import { ModalState } from 'checkout/state';
-import { PaymentMethodName } from 'checkout/config';
 import { provideInteraction } from '../provide-modal';
 import { toModalResult } from './to-modal-result';
 import { toInitialState } from './to-initial-state';
@@ -10,7 +9,6 @@ import { PaymentMethod } from 'checkout/hooks/init-available-payment-methods';
 export function initFromInvoiceEvents(
     events: InvoiceEvent[],
     methods: PaymentMethod[],
-    initialPaymentMethod: PaymentMethodName,
     serviceProviders: ServiceProvider[],
     skipUserInteraction: boolean
 ): ModalState {
@@ -23,7 +21,7 @@ export function initFromInvoiceEvents(
         case InvoiceChangeType.PaymentStatusChanged:
             return toModalResult();
         case InvoiceChangeType.InvoiceCreated:
-            return toInitialState(methods, initialPaymentMethod);
+            return toInitialState(methods);
         default:
             throw { code: 'error.unsupported.invoice.change.type' };
     }

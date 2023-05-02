@@ -1,6 +1,5 @@
 import { ForkEffect, put, PutEffect, SelectEffect, takeLatest } from 'redux-saga/effects';
 import { InitializeModalCompleted, InitializeModalRequested, TypeKeys } from 'checkout/actions';
-import { IntegrationType } from 'checkout/config';
 import { toInitialState } from './to-initial-state';
 import { initFromInvoiceEvents } from './init-from-invoice-events';
 
@@ -10,16 +9,15 @@ export function* initializeModal({
     payload: { initConfig, events, availablePaymentMethods, serviceProviders }
 }: InitializeModalRequested): Iterator<Effects> {
     let initializedModals;
-    const { integrationType, initialPaymentMethod, skipUserInteraction } = initConfig;
+    const { integrationType, skipUserInteraction } = initConfig;
     switch (integrationType) {
-        case IntegrationType.invoiceTemplate:
-            initializedModals = toInitialState(availablePaymentMethods, initialPaymentMethod);
+        case 'invoiceTemplate':
+            initializedModals = toInitialState(availablePaymentMethods);
             break;
-        case IntegrationType.invoice:
+        case 'invoice':
             initializedModals = initFromInvoiceEvents(
                 events,
                 availablePaymentMethods,
-                initialPaymentMethod,
                 serviceProviders,
                 skipUserInteraction
             );

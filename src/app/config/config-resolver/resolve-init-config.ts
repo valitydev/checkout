@@ -2,10 +2,8 @@ import { resolveBoolean } from './resolve-boolean';
 import { resolveInteger } from './resolve-integer';
 import { InitConfig } from '../init-config';
 import { resolveIntegrationType } from './resolve-integration-type';
-import { UserConfig } from './user-config';
 import { resolveString } from './resolve-string';
 import { HoldExpirationType } from 'checkout/backend/model';
-import { PaymentMethodName } from 'checkout/config/payment-method-name';
 import { DEFAULT_THEME } from 'checkout/themes';
 import { resolveObject } from './resolve-object';
 import { detectLocale } from '../../../locale';
@@ -26,7 +24,7 @@ const checkUnknown = (resolvedParams: object, allParams: object): void => {
     }
 };
 
-export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
+export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig => {
     const resolvedIntegrationType = resolveIntegrationType(userConfig);
     if (!resolvedIntegrationType) {
         throw { code: 'error.unrecognized.integration.type' };
@@ -43,7 +41,6 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
         paymentFlowHold,
         holdExpiration,
         locale,
-        initialPaymentMethod,
         recurring,
         theme,
         brandless,
@@ -78,7 +75,6 @@ export const resolveInitConfig = (userConfig: UserConfig): InitConfig => {
             HoldExpirationType.cancel
         ),
         locale: detectLocale(resolveString(locale, 'locale')),
-        initialPaymentMethod: resolveString(initialPaymentMethod, 'initialPaymentMethod') as PaymentMethodName,
         recurring: setDefault(resolveBoolean(recurring, 'recurring'), false),
         theme: setDefault(resolveString(theme, 'theme'), DEFAULT_THEME.name),
         brandless: setDefault(resolveBoolean(brandless, 'brandless'), true),

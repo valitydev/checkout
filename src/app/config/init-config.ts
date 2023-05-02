@@ -1,9 +1,7 @@
 import { HoldExpirationType } from 'checkout/backend';
-import { IntegrationType } from './integration-type';
-import { PaymentMethodName } from './payment-method-name';
 
-export class InitConfig {
-    integrationType?: IntegrationType;
+export type InitConfig = {
+    integrationType?: 'invoice' | 'invoiceTemplate';
     invoiceID?: string;
     invoiceAccessToken?: string;
     invoiceTemplateID?: string;
@@ -27,7 +25,6 @@ export class InitConfig {
     amount?: number;
     obscureCardCvv?: boolean;
     requireCardHolder?: boolean;
-    initialPaymentMethod?: PaymentMethodName;
     recurring?: boolean;
     theme?: string;
     brandless?: boolean;
@@ -35,4 +32,4 @@ export class InitConfig {
     terminalFormValues?: object;
     skipUserInteraction?: boolean;
     isExternalIDIncluded?: boolean;
-}
+};

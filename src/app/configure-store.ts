@@ -7,7 +7,7 @@ import { resultReducer, modelReducer, errorReducer, modalReducer, eventsReducer 
 import rootSaga from 'checkout/sagas/root-saga';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
-export function configureStore(initState: any): Store<State> {
+export function configureStore(): Store<State> {
     const sagaMiddleware = createSagaMiddleware();
     const store: Store<State> = createStore(
         combineReducers<State>({
@@ -18,7 +18,6 @@ export function configureStore(initState: any): Store<State> {
             modals: modalReducer,
             events: eventsReducer
         }),
-        initState,
         composeWithDevTools(applyMiddleware(sagaMiddleware))
     );
     sagaMiddleware.run(rootSaga);

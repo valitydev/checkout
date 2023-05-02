@@ -37,12 +37,10 @@ const Container = styled.div`
     position: relative;
 `;
 
-export const ModalContainer = () => {
-    return (
-        <Animation enter={750} appear={750} leave={750}>
-            <Container>
-                <ModalContent />
-            </Container>
-        </Animation>
-    );
-};
+export const ModalContainer = () => (
+    <Animation enter={750} appear={750} leave={750}>
+        <Container>
+            <ModalContent />
+        </Container>
+    </Animation>
+);

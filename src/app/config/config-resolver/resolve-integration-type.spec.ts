@@ -1,5 +1,4 @@
 import { resolveIntegrationType } from './resolve-integration-type';
-import { IntegrationType } from 'checkout/config';
 
 it('empty config should return null', () => {
     const result = resolveIntegrationType(null);
@@ -20,7 +19,7 @@ it('should return invoice integration type', () => {
         someField: 'someValue'
     } as any);
     const expected = {
-        integrationType: IntegrationType.invoice,
+        integrationType: 'invoice',
         invoiceID: 'mock invoiceID',
         invoiceAccessToken: 'mock token'
     };
@@ -34,7 +33,7 @@ it('should return invoiceTemplate integration type', () => {
         someField: 'someValue'
     } as any);
     const expected = {
-        integrationType: IntegrationType.invoiceTemplate,
+        integrationType: 'invoiceTemplate',
         invoiceTemplateID: 'mock invoiceTemplateID',
         invoiceTemplateAccessToken: 'mock token'
     };
