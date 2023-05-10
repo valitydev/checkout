@@ -47,15 +47,15 @@ function* poll(endpoint: string, token: string, invoiceID: string, interval = 10
     return lastEvent;
 }
 
-const POLLING_TIME_MS = 60 * 1000 * 5;
-const POLLING_INTEVAL_MS = 1000;
+const POLLING_TIME_MS = 30 * 1000;
+const POLLING_INTERVAL_MS = 1000;
 
 export function* pollInvoiceEvents(endpoint: string, token: string, invoiceID: string) {
     let lastEvent: InvoiceEvent;
     for (let i = 1; !lastEvent && i < 6; i += 1) {
         [lastEvent] = yield race<any>([
             call(poll, endpoint, token, invoiceID),
-            delay(POLLING_TIME_MS * i, POLLING_INTEVAL_MS * 2 ** i)
+            delay(POLLING_TIME_MS * i, POLLING_INTERVAL_MS * 2 ** i)
         ]);
     }
     if (lastEvent) {
