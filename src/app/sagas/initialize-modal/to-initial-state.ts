@@ -1,7 +1,7 @@
 import { ModalState, NoAvailablePaymentMethodFormInfo, PaymentMethodsFormInfo } from 'checkout/state';
 import { toInitialForm } from './to-initial-form';
 import { toInitialModal } from './to-initial-modal';
-import { PaymentMethod } from 'checkout/hooks/init-available-payment-methods';
+import { PaymentMethod } from 'checkout/hooks';
 
 export const toInitialState = (methods: PaymentMethod[]): ModalState => {
     if (methods.length === 1) {

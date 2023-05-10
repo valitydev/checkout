@@ -1,6 +1,6 @@
 import * as Currencies from '@dinero.js/currencies';
 
-import { AmountInfo } from 'checkout/hooks/amount-info';
+import { AmountInfo } from 'checkout/hooks';
 
 const getAmountByExponent = ({ minorValue, currencyCode }: AmountInfo): number =>
     minorValue / Number('1e' + Currencies[currencyCode].exponent);

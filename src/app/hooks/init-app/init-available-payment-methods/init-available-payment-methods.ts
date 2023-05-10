@@ -1,7 +1,7 @@
 import { InitConfig } from 'checkout/config';
 import { toAvailablePaymentMethods } from './to-available-payment-methods';
 import { setPriority } from './set-priority';
-import { Model } from '../fetch-model';
+import { Model } from '..';
 
 export const initAvailablePaymentMethods = (initConfig: InitConfig, { paymentMethods, serviceProviders }: Model) => {
     const methods = toAvailablePaymentMethods(paymentMethods, initConfig, serviceProviders);

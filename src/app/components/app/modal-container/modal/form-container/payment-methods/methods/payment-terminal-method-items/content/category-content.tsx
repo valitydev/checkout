@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { KnownProviderCategories } from 'checkout/hooks/init-available-payment-methods';
+import { KnownProviderCategories } from 'checkout/hooks';
 
 export const CategoryContent: React.FC<{ category: KnownProviderCategories }> = ({ category }) => {
     switch (category) {

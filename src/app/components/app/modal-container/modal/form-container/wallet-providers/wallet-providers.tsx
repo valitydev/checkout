@@ -7,7 +7,7 @@ import { goToFormInfo, pay } from 'checkout/actions';
 import { WalletProviderPaymentMethodItem } from '../wallet-provider-payment-method-item';
 import { useAppDispatch } from 'checkout/configure-store';
 import { InitialContext } from '../../../../initial-context';
-import { DigitalWalletPaymentMethod, PaymentMethodName } from 'checkout/hooks/init-available-payment-methods';
+import { DigitalWalletPaymentMethod, PaymentMethodName } from 'checkout/hooks';
 
 const getAvailablePaymentMethod = (
     availablePaymentMethods,

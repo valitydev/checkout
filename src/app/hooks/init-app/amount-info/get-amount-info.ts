@@ -1,8 +1,8 @@
 import { InitConfig } from 'checkout/config';
 import { resolveInvoiceTemplate } from './resolve-invoice-template';
 import { resolveInvoice } from './resolve-invoice';
-import { Model } from '../fetch-model';
 import { AmountInfo } from './types';
+import { Model } from '..';
 
 export const getAmountInfo = (initConfig: InitConfig, model: Model): AmountInfo => {
     switch (initConfig.integrationType) {

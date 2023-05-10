@@ -27,7 +27,7 @@ import {
 import { MetadataSelect } from './metadata-select';
 
 import { InitialContext } from '../../../../initial-context';
-import { PaymentMethodName } from 'checkout/hooks/init-available-payment-methods';
+import { PaymentMethodName } from 'checkout/hooks';
 
 const Container = styled.div`
     min-height: 300px;

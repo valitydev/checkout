@@ -5,7 +5,7 @@ import { formatAmount } from 'checkout/utils';
 import { Button } from 'checkout/components';
 import styled from 'checkout/styled-components';
 import { Locale } from 'checkout/locale';
-import { AmountInfo } from 'checkout/hooks/amount-info';
+import { AmountInfo } from 'checkout/hooks';
 
 import { InitialContext } from '../../../../initial-context';
 

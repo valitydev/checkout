@@ -4,7 +4,7 @@ import {
     PaymentMethod,
     PaymentMethodName,
     PaymentTerminalPaymentMethod
-} from 'checkout/hooks/init-available-payment-methods';
+} from 'checkout/hooks';
 import {
     CardFormInfo,
     FormInfo,

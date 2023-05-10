@@ -13,7 +13,7 @@ import { Amount } from '../common-fields';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getActiveModalFormSelector } from 'checkout/selectors';
 import { InitialContext } from '../../../../initial-context';
-import { PaymentMethodName } from 'checkout/hooks/init-available-payment-methods';
+import { PaymentMethodName } from 'checkout/hooks';
 
 const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
     const context = useContext(InitialContext);

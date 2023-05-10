@@ -7,7 +7,7 @@ import { ThemeProvider } from 'checkout/styled-components';
 import { AppWrapper } from './app-wrapper';
 import { GlobalStyle } from './global-style';
 import { InitialContext } from './initial-context';
-import { useInitializeApp, useTheme } from 'checkout/hooks';
+import { useInitApp, useTheme } from 'checkout/hooks';
 import { ModalError } from './modal-error';
 import { InitParams } from 'checkout/initialize';
 
@@ -17,7 +17,7 @@ export type AppProps = {
 
 export function App({ initParams }: AppProps) {
     const theme = useTheme(initParams);
-    const state = useInitializeApp(initParams);
+    const state = useInitApp(initParams);
     return (
         <ThemeProvider theme={theme}>
             <GlobalStyle theme={theme} />

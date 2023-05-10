@@ -1,4 +1,4 @@
-import { AmountInfo } from 'checkout/hooks/amount-info';
+import { AmountInfo } from 'checkout/hooks';
 import toNumber from 'checkout/utils/to-number';
 
 const format = (formAmount: string): string => formAmount.replace(/\s/g, '').replace(/,/g, '.');

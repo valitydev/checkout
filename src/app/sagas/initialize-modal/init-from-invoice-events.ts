@@ -4,7 +4,7 @@ import { provideInteraction } from '../provide-modal';
 import { toModalResult } from './to-modal-result';
 import { toInitialState } from './to-initial-state';
 import { getLastChange } from 'checkout/utils';
-import { PaymentMethod } from 'checkout/hooks/init-available-payment-methods';
+import { PaymentMethod } from 'checkout/hooks';
 
 export function initFromInvoiceEvents(
     events: InvoiceEvent[],

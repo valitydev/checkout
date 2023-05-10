@@ -5,7 +5,7 @@ import { assertUnreachable } from 'checkout/utils';
 import { payWithDigitalWallet } from './pay-with-digital-wallet';
 import { payWithPaymentTerminal } from './pay-with-payment-terminal';
 import { AppContext } from 'checkout/actions';
-import { PaymentMethodName } from 'checkout/hooks/init-available-payment-methods';
+import { PaymentMethodName } from 'checkout/hooks';
 
 const getPayFn = (method: PaymentMethodName) => {
     switch (method) {

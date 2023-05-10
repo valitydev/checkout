@@ -3,8 +3,7 @@ import { InitConfig } from 'checkout/config';
 import { State } from 'checkout/state';
 import { createInvoiceWithTemplate } from './create-invoice-with-template';
 import { Invoice, InvoiceTemplate } from 'checkout/backend';
-import { Model } from 'checkout/hooks/fetch-model';
-import { AmountInfo } from 'checkout/hooks/amount-info';
+import { AmountInfo, Model } from 'checkout/hooks';
 
 type Effects = CallEffect | InvoiceAndToken;
 

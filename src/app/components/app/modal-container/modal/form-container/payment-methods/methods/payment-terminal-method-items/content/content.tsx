@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { MetadataContent } from './metadata-content';
 import { CategoryContent } from './category-content';
-import { PaymentTerminalPaymentMethod } from 'checkout/hooks/init-available-payment-methods';
+import { PaymentTerminalPaymentMethod } from 'checkout/hooks';
 
 export const Content: React.FC<{ method: PaymentTerminalPaymentMethod; localeCode: string }> = ({
     method,

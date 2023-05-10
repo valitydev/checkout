@@ -10,7 +10,7 @@ import { Title } from '../title';
 import { HeaderWrapper } from '../header-wrapper';
 
 import { InitialContext } from '../../../../initial-context';
-import { PaymentMethod } from 'checkout/hooks/init-available-payment-methods';
+import { PaymentMethod } from 'checkout/hooks';
 
 const sortByPriority = (methods: PaymentMethod[]): PaymentMethod[] =>
     methods.sort((m1, m2) => (m1.priority > m2.priority ? 1 : -1));

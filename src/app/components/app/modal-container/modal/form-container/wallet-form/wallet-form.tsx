@@ -17,7 +17,7 @@ import { getMetadata, MetadataField, MetadataLogo, obscurePassword, sortByIndex 
 import { LogoContainer } from './logo-container';
 
 import { InitialContext } from '../../../../initial-context';
-import { PaymentMethodName } from 'checkout/hooks/init-available-payment-methods';
+import { PaymentMethodName } from 'checkout/hooks';
 
 const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
     const context = useContext(InitialContext);

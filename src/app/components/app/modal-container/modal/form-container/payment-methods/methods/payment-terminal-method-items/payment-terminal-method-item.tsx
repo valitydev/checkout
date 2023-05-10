@@ -8,7 +8,7 @@ import { payWithPaymentTerminal } from './pay-with-payment-terminal';
 import { ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
 import { Content } from './content';
 import { AppContext } from 'checkout/actions';
-import { KnownProviderCategories, PaymentTerminalPaymentMethod } from 'checkout/hooks/init-available-payment-methods';
+import { KnownProviderCategories, PaymentTerminalPaymentMethod } from 'checkout/hooks';
 
 export interface PaymentTerminalMethodItemProps {
     method: PaymentTerminalPaymentMethod;

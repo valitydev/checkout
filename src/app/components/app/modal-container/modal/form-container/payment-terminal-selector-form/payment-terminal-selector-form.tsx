@@ -12,7 +12,7 @@ import { ServiceProvidersGrid } from './service-providers-grid';
 
 import { InitialContext } from '../../../../initial-context';
 import { getAvailableTerminalPaymentMethod } from '../get-available-terminal-payment-method';
-import { KnownProviderCategories } from 'checkout/hooks/init-available-payment-methods';
+import { KnownProviderCategories } from 'checkout/hooks';
 
 const Container = styled.div`
     min-height: 346px;

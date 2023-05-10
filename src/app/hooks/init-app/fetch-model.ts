@@ -1,27 +1,14 @@
 import {
-    Invoice,
-    InvoiceTemplate,
-    PaymentMethod,
-    ServiceProvider,
     getInvoiceByID,
     getInvoiceEvents,
     getInvoicePaymentMethods,
-    Event,
     getInvoiceTemplateByID,
     getInvoicePaymentMethodsByTemplateID
 } from 'checkout/backend';
 
 import { getServiceProviders } from './get-service-providers';
 import { InitConfig } from 'checkout/config';
-
-export type Model = {
-    invoiceTemplate?: InvoiceTemplate;
-    events?: Event[];
-    paymentMethods?: PaymentMethod[];
-    invoiceAccessToken?: string;
-    invoice?: Invoice;
-    serviceProviders?: ServiceProvider[];
-};
+import { Model } from './types';
 
 type InvoiceTemplateParams = {
     integrationType: 'invoiceTemplate';

@@ -11,7 +11,7 @@ import {
     PaymentMethod,
     PaymentMethodName,
     PaymentTerminalPaymentMethod
-} from 'checkout/hooks/init-available-payment-methods';
+} from 'checkout/hooks';
 
 const Method: React.FC<MethodProps> = (props) => {
     switch (props.method.name) {

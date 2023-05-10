@@ -17,7 +17,7 @@ import { getMetadata } from 'checkout/components';
 
 import { InitialContext } from '../../../../initial-context';
 import { getAvailableTerminalPaymentMethod } from '../get-available-terminal-payment-method';
-import { KnownProviderCategories } from 'checkout/hooks/init-available-payment-methods';
+import { KnownProviderCategories } from 'checkout/hooks';
 
 const ProviderSelectorDescription = styled.p`
     font-size: 16px;
