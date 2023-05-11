@@ -1,5 +1,4 @@
-import groupBy from 'lodash-es/groupBy';
-
+import groupBy from 'checkout/utils/group-by';
 import { DigitalWallet, METADATA_NAMESPACE, ServiceProvider } from 'checkout/backend';
 import {
     DigitalWalletPaymentMethod,

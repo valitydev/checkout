@@ -1,10 +1,10 @@
-import { useEffect, useReducer } from 'react';
+import { useCallback, useReducer } from 'react';
 
 import { InitParams } from 'checkout/initialize';
 import { InitialData, initApp } from './init-app';
 
 type State =
-    | { status: 'INIT' }
+    | { status: 'PRISTINE' }
     | { status: 'SUCCESS'; data: InitialData }
     | { status: 'FAILURE'; data: null; error: unknown };
 
@@ -28,13 +28,13 @@ const dataFetchReducer = (state: State, action: Action): State => {
     }
 };
 
-export const useInitApp = (initParams: InitParams) => {
+export const useInitApp = () => {
     const [state, dispatch] = useReducer(dataFetchReducer, {
-        status: 'INIT'
+        status: 'PRISTINE'
     });
 
-    useEffect(() => {
-        const init = async () => {
+    const init = useCallback((initParams: InitParams) => {
+        const fetchData = async () => {
             try {
                 const payload = await initApp(initParams);
                 dispatch({
@@ -46,8 +46,8 @@ export const useInitApp = (initParams: InitParams) => {
                 console.error('Initialize app failure', error);
             }
         };
-        init();
+        fetchData();
     }, []);
 
-    return state;
+    return { state, init };
 };

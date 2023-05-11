@@ -10,6 +10,7 @@ import { InitialContext } from './initial-context';
 import { useInitApp, useTheme } from 'checkout/hooks';
 import { ModalError } from './modal-error';
 import { InitParams } from 'checkout/initialize';
+import { useEffect } from 'react';
 
 export type AppProps = {
     initParams: InitParams;
@@ -17,13 +18,16 @@ export type AppProps = {
 
 export function App({ initParams }: AppProps) {
     const theme = useTheme(initParams);
-    const state = useInitApp(initParams);
+    const { state, init } = useInitApp();
+
+    useEffect(() => init(initParams), [initParams]);
+
     return (
         <ThemeProvider theme={theme}>
             <GlobalStyle theme={theme} />
             <AppWrapper>
                 <Overlay />
-                {state.status === 'INIT' && <LayoutLoader />}
+                {state.status === 'PRISTINE' && <LayoutLoader />}
                 {state.status === 'SUCCESS' && (
                     <InitialContext.Provider value={state.data}>
                         <ModalContainer />

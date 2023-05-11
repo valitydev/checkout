@@ -1,5 +1,4 @@
-import groupBy from 'lodash-es/groupBy';
-
+import groupBy from 'checkout/utils/group-by';
 import { KnownProviderCategories, PaymentMethod, PaymentMethodName } from '../types';
 import { PaymentTerminal, ServiceProvider } from 'checkout/backend';
 import { logUnavailableWithConfig } from './log-unavailable-with-config';
