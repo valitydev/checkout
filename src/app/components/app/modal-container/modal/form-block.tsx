@@ -1,7 +1,7 @@
-import styled, { css } from 'checkout/styled-components';
+import styled from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 
-export const FormBlock = styled.div<{ inFrame: boolean }>`
+export const FormBlock = styled.div`
     position: relative;
     height: 100%;
     width: 100%;
@@ -18,10 +18,4 @@ export const FormBlock = styled.div<{ inFrame: boolean }>`
         padding: 30px;
         box-sizing: border-box;
     }
-
-    ${({ inFrame }) =>
-        inFrame &&
-        css`
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        `};
 `;

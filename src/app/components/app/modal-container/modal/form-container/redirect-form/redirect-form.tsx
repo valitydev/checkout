@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import styled from 'checkout/styled-components';
 import { useAppSelector } from 'checkout/configure-store';
 import { getActiveModalFormSelector } from 'checkout/selectors';
 import { RedirectFormInfo } from 'checkout/state';
 import { prepareForm } from 'checkout/utils';
+
+import { InitialContext } from '../../../../initial-context';
 
 const RedirectFormContainer = styled.div`
     visibility: hidden;
@@ -19,7 +21,7 @@ const Container = styled.div`
 export const RedirectForm: React.FC = () => {
     const containerRef = useRef(null);
     const [form, setForm] = useState(null);
-    const origin = useAppSelector((s) => s.config.origin);
+    const { origin } = useContext(InitialContext);
     const { request } = useAppSelector<RedirectFormInfo>(getActiveModalFormSelector);
 
     useEffect(() => {

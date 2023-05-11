@@ -21,13 +21,13 @@ class AppFinalizer {
         setTimeout(() => this.destroy(CommunicatorEvents.close), AppFinalizer.CLOSE_TIMEOUT);
     }
 
-    done(redirectUrl: string, inFrame: boolean, setResult: (resultState: ResultState) => ResultAction) {
+    done(redirectUrl: string, setResult: (resultState: ResultState) => ResultAction) {
         setTimeout(() => {
             setResult(ResultState.closeAfterDone);
             setTimeout(() => {
                 this.destroy(CommunicatorEvents.finished);
-                if (inFrame) {
-                    redirectUrl ? window.open(redirectUrl, '_self') : window.close();
+                if (redirectUrl) {
+                    window.open(redirectUrl, '_self');
                 }
             }, AppFinalizer.CLOSE_TIMEOUT);
         }, AppFinalizer.DONE_TIMEOUT - AppFinalizer.CLOSE_TIMEOUT);
@@ -38,7 +38,8 @@ export function finalize(
     state: State,
     transport: Transport,
     checkoutEl: HTMLElement,
-    setResult: (resultState: ResultState) => ResultAction
+    setResult: (resultState: ResultState) => ResultAction,
+    redirectUrl: string
 ) {
     const finalizer = new AppFinalizer(transport, checkoutEl);
     switch (state.result) {
@@ -46,13 +47,7 @@ export function finalize(
             finalizer.close();
             break;
         case ResultState.done:
-            const {
-                config: {
-                    initConfig: { redirectUrl },
-                    inFrame
-                }
-            } = state;
-            finalizer.done(redirectUrl, inFrame, setResult);
+            finalizer.done(redirectUrl, setResult);
             break;
     }
 }

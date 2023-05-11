@@ -1,6 +1,5 @@
 import { InvoiceTemplateLineCostRange, InvoiceTemplateLineCostUnlim } from 'checkout/backend';
 import { formatAmount } from 'checkout/utils';
-import { AmountInfoStatus } from 'checkout/state';
 
 const toUnlimPlaceholder = (localeString: string, currency: string): string => `${localeString} ${currency}`;
 
@@ -9,13 +8,13 @@ const toRangePlaceholder = (cost: InvoiceTemplateLineCostRange, locale: string):
     const lower = formatAmount({
         minorValue: range.lowerBound,
         currencyCode: cost.currency,
-        status: AmountInfoStatus.final,
+        status: 'final',
         locale
     });
     const upper = formatAmount({
         minorValue: range.upperBound,
         currencyCode: cost.currency,
-        status: AmountInfoStatus.final,
+        status: 'final',
         locale
     });
     return `${lower} - ${upper}`;

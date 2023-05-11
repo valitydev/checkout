@@ -3,7 +3,7 @@ import { initialize } from 'cross-origin-communicator';
 import { IframeContainer } from './iframe-container';
 import { Initializer } from './initializer';
 import { CommunicatorEvents, communicatorInstanceName } from '../communicator-constants';
-import { OpenConfig } from '../app/config';
+import { InitConfig } from 'checkout/config';
 
 export class IframeInitializer extends Initializer {
     private container: IframeContainer;
@@ -13,7 +13,7 @@ export class IframeInitializer extends Initializer {
         this.container = new IframeContainer(origin);
     }
 
-    open(openConfig: OpenConfig = {}) {
+    open(openConfig: InitConfig = {}) {
         const target = (window.frames as any)[this.container.getName()];
         this.container.show();
         initialize(target, this.origin, communicatorInstanceName).then((transport) => {

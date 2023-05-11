@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { useContext, useMemo } from 'react';
 
-import { State } from 'checkout/state';
 import { formatAmount } from 'checkout/utils';
-import { Locale } from 'checkout/locale';
 import { device } from 'checkout/utils/device';
 import styled from 'checkout/styled-components';
+
+import { InitialContext } from '../../../initial-context';
 
 const InfoWrapper = styled.div`
     padding: 16px;
@@ -65,31 +65,21 @@ const DescriptionContainer = styled.div`
     gap: 8px;
 `;
 
-export interface InfoProps {
-    locale: Locale;
-    name: string;
-    description: string;
-    formattedAmount: string;
-}
+export const Info = () => {
+    const { locale, initConfig, amountInfo } = useContext(InitialContext);
 
-const mapStateToProps = ({ config: { initConfig, locale }, amountInfo }: State): InfoProps => ({
-    locale,
-    name: initConfig.name,
-    description: initConfig.description,
-    formattedAmount: formatAmount(amountInfo)
-});
+    const formattedAmount = useMemo(() => formatAmount(amountInfo), [amountInfo]);
 
-const InfoDef: React.FC<InfoProps> = ({ formattedAmount, locale, name, description }) => (
-    <InfoWrapper>
-        {name ? <CompanyName id="company-name-label">{name}</CompanyName> : false}
-        {formattedAmount ? <Amount>{formattedAmount}</Amount> : false}
-        {description && (
-            <DescriptionContainer>
-                <Order>{locale['info.order.label']}</Order>
-                <ProductDescription id="product-description">{description}</ProductDescription>
-            </DescriptionContainer>
-        )}
-    </InfoWrapper>
-);
-
-export const Info = connect(mapStateToProps)(InfoDef);
+    return (
+        <InfoWrapper>
+            {initConfig.name ? <CompanyName id="company-name-label">{initConfig.name}</CompanyName> : false}
+            {formattedAmount ? <Amount>{formattedAmount}</Amount> : false}
+            {initConfig.description && (
+                <DescriptionContainer>
+                    <Order>{locale['info.order.label']}</Order>
+                    <ProductDescription id="product-description">{initConfig.description}</ProductDescription>
+                </DescriptionContainer>
+            )}
+        </InfoWrapper>
+    );
+};

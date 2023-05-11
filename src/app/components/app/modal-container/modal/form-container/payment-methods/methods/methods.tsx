@@ -1,37 +1,22 @@
 import * as React from 'react';
+import { FormName } from 'checkout/state';
+import { assertUnreachable } from 'checkout/utils';
+import { Wallets } from './wallets';
+import { BankCard } from './bank-card';
+import { MethodProps } from './method-props';
+import { WalletProviderPaymentMethodItem } from '../../wallet-provider-payment-method-item';
+import { PaymentTerminalMethodItems } from './payment-terminal-method-items';
 import {
     DigitalWalletPaymentMethod,
-    FormName,
     PaymentMethod,
     PaymentMethodName,
     PaymentTerminalPaymentMethod
-} from 'checkout/state';
-import { assertUnreachable } from 'checkout/utils';
-import { Wallets } from './wallets';
-import { ApplePay } from './apple-pay';
-import { BankCard } from './bank-card';
-import { GooglePay } from './google-pay';
-import { MethodProps } from './method-props';
-import { SamsungPay } from './samsung-pay';
-import { MobileCommerce } from './mobile-commerce';
-import { YandexPay } from './yandex-pay';
-import { WalletProviderPaymentMethodItem } from '../../wallet-provider-payment-method-item';
-import { PaymentTerminalMethodItems } from './payment-terminal-method-items';
+} from 'checkout/hooks';
 
 const Method: React.FC<MethodProps> = (props) => {
     switch (props.method.name) {
         case PaymentMethodName.BankCard:
             return <BankCard {...props} />;
-        case PaymentMethodName.ApplePay:
-            return <ApplePay {...props} />;
-        case PaymentMethodName.GooglePay:
-            return <GooglePay {...props} />;
-        case PaymentMethodName.SamsungPay:
-            return <SamsungPay {...props} />;
-        case PaymentMethodName.YandexPay:
-            return <YandexPay {...props} />;
-        case PaymentMethodName.MobileCommerce:
-            return <MobileCommerce {...props} />;
         case PaymentMethodName.PaymentTerminal:
             return (
                 <PaymentTerminalMethodItems
@@ -42,6 +27,7 @@ const Method: React.FC<MethodProps> = (props) => {
                     localeCode={props.localeCode}
                     emailPrefilled={props.emailPrefilled}
                     phoneNumberPrefilled={props.phoneNumberPrefilled}
+                    context={props.context}
                 />
             );
         case PaymentMethodName.DigitalWallet:
@@ -53,6 +39,7 @@ const Method: React.FC<MethodProps> = (props) => {
                         previous={FormName.paymentMethods}
                         setFormInfo={props.setFormInfo}
                         pay={props.pay}
+                        context={props.context}
                     />
                 );
             }

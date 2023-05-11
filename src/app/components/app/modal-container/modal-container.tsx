@@ -1,9 +1,6 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 
-import { State, ResultState, InitializeAppState } from 'checkout/state';
 import { ModalContent } from './modal-content';
-import { ModalError } from './modal-error';
 import styled from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 import { fadein, fadeout, popup, popout } from 'checkout/styled-components/animations';
@@ -40,30 +37,10 @@ const Container = styled.div`
     position: relative;
 `;
 
-export interface ModalContainerProps {
-    result: ResultState;
-    initializeApp: InitializeAppState;
-}
-
-class ModalContainerDef extends React.Component<ModalContainerProps> {
-    render() {
-        const {
-            result,
-            initializeApp: { error }
-        } = this.props;
-        return (
-            <Animation enter={750} appear={750} leave={750}>
-                {result !== ResultState.close && result !== ResultState.closeAfterDone && (
-                    <Container>{error ? <ModalError error={error} /> : <ModalContent />}</Container>
-                )}
-            </Animation>
-        );
-    }
-}
-
-const mapStateToProps = (state: State) => ({
-    result: state.result,
-    initializeApp: state.initializeApp
-});
-
-export const ModalContainer = connect(mapStateToProps)(ModalContainerDef);
+export const ModalContainer = () => (
+    <Animation enter={750} appear={750} leave={750}>
+        <Container>
+            <ModalContent />
+        </Container>
+    </Animation>
+);

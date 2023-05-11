@@ -2,11 +2,11 @@ import { initialize } from 'cross-origin-communicator';
 
 import { Initializer } from './initializer';
 import { CommunicatorEvents, communicatorInstanceName } from '../communicator-constants';
-import { OpenConfig } from '../app/config';
+import { InitConfig } from '../app/config';
 import { serializeUrlParams } from '../serialize-url-params';
 
 export class PopupInitializer extends Initializer {
-    open(openConfig: OpenConfig = {}) {
+    open(openConfig: InitConfig = {}) {
         const url = `${this.origin}/v1/checkout.html?${serializeUrlParams({ ...this.config, ...openConfig })}`;
         const target = window.open(url, '_blank');
         initialize(target, this.origin, communicatorInstanceName).then((transport) => {

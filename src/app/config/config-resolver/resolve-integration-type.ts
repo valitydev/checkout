@@ -1,24 +1,18 @@
 import intersection from 'checkout/utils/intersection';
-import { IntegrationType } from '../integration-type';
-import { UserConfig } from './user-config';
+import { InitConfig } from '../init-config';
 
-const typesDef = [
+const typesDef: { type: 'invoiceTemplate' | 'invoice'; requiredFields: string[] }[] = [
     {
-        type: IntegrationType.invoiceTemplate,
+        type: 'invoiceTemplate',
         requiredFields: ['invoiceTemplateID', 'invoiceTemplateAccessToken']
     },
     {
-        type: IntegrationType.invoice,
+        type: 'invoice',
         requiredFields: ['invoiceID', 'invoiceAccessToken']
     }
 ];
 
-interface Resolved {
-    integrationType: IntegrationType;
-    [key: string]: string;
-}
-
-export const resolveIntegrationType = (userConfig: UserConfig): Resolved => {
+export const resolveIntegrationType = (userConfig: InitConfig): InitConfig => {
     if (!userConfig) {
         return null;
     }

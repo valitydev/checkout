@@ -3,7 +3,6 @@ const merge = require('webpack-merge');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const checkoutConfig = require('./checkout-config');
 const initializerConfig = require('./initializer-config');
-const samsungPayConfig = require('./samsung-pay-config');
 const prepareOutputConfig = require('./prepare-output-config');
 const commonConfig = require('./common-config');
 
@@ -29,6 +28,5 @@ const prepareModule = (env, baseConfig, outputPath, jsPattern, cssPattern) =>
 
 module.exports = (env, { mode }) => [
     prepareModule(mode, checkoutConfig, `${baseOutput}/v1`, '[name].[hash:20]', '[hash:20]'),
-    prepareModule(mode, samsungPayConfig, `${baseOutput}/v1`, '[name].[hash:20]', '[hash:20]'),
     prepareModule(mode, initializerConfig, baseOutput)
 ];

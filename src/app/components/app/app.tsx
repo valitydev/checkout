@@ -1,49 +1,40 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
 
 import { Overlay } from './overlay';
 import { ModalContainer } from './modal-container';
 import { LayoutLoader } from './layout-loader';
-import { AppProps } from './app-props';
-import { State } from 'checkout/state';
-import { initializeApp } from 'checkout/actions';
 import { ThemeProvider } from 'checkout/styled-components';
-import { getTheme } from 'checkout/themes';
-import { AppWrapper } from 'checkout/components/app/app-wrapper';
-import { GlobalStyle } from 'checkout/components/app/global-style';
+import { AppWrapper } from './app-wrapper';
+import { GlobalStyle } from './global-style';
+import { InitialContext } from './initial-context';
+import { useInitApp, useTheme } from 'checkout/hooks';
+import { ModalError } from './modal-error';
+import { InitParams } from 'checkout/initialize';
+import { useEffect } from 'react';
 
-class AppDef extends React.Component<AppProps> {
-    componentWillMount() {
-        this.props.initApp(this.props.initConfig);
-    }
+export type AppProps = {
+    initParams: InitParams;
+};
 
-    render() {
-        const { initialized, error } = this.props.initializeApp;
-        const theme = getTheme(this.props.theme || this.props.fixedTheme);
-        return (
-            <ThemeProvider theme={theme}>
-                <>
-                    <GlobalStyle theme={theme} />
-                    <AppWrapper>
-                        <Overlay />
-                        {initialized || error ? <ModalContainer /> : <LayoutLoader />}
-                    </AppWrapper>
-                </>
-            </ThemeProvider>
-        );
-    }
+export function App({ initParams }: AppProps) {
+    const theme = useTheme(initParams);
+    const { state, init } = useInitApp();
+
+    useEffect(() => init(initParams), [initParams]);
+
+    return (
+        <ThemeProvider theme={theme}>
+            <GlobalStyle theme={theme} />
+            <AppWrapper>
+                <Overlay />
+                {state.status === 'PRISTINE' && <LayoutLoader />}
+                {state.status === 'SUCCESS' && (
+                    <InitialContext.Provider value={state.data}>
+                        <ModalContainer />
+                    </InitialContext.Provider>
+                )}
+                {state.status === 'FAILURE' && <ModalError error={state.error} />}
+            </AppWrapper>
+        </ThemeProvider>
+    );
 }
-
-const mapStateToProps = (state: State) => ({
-    initConfig: state.config.initConfig,
-    theme: state.config.initConfig.theme,
-    fixedTheme: state.config?.appConfig?.fixedTheme,
-    initializeApp: state.initializeApp
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    initApp: bindActionCreators(initializeApp, dispatch)
-});
-
-export const App = connect(mapStateToProps, mapDispatchToProps)(AppDef);

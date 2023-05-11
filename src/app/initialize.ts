@@ -1,13 +1,13 @@
 import { listen, Transport } from 'cross-origin-communicator';
 import * as creditCardType from 'credit-card-type';
+import * as Sentry from '@sentry/react';
 
-import { getUrlParams } from 'checkout/utils';
-import { isInFrame } from '../is-in-iframe';
-import { getOrigin } from '../get-origin';
+import { getUrlParams, URLParams } from 'checkout/utils';
 import { StubTransport } from './stub-transport';
-import { Config, resolveInitConfig } from 'checkout/config';
+import { InitConfig, resolveInitConfig } from 'checkout/config';
 import { CommunicatorEvents, communicatorInstanceName } from '../communicator-constants';
-import { UserConfig } from 'checkout/config/config-resolver/user-config';
+import { AppConfig, getAppConfig, getEnv } from './backend';
+import { getOrigin } from '../get-origin';
 
 /**
  * Adding available bank cards
@@ -25,36 +25,51 @@ import { UserConfig } from 'checkout/config/config-resolver/user-config';
     }
 });
 
-const isUriContext = () => !!location.search;
-
-const resolveCommunicatorParams = async (): Promise<[Transport, UserConfig]> => {
-    const transport = await listen(communicatorInstanceName);
-    const userConfig = await new Promise<UserConfig>((resolve) => transport.on(CommunicatorEvents.init, resolve));
-    return [transport, userConfig];
+const initSentry = async (dsn: string) => {
+    const env = await getEnv();
+    Sentry.init({
+        environment: 'production',
+        dsn,
+        integrations: [new Sentry.BrowserTracing()],
+        tracesSampleRate: 0.1,
+        release: env.version
+    });
 };
 
-const resolveUriParams = async (): Promise<[Transport, UserConfig]> => {
+const resolveUriParams = async (): Promise<[Transport, URLParams]> => {
     let transport;
     try {
         transport = await listen(communicatorInstanceName, window.opener ? 2000 : 0);
     } catch (e) {
         transport = new StubTransport();
     }
-    const userConfig: UserConfig = getUrlParams(location.search);
-    return [transport, userConfig];
+    const params = getUrlParams(location.search);
+    return [transport, params];
 };
 
-const resolveInitParams = () => (isUriContext() ? resolveUriParams() : resolveCommunicatorParams());
+export type InitParams = {
+    initConfig: InitConfig;
+    appConfig: AppConfig;
+    origin: string;
+};
 
-export const initialize = async (): Promise<[Transport, Config]> => {
-    const [transport, params] = await resolveInitParams();
+export const initialize = async (): Promise<[Transport, InitParams]> => {
+    const [transport, params] = await resolveUriParams();
+    const initConfig = resolveInitConfig(params);
+    const appConfig = await getAppConfig();
+    if (appConfig.sentryDsn) {
+        await initSentry(appConfig.sentryDsn);
+    }
+    const origin = getOrigin();
     try {
-        const config: Config = {
-            origin: getOrigin(),
-            inFrame: isInFrame(),
-            initConfig: resolveInitConfig(params)
-        };
-        return [transport, config];
+        return [
+            transport,
+            {
+                initConfig,
+                appConfig,
+                origin
+            }
+        ];
     } catch (e) {
         console.error(e);
         transport.emit(CommunicatorEvents.close);

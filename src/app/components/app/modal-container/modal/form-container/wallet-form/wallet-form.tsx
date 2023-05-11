@@ -1,41 +1,43 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 import get from 'lodash-es/get';
 
 import { FormGroup } from '../form-group';
-import { FormName, PaymentMethodName, PaymentStatus, WalletFormInfo, WalletFormValues } from 'checkout/state';
+import { FormName, PaymentStatus, WalletFormInfo, WalletFormValues } from 'checkout/state';
 import { PayButton } from '../pay-button';
 import { Header } from '../header';
 import { Amount } from '../common-fields';
 import { toFieldsConfig } from '../fields-config';
 import { pay, setViewInfoError } from 'checkout/actions';
 import { SignUp } from './sign-up';
-import {
-    getActiveModalFormSelector,
-    getInitConfigSelector,
-    getLocaleSelector,
-    getModelSelector
-} from 'checkout/selectors';
+import { getActiveModalFormSelector } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getMetadata, MetadataField, MetadataLogo, obscurePassword, sortByIndex } from 'checkout/components/ui';
 import { LogoContainer } from './logo-container';
 
-const WalletFormDef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
-    const locale = useAppSelector(getLocaleSelector);
-    const initConfig = useAppSelector(getInitConfigSelector);
-    const model = useAppSelector(getModelSelector);
+import { InitialContext } from '../../../../initial-context';
+import { PaymentMethodName } from 'checkout/hooks';
+
+const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
+    const context = useContext(InitialContext);
+    const {
+        locale,
+        initConfig,
+        model: { invoiceTemplate }
+    } = context;
     const { activeProvider, paymentStatus } = useAppSelector<WalletFormInfo>(getActiveModalFormSelector);
     const dispatch = useAppDispatch();
     const formValues = useAppSelector((s) => get(s.form, 'walletForm.values'));
     const { form, logo, signUpLink } = getMetadata(activeProvider);
-    const amount = toFieldsConfig(initConfig, model.invoiceTemplate).amount;
+    const amount = toFieldsConfig(initConfig, invoiceTemplate).amount;
 
     const submit = (values: WalletFormValues) => {
         dispatch(
             pay({
                 method: PaymentMethodName.DigitalWallet,
-                values: form ? obscurePassword(form, values) : values
+                values: form ? obscurePassword(form, values) : values,
+                context
             })
         );
     };
@@ -78,7 +80,7 @@ const WalletFormDef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, 
                     ))}
                     {amount.visible && (
                         <FormGroup>
-                            <Amount cost={amount.cost} />
+                            <Amount cost={amount.cost} locale={locale} localeCode={initConfig.locale} />
                         </FormGroup>
                     )}
                     <PayButton />

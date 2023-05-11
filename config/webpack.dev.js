@@ -4,7 +4,6 @@ const merge = require('webpack-merge');
 const checkoutConfig = require('./checkout-config');
 const initializerConfig = require('./initializer-config');
 const prepareOutputConfig = require('./prepare-output-config');
-const samsungPayConfig = require('./samsung-pay-config');
 const commonConfig = require('./common-config');
 
 const commonDevConfig = {
@@ -29,6 +28,5 @@ const prepareModule = (env, baseConfig, outputPath) =>
 
 module.exports = (env, { mode }) => [
     prepareModule(mode, checkoutConfig, `${baseOutput}/v1`),
-    prepareModule(mode, samsungPayConfig, `${baseOutput}/v1`),
     prepareModule(mode, initializerConfig, baseOutput)
 ];

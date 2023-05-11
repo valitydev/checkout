@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { ReactSVG } from 'react-svg';
+import { useContext } from 'react';
 
 import styled from 'checkout/styled-components';
-import { useAppSelector } from 'checkout/configure-store';
-import { getAppConfigSelector, getInitConfigSelector } from 'checkout/selectors';
+import { InitialContext } from '../../initial-context';
 
 const FooterWrapper = styled.footer`
     padding: 16px 4px;
@@ -12,8 +12,9 @@ const FooterWrapper = styled.footer`
 `;
 
 export const Footer: React.FC = () => {
-    const initConfigBrandless = useAppSelector(getInitConfigSelector).brandless;
-    const appConfigBrandless = useAppSelector(getAppConfigSelector).brandless;
+    const { initConfig, appConfig } = useContext(InitialContext);
+    const initConfigBrandless = initConfig.brandless;
+    const appConfigBrandless = appConfig.brandless;
     if (appConfigBrandless && initConfigBrandless) {
         return <></>;
     }

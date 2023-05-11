@@ -1,6 +1,5 @@
 import { call, CallEffect, ForkEffect, put, PutEffect, select, SelectEffect, takeLatest } from 'redux-saga/effects';
 import {
-    GoToFormInfo,
     goToFormInfo,
     PaymentCompleted,
     PaymentFailed,
@@ -8,34 +7,28 @@ import {
     PrepareToPay,
     TypeKeys
 } from 'checkout/actions';
+import { Event, ServiceProvider } from 'checkout/backend';
 import { providePayment } from './provide-payment';
 import { EventsStatus, ResultFormInfo, ResultType, State } from 'checkout/state';
 import { provideFromInvoiceEvent } from '../provide-modal';
 
-export function* paymentComplete(): Iterator<SelectEffect | CallEffect | PutEffect<PaymentCompleted>> {
-    const events = yield select((state: State) => state.events.events);
-    yield call(provideFromInvoiceEvent, events);
+export function* paymentComplete(
+    events: Event[],
+    serviceProviders: ServiceProvider[]
+): Iterator<SelectEffect | CallEffect | PutEffect<PaymentCompleted>> {
+    yield call(provideFromInvoiceEvent, events, serviceProviders);
     yield put({ type: TypeKeys.PAYMENT_COMPLETED } as PaymentCompleted);
 }
 
-type PayPutEffect = PrepareToPay | PaymentFailed | PaymentCompleted | GoToFormInfo;
-
-type PayEffect = SelectEffect | CallEffect | PutEffect<PayPutEffect>;
-
-export function* pay(action: PaymentRequested): Iterator<PayEffect> {
+export function* pay(action: PaymentRequested) {
     try {
-        const { config, model, amountInfo }: State = yield select((s: State) => ({
-            config: s.config,
-            model: s.model,
-            amountInfo: s.amountInfo
-        }));
-        const { values, method } = action.payload;
+        const { values, method, context } = action.payload;
         yield put({ type: TypeKeys.PREPARE_TO_PAY } as PrepareToPay);
-        yield call(providePayment, method, config, model, amountInfo, values);
-        const invoiceEventsStatus = yield select((state: State) => state.events.status);
-        switch (invoiceEventsStatus) {
+        yield call(providePayment, method, context, values);
+        const { events, status } = yield select((state: State) => state.events);
+        switch (status) {
             case EventsStatus.polled:
-                yield call(paymentComplete);
+                yield call(paymentComplete, events, context.model?.serviceProviders);
                 break;
             case EventsStatus.timeout:
                 yield put(goToFormInfo(new ResultFormInfo(ResultType.processed)));

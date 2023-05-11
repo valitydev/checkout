@@ -1,25 +1,22 @@
 import { HoldExpirationType } from 'checkout/backend';
-import { IntegrationType } from './integration-type';
-import { PaymentMethodName } from './payment-method-name';
 
-export class InitConfig {
-    integrationType: IntegrationType;
-    bankCard: boolean;
-    applePay: boolean;
-    googlePay: boolean;
-    samsungPay: boolean;
-    yandexPay: boolean;
-    wallets: boolean;
+export type InitConfig = {
+    integrationType?: 'invoice' | 'invoiceTemplate';
+    invoiceID?: string;
+    invoiceAccessToken?: string;
+    invoiceTemplateID?: string;
+    invoiceTemplateAccessToken?: string;
+    bankCard?: boolean;
+    wallets?: boolean;
     onlineBanking?: boolean;
     netBanking?: boolean;
     upi?: boolean;
     terminalBankCard?: boolean;
     terminalWallets?: boolean;
-    mobileCommerce: boolean;
-    pix: boolean;
-    paymentFlowHold: boolean;
-    holdExpiration: HoldExpirationType;
-    locale: string;
+    pix?: boolean;
+    paymentFlowHold?: boolean;
+    holdExpiration?: HoldExpirationType;
+    locale?: string;
     redirectUrl?: string;
     name?: string;
     description?: string;
@@ -28,7 +25,6 @@ export class InitConfig {
     amount?: number;
     obscureCardCvv?: boolean;
     requireCardHolder?: boolean;
-    initialPaymentMethod?: PaymentMethodName;
     recurring?: boolean;
     theme?: string;
     brandless?: boolean;
@@ -36,4 +32,4 @@ export class InitConfig {
     terminalFormValues?: object;
     skipUserInteraction?: boolean;
     isExternalIDIncluded?: boolean;
-}
+};

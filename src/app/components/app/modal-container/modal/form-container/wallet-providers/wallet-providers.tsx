@@ -1,17 +1,23 @@
 import * as React from 'react';
+import { useContext } from 'react';
 
-import { FormName, PaymentMethodName, DigitalWalletPaymentMethod } from 'checkout/state';
+import { FormName } from 'checkout/state';
 import { Header } from '../header';
 import { goToFormInfo, pay } from 'checkout/actions';
 import { WalletProviderPaymentMethodItem } from '../wallet-provider-payment-method-item';
-import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { getAvailablePaymentMethodSelector, getLocaleSelector } from 'checkout/selectors';
+import { useAppDispatch } from 'checkout/configure-store';
+import { InitialContext } from '../../../../initial-context';
+import { DigitalWalletPaymentMethod, PaymentMethodName } from 'checkout/hooks';
+
+const getAvailablePaymentMethod = (
+    availablePaymentMethods,
+    methodName: PaymentMethodName
+): DigitalWalletPaymentMethod => availablePaymentMethods.find((m) => m.name === methodName);
 
 export const WalletProviders: React.FC = () => {
-    const locale = useAppSelector(getLocaleSelector);
-    const paymentMethod = useAppSelector(
-        getAvailablePaymentMethodSelector<DigitalWalletPaymentMethod>(PaymentMethodName.DigitalWallet)
-    );
+    const context = useContext(InitialContext);
+    const { locale, availablePaymentMethods } = context;
+    const paymentMethod = getAvailablePaymentMethod(availablePaymentMethods, PaymentMethodName.DigitalWallet);
     const dispatch = useAppDispatch();
 
     return (
@@ -24,6 +30,7 @@ export const WalletProviders: React.FC = () => {
                     setFormInfo={(formInfo) => dispatch(goToFormInfo(formInfo))}
                     serviceProvider={serviceProvider}
                     pay={(payload) => dispatch(pay(payload))}
+                    context={context}
                 />
             ))}
         </div>

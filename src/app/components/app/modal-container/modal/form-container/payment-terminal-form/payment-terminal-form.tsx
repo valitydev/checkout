@@ -1,28 +1,16 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 import get from 'lodash-es/get';
 import styled from 'checkout/styled-components';
 
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { pay, setViewInfoError } from 'checkout/actions';
-import {
-    FormName,
-    PaymentMethodName,
-    PaymentStatus,
-    PaymentTerminalFormValues,
-    PaymentTerminalFormInfo
-} from 'checkout/state';
+import { FormName, PaymentStatus, PaymentTerminalFormValues, PaymentTerminalFormInfo } from 'checkout/state';
 import { Header } from '../header';
 import { PayButton } from '../pay-button';
 import { FormGroup } from '../form-group';
-import {
-    getActiveModalFormSelector,
-    getInitConfigSelector,
-    getLocaleSelector,
-    getModelSelector,
-    getServiceProviderSelector
-} from 'checkout/selectors';
+import { getActiveModalFormSelector } from 'checkout/selectors';
 import { getMetadata, MetadataField, MetadataLogo } from 'checkout/components/ui';
 import { toAmountConfig, toEmailConfig, toPhoneNumberConfig } from '../fields-config';
 import { Amount, Email, Phone } from '../common-fields';
@@ -38,6 +26,9 @@ import {
 } from './init-config-payment';
 import { MetadataSelect } from './metadata-select';
 
+import { InitialContext } from '../../../../initial-context';
+import { PaymentMethodName } from 'checkout/hooks';
+
 const Container = styled.div`
     min-height: 300px;
     display: flex;
@@ -46,13 +37,16 @@ const Container = styled.div`
 `;
 
 const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, initialize, handleSubmit }) => {
-    const locale = useAppSelector(getLocaleSelector);
+    const context = useContext(InitialContext);
+    const {
+        locale,
+        initConfig,
+        model: { serviceProviders, invoiceTemplate }
+    } = context;
     const { providerID, paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
-    const serviceProvider = useAppSelector(getServiceProviderSelector(providerID));
+    const serviceProvider = serviceProviders.find((value) => value.id === providerID);
     const { form, contactInfo, logo, paymentSessionInfo, prefilledMetadataValues } = getMetadata(serviceProvider);
-    const initConfig = useAppSelector(getInitConfigSelector);
-    const model = useAppSelector(getModelSelector);
-    const amount = toAmountConfig(initConfig, model.invoiceTemplate);
+    const amount = toAmountConfig(initConfig, invoiceTemplate);
     const email = toEmailConfig(initConfig.email);
     const terminalFormValues = initConfig?.terminalFormValues;
     const phoneNumber = toPhoneNumberConfig(initConfig.phoneNumber);
@@ -101,13 +95,14 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
             method: PaymentMethodName.PaymentTerminal,
             values: {
                 ...values,
-                provider: serviceProvider.id,
+                provider: serviceProvider?.id,
                 paymentSessionInfo,
                 metadata: {
                     ...prefilledMetadataValues,
                     ...formatMetadataValue(form, values?.metadata)
                 }
-            } as PaymentTerminalFormValues
+            } as PaymentTerminalFormValues,
+            context
         };
         dispatch(pay(payload));
     };
@@ -140,17 +135,17 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                         ))}
                     {amount.visible && (
                         <FormGroup>
-                            <Amount cost={amount.cost} />
+                            <Amount cost={amount.cost} locale={locale} localeCode={initConfig.locale} />
                         </FormGroup>
                     )}
                     {email.visible && contactInfo?.email && (
                         <FormGroup>
-                            <Email />
+                            <Email locale={locale} />
                         </FormGroup>
                     )}
                     {phoneNumber.visible && contactInfo?.phoneNumber && (
                         <FormGroup>
-                            <Phone />
+                            <Phone locale={locale} />
                         </FormGroup>
                     )}
                 </div>

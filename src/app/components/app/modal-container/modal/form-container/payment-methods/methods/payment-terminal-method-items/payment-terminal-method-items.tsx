@@ -1,11 +1,12 @@
 import * as React from 'react';
 
-import { KnownProviderCategories, PaymentTerminalPaymentMethod } from 'checkout/state';
+import { KnownProviderCategories, PaymentTerminalPaymentMethod } from 'checkout/hooks';
 import { assertUnreachable } from 'checkout/utils';
 import { Locale } from 'checkout/locale';
 import { PaymentTerminalBankCardMethodItem } from './payment-terminal-bank-card-method-item';
 import { PayAction, SetFormInfoAction } from './types';
 import { PaymentTerminalMethodItem } from './payment-terminal-method-item';
+import { AppContext } from 'checkout/actions';
 
 export interface PaymentTerminalMethodItemsProps {
     method: PaymentTerminalPaymentMethod;
@@ -15,17 +16,19 @@ export interface PaymentTerminalMethodItemsProps {
     localeCode: string;
     emailPrefilled: boolean;
     phoneNumberPrefilled: boolean;
+    context: AppContext;
 }
 
-export const PaymentTerminalMethodItems: React.FC<PaymentTerminalMethodItemsProps> = ({
+export const PaymentTerminalMethodItems = ({
     method,
     locale,
     setFormInfo,
     pay,
     localeCode,
     emailPrefilled,
-    phoneNumberPrefilled
-}) => {
+    phoneNumberPrefilled,
+    context
+}: PaymentTerminalMethodItemsProps) => {
     switch (method.category) {
         case KnownProviderCategories.UPI:
         case KnownProviderCategories.PIX:
@@ -41,6 +44,7 @@ export const PaymentTerminalMethodItems: React.FC<PaymentTerminalMethodItemsProp
                     localeCode={localeCode}
                     emailPrefilled={emailPrefilled}
                     phoneNumberPrefilled={phoneNumberPrefilled}
+                    context={context}
                 />
             );
         case KnownProviderCategories.BankCard:

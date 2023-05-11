@@ -9,16 +9,12 @@ import { FormContainerProps } from './form-container-props';
 import { FormLoader } from './form-loader';
 import { ResultForm } from './result-form';
 import { WalletForm } from './wallet-form';
-import { MobileCommerceForm } from './mobile-commerce-form';
-import { TokenProviderForm } from './token-provider-form';
 import { findNamed } from 'checkout/utils';
-import { Help } from './help';
 import { setViewInfoHeight } from 'checkout/actions';
 import styled, { css } from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 import { shake } from 'checkout/styled-components/animations';
 import { stylableTransition, ENTER, LEAVE, ACTIVE } from 'checkout/styled-transition';
-import { MobileCommerceReceiptForm } from './mobile-commerce-receipt-form';
 import { NoAvailablePaymentMethodForm } from './no-available-payment-method-form';
 import { WalletProviders } from './wallet-providers';
 import { RedirectForm } from './redirect-form';
@@ -200,14 +196,6 @@ class FormContainerDef extends React.Component<FormContainerProps, { height: num
                 return <WalletProviders key={name} />;
             case FormName.resultForm:
                 return <ResultForm key={name} />;
-            case FormName.helpForm:
-                return <Help key={name} />;
-            case FormName.tokenProviderForm:
-                return <TokenProviderForm key={name} />;
-            case FormName.mobileCommerceForm:
-                return <MobileCommerceForm key={name} />;
-            case FormName.mobileCommerceReceiptForm:
-                return <MobileCommerceReceiptForm key={name} />;
             case FormName.noAvailablePaymentMethodForm:
                 return <NoAvailablePaymentMethodForm key={name} />;
             case FormName.redirectForm:

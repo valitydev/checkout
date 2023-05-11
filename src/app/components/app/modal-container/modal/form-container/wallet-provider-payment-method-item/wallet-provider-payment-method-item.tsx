@@ -3,7 +3,7 @@ import * as React from 'react';
 import { FormInfo, FormName, PaymentTerminalFormValues, WalletFormInfo } from 'checkout/state';
 import { getMetadata, MetadataLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PaymentMethodName, ServiceProvider } from 'checkout/backend';
-import { PaymentRequestedPayload } from 'checkout/actions';
+import { AppContext, PaymentRequestedPayload } from 'checkout/actions';
 
 export type SetFormInfoAction = (formInfo: FormInfo) => any;
 export type PayAction = (payload: PaymentRequestedPayload) => any;
@@ -13,22 +13,32 @@ export interface WalletProviderPaymentMethodItemProps {
     serviceProvider: ServiceProvider;
     setFormInfo: SetFormInfoAction;
     pay: PayAction;
+    context: AppContext;
 }
 
-const provideTerminalPayment = (pay: PayAction, provider: string) =>
+const provideTerminalPayment = (context: AppContext, pay: PayAction, provider: string) =>
     pay({
         method: PaymentMethodName.PaymentTerminal,
         values: {
             provider
-        } as PaymentTerminalFormValues
+        } as PaymentTerminalFormValues,
+        context
     });
 
-const provideMethod = ({ serviceProvider, setFormInfo, pay, previous }: WalletProviderPaymentMethodItemProps) => {
+const provideMethod = ({
+    serviceProvider,
+    setFormInfo,
+    pay,
+    previous,
+    context
+}: WalletProviderPaymentMethodItemProps) => {
     const { form } = getMetadata(serviceProvider);
-    form ? setFormInfo(new WalletFormInfo(serviceProvider, previous)) : provideTerminalPayment(pay, serviceProvider.id);
+    form
+        ? setFormInfo(new WalletFormInfo(serviceProvider, previous))
+        : provideTerminalPayment(context, pay, serviceProvider.id);
 };
 
-export const WalletProviderPaymentMethodItem: React.FC<WalletProviderPaymentMethodItemProps> = (props) => {
+export const WalletProviderPaymentMethodItem = (props: WalletProviderPaymentMethodItemProps) => {
     const { logo } = getMetadata(props.serviceProvider);
     return (
         <PaymentMethodItemContainer onClick={() => provideMethod(props)}>

@@ -1,5 +1,4 @@
 import { resolveInitConfig } from './resolve-init-config';
-import { IntegrationType, PaymentMethodName } from 'checkout/config';
 import { HoldExpirationType } from 'checkout/backend';
 
 it('should return resolved init config', () => {
@@ -13,29 +12,22 @@ it('should return resolved init config', () => {
         description: 'some description',
         email: 'test@test.com',
         redirectUrl: 'some url',
-        initialPaymentMethod: 'bankCard',
         theme: 'main'
     };
 
-    const actual = resolveInitConfig(param);
+    const actual = resolveInitConfig(param as any);
     const expected = {
-        integrationType: IntegrationType.invoice,
+        integrationType: 'invoice',
         invoiceID: 'someID',
         invoiceAccessToken: 'some token',
         wallets: true,
         bankCard: true,
         brandless: true,
-        applePay: true,
-        googlePay: true,
-        samsungPay: true,
-        yandexPay: true,
-        mobileCommerce: true,
         paymentFlowHold: false,
         recurring: false,
         holdExpiration: HoldExpirationType.cancel,
         isExternalIDIncluded: false,
         locale: 'en',
-        initialPaymentMethod: PaymentMethodName.bankCard,
         requireCardHolder: false,
         obscureCardCvv: true,
         amount: 1000,

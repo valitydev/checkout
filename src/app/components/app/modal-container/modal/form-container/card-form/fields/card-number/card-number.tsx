@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { Field, WrappedFieldProps } from 'redux-form';
 
-import { State } from 'checkout/state';
 import { CardTypeIcon } from './card-type-icon';
 import { validateCardNumber } from './validate-card-number';
 import { Card, Input } from 'checkout/components';
@@ -26,13 +24,13 @@ export interface CardNumberProps {
     locale: Locale;
 }
 
-const getCardNumberInput = (props: CardNumberProps, fieldProps: WrappedFieldProps) => (
+const WrappedInput = ({ input, meta, locale }: WrappedFieldProps & CardNumberProps) => (
     <CardNumberInput
-        {...fieldProps.input}
-        {...fieldProps.meta}
-        error={isError(fieldProps.meta)}
+        {...input}
+        {...meta}
+        error={isError(meta)}
         icon={<Card />}
-        placeholder={props.locale['form.input.card.placeholder']}
+        placeholder={locale['form.input.card.placeholder']}
         mark={true}
         type="tel"
         id="card-number-input"
@@ -41,15 +39,9 @@ const getCardNumberInput = (props: CardNumberProps, fieldProps: WrappedFieldProp
     />
 );
 
-const CardNumberDef: React.FC<CardNumberProps> = (props) => (
+export const CardNumber = ({ locale }: CardNumberProps) => (
     <InputContainer>
-        <Field name="cardNumber" component={getCardNumberInput.bind(null, props)} validate={validateCardNumber} />
+        <Field name="cardNumber" component={WrappedInput} props={{ locale }} validate={validateCardNumber} />
         <CardTypeIcon />
     </InputContainer>
 );
-
-const mapStateToProps = (state: State) => ({
-    locale: state.config.locale
-});
-
-export const CardNumber = connect(mapStateToProps)(CardNumberDef);

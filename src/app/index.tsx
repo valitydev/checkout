@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Transport } from 'cross-origin-communicator';
 
 import { setResult } from 'checkout/actions';
 import { configureStore } from './configure-store';
@@ -12,19 +11,24 @@ import { initialize } from './initialize';
 
 import './styles/font-face.css';
 
-initialize().then((res) => {
-    const [transport, config] = res;
+initialize().then(([transport, initParams]) => {
     const app = document.getElementById('app');
-    const store = configureStore({ config });
+    const store = configureStore();
     store.subscribe(() => {
         const state = store.getState();
         if (state.result) {
-            finalize(state, transport as Transport, app, bindActionCreators(setResult, store.dispatch));
+            finalize(
+                state,
+                transport,
+                app,
+                bindActionCreators(setResult, store.dispatch),
+                initParams.initConfig.redirectUrl
+            );
         }
     });
     ReactDOM.render(
         <Provider store={store}>
-            <App />
+            <App initParams={initParams} />
         </Provider>,
         app
     );

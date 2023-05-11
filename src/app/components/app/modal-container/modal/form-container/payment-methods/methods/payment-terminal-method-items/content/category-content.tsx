@@ -1,6 +1,5 @@
 import * as React from 'react';
-
-import { KnownProviderCategories } from 'checkout/state';
+import { KnownProviderCategories } from 'checkout/hooks';
 
 export const CategoryContent: React.FC<{ category: KnownProviderCategories }> = ({ category }) => {
     switch (category) {

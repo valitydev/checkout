@@ -1,14 +1,9 @@
 {
     "info.order.label": "Order details",
-    "info.modal.mobile.commerce.description.steps": [
-        "A message has been sent to the phone number provided. To confirm the payment, please follow the steps indicated in the SMS from the mobile operator. This tab can be closed.",
-        "Usually payment takes a few minutes, in rare cases, the process may take up to 3 days. Once payment is processed, you will receive a message from the mobile operator."
-    ],
     "info.modal.no.available.payment.method": "No available payment methods",
     "form.header.payment.methods.label": "Please choose a payment method",
     "form.header.netbanking.label": "Please choose a bank",
     "form.header.pay.card.label": "Pay with a card",
-    "form.header.pay.mobile.commerce.label": "Pay with mobile phone account",
     "form.header.pay.upi.label": "Unified payment interface",
     "form.header.final.success.label": "Successful payment",
     "form.header.final.invoice.paid.label": "Fully paid",
@@ -41,11 +36,6 @@
     "form.button.copy.label": "Copy",
     "form.button.copied.label": "Copied!",
     "form.payment.method.name.card.label": "Card",
-    "form.payment.method.name.apple.pay.label": "Apple Pay",
-    "form.payment.method.name.google.pay.label": "Google Pay",
-    "form.payment.method.name.samsung.pay.label": "Samsung Pay",
-    "form.payment.method.name.yandex.pay.label": "Yandex Pay",
-    "form.payment.method.name.mobile.commerce.label": "Phone account",
     "form.payment.method.name.others.label": "All payment methods",
     "form.serviceProvidersGrid.search": "Search",
     "form.pay.upi.instruction": [
@@ -54,89 +44,6 @@
     ],
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Select payment system:",
     "form.qr.code": "Please scan the QR code with your banking app or phone camera to complete the payment",
-    "form.help.header": "How to solve a problem?",
-    "form.help.codes": {
-        "InvalidPaymentTool": {
-            "text": "Payment failed: invalid payment data entered.",
-            "steps": [
-                "Please return to the previous step.",
-                "Please make sure you have entered a valid card or account number.",
-                "Please press “Pay” again.",
-                "If error persists please try using a different card or account."
-            ]
-        },
-        "AccountLimitsExceeded": {
-            "text": "Payment failed: limits set by you exceeded.",
-            "steps": [
-                "Please login to your online banking or back office account.",
-                "Please change limit settings and country restrictions.",
-                "Please return to checkout and press “Try again”.",
-                "If error persists please contact your bank or payment institution."
-            ]
-        },
-        "InsufficientFunds": {
-            "text": "Payment failed: insufficient funds.",
-            "steps": [
-                "Please check your card or account balance.",
-                "If the funds are insufficient, please top up your account.",
-                "Please return to checkout and press “Try again”.",
-                "If error persists please try using a different card or bank account."
-            ]
-        },
-        "PreauthorizationFailed": {
-            "text": "Payment failed: can’t verify confirmation code.",
-            "steps": [
-                "Please press “Try again”.",
-                "Please check if you are entering correct payment password or SMS authentication code.",
-                "Please check if you press a button 'To confirm' on the bank page or payment institution page.",
-                "If error persists please contact your bank or payment institution."
-            ]
-        },
-        "RejectedByIssuer": {
-            "text": "Payment failed: your payment institution has rejected the payment.",
-            "steps": [
-                "Please check there are no limits or country rectrictions on the side of your online banking or bank back office.",
-                "Please check if your card or bank account is enabled for online payments.",
-                "Please contact your bank or payment institution.",
-                "Please try using a different card or bank account."
-            ]
-        },
-        "PaymentRejected": {
-            "text": "Payment failed: your payment has been rejected.",
-            "steps": [
-                "Please try using a different card or bank account.",
-                "Please contact support of the website."
-            ]
-        }
-    },
-    "error.apple.pay.unknown": "Unknown error - Apple Pay",
-    "error.apple.pay.cancel": "Apple Pay payment is cancelled",
-    "error.apple.pay.session.create": "Failed to create Apple Pay session",
-    "error.payment.request.cancel": "Payment is cancelled",
-    "error.google.pay.cancel": "Google Pay payment is cancelled",
-    "error.google.pay.unknown": "Unknown error - Google Pay ",
-    "error.samsung.pay.cancel": "Samsung Pay payment is cancelled",
-    "error.samsung.pay.not.available": "Samsung Pay payment is not available",
-    "error.yandex.pay.unknown": "Unknown error - Yandex Pay",
-    "error.yandex.pay.unavailable": "Yandex Pay payment is unavailable",
-    "error.yandex.pay.event.abort.no.reason": "Yandex Pay payment is cancelled",
-    "error.yandex.pay.event.abort.close": "Yandex Pay is cancelled",
-    "error.yandex.pay.event.abort.timeout": "Yandex Pay is cancelled (timeout)",
-    "error.yandex.pay.event.abort.unknown": "Yandex Pay is cancelled",
-    "error.yandex.pay.event.error.no.reason": "Yandex Pay payment error",
-    "error.yandex.pay.event.error.CODE_CHECK_FAILED": "Yandex Pay payment error (CODE_CHECK_FAILED)",
-    "error.yandex.pay.event.error.AMOUNT_LIMIT_EXCEEDED": "Yandex Pay payment error (AMOUNT_LIMIT_EXCEEDED)",
-    "error.yandex.pay.event.error.CARD_NOT_FOUND": "Yandex Pay payment error (CARD_NOT_FOUND)",
-    "error.yandex.pay.event.error.INVALID_AMOUNT": "Yandex Pay payment error (INVALID_AMOUNT)",
-    "error.yandex.pay.event.error.INVALID_COUNTRY": "Yandex Pay payment error (INVALID_COUNTRY)",
-    "error.yandex.pay.event.error.INVALID_CURRENCY": "Yandex Pay payment error (INVALID_CURRENCY)",
-    "error.yandex.pay.event.error.INVALID_VERSION": "Yandex Pay payment error (INVALID_VERSION)",
-    "error.yandex.pay.event.error.MERCHANT_NOT_FOUND": "Yandex Pay payment error (MERCHANT_NOT_FOUND)",
-    "error.yandex.pay.event.error.GATEWAY_NOT_FOUND": "Yandex Pay payment error (GATEWAY_NOT_FOUND)",
-    "error.yandex.pay.event.error.CARD_NETWORK_NOT_SUPPORTED": "Yandex Pay payment error (CARD_NETWORK_NOT_SUPPORTED)",
-    "error.yandex.pay.event.error.MERCHANT_DOMAIN_ERROR": "Yandex Pay payment error (MERCHANT_DOMAIN_ERROR)",
-    "error.yandex.pay.event.error.INSECURE_MERCHANT_DOMAIN": "Yandex Pay payment error (INSECURE_MERCHANT_DOMAIN)",
-    "error.yandex.pay.event.error.unknown": "Yandex Pay payment error",
     "InvalidPaymentTool": "Invalid payment instrument",
     "AccountLimitsExceeded": "Account limit is exceeded",
     "InsufficientFunds": "Insufficient funds",

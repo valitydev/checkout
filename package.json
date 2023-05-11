@@ -7,6 +7,7 @@
     "build": "npm run clear && webpack --mode production --colors --progress --config config/webpack.prod.js",
     "start": "npm run clear && webpack-dev-server --mode development --colors --progress --config config/webpack.dev.js --port 7050 --host ::",
     "test": "jest",
+    "test:watch": "jest --watch",
     "check": "npm run lint:fix; npm run prettier:check",
     "fix": "npm run lint:fix; npm run prettier:fix",
     "prettier:fix": "prettier \"**\" --write",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "@redux-saga/testing-utils": "^1.1.3",
+    "@testing-library/react-hooks": "8.0.1",
     "@types/card-validator": "~4.1.0",
     "@types/credit-card-type": "~7.0.0",
     "@types/currency-formatter": "~1.3.0",

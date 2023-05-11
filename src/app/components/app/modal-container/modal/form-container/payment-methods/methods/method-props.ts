@@ -1,6 +1,7 @@
 import { Locale } from 'checkout/locale';
-import { FormInfo, PaymentMethod, FormName } from 'checkout/state';
-import { PaymentRequestedPayload } from 'checkout/actions';
+import { FormInfo, FormName } from 'checkout/state';
+import { AppContext, PaymentRequestedPayload } from 'checkout/actions';
+import { PaymentMethod } from 'checkout/hooks';
 
 export interface MethodProps {
     locale: Locale;
@@ -12,4 +13,5 @@ export interface MethodProps {
     method: PaymentMethod;
     prevFormName: FormName;
     localeCode: string;
+    context: AppContext;
 }

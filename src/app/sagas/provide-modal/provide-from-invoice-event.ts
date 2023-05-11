@@ -1,7 +1,7 @@
-import { put, PutEffect, select, SelectEffect } from 'redux-saga/effects';
+import { put, PutEffect, SelectEffect } from 'redux-saga/effects';
 import { InvoiceEvent, InvoiceChangeType, ServiceProvider } from 'checkout/backend';
 import { Direction, GoToFormInfo, TypeKeys, SetModalState } from 'checkout/actions';
-import { ResultFormInfo, ResultType, State } from 'checkout/state';
+import { ResultFormInfo, ResultType } from 'checkout/state';
 import { provideInteraction } from './provide-interaction';
 import { getLastChange } from 'checkout/utils';
 
@@ -30,8 +30,8 @@ function toPayload(events: InvoiceEvent[], serviceProviders: ServiceProvider[]):
 }
 
 export function* provideFromInvoiceEvent(
-    events: InvoiceEvent[]
+    events: InvoiceEvent[],
+    serviceProviders: ServiceProvider[]
 ): IterableIterator<SelectEffect | PutEffect<SetStateFromEvents>> {
-    const serviceProviders = yield select((s: State) => s.model?.serviceProviders);
     return yield put<SetStateFromEvents>(toPayload(events, serviceProviders));
 }
