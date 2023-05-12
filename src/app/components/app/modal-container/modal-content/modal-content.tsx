@@ -9,7 +9,7 @@ import { device } from 'checkout/utils/device';
 import { stylableTransition, LEAVE, ENTER, ACTIVE } from 'checkout/styled-transition';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { useContext, useEffect, useMemo } from 'react';
-import { initializeModal } from 'checkout/actions';
+import { initializeModal, initializeEvents, initializeModel } from 'checkout/actions';
 import isNil from 'checkout/utils/is-nil';
 
 import { InitialContext } from '../../initial-context';
@@ -59,7 +59,11 @@ const Animation = styled(stylableTransition)`
 `;
 
 export const ModalContent = () => {
-    const { initConfig, model, availablePaymentMethods } = useContext(InitialContext);
+    const {
+        initConfig,
+        model: { events, serviceProviders, invoice, invoiceAccessToken },
+        availablePaymentMethods
+    } = useContext(InitialContext);
     const modals = useAppSelector((s: State) => s.modals);
     const dispatch = useAppDispatch();
 
@@ -71,7 +75,11 @@ export const ModalContent = () => {
     }, [modals]);
 
     useEffect(() => {
-        dispatch(initializeModal(initConfig, model?.events, availablePaymentMethods, model.serviceProviders));
+        dispatch(initializeModal(initConfig, events, availablePaymentMethods, serviceProviders));
+        if (initConfig.integrationType === 'invoice') {
+            dispatch(initializeEvents(events));
+            dispatch(initializeModel({ invoice, invoiceAccessToken }));
+        }
     }, []);
 
     return (
