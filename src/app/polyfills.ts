@@ -1,12 +1,8 @@
 if (!String.prototype.replaceAll) {
-    String.prototype.replaceAll = function(searchValue, replaceValue) {
-        // Escape special characters in the searchValue
-        const escapedSearch = searchValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
-        // Create a regular expression with the escaped searchValue and the global flag
-        const regex = new RegExp(escapedSearch, 'g');
-
-        // Use the replace method with the regular expression to replace all occurrences
-        return this.replace(regex, replaceValue);
+    String.prototype.replaceAll = function(str, newStr) {
+        if (Object.prototype.toString.call(str).toLowerCase() === '[object regexp]') {
+            return this.replace(str, newStr);
+        }
+        return this.replace(new RegExp(str, 'g'), newStr);
     };
 }
