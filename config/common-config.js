@@ -60,19 +60,6 @@ module.exports = (env) => ({
                 ]
             },
             {
-                test: /\.(woff|woff2)$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[hash:8].[ext]',
-                            mimetype: 'mimetype=application/font-woff',
-                            outputPath: './fonts/'
-                        }
-                    }
-                ]
-            },
-            {
                 test: /\.svg$/,
                 oneOf: [
                     {
