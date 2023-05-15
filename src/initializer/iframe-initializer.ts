@@ -1,8 +1,6 @@
-import { initialize } from 'cross-origin-communicator';
-
+import { initialize, CommunicatorEvents, communicatorInstanceName } from '../communicator';
 import { IframeContainer } from './iframe-container';
 import { Initializer } from './initializer';
-import { CommunicatorEvents, communicatorInstanceName } from '../communicator-constants';
 import { InitConfig } from 'checkout/config';
 
 export class IframeInitializer extends Initializer {

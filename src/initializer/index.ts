@@ -1,5 +1,3 @@
-import 'url-polyfill';
-
 import { domReady } from './dom-ready';
 import { HtmlIntegration } from './html-integration';
 import { PopupInitializer } from './popup-initializer';

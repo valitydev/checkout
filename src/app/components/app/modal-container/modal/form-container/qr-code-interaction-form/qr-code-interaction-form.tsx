@@ -57,7 +57,7 @@ export const QrCodeInteractionForm: React.FC = () => {
 
     return (
         <Container>
-            {qrCodeForm.isCopyCodeBlock && (
+            {qrCodeForm?.isCopyCodeBlock && (
                 <>
                     <Input
                         id="qr-code-input"

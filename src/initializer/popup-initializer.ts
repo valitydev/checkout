@@ -1,7 +1,5 @@
-import { initialize } from 'cross-origin-communicator';
-
+import { initialize, CommunicatorEvents, communicatorInstanceName } from '../communicator';
 import { Initializer } from './initializer';
-import { CommunicatorEvents, communicatorInstanceName } from '../communicator-constants';
 import { InitConfig } from '../app/config';
 import { serializeUrlParams } from '../serialize-url-params';
 
