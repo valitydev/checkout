@@ -1,9 +1,8 @@
 import * as ReactDOM from 'react-dom';
 import { State } from './state';
 import { ResultState } from 'checkout/state';
-import { CommunicatorEvents } from '../communicator/communicator-events';
 import { ResultAction } from 'checkout/actions';
-import { Transport } from '../communicator';
+import { Transport, CommunicatorEvents } from '../communicator';
 
 class AppFinalizer {
     static CLOSE_TIMEOUT = 750;
