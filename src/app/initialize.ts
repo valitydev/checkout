@@ -1,11 +1,9 @@
-import { listen, Transport } from 'cross-origin-communicator';
 import * as creditCardType from 'credit-card-type';
 import * as Sentry from '@sentry/react';
 
+import { listen, Transport, StubTransport, CommunicatorEvents, communicatorInstanceName } from '../communicator';
 import { getUrlParams, URLParams } from 'checkout/utils';
-import { StubTransport } from './stub-transport';
 import { InitConfig, resolveInitConfig } from 'checkout/config';
-import { CommunicatorEvents, communicatorInstanceName } from '../communicator-constants';
 import { AppConfig, getAppConfig, getEnv } from './backend';
 import { getOrigin } from '../get-origin';
 

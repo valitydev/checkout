@@ -1,4 +1,4 @@
-import { Transport } from 'cross-origin-communicator';
+import { Transport } from './transport';
 
 export class StubTransport implements Transport {
     emit(eventName: string, data?: object) {
