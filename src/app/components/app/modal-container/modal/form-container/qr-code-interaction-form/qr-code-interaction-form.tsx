@@ -57,25 +57,31 @@ export const QrCodeInteractionForm: React.FC = () => {
 
     return (
         <Container>
-            {qrCodeForm?.isCopyCodeBlock && (
+            {qrCodeForm && (
                 <>
-                    <Input
-                        id="qr-code-input"
-                        inputRef={qrCodeInputRef}
-                        defaultValue={request.qrCode}
-                        readOnly={true}></Input>
-                    <CopyToClipboardButton onClick={() => copyToClipboard()} />
-                    <Hr />
-                </>
-            )}
-            <Instruction>{locale['form.qr.code']}</Instruction>
-            <QRCode text={request.qrCode} />
-            {initConfig.redirectUrl && (
-                <>
-                    <Hr />
-                    <Button id="back-to-website-btn" onClick={() => window.open(initConfig.redirectUrl, '_self')}>
-                        {locale['form.button.back.to.website']}
-                    </Button>
+                    {qrCodeForm.isCopyCodeBlock && (
+                        <>
+                            <Input
+                                id="qr-code-input"
+                                inputRef={qrCodeInputRef}
+                                defaultValue={request.qrCode}
+                                readOnly={true}></Input>
+                            <CopyToClipboardButton onClick={() => copyToClipboard()} />
+                            <Hr />
+                        </>
+                    )}
+                    <Instruction>{locale['form.qr.code']}</Instruction>
+                    <QRCode text={request.qrCode} />
+                    {initConfig.redirectUrl && (
+                        <>
+                            <Hr />
+                            <Button
+                                id="back-to-website-btn"
+                                onClick={() => window.open(initConfig.redirectUrl, '_self')}>
+                                {locale['form.button.back.to.website']}
+                            </Button>
+                        </>
+                    )}
                 </>
             )}
         </Container>
