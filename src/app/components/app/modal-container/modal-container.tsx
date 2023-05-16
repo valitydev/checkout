@@ -1,16 +1,17 @@
 import * as React from 'react';
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
+import isNil from 'checkout/utils/is-nil';
 import { Modal } from './modal';
 import { UserInteractionModal } from './user-interaction-modal';
 import { ModalName, State } from 'checkout/state';
-import styled from 'checkout/styled-components';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { initializeModal, initializeEvents, initializeModel } from 'checkout/actions';
-import isNil from 'checkout/utils/is-nil';
-import { FadeInOutAnimation } from './fade-in-out-animation';
+import { initializeModal, initializeEvents } from 'checkout/actions';
 import { InitialContext } from '../initial-context';
+import { PayableInvoiceContext } from './payable-invoice-context';
+import styled from 'checkout/styled-components';
 import { RotateAnimation } from './rotate-animation';
+import { FadeInOutAnimation } from './fade-in-out-animation';
 
 const Container = styled.div`
     height: 100%;
@@ -23,6 +24,8 @@ export const ModalContainer = () => {
         model: { events, serviceProviders, invoice, invoiceAccessToken },
         availablePaymentMethods
     } = useContext(InitialContext);
+    const [payableInvoiceData, setPayableInvoiceData] = useState(null);
+
     const modals = useAppSelector((s: State) => s.modals);
     const dispatch = useAppDispatch();
 
@@ -36,8 +39,11 @@ export const ModalContainer = () => {
     useEffect(() => {
         dispatch(initializeModal(initConfig, events, availablePaymentMethods, serviceProviders));
         if (initConfig.integrationType === 'invoice') {
+            setPayableInvoiceData({
+                invoiceID: invoice.id,
+                invoiceAccessToken
+            });
             dispatch(initializeEvents(events));
-            dispatch(initializeModel({ invoice, invoiceAccessToken }));
         }
     }, []);
 
@@ -45,9 +51,13 @@ export const ModalContainer = () => {
         <FadeInOutAnimation enter={750} appear={750} leave={750}>
             <Container>
                 {!isNil(modals) && (
-                    <RotateAnimation enter={1000} leave={500} key={activeModalName}>
-                        {activeModalName === ModalName.modalForms && <Modal />}
-                        {activeModalName === ModalName.modalInteraction && <UserInteractionModal />}
+                    <RotateAnimation enter={1000} leave={500}>
+                        <div key={activeModalName}>
+                            <PayableInvoiceContext.Provider value={{ payableInvoiceData, setPayableInvoiceData }}>
+                                {activeModalName === ModalName.modalForms && <Modal />}
+                                {activeModalName === ModalName.modalInteraction && <UserInteractionModal />}
+                            </PayableInvoiceContext.Provider>
+                        </div>
                     </RotateAnimation>
                 )}
             </Container>

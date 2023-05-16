@@ -12,6 +12,7 @@ import { Button, CopyToClipboardButton, getMetadata, Hr, Input } from 'checkout/
 import { QrCodeFormMetadata, ServiceProvider } from 'checkout/backend';
 
 import { InitialContext } from '../../../../initial-context';
+import { PayableInvoiceContext } from '../../../payable-invoice-context';
 
 const Instruction = styled.p`
     font-weight: 500;
@@ -36,10 +37,10 @@ const getServiceProvider = (serviceProviders: ServiceProvider[], serviceProvider
 export const QrCodeInteractionForm: React.FC = () => {
     const qrCodeInputRef = useRef(null);
     const { locale, initConfig, appConfig, model } = useContext(InitialContext);
-    const { invoiceID, invoiceAccessToken } = useAppSelector((s) => ({
-        invoiceID: s.model?.invoice?.id,
-        invoiceAccessToken: s.model?.invoiceAccessToken
-    }));
+    const {
+        payableInvoiceData: { invoiceID, invoiceAccessToken }
+    } = useContext(PayableInvoiceContext);
+
     const { request, providerID } = useAppSelector<QrCodeInteractionFormInfo>(getActiveModalFormSelector);
     const serviceProvider = getServiceProvider(model.serviceProviders, providerID);
     const { qrCodeForm } = getMetadata(serviceProvider);
