@@ -3,54 +3,54 @@ import { useContext, useState, useEffect } from 'react';
 import isNil from 'checkout/utils/is-nil';
 import { PaymentRequestedPayload } from 'checkout/actions';
 import { PaymentMethodName } from 'checkout/backend';
-import { useCreateInvoiceWithTemplate } from 'checkout/hooks';
+import { usePreparePayableInvoice } from 'checkout/hooks';
 import { PayableFormValues } from 'checkout/state';
 
-import { PayableInvoiceContext } from '../../payable-invoice-context';
 import { InitialContext } from '../../../initial-context';
+import { PayableInvoiceContext } from '../../payable-invoice-context';
 
 export const usePreparePayableData = (): [PaymentRequestedPayload, any] => {
     const { initConfig, appConfig, model, amountInfo, origin } = useContext(InitialContext);
+    const { payableInvoiceData, setPayableInvoiceData } = useContext(PayableInvoiceContext);
+
     const [submitData, setSubmitData] = useState<{ method: PaymentMethodName; values?: PayableFormValues }>(null);
     const [prepared, setPrepared] = useState<PaymentRequestedPayload>(null);
-    const { state, create } = useCreateInvoiceWithTemplate();
-    const { payableInvoiceData, setPayableInvoiceData } = useContext(PayableInvoiceContext);
+
+    const { state, init, createInvoiceFromTemplate } = usePreparePayableInvoice({
+        capiEndpoint: appConfig.capiEndpoint,
+        invoiceTemplateAccessToken: initConfig.invoiceTemplateAccessToken,
+        invoiceTemplate: model.invoiceTemplate,
+        amountInfo: amountInfo
+    });
+
+    useEffect(() => {
+        if (state.status === 'PRISTINE') {
+            init(payableInvoiceData);
+        }
+    }, [state]);
 
     useEffect(() => {
         if (isNil(submitData)) return;
-        if (isNil(payableInvoiceData)) {
-            switch (state.status) {
-                case 'PRISTINE':
-                    create({
-                        capiEndpoint: appConfig.capiEndpoint,
-                        invoiceTemplateAccessToken: initConfig.invoiceTemplateAccessToken,
-                        invoiceTemplate: model.invoiceTemplate,
-                        amount: {
-                            amountInfo,
-                            formAmount: submitData.values?.amount
-                        }
-                    });
-                    break;
-                case 'SUCCESS':
-                    setPayableInvoiceData({
-                        invoiceID: state.data.invoice.id,
-                        invoiceAccessToken: state.data.invoiceAccessToken.payload
-                    });
-                    break;
-            }
-            return;
+        switch (state.status) {
+            case 'INVOICE_REQUIRED':
+                createInvoiceFromTemplate(submitData.values?.amount);
+                break;
+            case 'READY':
+                const data = state.data;
+                setPayableInvoiceData(data);
+                setPrepared({
+                    ...submitData,
+                    context: {
+                        initConfig,
+                        appConfig,
+                        origin,
+                        amountInfo,
+                        model
+                    }
+                });
+                break;
         }
-        setPrepared({
-            ...submitData,
-            context: {
-                initConfig,
-                appConfig,
-                origin,
-                amountInfo,
-                model
-            }
-        });
-    }, [submitData, payableInvoiceData, state]);
+    }, [submitData, state]);
 
     return [prepared, setSubmitData];
 };

@@ -1,9 +1,5 @@
 import { createContext } from 'react';
-
-export type PayableInvoiceData = {
-    invoiceID: string;
-    invoiceAccessToken: string;
-};
+import { PayableInvoiceData } from 'checkout/hooks';
 
 export const PayableInvoiceContext = createContext<{
     payableInvoiceData: PayableInvoiceData;
