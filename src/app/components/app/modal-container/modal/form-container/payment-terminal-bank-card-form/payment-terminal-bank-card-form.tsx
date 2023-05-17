@@ -18,8 +18,7 @@ import isNil from 'checkout/utils/is-nil';
 
 import { InitialContext } from '../../../../initial-context';
 import { getAvailableTerminalPaymentMethod } from '../get-available-terminal-payment-method';
-import { KnownProviderCategories } from 'checkout/hooks';
-import { usePreparePayableData } from '../use-prepare-payable-data';
+import { KnownProviderCategories, usePaymentPayload } from 'checkout/hooks';
 
 const ProviderSelectorDescription = styled.p`
     font-size: 16px;
@@ -30,7 +29,7 @@ const ProviderSelectorDescription = styled.p`
 
 export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ submitFailed, handleSubmit }) => {
     const { locale, initConfig, availablePaymentMethods } = useContext(InitialContext);
-    const [preparedPayload, setSubmitData] = usePreparePayableData();
+    const { paymentPayload, setFormData } = usePaymentPayload();
     const paymentMethod = getAvailableTerminalPaymentMethod(availablePaymentMethods, KnownProviderCategories.BankCard);
     const serviceProviders = paymentMethod?.serviceProviders;
     const email = toEmailConfig(initConfig.email);
@@ -46,13 +45,13 @@ export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ su
         if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-        if (!isNil(preparedPayload)) {
-            dispatch(pay(preparedPayload));
+        if (!isNil(paymentPayload)) {
+            dispatch(pay(paymentPayload));
         }
-    }, [submitFailed, preparedPayload]);
+    }, [submitFailed, paymentPayload]);
 
     const submit = (values: PaymentTerminalFormValues) => {
-        setSubmitData({
+        setFormData({
             method: PaymentMethodName.PaymentTerminal,
             values: {
                 ...values,

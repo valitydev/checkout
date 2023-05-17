@@ -3,4 +3,4 @@ export * from './types';
 
 export * from './use-init-app';
 export * from './use-theme';
-export * from './use-prepare-payable-invoice';
+export * from './use-payment-payload';

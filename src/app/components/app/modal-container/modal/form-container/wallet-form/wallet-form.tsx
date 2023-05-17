@@ -15,11 +15,10 @@ import { getActiveModalFormSelector } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getMetadata, MetadataField, MetadataLogo, obscurePassword, sortByIndex } from 'checkout/components/ui';
 import { LogoContainer } from './logo-container';
+import { PaymentMethodName, usePaymentPayload } from 'checkout/hooks';
+import isNil from 'checkout/utils/is-nil';
 
 import { InitialContext } from '../../../../initial-context';
-import { PaymentMethodName } from 'checkout/hooks';
-import { usePreparePayableData } from '../use-prepare-payable-data';
-import isNil from 'checkout/utils/is-nil';
 
 const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
     const {
@@ -27,7 +26,7 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
         initConfig,
         model: { invoiceTemplate }
     } = useContext(InitialContext);
-    const [preparedPayload, setSubmitData] = usePreparePayableData();
+    const { paymentPayload, setFormData } = usePaymentPayload();
     const { activeProvider, paymentStatus } = useAppSelector<WalletFormInfo>(getActiveModalFormSelector);
     const dispatch = useAppDispatch();
     const formValues = useAppSelector((s) => get(s.form, 'walletForm.values'));
@@ -35,7 +34,7 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
     const amount = toFieldsConfig(initConfig, invoiceTemplate).amount;
 
     const submit = (values: WalletFormValues) => {
-        setSubmitData({
+        setFormData({
             method: PaymentMethodName.DigitalWallet,
             values: form ? obscurePassword(form, values) : values
         });
@@ -60,10 +59,10 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
         if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-        if (!isNil(preparedPayload)) {
-            dispatch(pay(preparedPayload));
+        if (!isNil(paymentPayload)) {
+            dispatch(pay(paymentPayload));
         }
-    }, [submitFailed, preparedPayload]);
+    }, [submitFailed, paymentPayload]);
 
     return (
         <form id="wallet-form" onSubmit={handleSubmit(submit)}>

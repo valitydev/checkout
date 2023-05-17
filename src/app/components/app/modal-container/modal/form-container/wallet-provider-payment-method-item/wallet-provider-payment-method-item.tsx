@@ -7,7 +7,7 @@ import { PaymentMethodName, ServiceProvider } from 'checkout/backend';
 import { PaymentRequestedPayload, goToFormInfo, pay } from 'checkout/actions';
 import { useAppDispatch } from 'checkout/configure-store';
 import isNil from 'checkout/utils/is-nil';
-import { usePreparePayableData } from '../use-prepare-payable-data';
+import { usePaymentPayload } from 'checkout/hooks';
 
 export type SetFormInfoAction = (formInfo: FormInfo) => any;
 export type PayAction = (payload: PaymentRequestedPayload) => any;
@@ -19,12 +19,12 @@ export interface WalletProviderPaymentMethodItemProps {
 export const WalletProviderPaymentMethodItem = ({ serviceProvider }: WalletProviderPaymentMethodItemProps) => {
     const { logo, form } = getMetadata(serviceProvider);
 
-    const [preparedPayload, setSubmitData] = usePreparePayableData();
+    const { paymentPayload, setFormData } = usePaymentPayload();
     const dispatch = useAppDispatch();
 
     const onClick = () => {
         if (isNil(form)) {
-            setSubmitData({
+            setFormData({
                 method: PaymentMethodName.PaymentTerminal,
                 values: {
                     provider: serviceProvider.id
@@ -36,10 +36,10 @@ export const WalletProviderPaymentMethodItem = ({ serviceProvider }: WalletProvi
     };
 
     useEffect(() => {
-        if (!isNil(preparedPayload)) {
-            dispatch(pay(preparedPayload));
+        if (!isNil(paymentPayload)) {
+            dispatch(pay(paymentPayload));
         }
-    }, [preparedPayload]);
+    }, [paymentPayload]);
 
     return (
         <PaymentMethodItemContainer onClick={onClick}>

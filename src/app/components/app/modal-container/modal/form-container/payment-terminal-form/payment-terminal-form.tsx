@@ -25,9 +25,8 @@ import {
     prepareFormValues
 } from './init-config-payment';
 import { MetadataSelect } from './metadata-select';
-import { PaymentMethodName } from 'checkout/hooks';
+import { PaymentMethodName, usePaymentPayload } from 'checkout/hooks';
 import isNil from 'checkout/utils/is-nil';
-import { usePreparePayableData } from '../use-prepare-payable-data';
 import { InitialContext } from '../../../../initial-context';
 
 const Container = styled.div`
@@ -43,7 +42,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
         initConfig,
         model: { serviceProviders, invoiceTemplate }
     } = useContext(InitialContext);
-    const [preparedPayload, setSubmitData] = usePreparePayableData();
+    const { paymentPayload, setFormData } = usePaymentPayload();
     const { providerID, paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
     const serviceProvider = serviceProviders.find((value) => value.id === providerID);
     const { form, contactInfo, logo, paymentSessionInfo, prefilledMetadataValues } = getMetadata(serviceProvider);
@@ -89,10 +88,10 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
         if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-        if (!isNil(preparedPayload)) {
-            dispatch(pay(preparedPayload));
+        if (!isNil(paymentPayload)) {
+            dispatch(pay(paymentPayload));
         }
-    }, [submitFailed, preparedPayload]);
+    }, [submitFailed, paymentPayload]);
 
     const submit = (values?: Partial<PaymentTerminalFormValues>) => {
         const payload = {
@@ -107,7 +106,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                 }
             } as PaymentTerminalFormValues
         };
-        setSubmitData(payload);
+        setFormData(payload);
     };
 
     return (

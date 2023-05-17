@@ -12,11 +12,10 @@ import { getMetadata, PaymentMethodItemContainer } from 'checkout/components/ui'
 import { PaymentMethodName, ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
 import { Content } from './content';
 import { goToFormInfo, pay } from 'checkout/actions';
-import { PaymentTerminalPaymentMethod } from 'checkout/hooks';
+import { PaymentTerminalPaymentMethod, usePaymentPayload } from 'checkout/hooks';
 import { useAppDispatch } from 'checkout/configure-store';
 
 import { InitialContext } from '../../../../../../initial-context';
-import { usePreparePayableData } from '../../../use-prepare-payable-data';
 
 export interface PaymentTerminalMethodItemProps {
     method: PaymentTerminalPaymentMethod;
@@ -46,7 +45,7 @@ export const PaymentTerminalMethodItem = ({ method }: PaymentTerminalMethodItemP
     const emailPrefilled = !!initConfig.email;
     const phoneNumberPrefilled = !!initConfig.phoneNumber;
 
-    const [preparedPayload, setSubmitData] = usePreparePayableData();
+    const { paymentPayload, setFormData } = usePaymentPayload();
     const dispatch = useAppDispatch();
 
     const onClick = () => {
@@ -55,7 +54,7 @@ export const PaymentTerminalMethodItem = ({ method }: PaymentTerminalMethodItemP
             if (isRequiredPaymentTerminalForm(serviceProvider, emailPrefilled, phoneNumberPrefilled)) {
                 dispatch(goToFormInfo(new PaymentTerminalFormInfo(serviceProvider.id, FormName.paymentMethods)));
             } else {
-                setSubmitData({
+                setFormData({
                     method: PaymentMethodName.PaymentTerminal,
                     values: {
                         provider: serviceProvider.id
@@ -69,10 +68,10 @@ export const PaymentTerminalMethodItem = ({ method }: PaymentTerminalMethodItemP
     };
 
     useEffect(() => {
-        if (!isNil(preparedPayload)) {
-            dispatch(pay(preparedPayload));
+        if (!isNil(paymentPayload)) {
+            dispatch(pay(paymentPayload));
         }
-    }, [preparedPayload]);
+    }, [paymentPayload]);
 
     return (
         <PaymentMethodItemContainer id={`${Math.floor(Math.random() * 100)}-payment-method-item`} onClick={onClick}>
