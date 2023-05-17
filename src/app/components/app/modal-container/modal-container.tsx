@@ -12,6 +12,7 @@ import { PayableInvoiceContext } from './payable-invoice-context';
 import styled from 'checkout/styled-components';
 import { RotateAnimation } from './rotate-animation';
 import { FadeInOutAnimation } from './fade-in-out-animation';
+import { PayableInvoiceData } from 'checkout/hooks';
 
 const Container = styled.div`
     height: 100%;
@@ -24,7 +25,7 @@ export const ModalContainer = () => {
         model: { events, serviceProviders, invoice, invoiceAccessToken },
         availablePaymentMethods
     } = useContext(InitialContext);
-    const [payableInvoiceData, setPayableInvoiceData] = useState(null);
+    const [payableInvoiceData, setPayableInvoiceData] = useState<PayableInvoiceData>(null);
 
     const modals = useAppSelector((s: State) => s.modals);
     const dispatch = useAppDispatch();
@@ -40,7 +41,11 @@ export const ModalContainer = () => {
         dispatch(initializeModal(initConfig, events, availablePaymentMethods, serviceProviders));
         if (initConfig.integrationType === 'invoice') {
             setPayableInvoiceData({
-                invoiceID: invoice.id,
+                invoice: {
+                    id: invoice.id,
+                    dueDate: invoice.dueDate,
+                    externalID: invoice.externalID
+                },
                 invoiceAccessToken
             });
             dispatch(initializeEvents(events));

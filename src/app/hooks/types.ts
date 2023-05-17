@@ -1,4 +1,8 @@
 export type PayableInvoiceData = {
-    invoiceID: string;
+    invoice: {
+        id: string;
+        dueDate: string;
+        externalID: string;
+    };
     invoiceAccessToken: string;
 };

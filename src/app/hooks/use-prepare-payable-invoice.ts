@@ -65,8 +65,11 @@ const getAmount = (amountInfo: AmountInfo, formAmount: string): number => {
     }
 };
 
-const toPayableInvoiceData = ({ invoice, invoiceAccessToken }: InvoiceAndToken): PayableInvoiceData => ({
-    invoiceID: invoice.id,
+const toPayableInvoiceData = ({
+    invoice: { id, dueDate, externalID },
+    invoiceAccessToken
+}: InvoiceAndToken): PayableInvoiceData => ({
+    invoice: { id, dueDate, externalID },
     invoiceAccessToken: invoiceAccessToken.payload
 });
 

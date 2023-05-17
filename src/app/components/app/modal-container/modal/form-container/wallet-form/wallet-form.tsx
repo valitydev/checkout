@@ -18,14 +18,16 @@ import { LogoContainer } from './logo-container';
 
 import { InitialContext } from '../../../../initial-context';
 import { PaymentMethodName } from 'checkout/hooks';
+import { usePreparePayableData } from '../use-prepare-payable-data';
+import isNil from 'checkout/utils/is-nil';
 
 const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
-    const context = useContext(InitialContext);
     const {
         locale,
         initConfig,
         model: { invoiceTemplate }
-    } = context;
+    } = useContext(InitialContext);
+    const [preparedPayload, setSubmitData] = usePreparePayableData();
     const { activeProvider, paymentStatus } = useAppSelector<WalletFormInfo>(getActiveModalFormSelector);
     const dispatch = useAppDispatch();
     const formValues = useAppSelector((s) => get(s.form, 'walletForm.values'));
@@ -33,13 +35,10 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
     const amount = toFieldsConfig(initConfig, invoiceTemplate).amount;
 
     const submit = (values: WalletFormValues) => {
-        dispatch(
-            pay({
-                method: PaymentMethodName.DigitalWallet,
-                values: form ? obscurePassword(form, values) : values,
-                context
-            })
-        );
+        setSubmitData({
+            method: PaymentMethodName.DigitalWallet,
+            values: form ? obscurePassword(form, values) : values
+        });
     };
 
     useEffect(() => {
@@ -61,7 +60,10 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
         if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-    }, [submitFailed]);
+        if (!isNil(preparedPayload)) {
+            dispatch(pay(preparedPayload));
+        }
+    }, [submitFailed, preparedPayload]);
 
     return (
         <form id="wallet-form" onSubmit={handleSubmit(submit)}>

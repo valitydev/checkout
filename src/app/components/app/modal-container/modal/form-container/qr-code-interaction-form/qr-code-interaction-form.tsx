@@ -38,7 +38,7 @@ export const QrCodeInteractionForm: React.FC = () => {
     const qrCodeInputRef = useRef(null);
     const { locale, initConfig, appConfig, model } = useContext(InitialContext);
     const {
-        payableInvoiceData: { invoiceID, invoiceAccessToken }
+        payableInvoiceData: { invoice, invoiceAccessToken }
     } = useContext(PayableInvoiceContext);
 
     const { request, providerID } = useAppSelector<QrCodeInteractionFormInfo>(getActiveModalFormSelector);
@@ -48,7 +48,7 @@ export const QrCodeInteractionForm: React.FC = () => {
 
     useEffect(() => {
         isQrCodeRedirect(qrCodeForm) && window.open(request.qrCode, '_self');
-        dispatch(finishInteraction(appConfig.capiEndpoint, invoiceID, invoiceAccessToken, model.serviceProviders));
+        dispatch(finishInteraction(appConfig.capiEndpoint, invoice.id, invoiceAccessToken, model.serviceProviders));
     }, []);
 
     const copyToClipboard = () => {

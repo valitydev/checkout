@@ -52,7 +52,7 @@ export const UserInteractionModal = () => {
     const iFrameElement = useRef(null);
     const { origin, appConfig, model } = useContext(InitialContext);
     const {
-        payableInvoiceData: { invoiceID, invoiceAccessToken }
+        payableInvoiceData: { invoice, invoiceAccessToken }
     } = useContext(PayableInvoiceContext);
 
     const { modal } = useAppSelector((s) => ({
@@ -67,7 +67,7 @@ export const UserInteractionModal = () => {
             iFrameElement.current.contentWindow.document.body.appendChild(form);
             form.submit();
         }
-        dispatch(finishInteraction(appConfig.capiEndpoint, invoiceID, invoiceAccessToken, model.serviceProviders));
+        dispatch(finishInteraction(appConfig.capiEndpoint, invoice.id, invoiceAccessToken, model.serviceProviders));
     }, []);
 
     const src = useMemo(() => {

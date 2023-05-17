@@ -1,22 +1,28 @@
 import * as React from 'react';
+import { useContext } from 'react';
 
 import { Method } from '../method';
 import { FormName, PaymentTerminalBankCardFormInfo } from 'checkout/state';
-import { Locale } from 'checkout/locale';
-import { SetFormInfoAction } from './types';
 import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
+import { useAppDispatch } from 'checkout/configure-store';
+import { goToFormInfo } from 'checkout/actions';
 
-export interface PaymentTerminalBankCardMethodItemProps {
-    locale: Locale;
-    setFormInfo: SetFormInfoAction;
-}
+import { InitialContext } from '../../../../../../initial-context';
 
-const toPaymentTerminalBankCard = (props: PaymentTerminalBankCardMethodItemProps) =>
-    props.setFormInfo(new PaymentTerminalBankCardFormInfo(FormName.paymentMethods));
+export const PaymentTerminalBankCardMethodItem = () => {
+    const {
+        initConfig: { locale }
+    } = useContext(InitialContext);
+    const dispatch = useAppDispatch();
 
-export const PaymentTerminalBankCardMethodItem: React.FC<PaymentTerminalBankCardMethodItemProps> = (props) => (
-    <Method onClick={toPaymentTerminalBankCard.bind(null, props)} id="payment-terminal-bank-card-method-item">
-        <PaymentMethodIcon name="bank-card" />
-        <PaymentMethodTitle>{props.locale['form.payment.method.name.card.label']}</PaymentMethodTitle>
-    </Method>
-);
+    const onClick = () => {
+        dispatch(goToFormInfo(new PaymentTerminalBankCardFormInfo(FormName.paymentMethods)));
+    };
+
+    return (
+        <Method onClick={onClick} id="payment-terminal-bank-card-method-item">
+            <PaymentMethodIcon name="bank-card" />
+            <PaymentMethodTitle>{locale['form.payment.method.name.card.label']}</PaymentMethodTitle>
+        </Method>
+    );
+};
