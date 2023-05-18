@@ -10,6 +10,7 @@ import { QrCodeInteractionFormInfo } from 'checkout/state';
 import { finishInteraction } from 'checkout/actions';
 import { Button, CopyToClipboardButton, getMetadata, Hr, Input } from 'checkout/components/ui';
 import { QrCodeFormMetadata, ServiceProvider } from 'checkout/backend';
+import isNil from 'checkout/utils/is-nil';
 
 import { InitialContext } from '../../../../initial-context';
 import { PayableInvoiceContext } from '../../../payable-invoice-context';
@@ -28,8 +29,10 @@ const Container = styled.div`
     gap: 16px;
 `;
 
-const isQrCodeRedirect = ({ qrCodeRedirect }: QrCodeFormMetadata) =>
-    (isMobile(window.navigator).phone || isMobile(window.navigator).tablet) && qrCodeRedirect === 'mobile';
+const isQrCodeRedirect = (formMetadata: QrCodeFormMetadata) =>
+    !isNil(formMetadata) &&
+    (isMobile(window.navigator).phone || isMobile(window.navigator).tablet) &&
+    formMetadata.qrCodeRedirect === 'mobile';
 
 const getServiceProvider = (serviceProviders: ServiceProvider[], serviceProviderID: string): ServiceProvider =>
     serviceProviders.find((serviceProvider) => serviceProvider.id === serviceProviderID);
