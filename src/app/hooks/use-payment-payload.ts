@@ -65,8 +65,8 @@ export const usePaymentPayload = () => {
         amountInfo,
         origin
     } = useContext(InitialContext);
-
     const { payableInvoiceData, setPayableInvoiceData } = useContext(PayableInvoiceContext);
+
     const [paymentPayload, setPaymentPayload] = useState<PaymentRequestedPayload>(null);
 
     const setFormData = useCallback(
