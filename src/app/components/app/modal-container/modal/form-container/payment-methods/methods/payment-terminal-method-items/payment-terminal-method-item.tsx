@@ -1,30 +1,25 @@
 import * as React from 'react';
-import isNil from 'lodash-es/isNil';
+import { useContext, useEffect } from 'react';
+import isNil from 'checkout/utils/is-nil';
 
-import { FormName, PaymentTerminalFormInfo, PaymentTerminalSelectorFormInfo } from 'checkout/state';
+import {
+    FormName,
+    PaymentTerminalFormInfo,
+    PaymentTerminalFormValues,
+    PaymentTerminalSelectorFormInfo
+} from 'checkout/state';
 import { getMetadata, PaymentMethodItemContainer } from 'checkout/components/ui';
-import { PayAction, SetFormInfoAction } from './types';
-import { payWithPaymentTerminal } from './pay-with-payment-terminal';
-import { ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
+import { PaymentMethodName, ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
 import { Content } from './content';
-import { AppContext } from 'checkout/actions';
-import { KnownProviderCategories, PaymentTerminalPaymentMethod } from 'checkout/hooks';
+import { goToFormInfo, pay } from 'checkout/actions';
+import { PaymentTerminalPaymentMethod, usePaymentPayload } from 'checkout/hooks';
+import { useAppDispatch } from 'checkout/configure-store';
+
+import { InitialContext } from '../../../../../../initial-context';
 
 export interface PaymentTerminalMethodItemProps {
     method: PaymentTerminalPaymentMethod;
-    setFormInfo: SetFormInfoAction;
-    pay: PayAction;
-    localeCode: string;
-    emailPrefilled: boolean;
-    phoneNumberPrefilled: boolean;
-    context: AppContext;
 }
-
-const toPaymentTerminalSelector = (category: KnownProviderCategories, setFormInfo: SetFormInfoAction) =>
-    setFormInfo(new PaymentTerminalSelectorFormInfo(category, FormName.paymentMethods));
-
-const toPaymentTerminal = (serviceProviderID: string, setFormInfo: SetFormInfoAction) =>
-    setFormInfo(new PaymentTerminalFormInfo(serviceProviderID, FormName.paymentMethods));
 
 const isRequiredEmail = (contactInfo: ServiceProviderContactInfo, emailPrefilled: boolean): boolean =>
     !isNil(contactInfo) && contactInfo.email === true && !emailPrefilled;
@@ -45,37 +40,42 @@ const isRequiredPaymentTerminalForm = (
     );
 };
 
-const provideMethod = (
-    method: PaymentTerminalPaymentMethod,
-    pay: PayAction,
-    setFormInfo: SetFormInfoAction,
-    emailPrefilled: boolean,
-    phoneNumberPrefilled: boolean,
-    context: AppContext
-) => {
-    if (method.serviceProviders.length === 1) {
-        const serviceProvider = method.serviceProviders[0];
-        return isRequiredPaymentTerminalForm(serviceProvider, emailPrefilled, phoneNumberPrefilled)
-            ? toPaymentTerminal(serviceProvider.id, setFormInfo)
-            : payWithPaymentTerminal(context, serviceProvider.id, pay);
-    }
-    if (method.serviceProviders.length > 1) {
-        return toPaymentTerminalSelector(method.category, setFormInfo);
-    }
-};
+export const PaymentTerminalMethodItem = ({ method }: PaymentTerminalMethodItemProps) => {
+    const { initConfig } = useContext(InitialContext);
+    const emailPrefilled = !!initConfig.email;
+    const phoneNumberPrefilled = !!initConfig.phoneNumber;
 
-export const PaymentTerminalMethodItem = ({
-    method,
-    pay,
-    setFormInfo,
-    localeCode,
-    emailPrefilled,
-    phoneNumberPrefilled,
-    context
-}: PaymentTerminalMethodItemProps) => (
-    <PaymentMethodItemContainer
-        id={`${Math.floor(Math.random() * 100)}-payment-method-item`}
-        onClick={() => provideMethod(method, pay, setFormInfo, emailPrefilled, phoneNumberPrefilled, context)}>
-        <Content method={method} localeCode={localeCode} />
-    </PaymentMethodItemContainer>
-);
+    const { paymentPayload, setFormData } = usePaymentPayload();
+    const dispatch = useAppDispatch();
+
+    const onClick = () => {
+        if (method.serviceProviders.length === 1) {
+            const serviceProvider = method.serviceProviders[0];
+            if (isRequiredPaymentTerminalForm(serviceProvider, emailPrefilled, phoneNumberPrefilled)) {
+                dispatch(goToFormInfo(new PaymentTerminalFormInfo(serviceProvider.id, FormName.paymentMethods)));
+            } else {
+                setFormData({
+                    method: PaymentMethodName.PaymentTerminal,
+                    values: {
+                        provider: serviceProvider.id
+                    } as PaymentTerminalFormValues
+                });
+            }
+        }
+        if (method.serviceProviders.length > 1) {
+            dispatch(goToFormInfo(new PaymentTerminalSelectorFormInfo(method.category, FormName.paymentMethods)));
+        }
+    };
+
+    useEffect(() => {
+        if (!isNil(paymentPayload)) {
+            dispatch(pay(paymentPayload));
+        }
+    }, [paymentPayload]);
+
+    return (
+        <PaymentMethodItemContainer id={`${Math.floor(Math.random() * 100)}-payment-method-item`} onClick={onClick}>
+            <Content method={method} localeCode={initConfig.locale} />
+        </PaymentMethodItemContainer>
+    );
+};

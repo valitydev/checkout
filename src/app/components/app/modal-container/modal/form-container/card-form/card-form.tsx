@@ -13,15 +13,16 @@ import { Amount } from '../common-fields';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getActiveModalFormSelector } from 'checkout/selectors';
 import { InitialContext } from '../../../../initial-context';
-import { PaymentMethodName } from 'checkout/hooks';
+import { PaymentMethodName, usePaymentPayload } from 'checkout/hooks';
+import isNil from 'checkout/utils/is-nil';
 
 const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
-    const context = useContext(InitialContext);
     const {
         locale,
         initConfig,
         model: { invoiceTemplate }
-    } = context;
+    } = useContext(InitialContext);
+    const { paymentPayload, setFormData } = usePaymentPayload();
     const { paymentStatus } = useAppSelector<CardFormInfo>(getActiveModalFormSelector);
     const cardHolder = toCardHolderConfig(initConfig.requireCardHolder);
     const amount = toAmountConfig(initConfig, invoiceTemplate);
@@ -46,10 +47,13 @@ const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormPro
         if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-    }, [submitFailed]);
+        if (!isNil(paymentPayload)) {
+            dispatch(pay(paymentPayload));
+        }
+    }, [submitFailed, paymentPayload]);
 
     const submit = (values: CardFormValues) => {
-        dispatch(pay({ method: PaymentMethodName.BankCard, values, context }));
+        setFormData({ method: PaymentMethodName.BankCard, values });
     };
 
     return (

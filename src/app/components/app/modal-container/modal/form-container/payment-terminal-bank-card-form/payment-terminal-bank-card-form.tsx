@@ -14,10 +14,11 @@ import { toEmailConfig, toPhoneNumberConfig } from '../fields-config';
 import { FormGroup } from '../form-group';
 import { Email, Phone } from '../common-fields';
 import { getMetadata } from 'checkout/components';
+import isNil from 'checkout/utils/is-nil';
 
 import { InitialContext } from '../../../../initial-context';
 import { getAvailableTerminalPaymentMethod } from '../get-available-terminal-payment-method';
-import { KnownProviderCategories } from 'checkout/hooks';
+import { KnownProviderCategories, usePaymentPayload } from 'checkout/hooks';
 
 const ProviderSelectorDescription = styled.p`
     font-size: 16px;
@@ -27,8 +28,8 @@ const ProviderSelectorDescription = styled.p`
 `;
 
 export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ submitFailed, handleSubmit }) => {
-    const context = useContext(InitialContext);
-    const { locale, initConfig, availablePaymentMethods } = context;
+    const { locale, initConfig, availablePaymentMethods } = useContext(InitialContext);
+    const { paymentPayload, setFormData } = usePaymentPayload();
     const paymentMethod = getAvailableTerminalPaymentMethod(availablePaymentMethods, KnownProviderCategories.BankCard);
     const serviceProviders = paymentMethod?.serviceProviders;
     const email = toEmailConfig(initConfig.email);
@@ -44,19 +45,19 @@ export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ su
         if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-    }, [submitFailed]);
+        if (!isNil(paymentPayload)) {
+            dispatch(pay(paymentPayload));
+        }
+    }, [submitFailed, paymentPayload]);
 
     const submit = (values: PaymentTerminalFormValues) => {
-        dispatch(
-            pay({
-                method: PaymentMethodName.PaymentTerminal,
-                values: {
-                    ...values,
-                    paymentSessionInfo
-                } as PaymentTerminalFormValues,
-                context
-            })
-        );
+        setFormData({
+            method: PaymentMethodName.PaymentTerminal,
+            values: {
+                ...values,
+                paymentSessionInfo
+            } as PaymentTerminalFormValues
+        });
     };
 
     return (

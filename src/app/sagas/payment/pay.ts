@@ -28,7 +28,7 @@ export function* pay(action: PaymentRequested) {
         const { events, status } = yield select((state: State) => state.events);
         switch (status) {
             case EventsStatus.polled:
-                yield call(paymentComplete, events, context.model?.serviceProviders);
+                yield call(paymentComplete, events, context?.serviceProviders);
                 break;
             case EventsStatus.timeout:
                 yield put(goToFormInfo(new ResultFormInfo(ResultType.processed)));

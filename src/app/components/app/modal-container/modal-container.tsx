@@ -1,46 +1,71 @@
 import * as React from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
-import { ModalContent } from './modal-content';
+import isNil from 'checkout/utils/is-nil';
+import { Modal } from './modal';
+import { UserInteractionModal } from './user-interaction-modal';
+import { ModalName, State } from 'checkout/state';
+import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
+import { initializeModal, initializeEvents } from 'checkout/actions';
+import { InitialContext } from '../initial-context';
+import { PayableInvoiceContext } from './payable-invoice-context';
 import styled from 'checkout/styled-components';
-import { device } from 'checkout/utils/device';
-import { fadein, fadeout, popup, popout } from 'checkout/styled-components/animations';
-import { stylableTransition, APPEAR, ENTER, LEAVE, ACTIVE } from 'checkout/styled-transition';
-
-const Animation = styled(stylableTransition)`
-    ${APPEAR} {
-        animation: ${fadein} 0.75s;
-
-        @media ${device.desktop} {
-            animation-name: ${popup};
-        }
-    }
-
-    ${ENTER} {
-        background: transparent;
-    }
-
-    ${LEAVE} {
-        animation: ${fadeout} 0.75s;
-
-        @media ${device.desktop} {
-            animation-name: ${popout};
-        }
-
-        ${ACTIVE} {
-            opacity: 0;
-        }
-    }
-`;
+import { RotateAnimation } from './rotate-animation';
+import { FadeInOutAnimation } from './fade-in-out-animation';
+import { PayableInvoiceData } from 'checkout/hooks';
 
 const Container = styled.div`
     height: 100%;
     position: relative;
 `;
 
-export const ModalContainer = () => (
-    <Animation enter={750} appear={750} leave={750}>
-        <Container>
-            <ModalContent />
-        </Container>
-    </Animation>
-);
+export const ModalContainer = () => {
+    const {
+        initConfig,
+        model: { events, serviceProviders, invoice, invoiceAccessToken },
+        availablePaymentMethods
+    } = useContext(InitialContext);
+    const [payableInvoiceData, setPayableInvoiceData] = useState<PayableInvoiceData>(null);
+
+    const modals = useAppSelector((s: State) => s.modals);
+    const dispatch = useAppDispatch();
+
+    const activeModalName = useMemo(() => {
+        if (isNil(modals)) {
+            return null;
+        }
+        return modals.find((modal) => modal.active).name;
+    }, [modals]);
+
+    useEffect(() => {
+        dispatch(initializeModal(initConfig, events, availablePaymentMethods, serviceProviders));
+        if (initConfig.integrationType === 'invoice') {
+            setPayableInvoiceData({
+                invoice: {
+                    id: invoice.id,
+                    dueDate: invoice.dueDate,
+                    externalID: invoice.externalID
+                },
+                invoiceAccessToken
+            });
+            dispatch(initializeEvents(events));
+        }
+    }, []);
+
+    return (
+        <FadeInOutAnimation enter={750} appear={750} leave={750}>
+            <Container>
+                {!isNil(modals) && (
+                    <RotateAnimation enter={1000} leave={500}>
+                        <div key={activeModalName}>
+                            <PayableInvoiceContext.Provider value={{ payableInvoiceData, setPayableInvoiceData }}>
+                                {activeModalName === ModalName.modalForms && <Modal />}
+                                {activeModalName === ModalName.modalInteraction && <UserInteractionModal />}
+                            </PayableInvoiceContext.Provider>
+                        </div>
+                    </RotateAnimation>
+                )}
+            </Container>
+        </FadeInOutAnimation>
+    );
+};

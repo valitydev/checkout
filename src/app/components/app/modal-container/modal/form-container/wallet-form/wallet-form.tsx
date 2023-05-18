@@ -15,17 +15,18 @@ import { getActiveModalFormSelector } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getMetadata, MetadataField, MetadataLogo, obscurePassword, sortByIndex } from 'checkout/components/ui';
 import { LogoContainer } from './logo-container';
+import { PaymentMethodName, usePaymentPayload } from 'checkout/hooks';
+import isNil from 'checkout/utils/is-nil';
 
 import { InitialContext } from '../../../../initial-context';
-import { PaymentMethodName } from 'checkout/hooks';
 
 const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
-    const context = useContext(InitialContext);
     const {
         locale,
         initConfig,
         model: { invoiceTemplate }
-    } = context;
+    } = useContext(InitialContext);
+    const { paymentPayload, setFormData } = usePaymentPayload();
     const { activeProvider, paymentStatus } = useAppSelector<WalletFormInfo>(getActiveModalFormSelector);
     const dispatch = useAppDispatch();
     const formValues = useAppSelector((s) => get(s.form, 'walletForm.values'));
@@ -33,13 +34,10 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
     const amount = toFieldsConfig(initConfig, invoiceTemplate).amount;
 
     const submit = (values: WalletFormValues) => {
-        dispatch(
-            pay({
-                method: PaymentMethodName.DigitalWallet,
-                values: form ? obscurePassword(form, values) : values,
-                context
-            })
-        );
+        setFormData({
+            method: PaymentMethodName.DigitalWallet,
+            values: form ? obscurePassword(form, values) : values
+        });
     };
 
     useEffect(() => {
@@ -61,7 +59,10 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
         if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-    }, [submitFailed]);
+        if (!isNil(paymentPayload)) {
+            dispatch(pay(paymentPayload));
+        }
+    }, [submitFailed, paymentPayload]);
 
     return (
         <form id="wallet-form" onSubmit={handleSubmit(submit)}>

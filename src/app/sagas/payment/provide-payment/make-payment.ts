@@ -1,6 +1,5 @@
 import { call, put } from 'redux-saga/effects';
 import { PayableFormValues } from 'checkout/state';
-import { getPayableInvoice } from './get-payable-invoice';
 import { LogicErrorCode, PaymentResource } from 'checkout/backend';
 import { createPayment } from './create-payment';
 import { pollInvoiceEvents } from '../../poll-events';
@@ -21,12 +20,15 @@ export function* makePayment(
     fn: CreatePaymentResourceFn,
     createRedirectUrlFn: CreateRedirectUrlFn = null
 ) {
-    const { initConfig, appConfig, model, amountInfo } = context;
-    const { capiEndpoint } = appConfig;
     const {
-        invoice: { id, dueDate, externalID },
-        invoiceAccessToken
-    } = yield call(getPayableInvoice, initConfig, capiEndpoint, model, amountInfo, values.amount);
+        initConfig,
+        appConfig,
+        payableInvoice: {
+            invoiceAccessToken,
+            invoice: { id, dueDate, externalID }
+        }
+    } = context;
+    const { capiEndpoint } = appConfig;
     const paymentResource = yield call(fn, invoiceAccessToken);
     let redirectUrl;
     if (createRedirectUrlFn) {

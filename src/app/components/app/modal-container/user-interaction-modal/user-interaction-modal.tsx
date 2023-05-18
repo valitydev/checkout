@@ -15,6 +15,7 @@ import { finishInteraction } from 'checkout/actions';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 
 import { InitialContext } from '../../initial-context';
+import { PayableInvoiceContext } from '../payable-invoice-context';
 
 const Container = styled.div`
     height: 100%; // for cross-browser 100vh
@@ -50,10 +51,12 @@ const IFrame = styled.iframe`
 export const UserInteractionModal = () => {
     const iFrameElement = useRef(null);
     const { origin, appConfig, model } = useContext(InitialContext);
-    const { modal, invoiceID, invoiceAccessToken } = useAppSelector((s) => ({
-        modal: findNamed(s.modals, ModalName.modalInteraction) as ModalInteraction,
-        invoiceID: s.model?.invoice?.id,
-        invoiceAccessToken: s.model?.invoiceAccessToken
+    const {
+        payableInvoiceData: { invoice, invoiceAccessToken }
+    } = useContext(PayableInvoiceContext);
+
+    const { modal } = useAppSelector((s) => ({
+        modal: findNamed(s.modals, ModalName.modalInteraction) as ModalInteraction
     }));
     const dispatch = useAppDispatch();
 
@@ -64,7 +67,7 @@ export const UserInteractionModal = () => {
             iFrameElement.current.contentWindow.document.body.appendChild(form);
             form.submit();
         }
-        dispatch(finishInteraction(appConfig.capiEndpoint, invoiceID, invoiceAccessToken, model.serviceProviders));
+        dispatch(finishInteraction(appConfig.capiEndpoint, invoice.id, invoiceAccessToken, model.serviceProviders));
     }, []);
 
     const src = useMemo(() => {
