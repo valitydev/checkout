@@ -11,9 +11,7 @@ import { goToFormInfo } from 'checkout/actions';
 import { InitialContext } from '../../../../../initial-context';
 
 export const Wallets = () => {
-    const {
-        initConfig: { locale }
-    } = useContext(InitialContext);
+    const { locale } = useContext(InitialContext);
     const dispatch = useAppDispatch();
 
     const onClick = () => {
