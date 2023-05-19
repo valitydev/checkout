@@ -2,57 +2,13 @@ import { useContext, useState, useCallback } from 'react';
 
 import isNil from 'checkout/utils/is-nil';
 import { PaymentRequestedPayload } from 'checkout/actions';
-import { InvoiceAndToken, InvoiceTemplate, createInvoiceWithTemplate } from 'checkout/backend';
-import { toMinorAmount } from 'checkout/utils';
-import { PayableInvoiceData } from './create-payment/types';
-import { AmountInfo } from './init-app';
+import { createInvoiceWithTemplate, createPayment } from './create-payment';
 import { FormData } from './create-payment';
 
 import { InitialContext } from '../components/app/initial-context';
 import { PayableInvoiceContext } from '../components/app/modal-container/payable-invoice-context';
 
-const getAmount = (amountInfo: AmountInfo, formAmount: string): number => {
-    switch (amountInfo.status) {
-        case 'final':
-            return amountInfo.minorValue;
-        case 'notKnown':
-            return toMinorAmount(formAmount);
-    }
-};
-
-const toPayableInvoiceData = ({
-    invoice: { id, dueDate, externalID },
-    invoiceAccessToken
-}: InvoiceAndToken): PayableInvoiceData => ({
-    invoice: { id, dueDate, externalID },
-    invoiceAccessToken: invoiceAccessToken.payload
-});
-
-export type CreateInvoiceParams = {
-    capiEndpoint: string;
-    invoiceTemplateAccessToken: string;
-    invoiceTemplate: InvoiceTemplate;
-    amountInfo: AmountInfo;
-    formAmount: string;
-};
-
-const createPayableInvoiceWithTemplate = async ({
-    capiEndpoint,
-    invoiceTemplateAccessToken,
-    invoiceTemplate: { metadata, id },
-    amountInfo,
-    formAmount
-}: CreateInvoiceParams): Promise<PayableInvoiceData> => {
-    const params = {
-        amount: getAmount(amountInfo, formAmount),
-        metadata,
-        currency: amountInfo.currencyCode
-    };
-    const invoiceAndToken = await createInvoiceWithTemplate(capiEndpoint, invoiceTemplateAccessToken, id, params);
-    return toPayableInvoiceData(invoiceAndToken);
-};
-
-export const usePaymentPayload = () => {
+export const useCreatePayment = () => {
     const {
         initConfig,
         appConfig,
@@ -69,7 +25,7 @@ export const usePaymentPayload = () => {
             const fetchData = async () => {
                 let data = payableInvoiceData;
                 if (isNil(data)) {
-                    data = await createPayableInvoiceWithTemplate({
+                    data = await createInvoiceWithTemplate({
                         capiEndpoint: appConfig.capiEndpoint,
                         invoiceTemplateAccessToken: initConfig.invoiceTemplateAccessToken,
                         invoiceTemplate,
@@ -78,6 +34,26 @@ export const usePaymentPayload = () => {
                     });
                     setPayableInvoiceData(data);
                 }
+                const payment = await createPayment({
+                    capiEndpoint: appConfig.capiEndpoint,
+                    urlShortenerEndpoint: appConfig.urlShortenerEndpoint,
+                    origin,
+                    initConfig: {
+                        redirectUrl: initConfig.redirectUrl,
+                        email: initConfig.email,
+                        phoneNumber: initConfig.phoneNumber,
+                        paymentFlowHold: initConfig.paymentFlowHold,
+                        holdExpiration: initConfig.holdExpiration,
+                        recurring: initConfig.recurring,
+                        metadata: initConfig.metadata,
+                        isExternalIDIncluded: initConfig.isExternalIDIncluded
+                    },
+                    formData,
+                    payableInvoice: data
+                });
+
+                console.log('Payment', payment);
+
                 setPaymentPayload({
                     ...formData,
                     context: {

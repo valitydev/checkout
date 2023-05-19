@@ -5,7 +5,7 @@ import { InjectedFormProps, reduxForm } from 'redux-form';
 import { FormGroup } from '../form-group';
 import { CardHolder, CardNumber, ExpireDate, SecureCode } from './fields';
 import { CardFormInfo, CardFormValues, FormName, PaymentStatus } from 'checkout/state';
-import { pay, setViewInfoError } from 'checkout/actions';
+import { pay, prepareToPay, setViewInfoError } from 'checkout/actions';
 import { PayButton } from '../pay-button';
 import { Header } from '../header/header';
 import { toAmountConfig, toCardHolderConfig } from '../fields-config';
@@ -13,7 +13,7 @@ import { Amount } from '../common-fields';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getActiveModalFormSelector } from 'checkout/selectors';
 import { InitialContext } from '../../../../initial-context';
-import { PaymentMethodName, usePaymentPayload } from 'checkout/hooks';
+import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
 import isNil from 'checkout/utils/is-nil';
 
 const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
@@ -22,7 +22,7 @@ const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormPro
         initConfig,
         model: { invoiceTemplate }
     } = useContext(InitialContext);
-    const { paymentPayload, setFormData } = usePaymentPayload();
+    const { paymentPayload, setFormData } = useCreatePayment();
     const { paymentStatus } = useAppSelector<CardFormInfo>(getActiveModalFormSelector);
     const cardHolder = toCardHolderConfig(initConfig.requireCardHolder);
     const amount = toAmountConfig(initConfig, invoiceTemplate);
@@ -53,6 +53,7 @@ const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormPro
     }, [submitFailed, paymentPayload]);
 
     const submit = (values: CardFormValues) => {
+        dispatch(prepareToPay());
         setFormData({ method: PaymentMethodName.BankCard, values });
     };
 

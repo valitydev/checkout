@@ -1,12 +1,5 @@
 import { call, CallEffect, ForkEffect, put, PutEffect, select, SelectEffect, takeLatest } from 'redux-saga/effects';
-import {
-    goToFormInfo,
-    PaymentCompleted,
-    PaymentFailed,
-    PaymentRequested,
-    PrepareToPay,
-    TypeKeys
-} from 'checkout/actions';
+import { goToFormInfo, PaymentCompleted, PaymentFailed, PaymentRequested, TypeKeys } from 'checkout/actions';
 import { Event, ServiceProvider } from 'checkout/backend';
 import { providePayment } from './provide-payment';
 import { EventsStatus, ResultFormInfo, ResultType, State } from 'checkout/state';
@@ -23,7 +16,7 @@ export function* paymentComplete(
 export function* pay(action: PaymentRequested) {
     try {
         const { values, method, context } = action.payload;
-        yield put({ type: TypeKeys.PREPARE_TO_PAY } as PrepareToPay);
+        // yield put({ type: TypeKeys.PREPARE_TO_PAY } as PrepareToPay);
         yield call(providePayment, method, context, values);
         const { events, status } = yield select((state: State) => state.events);
         switch (status) {
