@@ -1,21 +1,11 @@
 import { AbstractAction, TypeKeys } from 'checkout/actions';
-import { PayableFormValues } from 'checkout/state';
-import { AppConfig, LogicError, ServiceProvider } from 'checkout/backend';
-import { InitConfig } from 'checkout/config';
-import { PayableInvoiceData, PaymentMethodName } from 'checkout/hooks';
-
-export type AppContext = {
-    initConfig: InitConfig;
-    appConfig: AppConfig;
-    origin: string;
-    serviceProviders: ServiceProvider[];
-    payableInvoice: PayableInvoiceData;
-};
+import { LogicError, ServiceProvider } from 'checkout/backend';
 
 export interface PaymentRequestedPayload {
-    method: PaymentMethodName;
-    context: AppContext;
-    values?: PayableFormValues;
+    capiEndpoint: string;
+    invoiceID: string;
+    invoiceAccessToken: string;
+    serviceProviders: ServiceProvider[];
 }
 
 export interface PaymentRequested extends AbstractAction<PaymentRequestedPayload> {

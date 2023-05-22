@@ -6,7 +6,7 @@ import { FormName, PaymentTerminalFormValues } from 'checkout/state';
 import { Header } from '../header';
 import { useAppDispatch } from 'checkout/configure-store';
 import { ProviderSelectorField } from './provider-selector';
-import { pay, setViewInfoError } from 'checkout/actions';
+import { pay, prepareToPay, setViewInfoError } from 'checkout/actions';
 import { PayButton } from '../pay-button';
 import { PaymentMethodName } from 'checkout/backend';
 import styled from 'checkout/styled-components';
@@ -18,7 +18,7 @@ import isNil from 'checkout/utils/is-nil';
 
 import { InitialContext } from '../../../../initial-context';
 import { getAvailableTerminalPaymentMethod } from '../get-available-terminal-payment-method';
-import { KnownProviderCategories, usePaymentPayload } from 'checkout/hooks';
+import { KnownProviderCategories, useCreatePayment } from 'checkout/hooks';
 
 const ProviderSelectorDescription = styled.p`
     font-size: 16px;
@@ -29,7 +29,7 @@ const ProviderSelectorDescription = styled.p`
 
 export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ submitFailed, handleSubmit }) => {
     const { locale, initConfig, availablePaymentMethods } = useContext(InitialContext);
-    const { paymentPayload, setFormData } = usePaymentPayload();
+    const { paymentPayload, setFormData } = useCreatePayment();
     const paymentMethod = getAvailableTerminalPaymentMethod(availablePaymentMethods, KnownProviderCategories.BankCard);
     const serviceProviders = paymentMethod?.serviceProviders;
     const email = toEmailConfig(initConfig.email);
@@ -51,6 +51,7 @@ export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ su
     }, [submitFailed, paymentPayload]);
 
     const submit = (values: PaymentTerminalFormValues) => {
+        dispatch(prepareToPay());
         setFormData({
             method: PaymentMethodName.PaymentTerminal,
             values: {

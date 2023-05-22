@@ -11,8 +11,8 @@ import {
 import { getMetadata, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PaymentMethodName, ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
 import { Content } from './content';
-import { goToFormInfo, pay } from 'checkout/actions';
-import { PaymentTerminalPaymentMethod, usePaymentPayload } from 'checkout/hooks';
+import { goToFormInfo, pay, prepareToPay } from 'checkout/actions';
+import { PaymentTerminalPaymentMethod, useCreatePayment } from 'checkout/hooks';
 import { useAppDispatch } from 'checkout/configure-store';
 
 import { InitialContext } from '../../../../../../initial-context';
@@ -45,7 +45,7 @@ export const PaymentTerminalMethodItem = ({ method }: PaymentTerminalMethodItemP
     const emailPrefilled = !!initConfig.email;
     const phoneNumberPrefilled = !!initConfig.phoneNumber;
 
-    const { paymentPayload, setFormData } = usePaymentPayload();
+    const { paymentPayload, setFormData } = useCreatePayment();
     const dispatch = useAppDispatch();
 
     const onClick = () => {
@@ -54,6 +54,7 @@ export const PaymentTerminalMethodItem = ({ method }: PaymentTerminalMethodItemP
             if (isRequiredPaymentTerminalForm(serviceProvider, emailPrefilled, phoneNumberPrefilled)) {
                 dispatch(goToFormInfo(new PaymentTerminalFormInfo(serviceProvider.id, FormName.paymentMethods)));
             } else {
+                dispatch(prepareToPay());
                 setFormData({
                     method: PaymentMethodName.PaymentTerminal,
                     values: {

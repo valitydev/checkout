@@ -34,7 +34,7 @@ export const useCreatePayment = () => {
                     });
                     setPayableInvoiceData(data);
                 }
-                const payment = await createPayment({
+                await createPayment({
                     capiEndpoint: appConfig.capiEndpoint,
                     urlShortenerEndpoint: appConfig.urlShortenerEndpoint,
                     origin,
@@ -52,17 +52,11 @@ export const useCreatePayment = () => {
                     payableInvoice: data
                 });
 
-                console.log('Payment', payment);
-
                 setPaymentPayload({
-                    ...formData,
-                    context: {
-                        initConfig,
-                        appConfig,
-                        origin,
-                        serviceProviders,
-                        payableInvoice: data
-                    }
+                    capiEndpoint: appConfig.capiEndpoint,
+                    invoiceID: data.invoice.id,
+                    invoiceAccessToken: data.invoiceAccessToken,
+                    serviceProviders
                 });
             };
             fetchData();

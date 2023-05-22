@@ -1,7 +1,7 @@
 import { CardData, PaymentMethodName, PaymentTool, PaymentToolType } from 'checkout/backend';
 import { CardFormValues, PaymentTerminalFormValues, WalletFormValues } from 'checkout/state';
 import { replaceSpaces } from 'checkout/utils/replace-spaces';
-import { FormData } from '../use-create-payment';
+import { FormData } from './types';
 
 const toPaymentToolBankCard = (values: CardFormValues): CardData => {
     const cardNumber = replaceSpaces(values.cardNumber);
