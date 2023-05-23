@@ -1,34 +1,36 @@
 import { replaceSpaces } from 'checkout/utils/replace-spaces';
 import isNil from 'checkout/utils/is-nil';
-import { InitConfig } from 'checkout/config';
 import { PayableFormValues, PaymentTerminalFormValues } from 'checkout/state';
 import { ContactInfo } from 'checkout/backend';
 
-const getPhoneNumber = (formValues: PayableFormValues): string | undefined => {
-    const metadata = (formValues as PaymentTerminalFormValues)?.metadata;
-    let phoneNumber;
-    if (!isNil(metadata) && !isNil(metadata?.phoneNumber)) {
-        phoneNumber = metadata.phoneNumber;
+const mapFrom = (obj: { email?: string; phoneNumber?: string }, targetKeys = ['email', 'phoneNumber']): ContactInfo => {
+    const defaultResult = {} as ContactInfo;
+    if (isNil(obj)) {
+        return defaultResult;
     }
-    if (!isNil(formValues.phoneNumber)) {
-        phoneNumber = formValues.phoneNumber;
-    }
-    return isNil(phoneNumber) ? undefined : replaceSpaces(phoneNumber);
+    return targetKeys.reduce((acc, targetKey) => {
+        const val = obj[targetKey];
+        if (isNil(val)) {
+            return acc;
+        }
+        return {
+            ...acc,
+            [targetKey]: replaceSpaces(val)
+        };
+    }, defaultResult);
 };
 
-const getEmail = (formValues: PayableFormValues): string | undefined => {
-    const metadata = (formValues as PaymentTerminalFormValues)?.metadata;
-    let email;
-    if (!isNil(metadata) && !isNil(metadata?.email)) {
-        email = metadata.email;
-    }
-    if (!isNil(formValues.email)) {
-        email = formValues.email;
-    }
-    return isNil(email) ? undefined : replaceSpaces(email);
+export const toContactInfo = (
+    initConfig: { email: string; phoneNumber: string },
+    formValues: PayableFormValues
+): ContactInfo => {
+    const fromFormValues = mapFrom(formValues);
+    const fromMetadata = mapFrom((formValues as PaymentTerminalFormValues)?.metadata);
+    const fromInitConfig = mapFrom(initConfig);
+    const byPriority = {
+        ...fromFormValues,
+        ...fromMetadata,
+        ...fromInitConfig
+    };
+    return byPriority;
 };
-
-export const toContactInfo = (initConfig: InitConfig, formValues: PayableFormValues): ContactInfo => ({
-    email: initConfig.email || getEmail(formValues),
-    phoneNumber: initConfig.phoneNumber || getPhoneNumber(formValues)
-});
