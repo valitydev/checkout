@@ -1,4 +1,4 @@
-import * as Fingerprint2 from 'fingerprintjs2';
+import Fingerprint2 from 'fingerprintjs2';
 import { PaymentResource, PaymentTool } from 'checkout/backend/model';
 import v from './capi-version';
 import { fetchCapi } from './fetch-capi';

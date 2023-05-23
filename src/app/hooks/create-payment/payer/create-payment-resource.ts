@@ -1,5 +1,5 @@
 import { PaymentResource, createPaymentResource as request } from 'checkout/backend';
-import { toPaymentTool } from '../to-payment-tool';
+import { toPaymentTool } from './to-payment-tool';
 import { FormData } from '../types';
 
 export const createPaymentResource = (
