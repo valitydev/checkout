@@ -1,7 +1,14 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 
-import { FormInfo, FormName, PaymentTerminalFormValues, WalletFormInfo } from 'checkout/state';
+import {
+    FormInfo,
+    FormName,
+    PaymentTerminalFormValues,
+    ResultFormInfo,
+    ResultType,
+    WalletFormInfo
+} from 'checkout/state';
 import { getMetadata, MetadataLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PaymentMethodName, ServiceProvider } from 'checkout/backend';
 import { PaymentRequestedPayload, goToFormInfo, pay, prepareToPay } from 'checkout/actions';
@@ -19,7 +26,7 @@ export interface WalletProviderPaymentMethodItemProps {
 export const WalletProviderPaymentMethodItem = ({ serviceProvider }: WalletProviderPaymentMethodItemProps) => {
     const { logo, form } = getMetadata(serviceProvider);
 
-    const { paymentPayload, setFormData } = useCreatePayment();
+    const { createPaymentState, setFormData } = useCreatePayment();
     const dispatch = useAppDispatch();
 
     const onClick = () => {
@@ -37,10 +44,13 @@ export const WalletProviderPaymentMethodItem = ({ serviceProvider }: WalletProvi
     };
 
     useEffect(() => {
-        if (!isNil(paymentPayload)) {
-            dispatch(pay(paymentPayload));
+        if (createPaymentState.status === 'SUCCESS') {
+            dispatch(pay(createPaymentState.data));
         }
-    }, [paymentPayload]);
+        if (createPaymentState.status === 'FAILURE') {
+            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, createPaymentState.error)));
+        }
+    }, [createPaymentState]);
 
     return (
         <PaymentMethodItemContainer onClick={onClick}>

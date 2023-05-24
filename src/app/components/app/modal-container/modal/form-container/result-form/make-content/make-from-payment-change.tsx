@@ -4,6 +4,7 @@ import { ResultFormContent } from './result-form-content';
 import { getFailedDescription } from './get-failed-description';
 import { getLastChange } from 'checkout/utils';
 import { ResultFormType } from './result-form-content';
+import isObject from 'checkout/utils/is-object';
 
 export const refunded = (l: Locale): ResultFormContent => ({
     hasActions: false,
@@ -31,6 +32,23 @@ export const failed = (l: Locale, e: PaymentError | LogicError): ResultFormConte
     hasDone: false,
     header: l['form.header.final.failed.label'],
     description: getFailedDescription(l, e),
+    type: ResultFormType.ERROR
+});
+
+const getErrorDescription = (error: unknown): string => {
+    if (error instanceof Error) {
+        return `${error.name}: ${error.message}`;
+    } else if (isObject(error)) {
+        return JSON.stringify(error);
+    }
+    return 'Unknown error';
+};
+
+export const failedHook = (l: Locale, error: unknown): ResultFormContent => ({
+    hasActions: true,
+    hasDone: false,
+    header: l['form.header.final.failed.label'],
+    description: getErrorDescription(error),
     type: ResultFormType.ERROR
 });
 
