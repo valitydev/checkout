@@ -2,11 +2,11 @@ import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 
-import { FormName, PaymentTerminalFormValues } from 'checkout/state';
+import { FormName, PaymentTerminalFormValues, ResultFormInfo, ResultType } from 'checkout/state';
 import { Header } from '../header';
 import { useAppDispatch } from 'checkout/configure-store';
 import { ProviderSelectorField } from './provider-selector';
-import { pay, prepareToPay, setViewInfoError } from 'checkout/actions';
+import { goToFormInfo, pay, prepareToPay, setViewInfoError } from 'checkout/actions';
 import { PayButton } from '../pay-button';
 import { PaymentMethodName } from 'checkout/backend';
 import styled from 'checkout/styled-components';
@@ -14,7 +14,6 @@ import { toEmailConfig, toPhoneNumberConfig } from '../fields-config';
 import { FormGroup } from '../form-group';
 import { Email, Phone } from '../common-fields';
 import { getMetadata } from 'checkout/components';
-import isNil from 'checkout/utils/is-nil';
 
 import { InitialContext } from '../../../../initial-context';
 import { getAvailableTerminalPaymentMethod } from '../get-available-terminal-payment-method';
@@ -29,7 +28,7 @@ const ProviderSelectorDescription = styled.p`
 
 export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ submitFailed, handleSubmit }) => {
     const { locale, initConfig, availablePaymentMethods } = useContext(InitialContext);
-    const { paymentPayload, setFormData } = useCreatePayment();
+    const { createPaymentState, setFormData } = useCreatePayment();
     const paymentMethod = getAvailableTerminalPaymentMethod(availablePaymentMethods, KnownProviderCategories.BankCard);
     const serviceProviders = paymentMethod?.serviceProviders;
     const email = toEmailConfig(initConfig.email);
@@ -45,10 +44,13 @@ export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ su
         if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-        if (!isNil(paymentPayload)) {
-            dispatch(pay(paymentPayload));
+        if (createPaymentState.status === 'SUCCESS') {
+            dispatch(pay(createPaymentState.data));
         }
-    }, [submitFailed, paymentPayload]);
+        if (createPaymentState.status === 'FAILURE') {
+            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, createPaymentState.error)));
+        }
+    }, [submitFailed, createPaymentState]);
 
     const submit = (values: PaymentTerminalFormValues) => {
         dispatch(prepareToPay());

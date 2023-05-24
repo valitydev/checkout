@@ -4,19 +4,18 @@ import { InjectedFormProps, reduxForm } from 'redux-form';
 import get from 'lodash-es/get';
 
 import { FormGroup } from '../form-group';
-import { FormName, PaymentStatus, WalletFormInfo, WalletFormValues } from 'checkout/state';
+import { FormName, PaymentStatus, ResultFormInfo, ResultType, WalletFormInfo, WalletFormValues } from 'checkout/state';
 import { PayButton } from '../pay-button';
 import { Header } from '../header';
 import { Amount } from '../common-fields';
 import { toFieldsConfig } from '../fields-config';
-import { pay, prepareToPay, setViewInfoError } from 'checkout/actions';
+import { goToFormInfo, pay, prepareToPay, setViewInfoError } from 'checkout/actions';
 import { SignUp } from './sign-up';
 import { getActiveModalFormSelector } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getMetadata, MetadataField, MetadataLogo, obscurePassword, sortByIndex } from 'checkout/components/ui';
 import { LogoContainer } from './logo-container';
 import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
-import isNil from 'checkout/utils/is-nil';
 
 import { InitialContext } from '../../../../initial-context';
 
@@ -26,7 +25,7 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
         initConfig,
         model: { invoiceTemplate }
     } = useContext(InitialContext);
-    const { paymentPayload, setFormData } = useCreatePayment();
+    const { createPaymentState, setFormData } = useCreatePayment();
     const { activeProvider, paymentStatus } = useAppSelector<WalletFormInfo>(getActiveModalFormSelector);
     const dispatch = useAppDispatch();
     const formValues = useAppSelector((s) => get(s.form, 'walletForm.values'));
@@ -60,10 +59,13 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
         if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-        if (!isNil(paymentPayload)) {
-            dispatch(pay(paymentPayload));
+        if (createPaymentState.status === 'SUCCESS') {
+            dispatch(pay(createPaymentState.data));
         }
-    }, [submitFailed, paymentPayload]);
+        if (createPaymentState.status === 'FAILURE') {
+            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, createPaymentState.error)));
+        }
+    }, [submitFailed, createPaymentState]);
 
     return (
         <form id="wallet-form" onSubmit={handleSubmit(submit)}>

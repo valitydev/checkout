@@ -6,7 +6,9 @@ import {
     FormName,
     PaymentTerminalFormInfo,
     PaymentTerminalFormValues,
-    PaymentTerminalSelectorFormInfo
+    PaymentTerminalSelectorFormInfo,
+    ResultFormInfo,
+    ResultType
 } from 'checkout/state';
 import { getMetadata, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PaymentMethodName, ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
@@ -45,7 +47,7 @@ export const PaymentTerminalMethodItem = ({ method }: PaymentTerminalMethodItemP
     const emailPrefilled = !!initConfig.email;
     const phoneNumberPrefilled = !!initConfig.phoneNumber;
 
-    const { paymentPayload, setFormData } = useCreatePayment();
+    const { createPaymentState, setFormData } = useCreatePayment();
     const dispatch = useAppDispatch();
 
     const onClick = () => {
@@ -69,10 +71,13 @@ export const PaymentTerminalMethodItem = ({ method }: PaymentTerminalMethodItemP
     };
 
     useEffect(() => {
-        if (!isNil(paymentPayload)) {
-            dispatch(pay(paymentPayload));
+        if (createPaymentState.status === 'SUCCESS') {
+            dispatch(pay(createPaymentState.data));
         }
-    }, [paymentPayload]);
+        if (createPaymentState.status === 'FAILURE') {
+            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, createPaymentState.error)));
+        }
+    }, [createPaymentState]);
 
     return (
         <PaymentMethodItemContainer id={`${Math.floor(Math.random() * 100)}-payment-method-item`} onClick={onClick}>

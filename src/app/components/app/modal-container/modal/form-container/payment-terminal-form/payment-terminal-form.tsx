@@ -5,8 +5,15 @@ import get from 'lodash-es/get';
 import styled from 'checkout/styled-components';
 
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { pay, prepareToPay, setViewInfoError } from 'checkout/actions';
-import { FormName, PaymentStatus, PaymentTerminalFormValues, PaymentTerminalFormInfo } from 'checkout/state';
+import { goToFormInfo, pay, prepareToPay, setViewInfoError } from 'checkout/actions';
+import {
+    FormName,
+    PaymentStatus,
+    PaymentTerminalFormValues,
+    PaymentTerminalFormInfo,
+    ResultFormInfo,
+    ResultType
+} from 'checkout/state';
 import { Header } from '../header';
 import { PayButton } from '../pay-button';
 import { FormGroup } from '../form-group';
@@ -26,7 +33,6 @@ import {
 } from './init-config-payment';
 import { MetadataSelect } from './metadata-select';
 import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
-import isNil from 'checkout/utils/is-nil';
 import { InitialContext } from '../../../../initial-context';
 
 const Container = styled.div`
@@ -42,7 +48,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
         initConfig,
         model: { serviceProviders, invoiceTemplate }
     } = useContext(InitialContext);
-    const { paymentPayload, setFormData } = useCreatePayment();
+    const { createPaymentState, setFormData } = useCreatePayment();
     const { providerID, paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
     const serviceProvider = serviceProviders.find((value) => value.id === providerID);
     const { form, contactInfo, logo, paymentSessionInfo, prefilledMetadataValues } = getMetadata(serviceProvider);
@@ -88,10 +94,13 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
         if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-        if (!isNil(paymentPayload)) {
-            dispatch(pay(paymentPayload));
+        if (createPaymentState.status === 'SUCCESS') {
+            dispatch(pay(createPaymentState.data));
         }
-    }, [submitFailed, paymentPayload]);
+        if (createPaymentState.status === 'FAILURE') {
+            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, createPaymentState.error)));
+        }
+    }, [submitFailed, createPaymentState]);
 
     const submit = (values?: Partial<PaymentTerminalFormValues>) => {
         const payload = {

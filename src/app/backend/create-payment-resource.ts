@@ -9,12 +9,9 @@ function getFingerprintFromComponents(components: Fingerprint2.Component[]) {
 }
 
 const getClientInfoUrl = (): { url: string } | undefined => {
-    const url = (document.referrer || '').slice(
-        0,
-        // URL max length (API constraint)
-        599
-    );
-    return url ? { url } : undefined;
+    if (document.referrer === '') return;
+    const url = new URL(document.referrer);
+    return { url: url.origin };
 };
 
 export const createPaymentResource = (

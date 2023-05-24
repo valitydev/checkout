@@ -4,8 +4,8 @@ import { InjectedFormProps, reduxForm } from 'redux-form';
 
 import { FormGroup } from '../form-group';
 import { CardHolder, CardNumber, ExpireDate, SecureCode } from './fields';
-import { CardFormInfo, CardFormValues, FormName, PaymentStatus } from 'checkout/state';
-import { pay, prepareToPay, setViewInfoError } from 'checkout/actions';
+import { CardFormInfo, CardFormValues, FormName, PaymentStatus, ResultFormInfo, ResultType } from 'checkout/state';
+import { goToFormInfo, pay, prepareToPay, setViewInfoError } from 'checkout/actions';
 import { PayButton } from '../pay-button';
 import { Header } from '../header/header';
 import { toAmountConfig, toCardHolderConfig } from '../fields-config';
@@ -14,7 +14,6 @@ import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getActiveModalFormSelector } from 'checkout/selectors';
 import { InitialContext } from '../../../../initial-context';
 import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
-import isNil from 'checkout/utils/is-nil';
 
 const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
     const {
@@ -22,7 +21,7 @@ const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormPro
         initConfig,
         model: { invoiceTemplate }
     } = useContext(InitialContext);
-    const { paymentPayload, setFormData } = useCreatePayment();
+    const { createPaymentState, setFormData } = useCreatePayment();
     const { paymentStatus } = useAppSelector<CardFormInfo>(getActiveModalFormSelector);
     const cardHolder = toCardHolderConfig(initConfig.requireCardHolder);
     const amount = toAmountConfig(initConfig, invoiceTemplate);
@@ -47,10 +46,13 @@ const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormPro
         if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-        if (!isNil(paymentPayload)) {
-            dispatch(pay(paymentPayload));
+        if (createPaymentState.status === 'SUCCESS') {
+            dispatch(pay(createPaymentState.data));
         }
-    }, [submitFailed, paymentPayload]);
+        if (createPaymentState.status === 'FAILURE') {
+            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, createPaymentState.error)));
+        }
+    }, [submitFailed, createPaymentState]);
 
     const submit = (values: CardFormValues) => {
         dispatch(prepareToPay());
