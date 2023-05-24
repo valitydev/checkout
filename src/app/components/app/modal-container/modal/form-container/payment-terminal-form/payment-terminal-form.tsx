@@ -5,7 +5,7 @@ import get from 'lodash-es/get';
 import styled from 'checkout/styled-components';
 
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { pay, setViewInfoError } from 'checkout/actions';
+import { pay, prepareToPay, setViewInfoError } from 'checkout/actions';
 import { FormName, PaymentStatus, PaymentTerminalFormValues, PaymentTerminalFormInfo } from 'checkout/state';
 import { Header } from '../header';
 import { PayButton } from '../pay-button';
@@ -25,7 +25,7 @@ import {
     prepareFormValues
 } from './init-config-payment';
 import { MetadataSelect } from './metadata-select';
-import { PaymentMethodName, usePaymentPayload } from 'checkout/hooks';
+import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
 import isNil from 'checkout/utils/is-nil';
 import { InitialContext } from '../../../../initial-context';
 
@@ -42,7 +42,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
         initConfig,
         model: { serviceProviders, invoiceTemplate }
     } = useContext(InitialContext);
-    const { paymentPayload, setFormData } = usePaymentPayload();
+    const { paymentPayload, setFormData } = useCreatePayment();
     const { providerID, paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
     const serviceProvider = serviceProviders.find((value) => value.id === providerID);
     const { form, contactInfo, logo, paymentSessionInfo, prefilledMetadataValues } = getMetadata(serviceProvider);
@@ -106,6 +106,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                 }
             } as PaymentTerminalFormValues
         };
+        dispatch(prepareToPay());
         setFormData(payload);
     };
 

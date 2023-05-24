@@ -28,3 +28,4 @@ export * from './service-provider';
 export * from './shortened-url-params';
 export * from './shortened-url';
 export * from './service-provider-metadata';
+export * from './contact-info';

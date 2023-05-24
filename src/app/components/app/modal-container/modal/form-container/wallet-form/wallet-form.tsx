@@ -9,13 +9,13 @@ import { PayButton } from '../pay-button';
 import { Header } from '../header';
 import { Amount } from '../common-fields';
 import { toFieldsConfig } from '../fields-config';
-import { pay, setViewInfoError } from 'checkout/actions';
+import { pay, prepareToPay, setViewInfoError } from 'checkout/actions';
 import { SignUp } from './sign-up';
 import { getActiveModalFormSelector } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { getMetadata, MetadataField, MetadataLogo, obscurePassword, sortByIndex } from 'checkout/components/ui';
 import { LogoContainer } from './logo-container';
-import { PaymentMethodName, usePaymentPayload } from 'checkout/hooks';
+import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
 import isNil from 'checkout/utils/is-nil';
 
 import { InitialContext } from '../../../../initial-context';
@@ -26,7 +26,7 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
         initConfig,
         model: { invoiceTemplate }
     } = useContext(InitialContext);
-    const { paymentPayload, setFormData } = usePaymentPayload();
+    const { paymentPayload, setFormData } = useCreatePayment();
     const { activeProvider, paymentStatus } = useAppSelector<WalletFormInfo>(getActiveModalFormSelector);
     const dispatch = useAppDispatch();
     const formValues = useAppSelector((s) => get(s.form, 'walletForm.values'));
@@ -34,6 +34,7 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
     const amount = toFieldsConfig(initConfig, invoiceTemplate).amount;
 
     const submit = (values: WalletFormValues) => {
+        dispatch(prepareToPay());
         setFormData({
             method: PaymentMethodName.DigitalWallet,
             values: form ? obscurePassword(form, values) : values

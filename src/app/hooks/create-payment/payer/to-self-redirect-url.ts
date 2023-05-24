@@ -1,6 +1,6 @@
 import { serializeUrlParams } from '../../../../serialize-url-params';
 
-export const prepareSelfRedirectUrl = (
+export const toSelfRedirectUrl = (
     origin: string,
     invoiceID: string,
     invoiceAccessToken: string,
