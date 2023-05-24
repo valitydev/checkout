@@ -16,7 +16,7 @@
     "form.header.final.pending.label": "대기 중",
     "form.header.final.cancelled.label": "취소됨",
     "form.final.failed.cancelled.text": "결제가 취소되었습니다",
-    "form.final.started.pay.text": "결제가 대기 중입니다",
+    "form.final.started.pay.text": "결제가 승인되어 처리 중입니다. 5-15분 내에 승인될 것으로 예상입니다",
     "form.final.need.help": "문제가 생기셨습니까?",
     "form.input.phone.placeholder": "Phone number",
     "form.input.card.placeholder": "Card number",
