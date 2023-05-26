@@ -2,9 +2,8 @@ import { InvoiceChange, InvoiceChangeType, InvoiceEvent, getInvoiceEvents } from
 import isNil from 'checkout/utils/is-nil';
 
 const GET_INVOICE_EVENTS_LIMIT = 5;
-const GET_INVOICE_EVENTS_CALL_DELAY_MS = 1000;
 
-const delay = (ms: number): Promise<undefined> => new Promise((resolve) => setTimeout(() => resolve(undefined), ms));
+const delay = (ms: number): Promise<undefined> => new Promise((resolve) => setTimeout(resolve, ms));
 
 const last = <T>(array: T[]): T | undefined => array[array.length - 1];
 
@@ -24,20 +23,16 @@ const getChange = (
     }
 };
 
-const getInvoiceEventsWithDelay = async (
-    { capiEndpoint, invoiceAccessToken, invoiceID }: GetInvoiceEventsParams,
-    eventID?: number
-) => {
-    await delay(GET_INVOICE_EVENTS_CALL_DELAY_MS);
-    return getInvoiceEvents(capiEndpoint, invoiceAccessToken, invoiceID, GET_INVOICE_EVENTS_LIMIT, eventID);
-};
-
-const fetchEvents = async (
-    params: GetInvoiceEventsParams,
-    stopPollingTypes: InvoiceChangeType[],
-    eventID?: number
-): Promise<PollingSuccess> => {
-    const events = await getInvoiceEventsWithDelay(params, eventID);
+const fetchEvents = async (params: PollInvoiceEventsParams): Promise<PollingResult> => {
+    const { capiEndpoint, invoiceAccessToken, invoiceID, eventID, stopPollingTypes, delays } = params;
+    await delay(delays.apiMethodCall);
+    const events = await getInvoiceEvents(
+        capiEndpoint,
+        invoiceAccessToken,
+        invoiceID,
+        GET_INVOICE_EVENTS_LIMIT,
+        eventID
+    );
     const lastEvent = last(events);
     const change = getChange(lastEvent, stopPollingTypes);
     if (!isNil(change)) {
@@ -47,40 +42,33 @@ const fetchEvents = async (
             change
         };
     }
-    const nextFetchEventID = isNil(lastEvent) ? eventID : lastEvent.id;
-    return await fetchEvents(params, stopPollingTypes, nextFetchEventID);
+    return await fetchEvents({ ...params, eventID: isNil(lastEvent) ? eventID : lastEvent.id });
 };
 
-export type GetInvoiceEventsParams = {
+export type PollInvoiceEventsParams = {
     capiEndpoint: string;
     invoiceAccessToken: string;
     invoiceID: string;
-};
-
-export type PollingContext = {
-    stopPollingTypes: InvoiceChangeType[];
-    pollingTimeoutMs: number;
     eventID?: number;
+    stopPollingTypes: InvoiceChangeType[];
+    delays: {
+        pollingTimeout: number;
+        apiMethodCall: number;
+    };
 };
 
-type PollingSuccess = {
-    status: 'POLLED';
-    eventID: number;
-    change: InvoiceChange;
-};
-type PollingTimeout = {
-    status: 'TIMEOUT';
-};
-export type PollingResult = PollingSuccess | PollingTimeout;
+export type PollingResult =
+    | {
+          status: 'POLLED';
+          eventID: number;
+          change: InvoiceChange;
+      }
+    | {
+          status: 'TIMEOUT';
+      };
 
-export const pollInvoiceEvents = async (
-    params: GetInvoiceEventsParams,
-    context: PollingContext
-): Promise<PollingResult> => {
-    const result = await Promise.race([
-        fetchEvents(params, context.stopPollingTypes, context.eventID),
-        delay(context.pollingTimeoutMs)
-    ]);
+export const pollInvoiceEvents = async (params: PollInvoiceEventsParams): Promise<PollingResult> => {
+    const result = await Promise.race([fetchEvents(params), delay(params.delays.pollingTimeout)]);
     return isNil(result)
         ? {
               status: 'TIMEOUT'
