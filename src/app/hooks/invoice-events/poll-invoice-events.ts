@@ -1,11 +1,10 @@
 import { InvoiceChange, InvoiceChangeType, InvoiceEvent, getInvoiceEvents } from 'checkout/backend';
 import isNil from 'checkout/utils/is-nil';
+import last from 'checkout/utils/last';
 
 const GET_INVOICE_EVENTS_LIMIT = 5;
 
 const delay = (ms: number): Promise<undefined> => new Promise((resolve) => setTimeout(resolve, ms));
-
-const last = <T>(array: T[]): T | undefined => array[array.length - 1];
 
 const getChange = (
     event: InvoiceEvent | undefined,
@@ -23,7 +22,7 @@ const getChange = (
     }
 };
 
-const fetchEvents = async (params: PollInvoiceEventsParams): Promise<PollingResult> => {
+const fetchEvents = async (params: PollInvoiceEventsParams, isStop: () => boolean): Promise<PollingResult> => {
     const { capiEndpoint, invoiceAccessToken, invoiceID, eventID, stopPollingTypes, delays } = params;
     await delay(delays.apiMethodCall);
     const events = await getInvoiceEvents(
@@ -42,7 +41,10 @@ const fetchEvents = async (params: PollInvoiceEventsParams): Promise<PollingResu
             change
         };
     }
-    return await fetchEvents({ ...params, eventID: isNil(lastEvent) ? eventID : lastEvent.id });
+    if (isStop()) {
+        return Promise.resolve(null);
+    }
+    return await fetchEvents({ ...params, eventID: isNil(lastEvent) ? eventID : lastEvent.id }, isStop);
 };
 
 export type PollInvoiceEventsParams = {
@@ -68,10 +70,13 @@ export type PollingResult =
       };
 
 export const pollInvoiceEvents = async (params: PollInvoiceEventsParams): Promise<PollingResult> => {
-    const result = await Promise.race([fetchEvents(params), delay(params.delays.pollingTimeout)]);
-    return isNil(result)
-        ? {
-              status: 'TIMEOUT'
-          }
-        : result;
+    let stopPolling = false;
+    const result = await Promise.race([fetchEvents(params, () => stopPolling), delay(params.delays.pollingTimeout)]);
+    if (isNil(result)) {
+        stopPolling = true;
+        return {
+            status: 'TIMEOUT'
+        };
+    }
+    return result;
 };

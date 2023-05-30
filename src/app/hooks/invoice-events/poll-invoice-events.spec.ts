@@ -19,19 +19,21 @@ describe('pollInvoiceEvents', () => {
     };
 
     describe('non specified eventID', () => {
+        const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
         test('should return timeout result', async () => {
             const mockFetch = jest.fn();
-            mockFetch.mockResolvedValueOnce(fetchValueMock([]));
-            mockFetch.mockResolvedValueOnce(fetchValueMock([]));
+            mockFetch.mockResolvedValue(fetchValueMock([]));
             global.fetch = mockFetch;
 
             const delays = {
-                pollingTimeout: 500,
-                apiMethodCall: 200
+                pollingTimeout: 300,
+                apiMethodCall: 100
             };
             const result = await pollInvoiceEvents({ ...params, delays });
+            await delay(300); // for checking that after timeout there are no more api calls
 
-            expect(mockFetch).toHaveBeenCalledTimes(2);
+            expect(mockFetch).toHaveBeenCalledTimes(3);
 
             const expected = {
                 status: 'TIMEOUT'
