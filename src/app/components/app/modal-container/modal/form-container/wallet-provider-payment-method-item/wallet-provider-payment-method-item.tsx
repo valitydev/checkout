@@ -11,13 +11,12 @@ import {
 } from 'checkout/state';
 import { getMetadata, MetadataLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PaymentMethodName, ServiceProvider } from 'checkout/backend';
-import { PaymentRequestedPayload, goToFormInfo, prepareToPay } from 'checkout/actions';
+import { goToFormInfo, prepareToPay } from 'checkout/actions';
 import { useAppDispatch } from 'checkout/configure-store';
 import isNil from 'checkout/utils/is-nil';
 import { useCreatePayment } from 'checkout/hooks';
 
 export type SetFormInfoAction = (formInfo: FormInfo) => any;
-export type PayAction = (payload: PaymentRequestedPayload) => any;
 
 export interface WalletProviderPaymentMethodItemProps {
     serviceProvider: ServiceProvider;
