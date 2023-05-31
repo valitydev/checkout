@@ -13,7 +13,7 @@ import {
 import { getMetadata, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PaymentMethodName, ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
 import { Content } from './content';
-import { goToFormInfo, pay, prepareToPay } from 'checkout/actions';
+import { goToFormInfo, prepareToPay } from 'checkout/actions';
 import { PaymentTerminalPaymentMethod, useCreatePayment } from 'checkout/hooks';
 import { useAppDispatch } from 'checkout/configure-store';
 
@@ -71,9 +71,6 @@ export const PaymentTerminalMethodItem = ({ method }: PaymentTerminalMethodItemP
     };
 
     useEffect(() => {
-        if (createPaymentState.status === 'SUCCESS') {
-            dispatch(pay(createPaymentState.data));
-        }
         if (createPaymentState.status === 'FAILURE') {
             dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, createPaymentState.error)));
         }

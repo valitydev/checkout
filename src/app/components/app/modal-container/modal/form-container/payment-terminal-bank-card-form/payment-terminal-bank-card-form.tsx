@@ -6,7 +6,7 @@ import { FormName, PaymentTerminalFormValues, ResultFormInfo, ResultType } from 
 import { Header } from '../header';
 import { useAppDispatch } from 'checkout/configure-store';
 import { ProviderSelectorField } from './provider-selector';
-import { goToFormInfo, pay, prepareToPay, setViewInfoError } from 'checkout/actions';
+import { goToFormInfo, prepareToPay, setViewInfoError } from 'checkout/actions';
 import { PayButton } from '../pay-button';
 import { PaymentMethodName } from 'checkout/backend';
 import styled from 'checkout/styled-components';
@@ -43,9 +43,6 @@ export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ su
     useEffect(() => {
         if (submitFailed) {
             dispatch(setViewInfoError(true));
-        }
-        if (createPaymentState.status === 'SUCCESS') {
-            dispatch(pay(createPaymentState.data));
         }
         if (createPaymentState.status === 'FAILURE') {
             dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, createPaymentState.error)));

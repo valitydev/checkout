@@ -11,11 +11,9 @@ import {
 import { findNamed, prepareForm } from 'checkout/utils';
 import styled from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
-import { finishInteraction } from 'checkout/actions';
-import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
+import { useAppSelector } from 'checkout/configure-store';
 
 import { InitialContext } from '../../initial-context';
-import { PayableInvoiceContext } from '../payable-invoice-context';
 
 const Container = styled.div`
     height: 100%; // for cross-browser 100vh
@@ -50,15 +48,11 @@ const IFrame = styled.iframe`
 
 export const UserInteractionModal = () => {
     const iFrameElement = useRef(null);
-    const { origin, appConfig, model } = useContext(InitialContext);
-    const {
-        payableInvoiceData: { invoice, invoiceAccessToken }
-    } = useContext(PayableInvoiceContext);
+    const { origin } = useContext(InitialContext);
 
     const { modal } = useAppSelector((s) => ({
         modal: findNamed(s.modals, ModalName.modalInteraction) as ModalInteraction
     }));
-    const dispatch = useAppDispatch();
 
     useEffect(() => {
         const interactionObject = modal.interactionObject;
@@ -67,7 +61,6 @@ export const UserInteractionModal = () => {
             iFrameElement.current.contentWindow.document.body.appendChild(form);
             form.submit();
         }
-        dispatch(finishInteraction(appConfig.capiEndpoint, invoice.id, invoiceAccessToken, model.serviceProviders));
     }, []);
 
     const src = useMemo(() => {

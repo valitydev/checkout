@@ -11,7 +11,7 @@ import {
 } from 'checkout/state';
 import { getMetadata, MetadataLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PaymentMethodName, ServiceProvider } from 'checkout/backend';
-import { PaymentRequestedPayload, goToFormInfo, pay, prepareToPay } from 'checkout/actions';
+import { PaymentRequestedPayload, goToFormInfo, prepareToPay } from 'checkout/actions';
 import { useAppDispatch } from 'checkout/configure-store';
 import isNil from 'checkout/utils/is-nil';
 import { useCreatePayment } from 'checkout/hooks';
@@ -44,9 +44,6 @@ export const WalletProviderPaymentMethodItem = ({ serviceProvider }: WalletProvi
     };
 
     useEffect(() => {
-        if (createPaymentState.status === 'SUCCESS') {
-            dispatch(pay(createPaymentState.data));
-        }
         if (createPaymentState.status === 'FAILURE') {
             dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, createPaymentState.error)));
         }

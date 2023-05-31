@@ -55,3 +55,17 @@ export const makeFromInvoiceChange = (l: Locale, e: InvoiceEvent[], error: Logic
     }
     throw new Error('Unsupported InvoiceStatusChange');
 };
+
+export const makeFromInvoiceChangeHook = (l: Locale, change: InvoiceStatusChanged) => {
+    switch (change.status) {
+        case InvoiceStatuses.paid:
+            return paid(l);
+        case InvoiceStatuses.cancelled:
+            return cancelled(l);
+        case InvoiceStatuses.fulfilled:
+            return fulfilled(l);
+        case InvoiceStatuses.refunded:
+            return refunded(l);
+    }
+    throw new Error('Unsupported InvoiceStatusChange');
+};

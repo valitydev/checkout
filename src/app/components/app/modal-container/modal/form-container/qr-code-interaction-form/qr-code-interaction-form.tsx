@@ -3,17 +3,15 @@ import { useContext, useEffect, useRef } from 'react';
 import styled from 'checkout/styled-components';
 import isMobile from 'ismobilejs';
 
-import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
+import { useAppSelector } from 'checkout/configure-store';
 import { getActiveModalFormSelector } from 'checkout/selectors';
 import { QRCode } from './qr-code';
 import { QrCodeInteractionFormInfo } from 'checkout/state';
-import { finishInteraction } from 'checkout/actions';
 import { Button, CopyToClipboardButton, getMetadata, Hr, Input } from 'checkout/components/ui';
 import { QrCodeFormMetadata, ServiceProvider } from 'checkout/backend';
 import isNil from 'checkout/utils/is-nil';
 
 import { InitialContext } from '../../../../initial-context';
-import { PayableInvoiceContext } from '../../../payable-invoice-context';
 
 const Instruction = styled.p`
     font-weight: 500;
@@ -39,19 +37,14 @@ const getServiceProvider = (serviceProviders: ServiceProvider[], serviceProvider
 
 export const QrCodeInteractionForm: React.FC = () => {
     const qrCodeInputRef = useRef(null);
-    const { locale, initConfig, appConfig, model } = useContext(InitialContext);
-    const {
-        payableInvoiceData: { invoice, invoiceAccessToken }
-    } = useContext(PayableInvoiceContext);
+    const { locale, initConfig, model } = useContext(InitialContext);
 
     const { request, providerID } = useAppSelector<QrCodeInteractionFormInfo>(getActiveModalFormSelector);
     const serviceProvider = getServiceProvider(model.serviceProviders, providerID);
     const { qrCodeForm } = getMetadata(serviceProvider);
-    const dispatch = useAppDispatch();
 
     useEffect(() => {
         isQrCodeRedirect(qrCodeForm) && window.open(request.qrCode, '_self');
-        dispatch(finishInteraction(appConfig.capiEndpoint, invoice.id, invoiceAccessToken, model.serviceProviders));
     }, []);
 
     const copyToClipboard = () => {

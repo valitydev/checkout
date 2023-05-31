@@ -4,8 +4,8 @@ import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { FormName, ModalForms, ModalName, ResultFormInfo, ResultState, ResultType } from 'checkout/state';
 import { setResult } from 'checkout/actions';
 import { findNamed } from 'checkout/utils';
-import { makeContentError, makeContentInvoice } from './make-content';
-import { failedHook } from './make-content/make-from-payment-change';
+import { makeContentError, makeContentInvoice, makeContentInvoiceHook } from './make-content';
+import { failedHook, pending } from './make-content/make-from-payment-change';
 import { ActionBlock } from './action-block';
 import { ResultIcon } from './result-icons';
 import styled, { css } from 'checkout/styled-components';
@@ -79,10 +79,15 @@ export const ResultForm = () => {
         switch (resultFormInfo.resultType) {
             case ResultType.error:
                 return makeContentError(locale, error);
-            case ResultType.hookError:
-                return failedHook(locale, resultFormInfo.hookError);
             case ResultType.processed:
                 return makeContentInvoice(locale, events.events, events.status, error);
+
+            case ResultType.hookError:
+                return failedHook(locale, resultFormInfo.hookPayload.error);
+            case ResultType.hookProcessed:
+                return makeContentInvoiceHook(locale, resultFormInfo.hookPayload.change);
+            case ResultType.hookTimeout:
+                return pending(locale);
         }
     }, [resultFormInfo, locale, error, events]);
 
