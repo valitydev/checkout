@@ -2,9 +2,6 @@ import { InvoiceChange } from 'checkout/backend';
 import { FormInfo, FormName } from '../form-info';
 
 export enum ResultType {
-    error = 'error',
-    processed = 'processed',
-
     hookError = 'hookError',
     hookProcessed = 'hookProcessed',
     hookTimeout = 'hookTimeout'

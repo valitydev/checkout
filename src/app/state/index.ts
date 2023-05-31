@@ -5,4 +5,3 @@ export * from './modal-state';
 export * from './state';
 export * from './forms';
 export * from './modal';
-export * from './events-state';

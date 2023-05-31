@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { FormName, ModalForms, ModalName, ResultFormInfo, ResultState, ResultType } from 'checkout/state';
 import { setResult } from 'checkout/actions';
 import { findNamed } from 'checkout/utils';
-import { makeContentError, makeContentInvoice, makeContentInvoiceHook } from './make-content';
+import { makeContentInvoiceHook } from './make-content';
 import { failedHook, pending } from './make-content/make-from-payment-change';
 import { ActionBlock } from './action-block';
 import { ResultIcon } from './result-icons';
@@ -64,24 +64,16 @@ const Form = styled.form<{ hasActions: boolean }>`
 
 export const ResultForm = () => {
     const { locale } = useContext(InitialContext);
-    const { resultFormInfo, error, events } = useAppSelector((s) => {
+    const { resultFormInfo } = useAppSelector((s) => {
         const info = (findNamed(s.modals, ModalName.modalForms) as ModalForms).formsInfo;
         return {
-            resultFormInfo: findNamed(info, FormName.resultForm) as ResultFormInfo,
-            hasMultiMethods: !!findNamed(info, FormName.paymentMethods),
-            events: s.events,
-            error: s.error ? s.error.error : null
+            resultFormInfo: findNamed(info, FormName.resultForm) as ResultFormInfo
         };
     });
     const dispatch = useAppDispatch();
 
     const { hasActions, type, header, description, hasDone } = useMemo(() => {
         switch (resultFormInfo.resultType) {
-            case ResultType.error:
-                return makeContentError(locale, error);
-            case ResultType.processed:
-                return makeContentInvoice(locale, events.events, events.status, error);
-
             case ResultType.hookError:
                 return failedHook(locale, resultFormInfo.hookPayload.error);
             case ResultType.hookProcessed:
@@ -89,7 +81,7 @@ export const ResultForm = () => {
             case ResultType.hookTimeout:
                 return pending(locale);
         }
-    }, [resultFormInfo, locale, error, events]);
+    }, [resultFormInfo, locale]);
 
     useEffect(() => {
         if (hasDone) {

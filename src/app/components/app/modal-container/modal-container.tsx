@@ -6,7 +6,7 @@ import { Modal } from './modal';
 import { UserInteractionModal } from './user-interaction-modal';
 import { ModalName, ResultFormInfo, ResultType, State } from 'checkout/state';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { initializeModal, initializeEvents, goToFormInfo, setModalState } from 'checkout/actions';
+import { initializeModal, goToFormInfo, setModalState } from 'checkout/actions';
 import { InitialContext } from '../initial-context';
 import { PayableInvoiceContext } from './payable-invoice-context';
 import styled from 'checkout/styled-components';
@@ -52,7 +52,7 @@ export const ModalContainer = () => {
                 },
                 invoiceAccessToken
             });
-            dispatch(initializeEvents(events));
+            // dispatch(initializeEvents(events));
         }
     }, []);
 
