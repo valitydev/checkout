@@ -57,8 +57,7 @@ export const ModalContainer = () => {
     }, []);
 
     useEffect(() => {
-        if (isNil(payableInvoiceData)) return;
-        console.log(pollingState);
+        if (isNil(payableInvoiceData) || initConfig.skipUserInteraction) return;
         if (pollingState.status === 'PRISTINE') {
             startPolling();
         }
