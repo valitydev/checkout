@@ -52,7 +52,6 @@ export const ModalContainer = () => {
                 },
                 invoiceAccessToken
             });
-            // dispatch(initializeEvents(events));
         }
     }, []);
 
