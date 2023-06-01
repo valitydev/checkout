@@ -76,3 +76,19 @@ export const makeFromPaymentChange = (l: Locale, e: InvoiceEvent[]) => {
     }
     throw new Error('Unsupported PaymentStatusChanged');
 };
+
+export const makeFromPaymentChangeHook = (l: Locale, change: PaymentStatusChanged) => {
+    switch (change.status) {
+        case PaymentStatuses.failed:
+            return failed(l, change.error);
+        case PaymentStatuses.processed:
+        case PaymentStatuses.captured:
+            return processed(l);
+        case PaymentStatuses.cancelled:
+            return cancelled(l);
+        case PaymentStatuses.pending:
+            return pending(l);
+        case PaymentStatuses.refunded:
+            return refunded(l);
+    }
+};

@@ -1,20 +1,26 @@
+import { InvoiceChange } from 'checkout/backend';
 import { FormInfo, FormName } from '../form-info';
 
 export enum ResultType {
-    error = 'error',
-    processed = 'processed',
-    hookError = 'hookError'
+    hookError = 'hookError',
+    hookProcessed = 'hookProcessed',
+    hookTimeout = 'hookTimeout'
 }
+
+export type HookPayload = {
+    error?: unknown;
+    change?: InvoiceChange;
+};
 
 export class ResultFormInfo extends FormInfo {
     resultType: ResultType;
-    hookError?: unknown;
+    hookPayload?: HookPayload;
 
-    constructor(resultType: ResultType, hookError?: unknown) {
+    constructor(resultType: ResultType, hookPayload?: HookPayload) {
         super();
         this.name = FormName.resultForm;
         this.resultType = resultType;
         this.active = true;
-        this.hookError = hookError;
+        this.hookPayload = hookPayload;
     }
 }

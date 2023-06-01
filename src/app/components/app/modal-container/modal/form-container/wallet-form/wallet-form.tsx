@@ -9,7 +9,7 @@ import { PayButton } from '../pay-button';
 import { Header } from '../header';
 import { Amount } from '../common-fields';
 import { toFieldsConfig } from '../fields-config';
-import { goToFormInfo, pay, prepareToPay, setViewInfoError } from 'checkout/actions';
+import { goToFormInfo, prepareToPay, setViewInfoError } from 'checkout/actions';
 import { SignUp } from './sign-up';
 import { getActiveModalFormSelector } from 'checkout/selectors';
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
@@ -59,11 +59,9 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
         if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-        if (createPaymentState.status === 'SUCCESS') {
-            dispatch(pay(createPaymentState.data));
-        }
         if (createPaymentState.status === 'FAILURE') {
-            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, createPaymentState.error)));
+            const error = createPaymentState.error;
+            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, { error })));
         }
     }, [submitFailed, createPaymentState]);
 

@@ -5,7 +5,7 @@ import { InjectedFormProps, reduxForm } from 'redux-form';
 import { FormGroup } from '../form-group';
 import { CardHolder, CardNumber, ExpireDate, SecureCode } from './fields';
 import { CardFormInfo, CardFormValues, FormName, PaymentStatus, ResultFormInfo, ResultType } from 'checkout/state';
-import { goToFormInfo, pay, prepareToPay, setViewInfoError } from 'checkout/actions';
+import { goToFormInfo, prepareToPay, setViewInfoError } from 'checkout/actions';
 import { PayButton } from '../pay-button';
 import { Header } from '../header/header';
 import { toAmountConfig, toCardHolderConfig } from '../fields-config';
@@ -46,11 +46,14 @@ const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormPro
         if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-        if (createPaymentState.status === 'SUCCESS') {
-            dispatch(pay(createPaymentState.data));
-        }
         if (createPaymentState.status === 'FAILURE') {
-            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, createPaymentState.error)));
+            dispatch(
+                goToFormInfo(
+                    new ResultFormInfo(ResultType.hookError, {
+                        error: createPaymentState.error
+                    })
+                )
+            );
         }
     }, [submitFailed, createPaymentState]);
 

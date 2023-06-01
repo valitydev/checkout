@@ -15,11 +15,11 @@ export function initFromInvoiceEvents(
     const change = getLastChange(events);
     switch (change.changeType) {
         case InvoiceChangeType.PaymentInteractionRequested:
-            return skipUserInteraction ? toModalResult() : provideInteraction(events, serviceProviders);
+            return skipUserInteraction ? toModalResult(change) : provideInteraction(events, serviceProviders);
         case InvoiceChangeType.PaymentStarted:
         case InvoiceChangeType.InvoiceStatusChanged:
         case InvoiceChangeType.PaymentStatusChanged:
-            return toModalResult();
+            return toModalResult(change);
         case InvoiceChangeType.InvoiceCreated:
             return toInitialState(methods);
         default:

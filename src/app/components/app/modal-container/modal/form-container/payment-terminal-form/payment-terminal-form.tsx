@@ -5,7 +5,7 @@ import get from 'lodash-es/get';
 import styled from 'checkout/styled-components';
 
 import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { goToFormInfo, pay, prepareToPay, setViewInfoError } from 'checkout/actions';
+import { goToFormInfo, prepareToPay, setViewInfoError } from 'checkout/actions';
 import {
     FormName,
     PaymentStatus,
@@ -94,11 +94,9 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
         if (submitFailed) {
             dispatch(setViewInfoError(true));
         }
-        if (createPaymentState.status === 'SUCCESS') {
-            dispatch(pay(createPaymentState.data));
-        }
         if (createPaymentState.status === 'FAILURE') {
-            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, createPaymentState.error)));
+            const error = createPaymentState.error;
+            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, { error })));
         }
     }, [submitFailed, createPaymentState]);
 

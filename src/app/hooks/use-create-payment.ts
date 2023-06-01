@@ -1,29 +1,22 @@
 import { useContext, useCallback, useReducer } from 'react';
 
 import isNil from 'checkout/utils/is-nil';
-import { PaymentRequestedPayload } from 'checkout/actions';
 import { createInvoiceWithTemplate, createPayment } from './create-payment';
 import { FormData } from './create-payment';
 
 import { InitialContext } from '../components/app/initial-context';
 import { PayableInvoiceContext } from '../components/app/modal-container/payable-invoice-context';
 
-type State =
-    | { status: 'PRISTINE' }
-    | { status: 'SUCCESS'; data: PaymentRequestedPayload }
-    | { status: 'FAILURE'; error: unknown };
+type State = { status: 'PRISTINE' } | { status: 'SUCCESS' } | { status: 'FAILURE'; error: unknown };
 
-type Action =
-    | { type: 'CREATE_PAYMENT_SUCCESS'; payload: PaymentRequestedPayload }
-    | { type: 'CREATE_PAYMENT_FAILURE'; error: unknown };
+type Action = { type: 'CREATE_PAYMENT_SUCCESS' } | { type: 'CREATE_PAYMENT_FAILURE'; error: unknown };
 
 const dataReducer = (state: State, action: Action): State => {
     switch (action.type) {
         case 'CREATE_PAYMENT_SUCCESS':
             return {
                 ...state,
-                status: 'SUCCESS',
-                data: action.payload
+                status: 'SUCCESS'
             };
         case 'CREATE_PAYMENT_FAILURE':
             return {
@@ -38,7 +31,7 @@ export const useCreatePayment = () => {
     const {
         initConfig,
         appConfig,
-        model: { invoiceTemplate, serviceProviders },
+        model: { invoiceTemplate },
         amountInfo,
         origin
     } = useContext(InitialContext);
@@ -80,13 +73,7 @@ export const useCreatePayment = () => {
                         formData,
                         payableInvoice: data
                     });
-                    const payload = {
-                        capiEndpoint: appConfig.capiEndpoint,
-                        invoiceID: data.invoice.id,
-                        invoiceAccessToken: data.invoiceAccessToken,
-                        serviceProviders
-                    };
-                    dispatch({ type: 'CREATE_PAYMENT_SUCCESS', payload });
+                    dispatch({ type: 'CREATE_PAYMENT_SUCCESS' });
                 } catch (error) {
                     dispatch({ type: 'CREATE_PAYMENT_FAILURE', error });
                     console.error('Create payment failure', error);

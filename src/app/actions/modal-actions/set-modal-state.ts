@@ -5,3 +5,8 @@ export interface SetModalState extends AbstractAction<ModalState> {
     type: TypeKeys.SET_MODAL_STATE;
     payload: ModalState;
 }
+
+export const setModalState = (payload: ModalState) => ({
+    type: TypeKeys.SET_MODAL_STATE,
+    payload
+});
