@@ -7,15 +7,21 @@ const fetchValueMock = (result, status = 200) => ({
 });
 
 describe('pollInvoiceEvents', () => {
+    const invoiceID = '1dyg1GWgt22';
+    const capiEndpoint = 'https://api.test.com';
     const params = {
-        capiEndpoint: 'https://api.test.com',
-        invoiceID: '1dyg1GWgt22',
+        capiEndpoint,
+        invoiceID,
         invoiceAccessToken: 'eyJhbGciOiJQUzI...',
         stopPollingTypes: [
             InvoiceChangeType.InvoiceStatusChanged,
             InvoiceChangeType.PaymentStatusChanged,
             InvoiceChangeType.PaymentInteractionRequested
         ]
+    };
+    const getEventsUrl = (capiEndpoint: string, invoiceID: string, eventID?: number, limit = 20) => {
+        const eventIDParam = eventID ? `&eventID=${eventID}` : '';
+        return `${capiEndpoint}/v2/processing/invoices/${invoiceID}/events?limit=${limit}${eventIDParam}`;
     };
 
     describe('non specified eventID', () => {
@@ -92,18 +98,9 @@ describe('pollInvoiceEvents', () => {
             const result = await pollInvoiceEvents({ ...params, delays });
 
             expect(mockFetch).toHaveBeenCalledTimes(3);
-            expect(mockFetch).toHaveBeenCalledWith(
-                'https://api.test.com/v2/processing/invoices/1dyg1GWgt22/events?limit=5',
-                expect.any(Object)
-            );
-            expect(mockFetch).toHaveBeenCalledWith(
-                'https://api.test.com/v2/processing/invoices/1dyg1GWgt22/events?limit=5&eventID=2',
-                expect.any(Object)
-            );
-            expect(mockFetch).toHaveBeenCalledWith(
-                'https://api.test.com/v2/processing/invoices/1dyg1GWgt22/events?limit=5&eventID=2',
-                expect.any(Object)
-            );
+            expect(mockFetch).toHaveBeenCalledWith(getEventsUrl(capiEndpoint, invoiceID), expect.any(Object));
+            expect(mockFetch).toHaveBeenCalledWith(getEventsUrl(capiEndpoint, invoiceID), expect.any(Object));
+            expect(mockFetch).toHaveBeenCalledWith(getEventsUrl(capiEndpoint, invoiceID, 2), expect.any(Object));
 
             const expected = {
                 status: 'POLLED',
@@ -157,18 +154,9 @@ describe('pollInvoiceEvents', () => {
             const result = await pollInvoiceEvents({ ...params, delays, ...{ eventID: 15 } });
 
             expect(mockFetch).toHaveBeenCalledTimes(3);
-            expect(mockFetch).toHaveBeenCalledWith(
-                'https://api.test.com/v2/processing/invoices/1dyg1GWgt22/events?limit=5&eventID=15',
-                expect.any(Object)
-            );
-            expect(mockFetch).toHaveBeenCalledWith(
-                'https://api.test.com/v2/processing/invoices/1dyg1GWgt22/events?limit=5&eventID=19',
-                expect.any(Object)
-            );
-            expect(mockFetch).toHaveBeenCalledWith(
-                'https://api.test.com/v2/processing/invoices/1dyg1GWgt22/events?limit=5&eventID=19',
-                expect.any(Object)
-            );
+            expect(mockFetch).toHaveBeenCalledWith(getEventsUrl(capiEndpoint, invoiceID, 15), expect.any(Object));
+            expect(mockFetch).toHaveBeenCalledWith(getEventsUrl(capiEndpoint, invoiceID, 19), expect.any(Object));
+            expect(mockFetch).toHaveBeenCalledWith(getEventsUrl(capiEndpoint, invoiceID, 19), expect.any(Object));
 
             const expected = {
                 status: 'POLLED',
