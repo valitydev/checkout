@@ -5,8 +5,8 @@ import { PollingResult, pollInvoiceEvents } from './invoice-events';
 import { Event, InvoiceChange, InvoiceChangeType, getInvoiceEvents } from 'checkout/backend';
 
 const API_METHOD_CALL_MS = 1000;
-const POLLING_TIMEOUT_MS = 60 * 1000;
-const POLLING_TIMEOUT_STATUS_CHANGED_MS = POLLING_TIMEOUT_MS * 10;
+const DEFAULT_TIMEOUT_MS = 60 * 1000 * 10;
+const PAYMENT_STARTED_TIMEOUT_MS = 60 * 1000;
 
 type Payload = { change: InvoiceChange } & { events: Event[] };
 
@@ -47,7 +47,7 @@ export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData)
     const [pollingResult, setPollingResult] = useState<PollingResult & { events: Event[] }>(null);
 
     const startPolling = useCallback(
-        (eventID?: number, pollingTimeout = POLLING_TIMEOUT_MS) => {
+        (eventID?: number, pollingTimeout = DEFAULT_TIMEOUT_MS) => {
             const { invoice, invoiceAccessToken } = data;
             const fetchData = async () => {
                 try {
@@ -56,6 +56,7 @@ export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData)
                         invoiceAccessToken,
                         invoiceID: invoice.id,
                         stopPollingTypes: [
+                            InvoiceChangeType.PaymentStarted,
                             InvoiceChangeType.InvoiceStatusChanged,
                             InvoiceChangeType.PaymentStatusChanged,
                             InvoiceChangeType.PaymentInteractionRequested
@@ -92,8 +93,13 @@ export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData)
                 break;
             case 'POLLED':
                 const change = pollingResult.change;
-                dispatch({ type: 'EVENTS_POLLED', payload: { change, events: pollingResult.events } });
-                startPolling(pollingResult.eventID, POLLING_TIMEOUT_STATUS_CHANGED_MS);
+                if (change.changeType === InvoiceChangeType.PaymentStarted) {
+                    startPolling(pollingResult.eventID, PAYMENT_STARTED_TIMEOUT_MS);
+                } else {
+                    startPolling(pollingResult.eventID);
+                    dispatch({ type: 'EVENTS_POLLED', payload: { change, events: pollingResult.events } });
+                }
+
                 break;
         }
     }, [pollingResult, startPolling]);

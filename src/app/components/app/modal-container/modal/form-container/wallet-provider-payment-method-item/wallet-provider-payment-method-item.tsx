@@ -44,7 +44,8 @@ export const WalletProviderPaymentMethodItem = ({ serviceProvider }: WalletProvi
 
     useEffect(() => {
         if (createPaymentState.status === 'FAILURE') {
-            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, createPaymentState.error)));
+            const error = createPaymentState.error;
+            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, { error })));
         }
     }, [createPaymentState]);
 

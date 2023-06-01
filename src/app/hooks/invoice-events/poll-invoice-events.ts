@@ -2,7 +2,7 @@ import { InvoiceChange, InvoiceChangeType, InvoiceEvent, getInvoiceEvents } from
 import isNil from 'checkout/utils/is-nil';
 import last from 'checkout/utils/last';
 
-const GET_INVOICE_EVENTS_LIMIT = 5;
+const GET_INVOICE_EVENTS_LIMIT = 20;
 
 const delay = (ms: number): Promise<undefined> => new Promise((resolve) => setTimeout(resolve, ms));
 

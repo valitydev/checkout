@@ -95,7 +95,8 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
             dispatch(setViewInfoError(true));
         }
         if (createPaymentState.status === 'FAILURE') {
-            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, createPaymentState.error)));
+            const error = createPaymentState.error;
+            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, { error })));
         }
     }, [submitFailed, createPaymentState]);
 
