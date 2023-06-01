@@ -1,36 +1,25 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import isNil from 'checkout/utils/is-nil';
-
 import { PayableInvoiceData } from './create-payment';
 import { PollingResult, pollInvoiceEvents } from './invoice-events';
-
-import {
-    Event,
-    InvoiceChange,
-    InvoiceChangeType,
-    InvoiceStatusChanged,
-    PaymentInteractionRequested,
-    PaymentStatusChanged,
-    getInvoiceEvents
-} from 'checkout/backend';
+import { Event, InvoiceChange, InvoiceChangeType, getInvoiceEvents } from 'checkout/backend';
 
 const API_METHOD_CALL_MS = 1000;
 const POLLING_TIMEOUT_MS = 60 * 1000;
 const POLLING_TIMEOUT_STATUS_CHANGED_MS = POLLING_TIMEOUT_MS * 10;
 
-type PolledChangeTypes = PaymentInteractionRequested | InvoiceStatusChanged | PaymentStatusChanged;
-type PolledChangeTypesTemp = { change: PolledChangeTypes } & { events: Event[] };
+type Payload = { change: InvoiceChange } & { events: Event[] };
 
 type State =
     | { status: 'PRISTINE' }
     | { status: 'TIMEOUT' }
-    | { status: 'SUCCESS'; payload: PolledChangeTypesTemp }
+    | { status: 'SUCCESS'; payload: Payload }
     | { status: 'FAILURE'; error: unknown };
 
 type Action =
     | { type: 'POLL_EVENTS_FAILURE'; error: unknown }
     | { type: 'POLL_EVENTS_TIMEOUT' }
-    | { type: 'EVENTS_POLLED'; payload: PolledChangeTypesTemp };
+    | { type: 'EVENTS_POLLED'; payload: Payload };
 
 const dataReducer = (_state: State, action: Action): State => {
     switch (action.type) {
@@ -51,28 +40,14 @@ const dataReducer = (_state: State, action: Action): State => {
     }
 };
 
-const isPolledChangeTypes = (change: InvoiceChange): change is PolledChangeTypes => {
-    switch (change.changeType) {
-        case InvoiceChangeType.PaymentInteractionRequested:
-        case InvoiceChangeType.PaymentStatusChanged:
-        case InvoiceChangeType.InvoiceStatusChanged:
-            return true;
-        default:
-            return false;
-    }
-};
-
-type TempPollingResult = PollingResult & { events: Event[] };
-
-export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData | null) => {
+export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData) => {
     const [pollingState, dispatch] = useReducer(dataReducer, {
         status: 'PRISTINE'
     });
-    const [pollingResult, setPollingResult] = useState<TempPollingResult>(null);
+    const [pollingResult, setPollingResult] = useState<PollingResult & { events: Event[] }>(null);
 
     const startPolling = useCallback(
         (eventID?: number, pollingTimeout = POLLING_TIMEOUT_MS) => {
-            if (isNil(data)) return;
             const { invoice, invoiceAccessToken } = data;
             const fetchData = async () => {
                 try {
@@ -117,10 +92,6 @@ export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData 
                 break;
             case 'POLLED':
                 const change = pollingResult.change;
-                if (!isPolledChangeTypes(change)) {
-                    dispatch({ type: 'POLL_EVENTS_FAILURE', error: new Error('Wrong polled change type') });
-                    return;
-                }
                 dispatch({ type: 'EVENTS_POLLED', payload: { change, events: pollingResult.events } });
                 startPolling(pollingResult.eventID, POLLING_TIMEOUT_STATUS_CHANGED_MS);
                 break;
