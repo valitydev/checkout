@@ -4,12 +4,13 @@ import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
 import { FormName, ModalForms, ModalName, ResultFormInfo, ResultState, ResultType } from 'checkout/state';
 import { setResult } from 'checkout/actions';
 import { findNamed } from 'checkout/utils';
-import { makeContentInvoiceHook } from './make-content';
+import { ResultFormType, makeContentInvoiceHook } from './make-content';
 import { failedHook, pending } from './make-content/make-from-payment-change';
 import { ActionBlock } from './action-block';
 import { ResultIcon } from './result-icons';
 import styled, { css } from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
+import isNil from 'checkout/utils/is-nil';
 
 import { InitialContext } from '../../../../initial-context';
 
@@ -73,6 +74,15 @@ export const ResultForm = () => {
     const dispatch = useAppDispatch();
 
     const { hasActions, type, header, description, hasDone } = useMemo(() => {
+        if (isNil(resultFormInfo)) {
+            return {
+                type: ResultFormType.WARNING,
+                hasActions: false,
+                hasDone: false,
+                header: '',
+                description: ''
+            };
+        }
         switch (resultFormInfo.resultType) {
             case ResultType.hookError:
                 return failedHook(locale, resultFormInfo.hookPayload.error);
