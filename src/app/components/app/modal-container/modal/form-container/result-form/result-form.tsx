@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { useContext, useEffect, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { FormName, ModalForms, ModalName, ResultFormInfo, ResultState, ResultType } from 'checkout/state';
-import { setResult } from 'checkout/actions';
+import { useAppSelector } from 'checkout/configure-store';
+import { FormName, ModalForms, ModalName, ResultFormInfo, ResultType } from 'checkout/state';
 import { findNamed } from 'checkout/utils';
 import { ResultFormType, makeContentInvoiceHook } from './make-content';
 import { failedHook, pending } from './make-content/make-from-payment-change';
@@ -13,6 +12,7 @@ import { device } from 'checkout/utils/device';
 import isNil from 'checkout/utils/is-nil';
 
 import { InitialContext } from '../../../../initial-context';
+import { ResultContext } from '../../../../result-context';
 
 const Title = styled.h2`
     font-weight: 500;
@@ -65,13 +65,14 @@ const Form = styled.form<{ hasActions: boolean }>`
 
 export const ResultForm = () => {
     const { locale } = useContext(InitialContext);
+    const { setIsComplete } = useContext(ResultContext);
+
     const { resultFormInfo } = useAppSelector((s) => {
         const info = (findNamed(s.modals, ModalName.modalForms) as ModalForms).formsInfo;
         return {
             resultFormInfo: findNamed(info, FormName.resultForm) as ResultFormInfo
         };
     });
-    const dispatch = useAppDispatch();
 
     const { hasActions, type, header, description, hasDone } = useMemo(() => {
         if (isNil(resultFormInfo)) {
@@ -95,7 +96,7 @@ export const ResultForm = () => {
 
     useEffect(() => {
         if (hasDone) {
-            dispatch(setResult(ResultState.done));
+            setIsComplete(true);
         }
     }, [hasDone]);
 
