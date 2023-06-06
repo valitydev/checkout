@@ -1,16 +1,13 @@
 import * as React from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
+import { useCallback, useRef, useState } from 'react';
 
 import { CardForm } from './card-form';
-import { FormName, ModalForms, ModalName, State, SlideDirection, FormInfo } from 'checkout/state';
+import { FormName, ModalForms, ModalName, SlideDirection, FormInfo } from 'checkout/state';
 import { PaymentMethods } from './payment-methods';
-import { FormContainerProps } from './form-container-props';
 import { FormLoader } from './form-loader';
 import { ResultForm } from './result-form';
 import { WalletForm } from './wallet-form';
 import { findNamed } from 'checkout/utils';
-import { setViewInfoHeight } from 'checkout/actions';
 import styled, { css } from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 import { shake } from 'checkout/styled-components/animations';
@@ -22,6 +19,7 @@ import { PaymentTerminalBankCardForm } from './payment-terminal-bank-card-form';
 import { PaymentTerminalForm } from './payment-terminal-form';
 import { QrCodeInteractionForm } from './qr-code-interaction-form';
 import { PaymentTerminalSelectorForm } from './payment-terminal-selector-form';
+import { useAppSelector } from 'checkout/configure-store';
 
 const Container = styled.div`
     padding: 0 8px 32px 8px;
@@ -39,7 +37,7 @@ const Form = styled.div<{ error?: any; height?: number }>`
     padding: 30px 20px;
     position: relative;
     overflow: hidden;
-    transition: height 0.4s;
+    transition: height 0.3s;
     height: ${({ height }) => (height ? `${height}px` : 'auto')};
 
     @media ${device.desktop} {
@@ -54,7 +52,7 @@ const Form = styled.div<{ error?: any; height?: number }>`
         `}
 `;
 
-const slideTransitionTime = '0.5s';
+const slideTransitionTime = '0.3s';
 
 const slideLeftAnimation = css`
     ${ENTER} {
@@ -131,98 +129,70 @@ const FormContainerAnimation = styled(stylableTransition)<{ direction: SlideDire
     ${({ direction }) => (direction === SlideDirection.left ? slideLeftAnimation : slideRightAnimation)}
 `;
 
-const mapStateToProps = (state: State): Partial<FormContainerProps> => {
-    const modalForms = findNamed(state.modals, ModalName.modalForms) as ModalForms;
-    return {
-        activeFormInfo: modalForms.formsInfo.find((item) => item.active),
-        viewInfo: modalForms.viewInfo
-    };
+const renderForm = (info: FormInfo) => {
+    const { name } = info;
+    switch (name) {
+        case FormName.paymentMethods:
+            return <PaymentMethods key={name} />;
+        case FormName.cardForm:
+            return <CardForm key={name} />;
+        case FormName.walletForm:
+            return <WalletForm key={name} />;
+        case FormName.walletProviders:
+            return <WalletProviders key={name} />;
+        case FormName.resultForm:
+            return <ResultForm key={name} />;
+        case FormName.noAvailablePaymentMethodForm:
+            return <NoAvailablePaymentMethodForm key={name} />;
+        case FormName.redirectForm:
+            return <RedirectForm key={name} />;
+        case FormName.paymentTerminalBankCard:
+            return <PaymentTerminalBankCardForm key={name} />;
+        case FormName.paymentTerminalForm:
+            return <PaymentTerminalForm key={name} />;
+        case FormName.paymentTerminalSelector:
+            return <PaymentTerminalSelectorForm key={name} />;
+        case FormName.qrCodeInteractionForm:
+            return <QrCodeInteractionForm key={name} />;
+        default:
+            return null;
+    }
 };
 
-const mapDispatchToProps = (dispatch: Dispatch): Partial<FormContainerProps> => ({
-    setViewInfoHeight: bindActionCreators(setViewInfoHeight, dispatch)
-});
+export const FormContainer = () => {
+    const contentElement = useRef(null);
+    const [height, setHeight] = useState(0);
 
-class FormContainerDef extends React.Component<FormContainerProps, { height: number }> {
-    state = {
-        height: 0
-    };
-    private contentElement: HTMLDivElement;
+    const { activeFormInfo, viewInfo } = useAppSelector((s) => {
+        const modalForms = findNamed(s.modals, ModalName.modalForms) as ModalForms;
+        return {
+            activeFormInfo: modalForms.formsInfo.find((item) => item.active),
+            viewInfo: modalForms.viewInfo
+        };
+    });
 
-    componentDidMount() {
-        this.setHeight();
-        window.addEventListener('resize', this.setHeight);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.setHeight);
-    }
-
-    componentDidUpdate() {
-        this.setHeight();
-    }
-
-    render() {
-        const { activeFormInfo, viewInfo } = this.props;
-        return (
-            <Container>
-                <Form error={viewInfo.error} height={this.state.height}>
-                    <div ref={this.setContentElement}>
-                        <FormContainerAnimation
-                            component="div"
-                            direction={viewInfo.slideDirection}
-                            enter={500}
-                            leave={500}
-                            onTransitionEnd={this.setHeight}>
-                            {this.renderForm(activeFormInfo)}
-                        </FormContainerAnimation>
-                        {viewInfo.inProcess && <FormLoader />}
-                    </div>
-                </Form>
-            </Container>
-        );
-    }
-
-    private renderForm = (info: FormInfo): React.ReactNode => {
-        const { name } = info;
-        switch (name) {
-            case FormName.paymentMethods:
-                return <PaymentMethods key={name} />;
-            case FormName.cardForm:
-                return <CardForm key={name} />;
-            case FormName.walletForm:
-                return <WalletForm key={name} />;
-            case FormName.walletProviders:
-                return <WalletProviders key={name} />;
-            case FormName.resultForm:
-                return <ResultForm key={name} />;
-            case FormName.noAvailablePaymentMethodForm:
-                return <NoAvailablePaymentMethodForm key={name} />;
-            case FormName.redirectForm:
-                return <RedirectForm key={name} />;
-            case FormName.paymentTerminalBankCard:
-                return <PaymentTerminalBankCardForm key={name} />;
-            case FormName.paymentTerminalForm:
-                return <PaymentTerminalForm key={name} />;
-            case FormName.paymentTerminalSelector:
-                return <PaymentTerminalSelectorForm key={name} />;
-            case FormName.qrCodeInteractionForm:
-                return <QrCodeInteractionForm key={name} />;
-            default:
-                return null;
+    const onTransitionEnd = useCallback(() => {
+        const elHight = contentElement.current?.clientHeight || 0;
+        if (elHight !== height) {
+            setHeight(elHight);
         }
-    };
+    }, [contentElement, height, setHeight]);
 
-    private setContentElement = (element: HTMLDivElement) => {
-        this.contentElement = element;
-    };
-
-    private setHeight = () => {
-        const height = this.contentElement?.clientHeight || 0;
-        if (height !== this.state.height) {
-            this.setState({ height });
-        }
-    };
-}
-
-export const FormContainer = connect(mapStateToProps, mapDispatchToProps)(FormContainerDef);
+    return (
+        <Container>
+            <Form error={viewInfo.error} height={height}>
+                <div ref={contentElement}>
+                    <FormContainerAnimation
+                        component="div"
+                        direction={viewInfo.slideDirection}
+                        enter={300}
+                        leave={300}
+                        onTransitionEnd={onTransitionEnd}>
+                        {renderForm(activeFormInfo)}
+                    </FormContainerAnimation>
+                    {viewInfo.inProcess && <FormLoader />}
+                </div>
+            </Form>
+        </Container>
+    );
+};
