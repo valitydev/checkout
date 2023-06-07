@@ -4,8 +4,7 @@ import { InjectedFormProps, reduxForm } from 'redux-form';
 import get from 'lodash-es/get';
 import styled from 'checkout/styled-components';
 
-import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { goToFormInfo, prepareToPay, setViewInfoError } from 'checkout/actions';
+import { useAppSelector } from 'checkout/configure-store';
 import {
     FormName,
     PaymentStatus,
@@ -17,7 +16,6 @@ import {
 import { Header } from '../header';
 import { PayButton } from '../pay-button';
 import { FormGroup } from '../form-group';
-import { getActiveModalFormSelector } from 'checkout/selectors';
 import { getMetadata, MetadataField, MetadataLogo } from 'checkout/components/ui';
 import { toAmountConfig, toEmailConfig, toPhoneNumberConfig } from '../fields-config';
 import { Amount, Email, Phone } from '../common-fields';
@@ -33,7 +31,10 @@ import {
 } from './init-config-payment';
 import { MetadataSelect } from './metadata-select';
 import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
+import { useActiveModalForm } from '../use-active-modal-form';
+
 import { InitialContext } from '../../../../initial-context';
+import { ModalContext } from '../../../modal-context';
 
 const Container = styled.div`
     min-height: 300px;
@@ -48,8 +49,9 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
         initConfig,
         model: { serviceProviders, invoiceTemplate }
     } = useContext(InitialContext);
+    const { modalState, setViewInfoError, goToFormInfo, prepareToPay } = useContext(ModalContext);
     const { createPaymentState, setFormData } = useCreatePayment();
-    const { providerID, paymentStatus } = useAppSelector<PaymentTerminalFormInfo>(getActiveModalFormSelector);
+    const { providerID, paymentStatus } = useActiveModalForm<PaymentTerminalFormInfo>(modalState);
     const serviceProvider = serviceProviders.find((value) => value.id === providerID);
     const { form, contactInfo, logo, paymentSessionInfo, prefilledMetadataValues } = getMetadata(serviceProvider);
     const amount = toAmountConfig(initConfig, invoiceTemplate);
@@ -57,10 +59,9 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
     const terminalFormValues = initConfig?.terminalFormValues;
     const phoneNumber = toPhoneNumberConfig(initConfig.phoneNumber);
     const formValues = useAppSelector((s) => get(s.form, 'paymentTerminalForm.values'));
-    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(setViewInfoError(false));
+        setViewInfoError(false);
         if (isInitConfigFormValues(form, terminalFormValues)) {
             switch (paymentStatus) {
                 case PaymentStatus.pristine:
@@ -92,11 +93,11 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
 
     useEffect(() => {
         if (submitFailed) {
-            dispatch(setViewInfoError(true));
+            setViewInfoError(true);
         }
         if (createPaymentState.status === 'FAILURE') {
             const error = createPaymentState.error;
-            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, { error })));
+            goToFormInfo(new ResultFormInfo(ResultType.hookError, { error }));
         }
     }, [submitFailed, createPaymentState]);
 
@@ -113,7 +114,7 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
                 }
             } as PaymentTerminalFormValues
         };
-        dispatch(prepareToPay());
+        prepareToPay();
         setFormData(payload);
     };
 

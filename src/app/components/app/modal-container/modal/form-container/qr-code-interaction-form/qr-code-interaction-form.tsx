@@ -3,15 +3,15 @@ import { useContext, useEffect, useRef } from 'react';
 import styled from 'checkout/styled-components';
 import isMobile from 'ismobilejs';
 
-import { useAppSelector } from 'checkout/configure-store';
-import { getActiveModalFormSelector } from 'checkout/selectors';
 import { QRCode } from './qr-code';
 import { QrCodeInteractionFormInfo } from 'checkout/state';
 import { Button, CopyToClipboardButton, getMetadata, Hr, Input } from 'checkout/components/ui';
 import { QrCodeFormMetadata, ServiceProvider } from 'checkout/backend';
 import isNil from 'checkout/utils/is-nil';
+import { useActiveModalForm } from '../use-active-modal-form';
 
 import { InitialContext } from '../../../../initial-context';
+import { ModalContext } from '../../../modal-context';
 
 const Instruction = styled.p`
     font-weight: 500;
@@ -38,8 +38,8 @@ const getServiceProvider = (serviceProviders: ServiceProvider[], serviceProvider
 export const QrCodeInteractionForm: React.FC = () => {
     const qrCodeInputRef = useRef(null);
     const { locale, initConfig, model } = useContext(InitialContext);
-
-    const { request, providerID } = useAppSelector<QrCodeInteractionFormInfo>(getActiveModalFormSelector);
+    const { modalState } = useContext(ModalContext);
+    const { request, providerID } = useActiveModalForm<QrCodeInteractionFormInfo>(modalState);
     const serviceProvider = getServiceProvider(model.serviceProviders, providerID);
     const { qrCodeForm } = getMetadata(serviceProvider);
 

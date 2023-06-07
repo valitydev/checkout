@@ -4,17 +4,18 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import isNil from 'checkout/utils/is-nil';
 import { Modal } from './modal';
 import { UserInteractionModal } from './user-interaction-modal';
-import { ModalName, ResultFormInfo, ResultType, State } from 'checkout/state';
-import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { initializeModal, goToFormInfo, setModalState } from 'checkout/actions';
+import { ModalName, ResultFormInfo, ResultType } from 'checkout/state';
+import { useAppDispatch } from 'checkout/configure-store';
+import { setModalState } from 'checkout/actions';
 import { InitialContext } from '../initial-context';
 import { PayableInvoiceContext } from './payable-invoice-context';
 import styled from 'checkout/styled-components';
 import { RotateAnimation } from './rotate-animation';
 import { FadeInOutAnimation } from './fade-in-out-animation';
-import { PayableInvoiceData, useInvoiceEvents } from 'checkout/hooks';
+import { PayableInvoiceData, useInvoiceEvents, useModal } from 'checkout/hooks';
 import { InvoiceChangeType } from 'checkout/backend';
 import { provideInteraction } from 'checkout/sagas/provide-modal';
+import { ModalContext } from './modal-context';
 
 const Container = styled.div`
     height: 100%;
@@ -28,21 +29,19 @@ export const ModalContainer = () => {
         model: { events, serviceProviders, invoice, invoiceAccessToken },
         availablePaymentMethods
     } = useContext(InitialContext);
+    const { modalState, goToFormInfo, prepareToPay, setViewInfoError } = useModal({
+        integrationType: initConfig.integrationType,
+        availablePaymentMethods
+    });
     const [payableInvoiceData, setPayableInvoiceData] = useState<PayableInvoiceData>(null);
     const { pollingState, startPolling } = useInvoiceEvents(capiEndpoint, payableInvoiceData);
 
-    const modals = useAppSelector((s: State) => s.modals);
     const dispatch = useAppDispatch();
 
-    const activeModalName = useMemo(() => {
-        if (isNil(modals)) {
-            return null;
-        }
-        return modals.find((modal) => modal.active).name;
-    }, [modals]);
+    const activeModalName = useMemo(() => modalState.find((modal) => modal.active).name, [modalState]);
 
     useEffect(() => {
-        dispatch(initializeModal(initConfig, events, availablePaymentMethods, serviceProviders));
+        // dispatch(initializeModal(initConfig, events, availablePaymentMethods, serviceProviders));
         if (initConfig.integrationType === 'invoice') {
             setPayableInvoiceData({
                 invoice: {
@@ -68,26 +67,22 @@ export const ModalContainer = () => {
                     break;
                 case InvoiceChangeType.InvoiceStatusChanged:
                 case InvoiceChangeType.PaymentStatusChanged:
-                    dispatch(
-                        goToFormInfo(
-                            new ResultFormInfo(ResultType.hookProcessed, {
-                                change
-                            })
-                        )
+                    goToFormInfo(
+                        new ResultFormInfo(ResultType.hookProcessed, {
+                            change
+                        })
                     );
                     break;
             }
         }
         if (pollingState.status === 'TIMEOUT') {
-            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookTimeout)));
+            goToFormInfo(new ResultFormInfo(ResultType.hookTimeout));
         }
         if (pollingState.status === 'FAILURE') {
-            dispatch(
-                goToFormInfo(
-                    new ResultFormInfo(ResultType.hookError, {
-                        error: pollingState.error
-                    })
-                )
+            goToFormInfo(
+                new ResultFormInfo(ResultType.hookError, {
+                    error: pollingState.error
+                })
             );
         }
     }, [payableInvoiceData, pollingState]);
@@ -95,16 +90,16 @@ export const ModalContainer = () => {
     return (
         <FadeInOutAnimation enter={750} appear={750} leave={750}>
             <Container>
-                {!isNil(modals) && (
-                    <RotateAnimation enter={1000} leave={500}>
-                        <div key={activeModalName}>
+                <RotateAnimation enter={1000} leave={500}>
+                    <div key={activeModalName}>
+                        <ModalContext.Provider value={{ modalState, goToFormInfo, prepareToPay, setViewInfoError }}>
                             <PayableInvoiceContext.Provider value={{ payableInvoiceData, setPayableInvoiceData }}>
                                 {activeModalName === ModalName.modalForms && <Modal />}
                                 {activeModalName === ModalName.modalInteraction && <UserInteractionModal />}
                             </PayableInvoiceContext.Provider>
-                        </div>
-                    </RotateAnimation>
-                )}
+                        </ModalContext.Provider>
+                    </div>
+                </RotateAnimation>
             </Container>
         </FadeInOutAnimation>
     );

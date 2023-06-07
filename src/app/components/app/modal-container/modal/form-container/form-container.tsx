@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useContext, useMemo, useRef, useState } from 'react';
 
 import { CardForm } from './card-form';
 import { FormName, ModalForms, ModalName, SlideDirection, FormInfo } from 'checkout/state';
@@ -19,7 +19,7 @@ import { PaymentTerminalBankCardForm } from './payment-terminal-bank-card-form';
 import { PaymentTerminalForm } from './payment-terminal-form';
 import { QrCodeInteractionForm } from './qr-code-interaction-form';
 import { PaymentTerminalSelectorForm } from './payment-terminal-selector-form';
-import { useAppSelector } from 'checkout/configure-store';
+import { ModalContext } from '../../modal-context';
 
 const Container = styled.div`
     padding: 0 8px 32px 8px;
@@ -162,14 +162,15 @@ const renderForm = (info: FormInfo) => {
 export const FormContainer = () => {
     const contentElement = useRef(null);
     const [height, setHeight] = useState(0);
+    const { modalState } = useContext(ModalContext);
 
-    const { activeFormInfo, viewInfo } = useAppSelector((s) => {
-        const modalForms = findNamed(s.modals, ModalName.modalForms) as ModalForms;
+    const { activeFormInfo, viewInfo } = useMemo(() => {
+        const modalForms = findNamed(modalState, ModalName.modalForms) as ModalForms;
         return {
             activeFormInfo: modalForms.formsInfo.find((item) => item.active),
             viewInfo: modalForms.viewInfo
         };
-    });
+    }, [modalState]);
 
     const onTransitionEnd = useCallback(() => {
         const elHight = contentElement.current?.clientHeight || 0;
