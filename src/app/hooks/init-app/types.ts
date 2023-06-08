@@ -3,8 +3,7 @@ import {
     Invoice,
     InvoiceTemplate,
     ServiceProvider,
-    PaymentMethod as ApiPaymentMethod,
-    Event
+    PaymentMethod as ApiPaymentMethod
 } from 'checkout/backend';
 import { InitConfig } from 'checkout/config';
 import { Locale } from 'checkout/locale';
@@ -13,7 +12,6 @@ import { PaymentMethod } from './init-available-payment-methods';
 
 export type Model = {
     invoiceTemplate?: InvoiceTemplate;
-    events?: Event[];
     paymentMethods?: ApiPaymentMethod[];
     invoiceAccessToken?: string;
     invoice?: Invoice;

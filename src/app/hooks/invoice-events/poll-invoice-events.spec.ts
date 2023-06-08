@@ -39,7 +39,7 @@ describe('pollInvoiceEvents', () => {
             const result = await pollInvoiceEvents({ ...params, delays });
             await delay(300); // for checking that after timeout there are no more api calls
 
-            expect(mockFetch).toHaveBeenCalledTimes(3);
+            expect(mockFetch).toHaveBeenCalledTimes(4);
 
             const expected = {
                 status: 'TIMEOUT'
