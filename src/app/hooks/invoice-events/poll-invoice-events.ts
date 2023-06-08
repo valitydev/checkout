@@ -24,7 +24,6 @@ const getChange = (
 
 const fetchEvents = async (params: PollInvoiceEventsParams, isStop: () => boolean): Promise<PollingResult> => {
     const { capiEndpoint, invoiceAccessToken, invoiceID, eventID, stopPollingTypes, delays } = params;
-    await delay(delays.apiMethodCall);
     const events = await getInvoiceEvents(
         capiEndpoint,
         invoiceAccessToken,
@@ -44,6 +43,7 @@ const fetchEvents = async (params: PollInvoiceEventsParams, isStop: () => boolea
     if (isStop()) {
         return Promise.resolve(null);
     }
+    await delay(delays.apiMethodCall);
     return await fetchEvents({ ...params, eventID: isNil(lastEvent) ? eventID : lastEvent.id }, isStop);
 };
 

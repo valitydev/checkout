@@ -5,8 +5,6 @@ import isNil from 'checkout/utils/is-nil';
 import { Modal } from './modal';
 import { UserInteractionModal } from './user-interaction-modal';
 import { ModalName, ResultFormInfo, ResultType } from 'checkout/state';
-import { useAppDispatch } from 'checkout/configure-store';
-import { setModalState } from 'checkout/actions';
 import { InitialContext } from '../initial-context';
 import { PayableInvoiceContext } from './payable-invoice-context';
 import styled from 'checkout/styled-components';
@@ -14,8 +12,8 @@ import { RotateAnimation } from './rotate-animation';
 import { FadeInOutAnimation } from './fade-in-out-animation';
 import { PayableInvoiceData, useInvoiceEvents, useModal } from 'checkout/hooks';
 import { InvoiceChangeType } from 'checkout/backend';
-import { provideInteraction } from 'checkout/sagas/provide-modal';
 import { ModalContext } from './modal-context';
+import { useInteractionModel } from './use-interaction-model';
 
 const Container = styled.div`
     height: 100%;
@@ -26,21 +24,26 @@ export const ModalContainer = () => {
     const {
         appConfig: { capiEndpoint },
         initConfig,
-        model: { events, serviceProviders, invoice, invoiceAccessToken },
+        model: { serviceProviders, invoice, invoiceAccessToken },
         availablePaymentMethods
     } = useContext(InitialContext);
-    const { modalState, goToFormInfo, prepareToPay, prepareToRetry, forgetPaymentAttempt, setViewInfoError } = useModal(
-        {
-            integrationType: initConfig.integrationType,
-            availablePaymentMethods
-        }
-    );
+    const {
+        modalState,
+        toInitialState,
+        goToFormInfo,
+        prepareToPay,
+        prepareToRetry,
+        forgetPaymentAttempt,
+        setViewInfoError,
+        toInteractionState
+    } = useModal({
+        integrationType: initConfig.integrationType,
+        availablePaymentMethods,
+        serviceProviders
+    });
     const [payableInvoiceData, setPayableInvoiceData] = useState<PayableInvoiceData>(null);
-    const { pollingState, startPolling } = useInvoiceEvents(capiEndpoint, payableInvoiceData);
-
-    const dispatch = useAppDispatch();
-
-    const activeModalName = useMemo(() => modalState.find((modal) => modal.active).name, [modalState]);
+    const { eventsState, startPolling, searchEventsChange } = useInvoiceEvents(capiEndpoint, payableInvoiceData);
+    const { interactionModel, setPaymentInteraction, setPaymentStarted } = useInteractionModel();
 
     useEffect(() => {
         if (initConfig.integrationType === 'invoice') {
@@ -56,15 +59,23 @@ export const ModalContainer = () => {
     }, []);
 
     useEffect(() => {
-        if (isNil(payableInvoiceData) || initConfig.skipUserInteraction) return;
-        if (pollingState.status === 'PRISTINE') {
+        if (isNil(payableInvoiceData)) return;
+        if (eventsState.status === 'PRISTINE') {
             startPolling();
         }
-        if (pollingState.status === 'SUCCESS') {
-            const { change, events } = pollingState.payload;
+        if (eventsState.status === 'POLLING_SUCCESS') {
+            const change = eventsState.payload;
             switch (change.changeType) {
+                case InvoiceChangeType.InvoiceCreated:
+                    toInitialState();
+                    break;
                 case InvoiceChangeType.PaymentInteractionRequested:
-                    dispatch(setModalState(provideInteraction(events, serviceProviders)));
+                    if (initConfig.skipUserInteraction) {
+                        goToFormInfo(new ResultFormInfo(ResultType.hookTimeout));
+                        break;
+                    }
+                    setPaymentInteraction(change);
+                    searchEventsChange('PaymentStarted');
                     break;
                 case InvoiceChangeType.InvoiceStatusChanged:
                 case InvoiceChangeType.PaymentStatusChanged:
@@ -76,17 +87,27 @@ export const ModalContainer = () => {
                     break;
             }
         }
-        if (pollingState.status === 'TIMEOUT') {
+        if (eventsState.status === 'POLLING_TIMEOUT') {
             goToFormInfo(new ResultFormInfo(ResultType.hookTimeout));
         }
-        if (pollingState.status === 'FAILURE') {
+        if (eventsState.status === 'EVENT_CHANGE_FOUND') {
+            setPaymentStarted(eventsState.payload);
+        }
+        if (eventsState.status === 'FAILURE') {
             goToFormInfo(
                 new ResultFormInfo(ResultType.hookError, {
-                    error: pollingState.error
+                    error: eventsState.error
                 })
             );
         }
-    }, [payableInvoiceData, pollingState]);
+    }, [payableInvoiceData, eventsState]);
+
+    useEffect(() => {
+        if (isNil(interactionModel)) return;
+        toInteractionState(interactionModel);
+    }, [interactionModel]);
+
+    const activeModalName = useMemo(() => modalState.find((modal) => modal.active).name, [modalState]);
 
     return (
         <FadeInOutAnimation enter={750} appear={750} leave={750}>

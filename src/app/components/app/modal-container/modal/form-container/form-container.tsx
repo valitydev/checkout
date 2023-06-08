@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback, useContext, useMemo, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { CardForm } from './card-form';
 import { FormName, ModalForms, ModalName, SlideDirection, FormInfo } from 'checkout/state';
@@ -20,6 +20,7 @@ import { PaymentTerminalForm } from './payment-terminal-form';
 import { QrCodeInteractionForm } from './qr-code-interaction-form';
 import { PaymentTerminalSelectorForm } from './payment-terminal-selector-form';
 import { ModalContext } from '../../modal-context';
+import isNil from 'checkout/utils/is-nil';
 
 const Container = styled.div`
     padding: 0 8px 32px 8px;
@@ -129,8 +130,7 @@ const FormContainerAnimation = styled(stylableTransition)<{ direction: SlideDire
     ${({ direction }) => (direction === SlideDirection.left ? slideLeftAnimation : slideRightAnimation)}
 `;
 
-const renderForm = (info: FormInfo) => {
-    const { name } = info;
+const renderForm = ({ name }: FormInfo) => {
     switch (name) {
         case FormName.paymentMethods:
             return <PaymentMethods key={name} />;
@@ -159,10 +159,16 @@ const renderForm = (info: FormInfo) => {
     }
 };
 
+const DEFAULT_HEIGHT_PX = 300;
+
 export const FormContainer = () => {
     const contentElement = useRef(null);
     const [height, setHeight] = useState(0);
     const { modalState } = useContext(ModalContext);
+
+    useEffect(() => {
+        setHeight(DEFAULT_HEIGHT_PX);
+    }, []);
 
     const { activeFormInfo, viewInfo } = useMemo(() => {
         const modalForms = findNamed(modalState, ModalName.modalForms) as ModalForms;
@@ -189,7 +195,7 @@ export const FormContainer = () => {
                         enter={300}
                         leave={300}
                         onTransitionEnd={onTransitionEnd}>
-                        {renderForm(activeFormInfo)}
+                        {!isNil(activeFormInfo) && renderForm(activeFormInfo)}
                     </FormContainerAnimation>
                     {viewInfo.inProcess && <FormLoader />}
                 </div>

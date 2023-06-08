@@ -2,49 +2,55 @@ import { useCallback, useEffect, useReducer, useState } from 'react';
 import isNil from 'checkout/utils/is-nil';
 import { PayableInvoiceData } from './create-payment';
 import { PollingResult, pollInvoiceEvents } from './invoice-events';
-import { Event, InvoiceChange, InvoiceChangeType, getInvoiceEvents } from 'checkout/backend';
+import { InvoiceChange, InvoiceChangeType, getInvoiceEvents } from 'checkout/backend';
+import { findChange } from 'checkout/utils/event-utils';
 
 const API_METHOD_CALL_MS = 1000;
 const DEFAULT_TIMEOUT_MS = 60 * 1000 * 10;
 const PAYMENT_STARTED_TIMEOUT_MS = 60 * 1000;
 
-type Payload = { change: InvoiceChange } & { events: Event[] };
-
 type State =
     | { status: 'PRISTINE' }
-    | { status: 'TIMEOUT' }
-    | { status: 'SUCCESS'; payload: Payload }
+    | { status: 'POLLING_TIMEOUT' }
+    | { status: 'POLLING_SUCCESS'; payload: InvoiceChange }
+    | { status: 'EVENT_CHANGE_FOUND'; payload: InvoiceChange }
     | { status: 'FAILURE'; error: unknown };
 
 type Action =
-    | { type: 'POLL_EVENTS_FAILURE'; error: unknown }
+    | { type: 'SET_FAILURE'; error: unknown }
     | { type: 'POLL_EVENTS_TIMEOUT' }
-    | { type: 'EVENTS_POLLED'; payload: Payload };
+    | { type: 'SET_POLLING_RESULT'; payload: InvoiceChange }
+    | { type: 'SET_SEARCH_RESULT'; payload: InvoiceChange };
 
 const dataReducer = (_state: State, action: Action): State => {
     switch (action.type) {
-        case 'POLL_EVENTS_FAILURE':
+        case 'SET_FAILURE':
             return {
                 status: 'FAILURE',
                 error: action.error
             };
         case 'POLL_EVENTS_TIMEOUT':
             return {
-                status: 'TIMEOUT'
+                status: 'POLLING_TIMEOUT'
             };
-        case 'EVENTS_POLLED':
+        case 'SET_POLLING_RESULT':
             return {
-                status: 'SUCCESS',
+                status: 'POLLING_SUCCESS',
+                payload: action.payload
+            };
+        case 'SET_SEARCH_RESULT':
+            return {
+                status: 'EVENT_CHANGE_FOUND',
                 payload: action.payload
             };
     }
 };
 
 export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData) => {
-    const [pollingState, dispatch] = useReducer(dataReducer, {
+    const [eventsState, dispatch] = useReducer(dataReducer, {
         status: 'PRISTINE'
     });
-    const [pollingResult, setPollingResult] = useState<PollingResult & { events: Event[] }>(null);
+    const [pollingResult, setPollingResult] = useState<PollingResult>(null);
 
     const startPolling = useCallback(
         (eventID?: number, pollingTimeout = DEFAULT_TIMEOUT_MS) => {
@@ -56,6 +62,7 @@ export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData)
                         invoiceAccessToken,
                         invoiceID: invoice.id,
                         stopPollingTypes: [
+                            InvoiceChangeType.InvoiceCreated,
                             InvoiceChangeType.PaymentStarted,
                             InvoiceChangeType.InvoiceStatusChanged,
                             InvoiceChangeType.PaymentStatusChanged,
@@ -67,16 +74,9 @@ export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData)
                         },
                         eventID
                     });
-
-                    // Temporary set events for legacy modal state
-                    const events = await getInvoiceEvents(capiEndpoint, invoiceAccessToken, invoice.id);
-
-                    setPollingResult({
-                        ...pollingResult,
-                        events
-                    });
+                    setPollingResult(pollingResult);
                 } catch (error) {
-                    dispatch({ type: 'POLL_EVENTS_FAILURE', error });
+                    dispatch({ type: 'SET_FAILURE', error });
                     console.error('Polling invoice events failure', error);
                 }
             };
@@ -97,12 +97,36 @@ export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData)
                     startPolling(pollingResult.eventID, PAYMENT_STARTED_TIMEOUT_MS);
                 } else {
                     startPolling(pollingResult.eventID);
-                    dispatch({ type: 'EVENTS_POLLED', payload: { change, events: pollingResult.events } });
+                    dispatch({ type: 'SET_POLLING_RESULT', payload: pollingResult.change });
                 }
-
                 break;
         }
     }, [pollingResult, startPolling]);
 
-    return { pollingState, startPolling };
+    const searchEventsChange = useCallback(
+        (foundType: string) => {
+            const fetchData = async () => {
+                try {
+                    const { invoice, invoiceAccessToken } = data;
+                    const events = await getInvoiceEvents(capiEndpoint, invoiceAccessToken, invoice.id);
+                    const found = findChange<InvoiceChange>(events, foundType);
+                    if (found) {
+                        dispatch({ type: 'SET_SEARCH_RESULT', payload: found });
+                    } else {
+                        dispatch({
+                            type: 'SET_FAILURE',
+                            error: new Error(`Event change: "${foundType}" is not found`)
+                        });
+                    }
+                } catch (error) {
+                    dispatch({ type: 'SET_FAILURE', error });
+                    console.error('Find events change failure', error);
+                }
+            };
+            fetchData();
+        },
+        [capiEndpoint, data]
+    );
+
+    return { eventsState, startPolling, searchEventsChange };
 };

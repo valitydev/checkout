@@ -10,9 +10,10 @@ import {
 } from 'checkout/state';
 
 import { PaymentMethod } from './init-app';
-import { toInitialState } from './modal';
+import { InteractionModel, provideInteraction, toInitialState } from './modal';
 import { InitConfig } from 'checkout/config';
 import { findNamed } from 'checkout/utils';
+import { ServiceProvider } from 'checkout/backend';
 
 type State = ModalState[];
 
@@ -28,7 +29,8 @@ export enum PaymentStatus {
 }
 
 type Action =
-    | { type: 'SET_MODAL_STATE'; payload: ModalState }
+    | { type: 'TO_INTERACTION_STATE'; payload: ModalState }
+    | { type: 'TO_INITIAL_STATE'; payload: PaymentMethod[] }
     | {
           type: 'GO_TO_FORM_INFO';
           payload: {
@@ -190,8 +192,8 @@ const forgetPaymentAttempt = (s: ModalState[]) => {
 
 const dataReducer = (state: State, action: Action): State => {
     switch (action.type) {
-        case 'SET_MODAL_STATE':
-            return addOrUpdate(state, action.payload);
+        case 'TO_INITIAL_STATE':
+            return [toInitialState(action.payload)];
         case 'GO_TO_FORM_INFO':
             const { formInfo, direction } = action.payload;
             return goToFormInfo(state, formInfo, direction);
@@ -203,25 +205,32 @@ const dataReducer = (state: State, action: Action): State => {
             return prepareToRetry(state, action.payload);
         case 'FORGET_PAYMENT_ATTEMPT':
             return forgetPaymentAttempt(state);
+        case 'TO_INTERACTION_STATE':
+            return addOrUpdate(state, action.payload);
+    }
+};
+
+const init = (integrationType: InitConfig['integrationType'], availablePaymentMethods: PaymentMethod[]): State => {
+    switch (integrationType) {
+        case 'invoice':
+            return [new ModalForms([], true, true)];
+        case 'invoiceTemplate':
+            return [toInitialState(availablePaymentMethods)];
     }
 };
 
 type ModalParams = {
     integrationType: InitConfig['integrationType'];
     availablePaymentMethods: PaymentMethod[];
+    serviceProviders: ServiceProvider[];
 };
 
-const init = ({ integrationType, availablePaymentMethods }: ModalParams): State => {
-    switch (integrationType) {
-        case 'invoice':
-            return [];
-        case 'invoiceTemplate':
-            return [toInitialState(availablePaymentMethods)];
-    }
-};
+export const useModal = ({ integrationType, availablePaymentMethods, serviceProviders }: ModalParams) => {
+    const [modalState, dispatch] = useReducer(dataReducer, init(integrationType, availablePaymentMethods));
 
-export const useModal = (params: ModalParams) => {
-    const [modalState, dispatch] = useReducer(dataReducer, init(params));
+    const toInitialState = useCallback(() => {
+        dispatch({ type: 'TO_INITIAL_STATE', payload: availablePaymentMethods });
+    }, [availablePaymentMethods]);
 
     const goToFormInfo = useCallback((formInfo: FormInfo, direction: Direction = Direction.forward) => {
         dispatch({ type: 'GO_TO_FORM_INFO', payload: { formInfo, direction } });
@@ -243,5 +252,21 @@ export const useModal = (params: ModalParams) => {
         dispatch({ type: 'SET_VIEW_INFO_ERROR', payload: hasError });
     }, []);
 
-    return { modalState, goToFormInfo, prepareToPay, prepareToRetry, forgetPaymentAttempt, setViewInfoError };
+    const toInteractionState = useCallback(
+        (interactionModel: InteractionModel) => {
+            dispatch({ type: 'TO_INTERACTION_STATE', payload: provideInteraction(serviceProviders, interactionModel) });
+        },
+        [serviceProviders]
+    );
+
+    return {
+        modalState,
+        toInitialState,
+        goToFormInfo,
+        prepareToPay,
+        prepareToRetry,
+        forgetPaymentAttempt,
+        setViewInfoError,
+        toInteractionState
+    };
 };

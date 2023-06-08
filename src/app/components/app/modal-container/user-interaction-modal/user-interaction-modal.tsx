@@ -11,9 +11,9 @@ import {
 import { findNamed, prepareForm } from 'checkout/utils';
 import styled from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
-import { useAppSelector } from 'checkout/configure-store';
 
 import { InitialContext } from '../../initial-context';
+import { ModalContext } from '../modal-context';
 
 const Container = styled.div`
     height: 100%; // for cross-browser 100vh
@@ -49,10 +49,9 @@ const IFrame = styled.iframe`
 export const UserInteractionModal = () => {
     const iFrameElement = useRef(null);
     const { origin } = useContext(InitialContext);
+    const { modalState } = useContext(ModalContext);
 
-    const { modal } = useAppSelector((s) => ({
-        modal: findNamed(s.modals, ModalName.modalInteraction) as ModalInteraction
-    }));
+    const modal = useMemo(() => findNamed(modalState, ModalName.modalInteraction) as ModalInteraction, [modalState]);
 
     useEffect(() => {
         const interactionObject = modal.interactionObject;
@@ -61,7 +60,7 @@ export const UserInteractionModal = () => {
             iFrameElement.current.contentWindow.document.body.appendChild(form);
             form.submit();
         }
-    }, []);
+    }, [modal]);
 
     const src = useMemo(() => {
         const interactionObject = modal?.interactionObject;
