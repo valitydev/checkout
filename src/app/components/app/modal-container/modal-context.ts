@@ -7,5 +7,7 @@ export const ModalContext = createContext<{
     modalState: ModalState[];
     goToFormInfo: (formInfo: FormInfo, direction?: Direction) => void;
     prepareToPay: () => void;
+    prepareToRetry: (resetFormData: boolean) => void;
+    forgetPaymentAttempt: () => void;
     setViewInfoError: (hasError: boolean) => void;
 }>(null);

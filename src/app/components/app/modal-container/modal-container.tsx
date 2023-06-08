@@ -29,10 +29,12 @@ export const ModalContainer = () => {
         model: { events, serviceProviders, invoice, invoiceAccessToken },
         availablePaymentMethods
     } = useContext(InitialContext);
-    const { modalState, goToFormInfo, prepareToPay, setViewInfoError } = useModal({
-        integrationType: initConfig.integrationType,
-        availablePaymentMethods
-    });
+    const { modalState, goToFormInfo, prepareToPay, prepareToRetry, forgetPaymentAttempt, setViewInfoError } = useModal(
+        {
+            integrationType: initConfig.integrationType,
+            availablePaymentMethods
+        }
+    );
     const [payableInvoiceData, setPayableInvoiceData] = useState<PayableInvoiceData>(null);
     const { pollingState, startPolling } = useInvoiceEvents(capiEndpoint, payableInvoiceData);
 
@@ -41,7 +43,6 @@ export const ModalContainer = () => {
     const activeModalName = useMemo(() => modalState.find((modal) => modal.active).name, [modalState]);
 
     useEffect(() => {
-        // dispatch(initializeModal(initConfig, events, availablePaymentMethods, serviceProviders));
         if (initConfig.integrationType === 'invoice') {
             setPayableInvoiceData({
                 invoice: {
@@ -92,7 +93,15 @@ export const ModalContainer = () => {
             <Container>
                 <RotateAnimation enter={1000} leave={500}>
                     <div key={activeModalName}>
-                        <ModalContext.Provider value={{ modalState, goToFormInfo, prepareToPay, setViewInfoError }}>
+                        <ModalContext.Provider
+                            value={{
+                                modalState,
+                                goToFormInfo,
+                                prepareToPay,
+                                prepareToRetry,
+                                forgetPaymentAttempt,
+                                setViewInfoError
+                            }}>
                             <PayableInvoiceContext.Provider value={{ payableInvoiceData, setPayableInvoiceData }}>
                                 {activeModalName === ModalName.modalForms && <Modal />}
                                 {activeModalName === ModalName.modalInteraction && <UserInteractionModal />}

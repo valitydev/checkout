@@ -1,16 +1,15 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 
 import { Button } from 'checkout/components';
 import { Locale } from 'checkout/locale';
-import { forgetPaymentAttempt, prepareToRetry } from 'checkout/actions';
 import { FormInfo, FormName, ModalForms, ModalName, PaymentStatus } from 'checkout/state';
 import { findNamed } from 'checkout/utils';
 import { Link } from 'checkout/components/ui/link';
 import styled from 'checkout/styled-components';
 
 import { InitialContext } from '../../../../initial-context';
-import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
+import { ModalContext } from '../../../modal-context';
 
 const OthersButton = styled(Link)`
     padding-top: 12px;
@@ -51,17 +50,18 @@ const retryCapability = (startedInfo: FormInfo): boolean =>
 
 export const ActionBlock = () => {
     const { locale, initConfig } = useContext(InitialContext);
-    const { startedInfo, hasMultiMethods } = useAppSelector((s) => {
-        const info = (findNamed(s.modals, ModalName.modalForms) as ModalForms).formsInfo;
+    const { modalState, prepareToRetry, forgetPaymentAttempt } = useContext(ModalContext);
+
+    const { startedInfo, hasMultiMethods } = useMemo(() => {
+        const info = (findNamed(modalState, ModalName.modalForms) as ModalForms).formsInfo;
         return {
             startedInfo: info.find((item) => item.paymentStatus === PaymentStatus.started),
             hasMultiMethods: !!findNamed(info, FormName.paymentMethods)
         };
-    });
-    const dispatch = useAppDispatch();
+    }, [modalState]);
 
     const retry = (resetFormData: boolean) => {
-        dispatch(prepareToRetry(resetFormData));
+        prepareToRetry(resetFormData);
     };
 
     return (
@@ -79,7 +79,7 @@ export const ActionBlock = () => {
                         </Button>
                     )}
                     {hasMultiMethods && (
-                        <OthersButton onClick={() => dispatch(forgetPaymentAttempt())}>
+                        <OthersButton onClick={() => forgetPaymentAttempt()}>
                             {locale['form.payment.method.name.others.label']}
                         </OthersButton>
                     )}

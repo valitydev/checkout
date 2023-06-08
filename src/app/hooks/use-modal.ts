@@ -1,5 +1,13 @@
 import { useCallback, useReducer } from 'react';
-import { FormInfo, ModalForms, ModalName, ModalState, Named, SlideDirection } from 'checkout/state';
+import {
+    FormInfo,
+    ModalForms,
+    ModalName,
+    ModalState,
+    Named,
+    PaymentMethodsFormInfo,
+    SlideDirection
+} from 'checkout/state';
 
 import { PaymentMethod } from './init-app';
 import { toInitialState } from './modal';
@@ -34,6 +42,13 @@ type Action =
     | {
           type: 'SET_VIEW_INFO_ERROR';
           payload: boolean;
+      }
+    | {
+          type: 'PREPARE_TO_RETRY';
+          payload: boolean;
+      }
+    | {
+          type: 'FORGET_PAYMENT_ATTEMPT';
       };
 
 const clone = <T>(items: T[]): T[] => JSON.parse(JSON.stringify(items));
@@ -135,6 +150,44 @@ const updateViewInfo = (s: ModalState[], field: string, value: any): ModalState[
     } as ModalForms);
 };
 
+const findStarted = (info: FormInfo[]) => info.find((item) => item.paymentStatus === PaymentStatus.started);
+
+const prepareToRetry = (s: ModalState[], toPristine: boolean): ModalState[] => {
+    const modal = findNamed(s, ModalName.modalForms) as ModalForms;
+    const started = findStarted(modal.formsInfo);
+    return addOrUpdate(s, {
+        ...modal,
+        viewInfo: {
+            ...modal.viewInfo,
+            slideDirection: SlideDirection.left,
+            inProcess: !toPristine
+        },
+        formsInfo: addOrUpdate(modal.formsInfo, {
+            ...started,
+            paymentStatus: toPristine ? PaymentStatus.pristine : PaymentStatus.needRetry,
+            active: true
+        } as FormInfo)
+    } as ModalForms);
+};
+
+const forgetPaymentAttempt = (s: ModalState[]) => {
+    const modal = findNamed(s, ModalName.modalForms) as ModalForms;
+    const pristine = addOrUpdate(modal.formsInfo, {
+        ...findStarted(modal.formsInfo),
+        paymentStatus: PaymentStatus.pristine,
+        active: false
+    } as FormInfo);
+    return addOrUpdate(s, {
+        ...modal,
+        viewInfo: {
+            ...modal.viewInfo,
+            slideDirection: SlideDirection.left,
+            inProcess: false
+        },
+        formsInfo: addOrUpdate(pristine, new PaymentMethodsFormInfo())
+    } as ModalForms);
+};
+
 const dataReducer = (state: State, action: Action): State => {
     switch (action.type) {
         case 'SET_MODAL_STATE':
@@ -146,6 +199,10 @@ const dataReducer = (state: State, action: Action): State => {
             return prepareToPay(state);
         case 'SET_VIEW_INFO_ERROR':
             return updateViewInfo(state, 'error', action.payload);
+        case 'PREPARE_TO_RETRY':
+            return prepareToRetry(state, action.payload);
+        case 'FORGET_PAYMENT_ATTEMPT':
+            return forgetPaymentAttempt(state);
     }
 };
 
@@ -174,9 +231,17 @@ export const useModal = (params: ModalParams) => {
         dispatch({ type: 'PREPARE_TO_PAY' });
     }, []);
 
+    const prepareToRetry = useCallback((resetFormData: boolean) => {
+        dispatch({ type: 'PREPARE_TO_RETRY', payload: resetFormData });
+    }, []);
+
+    const forgetPaymentAttempt = useCallback(() => {
+        dispatch({ type: 'FORGET_PAYMENT_ATTEMPT' });
+    }, []);
+
     const setViewInfoError = useCallback((hasError: boolean) => {
         dispatch({ type: 'SET_VIEW_INFO_ERROR', payload: hasError });
     }, []);
 
-    return { modalState, goToFormInfo, prepareToPay, setViewInfoError };
+    return { modalState, goToFormInfo, prepareToPay, prepareToRetry, forgetPaymentAttempt, setViewInfoError };
 };
