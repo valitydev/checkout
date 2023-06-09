@@ -38,7 +38,7 @@ const Form = styled.div<{ error?: any; height?: number }>`
     padding: 30px 20px;
     position: relative;
     overflow: hidden;
-    transition: height 0.3s;
+    transition: height 0.1s;
     height: ${({ height }) => (height ? `${height}px` : 'auto')};
 
     @media ${device.desktop} {

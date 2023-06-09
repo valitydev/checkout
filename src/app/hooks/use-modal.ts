@@ -188,7 +188,7 @@ const forgetPaymentAttempt = (s: ModalState[]) => {
 const dataReducer = (state: State, action: Action): State => {
     switch (action.type) {
         case 'TO_INITIAL_STATE':
-            return [toInitialState(action.payload)];
+            return addOrUpdate(state, toInitialState(action.payload));
         case 'GO_TO_FORM_INFO':
             const { formInfo, direction } = action.payload;
             return goToFormInfo(state, formInfo, direction);

@@ -68,6 +68,9 @@ export const ModalContainer = () => {
             switch (change.changeType) {
                 case InvoiceChangeType.InvoiceCreated:
                     toInitialState();
+                    if (initConfig.integrationType === 'invoiceTemplate') {
+                        prepareToPay();
+                    }
                     break;
                 case InvoiceChangeType.PaymentInteractionRequested:
                     if (initConfig.skipUserInteraction) {
