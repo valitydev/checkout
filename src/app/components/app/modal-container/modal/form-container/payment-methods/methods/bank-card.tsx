@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { CardFormInfo, FormName } from 'checkout/state';
+import { CardFormInfo, FormName } from 'checkout/hooks';
 import { Method } from './method';
 import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
 

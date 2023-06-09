@@ -6,8 +6,9 @@ import {
     ModalState,
     Named,
     PaymentMethodsFormInfo,
+    PaymentStatus,
     SlideDirection
-} from 'checkout/state';
+} from './modal/types';
 
 import { PaymentMethod } from './init-app';
 import { InteractionModel, provideInteraction, toInitialState } from './modal';
@@ -20,12 +21,6 @@ type State = ModalState[];
 export enum Direction {
     back = 'back',
     forward = 'forward'
-}
-
-export enum PaymentStatus {
-    pristine = 'pristine',
-    started = 'started',
-    needRetry = 'needRetry'
 }
 
 type Action =

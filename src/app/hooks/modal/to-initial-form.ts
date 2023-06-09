@@ -14,7 +14,7 @@ import {
     PaymentTerminalBankCardFormInfo,
     PaymentTerminalFormInfo,
     PaymentTerminalSelectorFormInfo
-} from 'checkout/state';
+} from './types';
 import { assertUnreachable } from 'checkout/utils';
 
 const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalPaymentMethod) => {

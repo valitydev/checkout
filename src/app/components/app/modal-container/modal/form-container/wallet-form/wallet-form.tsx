@@ -4,7 +4,8 @@ import { InjectedFormProps, reduxForm } from 'redux-form';
 import get from 'lodash-es/get';
 
 import { FormGroup } from '../form-group';
-import { FormName, PaymentStatus, ResultFormInfo, ResultType, WalletFormInfo, WalletFormValues } from 'checkout/state';
+import { FormName, PaymentStatus, ResultFormInfo, ResultType, WalletFormInfo } from 'checkout/hooks';
+import { WalletFormValues } from 'checkout/state';
 import { PayButton } from '../pay-button';
 import { Header } from '../header';
 import { Amount } from '../common-fields';

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 
-import { FormName, PaymentTerminalFormValues, ResultFormInfo, ResultType } from 'checkout/state';
+import { FormName, ResultFormInfo, ResultType } from 'checkout/hooks';
 import { Header } from '../header';
 import { ProviderSelectorField } from './provider-selector';
 import { PayButton } from '../pay-button';
@@ -17,6 +17,7 @@ import { InitialContext } from '../../../../initial-context';
 import { getAvailableTerminalPaymentMethod } from '../get-available-terminal-payment-method';
 import { KnownProviderCategories, useCreatePayment } from 'checkout/hooks';
 import { ModalContext } from '../../../modal-context';
+import { PaymentTerminalFormValues } from 'checkout/state';
 
 const ProviderSelectorDescription = styled.p`
     font-size: 16px;

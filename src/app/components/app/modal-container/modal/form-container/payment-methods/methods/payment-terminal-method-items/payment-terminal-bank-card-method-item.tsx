@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 
 import { Method } from '../method';
-import { FormName, PaymentTerminalBankCardFormInfo } from 'checkout/state';
+import { FormName, PaymentTerminalBankCardFormInfo } from 'checkout/hooks';
 import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
 
 import { InitialContext } from '../../../../../../initial-context';

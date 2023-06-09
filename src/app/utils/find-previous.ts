@@ -1,4 +1,4 @@
-import { FormInfo, ModalForms, ModalName, ModalState } from 'checkout/state';
+import { FormInfo, ModalForms, ModalName, ModalState } from 'checkout/hooks/modal/types';
 import { findNamed } from './find-named';
 
 export const findInfoWithPrevious = (modals: ModalState[]): FormInfo => {

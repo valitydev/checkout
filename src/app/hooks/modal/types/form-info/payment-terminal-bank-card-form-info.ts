@@ -1,5 +1,5 @@
-import { PaymentStatus } from 'checkout/state';
 import { FormInfo, FormName } from './form-info';
+import { PaymentStatus } from './payment-status';
 
 export class PaymentTerminalBankCardFormInfo extends FormInfo {
     name = FormName.paymentTerminalBankCard;

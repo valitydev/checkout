@@ -1,4 +1,4 @@
-import { Named } from './modal';
+import { Named } from './named';
 
 export enum ModalName {
     modalInteraction = 'modalInteraction',

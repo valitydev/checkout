@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 
 import { findInfoWithPrevious, findNamed } from 'checkout/utils';
-import { FormInfo, ModalForms, ModalName, ModalState } from 'checkout/state';
+import { FormInfo, ModalForms, ModalName, ModalState } from 'checkout/hooks';
 import { HeaderWrapper } from '../header-wrapper';
 import { Title } from '../title';
 import { ChevronButton } from 'checkout/components';

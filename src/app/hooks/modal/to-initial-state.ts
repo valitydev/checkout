@@ -1,10 +1,4 @@
-import {
-    FormInfo,
-    ModalForms,
-    ModalState,
-    NoAvailablePaymentMethodFormInfo,
-    PaymentMethodsFormInfo
-} from 'checkout/state';
+import { FormInfo, ModalForms, ModalState, NoAvailablePaymentMethodFormInfo, PaymentMethodsFormInfo } from './types';
 
 import { PaymentMethod } from '../init-app';
 import { toInitialForm } from './to-initial-form';

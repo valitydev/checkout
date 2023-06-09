@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import styled from 'checkout/styled-components';
 
 import { Header } from '../header';
-import { FormName, PaymentTerminalFormInfo, PaymentTerminalSelectorFormInfo } from 'checkout/state';
+import { FormName, PaymentTerminalFormInfo, PaymentTerminalSelectorFormInfo } from 'checkout/hooks';
 import { Locale } from 'checkout/locale';
 import { ServiceProvidersGrid } from './service-providers-grid';
 import { getAvailableTerminalPaymentMethod } from '../get-available-terminal-payment-method';

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { FormInfo, ModalForms, ModalName, ModalState } from 'checkout/state';
+import { FormInfo, ModalForms, ModalName, ModalState } from 'checkout/hooks';
 import { findNamed } from 'checkout/utils';
 
 export const useActiveModalForm = <T extends FormInfo>(modalState: ModalState[]) =>

@@ -5,7 +5,6 @@ import {
     PaymentMethodName as PaymentMethodNameState,
     KnownDigitalWalletProviderCategories
 } from '../types';
-import { logUnavailableWithConfig } from './log-unavailable-with-config';
 import { assertUnreachable } from 'checkout/utils';
 import { filterByPaymentMethodProviders } from './filter-by-payment-method-providers';
 
@@ -37,11 +36,9 @@ export const getDigitalWalletPaymentMethods = (
         return [];
     }
     if (paymentFlowHold) {
-        logUnavailableWithConfig('wallets', 'paymentFlowHold');
         return [];
     }
     if (recurring) {
-        logUnavailableWithConfig('wallets', 'recurring');
         return [];
     }
     const filtered = serviceProviders.filter(filterByPaymentMethodProviders(providers));

@@ -1,5 +1,5 @@
 import { PaymentSessionInfoMetadata } from 'checkout/backend';
-import { PayableFormValues } from 'checkout/state';
+import { PayableFormValues } from './payable-form-values';
 
 export interface PaymentTerminalFormValues extends PayableFormValues {
     provider: string;

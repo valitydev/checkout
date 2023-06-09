@@ -5,15 +5,15 @@ import isNil from 'checkout/utils/is-nil';
 import {
     FormName,
     PaymentTerminalFormInfo,
-    PaymentTerminalFormValues,
     PaymentTerminalSelectorFormInfo,
     ResultFormInfo,
     ResultType
-} from 'checkout/state';
+} from 'checkout/hooks';
 import { getMetadata, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PaymentMethodName, ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
 import { Content } from './content';
 import { PaymentTerminalPaymentMethod, useCreatePayment } from 'checkout/hooks';
+import { PaymentTerminalFormValues } from 'checkout/state';
 
 import { InitialContext } from '../../../../../../initial-context';
 import { ModalContext } from '../../../../../modal-context';

@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { FormInfo, ModalState } from 'checkout/state';
+import { FormInfo, ModalState } from 'checkout/hooks';
 import { Direction } from 'checkout/hooks/use-modal';
 
 export const ModalContext = createContext<{

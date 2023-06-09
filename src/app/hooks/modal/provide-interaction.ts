@@ -7,7 +7,7 @@ import {
     Redirect,
     ServiceProvider
 } from 'checkout/backend';
-import { InteractionModel } from './types';
+import { InteractionModel } from './types/interaction-model';
 import {
     EventInteractionObject,
     ModalForms,
@@ -16,9 +16,9 @@ import {
     ModalState,
     QrCodeInteractionFormInfo,
     RedirectFormInfo
-} from 'checkout/state';
+} from 'checkout/hooks';
 import isNil from 'checkout/utils/is-nil';
-import { getMetadata } from 'checkout/components/ui';
+import { getMetadata } from 'checkout/components/ui/metadata/utils/get-metadata';
 
 const toModalInteraction = (userInteraction: Redirect): ModalInteraction =>
     new ModalInteraction(

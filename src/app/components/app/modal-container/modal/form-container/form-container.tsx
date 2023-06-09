@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { CardForm } from './card-form';
-import { FormName, ModalForms, ModalName, SlideDirection, FormInfo } from 'checkout/state';
+import { FormName, ModalForms, ModalName, SlideDirection, FormInfo } from 'checkout/hooks';
 import { PaymentMethods } from './payment-methods';
 import { FormLoader } from './form-loader';
 import { ResultForm } from './result-form';

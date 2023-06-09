@@ -5,14 +5,8 @@ import get from 'lodash-es/get';
 import styled from 'checkout/styled-components';
 
 import { useAppSelector } from 'checkout/configure-store';
-import {
-    FormName,
-    PaymentStatus,
-    PaymentTerminalFormValues,
-    PaymentTerminalFormInfo,
-    ResultFormInfo,
-    ResultType
-} from 'checkout/state';
+import { PaymentTerminalFormValues } from 'checkout/state';
+import { FormName, PaymentStatus, PaymentTerminalFormInfo, ResultFormInfo, ResultType } from 'checkout/hooks';
 import { Header } from '../header';
 import { PayButton } from '../pay-button';
 import { FormGroup } from '../form-group';

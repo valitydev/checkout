@@ -4,7 +4,7 @@ import { InjectedFormProps, reduxForm } from 'redux-form';
 
 import { FormGroup } from '../form-group';
 import { CardHolder, CardNumber, ExpireDate, SecureCode } from './fields';
-import { CardFormValues, FormName, PaymentStatus, ResultFormInfo, ResultType } from 'checkout/state';
+import { FormName, PaymentStatus, ResultFormInfo, ResultType } from 'checkout/hooks';
 import { PayButton } from '../pay-button';
 import { Header } from '../header/header';
 import { toAmountConfig, toCardHolderConfig } from '../fields-config';
@@ -15,6 +15,7 @@ import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
 import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';
 import { useActiveModalForm } from '../use-active-modal-form';
+import { CardFormValues } from 'checkout/state';
 
 const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
     const {

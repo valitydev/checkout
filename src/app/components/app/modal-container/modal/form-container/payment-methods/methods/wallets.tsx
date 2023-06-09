@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { FormName, WalletProvidersFormInfo } from 'checkout/state';
+import { FormName, WalletProvidersFormInfo } from 'checkout/hooks';
 import { Method } from './method';
 import { Text } from './text';
 import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';

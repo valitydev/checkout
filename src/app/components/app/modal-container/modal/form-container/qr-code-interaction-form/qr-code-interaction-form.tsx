@@ -4,7 +4,7 @@ import styled from 'checkout/styled-components';
 import isMobile from 'ismobilejs';
 
 import { QRCode } from './qr-code';
-import { QrCodeInteractionFormInfo } from 'checkout/state';
+import { QrCodeInteractionFormInfo } from 'checkout/hooks';
 import { Button, CopyToClipboardButton, getMetadata, Hr, Input } from 'checkout/components/ui';
 import { QrCodeFormMetadata, ServiceProvider } from 'checkout/backend';
 import isNil from 'checkout/utils/is-nil';

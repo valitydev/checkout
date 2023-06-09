@@ -4,7 +4,7 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import isNil from 'checkout/utils/is-nil';
 import { Modal } from './modal';
 import { UserInteractionModal } from './user-interaction-modal';
-import { ModalName, ResultFormInfo, ResultType } from 'checkout/state';
+import { ModalName, ResultFormInfo, ResultType } from 'checkout/hooks';
 import { InitialContext } from '../initial-context';
 import { PayableInvoiceContext } from './payable-invoice-context';
 import styled from 'checkout/styled-components';
