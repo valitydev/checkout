@@ -2,11 +2,9 @@ import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 
-import { FormName, PaymentTerminalFormValues, ResultFormInfo, ResultType } from 'checkout/state';
+import { FormName, ResultFormInfo, ResultType } from 'checkout/hooks';
 import { Header } from '../header';
-import { useAppDispatch } from 'checkout/configure-store';
 import { ProviderSelectorField } from './provider-selector';
-import { goToFormInfo, prepareToPay, setViewInfoError } from 'checkout/actions';
 import { PayButton } from '../pay-button';
 import { PaymentMethodName } from 'checkout/backend';
 import styled from 'checkout/styled-components';
@@ -18,6 +16,8 @@ import { getMetadata } from 'checkout/components';
 import { InitialContext } from '../../../../initial-context';
 import { getAvailableTerminalPaymentMethod } from '../get-available-terminal-payment-method';
 import { KnownProviderCategories, useCreatePayment } from 'checkout/hooks';
+import { ModalContext } from '../../../modal-context';
+import { PaymentTerminalFormValues } from 'checkout/state';
 
 const ProviderSelectorDescription = styled.p`
     font-size: 16px;
@@ -28,30 +28,30 @@ const ProviderSelectorDescription = styled.p`
 
 export const PaymentTerminalBankCardFormDef: React.FC<InjectedFormProps> = ({ submitFailed, handleSubmit }) => {
     const { locale, initConfig, availablePaymentMethods } = useContext(InitialContext);
+    const { goToFormInfo, prepareToPay, setViewInfoError } = useContext(ModalContext);
     const { createPaymentState, setFormData } = useCreatePayment();
     const paymentMethod = getAvailableTerminalPaymentMethod(availablePaymentMethods, KnownProviderCategories.BankCard);
     const serviceProviders = paymentMethod?.serviceProviders;
     const email = toEmailConfig(initConfig.email);
     const phoneNumber = toPhoneNumberConfig(initConfig.phoneNumber);
     const { contactInfo, paymentSessionInfo } = getMetadata(serviceProviders && serviceProviders[0]);
-    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(setViewInfoError(false));
+        setViewInfoError(false);
     }, []);
 
     useEffect(() => {
         if (submitFailed) {
-            dispatch(setViewInfoError(true));
+            setViewInfoError(true);
         }
         if (createPaymentState.status === 'FAILURE') {
             const error = createPaymentState.error;
-            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, { error })));
+            goToFormInfo(new ResultFormInfo(ResultType.hookError, { error }));
         }
     }, [submitFailed, createPaymentState]);
 
     const submit = (values: PaymentTerminalFormValues) => {
-        dispatch(prepareToPay());
+        prepareToPay();
         setFormData({
             method: PaymentMethodName.PaymentTerminal,
             values: {

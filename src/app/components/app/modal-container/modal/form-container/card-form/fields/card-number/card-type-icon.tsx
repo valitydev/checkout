@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { formValueSelector } from 'redux-form';
-import { connect } from 'react-redux';
 import { number } from 'card-validator';
 
-import { FormName, State } from 'checkout/state';
+import { FormName } from 'checkout/hooks';
 import * as cardIcons from 'checkout/components/ui/icon/card';
 import styled from 'checkout/styled-components';
 import { growth } from 'checkout/styled-components/animations';
+import { useAppSelector } from 'checkout/configure-store';
 
 interface CardTypeIconProps {
     cardNumber: string;
@@ -50,8 +50,7 @@ const CardTypeIconDef = styled<React.FC<CardTypeIconProps>>(({ cardNumber, class
 
 const selector = formValueSelector(FormName.cardForm);
 
-const mapStateToProps = (state: State) => ({
-    cardNumber: selector(state, 'cardNumber')
-});
-
-export const CardTypeIcon = connect(mapStateToProps)(CardTypeIconDef);
+export const CardTypeIcon = () => {
+    const cardNumber = useAppSelector((state) => selector(state, 'cardNumber'));
+    return <CardTypeIconDef cardNumber={cardNumber} />;
+};

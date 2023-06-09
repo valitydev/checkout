@@ -33,14 +33,11 @@
     "react-transition-group": "1.2.1",
     "redux": "4.1.2",
     "redux-form": "8.3.8",
-    "redux-saga": "1.1.3",
-    "reselect": "~4.0.0",
     "styled-components": "5.3.3",
     "uri-template": "1.0.3",
     "uuid": "~8.3.2"
   },
   "devDependencies": {
-    "@redux-saga/testing-utils": "^1.1.3",
     "@testing-library/react-hooks": "8.0.1",
     "@types/card-validator": "~4.1.0",
     "@types/credit-card-type": "~7.0.0",

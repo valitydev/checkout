@@ -1,4 +1,4 @@
-import { ModalName, ModalState } from '../modal-state';
+import { ModalName, ModalState } from './modal-state';
 import { BrowserRequest } from 'checkout/backend';
 
 export enum ModalInteractionType {

@@ -4,20 +4,21 @@ import { InjectedFormProps, reduxForm } from 'redux-form';
 import get from 'lodash-es/get';
 
 import { FormGroup } from '../form-group';
-import { FormName, PaymentStatus, ResultFormInfo, ResultType, WalletFormInfo, WalletFormValues } from 'checkout/state';
+import { FormName, PaymentStatus, ResultFormInfo, ResultType, WalletFormInfo } from 'checkout/hooks';
+import { WalletFormValues } from 'checkout/state';
 import { PayButton } from '../pay-button';
 import { Header } from '../header';
 import { Amount } from '../common-fields';
 import { toFieldsConfig } from '../fields-config';
-import { goToFormInfo, prepareToPay, setViewInfoError } from 'checkout/actions';
 import { SignUp } from './sign-up';
-import { getActiveModalFormSelector } from 'checkout/selectors';
-import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
+import { useAppSelector } from 'checkout/configure-store';
 import { getMetadata, MetadataField, MetadataLogo, obscurePassword, sortByIndex } from 'checkout/components/ui';
 import { LogoContainer } from './logo-container';
 import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
+import { useActiveModalForm } from '../use-active-modal-form';
 
 import { InitialContext } from '../../../../initial-context';
+import { ModalContext } from '../../../modal-context';
 
 const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
     const {
@@ -25,15 +26,15 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
         initConfig,
         model: { invoiceTemplate }
     } = useContext(InitialContext);
+    const { modalState, goToFormInfo, prepareToPay, setViewInfoError } = useContext(ModalContext);
     const { createPaymentState, setFormData } = useCreatePayment();
-    const { activeProvider, paymentStatus } = useAppSelector<WalletFormInfo>(getActiveModalFormSelector);
-    const dispatch = useAppDispatch();
+    const { activeProvider, paymentStatus } = useActiveModalForm<WalletFormInfo>(modalState);
     const formValues = useAppSelector((s) => get(s.form, 'walletForm.values'));
     const { form, logo, signUpLink } = getMetadata(activeProvider);
     const amount = toFieldsConfig(initConfig, invoiceTemplate).amount;
 
     const submit = (values: WalletFormValues) => {
-        dispatch(prepareToPay());
+        prepareToPay();
         setFormData({
             method: PaymentMethodName.DigitalWallet,
             values: form ? obscurePassword(form, values) : values
@@ -41,7 +42,7 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
     };
 
     useEffect(() => {
-        dispatch(setViewInfoError(false));
+        setViewInfoError(false);
         switch (paymentStatus) {
             case PaymentStatus.pristine:
                 initialize({
@@ -57,11 +58,11 @@ const WalletFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormP
 
     useEffect(() => {
         if (submitFailed) {
-            dispatch(setViewInfoError(true));
+            setViewInfoError(true);
         }
         if (createPaymentState.status === 'FAILURE') {
             const error = createPaymentState.error;
-            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, { error })));
+            goToFormInfo(new ResultFormInfo(ResultType.hookError, { error }));
         }
     }, [submitFailed, createPaymentState]);
 

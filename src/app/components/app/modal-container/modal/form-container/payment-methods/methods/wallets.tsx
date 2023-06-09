@@ -1,21 +1,20 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { FormName, WalletProvidersFormInfo } from 'checkout/state';
+import { FormName, WalletProvidersFormInfo } from 'checkout/hooks';
 import { Method } from './method';
 import { Text } from './text';
 import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
-import { useAppDispatch } from 'checkout/configure-store';
-import { goToFormInfo } from 'checkout/actions';
 
 import { InitialContext } from '../../../../../initial-context';
+import { ModalContext } from '../../../../modal-context';
 
 export const Wallets = () => {
     const { locale } = useContext(InitialContext);
-    const dispatch = useAppDispatch();
+    const { goToFormInfo } = useContext(ModalContext);
 
     const onClick = () => {
-        dispatch(goToFormInfo(new WalletProvidersFormInfo(FormName.paymentMethods)));
+        goToFormInfo(new WalletProvidersFormInfo(FormName.paymentMethods));
     };
 
     return (

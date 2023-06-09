@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { useContext, useEffect, useMemo } from 'react';
-import { useAppSelector } from 'checkout/configure-store';
-import { FormName, ModalForms, ModalName, ResultFormInfo, ResultType } from 'checkout/state';
-import { findNamed } from 'checkout/utils';
+import { FormName, ModalForms, ModalName, ResultFormInfo, ResultType } from 'checkout/hooks';
 import { ResultFormType, makeContentInvoiceHook } from './make-content';
 import { failedHook, pending } from './make-content/make-from-payment-change';
 import { ActionBlock } from './action-block';
@@ -10,9 +8,11 @@ import { ResultIcon } from './result-icons';
 import styled, { css } from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 import isNil from 'checkout/utils/is-nil';
+import { findNamed } from 'checkout/utils/find-named';
 
 import { InitialContext } from '../../../../initial-context';
 import { ResultContext } from '../../../../result-context';
+import { ModalContext } from '../../../modal-context';
 
 const Title = styled.h2`
     font-weight: 500;
@@ -66,15 +66,11 @@ const Form = styled.form<{ hasActions: boolean }>`
 export const ResultForm = () => {
     const { locale } = useContext(InitialContext);
     const { setIsComplete } = useContext(ResultContext);
-
-    const { resultFormInfo } = useAppSelector((s) => {
-        const info = (findNamed(s.modals, ModalName.modalForms) as ModalForms).formsInfo;
-        return {
-            resultFormInfo: findNamed(info, FormName.resultForm) as ResultFormInfo
-        };
-    });
+    const { modalState } = useContext(ModalContext);
 
     const { hasActions, type, header, description, hasDone } = useMemo(() => {
+        const info = (findNamed(modalState, ModalName.modalForms) as ModalForms).formsInfo;
+        const resultFormInfo = findNamed(info, FormName.resultForm) as ResultFormInfo;
         if (isNil(resultFormInfo)) {
             return {
                 type: ResultFormType.WARNING,
@@ -92,7 +88,7 @@ export const ResultForm = () => {
             case ResultType.hookTimeout:
                 return pending(locale);
         }
-    }, [resultFormInfo, locale]);
+    }, [modalState, locale]);
 
     useEffect(() => {
         if (hasDone) {

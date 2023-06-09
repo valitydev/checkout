@@ -1,19 +1,5 @@
 import {
-    EventInteractionObject,
-    ModalForms,
-    ModalInteraction,
-    ModalInteractionType,
-    ModalState,
-    QrCodeInteractionFormInfo,
-    RedirectFormInfo
-} from 'checkout/state';
-import {
     InteractionType,
-    InvoiceChangeType,
-    InvoiceEvent,
-    PaymentInteractionRequested,
-    PaymentResourcePayer,
-    PaymentStarted,
     PaymentToolDetails,
     PaymentToolDetailsPaymentTerminal,
     PaymentToolDetailsType,
@@ -21,10 +7,18 @@ import {
     Redirect,
     ServiceProvider
 } from 'checkout/backend';
-import last from 'lodash-es/last';
-import isNil from 'lodash-es/isNil';
-import { findChange } from 'checkout/utils';
-import { getMetadata } from 'checkout/components/ui';
+import { InteractionModel } from './types/interaction-model';
+import {
+    EventInteractionObject,
+    ModalForms,
+    ModalInteraction,
+    ModalInteractionType,
+    ModalState,
+    QrCodeInteractionFormInfo,
+    RedirectFormInfo
+} from 'checkout/hooks';
+import isNil from 'checkout/utils/is-nil';
+import { getMetadata } from 'checkout/components/ui/metadata/utils/get-metadata';
 
 const toModalInteraction = (userInteraction: Redirect): ModalInteraction =>
     new ModalInteraction(
@@ -50,12 +44,6 @@ const provideRedirect = (userInteraction: Redirect, activeServiceProvider: Servi
     return providePaymentTerminalPaymentTool(userInteraction, activeServiceProvider);
 };
 
-const getPaymentToolDetails = (events: InvoiceEvent[]): PaymentToolDetails => {
-    const paymentStarted = findChange<PaymentStarted>(events, 'PaymentStarted');
-    const payer = paymentStarted && (paymentStarted?.payment?.payer as PaymentResourcePayer);
-    return payer && payer?.paymentToolDetails;
-};
-
 const provideQrCode = (
     userInteraction: QrCodeDisplayRequest,
     activeServiceProvider: ServiceProvider | null
@@ -79,21 +67,15 @@ const getActiveServiceProvider = (
     return null;
 };
 
-export function provideInteraction(events: InvoiceEvent[], serviceProviders: ServiceProvider[]): ModalState {
-    const lastEvent = last(events);
-    const change = last(lastEvent.changes);
-    if (change.changeType !== InvoiceChangeType.PaymentInteractionRequested) {
-        throw { code: 'error.wrong.event' };
-    }
-    const { userInteraction } = change as PaymentInteractionRequested;
-    const paymentToolDetails = getPaymentToolDetails(events);
+export const provideInteraction = (
+    serviceProviders: ServiceProvider[],
+    { paymentToolDetails, userInteraction }: InteractionModel
+): ModalState => {
     const activeServiceProvider = getActiveServiceProvider(serviceProviders, paymentToolDetails);
     switch (userInteraction.interactionType) {
         case InteractionType.Redirect:
             return provideRedirect(userInteraction as Redirect, activeServiceProvider);
         case InteractionType.QrCodeDisplayRequest:
             return provideQrCode(userInteraction as QrCodeDisplayRequest, activeServiceProvider);
-        default:
-            throw { code: 'error.unsupported.user.interaction.type' };
     }
-}
+};

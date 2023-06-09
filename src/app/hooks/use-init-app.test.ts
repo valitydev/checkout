@@ -228,14 +228,6 @@ describe('useInitApp', () => {
 
         const getInvoiceMock = fetchMock(invoice);
 
-        const getInvoiceEventsMock = fetchMock([
-            {
-                changes: [invoice],
-                createdAt: '2023-05-11T12:14:44.024191Z',
-                id: 1
-            }
-        ]);
-
         const getInvoicePaymentMethodsByTemplateIdMock = fetchMock([
             {
                 method: PaymentMethodName.BankCard
@@ -253,9 +245,6 @@ describe('useInitApp', () => {
                 }
                 if (args === 'https://api.test.com/v2/processing/invoices/1n3RrpQQQ1g') {
                     return getInvoiceMock;
-                }
-                if (args === 'https://api.test.com/v2/processing/invoices/1n3RrpQQQ1g/events?limit=50') {
-                    return getInvoiceEventsMock;
                 }
                 if (args === 'https://api.test.com/v2/processing/invoices/1n3RrpQQQ1g/payment-methods') {
                     return getInvoicePaymentMethodsByTemplateIdMock;
@@ -324,27 +313,6 @@ describe('useInitApp', () => {
                         shopID: 'cb323cb7-2abc-4626-a786-b70d8abbd0ec',
                         status: 'unpaid'
                     },
-                    events: [
-                        {
-                            changes: [
-                                {
-                                    amount: 100000,
-                                    cart: [{ cost: 100000, price: 100000, product: 'test', quantity: 1 }],
-                                    createdAt: '2023-05-11T12:14:44.001097Z',
-                                    currency: 'RUB',
-                                    description: '',
-                                    dueDate: '2023-05-30T23:59:59Z',
-                                    id: '1n3RrpQQQ1g',
-                                    metadata: {},
-                                    product: 'test',
-                                    shopID: 'cb323cb7-2abc-4626-a786-b70d8abbd0ec',
-                                    status: 'unpaid'
-                                }
-                            ],
-                            createdAt: '2023-05-11T12:14:44.024191Z',
-                            id: 1
-                        }
-                    ],
                     serviceProviders: [
                         {
                             brandName: 'Provider Brand Name 1',

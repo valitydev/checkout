@@ -1,7 +1,6 @@
 import groupBy from 'checkout/utils/group-by';
 import { KnownProviderCategories, PaymentMethod, PaymentMethodName } from '../types';
 import { PaymentTerminal, ServiceProvider } from 'checkout/backend';
-import { logUnavailableWithConfig } from './log-unavailable-with-config';
 import { assertUnreachable } from 'checkout/utils';
 import { filterByPaymentMethodProviders } from './filter-by-payment-method-providers';
 
@@ -87,11 +86,9 @@ export const getTerminalsPaymentMethods = (
     }: InitConfigChunk
 ): PaymentMethod[] => {
     if (paymentFlowHold) {
-        logUnavailableWithConfig('terminals', 'paymentFlowHold');
         return [];
     }
     if (recurring) {
-        logUnavailableWithConfig('terminals', 'recurring');
         return [];
     }
     const filtered = serviceProviders.filter(filterByPaymentMethodProviders(providers));

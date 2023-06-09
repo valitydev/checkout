@@ -4,16 +4,18 @@ import { InjectedFormProps, reduxForm } from 'redux-form';
 
 import { FormGroup } from '../form-group';
 import { CardHolder, CardNumber, ExpireDate, SecureCode } from './fields';
-import { CardFormInfo, CardFormValues, FormName, PaymentStatus, ResultFormInfo, ResultType } from 'checkout/state';
-import { goToFormInfo, prepareToPay, setViewInfoError } from 'checkout/actions';
+import { FormName, PaymentStatus, ResultFormInfo, ResultType } from 'checkout/hooks';
 import { PayButton } from '../pay-button';
 import { Header } from '../header/header';
 import { toAmountConfig, toCardHolderConfig } from '../fields-config';
 import { Amount } from '../common-fields';
-import { useAppDispatch, useAppSelector } from 'checkout/configure-store';
-import { getActiveModalFormSelector } from 'checkout/selectors';
-import { InitialContext } from '../../../../initial-context';
+import { useAppSelector } from 'checkout/configure-store';
 import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
+
+import { InitialContext } from '../../../../initial-context';
+import { ModalContext } from '../../../modal-context';
+import { useActiveModalForm } from '../use-active-modal-form';
+import { CardFormValues } from 'checkout/state';
 
 const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
     const {
@@ -21,15 +23,15 @@ const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormPro
         initConfig,
         model: { invoiceTemplate }
     } = useContext(InitialContext);
+    const { modalState, setViewInfoError, goToFormInfo, prepareToPay } = useContext(ModalContext);
     const { createPaymentState, setFormData } = useCreatePayment();
-    const { paymentStatus } = useAppSelector<CardFormInfo>(getActiveModalFormSelector);
+    const { paymentStatus } = useActiveModalForm(modalState);
     const cardHolder = toCardHolderConfig(initConfig.requireCardHolder);
     const amount = toAmountConfig(initConfig, invoiceTemplate);
     const formValues = useAppSelector(({ form }) => form?.cardForm?.values);
-    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(setViewInfoError(false));
+        setViewInfoError(false);
         switch (paymentStatus) {
             case PaymentStatus.pristine:
                 initialize({
@@ -44,21 +46,19 @@ const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormPro
 
     useEffect(() => {
         if (submitFailed) {
-            dispatch(setViewInfoError(true));
+            setViewInfoError(true);
         }
         if (createPaymentState.status === 'FAILURE') {
-            dispatch(
-                goToFormInfo(
-                    new ResultFormInfo(ResultType.hookError, {
-                        error: createPaymentState.error
-                    })
-                )
+            goToFormInfo(
+                new ResultFormInfo(ResultType.hookError, {
+                    error: createPaymentState.error
+                })
             );
         }
     }, [submitFailed, createPaymentState]);
 
     const submit = (values: CardFormValues) => {
-        dispatch(prepareToPay());
+        prepareToPay();
         setFormData({ method: PaymentMethodName.BankCard, values });
     };
 

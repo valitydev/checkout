@@ -1,4 +1,4 @@
-import { ModalName, ModalState } from '../modal-state';
+import { ModalName, ModalState } from './modal-state';
 import { FormInfo, FormViewInfo, SlideDirection } from './form-info';
 
 export class ModalForms extends ModalState {

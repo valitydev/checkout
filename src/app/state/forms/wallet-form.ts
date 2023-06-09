@@ -1,4 +1,4 @@
-import { PayableFormValues } from 'checkout/state';
+import { PayableFormValues } from './payable-form-values';
 
 export interface WalletFormValues extends PayableFormValues {
     provider: string;

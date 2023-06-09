@@ -5,19 +5,18 @@ import isNil from 'checkout/utils/is-nil';
 import {
     FormName,
     PaymentTerminalFormInfo,
-    PaymentTerminalFormValues,
     PaymentTerminalSelectorFormInfo,
     ResultFormInfo,
     ResultType
-} from 'checkout/state';
+} from 'checkout/hooks';
 import { getMetadata, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PaymentMethodName, ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
 import { Content } from './content';
-import { goToFormInfo, prepareToPay } from 'checkout/actions';
 import { PaymentTerminalPaymentMethod, useCreatePayment } from 'checkout/hooks';
-import { useAppDispatch } from 'checkout/configure-store';
+import { PaymentTerminalFormValues } from 'checkout/state';
 
 import { InitialContext } from '../../../../../../initial-context';
+import { ModalContext } from '../../../../../modal-context';
 
 export interface PaymentTerminalMethodItemProps {
     method: PaymentTerminalPaymentMethod;
@@ -44,19 +43,20 @@ const isRequiredPaymentTerminalForm = (
 
 export const PaymentTerminalMethodItem = ({ method }: PaymentTerminalMethodItemProps) => {
     const { initConfig } = useContext(InitialContext);
+    const { goToFormInfo, prepareToPay } = useContext(ModalContext);
+
     const emailPrefilled = !!initConfig.email;
     const phoneNumberPrefilled = !!initConfig.phoneNumber;
 
     const { createPaymentState, setFormData } = useCreatePayment();
-    const dispatch = useAppDispatch();
 
     const onClick = () => {
         if (method.serviceProviders.length === 1) {
             const serviceProvider = method.serviceProviders[0];
             if (isRequiredPaymentTerminalForm(serviceProvider, emailPrefilled, phoneNumberPrefilled)) {
-                dispatch(goToFormInfo(new PaymentTerminalFormInfo(serviceProvider.id, FormName.paymentMethods)));
+                goToFormInfo(new PaymentTerminalFormInfo(serviceProvider.id, FormName.paymentMethods));
             } else {
-                dispatch(prepareToPay());
+                prepareToPay();
                 setFormData({
                     method: PaymentMethodName.PaymentTerminal,
                     values: {
@@ -66,14 +66,14 @@ export const PaymentTerminalMethodItem = ({ method }: PaymentTerminalMethodItemP
             }
         }
         if (method.serviceProviders.length > 1) {
-            dispatch(goToFormInfo(new PaymentTerminalSelectorFormInfo(method.category, FormName.paymentMethods)));
+            goToFormInfo(new PaymentTerminalSelectorFormInfo(method.category, FormName.paymentMethods));
         }
     };
 
     useEffect(() => {
         if (createPaymentState.status === 'FAILURE') {
             const error = createPaymentState.error;
-            dispatch(goToFormInfo(new ResultFormInfo(ResultType.hookError, { error })));
+            goToFormInfo(new ResultFormInfo(ResultType.hookError, { error }));
         }
     }, [createPaymentState]);
 

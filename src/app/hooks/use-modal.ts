@@ -1,40 +1,54 @@
-import cloneDeep from 'lodash-es/cloneDeep';
-import { findNamed } from 'checkout/utils';
+import { useCallback, useReducer } from 'react';
 import {
     FormInfo,
     ModalForms,
-    ModalInteraction,
     ModalName,
     ModalState,
     Named,
     PaymentMethodsFormInfo,
     PaymentStatus,
     SlideDirection
-} from 'checkout/state';
-import {
-    TypeKeys,
-    SetModalState,
-    GoToFormInfo,
-    SetViewInfoError,
-    PrepareToPay,
-    PrepareToRetry,
-    SetModalInteractionPolling,
-    Direction,
-    SetViewInfoHeight,
-    ForgetPaymentAttempt,
-    InitializeModalCompleted
-} from 'checkout/actions';
+} from './modal/types';
 
-type ModalReducerAction =
-    | SetModalState
-    | SetViewInfoError
-    | GoToFormInfo
-    | PrepareToPay
-    | PrepareToRetry
-    | SetModalInteractionPolling
-    | SetViewInfoHeight
-    | ForgetPaymentAttempt
-    | InitializeModalCompleted;
+import { PaymentMethod } from './init-app';
+import { InteractionModel, provideInteraction, toInitialState } from './modal';
+import { InitConfig } from 'checkout/config';
+import { findNamed } from 'checkout/utils';
+import { ServiceProvider } from 'checkout/backend';
+
+type State = ModalState[];
+
+export enum Direction {
+    back = 'back',
+    forward = 'forward'
+}
+
+type Action =
+    | { type: 'TO_INTERACTION_STATE'; payload: ModalState }
+    | { type: 'TO_INITIAL_STATE'; payload: PaymentMethod[] }
+    | {
+          type: 'GO_TO_FORM_INFO';
+          payload: {
+              formInfo: FormInfo;
+              direction: Direction;
+          };
+      }
+    | {
+          type: 'PREPARE_TO_PAY';
+      }
+    | {
+          type: 'SET_VIEW_INFO_ERROR';
+          payload: boolean;
+      }
+    | {
+          type: 'PREPARE_TO_RETRY';
+          payload: boolean;
+      }
+    | {
+          type: 'FORGET_PAYMENT_ATTEMPT';
+      };
+
+const clone = <T>(items: T[]): T[] => JSON.parse(JSON.stringify(items));
 
 const deactivate = (items: Named[]): Named[] =>
     items.map((item) => {
@@ -43,14 +57,14 @@ const deactivate = (items: Named[]): Named[] =>
     });
 
 const add = (items: Named[], item: Named): Named[] => {
-    let result = items ? cloneDeep(items) : [];
+    let result = items ? clone(items) : [];
     result = result.length > 0 && item.active ? deactivate(result) : result;
     result.push(item);
     return result;
 };
 
 const update = (items: Named[], item: Named, position: number): Named[] => {
-    let result = cloneDeep(items);
+    let result = clone(items);
     result = item.active ? deactivate(result) : result;
     result[position] = item;
     return result;
@@ -59,17 +73,6 @@ const update = (items: Named[], item: Named, position: number): Named[] => {
 const addOrUpdate = (items: Named[], item: Named): Named[] => {
     const index = items ? items.findIndex((current) => current.name === item.name) : -1;
     return index === -1 ? add(items, item) : update(items, item, index);
-};
-
-const updateViewInfo = (s: ModalState[], field: string, value: any): ModalState[] => {
-    const modal = findNamed(s, ModalName.modalForms) as ModalForms;
-    return addOrUpdate(s, {
-        ...modal,
-        viewInfo: {
-            ...modal.viewInfo,
-            [field]: value
-        }
-    } as ModalForms);
 };
 
 const toSlideDirection = (direction: Direction): SlideDirection => {
@@ -133,6 +136,17 @@ const prepareToPay = (s: ModalState[]): ModalState[] => {
     } as ModalForms);
 };
 
+const updateViewInfo = (s: ModalState[], field: string, value: any): ModalState[] => {
+    const modal = findNamed(s, ModalName.modalForms) as ModalForms;
+    return addOrUpdate(s, {
+        ...modal,
+        viewInfo: {
+            ...modal.viewInfo,
+            [field]: value
+        }
+    } as ModalForms);
+};
+
 const findStarted = (info: FormInfo[]) => info.find((item) => item.paymentStatus === PaymentStatus.started);
 
 const prepareToRetry = (s: ModalState[], toPristine: boolean): ModalState[] => {
@@ -171,36 +185,83 @@ const forgetPaymentAttempt = (s: ModalState[]) => {
     } as ModalForms);
 };
 
-const setPollingEvents = (s: ModalState[], status: boolean): ModalState[] => {
-    const modal = findNamed(s, ModalName.modalInteraction) as ModalInteraction;
-    return modal
-        ? addOrUpdate(s, {
-              ...modal,
-              pollingEvents: status
-          } as ModalInteraction)
-        : s;
+const dataReducer = (state: State, action: Action): State => {
+    switch (action.type) {
+        case 'TO_INITIAL_STATE':
+            return addOrUpdate(state, toInitialState(action.payload));
+        case 'GO_TO_FORM_INFO':
+            const { formInfo, direction } = action.payload;
+            return goToFormInfo(state, formInfo, direction);
+        case 'PREPARE_TO_PAY':
+            return prepareToPay(state);
+        case 'SET_VIEW_INFO_ERROR':
+            return updateViewInfo(state, 'error', action.payload);
+        case 'PREPARE_TO_RETRY':
+            return prepareToRetry(state, action.payload);
+        case 'FORGET_PAYMENT_ATTEMPT':
+            return forgetPaymentAttempt(state);
+        case 'TO_INTERACTION_STATE':
+            return addOrUpdate(state, action.payload);
+    }
 };
 
-export function modalReducer(s: ModalState[] = null, action: ModalReducerAction): ModalState[] {
-    switch (action.type) {
-        case TypeKeys.SET_MODAL_STATE:
-        case TypeKeys.INITIALIZE_MODAL_COMPLETED:
-            return addOrUpdate(s, action.payload);
-        case TypeKeys.SET_VIEW_INFO_ERROR:
-            return updateViewInfo(s, 'error', action.payload);
-        case TypeKeys.SET_VIEW_INFO_HEIGHT:
-            return updateViewInfo(s, 'height', action.payload);
-        case TypeKeys.GO_TO_FORM_INFO:
-            const { formInfo, direction } = action.payload;
-            return goToFormInfo(s, formInfo, direction);
-        case TypeKeys.PREPARE_TO_PAY:
-            return prepareToPay(s);
-        case TypeKeys.PREPARE_TO_RETRY:
-            return prepareToRetry(s, action.payload);
-        case TypeKeys.FORGET_PAYMENT_ATTEMPT:
-            return forgetPaymentAttempt(s);
-        case TypeKeys.SET_MODAL_INTERACTION_POLLING:
-            return setPollingEvents(s, action.payload);
+const init = (integrationType: InitConfig['integrationType'], availablePaymentMethods: PaymentMethod[]): State => {
+    switch (integrationType) {
+        case 'invoice':
+            return [new ModalForms([], true, true)];
+        case 'invoiceTemplate':
+            return [toInitialState(availablePaymentMethods)];
     }
-    return s;
-}
+};
+
+type ModalParams = {
+    integrationType: InitConfig['integrationType'];
+    availablePaymentMethods: PaymentMethod[];
+    serviceProviders: ServiceProvider[];
+};
+
+export const useModal = ({ integrationType, availablePaymentMethods, serviceProviders }: ModalParams) => {
+    const [modalState, dispatch] = useReducer(dataReducer, init(integrationType, availablePaymentMethods));
+
+    const toInitialState = useCallback(() => {
+        dispatch({ type: 'TO_INITIAL_STATE', payload: availablePaymentMethods });
+    }, [availablePaymentMethods]);
+
+    const goToFormInfo = useCallback((formInfo: FormInfo, direction: Direction = Direction.forward) => {
+        dispatch({ type: 'GO_TO_FORM_INFO', payload: { formInfo, direction } });
+    }, []);
+
+    const prepareToPay = useCallback(() => {
+        dispatch({ type: 'PREPARE_TO_PAY' });
+    }, []);
+
+    const prepareToRetry = useCallback((resetFormData: boolean) => {
+        dispatch({ type: 'PREPARE_TO_RETRY', payload: resetFormData });
+    }, []);
+
+    const forgetPaymentAttempt = useCallback(() => {
+        dispatch({ type: 'FORGET_PAYMENT_ATTEMPT' });
+    }, []);
+
+    const setViewInfoError = useCallback((hasError: boolean) => {
+        dispatch({ type: 'SET_VIEW_INFO_ERROR', payload: hasError });
+    }, []);
+
+    const toInteractionState = useCallback(
+        (interactionModel: InteractionModel) => {
+            dispatch({ type: 'TO_INTERACTION_STATE', payload: provideInteraction(serviceProviders, interactionModel) });
+        },
+        [serviceProviders]
+    );
+
+    return {
+        modalState,
+        toInitialState,
+        goToFormInfo,
+        prepareToPay,
+        prepareToRetry,
+        forgetPaymentAttempt,
+        setViewInfoError,
+        toInteractionState
+    };
+};

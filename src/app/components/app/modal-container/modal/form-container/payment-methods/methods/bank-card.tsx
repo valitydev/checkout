@@ -1,20 +1,19 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { CardFormInfo, FormName } from 'checkout/state';
+import { CardFormInfo, FormName } from 'checkout/hooks';
 import { Method } from './method';
 import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
-import { useAppDispatch } from 'checkout/configure-store';
-import { goToFormInfo } from 'checkout/actions';
 
 import { InitialContext } from '../../../../../initial-context';
+import { ModalContext } from '../../../../modal-context';
 
 export const BankCard = () => {
     const { locale } = useContext(InitialContext);
-    const dispatch = useAppDispatch();
+    const { goToFormInfo } = useContext(ModalContext);
 
     const onClick = () => {
-        dispatch(goToFormInfo(new CardFormInfo(FormName.paymentMethods)));
+        goToFormInfo(new CardFormInfo(FormName.paymentMethods));
     };
 
     return (

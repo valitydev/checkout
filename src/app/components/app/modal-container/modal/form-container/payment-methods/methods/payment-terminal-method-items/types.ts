@@ -1,3 +1,3 @@
-import { FormInfo } from 'checkout/state';
+import { FormInfo } from 'checkout/hooks';
 
 export type SetFormInfoAction = (formInfo: FormInfo) => any;
