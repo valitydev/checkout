@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Marks } from '../marks';
 import { default as styled, css } from 'checkout/styled-components';
-import { MutableRefObject } from 'react';
+import { MutableRefObject, forwardRef } from 'react';
 
 const CONTENT_OFFSET = 15;
 const TEXT_ICON_OFFSET = 8;
@@ -94,10 +94,32 @@ export interface CustomProps {
 
 type InputProps = Omit<JSX.IntrinsicElements['input'], 'ref'> & CustomProps;
 
-export const Input: React.FC<InputProps> = ({ className, error, mark, active, pristine, icon, inputRef, ...props }) => (
+export const _Input: React.FC<InputProps> = ({
+    className,
+    error,
+    mark,
+    active,
+    pristine,
+    icon,
+    inputRef,
+    ...props
+}) => (
     <InputWrapper {...{ className, error, mark }}>
         {icon && <Icon>{icon}</Icon>}
         <StyledInput {...props} hasIcon={!!icon} ref={inputRef} />
         {!!mark && <Marks {...{ active, pristine, error }} />}
     </InputWrapper>
 );
+
+export const Input = forwardRef<any, any>(function Input(
+    { className, error, mark, active, pristine, icon, ...props },
+    ref
+) {
+    return (
+        <InputWrapper {...{ className, error, mark }}>
+            {icon && <Icon>{icon}</Icon>}
+            <StyledInput {...props} hasIcon={!!icon} ref={ref} />
+            {!!mark && <Marks {...{ active, pristine, error }} />}
+        </InputWrapper>
+    );
+});

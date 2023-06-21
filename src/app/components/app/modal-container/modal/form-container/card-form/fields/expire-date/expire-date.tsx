@@ -1,21 +1,25 @@
 import * as React from 'react';
-import { Field, WrappedFieldProps } from 'redux-form';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 
 import { validateExpireDate } from './validate-expire-date';
 import { Locale } from 'checkout/locale';
 import { formatExpiry } from './format-expiry';
 import { Calendar, Input } from 'checkout/components';
-import { isError } from 'checkout/utils';
+import { CardFormInputs } from '../../card-form-inputs';
+import isNil from 'checkout/utils/is-nil';
 
-export interface ExpireDateProps {
+export type ExpireDateProps = {
+    register: UseFormRegister<CardFormInputs>;
     locale: Locale;
-}
+    fieldError: FieldError;
+};
 
-const WrappedInput = ({ input, meta, locale }: WrappedFieldProps & ExpireDateProps) => (
+export const ExpireDate = ({ register, locale, fieldError }: ExpireDateProps) => (
     <Input
-        {...input}
-        {...meta}
-        error={isError(meta)}
+        {...register('expireDate', {
+            required: true,
+            validate: (value) => !validateExpireDate(value) || 'Exp date is invalid'
+        })}
         icon={<Calendar />}
         placeholder={locale['form.input.expiry.placeholder']}
         mark={true}
@@ -23,9 +27,6 @@ const WrappedInput = ({ input, meta, locale }: WrappedFieldProps & ExpireDatePro
         id="expire-date-input"
         onInput={formatExpiry}
         autocomplete="cc-exp"
+        error={!isNil(fieldError)}
     />
-);
-
-export const ExpireDate = ({ locale }: ExpireDateProps) => (
-    <Field name="expireDate" component={WrappedInput} props={{ locale }} validate={validateExpireDate} />
 );
