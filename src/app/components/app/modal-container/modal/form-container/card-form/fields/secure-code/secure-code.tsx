@@ -16,6 +16,7 @@ export interface SecureCodeProps {
     obscureCardCvv: boolean;
     cardNumber: string;
     fieldError: FieldError;
+    isDirty: boolean;
 }
 
 const getPlaceholder = (cardNumber: string | null, locale: Locale) => {
@@ -23,7 +24,7 @@ const getPlaceholder = (cardNumber: string | null, locale: Locale) => {
     return name || locale['form.input.secure.placeholder'];
 };
 
-export const SecureCode = ({ cardNumber, locale, obscureCardCvv, register, fieldError }: SecureCodeProps) => (
+export const SecureCode = ({ cardNumber, locale, obscureCardCvv, register, fieldError, isDirty }: SecureCodeProps) => (
     <Input
         {...register('secureCode', {
             required: true,
@@ -36,6 +37,7 @@ export const SecureCode = ({ cardNumber, locale, obscureCardCvv, register, field
         id="secure-code-input"
         autocomplete="cc-csc"
         error={!isNil(fieldError)}
+        dirty={isDirty}
         onInput={(e) => {
             const target = e.currentTarget;
             let value = target.value;

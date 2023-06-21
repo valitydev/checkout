@@ -111,15 +111,24 @@ export const _Input: React.FC<InputProps> = ({
     </InputWrapper>
 );
 
-export const Input = forwardRef<any, any>(function Input(
-    { className, error, mark, active, pristine, icon, ...props },
+export type NewInputProps = JSX.IntrinsicElements['input'] & {
+    icon?: React.ReactNode;
+    mark?: boolean;
+    error?: boolean;
+    dirty?: boolean;
+    autocomplete?: string;
+    spellcheck?: boolean;
+};
+
+export const Input = forwardRef<HTMLInputElement, NewInputProps>(function Input(
+    { className, error, dirty, mark, icon, ...props },
     ref
 ) {
     return (
         <InputWrapper {...{ className, error, mark }}>
             {icon && <Icon>{icon}</Icon>}
             <StyledInput {...props} hasIcon={!!icon} ref={ref} />
-            {!!mark && <Marks {...{ active, pristine, error }} />}
+            {mark && dirty && !error && <Marks />}
         </InputWrapper>
     );
 });

@@ -12,9 +12,10 @@ export type ExpireDateProps = {
     register: UseFormRegister<CardFormInputs>;
     locale: Locale;
     fieldError: FieldError;
+    isDirty: boolean;
 };
 
-export const ExpireDate = ({ register, locale, fieldError }: ExpireDateProps) => (
+export const ExpireDate = ({ register, locale, fieldError, isDirty }: ExpireDateProps) => (
     <Input
         {...register('expireDate', {
             required: true,
@@ -28,5 +29,6 @@ export const ExpireDate = ({ register, locale, fieldError }: ExpireDateProps) =>
         onInput={formatExpiry}
         autocomplete="cc-exp"
         error={!isNil(fieldError)}
+        dirty={isDirty}
     />
 );

@@ -156,8 +156,7 @@ const prepareToRetry = (s: ModalState[], toPristine: boolean): ModalState[] => {
         ...modal,
         viewInfo: {
             ...modal.viewInfo,
-            slideDirection: SlideDirection.left,
-            inProcess: !toPristine
+            slideDirection: SlideDirection.left
         },
         formsInfo: addOrUpdate(modal.formsInfo, {
             ...started,

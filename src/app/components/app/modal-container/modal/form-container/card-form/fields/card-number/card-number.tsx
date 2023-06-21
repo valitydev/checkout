@@ -26,9 +26,10 @@ export type CardNumberProps = {
     watch: UseFormWatch<CardFormInputs>;
     locale: Locale;
     fieldError: FieldError;
+    isDirty: boolean;
 };
 
-export const CardNumber = ({ register, locale, fieldError, watch }: CardNumberProps) => (
+export const CardNumber = ({ register, locale, fieldError, isDirty, watch }: CardNumberProps) => (
     <InputContainer>
         <CardNumberInput
             {...register('cardNumber', {
@@ -43,6 +44,7 @@ export const CardNumber = ({ register, locale, fieldError, watch }: CardNumberPr
             onInput={formatCardNumber}
             autocomplete="cc-number"
             error={!isNil(fieldError)}
+            dirty={isDirty}
         />
         <CardTypeIcon cardNumber={watch('cardNumber')} />
     </InputContainer>

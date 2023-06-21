@@ -1,21 +1,26 @@
 import * as React from 'react';
-import { Field, WrappedFieldProps } from 'redux-form';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 
 import { validateCardHolder } from './validate-card-holder';
 import { Locale } from 'checkout/locale';
 import { formatCardHolder } from './format-card-holder';
 import { User, Input } from 'checkout/components';
-import { isError } from 'checkout/utils';
+import { CardFormInputs } from '../../card-form-inputs';
+import isNil from 'checkout/utils/is-nil';
 
-export interface CardHolderProps {
+export type CardHolderProps = {
+    register: UseFormRegister<CardFormInputs>;
     locale: Locale;
-}
+    fieldError: FieldError;
+    isDirty: boolean;
+};
 
-const WrappedInput = ({ input, meta, locale }: WrappedFieldProps & CardHolderProps) => (
+export const CardHolder = ({ register, locale, fieldError, isDirty }: CardHolderProps) => (
     <Input
-        {...input}
-        {...meta}
-        error={isError(meta)}
+        {...register('cardHolder', {
+            required: true,
+            validate: (value) => !validateCardHolder(value) || 'Card holder is invalid'
+        })}
         icon={<User />}
         placeholder={locale['form.input.cardholder.placeholder']}
         mark={true}
@@ -23,9 +28,7 @@ const WrappedInput = ({ input, meta, locale }: WrappedFieldProps & CardHolderPro
         onInput={formatCardHolder}
         autocomplete="cc-name"
         spellcheck={false}
+        error={!isNil(fieldError)}
+        dirty={isDirty}
     />
-);
-
-export const CardHolder = ({ locale }: CardHolderProps) => (
-    <Field name="cardHolder" component={WrappedInput} props={{ locale }} validate={validateCardHolder} />
 );
