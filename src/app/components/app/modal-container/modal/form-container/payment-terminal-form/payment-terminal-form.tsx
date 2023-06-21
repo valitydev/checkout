@@ -30,6 +30,9 @@ import { useActiveModalForm } from '../use-active-modal-form';
 import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';
 
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { isEmptyObject } from 'checkout/utils/is-empty-object';
+
 const Container = styled.div`
     min-height: 300px;
     display: flex;
@@ -160,7 +163,110 @@ const PaymentTerminalFormRef: React.FC<InjectedFormProps> = ({ submitFailed, ini
     );
 };
 
-export const PaymentTerminalForm = reduxForm({
+export const _PaymentTerminalForm = reduxForm({
     form: FormName.paymentTerminalForm,
     destroyOnUnmount: false
 })(PaymentTerminalFormRef);
+
+export const PaymentTerminalForm = () => {
+    const {
+        locale,
+        initConfig,
+        model: { serviceProviders }
+    } = useContext(InitialContext);
+    const { modalState, setViewInfoError, goToFormInfo, prepareToPay } = useContext(ModalContext);
+    const { createPaymentState, setFormData } = useCreatePayment();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, dirtyFields, isSubmitted }
+    } = useForm({ mode: 'onChange' });
+    const { providerID, paymentStatus } = useActiveModalForm<PaymentTerminalFormInfo>(modalState);
+    const serviceProvider = serviceProviders.find((value) => value.id === providerID);
+    const { form, contactInfo, logo, paymentSessionInfo, prefilledMetadataValues } = getMetadata(serviceProvider);
+    const email = toEmailConfig(initConfig.email);
+    const phoneNumber = toPhoneNumberConfig(initConfig.phoneNumber);
+    const terminalFormValues = initConfig?.terminalFormValues;
+
+    useEffect(() => {
+        if (isSubmitted && !isEmptyObject(errors)) {
+            setViewInfoError(true);
+        }
+    }, [isSubmitted, errors]);
+
+    const onSubmit: SubmitHandler<any> = (values) => {
+        const payload = {
+            method: PaymentMethodName.PaymentTerminal,
+            values: {
+                ...values,
+                provider: serviceProvider?.id,
+                paymentSessionInfo,
+                metadata: {
+                    ...prefilledMetadataValues,
+                    ...formatMetadataValue(form, values?.metadata)
+                }
+            } as PaymentTerminalFormValues
+        };
+        prepareToPay();
+        setFormData(payload);
+    };
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Container>
+                <div>
+                    <Header title={serviceProvider?.brandName} />
+                    {logo && (
+                        <LogoContainer>
+                            <MetadataLogo metadata={logo} />
+                        </LogoContainer>
+                    )}
+                    {form &&
+                        form?.sort(sortByIndex).map((m) => (
+                            <FormGroup key={m.name} direction={'column'}>
+                                {m.type === 'select' && (
+                                    <MetadataSelect
+                                        metadata={m}
+                                        wrappedName="metadata"
+                                        localeCode={initConfig.locale}
+                                    />
+                                )}
+                                {m.type !== 'select' && (
+                                    <MetadataField
+                                        metadata={m}
+                                        localeCode={initConfig.locale}
+                                        wrappedName="metadata"
+                                        register={register}
+                                        fieldError={errors?.metadata?.[m.name]}
+                                        isDirty={dirtyFields?.metadata?.[m.name]}
+                                    />
+                                )}
+                                {m?.addon === 'vpa' && <VpaInstruction locale={locale} />}
+                            </FormGroup>
+                        ))}
+                    {email.visible && contactInfo?.email && (
+                        <FormGroup>
+                            <Email
+                                locale={locale}
+                                register={register}
+                                fieldError={errors.email}
+                                isDirty={dirtyFields.email}
+                            />
+                        </FormGroup>
+                    )}
+                    {phoneNumber.visible && contactInfo?.phoneNumber && (
+                        <FormGroup>
+                            <Phone
+                                locale={locale}
+                                register={register}
+                                fieldError={errors.phoneNumber}
+                                isDirty={dirtyFields.email}
+                            />
+                        </FormGroup>
+                    )}
+                </div>
+                {!isInstantPayment(form, contactInfo, email.visible, phoneNumber.visible) && <PayButton />}
+            </Container>
+        </form>
+    );
+};

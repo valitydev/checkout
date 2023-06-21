@@ -60,7 +60,7 @@ export const QrCodeInteractionForm: React.FC = () => {
                         <>
                             <Input
                                 id="qr-code-input"
-                                inputRef={qrCodeInputRef}
+                                ref={qrCodeInputRef}
                                 defaultValue={request.qrCode}
                                 readOnly={true}></Input>
                             <CopyToClipboardButton onClick={() => copyToClipboard()} />

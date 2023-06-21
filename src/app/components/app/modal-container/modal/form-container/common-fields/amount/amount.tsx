@@ -8,11 +8,10 @@ import { Locale } from 'checkout/locale';
 import { InvoiceTemplateLineCostRange, InvoiceTemplateLineCostUnlim } from 'checkout/backend';
 import { formatAmount } from './format-amount';
 import { Amount as AmountIcon } from 'checkout/components';
-import { CardFormInputs } from '../../card-form/card-form-inputs';
 import isNil from 'checkout/utils/is-nil';
 
 export type AmountProps = {
-    register: UseFormRegister<CardFormInputs>;
+    register: UseFormRegister<any>;
     cost: InvoiceTemplateLineCostRange | InvoiceTemplateLineCostUnlim;
     locale: Locale;
     localeCode: string;
@@ -22,7 +21,7 @@ export type AmountProps = {
 
 export const Amount = ({ register, locale, fieldError, cost, localeCode, isDirty }: AmountProps) => (
     <Input
-        {...register('cardNumber', {
+        {...register('amount', {
             required: true,
             validate: (value) => !validateAmount(value, cost) || 'Amount is invalid'
         })}

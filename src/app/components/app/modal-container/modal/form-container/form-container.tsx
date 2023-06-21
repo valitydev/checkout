@@ -167,7 +167,7 @@ export const FormContainer = () => {
     const { modalState } = useContext(ModalContext);
 
     useEffect(() => {
-        setHeight(DEFAULT_HEIGHT_PX);
+        setHeight(contentElement.current?.clientHeight || DEFAULT_HEIGHT_PX);
     }, []);
 
     const { activeFormInfo, viewInfo } = useMemo(() => {
