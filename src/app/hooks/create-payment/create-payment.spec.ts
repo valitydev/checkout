@@ -41,6 +41,7 @@ describe('createPayment', () => {
                 isExternalIDIncluded: true,
                 paymentFlowHold: false,
                 redirectUrl: 'https://init.config.redirect.url',
+                locale: null,
                 email: 'test@test.com',
                 phoneNumber: '+79774443411'
             },
