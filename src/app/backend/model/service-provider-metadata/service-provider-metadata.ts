@@ -77,8 +77,10 @@ export interface PrefilledMetadataValues {
     [key: string]: string | number | boolean;
 }
 
+export type ServiceProviderMetadataForm = ServiceProviderMetadataField[] | ServiceProviderMetadataSelect[];
+
 export interface CheckoutServiceProviderMetadata {
-    form?: ServiceProviderMetadataField[] | ServiceProviderMetadataSelect[];
+    form?: ServiceProviderMetadataForm;
     logo?: ServiceProviderIconMetadata;
     title?: ServiceProviderTitleMetadata;
     signUpLink?: string;
