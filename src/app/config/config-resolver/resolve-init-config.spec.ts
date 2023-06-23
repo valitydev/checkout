@@ -41,7 +41,6 @@ it('should return resolved init config', () => {
         phoneNumber: null,
         pix: true,
         redirectUrl: null,
-        theme: 'main',
         skipUserInteraction: false,
         terminalBankCard: true,
         terminalFormValues: undefined,

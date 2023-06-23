@@ -1,1 +1,1 @@
-export * from './country-subdivision-metadata-select';
+export * from './metadata-select';

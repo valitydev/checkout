@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { InjectedFormProps, reduxForm } from 'redux-form';
 import get from 'lodash-es/get';
 import styled from 'checkout/styled-components';
@@ -10,7 +10,7 @@ import { FormName, PaymentStatus, PaymentTerminalFormInfo, ResultFormInfo, Resul
 import { Header } from '../header';
 import { PayButton } from '../pay-button';
 import { FormGroup } from '../form-group';
-import { getMetadata, MetadataField, MetadataLogo } from 'checkout/components/ui';
+import { getMetadata, MetadataField, MetadataLogo, MetadataSelect } from 'checkout/components/ui';
 import { toAmountConfig, toEmailConfig, toPhoneNumberConfig } from '../fields-config';
 import { Amount, Email, Phone } from '../common-fields';
 import { LogoContainer } from './logo-container';
@@ -23,7 +23,6 @@ import {
     isReadyToProvidePaymentFromInitConfig,
     prepareFormValues
 } from './init-config-payment';
-import { MetadataSelect } from './metadata-select';
 import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
 import { useActiveModalForm } from '../use-active-modal-form';
 
@@ -32,6 +31,7 @@ import { ModalContext } from '../../../modal-context';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { isEmptyObject } from 'checkout/utils/is-empty-object';
+import isNil from 'checkout/utils/is-nil';
 
 const Container = styled.div`
     min-height: 300px;
@@ -176,17 +176,34 @@ export const PaymentTerminalForm = () => {
     } = useContext(InitialContext);
     const { modalState, setViewInfoError, goToFormInfo, prepareToPay } = useContext(ModalContext);
     const { createPaymentState, setFormData } = useCreatePayment();
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, dirtyFields, isSubmitted }
-    } = useForm({ mode: 'onChange' });
-    const { providerID, paymentStatus } = useActiveModalForm<PaymentTerminalFormInfo>(modalState);
+    const { providerID } = useActiveModalForm<PaymentTerminalFormInfo>(modalState);
     const serviceProvider = serviceProviders.find((value) => value.id === providerID);
     const { form, contactInfo, logo, paymentSessionInfo, prefilledMetadataValues } = getMetadata(serviceProvider);
     const email = toEmailConfig(initConfig.email);
     const phoneNumber = toPhoneNumberConfig(initConfig.phoneNumber);
-    const terminalFormValues = initConfig?.terminalFormValues;
+
+    const defaultValues = useMemo(() => {
+        const terminalFormValues = initConfig?.terminalFormValues;
+        if (isNil(terminalFormValues) || isNil(form)) return null;
+        return prepareFormValues(form, terminalFormValues);
+    }, [initConfig, form]);
+
+    const {
+        register,
+        handleSubmit,
+        getValues,
+        formState: { errors, dirtyFields, isSubmitted, isValid }
+    } = useForm<PaymentTerminalFormValues>({
+        mode: 'onChange',
+        defaultValues
+    });
+    const [formTouched, setFormTouched] = useState(false);
+
+    useEffect(() => {
+        if (!formTouched && isValid) {
+            onSubmit(getValues());
+        }
+    }, [isValid, formTouched]);
 
     useEffect(() => {
         if (isSubmitted && !isEmptyObject(errors)) {
@@ -194,7 +211,17 @@ export const PaymentTerminalForm = () => {
         }
     }, [isSubmitted, errors]);
 
-    const onSubmit: SubmitHandler<any> = (values) => {
+    useEffect(() => {
+        if (createPaymentState.status === 'FAILURE') {
+            goToFormInfo(
+                new ResultFormInfo(ResultType.hookError, {
+                    error: createPaymentState.error
+                })
+            );
+        }
+    }, [createPaymentState]);
+
+    const onSubmit: SubmitHandler<PaymentTerminalFormValues> = (values) => {
         const payload = {
             method: PaymentMethodName.PaymentTerminal,
             values: {
@@ -205,14 +232,14 @@ export const PaymentTerminalForm = () => {
                     ...prefilledMetadataValues,
                     ...formatMetadataValue(form, values?.metadata)
                 }
-            } as PaymentTerminalFormValues
+            }
         };
         prepareToPay();
         setFormData(payload);
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} onClick={() => setFormTouched(true)}>
             <Container>
                 <div>
                     <Header title={serviceProvider?.brandName} />
@@ -229,6 +256,9 @@ export const PaymentTerminalForm = () => {
                                         metadata={m}
                                         wrappedName="metadata"
                                         localeCode={initConfig.locale}
+                                        register={register}
+                                        fieldError={errors?.metadata?.[m.name]}
+                                        isDirty={dirtyFields?.metadata?.[m.name]}
                                     />
                                 )}
                                 {m.type !== 'select' && (
@@ -265,7 +295,7 @@ export const PaymentTerminalForm = () => {
                         </FormGroup>
                     )}
                 </div>
-                {!isInstantPayment(form, contactInfo, email.visible, phoneNumber.visible) && <PayButton />}
+                <PayButton />
             </Container>
         </form>
     );

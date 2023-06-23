@@ -1,8 +1,9 @@
 import * as React from 'react';
+import { forwardRef } from 'react';
 import { default as styled, css } from 'checkout/styled-components';
 import { Marks } from '../marks';
 
-const StyledSelect = styled.select<{ isError: boolean; isPristine: boolean }>`
+const StyledSelect = styled.select<{ isError: boolean }>`
     margin: 0;
     width: 100%;
     height: 48px;
@@ -25,13 +26,6 @@ const StyledSelect = styled.select<{ isError: boolean; isPristine: boolean }>`
             `;
         }
     }}
-    ${({ isPristine }) => {
-        if (isPristine) {
-            return css`
-                color: ${({ theme }) => theme.input.placeholder};
-            `;
-        }
-    }}
 `;
 
 const SelectWrapper = styled.div`
@@ -39,19 +33,17 @@ const SelectWrapper = styled.div`
     width: 100%;
 `;
 
-export interface SelectProps {
+export type SelectProps = {
     children: React.ReactNode;
-    isError: boolean;
-    isActive: boolean;
-    isPristine: boolean;
-    onChange: (value: string) => void;
-}
+    error: boolean;
+    dirty: boolean;
+};
 
-export const Select = ({ children, onChange, isError, isActive, isPristine }: SelectProps) => (
+export const Select = forwardRef<HTMLSelectElement, SelectProps>(({ children, error, dirty, ...props }, ref) => (
     <SelectWrapper>
-        <StyledSelect onChange={({ target: { value } }) => onChange(value)} isError={isError} isPristine={isPristine}>
+        <StyledSelect isError={error} {...props} ref={ref}>
             {children}
         </StyledSelect>
-        <Marks active={isActive} pristine={isPristine} error={isError} />
+        {!error && dirty && <Marks />}
     </SelectWrapper>
-);
+));
