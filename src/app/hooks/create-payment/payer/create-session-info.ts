@@ -34,12 +34,12 @@ const toRedirectUrlType = (formValues: FormData, initConfigRedirectUrl: string |
 export const createSessionInfo = async (
     urlShortenerEndpoint: string,
     origin: string,
-    initConfigRedirectUrl: string | null,
+    initConfig: { redirectUrl?: string; locale?: string },
     { invoice, invoiceAccessToken }: PayableInvoiceData,
     formValues: FormData
 ): Promise<SessionInfo> => {
     let redirectUrl;
-    const redirectUrlType = toRedirectUrlType(formValues, initConfigRedirectUrl);
+    const redirectUrlType = toRedirectUrlType(formValues, initConfig.redirectUrl);
     switch (redirectUrlType) {
         case 'self':
             redirectUrl = await shorten(urlShortenerEndpoint, invoiceAccessToken, {
@@ -47,14 +47,14 @@ export const createSessionInfo = async (
                     origin,
                     invoice.id,
                     invoiceAccessToken,
-                    initConfigRedirectUrl,
+                    initConfig,
                     isSkipUserInteractionParam(formValues.method)
                 ),
                 expiresAt: invoice.dueDate
             });
             break;
         case 'outer':
-            redirectUrl = initConfigRedirectUrl;
+            redirectUrl = initConfig.redirectUrl;
             break;
     }
     return { redirectUrl };

@@ -62,6 +62,7 @@ export const useCreatePayment = () => {
                         origin,
                         initConfig: {
                             redirectUrl: initConfig.redirectUrl,
+                            locale: initConfig.locale,
                             email: initConfig.email,
                             phoneNumber: initConfig.phoneNumber,
                             paymentFlowHold: initConfig.paymentFlowHold,

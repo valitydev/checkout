@@ -14,6 +14,7 @@ export const createPayment = async ({
     const { invoice, invoiceAccessToken } = payableInvoice;
     const {
         redirectUrl,
+        locale,
         email,
         phoneNumber,
         paymentFlowHold,
@@ -28,6 +29,7 @@ export const createPayment = async ({
         origin,
         initConfig: {
             redirectUrl,
+            locale,
             email,
             phoneNumber
         },

@@ -6,6 +6,7 @@ export type CreatePayerParams = {
     origin: string;
     initConfig: {
         redirectUrl: string;
+        locale: string;
         email: string;
         phoneNumber: string;
     };
