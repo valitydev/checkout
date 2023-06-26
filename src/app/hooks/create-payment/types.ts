@@ -19,6 +19,7 @@ export type CreatePaymentParams = {
         paymentFlowHold: boolean;
         holdExpiration?: HoldExpirationType;
         redirectUrl: string;
+        locale: string;
         email: string;
         phoneNumber: string;
     };

@@ -17,13 +17,7 @@ export const createPayer = async ({
         payableInvoice.invoiceAccessToken,
         formData
     );
-    const sessionInfo = await createSessionInfo(
-        urlShortenerEndpoint,
-        origin,
-        initConfig.redirectUrl,
-        payableInvoice,
-        formData
-    );
+    const sessionInfo = await createSessionInfo(urlShortenerEndpoint, origin, initConfig, payableInvoice, formData);
     const contactInfo = toContactInfo(initConfig, formData.values);
     return {
         payerType: PayerType.PaymentResourcePayer,

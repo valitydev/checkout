@@ -26,7 +26,10 @@ describe('createSessionInfo', () => {
 
     const urlShortenerEndpoint = 'https://shortener.test.com';
     const origin = 'https://origin.test.com';
-    const initConfigRedirectUrl = 'https://init.config.redirect.url';
+    const initConfig = {
+        redirectUrl: 'https://init.config.redirect.url',
+        locale: 'kr'
+    };
     const invoiceData = {
         invoice: {
             id: '1nLoSaB3UUU',
@@ -40,7 +43,7 @@ describe('createSessionInfo', () => {
         expect.objectContaining({
             method: 'POST',
             body: JSON.stringify({
-                sourceUrl: `https://origin.test.com/v1/checkout.html?invoiceID=1nLoSaB3UUU&invoiceAccessToken=eyJhb...&redirectUrl=https%3A%2F%2Finit.config.redirect.url&skipUserInteraction=${skipUserInteraction}`,
+                sourceUrl: `https://origin.test.com/v1/checkout.html?invoiceID=1nLoSaB3UUU&invoiceAccessToken=eyJhb...&redirectUrl=https%3A%2F%2Finit.config.redirect.url&locale=kr&skipUserInteraction=${skipUserInteraction}`,
                 expiresAt: '2023-05-22T13:47:47.444260Z'
             }),
             headers: expect.any(Object)
@@ -66,7 +69,7 @@ describe('createSessionInfo', () => {
                     const result = await createSessionInfo(
                         urlShortenerEndpoint,
                         origin,
-                        initConfigRedirectUrl,
+                        initConfig,
                         invoiceData,
                         formValues
                     );
@@ -81,11 +84,10 @@ describe('createSessionInfo', () => {
                 });
 
                 test('nullable initConfigRedirectUrl should shorten without initConfigRedirectUrl', async () => {
-                    const nullInitConfigRedirectUrl = null;
                     const result = await createSessionInfo(
                         urlShortenerEndpoint,
                         origin,
-                        nullInitConfigRedirectUrl,
+                        { redirectUrl: null },
                         invoiceData,
                         formValues
                     );
@@ -123,7 +125,7 @@ describe('createSessionInfo', () => {
                     const result = await createSessionInfo(
                         urlShortenerEndpoint,
                         origin,
-                        initConfigRedirectUrl,
+                        initConfig,
                         invoiceData,
                         formValues
                     );
@@ -135,11 +137,10 @@ describe('createSessionInfo', () => {
 
                 test('nullable initConfigRedirectUrl should shorten without initConfigRedirectUrl', async () => {
                     const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-                    const nullInitConfigRedirectUrl = null;
                     const result = await createSessionInfo(
                         urlShortenerEndpoint,
                         origin,
-                        nullInitConfigRedirectUrl,
+                        { redirectUrl: null },
                         invoiceData,
                         formValues
                     );
@@ -169,13 +170,7 @@ describe('createSessionInfo', () => {
                 values: {}
             };
 
-            const result = await createSessionInfo(
-                urlShortenerEndpoint,
-                origin,
-                initConfigRedirectUrl,
-                invoiceData,
-                formValues
-            );
+            const result = await createSessionInfo(urlShortenerEndpoint, origin, initConfig, invoiceData, formValues);
             expect(result).toStrictEqual({
                 redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH'
             });
@@ -194,13 +189,7 @@ describe('createSessionInfo', () => {
                 } as PaymentTerminalFormValues
             };
 
-            const result = await createSessionInfo(
-                urlShortenerEndpoint,
-                origin,
-                initConfigRedirectUrl,
-                invoiceData,
-                formValues
-            );
+            const result = await createSessionInfo(urlShortenerEndpoint, origin, initConfig, invoiceData, formValues);
             expect(result).toStrictEqual({
                 redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH'
             });
@@ -220,13 +209,7 @@ describe('createSessionInfo', () => {
                 method: PaymentMethodName.BankCard
             };
 
-            const result = await createSessionInfo(
-                urlShortenerEndpoint,
-                origin,
-                initConfigRedirectUrl,
-                invoiceData,
-                formValues
-            );
+            const result = await createSessionInfo(urlShortenerEndpoint, origin, initConfig, invoiceData, formValues);
             expect(result).toStrictEqual({
                 redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH'
             });
@@ -246,13 +229,7 @@ describe('createSessionInfo', () => {
                 method: PaymentMethodName.DigitalWallet
             };
 
-            const result = await createSessionInfo(
-                urlShortenerEndpoint,
-                origin,
-                initConfigRedirectUrl,
-                invoiceData,
-                formValues
-            );
+            const result = await createSessionInfo(urlShortenerEndpoint, origin, initConfig, invoiceData, formValues);
             expect(result).toStrictEqual({
                 redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH'
             });
