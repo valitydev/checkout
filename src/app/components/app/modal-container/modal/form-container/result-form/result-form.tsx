@@ -67,7 +67,6 @@ export const ResultForm = () => {
     const { locale } = useContext(InitialContext);
     const { setIsComplete } = useContext(ResultContext);
     const { modalState } = useContext(ModalContext);
-
     const { hasActions, type, header, description, hasDone } = useMemo(() => {
         const info = (findNamed(modalState, ModalName.modalForms) as ModalForms).formsInfo;
         const resultFormInfo = findNamed(info, FormName.resultForm) as ResultFormInfo;

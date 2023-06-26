@@ -67,7 +67,9 @@ export const ModalContainer = () => {
             const change = eventsState.payload;
             switch (change.changeType) {
                 case InvoiceChangeType.InvoiceCreated:
-                    toInitialState();
+                    if (initConfig.integrationType === 'invoice') {
+                        toInitialState();
+                    }
                     if (initConfig.integrationType === 'invoiceTemplate') {
                         prepareToPay();
                     }

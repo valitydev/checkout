@@ -30,7 +30,7 @@ export const WalletProviderPaymentMethodItem = ({ serviceProvider }: WalletProvi
                 } as PaymentTerminalFormValues
             });
         } else {
-            goToFormInfo(new WalletFormInfo(serviceProvider, FormName.paymentMethods));
+            goToFormInfo(new WalletFormInfo(serviceProvider, FormName.walletProviders));
         }
     };
 
