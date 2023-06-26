@@ -1,6 +1,6 @@
 import { PaymentMethodName } from 'checkout/backend';
 import { createSessionInfo } from './create-session-info';
-import { PaymentTerminalFormValues } from 'checkout/state';
+import { PaymentTerminalFormValues } from 'checkout/hooks';
 
 const fetchMock = (result, status = 200) =>
     Promise.resolve({

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Omit } from 'react-redux';
 import { CSSTransitionGroup } from 'react-transition-group';
 
 type Props = Omit<

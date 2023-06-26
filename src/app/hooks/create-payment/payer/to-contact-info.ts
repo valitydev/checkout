@@ -1,6 +1,6 @@
 import { replaceSpaces } from 'checkout/utils/replace-spaces';
 import isNil from 'checkout/utils/is-nil';
-import { PayableFormValues, PaymentTerminalFormValues } from 'checkout/state';
+import { PayableFormValues, PaymentTerminalFormValues } from 'checkout/hooks';
 import { ContactInfo } from 'checkout/backend';
 
 const mapFrom = (obj: { email?: string; phoneNumber?: string }, targetKeys = ['email', 'phoneNumber']): ContactInfo => {

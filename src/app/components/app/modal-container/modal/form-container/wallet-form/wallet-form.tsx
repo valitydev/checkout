@@ -3,8 +3,7 @@ import { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { FormGroup } from '../form-group';
-import { ResultFormInfo, ResultType, WalletFormInfo } from 'checkout/hooks';
-import { WalletFormValues } from 'checkout/state';
+import { ResultFormInfo, ResultType, WalletFormInfo, WalletFormValues } from 'checkout/hooks';
 import { PayButton } from '../pay-button';
 import { Header } from '../header';
 import { SignUp } from './sign-up';

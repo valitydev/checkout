@@ -15,7 +15,6 @@ export * from './assert-unreachable';
 export * from './is-payment-result-success';
 export * from './email';
 export * from './format-utils';
-export * from './is-error-predicate';
 export * from './interaction-form';
 export * from './replace-spaces';
 export * from './country-data';

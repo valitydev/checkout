@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { ServiceProviderMetadataField, ServiceProviderMetadataForm } from 'checkout/backend';
 import { InitConfig } from 'checkout/config';
-import { PaymentTerminalFormValues } from 'checkout/state';
+import { PaymentTerminalFormValues } from 'checkout/hooks';
 import isNil from 'checkout/utils/is-nil';
 import isString from 'checkout/utils/is-string';
 

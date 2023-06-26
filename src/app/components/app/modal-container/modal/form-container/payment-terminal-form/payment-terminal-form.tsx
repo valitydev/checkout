@@ -2,8 +2,7 @@ import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { PaymentTerminalFormValues } from 'checkout/state';
-import { PaymentTerminalFormInfo, ResultFormInfo, ResultType } from 'checkout/hooks';
+import { PaymentTerminalFormInfo, ResultFormInfo, ResultType, PaymentTerminalFormValues } from 'checkout/hooks';
 import { Header } from '../header';
 import { PayButton } from '../pay-button';
 import { FormGroup } from '../form-group';

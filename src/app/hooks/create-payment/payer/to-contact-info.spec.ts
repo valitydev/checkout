@@ -1,4 +1,4 @@
-import { PaymentTerminalFormValues } from 'checkout/state';
+import { PaymentTerminalFormValues } from 'checkout/hooks';
 import { toContactInfo } from './to-contact-info';
 
 describe('toContactInfo', () => {

@@ -1,7 +1,7 @@
 import { PaymentMethodName, SessionInfo, ShortenedUrlParams, shortenUrl } from 'checkout/backend';
 import { FormData, PayableInvoiceData } from '../types';
 import { toSelfRedirectUrl } from './to-self-redirect-url';
-import { PaymentTerminalFormValues } from 'checkout/state';
+import { PaymentTerminalFormValues } from 'checkout/hooks';
 import isNil from 'checkout/utils/is-nil';
 
 export const shorten = (
