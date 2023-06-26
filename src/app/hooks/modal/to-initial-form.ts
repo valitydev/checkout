@@ -11,7 +11,6 @@ import {
     WalletFormInfo,
     NoAvailablePaymentMethodFormInfo,
     WalletProvidersFormInfo,
-    PaymentTerminalBankCardFormInfo,
     PaymentTerminalFormInfo,
     PaymentTerminalSelectorFormInfo
 } from './types';
@@ -19,8 +18,6 @@ import { assertUnreachable } from 'checkout/utils';
 
 const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalPaymentMethod) => {
     switch (category) {
-        case KnownProviderCategories.BankCard:
-            return new PaymentTerminalBankCardFormInfo();
         case KnownProviderCategories.DigitalWallet:
         case KnownProviderCategories.NetBanking:
         case KnownProviderCategories.UPI:

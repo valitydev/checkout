@@ -9,7 +9,6 @@ export enum FormName {
     walletProviders = 'walletProviders',
     noAvailablePaymentMethodForm = 'noAvailablePaymentMethodForm',
     redirectForm = 'redirectForm',
-    paymentTerminalBankCard = 'paymentTerminalBankCard',
     paymentTerminalForm = 'paymentTerminalForm',
     paymentTerminalSelector = 'paymentTerminalSelector',
     qrCodeInteractionForm = 'qrCodeInteractionForm'

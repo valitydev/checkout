@@ -8,8 +8,6 @@ const getPriority = (method: PaymentMethod): number => {
         case PaymentMethodName.PaymentTerminal:
             const { category } = method as PaymentTerminalPaymentMethod;
             switch (category) {
-                case KnownProviderCategories.BankCard:
-                    return 2;
                 case KnownProviderCategories.OnlineBanking:
                     return 3;
                 case KnownProviderCategories.NetBanking:

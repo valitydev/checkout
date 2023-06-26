@@ -12,17 +12,7 @@ export function toAvailablePaymentMethods(
     serviceProviders: ServiceProvider[]
 ): PaymentMethodState[] {
     let result: PaymentMethodState[] = [];
-    const {
-        wallets,
-        onlineBanking,
-        netBanking,
-        upi,
-        terminalBankCard,
-        terminalWallets,
-        paymentFlowHold,
-        recurring,
-        pix
-    } = initConfig;
+    const { wallets, onlineBanking, netBanking, upi, terminalWallets, paymentFlowHold, recurring, pix } = initConfig;
     for (const method of paymentMethods) {
         switch (method.method) {
             case PaymentMethodName.BankCard:
@@ -46,7 +36,6 @@ export function toAvailablePaymentMethods(
                         onlineBanking,
                         netBanking,
                         upi,
-                        terminalBankCard,
                         terminalWallets,
                         paymentFlowHold,
                         recurring,
