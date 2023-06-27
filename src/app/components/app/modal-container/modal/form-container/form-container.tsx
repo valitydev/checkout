@@ -15,7 +15,6 @@ import { stylableTransition, ENTER, LEAVE, ACTIVE } from 'checkout/styled-transi
 import { NoAvailablePaymentMethodForm } from './no-available-payment-method-form';
 import { WalletProviders } from './wallet-providers';
 import { RedirectForm } from './redirect-form';
-import { PaymentTerminalBankCardForm } from './payment-terminal-bank-card-form';
 import { PaymentTerminalForm } from './payment-terminal-form';
 import { QrCodeInteractionForm } from './qr-code-interaction-form';
 import { PaymentTerminalSelectorForm } from './payment-terminal-selector-form';
@@ -146,8 +145,6 @@ const renderForm = ({ name }: FormInfo) => {
             return <NoAvailablePaymentMethodForm key={name} />;
         case FormName.redirectForm:
             return <RedirectForm key={name} />;
-        case FormName.paymentTerminalBankCard:
-            return <PaymentTerminalBankCardForm key={name} />;
         case FormName.paymentTerminalForm:
             return <PaymentTerminalForm key={name} />;
         case FormName.paymentTerminalSelector:
@@ -167,7 +164,7 @@ export const FormContainer = () => {
     const { modalState } = useContext(ModalContext);
 
     useEffect(() => {
-        setHeight(DEFAULT_HEIGHT_PX);
+        setHeight(contentElement.current?.clientHeight || DEFAULT_HEIGHT_PX);
     }, []);
 
     const { activeFormInfo, viewInfo } = useMemo(() => {

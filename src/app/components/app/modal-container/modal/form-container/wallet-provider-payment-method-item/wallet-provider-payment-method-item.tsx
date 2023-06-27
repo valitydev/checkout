@@ -5,8 +5,7 @@ import { FormInfo, FormName, ResultFormInfo, ResultType, WalletFormInfo } from '
 import { getMetadata, MetadataLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PaymentMethodName, ServiceProvider } from 'checkout/backend';
 import isNil from 'checkout/utils/is-nil';
-import { useCreatePayment } from 'checkout/hooks';
-import { PaymentTerminalFormValues } from 'checkout/state';
+import { PaymentTerminalFormValues, useCreatePayment } from 'checkout/hooks';
 import { ModalContext } from '../../../modal-context';
 
 export type SetFormInfoAction = (formInfo: FormInfo) => any;
@@ -30,7 +29,7 @@ export const WalletProviderPaymentMethodItem = ({ serviceProvider }: WalletProvi
                 } as PaymentTerminalFormValues
             });
         } else {
-            goToFormInfo(new WalletFormInfo(serviceProvider, FormName.paymentMethods));
+            goToFormInfo(new WalletFormInfo(serviceProvider, FormName.walletProviders));
         }
     };
 

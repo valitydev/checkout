@@ -1,44 +1,27 @@
 import * as React from 'react';
-import { Field, Validator, WrappedFieldProps } from 'redux-form';
-import isNil from 'lodash-es/isNil';
-
+import { FieldError, UseFormRegister } from 'react-hook-form';
 import { MetadataTextLocalization, ServiceProviderMetadataSelect } from 'checkout/backend';
-import { isError } from 'checkout/utils';
 import { Select } from 'checkout/components';
+import { countries, Country, CountrySubdivision } from 'checkout/utils';
+import isNil from 'checkout/utils/is-nil';
 
-export interface SelectorOption {
-    label: string;
-    value: string;
+export interface MetadataSelectProps {
+    metadata: ServiceProviderMetadataSelect;
+    localeCode: string;
+    wrappedName: string;
+    register: UseFormRegister<any>;
+    fieldError: FieldError;
+    isDirty: boolean;
 }
+
+const findCountry = (countryCode: string) => (country: Country) => country.code === countryCode;
+
+const toOptions = ({ name, code }: CountrySubdivision) => ({ label: name, value: code });
 
 const getDefOptionLabel = (localeCode: string, localization: MetadataTextLocalization) =>
     localization[localeCode] || localization['en'];
 
-const WrappedSelect = ({
-    input,
-    meta,
-    localization,
-    localeCode,
-    options
-}: WrappedFieldProps & {
-    name: string;
-    localization: MetadataTextLocalization;
-    localeCode: string;
-    options: SelectorOption[];
-}) => {
-    return (
-        <Select onChange={input.onChange} isError={isError(meta)} isActive={meta.active} isPristine={meta.pristine}>
-            <option value="">{getDefOptionLabel(localeCode, localization)}</option>
-            {options.map(({ value, label }, i) => (
-                <option key={i} value={value}>
-                    {value} - {label}
-                </option>
-            ))}
-        </Select>
-    );
-};
-
-const createValidator = (required: boolean): Validator => (value) => {
+const createValidator = (required: boolean) => (value) => {
     if (!required) {
         return undefined;
     }
@@ -47,27 +30,32 @@ const createValidator = (required: boolean): Validator => (value) => {
     }
 };
 
-export interface MetadataSelectProps {
-    metadata: ServiceProviderMetadataSelect;
-    options: SelectorOption[];
-    localeCode?: string;
-    wrappedName?: string;
-}
-
 export const MetadataSelect = ({
-    metadata: { name, required, localization },
     wrappedName,
+    metadata: { name, src, localization, required },
+    register,
     localeCode,
-    options
+    fieldError,
+    isDirty
 }: MetadataSelectProps) => {
+    const registerName = wrappedName ? `${wrappedName}.${name}` : name;
+    const subdivisions = countries.find(findCountry(src.countryCode)).sub;
+    const options = subdivisions.map(toOptions);
     const validate = React.useMemo(() => createValidator(required), [name]);
     return (
-        <Field
-            name={wrappedName ? `${wrappedName}.${name}` : name}
-            component={WrappedSelect}
-            props={{ name, localization, required, localeCode }}
-            validate={validate}
-            options={options}
-        />
+        <Select
+            {...register(registerName, {
+                required,
+                validate: (value) => !validate(value) || `${name} field is invalid`
+            })}
+            error={!isNil(fieldError)}
+            dirty={isDirty}>
+            <option value="">{getDefOptionLabel(localeCode, localization)}</option>
+            {options.map(({ value, label }, i) => (
+                <option key={i} value={value}>
+                    {value} - {label}
+                </option>
+            ))}
+        </Select>
     );
 };

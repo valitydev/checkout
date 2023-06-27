@@ -1,7 +1,8 @@
-import { HoldExpirationType, PaymentMethodName } from 'checkout/backend';
-import { PayableFormValues } from 'checkout/state';
+import { HoldExpirationType } from 'checkout/backend';
+import { FormData } from './form-data';
 
-export * from './payer/types';
+export * from '../payer/types';
+export * from './form-data';
 
 export type PaymentFlowParams = {
     paymentFlowHold: boolean;
@@ -34,9 +35,4 @@ export type PayableInvoiceData = {
         externalID: string;
     };
     invoiceAccessToken: string;
-};
-
-export type FormData = {
-    method: PaymentMethodName;
-    values?: PayableFormValues;
 };

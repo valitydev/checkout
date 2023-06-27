@@ -1,8 +1,8 @@
 import * as React from 'react';
+import { forwardRef } from 'react';
 
 import { Marks } from '../marks';
 import { default as styled, css } from 'checkout/styled-components';
-import { MutableRefObject } from 'react';
 
 const CONTENT_OFFSET = 15;
 const TEXT_ICON_OFFSET = 8;
@@ -81,23 +81,21 @@ const InputWrapper = styled.div<{ error?: any; mark?: boolean }>`
         `};
 `;
 
-export interface CustomProps {
+export type InputProps = JSX.IntrinsicElements['input'] & {
     icon?: React.ReactNode;
     mark?: boolean;
+    error?: boolean;
+    dirty?: boolean;
     autocomplete?: string;
     spellcheck?: boolean;
-    error?: any;
-    active?: boolean;
-    pristine?: boolean;
-    inputRef?: MutableRefObject<HTMLInputElement>;
-}
+};
 
-type InputProps = Omit<JSX.IntrinsicElements['input'], 'ref'> & CustomProps;
-
-export const Input: React.FC<InputProps> = ({ className, error, mark, active, pristine, icon, inputRef, ...props }) => (
-    <InputWrapper {...{ className, error, mark }}>
-        {icon && <Icon>{icon}</Icon>}
-        <StyledInput {...props} hasIcon={!!icon} ref={inputRef} />
-        {!!mark && <Marks {...{ active, pristine, error }} />}
-    </InputWrapper>
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+    ({ className, error, dirty, mark, icon, ...props }, ref) => (
+        <InputWrapper {...{ className, error, mark }}>
+            {icon && <Icon>{icon}</Icon>}
+            <StyledInput {...props} hasIcon={!!icon} ref={ref} />
+            {mark && dirty && !error && <Marks />}
+        </InputWrapper>
+    )
 );

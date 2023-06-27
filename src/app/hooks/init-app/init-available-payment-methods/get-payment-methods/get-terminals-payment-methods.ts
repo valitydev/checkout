@@ -8,21 +8,13 @@ interface InitConfigChunk {
     onlineBanking: boolean;
     netBanking: boolean;
     upi: boolean;
-    terminalBankCard: boolean;
     terminalWallets: boolean;
     pix: boolean;
     paymentFlowHold: boolean;
     recurring: boolean;
 }
 
-const categoryReducer = ({
-    onlineBanking,
-    netBanking,
-    upi,
-    terminalBankCard,
-    terminalWallets,
-    pix
-}: Partial<InitConfigChunk>) => (
+const categoryReducer = ({ onlineBanking, netBanking, upi, terminalWallets, pix }: Partial<InitConfigChunk>) => (
     result: PaymentMethod[],
     [category, serviceProviders]: [KnownProviderCategories, ServiceProvider[]]
 ) => {
@@ -44,11 +36,6 @@ const categoryReducer = ({
             break;
         case KnownProviderCategories.UPI:
             if (upi) {
-                result = result.concat([paymentMethod]);
-            }
-            break;
-        case KnownProviderCategories.BankCard:
-            if (terminalBankCard) {
                 result = result.concat([paymentMethod]);
             }
             break;
@@ -74,16 +61,7 @@ const categoryReducer = ({
 export const getTerminalsPaymentMethods = (
     { providers }: PaymentTerminal,
     serviceProviders: ServiceProvider[],
-    {
-        paymentFlowHold,
-        recurring,
-        onlineBanking,
-        netBanking,
-        upi,
-        terminalBankCard,
-        terminalWallets,
-        pix
-    }: InitConfigChunk
+    { paymentFlowHold, recurring, onlineBanking, netBanking, upi, terminalWallets, pix }: InitConfigChunk
 ): PaymentMethod[] => {
     if (paymentFlowHold) {
         return [];
@@ -93,8 +71,5 @@ export const getTerminalsPaymentMethods = (
     }
     const filtered = serviceProviders.filter(filterByPaymentMethodProviders(providers));
     const groupedByCategory = Object.entries(groupBy(filtered, 'category'));
-    return groupedByCategory.reduce(
-        categoryReducer({ onlineBanking, netBanking, upi, terminalBankCard, terminalWallets, pix }),
-        []
-    );
+    return groupedByCategory.reduce(categoryReducer({ onlineBanking, netBanking, upi, terminalWallets, pix }), []);
 };

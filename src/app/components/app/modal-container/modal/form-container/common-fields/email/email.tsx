@@ -1,28 +1,30 @@
 import * as React from 'react';
-import { Field, WrappedFieldProps } from 'redux-form';
-
-import { formatEmail, isError, validateEmail } from 'checkout/utils';
+import { FieldError, FieldErrorsImpl, Merge, UseFormRegister } from 'react-hook-form';
+import { formatEmail, validateEmail } from 'checkout/utils';
 import { Locale } from 'checkout/locale';
 import { Input } from 'checkout/components';
+import isNil from 'checkout/utils/is-nil';
 
-export interface EmailDefProps {
+export type EmailProps = {
+    register: UseFormRegister<any>;
     locale: Locale;
-}
+    fieldError: FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
+    isDirty: boolean;
+};
 
-const WrappedInput = ({ input, meta, locale }: WrappedFieldProps & EmailDefProps) => (
+export const Email = ({ register, locale, fieldError, isDirty }: EmailProps) => (
     <Input
-        {...input}
-        {...meta}
-        error={isError(meta)}
+        {...register('email', {
+            required: true,
+            validate: (value) => !validateEmail(value) || 'Email is invalid'
+        })}
         placeholder={locale['form.input.email.placeholder']}
         mark={true}
         type="email"
         id="email-input"
         onInput={formatEmail}
         autocomplete="email"
+        error={!isNil(fieldError)}
+        dirty={isDirty}
     />
-);
-
-export const Email = ({ locale }: EmailDefProps) => (
-    <Field name="email" component={WrappedInput} props={{ locale }} validate={validateEmail} />
 );

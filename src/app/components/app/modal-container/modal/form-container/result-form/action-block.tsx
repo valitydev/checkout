@@ -45,9 +45,6 @@ const toReenterButtonText = (startedInfo: FormInfo, locale: Locale): string => {
 const payOtherCapability = (startedInfo: FormInfo): boolean =>
     startedInfo && startedInfo.name !== FormName.paymentMethods;
 
-const retryCapability = (startedInfo: FormInfo): boolean =>
-    startedInfo && startedInfo.name !== FormName.paymentMethods && startedInfo.name !== FormName.walletProviders;
-
 export const ActionBlock = () => {
     const { locale, initConfig } = useContext(InitialContext);
     const { modalState, prepareToRetry, forgetPaymentAttempt } = useContext(ModalContext);
@@ -68,13 +65,8 @@ export const ActionBlock = () => {
         <ErrorBlock>
             {!initConfig.isExternalIDIncluded && (
                 <>
-                    {retryCapability(startedInfo) && (
-                        <Button color="primary" onClick={() => retry(false)} id="retry-btn">
-                            {locale['form.button.pay.again.label']}
-                        </Button>
-                    )}
                     {payOtherCapability(startedInfo) && (
-                        <Button onClick={() => retry(true)} id="reenter-btn">
+                        <Button color="primary" onClick={() => retry(true)} id="reenter-btn">
                             {toReenterButtonText(startedInfo, locale)}
                         </Button>
                     )}

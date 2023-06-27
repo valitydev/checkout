@@ -6,7 +6,7 @@ import isMobile from 'ismobilejs';
 import { QRCode } from './qr-code';
 import { QrCodeInteractionFormInfo } from 'checkout/hooks';
 import { Button, CopyToClipboardButton, getMetadata, Hr, Input } from 'checkout/components/ui';
-import { QrCodeFormMetadata, ServiceProvider } from 'checkout/backend';
+import { QrCodeFormMetadata } from 'checkout/backend';
 import isNil from 'checkout/utils/is-nil';
 import { useActiveModalForm } from '../use-active-modal-form';
 
@@ -32,15 +32,16 @@ const isQrCodeRedirect = (formMetadata: QrCodeFormMetadata) =>
     (isMobile(window.navigator).phone || isMobile(window.navigator).tablet) &&
     formMetadata.qrCodeRedirect === 'mobile';
 
-const getServiceProvider = (serviceProviders: ServiceProvider[], serviceProviderID: string): ServiceProvider =>
-    serviceProviders.find((serviceProvider) => serviceProvider.id === serviceProviderID);
-
 export const QrCodeInteractionForm: React.FC = () => {
     const qrCodeInputRef = useRef(null);
-    const { locale, initConfig, model } = useContext(InitialContext);
+    const {
+        locale,
+        initConfig,
+        model: { serviceProviders }
+    } = useContext(InitialContext);
     const { modalState } = useContext(ModalContext);
     const { request, providerID } = useActiveModalForm<QrCodeInteractionFormInfo>(modalState);
-    const serviceProvider = getServiceProvider(model.serviceProviders, providerID);
+    const serviceProvider = serviceProviders.find((value) => value.id === providerID);
     const { qrCodeForm } = getMetadata(serviceProvider);
 
     useEffect(() => {
@@ -60,7 +61,7 @@ export const QrCodeInteractionForm: React.FC = () => {
                         <>
                             <Input
                                 id="qr-code-input"
-                                inputRef={qrCodeInputRef}
+                                ref={qrCodeInputRef}
                                 defaultValue={request.qrCode}
                                 readOnly={true}></Input>
                             <CopyToClipboardButton onClick={() => copyToClipboard()} />

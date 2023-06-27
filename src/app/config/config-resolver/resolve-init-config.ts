@@ -4,7 +4,6 @@ import { InitConfig } from '../init-config';
 import { resolveIntegrationType } from './resolve-integration-type';
 import { resolveString } from './resolve-string';
 import { HoldExpirationType } from 'checkout/backend/model';
-import { DEFAULT_THEME } from 'checkout/themes';
 import { resolveObject } from './resolve-object';
 import { detectLocale } from '../../../locale';
 import { resolveRedirectUrl } from './resolve-redirect-url';
@@ -76,7 +75,6 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         ),
         locale: detectLocale(resolveString(locale, 'locale')),
         recurring: setDefault(resolveBoolean(recurring, 'recurring'), false),
-        theme: setDefault(resolveString(theme, 'theme'), DEFAULT_THEME.name),
         brandless: setDefault(resolveBoolean(brandless, 'brandless'), true),
         metadata: setDefault(resolveObject(metadata, 'metadata'), undefined),
         terminalFormValues: setDefault(resolveObject(terminalFormValues, 'terminalFormValues'), undefined),

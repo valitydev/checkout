@@ -1,53 +1,45 @@
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
-import { InjectedFormProps, reduxForm } from 'redux-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { FormGroup } from '../form-group';
 import { CardHolder, CardNumber, ExpireDate, SecureCode } from './fields';
-import { FormName, PaymentStatus, ResultFormInfo, ResultType } from 'checkout/hooks';
+import { ResultFormInfo, ResultType } from 'checkout/hooks';
 import { PayButton } from '../pay-button';
-import { Header } from '../header/header';
+import { Header } from '../header';
 import { toAmountConfig, toCardHolderConfig } from '../fields-config';
 import { Amount } from '../common-fields';
-import { useAppSelector } from 'checkout/configure-store';
 import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
+import { isEmptyObject } from 'checkout/utils/is-empty-object';
+import { CardFormInputs } from './card-form-inputs';
 
 import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';
-import { useActiveModalForm } from '../use-active-modal-form';
-import { CardFormValues } from 'checkout/state';
 
-const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormProps) => {
+export const CardForm = () => {
     const {
         locale,
         initConfig,
         model: { invoiceTemplate }
     } = useContext(InitialContext);
-    const { modalState, setViewInfoError, goToFormInfo, prepareToPay } = useContext(ModalContext);
+    const { setViewInfoError, goToFormInfo, prepareToPay } = useContext(ModalContext);
     const { createPaymentState, setFormData } = useCreatePayment();
-    const { paymentStatus } = useActiveModalForm(modalState);
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors, dirtyFields, isSubmitted }
+    } = useForm<CardFormInputs>({ mode: 'onChange' });
     const cardHolder = toCardHolderConfig(initConfig.requireCardHolder);
     const amount = toAmountConfig(initConfig, invoiceTemplate);
-    const formValues = useAppSelector(({ form }) => form?.cardForm?.values);
 
     useEffect(() => {
-        setViewInfoError(false);
-        switch (paymentStatus) {
-            case PaymentStatus.pristine:
-                initialize({
-                    amount: formValues?.amount
-                });
-                break;
-            case PaymentStatus.needRetry:
-                submit(formValues);
-                break;
-        }
-    }, []);
-
-    useEffect(() => {
-        if (submitFailed) {
+        if (isSubmitted && !isEmptyObject(errors)) {
             setViewInfoError(true);
         }
+    }, [isSubmitted, errors]);
+
+    useEffect(() => {
         if (createPaymentState.status === 'FAILURE') {
             goToFormInfo(
                 new ResultFormInfo(ResultType.hookError, {
@@ -55,45 +47,64 @@ const CardFormDef = ({ submitFailed, initialize, handleSubmit }: InjectedFormPro
                 })
             );
         }
-    }, [submitFailed, createPaymentState]);
+    }, [createPaymentState]);
 
-    const submit = (values: CardFormValues) => {
+    const onSubmit: SubmitHandler<CardFormInputs> = (values) => {
         prepareToPay();
         setFormData({ method: PaymentMethodName.BankCard, values });
     };
 
     return (
-        <form onSubmit={handleSubmit(submit)}>
-            <div>
-                <Header title={locale['form.header.pay.card.label']} />
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Header title={locale['form.header.pay.card.label']} />
+            <FormGroup>
+                <CardNumber
+                    locale={locale}
+                    fieldError={errors.cardNumber}
+                    isDirty={dirtyFields.cardNumber}
+                    register={register}
+                    watch={watch}
+                />
+            </FormGroup>
+            <FormGroup>
+                <ExpireDate
+                    locale={locale}
+                    fieldError={errors.expireDate}
+                    isDirty={dirtyFields.expireDate}
+                    register={register}
+                />
+                <SecureCode
+                    locale={locale}
+                    fieldError={errors.secureCode}
+                    isDirty={dirtyFields.secureCode}
+                    register={register}
+                    obscureCardCvv={initConfig?.obscureCardCvv}
+                    cardNumber={watch('cardNumber')}
+                />
+            </FormGroup>
+            {cardHolder.visible && (
                 <FormGroup>
-                    <CardNumber locale={locale} />
-                </FormGroup>
-                <FormGroup>
-                    <ExpireDate locale={locale} />
-                    <SecureCode
+                    <CardHolder
                         locale={locale}
-                        obscureCardCvv={initConfig?.obscureCardCvv}
-                        cardNumber={formValues?.cardNumber}
+                        fieldError={errors.cardHolder}
+                        isDirty={dirtyFields.cardHolder}
+                        register={register}
                     />
                 </FormGroup>
-                {cardHolder.visible && (
-                    <FormGroup>
-                        <CardHolder locale={locale} />
-                    </FormGroup>
-                )}
-                {amount.visible && (
-                    <FormGroup>
-                        <Amount cost={amount.cost} locale={locale} localeCode={initConfig.locale} />
-                    </FormGroup>
-                )}
-            </div>
+            )}
+            {amount.visible && (
+                <FormGroup>
+                    <Amount
+                        cost={amount.cost}
+                        locale={locale}
+                        localeCode={initConfig.locale}
+                        fieldError={errors.amount}
+                        isDirty={dirtyFields.amount}
+                        register={register}
+                    />
+                </FormGroup>
+            )}
             <PayButton />
         </form>
     );
 };
-
-export const CardForm = reduxForm({
-    form: FormName.cardForm,
-    destroyOnUnmount: false
-})(CardFormDef);

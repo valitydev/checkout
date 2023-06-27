@@ -39,12 +39,8 @@ const CheckmarkIcon = styled(Checkmark)`
     }
 `;
 
-interface MarksProps {
-    active: boolean;
-    pristine: boolean;
-    error: boolean;
-}
-
-export const Marks: React.FC<MarksProps> = ({ active, error, pristine }) => (
-    <FadeAnimation>{!active && !error && !pristine && <CheckmarkIcon />}</FadeAnimation>
+export const Marks = () => (
+    <FadeAnimation>
+        <CheckmarkIcon />
+    </FadeAnimation>
 );

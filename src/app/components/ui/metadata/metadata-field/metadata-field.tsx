@@ -1,17 +1,11 @@
 import * as React from 'react';
 import { useMemo } from 'react';
-import { Field, Validator, WrappedFieldProps } from 'redux-form';
-import isNil from 'lodash-es/isNil';
-import partialRight from 'lodash-es/partialRight';
+import { FieldError, UseFormRegister } from 'react-hook-form';
+import isNil from 'checkout/utils/is-nil';
+import partialRight from 'checkout/utils/partial-right';
 
-import {
-    AttributeInputMode,
-    AttributeType,
-    MetadataFieldFormatter,
-    MetadataTextLocalization,
-    ServiceProviderMetadataField
-} from 'checkout/backend';
-import { formatPhoneNumber, isError, formatOnFocus, validateEmail, validatePhone } from 'checkout/utils';
+import { MetadataFieldFormatter, MetadataTextLocalization, ServiceProviderMetadataField } from 'checkout/backend';
+import { formatPhoneNumber, formatOnFocus, validateEmail, validatePhone } from 'checkout/utils';
 import { Input } from 'checkout/components';
 import { getInputTypeFormatter, getMetadataFieldFormatter } from './formatters';
 
@@ -50,35 +44,9 @@ const getPlaceholder = (localeCode: string, localization: MetadataTextLocalizati
     return localization[localeCode] || localization['en'];
 };
 
-const WrappedInput: React.FC<WrappedFieldProps & {
-    type: AttributeType;
-    name: string;
-    localization: MetadataTextLocalization;
-    localeCode: string;
-    required: boolean;
-    formatter: MetadataFieldFormatter;
-    inputMode: AttributeInputMode;
-}> = ({ type, name, input, meta, localeCode, localization, formatter, inputMode }) => (
-    <Input
-        {...input}
-        {...meta}
-        name={name}
-        type={type}
-        placeholder={getPlaceholder(localeCode, localization)}
-        mark={true}
-        error={isError(meta)}
-        onInput={getOnInputHandler(type, formatter)}
-        onFocus={getOnFocusHandler(type)}
-        autocomplete={getAutocomplete(type)}
-        inputMode={inputMode}
-    />
-);
-
-const createValidator = (
-    type: JSX.IntrinsicElements['input']['type'],
-    required: boolean,
-    pattern?: string
-): Validator => (value) => {
+const createValidator = (type: JSX.IntrinsicElements['input']['type'], required: boolean, pattern?: string) => (
+    value
+) => {
     if (!required && isNil(value)) {
         return undefined;
     }
@@ -100,20 +68,36 @@ export interface MetadataFieldProps {
     metadata: ServiceProviderMetadataField;
     localeCode?: string;
     wrappedName?: string;
+    register: UseFormRegister<any>;
+    fieldError: FieldError;
+    isDirty: boolean;
 }
 
-export const MetadataField: React.FC<MetadataFieldProps> = ({
+export const MetadataField = ({
     metadata: { name, type, required, pattern, localization, formatter, inputMode },
     localeCode,
-    wrappedName
-}) => {
+    wrappedName,
+    register,
+    fieldError,
+    isDirty
+}: MetadataFieldProps) => {
     const validate = useMemo(() => createValidator(type, required, pattern), [name]);
+    const registerName = wrappedName ? `${wrappedName}.${name}` : name;
     return (
-        <Field
-            name={wrappedName ? `${wrappedName}.${name}` : name}
-            component={WrappedInput}
-            props={{ type, name, localization, localeCode, required, formatter, inputMode }}
-            validate={validate}
+        <Input
+            {...register(registerName, {
+                required: true,
+                validate: (value) => !validate(value) || `${name} field is invalid`
+            })}
+            type={type}
+            placeholder={getPlaceholder(localeCode, localization)}
+            mark={true}
+            onInput={getOnInputHandler(type, formatter)}
+            onFocus={getOnFocusHandler(type)}
+            autocomplete={getAutocomplete(type)}
+            inputMode={inputMode}
+            error={!isNil(fieldError)}
+            dirty={isDirty}
         />
     );
 };

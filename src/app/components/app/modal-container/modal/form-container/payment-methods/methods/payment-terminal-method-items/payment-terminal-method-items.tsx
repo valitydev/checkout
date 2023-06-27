@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { KnownProviderCategories, PaymentTerminalPaymentMethod } from 'checkout/hooks';
 import { assertUnreachable } from 'checkout/utils';
-import { PaymentTerminalBankCardMethodItem } from './payment-terminal-bank-card-method-item';
 import { PaymentTerminalMethodItem } from './payment-terminal-method-item';
 
 export interface PaymentTerminalMethodItemsProps {
@@ -18,8 +17,6 @@ export const PaymentTerminalMethodItems = ({ method }: PaymentTerminalMethodItem
         case KnownProviderCategories.NetBanking:
         case KnownProviderCategories.OnlineBanking:
             return <PaymentTerminalMethodItem method={method} />;
-        case KnownProviderCategories.BankCard:
-            return <PaymentTerminalBankCardMethodItem />;
         default:
             assertUnreachable(method.category);
             return null;

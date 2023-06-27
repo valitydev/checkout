@@ -1,20 +1,25 @@
 import * as React from 'react';
-import { Field, WrappedFieldProps } from 'redux-form';
+import { FieldError, FieldErrorsImpl, Merge, UseFormRegister } from 'react-hook-form';
 
 import { Locale } from 'checkout/locale';
 import { validatePhone } from './validate-phone';
 import { Input } from 'checkout/components';
-import { formatPhoneNumber, isError } from 'checkout/utils';
+import { formatPhoneNumber } from 'checkout/utils';
+import isNil from 'checkout/utils/is-nil';
 
 export interface PhoneProps {
+    register: UseFormRegister<any>;
     locale: Locale;
+    fieldError: FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
+    isDirty: boolean;
 }
 
-const WrappedInput = ({ input, meta, locale }: WrappedFieldProps & PhoneProps) => (
+export const Phone = ({ register, locale, fieldError, isDirty }: PhoneProps) => (
     <Input
-        {...input}
-        {...meta}
-        error={isError(meta)}
+        {...register('phoneNumber', {
+            required: true,
+            validate: (value) => !validatePhone(value) || 'Phone number is invalid'
+        })}
         placeholder={locale['form.input.phone.placeholder']}
         mark={true}
         type="tel"
@@ -22,9 +27,7 @@ const WrappedInput = ({ input, meta, locale }: WrappedFieldProps & PhoneProps) =
         onInput={formatPhoneNumber}
         onFocus={formatPhoneNumber}
         autocomplete="tel"
+        error={!isNil(fieldError)}
+        dirty={isDirty}
     />
-);
-
-export const Phone = ({ locale }: PhoneProps) => (
-    <Field name="phoneNumber" component={WrappedInput} props={{ locale }} validate={validatePhone} />
 );

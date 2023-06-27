@@ -1,4 +1,4 @@
-import { PaymentTerminalFormValues } from 'checkout/state';
+import { PaymentTerminalFormValues } from 'checkout/hooks';
 import { PaymentMethodName } from '../init-app';
 import { createPayment } from './create-payment';
 
