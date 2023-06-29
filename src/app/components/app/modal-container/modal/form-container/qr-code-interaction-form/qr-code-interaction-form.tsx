@@ -46,7 +46,7 @@ export const QrCodeInteractionForm = ({ onMount }: { onMount?: () => void }) => 
 
     useEffect(() => {
         isQrCodeRedirect(qrCodeForm) && window.open(request.qrCode, '_self');
-        onMount && onMount();
+        !isNil(onMount) && onMount();
     }, []);
 
     const copyToClipboard = () => {
