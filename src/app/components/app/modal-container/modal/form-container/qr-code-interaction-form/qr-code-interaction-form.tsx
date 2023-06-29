@@ -32,7 +32,7 @@ const isQrCodeRedirect = (formMetadata: QrCodeFormMetadata) =>
     (isMobile(window.navigator).phone || isMobile(window.navigator).tablet) &&
     formMetadata.qrCodeRedirect === 'mobile';
 
-export const QrCodeInteractionForm: React.FC = () => {
+export const QrCodeInteractionForm = ({ onMount }: { onMount?: () => void }) => {
     const qrCodeInputRef = useRef(null);
     const {
         locale,
@@ -46,6 +46,7 @@ export const QrCodeInteractionForm: React.FC = () => {
 
     useEffect(() => {
         isQrCodeRedirect(qrCodeForm) && window.open(request.qrCode, '_self');
+        onMount && onMount();
     }, []);
 
     const copyToClipboard = () => {

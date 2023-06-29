@@ -129,7 +129,7 @@ const FormContainerAnimation = styled(stylableTransition)<{ direction: SlideDire
     ${({ direction }) => (direction === SlideDirection.left ? slideLeftAnimation : slideRightAnimation)}
 `;
 
-const renderForm = ({ name }: FormInfo) => {
+const renderForm = ({ name }: FormInfo, onMount: () => void) => {
     switch (name) {
         case FormName.paymentMethods:
             return <PaymentMethods key={name} />;
@@ -150,7 +150,7 @@ const renderForm = ({ name }: FormInfo) => {
         case FormName.paymentTerminalSelector:
             return <PaymentTerminalSelectorForm key={name} />;
         case FormName.qrCodeInteractionForm:
-            return <QrCodeInteractionForm key={name} />;
+            return <QrCodeInteractionForm key={name} onMount={onMount} />;
         default:
             return null;
     }
@@ -192,7 +192,7 @@ export const FormContainer = () => {
                         enter={300}
                         leave={300}
                         onTransitionEnd={onTransitionEnd}>
-                        {!isNil(activeFormInfo) && renderForm(activeFormInfo)}
+                        {!isNil(activeFormInfo) && renderForm(activeFormInfo, onTransitionEnd)}
                     </FormContainerAnimation>
                     {viewInfo.inProcess && <FormLoader />}
                 </div>
