@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback, useContext, useMemo, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import { CardForm } from './card-form';
@@ -78,6 +78,8 @@ const toInitialPos = (slideDirection: SlideDirection): number => {
     }
 };
 
+const DEFAULT_HEIGHT_PX = 300;
+
 export const FormContainer = () => {
     const contentElement = useRef(null);
     const [height, setHeight] = useState(0);
@@ -87,10 +89,10 @@ export const FormContainer = () => {
         formName,
         viewInfo: { slideDirection, inProcess }
     } = useMemo(() => {
-        const { formsInfo, viewInfo } = findNamed(modalState, ModalName.modalForms) as ModalForms;
+        const found = findNamed(modalState, ModalName.modalForms) as ModalForms;
         return {
-            formName: formsInfo.find((item) => item.active).name,
-            viewInfo
+            formName: found.formsInfo.find((item) => item.active)?.name,
+            viewInfo: found.viewInfo
         };
     }, [modalState]);
 
@@ -100,6 +102,10 @@ export const FormContainer = () => {
             setHeight(elHight);
         }
     }, [contentElement, height, setHeight]);
+
+    useEffect(() => {
+        setHeight(contentElement.current?.clientHeight || DEFAULT_HEIGHT_PX);
+    }, []);
 
     return (
         <Container>
