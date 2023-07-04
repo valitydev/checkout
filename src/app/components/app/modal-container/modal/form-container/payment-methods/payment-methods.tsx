@@ -23,7 +23,7 @@ export const PaymentMethods = ({ onMount }: { onMount: () => void }) => {
 
     useEffect(() => {
         onMount();
-    }, []);
+    }, [isShowAll]);
 
     return (
         <form>

@@ -1,19 +1,14 @@
 import * as React from 'react';
+import { motion } from 'framer-motion';
 
 import { Loader } from 'checkout/components';
 import styled from 'checkout/styled-components';
-import { stylableTransition, APPEAR, LEAVE } from 'checkout/styled-transition';
-import { fadein, fadeout } from 'checkout/styled-components/animations';
 
-const Animation = styled(stylableTransition)`
-    ${APPEAR} {
-        animation: ${fadein} 0.5s;
-    }
-
-    ${LEAVE} {
-        animation: ${fadeout} 0.2s;
-    }
-`;
+const fadeIn = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { duration: 0.5 } },
+    exit: { opacity: 0, transition: { duration: 0.5 } }
+};
 
 const LoaderWrapper = styled.div`
     position: absolute;
@@ -30,10 +25,10 @@ const LoaderWrapper = styled.div`
     background: rgba(255, 255, 255, 0.9);
 `;
 
-export const FormLoader: React.FC = () => (
-    <Animation appear={500} leave={200}>
+export const FormLoader = () => (
+    <motion.div variants={fadeIn} initial="hidden" animate="show" exit="exit">
         <LoaderWrapper key="form-loader" id="form-loader">
             <Loader />
         </LoaderWrapper>
-    </Animation>
+    </motion.div>
 );
