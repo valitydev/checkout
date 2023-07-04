@@ -63,7 +63,7 @@ const Form = styled.form<{ hasActions: boolean }>`
     }
 `;
 
-export const ResultForm = () => {
+export const ResultForm = ({ onMount }: { onMount: () => void }) => {
     const { locale } = useContext(InitialContext);
     const { setIsComplete } = useContext(ResultContext);
     const { modalState } = useContext(ModalContext);
@@ -88,6 +88,10 @@ export const ResultForm = () => {
                 return pending(locale);
         }
     }, [modalState, locale]);
+
+    useEffect(() => {
+        onMount();
+    }, []);
 
     useEffect(() => {
         if (hasDone) {

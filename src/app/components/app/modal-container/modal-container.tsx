@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useContext, useEffect, useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 
 import isNil from 'checkout/utils/is-nil';
 import { Modal } from './modal';
@@ -8,8 +9,6 @@ import { ModalName, ResultFormInfo, ResultType } from 'checkout/hooks';
 import { InitialContext } from '../initial-context';
 import { PayableInvoiceContext } from './payable-invoice-context';
 import styled from 'checkout/styled-components';
-import { RotateAnimation } from './rotate-animation';
-import { FadeInOutAnimation } from './fade-in-out-animation';
 import { PayableInvoiceData, useInvoiceEvents, useModal } from 'checkout/hooks';
 import { InvoiceChangeType } from 'checkout/backend';
 import { ModalContext } from './modal-context';
@@ -115,27 +114,23 @@ export const ModalContainer = () => {
     const activeModalName = useMemo(() => modalState.find((modal) => modal.active).name, [modalState]);
 
     return (
-        <FadeInOutAnimation enter={750} appear={750} leave={750}>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
             <Container>
-                <RotateAnimation enter={1000} leave={500}>
-                    <div key={activeModalName}>
-                        <ModalContext.Provider
-                            value={{
-                                modalState,
-                                goToFormInfo,
-                                prepareToPay,
-                                prepareToRetry,
-                                forgetPaymentAttempt,
-                                setViewInfoError
-                            }}>
-                            <PayableInvoiceContext.Provider value={{ payableInvoiceData, setPayableInvoiceData }}>
-                                {activeModalName === ModalName.modalForms && <Modal />}
-                                {activeModalName === ModalName.modalInteraction && <UserInteractionModal />}
-                            </PayableInvoiceContext.Provider>
-                        </ModalContext.Provider>
-                    </div>
-                </RotateAnimation>
+                <ModalContext.Provider
+                    value={{
+                        modalState,
+                        goToFormInfo,
+                        prepareToPay,
+                        prepareToRetry,
+                        forgetPaymentAttempt,
+                        setViewInfoError
+                    }}>
+                    <PayableInvoiceContext.Provider value={{ payableInvoiceData, setPayableInvoiceData }}>
+                        {activeModalName === ModalName.modalForms && <Modal />}
+                        {activeModalName === ModalName.modalInteraction && <UserInteractionModal />}
+                    </PayableInvoiceContext.Provider>
+                </ModalContext.Provider>
             </Container>
-        </FadeInOutAnimation>
+        </motion.div>
     );
 };

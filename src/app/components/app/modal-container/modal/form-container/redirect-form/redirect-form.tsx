@@ -18,7 +18,7 @@ const Container = styled.div`
     height: 360px;
 `;
 
-export const RedirectForm: React.FC = () => {
+export const RedirectForm = ({ onMount }: { onMount: () => void }) => {
     const containerRef = useRef(null);
     const [form, setForm] = useState(null);
     const { origin } = useContext(InitialContext);
@@ -26,6 +26,7 @@ export const RedirectForm: React.FC = () => {
     const { request } = useActiveModalForm<RedirectFormInfo>(modalState);
 
     useEffect(() => {
+        onMount();
         const prepared = prepareForm(origin, request, '_self');
         containerRef.current.appendChild(prepared);
         setForm(prepared);
