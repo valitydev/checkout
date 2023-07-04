@@ -16,7 +16,7 @@ import { isEmptyObject } from 'checkout/utils/is-empty-object';
 import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';
 
-export const WalletForm = () => {
+export const WalletForm = ({ onMount }: { onMount: () => void }) => {
     const { locale, initConfig } = useContext(InitialContext);
     const { modalState, goToFormInfo, prepareToPay, setViewInfoError } = useContext(ModalContext);
     const { createPaymentState, setFormData } = useCreatePayment();
@@ -29,6 +29,10 @@ export const WalletForm = () => {
     } = useForm<WalletFormValues>({
         mode: 'onChange'
     });
+
+    useEffect(() => {
+        onMount();
+    }, []);
 
     useEffect(() => {
         if (isSubmitted && !isEmptyObject(errors)) {

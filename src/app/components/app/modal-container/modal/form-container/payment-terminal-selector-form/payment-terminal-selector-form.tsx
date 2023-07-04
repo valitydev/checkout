@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import styled from 'checkout/styled-components';
 
 import { Header } from '../header';
@@ -21,12 +21,16 @@ const Container = styled.div`
 
 const toHeader = (locale: Locale, category: KnownProviderCategories) => locale[`form.header.${category}.label`];
 
-export const PaymentTerminalSelectorForm: React.FC = () => {
+export const PaymentTerminalSelectorForm = ({ onMount }: { onMount: () => void }) => {
     const { locale, availablePaymentMethods } = useContext(InitialContext);
     const { modalState, goToFormInfo } = useContext(ModalContext);
     const { category } = useActiveModalForm<PaymentTerminalSelectorFormInfo>(modalState);
     const paymentMethod = getAvailableTerminalPaymentMethod(availablePaymentMethods, category);
     const serviceProviders = paymentMethod?.serviceProviders;
+
+    useEffect(() => {
+        onMount();
+    }, []);
 
     return (
         <Container>

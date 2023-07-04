@@ -1,28 +1,27 @@
 import * as React from 'react';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 import { CardForm } from './card-form';
-import { FormName, ModalForms, ModalName, SlideDirection, FormInfo } from 'checkout/hooks';
+import { FormName, ModalForms, ModalName, SlideDirection } from 'checkout/hooks';
 import { PaymentMethods } from './payment-methods';
 import { FormLoader } from './form-loader';
 import { ResultForm } from './result-form';
 import { WalletForm } from './wallet-form';
 import { findNamed } from 'checkout/utils';
-import styled, { css } from 'checkout/styled-components';
+import styled from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
-import { shake } from 'checkout/styled-components/animations';
-import { stylableTransition, ENTER, LEAVE, ACTIVE } from 'checkout/styled-transition';
 import { NoAvailablePaymentMethodForm } from './no-available-payment-method-form';
 import { WalletProviders } from './wallet-providers';
 import { RedirectForm } from './redirect-form';
 import { PaymentTerminalForm } from './payment-terminal-form';
 import { QrCodeInteractionForm } from './qr-code-interaction-form';
 import { PaymentTerminalSelectorForm } from './payment-terminal-selector-form';
+
 import { ModalContext } from '../../modal-context';
-import isNil from 'checkout/utils/is-nil';
 
 const Container = styled.div`
-    padding: 0 8px 32px 8px;
+    padding: 16px;
 
     @media ${device.desktop} {
         width: 360px;
@@ -30,129 +29,52 @@ const Container = styled.div`
     }
 `;
 
-const Form = styled.div<{ error?: any; height?: number }>`
+const Form = styled.div<{ height?: number }>`
+    position: relative;
     background: #fff;
     border-radius: 16px;
     border: 1px solid ${({ theme }) => theme.form.border};
-    padding: 30px 20px;
-    position: relative;
+    padding: 24px;
     overflow: hidden;
-    transition: height 0.1s;
+    transition: height 0.3s;
     height: ${({ height }) => (height ? `${height}px` : 'auto')};
-
-    @media ${device.desktop} {
-        padding: 30px;
-        min-height: auto;
-    }
-
-    ${({ error }) =>
-        error &&
-        css`
-            animation: ${shake} 0.82s;
-        `}
 `;
 
-const slideTransitionTime = '0.3s';
-
-const slideLeftAnimation = css`
-    ${ENTER} {
-        transform: translateX(-100%);
-        opacity: 0;
-        transition: all ${slideTransitionTime};
-
-        ${ACTIVE} {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-
-    ${LEAVE} {
-        transform: translateX(0);
-        opacity: 1;
-        position: absolute;
-        top: 0;
-        transition: all ${slideTransitionTime};
-        width: 100%;
-
-        ${ACTIVE} {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-`;
-
-const slideRightAnimation = css`
-    ${ENTER} {
-        transform: translateX(100%);
-        opacity: 0;
-        transition: all ${slideTransitionTime};
-
-        ${ACTIVE} {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-
-    ${LEAVE} {
-        transform: translateX(0);
-        opacity: 1;
-        position: absolute;
-        top: 0;
-        transition: all ${slideTransitionTime};
-        width: 100%;
-
-        ${ACTIVE} {
-            transform: translateX(-100%);
-            opacity: 0;
-        }
-    }
-`;
-
-const FormContainerAnimation = styled(stylableTransition)<{ direction: SlideDirection }>`
-    height: 100%;
-    position: relative;
-
-    form {
-        width: 100%;
-        display: flex;
-        flex-wrap: nowrap;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    ${ENTER},${LEAVE} {
-        * {
-            pointer-events: none !important;
-        }
-    }
-
-    ${({ direction }) => (direction === SlideDirection.left ? slideLeftAnimation : slideRightAnimation)}
-`;
-
-const renderForm = ({ name }: FormInfo, onMount: () => void) => {
+const renderForm = (name: FormName, onMount: () => void) => {
     switch (name) {
         case FormName.paymentMethods:
-            return <PaymentMethods key={name} />;
+            return <PaymentMethods onMount={onMount} />;
         case FormName.cardForm:
-            return <CardForm key={name} />;
+            return <CardForm onMount={onMount} />;
         case FormName.walletForm:
-            return <WalletForm key={name} />;
+            return <WalletForm onMount={onMount} />;
         case FormName.walletProviders:
-            return <WalletProviders key={name} />;
+            return <WalletProviders onMount={onMount} />;
         case FormName.resultForm:
-            return <ResultForm key={name} />;
+            return <ResultForm onMount={onMount} />;
         case FormName.noAvailablePaymentMethodForm:
-            return <NoAvailablePaymentMethodForm key={name} />;
+            return <NoAvailablePaymentMethodForm onMount={onMount} />;
         case FormName.redirectForm:
-            return <RedirectForm key={name} />;
+            return <RedirectForm onMount={onMount} />;
         case FormName.paymentTerminalForm:
-            return <PaymentTerminalForm key={name} />;
+            return <PaymentTerminalForm onMount={onMount} />;
         case FormName.paymentTerminalSelector:
-            return <PaymentTerminalSelectorForm key={name} />;
+            return <PaymentTerminalSelectorForm onMount={onMount} />;
         case FormName.qrCodeInteractionForm:
-            return <QrCodeInteractionForm key={name} onMount={onMount} />;
+            return <QrCodeInteractionForm onMount={onMount} />;
         default:
             return null;
+    }
+};
+
+const toInitialPos = (slideDirection: SlideDirection): number => {
+    switch (slideDirection) {
+        case SlideDirection.left:
+            return -300;
+        case SlideDirection.right:
+            return 300;
+        default:
+            return 0;
     }
 };
 
@@ -163,39 +85,40 @@ export const FormContainer = () => {
     const [height, setHeight] = useState(0);
     const { modalState } = useContext(ModalContext);
 
-    useEffect(() => {
-        setHeight(contentElement.current?.clientHeight || DEFAULT_HEIGHT_PX);
-    }, []);
-
-    const { activeFormInfo, viewInfo } = useMemo(() => {
-        const modalForms = findNamed(modalState, ModalName.modalForms) as ModalForms;
+    const {
+        formName,
+        viewInfo: { slideDirection, inProcess }
+    } = useMemo(() => {
+        const found = findNamed(modalState, ModalName.modalForms) as ModalForms;
         return {
-            activeFormInfo: modalForms.formsInfo.find((item) => item.active),
-            viewInfo: modalForms.viewInfo
+            formName: found.formsInfo.find((item) => item.active)?.name,
+            viewInfo: found.viewInfo
         };
     }, [modalState]);
 
-    const onTransitionEnd = useCallback(() => {
+    const onMount = useCallback(() => {
         const elHight = contentElement.current?.clientHeight || 0;
         if (elHight !== height) {
             setHeight(elHight);
         }
     }, [contentElement, height, setHeight]);
 
+    useEffect(() => {
+        setHeight(contentElement.current?.clientHeight || DEFAULT_HEIGHT_PX);
+    }, []);
+
     return (
         <Container>
-            <Form error={viewInfo.error} height={height}>
-                <div ref={contentElement}>
-                    <FormContainerAnimation
-                        component="div"
-                        direction={viewInfo.slideDirection}
-                        enter={300}
-                        leave={300}
-                        onTransitionEnd={onTransitionEnd}>
-                        {!isNil(activeFormInfo) && renderForm(activeFormInfo, onTransitionEnd)}
-                    </FormContainerAnimation>
-                    {viewInfo.inProcess && <FormLoader />}
-                </div>
+            <Form height={height}>
+                <motion.div
+                    ref={contentElement}
+                    key={formName}
+                    initial={{ x: toInitialPos(slideDirection) }}
+                    animate={{ x: 0 }}
+                    transition={{ duration: 0.3 }}>
+                    {renderForm(formName, onMount)}
+                    {inProcess && <FormLoader />}
+                </motion.div>
             </Form>
         </Container>
     );

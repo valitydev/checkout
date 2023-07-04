@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { Header } from '../header';
 import { WalletProviderPaymentMethodItem } from '../wallet-provider-payment-method-item';
@@ -11,10 +11,14 @@ const getAvailablePaymentMethod = (
     methodName: PaymentMethodName
 ): DigitalWalletPaymentMethod => availablePaymentMethods.find((m) => m.name === methodName);
 
-export const WalletProviders: React.FC = () => {
+export const WalletProviders = ({ onMount }: { onMount: () => void }) => {
     const context = useContext(InitialContext);
     const { locale, availablePaymentMethods } = context;
     const paymentMethod = getAvailablePaymentMethod(availablePaymentMethods, PaymentMethodName.DigitalWallet);
+
+    useEffect(() => {
+        onMount();
+    }, []);
 
     return (
         <div>

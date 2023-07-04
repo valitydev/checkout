@@ -16,7 +16,7 @@ import { CardFormInputs } from './card-form-inputs';
 import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';
 
-export const CardForm = () => {
+export const CardForm = ({ onMount }: { onMount: () => void }) => {
     const {
         locale,
         initConfig,
@@ -32,6 +32,10 @@ export const CardForm = () => {
     } = useForm<CardFormInputs>({ mode: 'onChange' });
     const cardHolder = toCardHolderConfig(initConfig.requireCardHolder);
     const amount = toAmountConfig(initConfig, invoiceTemplate);
+
+    useEffect(() => {
+        onMount();
+    }, []);
 
     useEffect(() => {
         if (isSubmitted && !isEmptyObject(errors)) {

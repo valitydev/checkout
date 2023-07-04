@@ -2,13 +2,21 @@ import * as React from 'react';
 import { number } from 'card-validator';
 
 import * as cardIcons from 'checkout/components/ui/icon/card';
-import styled from 'checkout/styled-components';
-import { growth } from 'checkout/styled-components/animations';
+import styled, { keyframes } from 'checkout/styled-components';
 
 interface CardTypeIconProps {
     cardNumber: string;
     className?: string;
 }
+
+const growth = keyframes`
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+`;
 
 const cardIconsMapping = {
     visa: cardIcons.Visa,

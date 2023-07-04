@@ -1,8 +1,13 @@
 import * as React from 'react';
 
-import styled, { withTheme } from 'checkout/styled-components';
+import styled, { keyframes, withTheme } from 'checkout/styled-components';
 import { WithThemeProps } from 'checkout/themes';
-import { spin } from 'checkout/styled-components/animations';
+
+export const spin = keyframes`
+    100% {
+        transform: rotate(360deg);
+    }
+`;
 
 const LoaderWrapper = styled.svg`
     position: relative;

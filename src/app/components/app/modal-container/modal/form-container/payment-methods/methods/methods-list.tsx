@@ -2,10 +2,9 @@ import * as React from 'react';
 
 import { Methods } from './methods';
 import styled from 'checkout/styled-components';
-import { stylableTransition } from 'checkout/styled-transition';
 import { PaymentMethod } from 'checkout/hooks';
 
-const List = styled(stylableTransition)`
+const List = styled.ul`
     margin: 0;
     padding: 0;
     list-style: none;
@@ -13,7 +12,7 @@ const List = styled(stylableTransition)`
 `;
 
 export const MethodsList = ({ methods }: { methods: PaymentMethod[] }) => (
-    <List component="ul" appear={1000} leave={1000}>
+    <List>
         <Methods methods={methods} />
     </List>
 );

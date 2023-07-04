@@ -21,7 +21,7 @@ import { Container } from './container';
 import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';
 
-export const PaymentTerminalForm = () => {
+export const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
     const {
         locale,
         initConfig,
@@ -43,6 +43,10 @@ export const PaymentTerminalForm = () => {
         defaultValues
     });
     const [formTouched, setFormTouched] = useState(false);
+
+    useEffect(() => {
+        onMount();
+    }, []);
 
     useEffect(() => {
         if (!formTouched && isValid) {

@@ -1,9 +1,17 @@
 import * as React from 'react';
 
 import { Loader } from '../ui/loader';
-import styled from 'checkout/styled-components';
+import styled, { keyframes } from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
-import { growth } from 'checkout/styled-components/animations';
+
+const growth = keyframes`
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+`;
 
 const LayoutLoaderWrapper = styled.div`
     position: fixed;
@@ -23,7 +31,7 @@ const LayoutLoaderWrapper = styled.div`
         align-items: center;
         justify-content: center;
         transform: translate(0, 0);
-        animation: ${growth} 0.75s;
+        animation: ${growth} 0.5s;
     }
 `;
 

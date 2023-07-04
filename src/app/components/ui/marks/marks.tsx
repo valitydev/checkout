@@ -1,23 +1,14 @@
 import * as React from 'react';
+import { motion } from 'framer-motion';
 
 import { Checkmark } from 'checkout/components/ui/icon';
 import styled, { css } from 'checkout/styled-components';
-import { stylableTransition, APPEAR, ENTER, LEAVE } from 'checkout/styled-transition';
-import { fadein, fadeout } from 'checkout/styled-components/animations';
 
-const FadeAnimation = styled(stylableTransition).attrs({
-    appear: 450,
-    leave: 450,
-    enter: 450
-})`
-    ${APPEAR}, ${ENTER} {
-        animation: ${fadein} 0.5s;
-    }
-
-    ${LEAVE} {
-        animation: ${fadeout} 0.5s;
-    }
-`;
+const fadeIn = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { duration: 0.3 } },
+    exit: { opacity: 0, transition: { duration: 0.3 } }
+};
 
 const iconStyle = css`
     display: flex;
@@ -40,7 +31,7 @@ const CheckmarkIcon = styled(Checkmark)`
 `;
 
 export const Marks = () => (
-    <FadeAnimation>
+    <motion.div variants={fadeIn} initial="hidden" animate="show" exit="exit">
         <CheckmarkIcon />
-    </FadeAnimation>
+    </motion.div>
 );

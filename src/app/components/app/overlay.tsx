@@ -1,27 +1,9 @@
 import * as React from 'react';
+import { motion } from 'framer-motion';
 
 import styled, { css } from 'checkout/styled-components';
-import { stylableTransition, APPEAR, LEAVE, ACTIVE } from 'checkout/styled-transition';
-import { fadein, fadeout } from 'checkout/styled-components/animations';
-
-const Animation = styled(stylableTransition)`
-    ${APPEAR} {
-        animation: ${fadein} 0.75s;
-    }
-
-    ${LEAVE} {
-        animation: ${fadeout} 0.75s;
-
-        ${ACTIVE} {
-            opacity: 0;
-        }
-    }
-`;
 
 const OverlayBg = styled.div`
-    // Safari popup animation fix
-    -webkit-transform: translateZ(-1000px);
-
     position: fixed;
     width: 100%;
     height: 100%;
@@ -38,7 +20,7 @@ const OverlayBg = styled.div`
 `;
 
 export const Overlay = () => (
-    <Animation appear={750} leave={750}>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
         <OverlayBg key="overlay" />
-    </Animation>
+    </motion.div>
 );

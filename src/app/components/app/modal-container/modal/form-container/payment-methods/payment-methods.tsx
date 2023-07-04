@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
 import { MethodsList } from './methods';
 import { OtherPaymentMethodsLink } from './other-payment-methods-link';
@@ -15,11 +15,15 @@ const sortByPriority = (methods: PaymentMethod[]): PaymentMethod[] =>
 const sliceMethods = (methods: PaymentMethod[], showAll: boolean, limit = 3) =>
     showAll ? methods : methods.slice(0, limit);
 
-export const PaymentMethods = () => {
+export const PaymentMethods = ({ onMount }: { onMount: () => void }) => {
     const { locale, availablePaymentMethods } = useContext(InitialContext);
     const [isShowAll, setIsShowAll] = useState(false);
     const allMethods = useMemo(() => sortByPriority(availablePaymentMethods), [availablePaymentMethods]);
     const visibleMethods = useMemo(() => sliceMethods(allMethods, isShowAll), [allMethods, isShowAll]);
+
+    useEffect(() => {
+        onMount();
+    }, [isShowAll]);
 
     return (
         <form>
