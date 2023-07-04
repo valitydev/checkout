@@ -3,7 +3,7 @@ import { useCallback, useContext, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import { CardForm } from './card-form';
-import { FormName, ModalForms, ModalName, SlideDirection, FormInfo } from 'checkout/hooks';
+import { FormName, ModalForms, ModalName, SlideDirection } from 'checkout/hooks';
 import { PaymentMethods } from './payment-methods';
 import { FormLoader } from './form-loader';
 import { ResultForm } from './result-form';
@@ -17,7 +17,6 @@ import { RedirectForm } from './redirect-form';
 import { PaymentTerminalForm } from './payment-terminal-form';
 import { QrCodeInteractionForm } from './qr-code-interaction-form';
 import { PaymentTerminalSelectorForm } from './payment-terminal-selector-form';
-import isNil from 'checkout/utils/is-nil';
 
 import { ModalContext } from '../../modal-context';
 
@@ -31,17 +30,17 @@ const Container = styled.div`
 `;
 
 const Form = styled.div<{ height?: number }>`
+    position: relative;
     background: #fff;
     border-radius: 16px;
     border: 1px solid ${({ theme }) => theme.form.border};
     padding: 24px;
-    position: relative;
     overflow: hidden;
     transition: height 0.3s;
     height: ${({ height }) => (height ? `${height}px` : 'auto')};
 `;
 
-const renderForm = ({ name }: FormInfo, onMount: () => void) => {
+const renderForm = (name: FormName, onMount: () => void) => {
     switch (name) {
         case FormName.paymentMethods:
             return <PaymentMethods onMount={onMount} />;
@@ -68,16 +67,30 @@ const renderForm = ({ name }: FormInfo, onMount: () => void) => {
     }
 };
 
+const toInitialPos = (slideDirection: SlideDirection): number => {
+    switch (slideDirection) {
+        case SlideDirection.left:
+            return -300;
+        case SlideDirection.right:
+            return 300;
+        default:
+            return 0;
+    }
+};
+
 export const FormContainer = () => {
     const contentElement = useRef(null);
     const [height, setHeight] = useState(0);
     const { modalState } = useContext(ModalContext);
 
-    const { activeFormInfo, viewInfo } = useMemo(() => {
-        const modalForms = findNamed(modalState, ModalName.modalForms) as ModalForms;
+    const {
+        formName,
+        viewInfo: { slideDirection, inProcess }
+    } = useMemo(() => {
+        const { formsInfo, viewInfo } = findNamed(modalState, ModalName.modalForms) as ModalForms;
         return {
-            activeFormInfo: modalForms.formsInfo.find((item) => item.active),
-            viewInfo: modalForms.viewInfo
+            formName: formsInfo.find((item) => item.active).name,
+            viewInfo
         };
     }, [modalState]);
 
@@ -91,17 +104,15 @@ export const FormContainer = () => {
     return (
         <Container>
             <Form height={height}>
-                {!isNil(activeFormInfo) && (
-                    <motion.div
-                        ref={contentElement}
-                        key={activeFormInfo.name}
-                        initial={{ x: viewInfo.slideDirection === SlideDirection.left ? -300 : 300 }}
-                        animate={{ x: 0 }}
-                        transition={{ duration: 0.3 }}>
-                        {renderForm(activeFormInfo, onMount)}
-                        {viewInfo.inProcess && <FormLoader />}
-                    </motion.div>
-                )}
+                <motion.div
+                    ref={contentElement}
+                    key={formName}
+                    initial={{ x: toInitialPos(slideDirection) }}
+                    animate={{ x: 0 }}
+                    transition={{ duration: 0.3 }}>
+                    {renderForm(formName, onMount)}
+                    {inProcess && <FormLoader />}
+                </motion.div>
             </Form>
         </Container>
     );
