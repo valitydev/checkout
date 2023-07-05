@@ -32,6 +32,11 @@ module.exports = (env) => ({
                 exclude: /node_modules/
             },
             {
+                test: /\.mjs$/,
+                include: /node_modules/,
+                type: 'javascript/auto'
+            },
+            {
                 test: /\.css$/,
                 use: [
                     MiniCssExtractPlugin.loader,

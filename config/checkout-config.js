@@ -25,7 +25,7 @@ module.exports = {
     },
     resolve: {
         modules: ['node_modules', path.join(__dirname, 'src/app')],
-        extensions: ['.ts', '.tsx', '.js'],
+        extensions: ['.ts', '.tsx', '.js', '.mjs'],
         alias: {
             checkout: __dirname + '/../src/app'
         }
