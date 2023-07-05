@@ -1,6 +1,6 @@
 import { CardData, PaymentMethodName, PaymentTool, PaymentToolType } from 'checkout/backend';
 import { CardFormValues, PaymentTerminalFormValues, WalletFormValues } from 'checkout/hooks';
-import { replaceSpaces } from 'checkout/utils/replace-spaces';
+import replaceSpaces from 'checkout/utils/replace-spaces';
 import { FormData } from '../types';
 
 const toPaymentToolBankCard = (values: CardFormValues): CardData => {

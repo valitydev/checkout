@@ -1,5 +1,13 @@
-import mapKeys from 'lodash-es/mapKeys';
 import { appendInitButton } from './init-button/append-init-button';
+
+const mapKeys = (obj, mapper) =>
+    Object.entries(obj).reduce(
+        (acc, [key, value]) => ({
+            ...acc,
+            [mapper(value, key)]: value
+        }),
+        {}
+    );
 
 const getOuterForm = (element: HTMLScriptElement) => {
     const node = element.parentNode as HTMLFormElement;

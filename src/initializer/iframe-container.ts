@@ -1,5 +1,3 @@
-import assign from 'lodash-es/assign';
-
 const s4 = () =>
     Math.floor((1 + Math.random()) * 0x10000)
         .toString(16)
@@ -23,6 +21,12 @@ const styles = {
     zIndex: 2147483647
 };
 
+const setStyles = (element, styles) => {
+    for (let property in styles) {
+        element.style[property] = styles[property];
+    }
+};
+
 const create = (origin: string): HTMLIFrameElement => {
     const iframe = document.createElement('iframe');
     iframe.setAttribute('src', `${origin}/v1/checkout.html`);
@@ -31,7 +35,10 @@ const create = (origin: string): HTMLIFrameElement => {
     iframe.setAttribute('allowtransparency', 'true');
     iframe.setAttribute('frameborder', '0');
     iframe.setAttribute('allowpaymentrequest', '');
-    assign(iframe.style, styles);
+    setStyles(iframe, {
+        ...iframe.style,
+        ...styles
+    });
     return iframe;
 };
 

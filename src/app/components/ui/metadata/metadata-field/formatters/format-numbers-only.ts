@@ -1,7 +1,7 @@
 import { FormEvent } from 'react';
 import { MetadataFieldFormatter } from 'checkout/backend';
-import isNil from 'lodash-es/isNil';
 import { safeVal } from 'checkout/utils';
+import isNil from 'checkout/utils/is-nil';
 
 export const formatNumbersOnly = ({ maxLength }: MetadataFieldFormatter) => (e: FormEvent<HTMLInputElement>) => {
     const target = e.currentTarget;

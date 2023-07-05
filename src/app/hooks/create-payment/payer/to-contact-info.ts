@@ -1,4 +1,4 @@
-import { replaceSpaces } from 'checkout/utils/replace-spaces';
+import replaceSpaces from 'checkout/utils/replace-spaces';
 import isNil from 'checkout/utils/is-nil';
 import { PayableFormValues, PaymentTerminalFormValues } from 'checkout/hooks';
 import { ContactInfo } from 'checkout/backend';
