@@ -2,15 +2,14 @@ import { InitConfig } from 'checkout/config';
 
 const isFunction = (val) => typeof val === 'function';
 
-function mapValue(object, iteratee) {
+const mapValue = (object, iteratee) => {
     object = Object(object);
     const result = {};
-
     Object.keys(object).forEach((key) => {
         result[key] = iteratee(object[key], key, object);
     });
     return result;
-}
+};
 
 const mapBoolean = (obj: object): object =>
     mapValue(obj, (value: any) => {
