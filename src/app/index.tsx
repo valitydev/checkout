@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import { App } from './components/app';
 import { initialize } from './initialize';
@@ -9,8 +9,9 @@ import isNil from './utils/is-nil';
 const ON_COMPLETE_TIMEOUT_MS = 1000 * 5;
 
 initialize().then(([transport, initParams]) => {
-    const app = document.getElementById('app');
-    ReactDOM.render(
+    const container = document.getElementById('app');
+    const root = createRoot(container);
+    root.render(
         <App
             initParams={initParams}
             onComplete={() => {
@@ -21,10 +22,9 @@ initialize().then(([transport, initParams]) => {
                     if (!isNil(redirectUrl)) {
                         window.open(redirectUrl, '_self');
                     }
-                    ReactDOM.unmountComponentAtNode(app);
+                    root.unmount();
                 }, ON_COMPLETE_TIMEOUT_MS);
             }}
-        />,
-        app
+        />
     );
 });
