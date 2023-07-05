@@ -1,6 +1,6 @@
 {
   "name": "checkout",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "clear": "rimraf dist && rimraf .cache-loader",
@@ -29,7 +29,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "7.45.0",
-    "react-svg": "14.1.8",
+    "react-svg": "16.1.18",
     "styled-components": "5.3.3",
     "uri-template": "1.0.3",
     "uuid": "~8.3.2"
