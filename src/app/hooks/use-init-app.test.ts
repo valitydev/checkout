@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 
 import { useInitApp } from './use-init-app';
 import { PaymentMethodName } from 'checkout/backend';
