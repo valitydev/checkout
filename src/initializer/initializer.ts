@@ -1,9 +1,19 @@
-import mapValues from 'lodash-es/mapValues';
-import isFunction from 'lodash-es/isFunction';
 import { InitConfig } from 'checkout/config';
 
+const isFunction = (val) => typeof val === 'function';
+
+function mapValue(object, iteratee) {
+    object = Object(object);
+    const result = {};
+
+    Object.keys(object).forEach((key) => {
+        result[key] = iteratee(object[key], key, object);
+    });
+    return result;
+}
+
 const mapBoolean = (obj: object): object =>
-    mapValues(obj, (value: any) => {
+    mapValue(obj, (value: any) => {
         switch (value) {
             case 'true':
                 return true;

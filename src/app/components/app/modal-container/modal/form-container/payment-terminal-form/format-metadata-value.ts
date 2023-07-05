@@ -1,6 +1,6 @@
 import { ServiceProviderMetadataField } from 'checkout/backend';
-import { replaceSpaces } from 'checkout/utils';
-import { isNil } from 'lodash-es';
+import isNil from 'checkout/utils/is-nil';
+import replaceSpaces from 'checkout/utils/replace-spaces';
 
 const toResultValue = (field: ServiceProviderMetadataField, formValue) => {
     switch (field.type) {
