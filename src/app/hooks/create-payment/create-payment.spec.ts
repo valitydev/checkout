@@ -2,8 +2,6 @@ import { PaymentTerminalFormValues } from 'checkout/hooks';
 import { PaymentMethodName } from '../init-app';
 import { createPayment } from './create-payment';
 
-jest.mock('fingerprintjs2');
-
 const fetchMock = (result, status = 200) =>
     Promise.resolve({
         status,
