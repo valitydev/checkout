@@ -36,7 +36,8 @@ const initSentry = async (dsn: string) => {
             }),
             new CaptureConsoleIntegration({
                 levels: ['warn', 'error']
-            })
+            }),
+            new Sentry.Replay()
         ],
         tracesSampleRate: 0.2,
         release: env.version
