@@ -1,5 +1,6 @@
 import * as creditCardType from 'credit-card-type';
 import * as Sentry from '@sentry/react';
+import { HttpClient as HttpClientIntegration, CaptureConsole as CaptureConsoleIntegration } from '@sentry/integrations';
 
 import { listen, Transport, StubTransport, CommunicatorEvents, communicatorInstanceName } from '../communicator';
 import { getUrlParams, URLParams } from 'checkout/utils';
@@ -28,8 +29,16 @@ const initSentry = async (dsn: string) => {
     Sentry.init({
         environment: 'production',
         dsn,
-        integrations: [new Sentry.BrowserTracing()],
-        tracesSampleRate: 0.1,
+        integrations: [
+            new Sentry.BrowserTracing(),
+            new HttpClientIntegration({
+                failedRequestStatusCodes: [[400, 599]]
+            }),
+            new CaptureConsoleIntegration({
+                levels: ['warn', 'error']
+            })
+        ],
+        tracesSampleRate: 0.2,
         release: env.version
     });
 };
