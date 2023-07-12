@@ -40,7 +40,9 @@ const initSentry = async (dsn: string) => {
             new Sentry.Replay()
         ],
         tracesSampleRate: 0.2,
-        release: env.version
+        release: env.version,
+        replaysOnErrorSampleRate: 1.0,
+        replaysSessionSampleRate: 0.1
     });
 };
 
