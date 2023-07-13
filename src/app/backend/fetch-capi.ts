@@ -18,10 +18,11 @@ const provideResponse = async (response: Response) => {
 };
 
 const doFetch = async (param: FetchCapiParams, retryDelay: number, retryLimit: number, attempt: number = 0) => {
+    const method = param.method || 'GET';
     try {
         attempt++;
         return await fetch(param.endpoint, {
-            method: param.method || 'GET',
+            method,
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 Authorization: `Bearer ${param.accessToken}`,
@@ -30,6 +31,7 @@ const doFetch = async (param: FetchCapiParams, retryDelay: number, retryLimit: n
             body: param.body ? JSON.stringify(param.body) : undefined
         });
     } catch (ex) {
+        console.warn(`Request failed: ${method} ${param.endpoint} (${ex}). Attempt: ${attempt} of ${retryLimit}`);
         if (attempt === retryLimit) {
             return Promise.reject(ex);
         }
