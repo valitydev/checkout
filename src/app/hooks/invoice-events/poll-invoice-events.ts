@@ -1,10 +1,9 @@
 import { InvoiceChange, InvoiceChangeType, InvoiceEvent, getInvoiceEvents } from 'checkout/backend';
+import delay from 'checkout/utils/delay';
 import isNil from 'checkout/utils/is-nil';
 import last from 'checkout/utils/last';
 
 const GET_INVOICE_EVENTS_LIMIT = 20;
-
-const delay = (ms: number): Promise<undefined> => new Promise((resolve) => setTimeout(resolve, ms));
 
 const getChange = (
     event: InvoiceEvent | undefined,
