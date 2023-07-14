@@ -181,7 +181,10 @@ describe('useInitApp', () => {
         test('should failure init', async () => {
             const errorMsg = 'API error example';
             const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-            global.fetch = jest.fn().mockImplementation(() => Promise.reject(errorMsg));
+
+            const mockFetch = jest.fn();
+            mockFetch.mockResolvedValue(fetchMock(errorMsg, 500));
+            global.fetch = mockFetch;
 
             const { result } = renderHook(() => useInitApp());
             expect(result.current.state.status).toBe('PRISTINE');
