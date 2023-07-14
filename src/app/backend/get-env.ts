@@ -1,13 +1,8 @@
 import { getNocacheValue } from 'checkout/utils';
+import { fetchCapi } from './fetch-capi';
 
 export interface Env {
     version: string;
 }
 
-export const getEnv = (): Promise<Env> =>
-    fetch(`../env.json?nocache=${getNocacheValue()}`, {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'GET'
-    }).then((response) => response.json());
+export const getEnv = (): Promise<Env> => fetchCapi({ endpoint: `../env.json?nocache=${getNocacheValue()}` });

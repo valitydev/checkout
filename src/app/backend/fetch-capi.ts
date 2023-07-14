@@ -3,7 +3,7 @@ import delay from 'checkout/utils/delay';
 
 export type FetchCapiParams = {
     endpoint: string;
-    accessToken: string;
+    accessToken?: string;
     method?: 'GET' | 'POST' | 'PUT';
     body?: any;
 };
@@ -25,13 +25,12 @@ const doFetch = async (param: FetchCapiParams, retryDelay: number, retryLimit: n
             method,
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
-                Authorization: `Bearer ${param.accessToken}`,
+                Authorization: param.accessToken ? `Bearer ${param.accessToken}` : undefined,
                 'X-Request-ID': guid()
             },
             body: param.body ? JSON.stringify(param.body) : undefined
         });
     } catch (ex) {
-        console.warn(`Request failed: ${method} ${param.endpoint} (${ex}). Attempt: ${attempt} of ${retryLimit}`);
         if (attempt === retryLimit) {
             return Promise.reject(ex);
         }

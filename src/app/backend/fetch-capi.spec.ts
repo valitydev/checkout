@@ -97,8 +97,6 @@ describe('fetch capi', () => {
     });
 
     test('should retry failed fetch requests', async () => {
-        const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-
         const expected = {
             someField: 'someValue'
         };
@@ -131,13 +129,9 @@ describe('fetch capi', () => {
         expect(mockFetch).toHaveBeenCalledWith(endpoint, requestInit);
         expect(mockFetch).toHaveBeenCalledWith(endpoint, requestInit);
         expect(mockFetch).toHaveBeenCalledWith(endpoint, requestInit);
-        expect(warnSpy).toHaveBeenCalled();
-        warnSpy.mockRestore();
     });
 
     test('should retry failed fetch requests based on config', async () => {
-        const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-
         const expectedError = new Error('TypeError: Failed to fetch');
         const mockFetch = jest.fn().mockRejectedValue(expectedError);
         global.fetch = mockFetch;
@@ -154,7 +148,5 @@ describe('fetch capi', () => {
             expect(error).toEqual(expectedError);
         }
         expect(mockFetch).toHaveBeenCalledTimes(retryLimit);
-        expect(warnSpy).toHaveBeenCalled();
-        warnSpy.mockRestore();
     });
 });
