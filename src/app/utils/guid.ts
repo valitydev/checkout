@@ -4,6 +4,8 @@ function s4() {
         .substring(1);
 }
 
-export function guid() {
+function guid() {
     return `${s4()}${s4()}-${s4()}${s4()}`;
 }
+
+export default guid;

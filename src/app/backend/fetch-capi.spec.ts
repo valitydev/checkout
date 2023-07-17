@@ -80,10 +80,12 @@ describe('fetch capi', () => {
     });
 
     test('should catch json reject', async () => {
-        const mockFetch = jest.fn();
-        mockFetch.mockResolvedValue({
+        const errorMsg = 'Read json error';
+        const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+        const mockFetch = jest.fn().mockResolvedValue({
             status: 500,
-            json: async () => Promise.reject()
+            json: async () => Promise.reject(errorMsg)
         });
         global.fetch = mockFetch;
 
@@ -92,8 +94,10 @@ describe('fetch capi', () => {
         try {
             await fetchCapi({ endpoint, accessToken });
         } catch (error) {
-            expect(error).toStrictEqual({ responseStatus: 500 });
+            expect(error).toEqual(errorMsg);
         }
+        expect(errorSpy).toHaveBeenCalled();
+        errorSpy.mockRestore();
     });
 
     test('should retry failed fetch requests', async () => {

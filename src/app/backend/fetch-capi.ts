@@ -1,4 +1,4 @@
-import { guid } from 'checkout/utils';
+import guid from 'checkout/utils/guid';
 import delay from 'checkout/utils/delay';
 
 export type FetchCapiParams = {
@@ -13,7 +13,8 @@ const provideResponse = async (response: Response) => {
         const json = await response.json();
         return response.status >= 200 && response.status <= 300 ? json : Promise.reject(json);
     } catch (ex) {
-        return Promise.reject({ responseStatus: response.status });
+        console.error('Read response json error', ex);
+        return Promise.reject(ex);
     }
 };
 
@@ -39,7 +40,7 @@ const doFetch = async (param: FetchCapiParams, retryDelay: number, retryLimit: n
     }
 };
 
-export const fetchCapi = async <T>(param: FetchCapiParams, retryDelay = 500, retryLimit = 20): Promise<T> => {
+export const fetchCapi = async <T>(param: FetchCapiParams, retryDelay = 1000, retryLimit = 20): Promise<T> => {
     const response = await doFetch(param, retryDelay, retryLimit);
     return provideResponse(response);
 };
