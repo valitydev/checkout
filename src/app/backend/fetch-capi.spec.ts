@@ -9,6 +9,7 @@ describe('fetch capi', () => {
         const mockFetch = jest.fn();
         mockFetch.mockResolvedValue({
             status: 200,
+            ok: true,
             json: async () => expected
         });
         global.fetch = mockFetch;
@@ -38,6 +39,7 @@ describe('fetch capi', () => {
         const mockFetch = jest.fn();
         mockFetch.mockResolvedValue({
             status: 200,
+            ok: true,
             json: async () => expected
         });
         global.fetch = mockFetch;
@@ -62,11 +64,12 @@ describe('fetch capi', () => {
     });
 
     test('should catch 500 status response', async () => {
-        const expectedError = 'Internal Server Error';
         const mockFetch = jest.fn();
+        const statusText = 'Internal Server Error';
         mockFetch.mockResolvedValue({
             status: 500,
-            json: async () => expectedError
+            ok: false,
+            statusText
         });
         global.fetch = mockFetch;
 
@@ -75,7 +78,7 @@ describe('fetch capi', () => {
         try {
             await fetchCapi({ endpoint, accessToken });
         } catch (error) {
-            expect(error).toEqual(expectedError);
+            expect(error).toStrictEqual({ status: 500, statusText, details: undefined });
         }
     });
 
@@ -84,7 +87,8 @@ describe('fetch capi', () => {
         const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
         const mockFetch = jest.fn().mockResolvedValue({
-            status: 500,
+            status: 200,
+            ok: true,
             json: async () => Promise.reject(errorMsg)
         });
         global.fetch = mockFetch;
@@ -111,6 +115,7 @@ describe('fetch capi', () => {
             .mockRejectedValueOnce(new Error('TypeError: Failed to fetch'))
             .mockResolvedValueOnce({
                 status: 200,
+                ok: true,
                 json: async () => expected
             });
         global.fetch = mockFetch;

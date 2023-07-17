@@ -3,9 +3,10 @@ import { act, renderHook } from '@testing-library/react';
 import { useInitApp } from './use-init-app';
 import { PaymentMethodName } from 'checkout/backend';
 
-const fetchMock = (result, status = 200) =>
+const fetchMock = (result, status = 200, ok = true) =>
     Promise.resolve({
         status,
+        ok,
         json: () => Promise.resolve(result)
     });
 
@@ -183,7 +184,7 @@ describe('useInitApp', () => {
             const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
             const mockFetch = jest.fn();
-            mockFetch.mockResolvedValue(fetchMock(errorMsg, 500));
+            mockFetch.mockResolvedValue(fetchMock(errorMsg, 500, false));
             global.fetch = mockFetch;
 
             const { result } = renderHook(() => useInitApp());
@@ -210,7 +211,7 @@ describe('useInitApp', () => {
             expect(state.status).toBe('FAILURE');
             expect(errorSpy).toHaveBeenCalled();
             if (state.status !== 'FAILURE') return;
-            expect(state.error).toBe(errorMsg);
+            expect(state.error).toStrictEqual({ details: errorMsg, status: 500, statusText: undefined });
         });
     });
 
