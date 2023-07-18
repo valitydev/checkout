@@ -28,6 +28,7 @@ const provideResponse = async (response: Response, retryDelay: number, retryLimi
             details: await getDetails(response)
         });
     } catch (ex) {
+        console.warn('Read response json error', ex, `attempt ${attempt} / ${retryLimit}`);
         if (attempt === retryLimit) {
             return Promise.reject(ex);
         }
