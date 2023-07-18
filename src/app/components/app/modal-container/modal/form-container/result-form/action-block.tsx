@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useContext, useMemo } from 'react';
+import styled from 'styled-components';
 
 import { Button } from 'checkout/components';
 import { Locale } from 'checkout/locale';
 import { FormInfo, FormName, ModalForms, ModalName, PaymentStatus } from 'checkout/hooks';
 import { findNamed } from 'checkout/utils';
 import { Link } from 'checkout/components/ui/link';
-import styled from 'checkout/styled-components';
 
 import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';

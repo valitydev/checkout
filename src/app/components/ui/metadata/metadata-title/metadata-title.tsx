@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'checkout/styled-components';
+import styled from 'styled-components';
 
 import { MetadataTextLocalization, ServiceProviderTitleMetadata } from 'checkout/backend';
 import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';

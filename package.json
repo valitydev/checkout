@@ -31,7 +31,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "7.45.1",
     "react-svg": "16.1.18",
-    "styled-components": "5.3.3",
+    "styled-components": "6.0.4",
     "uri-template": "1.0.3"
   },
   "devDependencies": {
@@ -43,7 +43,6 @@
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "@types/react-test-renderer": "18.0.0",
-    "@types/styled-components": "5.1.20",
     "cache-loader": "4.1.0",
     "concurrently": "7.0.0",
     "copy-webpack-plugin": "~5.1.1",

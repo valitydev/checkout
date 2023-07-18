@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext, useEffect, useRef } from 'react';
-import styled from 'checkout/styled-components';
+import styled from 'styled-components';
 import isMobile from 'ismobilejs';
 
 import { QRCode } from './qr-code';

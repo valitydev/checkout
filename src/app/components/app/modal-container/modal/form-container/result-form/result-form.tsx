@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { useContext, useEffect, useMemo } from 'react';
+import styled, { css } from 'styled-components';
+
 import { FormName, ModalForms, ModalName, ResultFormInfo, ResultType } from 'checkout/hooks';
 import { ResultFormType, makeContentInvoiceHook } from './make-content';
 import { failedHook, pending } from './make-content/make-from-payment-change';
 import { ActionBlock } from './action-block';
 import { ResultIcon } from './result-icons';
-import styled, { css } from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 import isNil from 'checkout/utils/is-nil';
 import { findNamed } from 'checkout/utils/find-named';

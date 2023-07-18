@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
 
 import { CardForm } from './card-form';
 import { FormName, ModalForms, ModalName, SlideDirection } from 'checkout/hooks';
@@ -9,7 +10,6 @@ import { FormLoader } from './form-loader';
 import { ResultForm } from './result-form';
 import { WalletForm } from './wallet-form';
 import { findNamed } from 'checkout/utils';
-import styled from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 import { NoAvailablePaymentMethodForm } from './no-available-payment-method-form';
 import { WalletProviders } from './wallet-providers';

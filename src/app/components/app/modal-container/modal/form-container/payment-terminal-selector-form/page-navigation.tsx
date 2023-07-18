@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'checkout/styled-components';
+import styled from 'styled-components';
 import { ChevronButton } from 'checkout/components';
 
 const Flex = styled.div`

@@ -1,4 +1,4 @@
-import styled from 'checkout/styled-components';
+import styled from 'styled-components';
 
 export const FormGroup = styled.div<{ direction?: 'column' | 'row' }>`
     display: flex;

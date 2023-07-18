@@ -35,7 +35,7 @@ export const SecureCode = ({ cardNumber, locale, obscureCardCvv, register, field
         mark={true}
         type={obscureCardCvv ? 'password' : 'tel'}
         id="secure-code-input"
-        autocomplete="cc-csc"
+        autoComplete="cc-csc"
         error={!isNil(fieldError)}
         dirty={isDirty}
         onInput={(e) => {

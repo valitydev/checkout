@@ -1,5 +1,5 @@
-import styled from 'checkout/styled-components';
-import { css } from 'checkout/styled-components';
+import styled from 'styled-components';
+import { css } from 'styled-components';
 
 type ButtonType = 'primary' | 'default';
 

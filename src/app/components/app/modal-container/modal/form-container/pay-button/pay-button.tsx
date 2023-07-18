@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useContext } from 'react';
+import styled from 'styled-components';
 
 import { formatAmount } from 'checkout/utils';
 import { Button } from 'checkout/components';
-import styled from 'checkout/styled-components';
 import { Locale } from 'checkout/locale';
 import { AmountInfo } from 'checkout/hooks';
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
-import styled from 'checkout/styled-components';
+import styled from 'styled-components';
 
 import { Header } from '../header';
 import { FormName, PaymentTerminalFormInfo, PaymentTerminalSelectorFormInfo } from 'checkout/hooks';

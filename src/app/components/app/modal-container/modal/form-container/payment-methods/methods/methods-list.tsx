@@ -1,7 +1,7 @@
 import * as React from 'react';
+import styled from 'styled-components';
 
 import { Methods } from './methods';
-import styled from 'checkout/styled-components';
 import { PaymentMethod } from 'checkout/hooks';
 
 const List = styled.ul`

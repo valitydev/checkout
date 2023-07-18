@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { motion } from 'framer-motion';
+import styled, { css } from 'styled-components';
 
 import { Checkmark } from 'checkout/components/ui/icon';
-import styled, { css } from 'checkout/styled-components';
 
 const fadeIn = {
     hidden: { opacity: 0 },

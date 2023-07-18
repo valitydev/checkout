@@ -1,7 +1,7 @@
 import * as React from 'react';
+import styled, { keyframes } from 'styled-components';
 
 import { Loader } from '../ui/loader';
-import styled, { keyframes } from 'checkout/styled-components';
 import { device } from 'checkout/utils/device';
 
 const growth = keyframes`

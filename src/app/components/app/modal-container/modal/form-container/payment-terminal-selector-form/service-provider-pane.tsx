@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'checkout/styled-components';
+import styled from 'styled-components';
 
 import { ServiceProvider, ServiceProviderIconMetadata } from 'checkout/backend';
 import { getMetadata, MetadataLogo } from 'checkout/components';

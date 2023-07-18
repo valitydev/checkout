@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useContext, useMemo } from 'react';
+import styled from 'styled-components';
 
 import { formatAmount } from 'checkout/utils';
 import { device } from 'checkout/utils/device';
-import styled from 'checkout/styled-components';
 
 import { InitialContext } from '../../../initial-context';
 

@@ -9,7 +9,7 @@ import {
     TokenizedInteractionObject
 } from 'checkout/hooks';
 import { findNamed, prepareForm } from 'checkout/utils';
-import styled from 'checkout/styled-components';
+import styled from 'styled-components';
 import { device } from 'checkout/utils/device';
 
 import { InitialContext } from '../../initial-context';

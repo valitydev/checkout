@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
 
 import { Loader } from 'checkout/components';
-import styled from 'checkout/styled-components';
 
 const fadeIn = {
     hidden: { opacity: 0 },

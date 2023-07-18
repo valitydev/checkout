@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { forwardRef } from 'react';
-import { default as styled, css } from 'checkout/styled-components';
+import { styled, css } from 'styled-components';
+
 import { Marks } from '../marks';
 
 const StyledSelect = styled.select<{ isError: boolean }>`

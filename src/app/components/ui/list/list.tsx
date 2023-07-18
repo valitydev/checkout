@@ -1,6 +1,6 @@
 // @ts-ignore
 import * as React from 'react';
-import styled from 'checkout/styled-components';
+import styled from 'styled-components';
 import { StyledItem } from './item';
 
 export const List = styled.div`

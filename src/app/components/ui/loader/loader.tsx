@@ -1,6 +1,6 @@
 import * as React from 'react';
+import styled, { keyframes, withTheme } from 'styled-components';
 
-import styled, { keyframes, withTheme } from 'checkout/styled-components';
 import { WithThemeProps } from 'checkout/themes';
 
 export const spin = keyframes`

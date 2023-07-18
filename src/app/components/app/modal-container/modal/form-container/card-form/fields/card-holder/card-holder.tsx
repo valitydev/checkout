@@ -26,8 +26,8 @@ export const CardHolder = ({ register, locale, fieldError, isDirty }: CardHolder
         mark={true}
         id="card-holder-input"
         onInput={formatCardHolder}
-        autocomplete="cc-name"
-        spellcheck={false}
+        autoComplete="cc-name"
+        spellCheck={false}
         error={!isNil(fieldError)}
         dirty={isDirty}
     />

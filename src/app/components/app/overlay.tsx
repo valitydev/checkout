@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { motion } from 'framer-motion';
 
-import styled, { css } from 'checkout/styled-components';
+import styled, { css } from 'styled-components';
 
 const OverlayBg = styled.div`
     position: fixed;

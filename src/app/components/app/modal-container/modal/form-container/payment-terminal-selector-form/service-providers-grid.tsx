@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'checkout/styled-components';
+import styled from 'styled-components';
 import { ServiceProvider } from 'checkout/backend';
 import { ServiceProviderPane } from './service-provider-pane';
 import { useCallback, useContext, useMemo } from 'react';

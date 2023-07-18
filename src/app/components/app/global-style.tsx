@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'checkout/styled-components';
+import { createGlobalStyle } from 'styled-components';
 import { device } from 'checkout/utils/device';
 
 export const GlobalStyle = createGlobalStyle`
@@ -23,7 +23,7 @@ export const GlobalStyle = createGlobalStyle`
             min-width: 680px;
         }
     }
-    
+
     * {
         font-family: ${({ theme }) => theme.font.family};
     }

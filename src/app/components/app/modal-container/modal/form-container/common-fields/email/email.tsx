@@ -23,7 +23,7 @@ export const Email = ({ register, locale, fieldError, isDirty }: EmailProps) => 
         type="email"
         id="email-input"
         onInput={formatEmail}
-        autocomplete="email"
+        autoComplete="email"
         error={!isNil(fieldError)}
         dirty={isDirty}
     />
