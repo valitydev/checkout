@@ -16,9 +16,10 @@ const getDetails = async (response: Response) => {
     }
 };
 
-const provideResponse = async (response: Response) => {
+const provideResponse = async (response: Response, retryDelay: number, retryLimit: number, attempt: number = 0) => {
     try {
         if (response.ok) {
+            attempt++;
             return await response.json();
         }
         return Promise.reject({
@@ -27,17 +28,20 @@ const provideResponse = async (response: Response) => {
             details: await getDetails(response)
         });
     } catch (ex) {
-        console.error('Read response json error', ex);
-        return Promise.reject(ex);
+        console.warn('Read response json error', ex, `attempt ${attempt} / ${retryLimit}`);
+        if (attempt === retryLimit) {
+            return Promise.reject(ex);
+        }
+        await delay(retryDelay);
+        return provideResponse(response, retryDelay, retryLimit, attempt);
     }
 };
 
 const doFetch = async (param: FetchCapiParams, retryDelay: number, retryLimit: number, attempt: number = 0) => {
-    const method = param.method || 'GET';
     try {
         attempt++;
         return await fetch(param.endpoint, {
-            method,
+            method: param.method || 'GET',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 Authorization: param.accessToken ? `Bearer ${param.accessToken}` : undefined,
@@ -56,5 +60,5 @@ const doFetch = async (param: FetchCapiParams, retryDelay: number, retryLimit: n
 
 export const fetchCapi = async <T>(param: FetchCapiParams, retryDelay = 1000, retryLimit = 20): Promise<T> => {
     const response = await doFetch(param, retryDelay, retryLimit);
-    return await provideResponse(response);
+    return await provideResponse(response, retryDelay, retryLimit);
 };

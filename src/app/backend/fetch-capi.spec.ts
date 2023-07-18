@@ -82,26 +82,35 @@ describe('fetch capi', () => {
         }
     });
 
-    test('should catch json reject', async () => {
+    test('should retry json reject', async () => {
+        const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
         const errorMsg = 'Read json error';
-        const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
+        const expected = {
+            someField: 'someValue'
+        };
+        const mockFetchJson = jest
+            .fn()
+            .mockRejectedValueOnce(errorMsg)
+            .mockRejectedValueOnce(errorMsg)
+            .mockResolvedValueOnce(expected);
         const mockFetch = jest.fn().mockResolvedValue({
             status: 200,
             ok: true,
-            json: async () => Promise.reject(errorMsg)
+            json: mockFetchJson
         });
         global.fetch = mockFetch;
 
         const endpoint = 'https://api.test.com/endpoint';
         const accessToken = 'testToken';
-        try {
-            await fetchCapi({ endpoint, accessToken });
-        } catch (error) {
-            expect(error).toEqual(errorMsg);
-        }
-        expect(errorSpy).toHaveBeenCalled();
-        errorSpy.mockRestore();
+
+        const retryDelay = 50;
+        const retryLimit = 10;
+
+        const result = await fetchCapi({ endpoint, accessToken }, retryDelay, retryLimit);
+        expect(result).toStrictEqual(expected);
+        expect(mockFetchJson).toHaveBeenCalledTimes(3);
+        expect(warnSpy).toHaveBeenCalled();
+        warnSpy.mockRestore();
     });
 
     test('should retry failed fetch requests', async () => {
@@ -123,7 +132,10 @@ describe('fetch capi', () => {
         const endpoint = 'https://api.test.com/endpoint';
         const accessToken = 'testToken';
 
-        const result = await fetchCapi({ endpoint, accessToken });
+        const retryDelay = 50;
+        const retryLimit = 10;
+
+        const result = await fetchCapi({ endpoint, accessToken }, retryDelay, retryLimit);
 
         expect(result).toStrictEqual(expected);
         expect(mockFetch).toHaveBeenCalledTimes(3);
