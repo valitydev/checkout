@@ -36,19 +36,18 @@ const StyledInput = styled.input<{ $hasIcon?: boolean }>`
     padding-right: ${CONTENT_OFFSET}px;
     appearance: none;
     transition: border-color 0.3s;
-    outline: none;
 
     ::placeholder {
         color: ${({ theme }) => theme.input.placeholder};
         opacity: 1;
     }
 
-    :focus {
+    &:focus-visible {
         border-color: ${({ theme }) => theme.input.focus};
-        border-width: 2px;
-        padding-left: ${({ $hasIcon }) =>
-            `${($hasIcon ? CONTENT_OFFSET + ICON_SIZE + TEXT_ICON_OFFSET : CONTENT_OFFSET) - 1}px`};
-        padding-right: ${CONTENT_OFFSET - 1}px;
+        border-width: 1px;
+        box-shadow: 0 0 0 1px ${({ theme }) => theme.input.focus};
+        outline: transparent solid 2px;
+        outline-offset: 2px;
     }
 `;
 
@@ -56,15 +55,12 @@ const InputWrapper = styled.div<{ $error?: any; $mark?: boolean }>`
     position: relative;
     width: 100%;
 
-    :nth-child(2) {
-        margin-left: 10px;
-    }
-
     ${({ $error, theme }) =>
         $error &&
         css`
             ${StyledInput} {
                 border-color: ${theme.input.error};
+                box-shadow: 0 0 0 1px ${({ theme }) => theme.input.error};
             }
         `};
 
@@ -73,10 +69,6 @@ const InputWrapper = styled.div<{ $error?: any; $mark?: boolean }>`
         css`
             ${StyledInput} {
                 padding-right: 30px;
-
-                :focus {
-                    padding-right: 29px;
-                }
             }
         `};
 `;

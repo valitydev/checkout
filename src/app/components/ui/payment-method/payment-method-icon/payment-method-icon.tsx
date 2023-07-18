@@ -1,6 +1,6 @@
 import * as React from 'react';
-
 import styled from 'styled-components';
+
 import BankCard from './bank-card.svg';
 import Terminals from './terminals.svg';
 import Wallets from './wallets.svg';

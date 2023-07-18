@@ -12,7 +12,7 @@ export const PaymentMethodItemContainer = styled.li`
     height: 80px;
     margin-bottom: 10px;
     transition: all 0.3s;
-    :hover {
+    &:hover {
         border-color: ${({ theme }) => theme.paymentMethodItem.hover};
     }
 `;

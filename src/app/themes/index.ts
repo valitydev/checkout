@@ -1,5 +1,4 @@
 import { Theme } from './theme';
-import { ThemeName } from './theme-name';
 import plantation from './plantation';
 import rhino from './rhino';
 
@@ -15,4 +14,5 @@ export function getTheme(themeName: string): Theme {
     return themes.find(({ name }) => name === themeName) || DEFAULT_THEME;
 }
 
-export { ThemeName, Theme };
+export * from './theme';
+export * from './theme-name';

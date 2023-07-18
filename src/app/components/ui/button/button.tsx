@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 type ButtonType = 'primary' | 'default';
 
@@ -23,7 +22,7 @@ export const Button = styled.button<{ color?: ButtonType }>`
                   border: 2px solid ${({ theme }) => theme.button.color};
                   background: ${theme.button.color};
 
-                  :hover {
+                  &:hover {
                       background: ${theme.button.hover};
                       border-color: ${theme.button.hover};
                   }

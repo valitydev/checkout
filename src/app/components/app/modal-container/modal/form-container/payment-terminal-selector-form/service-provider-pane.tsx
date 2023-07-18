@@ -12,7 +12,7 @@ const PaneContainer = styled.div`
     border-radius: 8px;
     border: 1px solid ${({ theme }) => theme.paymentMethodItem.border};
 
-    :hover {
+    &:hover {
         border-color: ${({ theme }) => theme.paymentMethodItem.hover};
     }
 

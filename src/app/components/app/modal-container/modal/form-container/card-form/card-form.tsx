@@ -70,7 +70,7 @@ export const CardForm = ({ onMount }: { onMount: () => void }) => {
                     watch={watch}
                 />
             </FormGroup>
-            <FormGroup>
+            <FormGroup $gap={10}>
                 <ExpireDate
                     locale={locale}
                     fieldError={errors.expireDate}

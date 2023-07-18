@@ -10,7 +10,7 @@ export const Link = styled.a`
     text-decoration: none;
     cursor: pointer;
 
-    :hover {
+    &:hover {
         color: ${({ theme }) => theme.linkButton.hover};
     }
 `;
