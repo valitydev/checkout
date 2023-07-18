@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { FieldError, UseFormRegister, UseFormWatch } from 'react-hook-form';
+import styled from 'styled-components';
 
 import { CardTypeIcon } from './card-type-icon';
 import { validateCardNumber } from './validate-card-number';
 import { Card, Input } from 'checkout/components';
 import { Locale } from 'checkout/locale';
 import { formatCardNumber } from './format-card-number';
-import styled from 'checkout/styled-components';
 import isNil from 'checkout/utils/is-nil';
 import { CardFormInputs } from '../../card-form-inputs';
 
@@ -42,7 +42,7 @@ export const CardNumber = ({ register, locale, fieldError, isDirty, watch }: Car
             type="tel"
             id="card-number-input"
             onInput={formatCardNumber}
-            autocomplete="cc-number"
+            autoComplete="cc-number"
             error={!isNil(fieldError)}
             dirty={isDirty}
         />

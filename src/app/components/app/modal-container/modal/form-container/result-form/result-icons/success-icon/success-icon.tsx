@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withTheme } from 'checkout/styled-components';
+import { withTheme } from 'styled-components';
 import { WithThemeProps } from 'checkout/themes';
 
 const SuccessIconDef: React.FC<WithThemeProps> = ({ theme }) => (

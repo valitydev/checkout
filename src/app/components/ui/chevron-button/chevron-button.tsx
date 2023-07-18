@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ChevronLeft, ChevronRight } from 'checkout/components';
-import { default as styled, css } from 'checkout/styled-components';
+import { styled, css } from 'styled-components';
 
 const Button = styled.button<{ disabled?: boolean }>`
     border: none;

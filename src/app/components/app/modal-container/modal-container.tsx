@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
 
 import isNil from 'checkout/utils/is-nil';
 import { Modal } from './modal';
@@ -8,7 +9,6 @@ import { UserInteractionModal } from './user-interaction-modal';
 import { ModalName, ResultFormInfo, ResultType } from 'checkout/hooks';
 import { InitialContext } from '../initial-context';
 import { PayableInvoiceContext } from './payable-invoice-context';
-import styled from 'checkout/styled-components';
 import { PayableInvoiceData, useInvoiceEvents, useModal } from 'checkout/hooks';
 import { InvoiceChangeType } from 'checkout/backend';
 import { ModalContext } from './modal-context';

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { ThemeProvider } from 'styled-components';
 
 import { InitParams } from 'checkout/initialize';
 import { Overlay } from './overlay';
 import { ModalContainer } from './modal-container';
 import { LayoutLoader } from './layout-loader';
-import { ThemeProvider } from 'checkout/styled-components';
 import { AppWrapper } from './app-wrapper';
 import { GlobalStyle } from './global-style';
 import { InitialContext } from './initial-context';

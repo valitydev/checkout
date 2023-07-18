@@ -1,4 +1,4 @@
-import styled from 'checkout/styled-components';
+import styled from 'styled-components';
 
 export const Method = styled.li`
     border-radius: 8px;
@@ -11,7 +11,7 @@ export const Method = styled.li`
     margin-bottom: 10px;
     transition: all 0.3s;
     cursor: pointer;
-    :hover {
+    &:hover {
         border-color: ${({ theme }) => theme.paymentMethodItem.hover};
     }
 `;

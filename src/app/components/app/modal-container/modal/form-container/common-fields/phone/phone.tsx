@@ -26,7 +26,7 @@ export const Phone = ({ register, locale, fieldError, isDirty }: PhoneProps) => 
         id="phone-input"
         onInput={formatPhoneNumber}
         onFocus={formatPhoneNumber}
-        autocomplete="tel"
+        autoComplete="tel"
         error={!isNil(fieldError)}
         dirty={isDirty}
     />

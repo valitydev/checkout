@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { forwardRef } from 'react';
+import { styled, css } from 'styled-components';
 
 import { Marks } from '../marks';
-import { default as styled, css } from 'checkout/styled-components';
 
 const CONTENT_OFFSET = 15;
 const TEXT_ICON_OFFSET = 8;
@@ -22,7 +22,7 @@ const Icon = styled.div`
     opacity: 1;
 `;
 
-const StyledInput = styled.input<{ hasIcon?: boolean }>`
+const StyledInput = styled.input<{ $hasIcon?: boolean }>`
     margin: 0;
     width: 100%;
     height: 48px;
@@ -32,51 +32,43 @@ const StyledInput = styled.input<{ hasIcon?: boolean }>`
     font-weight: 500;
     font-size: 16px;
     letter-spacing: 0;
-    padding-left: ${({ hasIcon }) => `${hasIcon ? CONTENT_OFFSET + ICON_SIZE + TEXT_ICON_OFFSET : CONTENT_OFFSET}px`};
+    padding-left: ${({ $hasIcon }) => `${$hasIcon ? CONTENT_OFFSET + ICON_SIZE + TEXT_ICON_OFFSET : CONTENT_OFFSET}px`};
     padding-right: ${CONTENT_OFFSET}px;
     appearance: none;
     transition: border-color 0.3s;
-    outline: none;
 
     ::placeholder {
         color: ${({ theme }) => theme.input.placeholder};
         opacity: 1;
     }
 
-    :focus {
+    &:focus-visible {
         border-color: ${({ theme }) => theme.input.focus};
-        border-width: 2px;
-        padding-left: ${({ hasIcon }) =>
-            `${(hasIcon ? CONTENT_OFFSET + ICON_SIZE + TEXT_ICON_OFFSET : CONTENT_OFFSET) - 1}px`};
-        padding-right: ${CONTENT_OFFSET - 1}px;
+        border-width: 1px;
+        box-shadow: 0 0 0 1px ${({ theme }) => theme.input.focus};
+        outline: transparent solid 2px;
+        outline-offset: 2px;
     }
 `;
 
-const InputWrapper = styled.div<{ error?: any; mark?: boolean }>`
+const InputWrapper = styled.div<{ $error?: any; $mark?: boolean }>`
     position: relative;
     width: 100%;
 
-    :nth-child(2) {
-        margin-left: 10px;
-    }
-
-    ${(props) =>
-        props.error &&
+    ${({ $error, theme }) =>
+        $error &&
         css`
             ${StyledInput} {
-                border-color: ${props.theme.input.error};
+                border-color: ${theme.input.error};
+                box-shadow: 0 0 0 1px ${({ theme }) => theme.input.error};
             }
         `};
 
-    ${(props) =>
-        props.mark &&
+    ${({ $mark }) =>
+        $mark &&
         css`
             ${StyledInput} {
                 padding-right: 30px;
-
-                :focus {
-                    padding-right: 29px;
-                }
             }
         `};
 `;
@@ -86,15 +78,14 @@ export type InputProps = JSX.IntrinsicElements['input'] & {
     mark?: boolean;
     error?: boolean;
     dirty?: boolean;
-    autocomplete?: string;
-    spellcheck?: boolean;
+    autoComplete?: string;
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
     ({ className, error, dirty, mark, icon, ...props }, ref) => (
-        <InputWrapper {...{ className, error, mark }}>
+        <InputWrapper {...{ className, $error: error, $mark: mark }}>
             {icon && <Icon>{icon}</Icon>}
-            <StyledInput {...props} hasIcon={!!icon} ref={ref} />
+            <StyledInput {...props} $hasIcon={!!icon} ref={ref} />
             {mark && dirty && !error && <Marks />}
         </InputWrapper>
     )

@@ -1,4 +1,4 @@
-import { css } from 'checkout/styled-components';
+import { css } from 'styled-components';
 import { ThemeName } from './theme-name';
 import { Theme } from './theme';
 

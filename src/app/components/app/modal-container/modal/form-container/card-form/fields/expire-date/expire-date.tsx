@@ -27,7 +27,7 @@ export const ExpireDate = ({ register, locale, fieldError, isDirty }: ExpireDate
         type="tel"
         id="expire-date-input"
         onInput={formatExpiry}
-        autocomplete="cc-exp"
+        autoComplete="cc-exp"
         error={!isNil(fieldError)}
         dirty={isDirty}
     />

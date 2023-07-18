@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { number } from 'card-validator';
+import styled, { keyframes } from 'styled-components';
 
 import * as cardIcons from 'checkout/components/ui/icon/card';
-import styled, { keyframes } from 'checkout/styled-components';
 
 interface CardTypeIconProps {
     cardNumber: string;

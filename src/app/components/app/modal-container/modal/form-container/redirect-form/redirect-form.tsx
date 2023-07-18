@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 
-import styled from 'checkout/styled-components';
 import { RedirectFormInfo } from 'checkout/hooks';
 import { prepareForm } from 'checkout/utils';
 

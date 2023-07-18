@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { forwardRef } from 'react';
-import { default as styled, css } from 'checkout/styled-components';
+import { styled, css } from 'styled-components';
+
 import { Marks } from '../marks';
 
-const StyledSelect = styled.select<{ isError: boolean }>`
+const StyledSelect = styled.select<{ $isError: boolean }>`
     margin: 0;
     width: 100%;
     height: 48px;
@@ -19,10 +20,11 @@ const StyledSelect = styled.select<{ isError: boolean }>`
     background-color: #fff;
     cursor: pointer;
     padding: 0 15px;
-    ${({ isError }) => {
-        if (isError) {
+    ${({ $isError }) => {
+        if ($isError) {
             return css`
                 border-color: ${({ theme }) => theme.input.error};
+                box-shadow: 0 0 0 1px ${({ theme }) => theme.input.error};
             `;
         }
     }}
@@ -41,7 +43,7 @@ export type SelectProps = {
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(({ children, error, dirty, ...props }, ref) => (
     <SelectWrapper>
-        <StyledSelect isError={error} {...props} ref={ref}>
+        <StyledSelect $isError={error} {...props} ref={ref}>
             {children}
         </StyledSelect>
         {!error && dirty && <Marks />}

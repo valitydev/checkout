@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
+import styled from 'styled-components';
 
-import styled from 'checkout/styled-components';
 import { Text } from '../text';
 
 import { InitialContext } from '../../../../initial-context';

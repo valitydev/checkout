@@ -1,4 +1,4 @@
-import styled from 'checkout/styled-components';
+import styled from 'styled-components';
 
 export const PaymentMethodTitle = styled.div`
     font-weight: 900;

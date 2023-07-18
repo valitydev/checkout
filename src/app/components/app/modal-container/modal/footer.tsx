@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ReactSVG } from 'react-svg';
 import { useContext } from 'react';
+import styled from 'styled-components';
 
-import styled from 'checkout/styled-components';
 import { InitialContext } from '../../initial-context';
 
 const FooterWrapper = styled.footer`

@@ -1,4 +1,4 @@
-import styled from 'checkout/styled-components';
+import styled from 'styled-components';
 import { device } from 'checkout/utils/device';
 
 export const FormBlock = styled.div`

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'checkout/styled-components';
+import styled from 'styled-components';
 
 import { ServiceProvider, ServiceProviderIconMetadata } from 'checkout/backend';
 import { getMetadata, MetadataLogo } from 'checkout/components';
@@ -12,7 +12,7 @@ const PaneContainer = styled.div`
     border-radius: 8px;
     border: 1px solid ${({ theme }) => theme.paymentMethodItem.border};
 
-    :hover {
+    &:hover {
         border-color: ${({ theme }) => theme.paymentMethodItem.hover};
     }
 
