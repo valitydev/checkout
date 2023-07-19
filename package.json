@@ -1,6 +1,6 @@
 {
   "name": "checkout",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "clear": "rimraf dist && rimraf .cache-loader",
@@ -57,7 +57,7 @@
     "prettier": "~1.19.1",
     "react-test-renderer": "18.2.0",
     "rimraf": "~2.6.2",
-    "style-loader": "~0.23.1",
+    "style-loader": "~3.3.0",
     "svg-react-loader": "~0.4.6",
     "thread-loader": "~2.1.2",
     "ts-jest": "29.1.0",
