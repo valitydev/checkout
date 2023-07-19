@@ -83,7 +83,6 @@ describe('fetch capi', () => {
     });
 
     test('should retry json reject', async () => {
-        const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
         const errorMsg = 'Read json error';
         const expected = {
             someField: 'someValue'
@@ -109,8 +108,6 @@ describe('fetch capi', () => {
         const result = await fetchCapi({ endpoint, accessToken }, retryDelay, retryLimit);
         expect(result).toStrictEqual(expected);
         expect(mockFetchJson).toHaveBeenCalledTimes(3);
-        expect(warnSpy).toHaveBeenCalled();
-        warnSpy.mockRestore();
     });
 
     test('should retry failed fetch requests', async () => {

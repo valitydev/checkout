@@ -1,9 +1,10 @@
-import parse from 'libphonenumber-js/min';
+import isNil from '../is-nil';
+import replaceSpaces from '../replace-spaces';
 
 export function validatePhone(value: string): boolean {
-    if (!value) {
+    if (isNil(value)) {
         return true;
     }
-    const parsed = parse(value);
-    return !parsed || !parsed.isValid();
+    const regex = /^\+\d{4,15}$/;
+    return !regex.test(replaceSpaces(value));
 }
