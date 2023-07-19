@@ -40,7 +40,7 @@ const Container = styled.div`
     gap: 24px;
 `;
 
-const Form = styled.form<{ hasActions: boolean }>`
+const Form = styled.form<{ $hasActions: boolean }>`
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
@@ -52,8 +52,8 @@ const Form = styled.form<{ hasActions: boolean }>`
         // so that when the window size is changed, it does not break
         padding-top: 50px;
 
-        ${({ hasActions }) =>
-            !hasActions &&
+        ${({ $hasActions }) =>
+            !$hasActions &&
             css`
                 padding-bottom: 50px;
             `}
@@ -101,7 +101,7 @@ export const ResultForm = ({ onMount }: { onMount: () => void }) => {
     }, [hasDone]);
 
     return (
-        <Form hasActions={hasActions}>
+        <Form $hasActions={hasActions}>
             <Container>
                 <ResultIcon type={type} />
                 <Title>{header}</Title>

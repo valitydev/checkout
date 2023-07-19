@@ -24,11 +24,10 @@ const provideResponse = async (response: Response, retryDelay: number, retryLimi
         }
         return Promise.reject({
             status: response.status,
-            statusText: response.statusText,
+            statusText: response.statusText || undefined,
             details: await getDetails(response)
         });
     } catch (ex) {
-        console.warn('Read response json error', ex, `attempt ${attempt} / ${retryLimit}`);
         if (attempt === retryLimit) {
             return Promise.reject(ex);
         }
