@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
     build: {
@@ -14,6 +15,7 @@ export default defineConfig({
     },
     plugins: [
         react(),
+        svgr(),
         tsconfigPaths(),
         viteStaticCopy({
             targets: [

@@ -2,13 +2,14 @@ import * as React from 'react';
 import { FieldError, UseFormRegister, UseFormWatch } from 'react-hook-form';
 import styled from 'styled-components';
 
-import { CardTypeIcon } from './card-type-icon';
 import { validateCardNumber } from './validate-card-number';
-import { Card, Input } from 'checkout/components';
+import { Input } from 'checkout/components';
 import { Locale } from 'checkout/locale';
 import { formatCardNumber } from './format-card-number';
 import isNil from 'checkout/utils/is-nil';
 import { CardFormInputs } from '../../card-form-inputs';
+import { ReactComponent as CardIcon } from '../../../../../../../ui/icon/card.svg';
+import { CardTypeIcon } from 'checkout/components/ui/card-type-icon';
 
 const InputContainer = styled.div`
     width: 100%;
@@ -36,7 +37,7 @@ export const CardNumber = ({ register, locale, fieldError, isDirty, watch }: Car
                 required: true,
                 validate: (value) => !validateCardNumber(value) || 'Card number is invalid'
             })}
-            icon={<Card />}
+            icon={<CardIcon />}
             placeholder={locale['form.input.card.placeholder']}
             mark={true}
             type="tel"
