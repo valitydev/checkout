@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite --c vite.config.app.ts",
     "build:vite": "rimraf dist && vite build --c vite.config.app.ts",
-    "preview": "vite preview",
+    "preview": "vite preview --c vite.config.app.ts",
     "clear": "rimraf dist && rimraf .cache-loader",
     "build": "npm run clear && webpack --mode production --colors --progress --config config/webpack.prod.js",
     "start": "npm run clear && webpack-dev-server --mode development --colors --progress --config config/webpack.dev.js --port 7050 --host ::",
