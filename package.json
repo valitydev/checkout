@@ -6,19 +6,15 @@
     "dev": "vite --c vite.config.app.ts",
     "build:app": "vite build --c vite.config.app.ts",
     "build:checkout": "vite build --c vite.config.checkout.ts",
-    "build:vite": "npm run build:checkout && npm run build:app",
-    "preview": "npm run build:vite && vite --c vite.config.preview.ts",
+    "build": "npm run build:checkout && npm run build:app",
+    "preview": "npm run build && vite --c vite.config.preview.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "prettier:fix": "prettier \"**\" --write",
     "prettier:check": "prettier \"**\" --list-different",
     "lint:fix": "tslint \"src/**/*.@(ts|tsx)\" -e \"**/*.d.ts\"",
     "check": "npm run lint:fix; npm run prettier:check",
-    "fix": "npm run lint:fix; npm run prettier:fix",
-
-    "clear": "rimraf dist && rimraf .cache-loader",
-    "build": "npm run clear && webpack --mode production --colors --progress --config config/webpack.prod.js",
-    "start": "npm run clear && webpack-dev-server --mode development --colors --progress --config config/webpack.dev.js --port 7050 --host ::",
+    "fix": "npm run lint:fix; npm run prettier:fix"
   },
   "license": "Apache-2.0",
   "dependencies": {
