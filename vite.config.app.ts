@@ -5,6 +5,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
+    base: './',
     build: {
         outDir: 'dist/v1',
         rollupOptions: {
