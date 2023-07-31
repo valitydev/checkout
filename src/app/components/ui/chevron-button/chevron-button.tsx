@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { ChevronLeft, ChevronRight } from 'checkout/components';
 import { styled, css } from 'styled-components';
+
+import { ReactComponent as ChevronLeftIcon } from '../icon/chevron-left.svg';
+import { ReactComponent as ChevronRightIcon } from '../icon/chevron-right.svg';
 
 const Button = styled.button<{ disabled?: boolean }>`
     border: none;
@@ -37,6 +39,6 @@ export type ChevronButtonProps = {
 
 export const ChevronButton: React.FC<ChevronButtonProps> = ({ id, onClick, type, disabled }) => (
     <Button aria-disabled={disabled} id={id} onClick={onClick} disabled={disabled}>
-        {type === 'left' && <ChevronLeft />} {type === 'right' && <ChevronRight />}
+        {type === 'left' && <ChevronLeftIcon />} {type === 'right' && <ChevronRightIcon />}
     </Button>
 );

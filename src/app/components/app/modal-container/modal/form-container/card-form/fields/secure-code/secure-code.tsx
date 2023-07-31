@@ -5,10 +5,11 @@ import { FieldError, UseFormRegister } from 'react-hook-form';
 import { validateSecureCode } from './validate-secure-code';
 import { Locale } from 'checkout/locale';
 import { formatCVC } from './format-cvc';
-import { Lock, Input } from 'checkout/components';
+import { Input } from 'checkout/components';
 import { safeVal } from 'checkout/utils';
 import { CardFormInputs } from '../../card-form-inputs';
 import isNil from 'checkout/utils/is-nil';
+import { ReactComponent as LockIcon } from '../../../../../../../ui/icon/lock.svg';
 
 export interface SecureCodeProps {
     register: UseFormRegister<CardFormInputs>;
@@ -30,7 +31,7 @@ export const SecureCode = ({ cardNumber, locale, obscureCardCvv, register, field
             required: true,
             validate: (value) => !validateSecureCode(value, { cardNumber }) || 'Secure code is invalid'
         })}
-        icon={<Lock />}
+        icon={<LockIcon />}
         placeholder={getPlaceholder(cardNumber, locale)}
         mark={true}
         type={obscureCardCvv ? 'password' : 'tel'}

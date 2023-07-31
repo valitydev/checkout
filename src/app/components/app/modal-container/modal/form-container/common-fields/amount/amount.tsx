@@ -7,8 +7,8 @@ import { validateAmount } from './validate-amount';
 import { Locale } from 'checkout/locale';
 import { InvoiceTemplateLineCostRange, InvoiceTemplateLineCostUnlim } from 'checkout/backend';
 import { formatAmount } from './format-amount';
-import { Amount as AmountIcon } from 'checkout/components';
 import isNil from 'checkout/utils/is-nil';
+import { ReactComponent as AmountIcon } from '../../../../../../ui/icon/amount.svg';
 
 export type AmountProps = {
     register: UseFormRegister<any>;

@@ -1,7 +1,6 @@
 export * from './list';
 export * from './link';
 export * from './loader';
-export * from './icon';
 export * from './round-icon';
 export * from './input';
 export * from './button';

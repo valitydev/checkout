@@ -5,4 +5,4 @@ export interface Env {
     version: string;
 }
 
-export const getEnv = (): Promise<Env> => fetchCapi({ endpoint: `../env.json?nocache=${getNocacheValue()}` });
+export const getEnv = (): Promise<Env> => fetchCapi({ endpoint: `./env.json?nocache=${getNocacheValue()}` });
