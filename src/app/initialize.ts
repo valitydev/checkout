@@ -9,13 +9,12 @@ import { AppConfig, getAppConfig, getEnv } from './backend';
 import { getOrigin } from '../get-origin';
 
 /**
- * Adding available bank cards
+ * Additional card brands
  */
-// TODO: update credit-card-type
-(creditCardType as any).addCard({
-    niceType: 'TestCard',
-    type: 'test-card',
-    patterns: [1234],
+creditCardType.addCard({
+    niceType: 'UzCard',
+    type: 'uzcard',
+    patterns: [8600],
     gaps: [4, 8, 12],
     lengths: [16],
     code: {
