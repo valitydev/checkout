@@ -23,6 +23,18 @@ creditCardType.addCard({
     }
 });
 
+creditCardType.addCard({
+    niceType: 'Humo',
+    type: 'humo',
+    patterns: [9860],
+    gaps: [4, 8, 12],
+    lengths: [16],
+    code: {
+        name: 'CVV',
+        size: 3
+    }
+});
+
 const initSentry = async (dsn: string) => {
     const env = await getEnv();
     Sentry.init({
