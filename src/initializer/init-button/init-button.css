@@ -5,7 +5,11 @@
     visibility: visible;
     padding: 8px 12px;
     outline: 0;
-    font: bold 14px/14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font:
+        bold 14px/14px 'Helvetica Neue',
+        Helvetica,
+        Arial,
+        sans-serif;
     text-decoration: none;
     color: #fff;
     border: 1px solid #2384c1;

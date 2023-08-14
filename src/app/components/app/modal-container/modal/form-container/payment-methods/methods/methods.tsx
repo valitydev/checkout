@@ -9,7 +9,7 @@ import {
     DigitalWalletPaymentMethod,
     PaymentMethod,
     PaymentMethodName,
-    PaymentTerminalPaymentMethod
+    PaymentTerminalPaymentMethod,
 } from 'checkout/hooks';
 
 const Method = ({ method }: { method: PaymentMethod }) => {

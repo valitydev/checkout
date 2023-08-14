@@ -5,5 +5,5 @@ export const resolveInvoice = ({ amount, currency }: Invoice, locale: string): A
     status: 'final',
     minorValue: amount,
     currencyCode: currency,
-    locale
+    locale,
 });

@@ -16,21 +16,21 @@ const dataFetchReducer = (state: State, action: Action): State => {
             return {
                 ...state,
                 status: 'SUCCESS',
-                data: action.payload
+                data: action.payload,
             };
         case 'APP_INIT_FAILURE':
             return {
                 ...state,
                 status: 'FAILURE',
                 error: action.error,
-                data: null
+                data: null,
             };
     }
 };
 
 export const useInitApp = () => {
     const [state, dispatch] = useReducer(dataFetchReducer, {
-        status: 'PRISTINE'
+        status: 'PRISTINE',
     });
 
     const init = useCallback((initParams: InitParams) => {
@@ -39,7 +39,7 @@ export const useInitApp = () => {
                 const payload = await initApp(initParams);
                 dispatch({
                     type: 'APP_INIT_SUCCESS',
-                    payload
+                    payload,
                 });
             } catch (error) {
                 dispatch({ type: 'APP_INIT_FAILURE', error });

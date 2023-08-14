@@ -7,7 +7,7 @@ export const obscurePassword = <T>(formMetadata: ServiceProviderMetadataField[],
     return found
         ? {
               ...formValues,
-              [found.name]: md5(formValues[found.name])
+              [found.name]: md5(formValues[found.name]),
           }
         : formValues;
 };

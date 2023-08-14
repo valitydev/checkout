@@ -88,5 +88,5 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             <StyledInput {...props} $hasIcon={!!icon} ref={ref} />
             {mark && dirty && !error && <Marks />}
         </InputWrapper>
-    )
+    ),
 );

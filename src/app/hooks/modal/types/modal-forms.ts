@@ -10,7 +10,7 @@ export class ModalForms extends ModalState {
         this.name = ModalName.modalForms;
         this.viewInfo = {
             slideDirection: SlideDirection.none,
-            inProcess
+            inProcess,
         };
         this.formsInfo = formsInfo;
         this.active = active;

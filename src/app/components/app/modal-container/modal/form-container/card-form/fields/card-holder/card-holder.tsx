@@ -20,7 +20,7 @@ export const CardHolder = ({ register, locale, fieldError, isDirty }: CardHolder
     <Input
         {...register('cardHolder', {
             required: true,
-            validate: (value) => !validateCardHolder(value) || 'Card holder is invalid'
+            validate: (value) => !validateCardHolder(value) || 'Card holder is invalid',
         })}
         icon={<UserIcon />}
         placeholder={locale['form.input.cardholder.placeholder']}

@@ -21,7 +21,7 @@ export function formatMetadataValue<T>(form: ServiceProviderMetadataField[], for
             ? acc
             : {
                   ...acc,
-                  [field.name]: toResultValue(field, formValue)
+                  [field.name]: toResultValue(field, formValue),
               };
     }, {} as T);
 }

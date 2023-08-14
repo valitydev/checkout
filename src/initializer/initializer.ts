@@ -27,7 +27,7 @@ const getLocale = (userConfig: any) => userConfig.locale || 'auto';
 
 const prepareConfig = (userConfig: any): any => ({
     ...mapBoolean(userConfig),
-    locale: getLocale(userConfig)
+    locale: getLocale(userConfig),
 });
 
 const dummyFn: ActionCallback = () => undefined;

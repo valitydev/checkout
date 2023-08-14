@@ -7,7 +7,7 @@ import isNil from 'checkout/utils/is-nil';
 export const shorten = (
     urlShortenerEndpoint: string,
     invoiceAccessToken: string,
-    params: ShortenedUrlParams
+    params: ShortenedUrlParams,
 ): Promise<string> =>
     shortenUrl(urlShortenerEndpoint, invoiceAccessToken, params).then(({ shortenedUrl }) => shortenedUrl);
 
@@ -36,7 +36,7 @@ export const createSessionInfo = async (
     origin: string,
     initConfig: { redirectUrl?: string; locale?: string },
     { invoice, invoiceAccessToken }: PayableInvoiceData,
-    formValues: FormData
+    formValues: FormData,
 ): Promise<SessionInfo> => {
     let redirectUrl;
     const redirectUrlType = toRedirectUrlType(formValues, initConfig.redirectUrl);
@@ -48,9 +48,9 @@ export const createSessionInfo = async (
                     invoice.id,
                     invoiceAccessToken,
                     initConfig,
-                    isSkipUserInteractionParam(formValues.method)
+                    isSkipUserInteractionParam(formValues.method),
                 ),
-                expiresAt: invoice.dueDate
+                expiresAt: invoice.dueDate,
             });
             break;
         case 'outer':

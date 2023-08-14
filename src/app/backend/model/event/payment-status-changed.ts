@@ -8,7 +8,7 @@ export enum PaymentStatuses {
     cancelled = 'cancelled',
     pending = 'pending',
     captured = 'captured',
-    refunded = 'refunded'
+    refunded = 'refunded',
 }
 
 export class PaymentStatusChanged extends InvoiceChange {

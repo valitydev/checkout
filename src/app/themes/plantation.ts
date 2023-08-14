@@ -18,37 +18,37 @@ const palette = {
     SeaNymph: '#71A19D',
     BlueRibbon: '#0038FF',
     Candlelight: '#ffe05c',
-    Silver: '#979797'
+    Silver: '#979797',
 };
 
 const theme: Theme = {
     name: ThemeName.plantation,
     font: {
         family: "'Roboto', sans-serif",
-        primaryColor: palette.Zeus
+        primaryColor: palette.Zeus,
     },
     background: {
         gradient: css`linear-gradient(30deg, ${palette.Aztec} 0%, ${palette.GableGreen} 50%, ${palette.William} 100%)`,
         loader: [
             [palette.Flamenco, '0%'],
-            [palette.Mustard, '100%']
-        ]
+            [palette.Mustard, '100%'],
+        ],
     },
     form: {
         background: palette.AthensGray,
-        border: palette.Loblolly
+        border: palette.Loblolly,
     },
     input: {
         border: palette.Loblolly,
         placeholder: palette.RegentGray,
         error: palette.Cinnabar,
-        focus: palette.Zeus
+        focus: palette.Zeus,
     },
     icons: {
         success: palette.SeaNymph,
         error: palette.CopperRose,
         warn: palette.Candlelight,
-        checkmark: palette.SeaNymph
+        checkmark: palette.SeaNymph,
     },
     divider: palette.Loblolly,
     externalLink: palette.BlueRibbon,
@@ -56,22 +56,22 @@ const theme: Theme = {
         border: palette.Loblolly,
         hover: palette.Zeus,
         color: palette.Zeus,
-        error: palette.Cinnabar
+        error: palette.Cinnabar,
     },
     chevronButton: {
         color: palette.Zeus,
-        disabled: palette.Silver
+        disabled: palette.Silver,
     },
     button: {
         primaryText: palette.Zeus,
         outlineText: palette.Zeus,
         color: palette.Mustard,
-        hover: palette.LightningYellow
+        hover: palette.LightningYellow,
     },
     linkButton: {
         color: palette.Zeus,
-        hover: palette.Zeus
-    }
+        hover: palette.Zeus,
+    },
 };
 
 export default theme;

@@ -25,7 +25,7 @@ const provideResponse = async (response: Response, retryDelay: number, retryLimi
         return Promise.reject({
             status: response.status,
             statusText: response.statusText || undefined,
-            details: await getDetails(response)
+            details: await getDetails(response),
         });
     } catch (ex) {
         if (attempt === retryLimit) {
@@ -44,9 +44,9 @@ const doFetch = async (param: FetchCapiParams, retryDelay: number, retryLimit: n
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 Authorization: param.accessToken ? `Bearer ${param.accessToken}` : undefined,
-                'X-Request-ID': guid()
+                'X-Request-ID': guid(),
             },
-            body: param.body ? JSON.stringify(param.body) : undefined
+            body: param.body ? JSON.stringify(param.body) : undefined,
         });
     } catch (ex) {
         if (attempt === retryLimit) {

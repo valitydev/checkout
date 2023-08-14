@@ -5,5 +5,5 @@ export const getAmountFromMultiLine = (details: InvoiceTemplateMultiLine, locale
     status: 'final',
     minorValue: details.cart.reduce((p, c) => p + c.price * c.quantity, 0),
     currencyCode: details.currency,
-    locale
+    locale,
 });

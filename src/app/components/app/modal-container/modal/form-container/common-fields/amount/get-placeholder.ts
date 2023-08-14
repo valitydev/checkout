@@ -9,13 +9,13 @@ const toRangePlaceholder = (cost: InvoiceTemplateLineCostRange, locale: string):
         minorValue: range.lowerBound,
         currencyCode: cost.currency,
         status: 'final',
-        locale
+        locale,
     });
     const upper = formatAmount({
         minorValue: range.upperBound,
         currencyCode: cost.currency,
         status: 'final',
-        locale
+        locale,
     });
     return `${lower} - ${upper}`;
 };
@@ -23,7 +23,7 @@ const toRangePlaceholder = (cost: InvoiceTemplateLineCostRange, locale: string):
 export const getPlaceholder = (
     cost: InvoiceTemplateLineCostRange | InvoiceTemplateLineCostUnlim,
     localeString: string,
-    localeCode: string
+    localeCode: string,
 ): string => {
     if (!cost) {
         return;

@@ -3,7 +3,7 @@ import { PopupInitializer } from './popup-initializer';
 import { environment, Configurator } from '../environment';
 
 const init = (origin: string): Configurator => ({
-    configure: (userConfig: any) => new PopupInitializer(origin, userConfig)
+    configure: (userConfig: any) => new PopupInitializer(origin, userConfig),
 });
 
 domReady().then((origin) => {

@@ -9,5 +9,5 @@ const MetadataImage = styled.img<{ height: string; width: string }>`
 `;
 
 export const MetadataLogo: React.FC<{ metadata: ServiceProviderIconMetadata }> = ({
-    metadata: { height, width, src }
+    metadata: { height, width, src },
 }) => <MetadataImage height={height} width={width} src={src} />;

@@ -35,7 +35,7 @@ export const CardNumber = ({ register, locale, fieldError, isDirty, watch }: Car
         <CardNumberInput
             {...register('cardNumber', {
                 required: true,
-                validate: (value) => !validateCardNumber(value) || 'Card number is invalid'
+                validate: (value) => !validateCardNumber(value) || 'Card number is invalid',
             })}
             icon={<CardIcon />}
             placeholder={locale['form.input.card.placeholder']}

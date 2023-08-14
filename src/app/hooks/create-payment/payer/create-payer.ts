@@ -10,12 +10,12 @@ export const createPayer = async ({
     origin,
     payableInvoice,
     initConfig,
-    formData
+    formData,
 }: CreatePayerParams): Promise<PaymentResourcePayer> => {
     const { paymentToolToken, paymentSession } = await createPaymentResource(
         capiEndpoint,
         payableInvoice.invoiceAccessToken,
-        formData
+        formData,
     );
     const sessionInfo = await createSessionInfo(urlShortenerEndpoint, origin, initConfig, payableInvoice, formData);
     const contactInfo = toContactInfo(initConfig, formData.values);
@@ -24,6 +24,6 @@ export const createPayer = async ({
         paymentToolToken,
         paymentSession,
         contactInfo,
-        sessionInfo
+        sessionInfo,
     };
 };

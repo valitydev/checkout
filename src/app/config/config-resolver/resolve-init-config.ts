@@ -16,7 +16,7 @@ const setDefault = <P, D>(userParam: P, defaultValue: D): P | D =>
 const checkUnknown = (resolvedParams: object, allParams: object): void => {
     const resolvedParamsKeys = Object.keys(resolvedParams);
     const unknownParams = Object.keys(allParams).filter(
-        (param) => resolvedParamsKeys.findIndex((v) => v === param) === -1
+        (param) => resolvedParamsKeys.findIndex((v) => v === param) === -1,
     );
     if (unknownParams.length) {
         console.warn(`Unknown params: ${unknownParams.join(', ')}`);
@@ -71,7 +71,7 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         paymentFlowHold: setDefault(resolveBoolean(paymentFlowHold, 'paymentFlowHold'), false),
         holdExpiration: setDefault(
             resolveString(holdExpiration, 'holdExpiration') as HoldExpirationType,
-            HoldExpirationType.cancel
+            HoldExpirationType.cancel,
         ),
         locale: detectLocale(resolveString(locale, 'locale')),
         recurring: setDefault(resolveBoolean(recurring, 'recurring'), false),
@@ -87,6 +87,6 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         terminalWallets: setDefault(resolveBoolean(terminalWallets, 'terminalWallets'), true),
         pix: setDefault(resolveBoolean(pix, 'pix'), true),
         skipUserInteraction: setDefault(resolveBoolean(skipUserInteraction, 'skipUserInteraction'), false),
-        isExternalIDIncluded: setDefault(resolveBoolean(isExternalIDIncluded, 'isExternalIDIncluded'), false)
+        isExternalIDIncluded: setDefault(resolveBoolean(isExternalIDIncluded, 'isExternalIDIncluded'), false),
     };
 };

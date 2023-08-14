@@ -3,14 +3,14 @@ import { fetchCapi } from './fetch-capi';
 describe('fetch capi', () => {
     test('should do GET request', async () => {
         const expected = {
-            someField: 'someValue'
+            someField: 'someValue',
         };
 
         const mockFetch = jest.fn();
         mockFetch.mockResolvedValue({
             status: 200,
             ok: true,
-            json: async () => expected
+            json: async () => expected,
         });
         global.fetch = mockFetch;
 
@@ -25,22 +25,22 @@ describe('fetch capi', () => {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json;charset=utf-8',
-                'X-Request-ID': expect.any(String)
+                'X-Request-ID': expect.any(String),
             },
-            method: 'GET'
+            method: 'GET',
         });
     });
 
     test('should do POST request', async () => {
         const expected = {
-            someField: 'someValue'
+            someField: 'someValue',
         };
 
         const mockFetch = jest.fn();
         mockFetch.mockResolvedValue({
             status: 200,
             ok: true,
-            json: async () => expected
+            json: async () => expected,
         });
         global.fetch = mockFetch;
 
@@ -57,9 +57,9 @@ describe('fetch capi', () => {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json;charset=utf-8',
-                'X-Request-ID': expect.any(String)
+                'X-Request-ID': expect.any(String),
             },
-            method
+            method,
         });
     });
 
@@ -69,7 +69,7 @@ describe('fetch capi', () => {
         mockFetch.mockResolvedValue({
             status: 500,
             ok: false,
-            statusText
+            statusText,
         });
         global.fetch = mockFetch;
 
@@ -85,7 +85,7 @@ describe('fetch capi', () => {
     test('should retry json reject', async () => {
         const errorMsg = 'Read json error';
         const expected = {
-            someField: 'someValue'
+            someField: 'someValue',
         };
         const mockFetchJson = jest
             .fn()
@@ -95,7 +95,7 @@ describe('fetch capi', () => {
         const mockFetch = jest.fn().mockResolvedValue({
             status: 200,
             ok: true,
-            json: mockFetchJson
+            json: mockFetchJson,
         });
         global.fetch = mockFetch;
 
@@ -112,7 +112,7 @@ describe('fetch capi', () => {
 
     test('should retry failed fetch requests', async () => {
         const expected = {
-            someField: 'someValue'
+            someField: 'someValue',
         };
 
         const mockFetch = jest
@@ -122,7 +122,7 @@ describe('fetch capi', () => {
             .mockResolvedValueOnce({
                 status: 200,
                 ok: true,
-                json: async () => expected
+                json: async () => expected,
             });
         global.fetch = mockFetch;
 
@@ -140,9 +140,9 @@ describe('fetch capi', () => {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json;charset=utf-8',
-                'X-Request-ID': expect.any(String)
+                'X-Request-ID': expect.any(String),
             },
-            method: 'GET'
+            method: 'GET',
         };
         expect(mockFetch).toHaveBeenCalledWith(endpoint, requestInit);
         expect(mockFetch).toHaveBeenCalledWith(endpoint, requestInit);

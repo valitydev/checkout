@@ -18,6 +18,6 @@ export function cardExpiryVal(value: string): ExpiryDate {
     year = parseInt(year, 10);
     return {
         month,
-        year
+        year,
     };
 }

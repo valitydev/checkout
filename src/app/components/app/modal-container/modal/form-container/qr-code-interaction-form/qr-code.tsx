@@ -18,8 +18,8 @@ export const QRCode: React.FC<{ text: string }> = ({ text }) => (
                 ecLevel: 'H',
                 quiet: 0,
                 mode: 'plain',
-                text
-            }).outerHTML
+                text,
+            }).outerHTML,
         }}
     />
 );

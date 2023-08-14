@@ -6,7 +6,7 @@ import { AmountInfo } from './types';
 export const resolveInvoiceTemplate = (
     invoiceTemplate: InvoiceTemplate,
     configAmount: number,
-    locale: string
+    locale: string,
 ): AmountInfo => {
     switch (invoiceTemplate.details.templateType) {
         case TemplateType.InvoiceTemplateSingleLine:

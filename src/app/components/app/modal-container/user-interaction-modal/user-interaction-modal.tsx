@@ -6,7 +6,7 @@ import {
     ModalInteraction,
     ModalInteractionType,
     ModalName,
-    TokenizedInteractionObject
+    TokenizedInteractionObject,
 } from 'checkout/hooks';
 import { findNamed, prepareForm } from 'checkout/utils';
 import styled from 'styled-components';

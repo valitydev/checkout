@@ -10,13 +10,13 @@ describe('useTheme', () => {
         const { result } = renderHook(() =>
             useTheme({
                 appConfig: {
-                    fixedTheme: ThemeName.plantation
+                    fixedTheme: ThemeName.plantation,
                 },
                 initConfig: {
-                    theme: 'rhino'
+                    theme: 'rhino',
                 },
-                origin: ''
-            })
+                origin: '',
+            }),
         );
 
         expect(result.current).toStrictEqual(rhino);
@@ -26,11 +26,11 @@ describe('useTheme', () => {
         const { result } = renderHook(() =>
             useTheme({
                 appConfig: {
-                    fixedTheme: ThemeName.plantation
+                    fixedTheme: ThemeName.plantation,
                 },
                 initConfig: {},
-                origin: ''
-            })
+                origin: '',
+            }),
         );
 
         expect(result.current).toStrictEqual(plantation);
@@ -41,8 +41,8 @@ describe('useTheme', () => {
             useTheme({
                 appConfig: {},
                 initConfig: {},
-                origin: ''
-            })
+                origin: '',
+            }),
         );
 
         expect(result.current).toStrictEqual(plantation);
@@ -53,10 +53,10 @@ describe('useTheme', () => {
             useTheme({
                 appConfig: {},
                 initConfig: {
-                    theme: 'rhino'
+                    theme: 'rhino',
                 },
-                origin: ''
-            })
+                origin: '',
+            }),
         );
 
         expect(result.current).toStrictEqual(rhino);

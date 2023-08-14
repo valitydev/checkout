@@ -6,7 +6,10 @@ export class PaymentTerminalFormInfo extends FormInfo {
     active = true;
     paymentStatus = PaymentStatus.pristine;
 
-    constructor(public providerID: string, previous?: FormName) {
+    constructor(
+        public providerID: string,
+        previous?: FormName,
+    ) {
         super(previous);
     }
 }

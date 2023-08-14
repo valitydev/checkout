@@ -3,9 +3,9 @@ module.exports = {
         Promise.resolve({
             get: jest.fn().mockReturnValue(
                 Promise.resolve({
-                    visitorId: 'userFingerprintTest'
-                })
-            )
-        })
-    )
+                    visitorId: 'userFingerprintTest',
+                }),
+            ),
+        }),
+    ),
 };

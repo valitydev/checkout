@@ -15,14 +15,14 @@ const mapFrom = (obj: { email?: string; phoneNumber?: string }, targetKeys = ['e
         }
         return {
             ...acc,
-            [targetKey]: replaceSpaces(val)
+            [targetKey]: replaceSpaces(val),
         };
     }, defaultResult);
 };
 
 export const toContactInfo = (
     initConfig: { email: string; phoneNumber: string },
-    formValues: PayableFormValues
+    formValues: PayableFormValues,
 ): ContactInfo => {
     const fromFormValues = mapFrom(formValues);
     const fromMetadata = mapFrom((formValues as PaymentTerminalFormValues)?.metadata);
@@ -30,7 +30,7 @@ export const toContactInfo = (
     const byPriority = {
         ...fromFormValues,
         ...fromMetadata,
-        ...fromInitConfig
+        ...fromInitConfig,
     };
     return byPriority;
 };

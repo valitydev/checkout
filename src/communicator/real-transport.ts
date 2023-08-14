@@ -24,7 +24,7 @@ export class RealTransport implements Transport {
     constructor(
         private readonly target: Window,
         private readonly origin: string,
-        private readonly transportName = 'default-communicator-transport'
+        private readonly transportName = 'default-communicator-transport',
     ) {
         this.transportListener = transportListener.bind(this, this.transportName, this.events);
         window.addEventListener('message', this.transportListener, false);
@@ -34,7 +34,7 @@ export class RealTransport implements Transport {
         const serialized = JSON.stringify({
             data,
             name: eventName,
-            transport: this.transportName
+            transport: this.transportName,
         });
         this.target.postMessage(serialized, this.origin);
     }

@@ -10,7 +10,7 @@ const IconClasses = {
     'bank-card': BankCard,
     terminals: Terminals,
     wallets: Wallets,
-    'online-banking': OnlineBanking
+    'online-banking': OnlineBanking,
 };
 
 type name = keyof typeof IconClasses;

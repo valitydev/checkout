@@ -17,6 +17,6 @@ export const initApp = async ({ initConfig, appConfig, origin }: InitParams): Pr
         locale,
         model,
         amountInfo,
-        availablePaymentMethods
+        availablePaymentMethods,
     };
 };

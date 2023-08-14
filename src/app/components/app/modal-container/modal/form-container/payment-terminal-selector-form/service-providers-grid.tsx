@@ -38,7 +38,7 @@ export const ServiceProvidersGrid: React.FC<ServiceProvidersGridProps> = ({ serv
     const { locale } = useContext(InitialContext);
     const [{ totalPages, page, isNext, isPrevious, pageItems }, { next, previous, filter }] = useGridPages(
         serviceProviders,
-        ITEMS_ON_PAGE
+        ITEMS_ON_PAGE,
     );
 
     const onChange = useCallback((e) => {

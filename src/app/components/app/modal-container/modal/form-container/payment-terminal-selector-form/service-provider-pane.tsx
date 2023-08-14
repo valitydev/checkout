@@ -51,7 +51,7 @@ const PaneLogo: React.FC<{ logo: ServiceProviderIconMetadata }> = ({ logo }) => 
 
 export const ServiceProviderPane: React.FC<{ serviceProvider: ServiceProvider; onClick: (id: string) => void }> = ({
     serviceProvider,
-    onClick
+    onClick,
 }) => {
     const { logo } = getMetadata(serviceProvider);
     return (

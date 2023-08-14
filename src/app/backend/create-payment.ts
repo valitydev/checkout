@@ -6,11 +6,11 @@ export const createPayment = (
     capiEndpoint: string,
     accessToken: string,
     invoiceID: string,
-    paymentParams: PaymentParams
+    paymentParams: PaymentParams,
 ): Promise<Payment> =>
     fetchCapi({
         method: 'POST',
         endpoint: `${capiEndpoint}/${v}/processing/invoices/${invoiceID}/payments`,
         accessToken,
-        body: paymentParams
+        body: paymentParams,
     });

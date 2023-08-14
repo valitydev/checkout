@@ -4,5 +4,5 @@ export enum InvoiceChangeType {
     PaymentInteractionRequested = 'PaymentInteractionRequested',
     PaymentInteractionCompleted = 'PaymentInteractionCompleted',
     PaymentStarted = 'PaymentStarted',
-    PaymentStatusChanged = 'PaymentStatusChanged'
+    PaymentStatusChanged = 'PaymentStatusChanged',
 }

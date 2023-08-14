@@ -52,7 +52,7 @@ export const getUrlParams = (url: string): URLParams =>
     Object.entries(getEncodedUrlParams(url)).reduce(
         (acc, [name, value]) => ({
             ...acc,
-            [decodeURIComponentWithLogError(name)]: parseValue(decodeURIComponentWithLogError(value))
+            [decodeURIComponentWithLogError(name)]: parseValue(decodeURIComponentWithLogError(value)),
         }),
-        {}
+        {},
     );

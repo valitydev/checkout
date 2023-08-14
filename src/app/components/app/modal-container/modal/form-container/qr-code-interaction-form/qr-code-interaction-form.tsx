@@ -37,7 +37,7 @@ export const QrCodeInteractionForm = ({ onMount }: { onMount: () => void }) => {
     const {
         locale,
         initConfig,
-        model: { serviceProviders }
+        model: { serviceProviders },
     } = useContext(InitialContext);
     const { modalState } = useContext(ModalContext);
     const { request, providerID } = useActiveModalForm<QrCodeInteractionFormInfo>(modalState);
@@ -64,7 +64,8 @@ export const QrCodeInteractionForm = ({ onMount }: { onMount: () => void }) => {
                                 id="qr-code-input"
                                 ref={qrCodeInputRef}
                                 defaultValue={request.qrCode}
-                                readOnly={true}></Input>
+                                readOnly={true}
+                            ></Input>
                             <CopyToClipboardButton onClick={() => copyToClipboard()} />
                             <Hr />
                         </>
@@ -76,7 +77,8 @@ export const QrCodeInteractionForm = ({ onMount }: { onMount: () => void }) => {
                             <Hr />
                             <Button
                                 id="back-to-website-btn"
-                                onClick={() => window.open(initConfig.redirectUrl, '_self')}>
+                                onClick={() => window.open(initConfig.redirectUrl, '_self')}
+                            >
                                 {locale['form.button.back.to.website']}
                             </Button>
                         </>

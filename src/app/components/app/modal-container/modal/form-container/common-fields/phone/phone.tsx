@@ -17,7 +17,7 @@ export const Phone = ({ register, locale, fieldError, isDirty }: PhoneProps) => 
     <Input
         {...register('phoneNumber', {
             required: true,
-            validate: (value) => !validatePhone(value) || 'Phone number is invalid'
+            validate: (value) => !validatePhone(value) || 'Phone number is invalid',
         })}
         placeholder={locale['form.input.phone.placeholder']}
         mark={true}

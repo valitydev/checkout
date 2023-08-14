@@ -25,9 +25,9 @@ export const WalletForm = ({ onMount }: { onMount: () => void }) => {
     const {
         register,
         handleSubmit,
-        formState: { errors, dirtyFields, isSubmitted }
+        formState: { errors, dirtyFields, isSubmitted },
     } = useForm<WalletFormValues>({
-        mode: 'onChange'
+        mode: 'onChange',
     });
 
     useEffect(() => {
@@ -44,8 +44,8 @@ export const WalletForm = ({ onMount }: { onMount: () => void }) => {
         if (createPaymentState.status === 'FAILURE') {
             goToFormInfo(
                 new ResultFormInfo(ResultType.hookError, {
-                    error: createPaymentState.error
-                })
+                    error: createPaymentState.error,
+                }),
             );
         }
     }, [createPaymentState]);
@@ -56,8 +56,8 @@ export const WalletForm = ({ onMount }: { onMount: () => void }) => {
             method: PaymentMethodName.DigitalWallet,
             values: {
                 provider: activeProvider?.id,
-                ...(form ? obscurePassword(form, values) : values)
-            }
+                ...(form ? obscurePassword(form, values) : values),
+            },
         });
     };
 

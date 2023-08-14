@@ -25,8 +25,8 @@ export const WalletProviderPaymentMethodItem = ({ serviceProvider }: WalletProvi
             setFormData({
                 method: PaymentMethodName.PaymentTerminal,
                 values: {
-                    provider: serviceProvider.id
-                } as PaymentTerminalFormValues
+                    provider: serviceProvider.id,
+                } as PaymentTerminalFormValues,
             });
         } else {
             goToFormInfo(new WalletFormInfo(serviceProvider, FormName.walletProviders));

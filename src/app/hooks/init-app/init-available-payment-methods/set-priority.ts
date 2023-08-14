@@ -33,5 +33,5 @@ const getPriority = (method: PaymentMethod): number => {
 export const setPriority = (methods: PaymentMethod[]): PaymentMethod[] =>
     methods.map((method) => ({
         ...method,
-        priority: getPriority(method)
+        priority: getPriority(method),
     }));

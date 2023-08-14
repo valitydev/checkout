@@ -12,7 +12,7 @@ it('should return resolved init config', () => {
         description: 'some description',
         email: 'test@test.com',
         redirectUrl: 'some url',
-        theme: 'main'
+        theme: 'main',
     };
 
     const actual = resolveInitConfig(param as any);
@@ -45,7 +45,7 @@ it('should return resolved init config', () => {
         terminalBankCard: true,
         terminalFormValues: undefined,
         terminalWallets: true,
-        upi: true
+        upi: true,
     };
     expect(actual).toEqual(expected);
 });

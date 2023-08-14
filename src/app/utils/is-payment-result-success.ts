@@ -5,7 +5,7 @@ import {
     InvoiceStatusChanged,
     PaymentStatusChanged,
     PaymentStatuses,
-    InvoiceStatuses
+    InvoiceStatuses,
 } from 'checkout/backend';
 
 const fromPaymentStatusChanged = (change: PaymentStatusChanged): boolean => {

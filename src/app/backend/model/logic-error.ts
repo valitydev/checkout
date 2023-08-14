@@ -20,7 +20,7 @@ export enum LogicErrorCode {
     invalidClaimStatus = 'invalidClaimStatus',
     invalidClaimRevision = 'invalidClaimRevision',
     limitExceeded = 'limitExceeded',
-    invalidRequest = 'invalidRequest'
+    invalidRequest = 'invalidRequest',
 }
 
 export class LogicError {

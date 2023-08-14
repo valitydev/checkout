@@ -9,7 +9,7 @@ export const createPayment = async ({
     origin,
     initConfig,
     formData,
-    payableInvoice
+    payableInvoice,
 }: CreatePaymentParams): Promise<Payment> => {
     const { invoice, invoiceAccessToken } = payableInvoice;
     const {
@@ -21,7 +21,7 @@ export const createPayment = async ({
         holdExpiration,
         recurring,
         metadata,
-        isExternalIDIncluded
+        isExternalIDIncluded,
     } = initConfig;
     const payer = await createPayer({
         capiEndpoint,
@@ -31,17 +31,17 @@ export const createPayment = async ({
             redirectUrl,
             locale,
             email,
-            phoneNumber
+            phoneNumber,
         },
         formData,
-        payableInvoice
+        payableInvoice,
     });
     const params = {
         flow: toPaymentFlow({ paymentFlowHold, holdExpiration }),
         payer,
         makeRecurrent: recurring,
         metadata,
-        externalID: isExternalIDIncluded ? invoice.externalID : undefined
+        externalID: isExternalIDIncluded ? invoice.externalID : undefined,
     };
     return await request(capiEndpoint, invoiceAccessToken, invoice.id, params);
 };

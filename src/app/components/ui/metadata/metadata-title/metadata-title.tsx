@@ -18,7 +18,7 @@ export const Container = styled.div`
 
 export const MetadataTitle: React.FC<{ localeCode: string; metadata: ServiceProviderTitleMetadata }> = ({
     localeCode,
-    metadata: { icon, localization }
+    metadata: { icon, localization },
 }) => (
     <Container>
         <PaymentMethodIcon name={icon} />

@@ -7,7 +7,7 @@ import {
     PaymentTerminalFormInfo,
     PaymentTerminalSelectorFormInfo,
     ResultFormInfo,
-    ResultType
+    ResultType,
 } from 'checkout/hooks';
 import { getMetadata, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PaymentMethodName, ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
@@ -30,7 +30,7 @@ const isRequiredPhoneNumber = (contactInfo: ServiceProviderContactInfo, phoneNum
 const isRequiredPaymentTerminalForm = (
     serviceProvider: ServiceProvider,
     emailPrefilled: boolean,
-    phoneNumberPrefilled: boolean
+    phoneNumberPrefilled: boolean,
 ): boolean => {
     const { form, contactInfo } = getMetadata(serviceProvider);
     return (
@@ -59,8 +59,8 @@ export const PaymentTerminalMethodItem = ({ method }: PaymentTerminalMethodItemP
                 setFormData({
                     method: PaymentMethodName.PaymentTerminal,
                     values: {
-                        provider: serviceProvider.id
-                    } as PaymentTerminalFormValues
+                        provider: serviceProvider.id,
+                    } as PaymentTerminalFormValues,
                 });
             }
         }

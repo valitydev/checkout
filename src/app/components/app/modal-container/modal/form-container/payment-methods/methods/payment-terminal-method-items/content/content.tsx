@@ -6,7 +6,7 @@ import { PaymentTerminalPaymentMethod } from 'checkout/hooks';
 
 export const Content: React.FC<{ method: PaymentTerminalPaymentMethod; localeCode: string }> = ({
     method,
-    localeCode
+    localeCode,
 }) => {
     if (method.serviceProviders.length === 1) {
         return <MetadataContent serviceProvider={method.serviceProviders[0]} localeCode={localeCode} />;

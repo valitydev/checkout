@@ -3,7 +3,7 @@ import {
     Invoice,
     InvoiceTemplate,
     ServiceProvider,
-    PaymentMethod as ApiPaymentMethod
+    PaymentMethod as ApiPaymentMethod,
 } from 'checkout/backend';
 import { InitConfig } from 'checkout/config';
 import { Locale } from 'checkout/locale';

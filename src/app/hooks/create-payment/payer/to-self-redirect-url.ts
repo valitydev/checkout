@@ -5,12 +5,12 @@ export const toSelfRedirectUrl = (
     invoiceID: string,
     invoiceAccessToken: string,
     { redirectUrl, locale }: { redirectUrl?: string; locale?: string },
-    skipUserInteraction: boolean
+    skipUserInteraction: boolean,
 ) =>
     `${origin}/v1/checkout.html?${serializeUrlParams({
         invoiceID,
         invoiceAccessToken,
         redirectUrl,
         locale,
-        skipUserInteraction
+        skipUserInteraction,
     })}`;

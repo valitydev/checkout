@@ -18,151 +18,151 @@ export const countries: Country[] = [
         sub: [
             {
                 name: 'Andhra Pradesh',
-                code: 'AP'
+                code: 'AP',
             },
             {
                 name: 'Arunāchal Pradesh',
-                code: 'AR'
+                code: 'AR',
             },
             {
                 name: 'Assam',
-                code: 'AS'
+                code: 'AS',
             },
             {
                 name: 'Bihār',
-                code: 'BR'
+                code: 'BR',
             },
             {
                 name: 'Chhattīsgarh',
-                code: 'CT'
+                code: 'CT',
             },
             {
                 name: 'Goa',
-                code: 'GA'
+                code: 'GA',
             },
             {
                 name: 'Gujarāt',
-                code: 'GJ'
+                code: 'GJ',
             },
             {
                 name: 'Haryāna',
-                code: 'HR'
+                code: 'HR',
             },
             {
                 name: 'Himāchal Pradesh',
-                code: 'HP'
+                code: 'HP',
             },
             {
                 name: 'Jhārkhand',
-                code: 'JH'
+                code: 'JH',
             },
             {
                 name: 'Karnātaka',
-                code: 'KA'
+                code: 'KA',
             },
             {
                 name: 'Kerala',
-                code: 'KL'
+                code: 'KL',
             },
             {
                 name: 'Madhya Pradesh',
-                code: 'MP'
+                code: 'MP',
             },
             {
                 name: 'Mahārāshtra',
-                code: 'MH'
+                code: 'MH',
             },
             {
                 name: 'Manipur',
-                code: 'MN'
+                code: 'MN',
             },
             {
                 name: 'Meghālaya',
-                code: 'ML'
+                code: 'ML',
             },
             {
                 name: 'Mizoram',
-                code: 'MZ'
+                code: 'MZ',
             },
             {
                 name: 'Nāgāland',
-                code: 'NL'
+                code: 'NL',
             },
 
             {
                 name: 'Odisha',
-                code: 'OR'
+                code: 'OR',
             },
             {
                 name: 'Punjab',
-                code: 'PB'
+                code: 'PB',
             },
             {
                 name: 'Rājasthān',
-                code: 'RJ'
+                code: 'RJ',
             },
             {
                 name: 'Sikkim',
-                code: 'SK'
+                code: 'SK',
             },
             {
                 name: 'Tamil Nādu',
-                code: 'TN'
+                code: 'TN',
             },
 
             {
                 name: 'Telangāna',
-                code: 'TG'
+                code: 'TG',
             },
             {
                 name: 'Tripura',
-                code: 'TR'
+                code: 'TR',
             },
             {
                 name: 'Uttarākhand',
-                code: 'UT'
+                code: 'UT',
             },
             {
                 name: 'Uttar Pradesh',
-                code: 'UP'
+                code: 'UP',
             },
             {
                 name: 'West Bengal',
-                code: 'WB'
+                code: 'WB',
             },
             {
                 name: 'Andaman and Nicobar Islands',
-                code: 'AN'
+                code: 'AN',
             },
 
             {
                 name: 'Chandīgarh',
-                code: 'CH'
+                code: 'CH',
             },
             {
                 name: 'Dādra and Nagar Haveli and Damān and Diu',
-                code: 'DH'
+                code: 'DH',
             },
             {
                 name: 'Delhi',
-                code: 'DL'
+                code: 'DL',
             },
             {
                 name: 'Jammu and Kashmīr',
-                code: 'JK'
+                code: 'JK',
             },
             {
                 name: 'Ladākh',
-                code: 'LA'
+                code: 'LA',
             },
             {
                 name: 'Lakshadweep',
-                code: 'LD'
+                code: 'LD',
             },
             {
                 name: 'Puducherry',
-                code: 'PY'
-            }
-        ]
-    }
+                code: 'PY',
+            },
+        ],
+    },
 ];

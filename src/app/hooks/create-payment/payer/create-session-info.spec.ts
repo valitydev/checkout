@@ -6,14 +6,14 @@ const fetchMock = (result, status = 200, ok = true) =>
     Promise.resolve({
         status,
         ok,
-        json: () => Promise.resolve(result)
+        json: () => Promise.resolve(result),
     });
 
 describe('createSessionInfo', () => {
     const mockFetch = jest.fn().mockImplementation((args) => {
         if (args === 'https://shortener.test.com/v1/shortened-urls') {
             return fetchMock({
-                shortenedUrl: 'https://shrt.empayre.com/6ut9gYaaMwH'
+                shortenedUrl: 'https://shrt.empayre.com/6ut9gYaaMwH',
             });
         }
         return Promise.reject('Mock function is not found');
@@ -29,15 +29,15 @@ describe('createSessionInfo', () => {
     const origin = 'https://origin.test.com';
     const initConfig = {
         redirectUrl: 'https://init.config.redirect.url',
-        locale: 'kr'
+        locale: 'kr',
     };
     const invoiceData = {
         invoice: {
             id: '1nLoSaB3UUU',
             dueDate: '2023-05-22T13:47:47.444260Z',
-            externalID: 'Invoice external ID'
+            externalID: 'Invoice external ID',
         },
-        invoiceAccessToken: 'eyJhb...'
+        invoiceAccessToken: 'eyJhb...',
     };
 
     const shortenerCallBody = (skipUserInteraction) =>
@@ -45,9 +45,9 @@ describe('createSessionInfo', () => {
             method: 'POST',
             body: JSON.stringify({
                 sourceUrl: `https://origin.test.com/v1/checkout.html?invoiceID=1nLoSaB3UUU&invoiceAccessToken=eyJhb...&redirectUrl=https%3A%2F%2Finit.config.redirect.url&locale=kr&skipUserInteraction=${skipUserInteraction}`,
-                expiresAt: '2023-05-22T13:47:47.444260Z'
+                expiresAt: '2023-05-22T13:47:47.444260Z',
             }),
-            headers: expect.any(Object)
+            headers: expect.any(Object),
         });
 
     describe('method payment terminal', () => {
@@ -60,10 +60,10 @@ describe('createSessionInfo', () => {
                     values: {
                         paymentSessionInfo: {
                             redirectUrlInfo: {
-                                type: 'self'
-                            }
-                        }
-                    } as PaymentTerminalFormValues
+                                type: 'self',
+                            },
+                        },
+                    } as PaymentTerminalFormValues,
                 };
 
                 test('should shorten with initConfigRedirectUrl', async () => {
@@ -72,15 +72,15 @@ describe('createSessionInfo', () => {
                         origin,
                         initConfig,
                         invoiceData,
-                        formValues
+                        formValues,
                     );
                     expect(result).toStrictEqual({
-                        redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH'
+                        redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH',
                     });
                     expect(mockFetch).toHaveBeenCalledTimes(1);
                     expect(mockFetch).toHaveBeenCalledWith(
                         'https://shortener.test.com/v1/shortened-urls',
-                        shortenerCallBody(skipUserInteraction)
+                        shortenerCallBody(skipUserInteraction),
                     );
                 });
 
@@ -90,10 +90,10 @@ describe('createSessionInfo', () => {
                         origin,
                         { redirectUrl: null },
                         invoiceData,
-                        formValues
+                        formValues,
                     );
                     expect(result).toStrictEqual({
-                        redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH'
+                        redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH',
                     });
                     expect(mockFetch).toHaveBeenCalledTimes(1);
                     expect(mockFetch).toHaveBeenCalledWith(
@@ -102,10 +102,10 @@ describe('createSessionInfo', () => {
                             method: 'POST',
                             body: JSON.stringify({
                                 sourceUrl: `https://origin.test.com/v1/checkout.html?invoiceID=1nLoSaB3UUU&invoiceAccessToken=eyJhb...&skipUserInteraction=${skipUserInteraction}`,
-                                expiresAt: '2023-05-22T13:47:47.444260Z'
+                                expiresAt: '2023-05-22T13:47:47.444260Z',
                             }),
-                            headers: expect.any(Object)
-                        })
+                            headers: expect.any(Object),
+                        }),
                     );
                 });
             });
@@ -116,10 +116,10 @@ describe('createSessionInfo', () => {
                     values: {
                         paymentSessionInfo: {
                             redirectUrlInfo: {
-                                type: 'outer'
-                            }
-                        }
-                    } as PaymentTerminalFormValues
+                                type: 'outer',
+                            },
+                        },
+                    } as PaymentTerminalFormValues,
                 };
 
                 test('should return initConfigRedirectUrl and do not shorten', async () => {
@@ -128,10 +128,10 @@ describe('createSessionInfo', () => {
                         origin,
                         initConfig,
                         invoiceData,
-                        formValues
+                        formValues,
                     );
                     expect(result).toStrictEqual({
-                        redirectUrl: 'https://init.config.redirect.url'
+                        redirectUrl: 'https://init.config.redirect.url',
                     });
                     expect(mockFetch).toHaveBeenCalledTimes(0);
                 });
@@ -143,10 +143,10 @@ describe('createSessionInfo', () => {
                         origin,
                         { redirectUrl: null },
                         invoiceData,
-                        formValues
+                        formValues,
                     );
                     expect(result).toStrictEqual({
-                        redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH'
+                        redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH',
                     });
                     expect(mockFetch).toHaveBeenCalledTimes(1);
                     expect(mockFetch).toHaveBeenCalledWith(
@@ -155,10 +155,10 @@ describe('createSessionInfo', () => {
                             method: 'POST',
                             body: JSON.stringify({
                                 sourceUrl: `https://origin.test.com/v1/checkout.html?invoiceID=1nLoSaB3UUU&invoiceAccessToken=eyJhb...&skipUserInteraction=${skipUserInteraction}`,
-                                expiresAt: '2023-05-22T13:47:47.444260Z'
+                                expiresAt: '2023-05-22T13:47:47.444260Z',
                             }),
-                            headers: expect.any(Object)
-                        })
+                            headers: expect.any(Object),
+                        }),
                     );
                     expect(errorSpy).toHaveBeenCalled();
                 });
@@ -168,17 +168,17 @@ describe('createSessionInfo', () => {
         test('redirect url info is not specified', async () => {
             const formValues = {
                 method: PaymentMethodName.PaymentTerminal,
-                values: {}
+                values: {},
             };
 
             const result = await createSessionInfo(urlShortenerEndpoint, origin, initConfig, invoiceData, formValues);
             expect(result).toStrictEqual({
-                redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH'
+                redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH',
             });
             expect(mockFetch).toHaveBeenCalledTimes(1);
             expect(mockFetch).toHaveBeenCalledWith(
                 'https://shortener.test.com/v1/shortened-urls',
-                shortenerCallBody(skipUserInteraction)
+                shortenerCallBody(skipUserInteraction),
             );
         });
 
@@ -186,18 +186,18 @@ describe('createSessionInfo', () => {
             const formValues = {
                 method: PaymentMethodName.PaymentTerminal,
                 values: {
-                    paymentSessionInfo: {}
-                } as PaymentTerminalFormValues
+                    paymentSessionInfo: {},
+                } as PaymentTerminalFormValues,
             };
 
             const result = await createSessionInfo(urlShortenerEndpoint, origin, initConfig, invoiceData, formValues);
             expect(result).toStrictEqual({
-                redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH'
+                redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH',
             });
             expect(mockFetch).toHaveBeenCalledTimes(1);
             expect(mockFetch).toHaveBeenCalledWith(
                 'https://shortener.test.com/v1/shortened-urls',
-                shortenerCallBody(skipUserInteraction)
+                shortenerCallBody(skipUserInteraction),
             );
         });
     });
@@ -207,17 +207,17 @@ describe('createSessionInfo', () => {
 
         test('should shorten redirect url with false skipUserInteraction', async () => {
             const formValues = {
-                method: PaymentMethodName.BankCard
+                method: PaymentMethodName.BankCard,
             };
 
             const result = await createSessionInfo(urlShortenerEndpoint, origin, initConfig, invoiceData, formValues);
             expect(result).toStrictEqual({
-                redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH'
+                redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH',
             });
             expect(mockFetch).toHaveBeenCalledTimes(1);
             expect(mockFetch).toHaveBeenCalledWith(
                 'https://shortener.test.com/v1/shortened-urls',
-                shortenerCallBody(skipUserInteraction)
+                shortenerCallBody(skipUserInteraction),
             );
         });
     });
@@ -227,17 +227,17 @@ describe('createSessionInfo', () => {
 
         test('should shorten redirect url with false skipUserInteraction', async () => {
             const formValues = {
-                method: PaymentMethodName.DigitalWallet
+                method: PaymentMethodName.DigitalWallet,
             };
 
             const result = await createSessionInfo(urlShortenerEndpoint, origin, initConfig, invoiceData, formValues);
             expect(result).toStrictEqual({
-                redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH'
+                redirectUrl: 'https://shrt.empayre.com/6ut9gYaaMwH',
             });
             expect(mockFetch).toHaveBeenCalledTimes(1);
             expect(mockFetch).toHaveBeenCalledWith(
                 'https://shortener.test.com/v1/shortened-urls',
-                shortenerCallBody(skipUserInteraction)
+                shortenerCallBody(skipUserInteraction),
             );
         });
     });

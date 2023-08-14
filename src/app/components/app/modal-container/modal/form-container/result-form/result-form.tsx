@@ -77,7 +77,7 @@ export const ResultForm = ({ onMount }: { onMount: () => void }) => {
                 hasActions: false,
                 hasDone: false,
                 header: '',
-                description: ''
+                description: '',
             };
         }
         switch (resultFormInfo.resultType) {

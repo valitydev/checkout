@@ -25,6 +25,6 @@ initialize().then(([transport, initParams]) => {
                     root.unmount();
                 }, ON_COMPLETE_TIMEOUT_MS);
             }}
-        />
+        />,
     );
 });

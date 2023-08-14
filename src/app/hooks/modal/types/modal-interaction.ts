@@ -3,7 +3,7 @@ import { BrowserRequest } from 'checkout/backend';
 
 export enum ModalInteractionType {
     TokenizedInteraction = 'TokenizedInteraction',
-    EventInteraction = 'EventInteraction'
+    EventInteraction = 'EventInteraction',
 }
 
 interface InteractionObject {

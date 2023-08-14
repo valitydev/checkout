@@ -2,13 +2,13 @@ import {
     KnownProviderCategories,
     PaymentMethod,
     PaymentMethodName,
-    PaymentTerminalPaymentMethod
+    PaymentTerminalPaymentMethod,
 } from 'checkout/hooks';
 import isNil from 'checkout/utils/is-nil';
 
 export const getAvailableTerminalPaymentMethod = (
     availablePaymentMethods: PaymentMethod[],
-    category: KnownProviderCategories
+    category: KnownProviderCategories,
 ): PaymentTerminalPaymentMethod | null => {
     if (isNil(category)) {
         return null;

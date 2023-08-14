@@ -87,12 +87,12 @@ export const FormContainer = () => {
 
     const {
         formName,
-        viewInfo: { slideDirection, inProcess }
+        viewInfo: { slideDirection, inProcess },
     } = useMemo(() => {
         const found = findNamed(modalState, ModalName.modalForms) as ModalForms;
         return {
             formName: found.formsInfo.find((item) => item.active)?.name,
-            viewInfo: found.viewInfo
+            viewInfo: found.viewInfo,
         };
     }, [modalState]);
 
@@ -115,7 +115,8 @@ export const FormContainer = () => {
                     key={formName}
                     initial={{ x: toInitialPos(slideDirection) }}
                     animate={{ x: 0 }}
-                    transition={{ duration: 0.3 }}>
+                    transition={{ duration: 0.3 }}
+                >
                     {renderForm(formName, onMount)}
                     {inProcess && <FormLoader />}
                 </motion.div>

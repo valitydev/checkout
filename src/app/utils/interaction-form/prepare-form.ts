@@ -23,7 +23,7 @@ const toMethod = (request: BrowserRequest): 'POST' | 'GET' => {
 export const prepareForm = (
     origin: string,
     request: BrowserRequest,
-    target: '_self' | '_blank' = '_self'
+    target: '_self' | '_blank' = '_self',
 ): HTMLFormElement => {
     const form = document.createElement('form');
     form.action = request.uriTemplate;

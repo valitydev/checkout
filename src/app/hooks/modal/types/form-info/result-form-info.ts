@@ -4,7 +4,7 @@ import { FormInfo, FormName } from '../form-info';
 export enum ResultType {
     hookError = 'hookError',
     hookProcessed = 'hookProcessed',
-    hookTimeout = 'hookTimeout'
+    hookTimeout = 'hookTimeout',
 }
 
 export type HookPayload = {

@@ -20,7 +20,7 @@ export const CardForm = ({ onMount }: { onMount: () => void }) => {
     const {
         locale,
         initConfig,
-        model: { invoiceTemplate }
+        model: { invoiceTemplate },
     } = useContext(InitialContext);
     const { setViewInfoError, goToFormInfo, prepareToPay } = useContext(ModalContext);
     const { createPaymentState, setFormData } = useCreatePayment();
@@ -28,7 +28,7 @@ export const CardForm = ({ onMount }: { onMount: () => void }) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors, dirtyFields, isSubmitted }
+        formState: { errors, dirtyFields, isSubmitted },
     } = useForm<CardFormInputs>({ mode: 'onChange' });
     const cardHolder = toCardHolderConfig(initConfig.requireCardHolder);
     const amount = toAmountConfig(initConfig, invoiceTemplate);
@@ -47,8 +47,8 @@ export const CardForm = ({ onMount }: { onMount: () => void }) => {
         if (createPaymentState.status === 'FAILURE') {
             goToFormInfo(
                 new ResultFormInfo(ResultType.hookError, {
-                    error: createPaymentState.error
-                })
+                    error: createPaymentState.error,
+                }),
             );
         }
     }, [createPaymentState]);

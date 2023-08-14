@@ -25,7 +25,7 @@ export const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
     const {
         locale,
         initConfig,
-        model: { serviceProviders }
+        model: { serviceProviders },
     } = useContext(InitialContext);
     const { modalState, setViewInfoError, goToFormInfo, prepareToPay } = useContext(ModalContext);
     const { createPaymentState, setFormData } = useCreatePayment();
@@ -37,10 +37,10 @@ export const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
         register,
         handleSubmit,
         getValues,
-        formState: { errors, dirtyFields, isSubmitted, isValid }
+        formState: { errors, dirtyFields, isSubmitted, isValid },
     } = useForm<PaymentTerminalFormValues>({
         mode: 'onChange',
-        defaultValues
+        defaultValues,
     });
     const [formTouched, setFormTouched] = useState(false);
 
@@ -64,8 +64,8 @@ export const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
         if (createPaymentState.status === 'FAILURE') {
             goToFormInfo(
                 new ResultFormInfo(ResultType.hookError, {
-                    error: createPaymentState.error
-                })
+                    error: createPaymentState.error,
+                }),
             );
         }
     }, [createPaymentState]);
@@ -79,9 +79,9 @@ export const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
                 paymentSessionInfo,
                 metadata: {
                     ...prefilledMetadataValues,
-                    ...formatMetadataValue(form, values?.metadata)
-                }
-            }
+                    ...formatMetadataValue(form, values?.metadata),
+                },
+            },
         };
         prepareToPay();
         setFormData(payload);

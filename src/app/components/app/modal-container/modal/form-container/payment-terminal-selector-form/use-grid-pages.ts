@@ -19,8 +19,8 @@ const toPages = (serviceProviders: ServiceProvider[], itemsOnPage: number): Serv
             result = [
                 ...result,
                 {
-                    items: sliced
-                }
+                    items: sliced,
+                },
             ];
         }
     } while (isMorePages);
@@ -56,7 +56,7 @@ const initPages = (serviceProviders: ServiceProvider[], itemsOnPage: number): St
         page: 1,
         totalPages: pages.length,
         serviceProviders,
-        itemsOnPage
+        itemsOnPage,
     };
 };
 
@@ -71,7 +71,7 @@ const next = (state: State): State => {
         pageItems: state.pages[currPageIndex].items,
         isPrevious: true,
         isNext: state.pages.length > state.page + 1,
-        page: state.page + 1
+        page: state.page + 1,
     };
 };
 
@@ -87,12 +87,14 @@ const previous = (state: State): State => {
         pageItems: state.pages[currPageIndex].items,
         isPrevious: currPage !== 1,
         isNext: true,
-        page: currPage
+        page: currPage,
     };
 };
 
-const byBrandName = (filterStr: string) => ({ brandName }: ServiceProvider) =>
-    brandName.toLowerCase().includes(filterStr.toLowerCase());
+const byBrandName =
+    (filterStr: string) =>
+    ({ brandName }: ServiceProvider) =>
+        brandName.toLowerCase().includes(filterStr.toLowerCase());
 
 const filterPages = (state: State, filterStr: string): State => {
     let filtered = state.serviceProviders.concat();
@@ -102,7 +104,7 @@ const filterPages = (state: State, filterStr: string): State => {
     return {
         ...state,
         ...initPages(filtered, state.itemsOnPage),
-        serviceProviders: state.serviceProviders.concat()
+        serviceProviders: state.serviceProviders.concat(),
     };
 };
 
@@ -119,14 +121,14 @@ const gridPagesReducer = (state: State, action: Action): State => {
 
 export const useGridPages = (
     serviceProviders: ServiceProvider[],
-    itemsOnPage: number
+    itemsOnPage: number,
 ): [
     State,
     {
         next: () => void;
         previous: () => void;
         filter: (str: string) => void;
-    }
+    },
 ] => {
     const [state, dispatch] = useReducer(gridPagesReducer, initPages(serviceProviders, itemsOnPage));
 
@@ -142,10 +144,10 @@ export const useGridPages = (
         (filterStr: string) => {
             dispatch({
                 type: 'FILTER_PAGES',
-                payload: filterStr
+                payload: filterStr,
             });
         },
-        [serviceProviders]
+        [serviceProviders],
     );
 
     return [
@@ -153,7 +155,7 @@ export const useGridPages = (
         {
             next,
             previous,
-            filter
-        }
+            filter,
+        },
     ];
 };

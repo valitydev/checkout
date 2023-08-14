@@ -7,7 +7,7 @@ export const getInvoiceEvents = (
     accessToken: string,
     invoiceID: string,
     limit: number = 50,
-    eventID?: number
+    eventID?: number,
 ): Promise<InvoiceEvent[]> => {
     let endpoint = `${capiEndpoint}/${v}/processing/invoices/${invoiceID}/events?limit=${limit}`;
     endpoint = eventID ? endpoint + `&eventID=${eventID}` : endpoint;

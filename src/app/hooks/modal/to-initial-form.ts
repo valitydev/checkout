@@ -3,7 +3,7 @@ import {
     KnownProviderCategories,
     PaymentMethod,
     PaymentMethodName,
-    PaymentTerminalPaymentMethod
+    PaymentTerminalPaymentMethod,
 } from 'checkout/hooks';
 import {
     CardFormInfo,
@@ -12,7 +12,7 @@ import {
     NoAvailablePaymentMethodFormInfo,
     WalletProvidersFormInfo,
     PaymentTerminalFormInfo,
-    PaymentTerminalSelectorFormInfo
+    PaymentTerminalSelectorFormInfo,
 } from './types';
 import { assertUnreachable } from 'checkout/utils';
 

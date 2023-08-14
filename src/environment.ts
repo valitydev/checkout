@@ -8,4 +8,4 @@ export interface Configurator {
     configure: (userConfig: any) => Initializer;
 }
 
-export const environment = (window as any) as Environment;
+export const environment = window as any as Environment;

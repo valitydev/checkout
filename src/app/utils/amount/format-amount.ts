@@ -8,7 +8,7 @@ const getAmountByExponent = ({ minorValue, currencyCode }: AmountInfo): number =
 export const formatAmount = (amount: AmountInfo): string | null => {
     return amount && amount.minorValue
         ? new Intl.NumberFormat(amount.locale, { style: 'currency', currency: amount.currencyCode }).format(
-              getAmountByExponent(amount)
+              getAmountByExponent(amount),
           )
         : null;
 };

@@ -6,11 +6,11 @@ export const createInvoiceWithTemplate = (
     capiEndpoint: string,
     accessToken: string,
     invoiceTemplateID: string,
-    params: InvoiceParamsWithTemplate
+    params: InvoiceParamsWithTemplate,
 ): Promise<InvoiceAndToken> =>
     fetchCapi({
         method: 'POST',
         endpoint: `${capiEndpoint}/${v}/processing/invoice-templates/${invoiceTemplateID}/invoices`,
         accessToken,
-        body: params
+        body: params,
     });

@@ -23,7 +23,7 @@ export const Amount = ({ register, locale, fieldError, cost, localeCode, isDirty
     <Input
         {...register('amount', {
             required: true,
-            validate: (value) => !validateAmount(value, cost) || 'Amount is invalid'
+            validate: (value) => !validateAmount(value, cost) || 'Amount is invalid',
         })}
         icon={<AmountIcon />}
         placeholder={getPlaceholder(cost, locale['form.input.amount.placeholder'], localeCode)}

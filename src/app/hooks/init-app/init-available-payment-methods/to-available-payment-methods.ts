@@ -9,7 +9,7 @@ import { terminalDigitalWalletReducer } from './terminal-digital-wallet-reducer'
 export function toAvailablePaymentMethods(
     paymentMethods: PaymentMethod[],
     initConfig: InitConfig,
-    serviceProviders: ServiceProvider[]
+    serviceProviders: ServiceProvider[],
 ): PaymentMethodState[] {
     let result: PaymentMethodState[] = [];
     const { wallets, onlineBanking, netBanking, upi, terminalWallets, paymentFlowHold, recurring, pix } = initConfig;
@@ -26,8 +26,8 @@ export function toAvailablePaymentMethods(
                         serviceProviders,
                         wallets,
                         paymentFlowHold,
-                        recurring
-                    )
+                        recurring,
+                    ),
                 );
                 break;
             case PaymentMethodName.PaymentTerminal:
@@ -39,8 +39,8 @@ export function toAvailablePaymentMethods(
                         terminalWallets,
                         paymentFlowHold,
                         recurring,
-                        pix
-                    })
+                        pix,
+                    }),
                 );
                 break;
             default:

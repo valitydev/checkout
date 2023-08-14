@@ -7,7 +7,7 @@ export const initialize = (
     target: Window,
     origin: string,
     transportName: string,
-    isLog: boolean = false
+    isLog: boolean = false,
 ): Promise<Transport> => {
     let interval: number;
     return new Promise((resolve, reject) => {

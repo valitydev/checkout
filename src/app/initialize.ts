@@ -19,8 +19,8 @@ creditCardType.addCard({
     lengths: [16],
     code: {
         name: 'CVV',
-        size: 3
-    }
+        size: 3,
+    },
 });
 
 creditCardType.addCard({
@@ -31,8 +31,8 @@ creditCardType.addCard({
     lengths: [16],
     code: {
         name: 'CVV',
-        size: 3
-    }
+        size: 3,
+    },
 });
 
 const initSentry = async (dsn: string) => {
@@ -43,14 +43,14 @@ const initSentry = async (dsn: string) => {
         integrations: [
             new Sentry.BrowserTracing(),
             new CaptureConsoleIntegration({
-                levels: ['warn', 'error']
+                levels: ['warn', 'error'],
             }),
-            new Sentry.Replay()
+            new Sentry.Replay(),
         ],
         tracesSampleRate: 0.2,
         release: env.version,
         replaysOnErrorSampleRate: 1.0,
-        replaysSessionSampleRate: 0.1
+        replaysSessionSampleRate: 0.1,
     });
 };
 
@@ -85,8 +85,8 @@ export const initialize = async (): Promise<[Transport, InitParams]> => {
             {
                 initConfig,
                 appConfig,
-                origin
-            }
+                origin,
+            },
         ];
     } catch (e) {
         console.error(e);

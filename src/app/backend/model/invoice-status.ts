@@ -3,5 +3,5 @@ export enum InvoiceStatus {
     paid = 'paid',
     cancelled = 'cancelled',
     refunded = 'refunded',
-    fulfilled = 'fulfilled'
+    fulfilled = 'fulfilled',
 }

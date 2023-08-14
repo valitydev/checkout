@@ -53,7 +53,7 @@ export const ActionBlock = () => {
         const info = (findNamed(modalState, ModalName.modalForms) as ModalForms).formsInfo;
         return {
             startedInfo: info.find((item) => item.paymentStatus === PaymentStatus.started),
-            hasMultiMethods: !!findNamed(info, FormName.paymentMethods)
+            hasMultiMethods: !!findNamed(info, FormName.paymentMethods),
         };
     }, [modalState]);
 

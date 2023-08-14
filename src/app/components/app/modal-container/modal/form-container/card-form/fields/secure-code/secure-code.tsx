@@ -29,7 +29,7 @@ export const SecureCode = ({ cardNumber, locale, obscureCardCvv, register, field
     <Input
         {...register('secureCode', {
             required: true,
-            validate: (value) => !validateSecureCode(value, { cardNumber }) || 'Secure code is invalid'
+            validate: (value) => !validateSecureCode(value, { cardNumber }) || 'Secure code is invalid',
         })}
         icon={<LockIcon />}
         placeholder={getPlaceholder(cardNumber, locale)}

@@ -7,7 +7,7 @@ import { ReactComponent as Checkmark } from '../icon/checkmark.svg';
 const fadeIn = {
     hidden: { opacity: 0 },
     show: { opacity: 1, transition: { duration: 0.3 } },
-    exit: { opacity: 0, transition: { duration: 0.3 } }
+    exit: { opacity: 0, transition: { duration: 0.3 } },
 };
 
 const iconStyle = css`

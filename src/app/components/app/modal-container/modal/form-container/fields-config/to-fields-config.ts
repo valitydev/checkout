@@ -2,7 +2,7 @@ import {
     InvoiceTemplate,
     InvoiceTemplateLineCostRange,
     InvoiceTemplateLineCostUnlim,
-    InvoiceTemplateSingleLine
+    InvoiceTemplateSingleLine,
 } from 'checkout/backend';
 import { InitConfig } from 'checkout/config';
 import { AmountConfig, EmailConfig, FieldsConfig, PhoneNumberConfig } from './fields-config';
@@ -47,12 +47,12 @@ export const toEmailConfig = (email: string): EmailConfig => {
 };
 
 export const toCardHolderConfig = (requireCardHolder: boolean | null) => ({
-    visible: requireCardHolder === null ? true : requireCardHolder
+    visible: requireCardHolder === null ? true : requireCardHolder,
 });
 
 export const toFieldsConfig = (c: InitConfig, t: InvoiceTemplate): FieldsConfig => ({
     amount: toAmountConfig(c, t),
     email: toEmailConfig(c.email),
     cardHolder: toCardHolderConfig(c.requireCardHolder),
-    phoneNumber: toPhoneNumberConfig(c.phoneNumber)
+    phoneNumber: toPhoneNumberConfig(c.phoneNumber),
 });

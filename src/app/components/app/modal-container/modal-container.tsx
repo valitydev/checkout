@@ -24,7 +24,7 @@ export const ModalContainer = () => {
         appConfig: { capiEndpoint },
         initConfig,
         model: { serviceProviders, invoice, invoiceAccessToken },
-        availablePaymentMethods
+        availablePaymentMethods,
     } = useContext(InitialContext);
     const {
         modalState,
@@ -34,11 +34,11 @@ export const ModalContainer = () => {
         prepareToRetry,
         forgetPaymentAttempt,
         setViewInfoError,
-        toInteractionState
+        toInteractionState,
     } = useModal({
         integrationType: initConfig.integrationType,
         availablePaymentMethods,
-        serviceProviders
+        serviceProviders,
     });
     const [payableInvoiceData, setPayableInvoiceData] = useState<PayableInvoiceData>(null);
     const { eventsState, startPolling, searchEventsChange } = useInvoiceEvents(capiEndpoint, payableInvoiceData);
@@ -50,9 +50,9 @@ export const ModalContainer = () => {
                 invoice: {
                     id: invoice.id,
                     dueDate: invoice.dueDate,
-                    externalID: invoice.externalID
+                    externalID: invoice.externalID,
                 },
-                invoiceAccessToken
+                invoiceAccessToken,
             });
         }
     }, []);
@@ -85,8 +85,8 @@ export const ModalContainer = () => {
                 case InvoiceChangeType.PaymentStatusChanged:
                     goToFormInfo(
                         new ResultFormInfo(ResultType.hookProcessed, {
-                            change
-                        })
+                            change,
+                        }),
                     );
                     break;
             }
@@ -100,8 +100,8 @@ export const ModalContainer = () => {
         if (eventsState.status === 'FAILURE') {
             goToFormInfo(
                 new ResultFormInfo(ResultType.hookError, {
-                    error: eventsState.error
-                })
+                    error: eventsState.error,
+                }),
             );
         }
     }, [payableInvoiceData, eventsState]);
@@ -123,8 +123,9 @@ export const ModalContainer = () => {
                         prepareToPay,
                         prepareToRetry,
                         forgetPaymentAttempt,
-                        setViewInfoError
-                    }}>
+                        setViewInfoError,
+                    }}
+                >
                     <PayableInvoiceContext.Provider value={{ payableInvoiceData, setPayableInvoiceData }}>
                         {activeModalName === ModalName.modalForms && <Modal />}
                         {activeModalName === ModalName.modalInteraction && <UserInteractionModal />}

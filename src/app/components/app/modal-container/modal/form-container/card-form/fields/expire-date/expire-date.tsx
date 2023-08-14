@@ -20,7 +20,7 @@ export const ExpireDate = ({ register, locale, fieldError, isDirty }: ExpireDate
     <Input
         {...register('expireDate', {
             required: true,
-            validate: (value) => !validateExpireDate(value) || 'Exp date is invalid'
+            validate: (value) => !validateExpireDate(value) || 'Exp date is invalid',
         })}
         icon={<CalendarIcon />}
         placeholder={locale['form.input.expiry.placeholder']}

@@ -36,7 +36,7 @@ export const MetadataSelect = ({
     register,
     localeCode,
     fieldError,
-    isDirty
+    isDirty,
 }: MetadataSelectProps) => {
     const registerName = wrappedName ? `${wrappedName}.${name}` : name;
     const subdivisions = countries.find(findCountry(src.countryCode)).sub;
@@ -46,10 +46,11 @@ export const MetadataSelect = ({
         <Select
             {...register(registerName, {
                 required,
-                validate: (value) => !validate(value) || `${name} field is invalid`
+                validate: (value) => !validate(value) || `${name} field is invalid`,
             })}
             error={!isNil(fieldError)}
-            dirty={isDirty}>
+            dirty={isDirty}
+        >
             <option value="">{getDefOptionLabel(localeCode, localization)}</option>
             {options.map(({ value, label }, i) => (
                 <option key={i} value={value}>

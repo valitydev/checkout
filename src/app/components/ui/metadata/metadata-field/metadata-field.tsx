@@ -44,25 +44,24 @@ const getPlaceholder = (localeCode: string, localization: MetadataTextLocalizati
     return localization[localeCode] || localization['en'];
 };
 
-const createValidator = (type: JSX.IntrinsicElements['input']['type'], required: boolean, pattern?: string) => (
-    value
-) => {
-    if (!required && isNil(value)) {
-        return undefined;
-    }
-    if (type === 'email') {
-        return validateEmail(value);
-    }
-    if (type === 'tel') {
-        return validatePhone(value);
-    }
-    if (pattern) {
-        return !new RegExp(pattern).test(value);
-    }
-    if (required) {
-        return !value || !value.trim();
-    }
-};
+const createValidator =
+    (type: JSX.IntrinsicElements['input']['type'], required: boolean, pattern?: string) => (value) => {
+        if (!required && isNil(value)) {
+            return undefined;
+        }
+        if (type === 'email') {
+            return validateEmail(value);
+        }
+        if (type === 'tel') {
+            return validatePhone(value);
+        }
+        if (pattern) {
+            return !new RegExp(pattern).test(value);
+        }
+        if (required) {
+            return !value || !value.trim();
+        }
+    };
 
 export interface MetadataFieldProps {
     metadata: ServiceProviderMetadataField;
@@ -79,7 +78,7 @@ export const MetadataField = ({
     wrappedName,
     register,
     fieldError,
-    isDirty
+    isDirty,
 }: MetadataFieldProps) => {
     const validate = useMemo(() => createValidator(type, required, pattern), [name]);
     const registerName = wrappedName ? `${wrappedName}.${name}` : name;
@@ -87,7 +86,7 @@ export const MetadataField = ({
         <Input
             {...register(registerName, {
                 required: true,
-                validate: (value) => !validate(value) || `${name} field is invalid`
+                validate: (value) => !validate(value) || `${name} field is invalid`,
             })}
             type={type}
             placeholder={getPlaceholder(localeCode, localization)}

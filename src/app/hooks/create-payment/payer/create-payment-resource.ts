@@ -17,12 +17,12 @@ const getFingerprint = (): Promise<string> =>
 export const createPaymentResource = async (
     capiEndpoint: string,
     invoiceAccessToken: string,
-    formData: FormData
+    formData: FormData,
 ): Promise<PaymentResource> => {
     const paymentTool = toPaymentTool(formData);
     const clientInfo = {
         fingerprint: await getFingerprint(),
-        ...getClientInfoUrl()
+        ...getClientInfoUrl(),
     };
     return request(capiEndpoint, invoiceAccessToken, paymentTool, clientInfo);
 };

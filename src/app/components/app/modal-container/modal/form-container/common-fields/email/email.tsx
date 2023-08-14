@@ -16,7 +16,7 @@ export const Email = ({ register, locale, fieldError, isDirty }: EmailProps) => 
     <Input
         {...register('email', {
             required: true,
-            validate: (value) => !validateEmail(value) || 'Email is invalid'
+            validate: (value) => !validateEmail(value) || 'Email is invalid',
         })}
         placeholder={locale['form.input.email.placeholder']}
         mark={true}

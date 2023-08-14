@@ -14,7 +14,7 @@ function validate(amount: number, min?: number, max?: number): boolean {
 
 export const validateAmount = (
     value: string,
-    cost: InvoiceTemplateLineCostRange | InvoiceTemplateLineCostUnlim
+    cost: InvoiceTemplateLineCostRange | InvoiceTemplateLineCostUnlim,
 ): boolean => {
     if (value) {
         value = value.replace(/\s/g, '').replace(/,/g, '.');

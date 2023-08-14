@@ -15,7 +15,7 @@ const applyReplacePattern = <T>(rawValue: T, pattern?: string, replaceValue = ''
 
 export const prepareFormValues = (
     form: ServiceProviderMetadataField[],
-    terminalFormValues: object
+    terminalFormValues: object,
 ): Partial<PaymentTerminalFormValues> => ({
     metadata: form.reduce((acc, formField) => {
         const value = terminalFormValues[formField.name];
@@ -28,9 +28,9 @@ export const prepareFormValues = (
         }
         return {
             ...acc,
-            [formField.name]: appliedValue
+            [formField.name]: appliedValue,
         };
-    }, {})
+    }, {}),
 });
 
 const toDefaultFormValuesMetadata = (terminalFormValues: object, form: ServiceProviderMetadataForm) => {

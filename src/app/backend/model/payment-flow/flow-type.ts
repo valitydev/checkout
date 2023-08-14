@@ -1,4 +1,4 @@
 export enum FlowType {
     PaymentFlowInstant = 'PaymentFlowInstant',
-    PaymentFlowHold = 'PaymentFlowHold'
+    PaymentFlowHold = 'PaymentFlowHold',
 }
