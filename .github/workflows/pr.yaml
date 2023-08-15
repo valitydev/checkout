@@ -26,14 +26,9 @@ jobs:
               with:
                   path: ./*
                   key: ${{ github.sha }}
-            - name: Init NodeJS
-              uses: actions/setup-node@v3
-              with:
-                  node-version: '16.13.2'
-                  cache: 'npm'
-            - name: Check
-              run: npm run check
-            - name: Run tests
+            - name: Lint
+              run: npm run lint
+            - name: Tests
               run: npm run test
     build:
         name: Build
@@ -46,10 +41,5 @@ jobs:
               with:
                   path: ./*
                   key: ${{ github.sha }}
-            - name: Init NodeJS
-              uses: actions/setup-node@v3
-              with:
-                  node-version: '16.13.2'
-                  cache: 'npm'
             - name: Build
               run: npm run build

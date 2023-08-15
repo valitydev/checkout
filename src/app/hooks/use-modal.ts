@@ -17,8 +17,6 @@ import {
     SlideDirection,
 } from './modal/types';
 
-
-
 type State = ModalState[];
 
 export enum Direction {
