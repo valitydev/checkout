@@ -15,8 +15,8 @@ jobs:
               with:
                   path: ./*
                   key: ${{ github.sha }}
-    check:
-        name: Check
+    lint:
+        name: Lint
         runs-on: ubuntu-latest
         needs: [init]
         steps:
@@ -28,7 +28,18 @@ jobs:
                   key: ${{ github.sha }}
             - name: Lint
               run: npm run lint
-            - name: Tests
+    test:
+        name: Test
+        runs-on: ubuntu-latest
+        needs: [init]
+        steps:
+            - name: Cache
+              uses: actions/cache@v3
+              id: cache
+              with:
+                  path: ./*
+                  key: ${{ github.sha }}
+            - name: Test
               run: npm run test
     build:
         name: Build
