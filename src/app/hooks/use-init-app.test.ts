@@ -37,7 +37,11 @@ describe('useInitApp', () => {
         const getInvoiceTemplateMock = fetchMock({
             createdAt: '2023-05-10T08:34:22.263596Z',
             details: {
-                price: { amount: 100, costType: 'InvoiceTemplateLineCostFixed', currency: 'USD' },
+                price: {
+                    amount: 100,
+                    costType: 'InvoiceTemplateLineCostFixed',
+                    currency: 'USD',
+                },
                 product: 'test',
                 templateType: 'InvoiceTemplateSingleLine',
             },
@@ -116,12 +120,19 @@ describe('useInitApp', () => {
                 model: {
                     paymentMethods: [
                         { method: 'BankCard' },
-                        { method: 'PaymentTerminal', providers: ['providerID_001', 'providerID_002'] },
+                        {
+                            method: 'PaymentTerminal',
+                            providers: ['providerID_001', 'providerID_002'],
+                        },
                     ],
                     invoiceTemplate: {
                         createdAt: '2023-05-10T08:34:22.263596Z',
                         details: {
-                            price: { amount: 100, costType: 'InvoiceTemplateLineCostFixed', currency: 'USD' },
+                            price: {
+                                amount: 100,
+                                costType: 'InvoiceTemplateLineCostFixed',
+                                currency: 'USD',
+                            },
                             product: 'test',
                             templateType: 'InvoiceTemplateSingleLine',
                         },
@@ -144,7 +155,12 @@ describe('useInitApp', () => {
                         },
                     ],
                 },
-                amountInfo: { status: 'final', minorValue: 100, currencyCode: 'USD', locale: 'en' },
+                amountInfo: {
+                    status: 'final',
+                    minorValue: 100,
+                    currencyCode: 'USD',
+                    locale: 'en',
+                },
                 availablePaymentMethods: [
                     { name: 'BankCard', priority: 1 },
                     {
@@ -211,7 +227,11 @@ describe('useInitApp', () => {
             expect(state.status).toBe('FAILURE');
             expect(errorSpy).toHaveBeenCalled();
             if (state.status !== 'FAILURE') return;
-            expect(state.error).toStrictEqual({ details: errorMsg, status: 500, statusText: undefined });
+            expect(state.error).toStrictEqual({
+                details: errorMsg,
+                status: 500,
+                statusText: undefined,
+            });
         });
     });
 
@@ -302,11 +322,21 @@ describe('useInitApp', () => {
                 model: {
                     paymentMethods: [
                         { method: 'BankCard' },
-                        { method: 'PaymentTerminal', providers: ['providerID_001', 'providerID_002'] },
+                        {
+                            method: 'PaymentTerminal',
+                            providers: ['providerID_001', 'providerID_002'],
+                        },
                     ],
                     invoice: {
                         amount: 100000,
-                        cart: [{ cost: 100000, price: 100000, product: 'test', quantity: 1 }],
+                        cart: [
+                            {
+                                cost: 100000,
+                                price: 100000,
+                                product: 'test',
+                                quantity: 1,
+                            },
+                        ],
                         createdAt: '2023-05-11T12:14:44.001097Z',
                         currency: 'RUB',
                         description: '',
@@ -333,7 +363,12 @@ describe('useInitApp', () => {
                     ],
                     invoiceAccessToken: 'eyJhbGciOiJ...',
                 },
-                amountInfo: { status: 'final', minorValue: 100000, currencyCode: 'RUB', locale: 'en' },
+                amountInfo: {
+                    status: 'final',
+                    minorValue: 100000,
+                    currencyCode: 'RUB',
+                    locale: 'en',
+                },
                 availablePaymentMethods: [
                     { name: 'BankCard', priority: 1 },
                     {

@@ -223,11 +223,17 @@ export const useModal = ({ integrationType, availablePaymentMethods, serviceProv
     const [modalState, dispatch] = useReducer(dataReducer, init(integrationType, availablePaymentMethods));
 
     const toInitialState = useCallback(() => {
-        dispatch({ type: 'TO_INITIAL_STATE', payload: availablePaymentMethods });
+        dispatch({
+            type: 'TO_INITIAL_STATE',
+            payload: availablePaymentMethods,
+        });
     }, [availablePaymentMethods]);
 
     const goToFormInfo = useCallback((formInfo: FormInfo, direction: Direction = Direction.forward) => {
-        dispatch({ type: 'GO_TO_FORM_INFO', payload: { formInfo, direction } });
+        dispatch({
+            type: 'GO_TO_FORM_INFO',
+            payload: { formInfo, direction },
+        });
     }, []);
 
     const prepareToPay = useCallback(() => {
@@ -248,7 +254,10 @@ export const useModal = ({ integrationType, availablePaymentMethods, serviceProv
 
     const toInteractionState = useCallback(
         (interactionModel: InteractionModel) => {
-            dispatch({ type: 'TO_INTERACTION_STATE', payload: provideInteraction(serviceProviders, interactionModel) });
+            dispatch({
+                type: 'TO_INTERACTION_STATE',
+                payload: provideInteraction(serviceProviders, interactionModel),
+            });
         },
         [serviceProviders],
     );

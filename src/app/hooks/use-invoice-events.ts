@@ -97,7 +97,10 @@ export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData)
                     startPolling(pollingResult.eventID, PAYMENT_STARTED_TIMEOUT_MS);
                 } else {
                     startPolling(pollingResult.eventID);
-                    dispatch({ type: 'SET_POLLING_RESULT', payload: pollingResult.change });
+                    dispatch({
+                        type: 'SET_POLLING_RESULT',
+                        payload: pollingResult.change,
+                    });
                 }
                 break;
         }

@@ -43,7 +43,11 @@ const toDefaultFormValues = (initConfig: InitConfig, form: ServiceProviderMetada
     const email = initConfig?.email;
     const phoneNumber = initConfig?.phoneNumber;
     const terminalFormValues = initConfig?.terminalFormValues;
-    return { email, phoneNumber, metadata: toDefaultFormValuesMetadata(terminalFormValues, form) };
+    return {
+        email,
+        phoneNumber,
+        metadata: toDefaultFormValuesMetadata(terminalFormValues, form),
+    };
 };
 
 export const useDefaultFormValues = (initConfig: InitConfig, form: ServiceProviderMetadataForm) =>

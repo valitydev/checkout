@@ -1,7 +1,10 @@
 import intersection from 'checkout/utils/intersection';
 import { InitConfig } from '../init-config';
 
-const typesDef: { type: 'invoiceTemplate' | 'invoice'; requiredFields: string[] }[] = [
+const typesDef: {
+    type: 'invoiceTemplate' | 'invoice';
+    requiredFields: string[];
+}[] = [
     {
         type: 'invoiceTemplate',
         requiredFields: ['invoiceTemplateID', 'invoiceTemplateAccessToken'],

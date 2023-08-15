@@ -3,10 +3,10 @@ import { useContext, useEffect, useState } from 'react';
 import { Button } from '../button';
 import { InitialContext } from 'checkout/components/app/initial-context';
 
-export const CopyToClipboardButton: React.FC<{ onClick: () => void; timeout?: number }> = ({
-    timeout = 3000,
-    onClick,
-}) => {
+export const CopyToClipboardButton: React.FC<{
+    onClick: () => void;
+    timeout?: number;
+}> = ({ timeout = 3000, onClick }) => {
     const { locale } = useContext(InitialContext);
     const [label, setLabel] = useState(locale['form.button.copy.label']);
 

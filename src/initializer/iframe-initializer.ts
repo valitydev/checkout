@@ -16,7 +16,10 @@ export class IframeInitializer extends Initializer {
         this.container.show();
         initialize(target, this.origin, communicatorInstanceName).then((transport) => {
             this.opened();
-            transport.emit(CommunicatorEvents.init, { ...this.config, ...openConfig });
+            transport.emit(CommunicatorEvents.init, {
+                ...this.config,
+                ...openConfig,
+            });
             transport.on(CommunicatorEvents.finished, () => {
                 transport.destroy();
                 this.container.reinitialize();

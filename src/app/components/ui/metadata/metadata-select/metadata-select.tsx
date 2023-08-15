@@ -16,7 +16,10 @@ export interface MetadataSelectProps {
 
 const findCountry = (countryCode: string) => (country: Country) => country.code === countryCode;
 
-const toOptions = ({ name, code }: CountrySubdivision) => ({ label: name, value: code });
+const toOptions = ({ name, code }: CountrySubdivision) => ({
+    label: name,
+    value: code,
+});
 
 const getDefOptionLabel = (localeCode: string, localization: MetadataTextLocalization) =>
     localization[localeCode] || localization['en'];

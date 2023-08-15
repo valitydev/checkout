@@ -78,7 +78,11 @@ describe('fetch capi', () => {
         try {
             await fetchCapi({ endpoint, accessToken });
         } catch (error) {
-            expect(error).toStrictEqual({ status: 500, statusText, details: undefined });
+            expect(error).toStrictEqual({
+                status: 500,
+                statusText,
+                details: undefined,
+            });
         }
     });
 

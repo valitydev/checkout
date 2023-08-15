@@ -70,5 +70,14 @@ export const getTerminalsPaymentMethods = (
     }
     const filtered = serviceProviders.filter(filterByPaymentMethodProviders(providers));
     const groupedByCategory = Object.entries(groupBy(filtered, 'category'));
-    return groupedByCategory.reduce(categoryReducer({ onlineBanking, netBanking, upi, terminalWallets, pix }), []);
+    return groupedByCategory.reduce(
+        categoryReducer({
+            onlineBanking,
+            netBanking,
+            upi,
+            terminalWallets,
+            pix,
+        }),
+        [],
+    );
 };

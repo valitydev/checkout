@@ -152,7 +152,11 @@ describe('pollInvoiceEvents', () => {
                 pollingTimeout: 100,
                 apiMethodCall: 10,
             };
-            const result = await pollInvoiceEvents({ ...params, delays, ...{ eventID: 15 } });
+            const result = await pollInvoiceEvents({
+                ...params,
+                delays,
+                ...{ eventID: 15 },
+            });
 
             expect(mockFetch).toHaveBeenCalledTimes(3);
             expect(mockFetch).toHaveBeenCalledWith(getEventsUrl(capiEndpoint, invoiceID, 15), expect.any(Object));
