@@ -24,6 +24,8 @@ export function App({ initParams, onComplete }: AppProps) {
     const { state, init } = useInitApp();
     const [isComplete, setIsComplete] = useState(null);
 
+    debugger;
+
     useEffect(() => init(initParams), [initParams]);
 
     useEffect(() => {
