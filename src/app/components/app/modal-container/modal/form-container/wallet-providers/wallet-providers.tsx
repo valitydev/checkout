@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useContext, useEffect } from 'react';
 
 import { DigitalWalletPaymentMethod, PaymentMethodName } from 'checkout/hooks';

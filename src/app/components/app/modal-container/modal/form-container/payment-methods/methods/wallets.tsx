@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useContext } from 'react';
 
 import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';

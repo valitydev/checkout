@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useContext, useEffect, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 

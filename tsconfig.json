@@ -2,10 +2,10 @@
     "compilerOptions": {
         "outDir": "./dist/",
         "sourceMap": true,
-        "moduleResolution": "Node",
+        "moduleResolution": "node",
         "module": "ES2015",
         "target": "ES5",
-        "jsx": "react",
+        "jsx": "react-jsx",
         "lib": ["ESNext", "DOM"],
         "baseUrl": ".",
         "paths": {

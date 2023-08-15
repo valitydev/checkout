@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useContext, useEffect, useMemo, useState } from 'react';
 
 import { PaymentMethod } from 'checkout/hooks';

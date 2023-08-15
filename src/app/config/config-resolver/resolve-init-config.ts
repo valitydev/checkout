@@ -42,7 +42,6 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         holdExpiration,
         locale,
         recurring,
-        theme,
         brandless,
         metadata,
         terminalFormValues,

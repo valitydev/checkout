@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { Footer } from './footer';
 import { FormBlock } from './form-block';
 import { FormContainer } from './form-container';

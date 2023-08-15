@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { FieldError, UseFormRegister, UseFormWatch } from 'react-hook-form';
 import styled from 'styled-components';
 

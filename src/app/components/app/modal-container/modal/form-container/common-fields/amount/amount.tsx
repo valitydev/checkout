@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
 import { InvoiceTemplateLineCostRange, InvoiceTemplateLineCostUnlim } from 'checkout/backend';

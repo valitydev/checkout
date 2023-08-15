@@ -45,7 +45,6 @@ module.exports = {
         'react/require-default-props': [0],
 
         '@typescript-eslint/no-explicit-any': 'off',
-        '@typescript-eslint/no-unused-vars': 'off',
         'no-case-declarations': 'off',
     },
     settings: {

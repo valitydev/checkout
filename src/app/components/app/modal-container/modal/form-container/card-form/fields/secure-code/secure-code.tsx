@@ -1,5 +1,4 @@
 import { number } from 'card-validator';
-import * as React from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
 import { Input } from 'checkout/components';

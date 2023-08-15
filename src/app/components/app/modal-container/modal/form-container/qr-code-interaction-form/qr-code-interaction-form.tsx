@@ -1,5 +1,4 @@
 import isMobile from 'ismobilejs';
-import * as React from 'react';
 import { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
