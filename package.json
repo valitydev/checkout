@@ -10,7 +10,7 @@
     "preview": "npm run build && vite --c vite.config.preview.ts",
     "test": "jest",
     "test:watch": "jest --watch",
-    "prettier": "prettier \"**\" --write --ignore-unknown",
+    "prettier": "prettier * --list-different --ignore-unknown",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx ."
   },
   "license": "Apache-2.0",
