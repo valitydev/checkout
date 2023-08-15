@@ -8,7 +8,6 @@ import { formatPhoneNumber, formatOnFocus, validateEmail, validatePhone } from '
 import isNil from 'checkout/utils/is-nil';
 import partialRight from 'checkout/utils/partial-right';
 
-
 import { getInputTypeFormatter, getMetadataFieldFormatter } from './formatters';
 
 const getAutocomplete = (type: JSX.IntrinsicElements['input']['type']): string | null => {

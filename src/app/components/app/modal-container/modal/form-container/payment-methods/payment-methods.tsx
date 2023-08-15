@@ -9,7 +9,6 @@ import { InitialContext } from '../../../../initial-context';
 import { HeaderWrapper } from '../header-wrapper';
 import { Title } from '../title';
 
-
 const sortByPriority = (methods: PaymentMethod[]): PaymentMethod[] =>
     methods.sort((m1, m2) => (m1.priority > m2.priority ? 1 : -1));
 

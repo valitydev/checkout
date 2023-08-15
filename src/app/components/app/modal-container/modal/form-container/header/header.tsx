@@ -10,8 +10,6 @@ import { ModalContext } from '../../../modal-context';
 import { HeaderWrapper } from '../header-wrapper';
 import { Title } from '../title';
 
-
-
 const getDestination = (modals: ModalState[]): FormInfo => {
     const modalForms = findNamed(modals, ModalName.modalForms) as ModalForms;
     const withPrevious = findInfoWithPrevious(modals);

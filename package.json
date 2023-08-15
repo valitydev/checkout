@@ -11,6 +11,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "prettier": "prettier * --list-different --ignore-unknown",
+    "prettier:fix": "prettier * --write --ignore-unknown",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx ."
   },
   "license": "Apache-2.0",

@@ -4,7 +4,6 @@ import { Payer } from './payer';
 import { PaymentFlow } from './payment-flow';
 import { PaymentStatus } from './payment-status';
 
-
 export class Payment {
     id: string;
     invoiceID: string;

@@ -12,7 +12,6 @@ import { validateCardNumber } from './validate-card-number';
 import { ReactComponent as CardIcon } from '../../../../../../../ui/icon/card.svg';
 import { CardFormInputs } from '../../card-form-inputs';
 
-
 const InputContainer = styled.div`
     width: 100%;
     position: relative;

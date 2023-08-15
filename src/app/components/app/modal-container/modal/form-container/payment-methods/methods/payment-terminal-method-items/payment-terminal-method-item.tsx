@@ -13,7 +13,6 @@ import {
 import { PaymentTerminalPaymentMethod, useCreatePayment, PaymentTerminalFormValues } from 'checkout/hooks';
 import isNil from 'checkout/utils/is-nil';
 
-
 import { Content } from './content';
 import { InitialContext } from '../../../../../../initial-context';
 import { ModalContext } from '../../../../../modal-context';

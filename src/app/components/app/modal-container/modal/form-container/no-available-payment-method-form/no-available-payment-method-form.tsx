@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { InitialContext } from '../../../../initial-context';
 import { Text } from '../text';
 
-
 const Container = styled.div`
     padding: 80px 0;
 `;

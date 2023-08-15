@@ -7,7 +7,6 @@ import { getFailedDescription } from './get-failed-description';
 import { ResultFormContent } from './result-form-content';
 import { ResultFormType } from './result-form-content';
 
-
 export const refunded = (l: Locale): ResultFormContent => ({
     hasActions: false,
     hasDone: true,

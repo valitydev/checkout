@@ -15,8 +15,6 @@ import { useInteractionModel } from './use-interaction-model';
 import { UserInteractionModal } from './user-interaction-modal';
 import { InitialContext } from '../initial-context';
 
-
-
 const Container = styled.div`
     height: 100%;
     position: relative;
