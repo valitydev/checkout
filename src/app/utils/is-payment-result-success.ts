@@ -1,4 +1,3 @@
-import last from 'checkout/utils/last';
 import {
     InvoiceEvent,
     InvoiceChangeType,
@@ -7,6 +6,7 @@ import {
     PaymentStatuses,
     InvoiceStatuses,
 } from 'checkout/backend';
+import last from 'checkout/utils/last';
 
 const fromPaymentStatusChanged = (change: PaymentStatusChanged): boolean => {
     switch (change.status) {

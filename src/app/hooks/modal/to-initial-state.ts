@@ -1,7 +1,6 @@
-import { FormInfo, ModalForms, ModalState, NoAvailablePaymentMethodFormInfo, PaymentMethodsFormInfo } from './types';
-
-import { PaymentMethod } from '../init-app';
 import { toInitialForm } from './to-initial-form';
+import { FormInfo, ModalForms, ModalState, NoAvailablePaymentMethodFormInfo, PaymentMethodsFormInfo } from './types';
+import { PaymentMethod } from '../init-app';
 
 const toInitialModal = (formInfo: FormInfo[]): ModalForms => new ModalForms(formInfo, true);
 

@@ -1,11 +1,12 @@
-import * as creditCardType from 'credit-card-type';
-import * as Sentry from '@sentry/react';
 import { CaptureConsole as CaptureConsoleIntegration } from '@sentry/integrations';
+import * as Sentry from '@sentry/react';
+import * as creditCardType from 'credit-card-type';
 
-import { listen, Transport, StubTransport, CommunicatorEvents, communicatorInstanceName } from '../communicator';
-import { getUrlParams, URLParams } from 'checkout/utils';
 import { InitConfig, resolveInitConfig } from 'checkout/config';
+import { getUrlParams, URLParams } from 'checkout/utils';
+
 import { AppConfig, getAppConfig, getEnv } from './backend';
+import { listen, Transport, StubTransport, CommunicatorEvents, communicatorInstanceName } from '../communicator';
 import { getOrigin } from '../get-origin';
 
 /**

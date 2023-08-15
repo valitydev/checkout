@@ -4,7 +4,7 @@ const parse = (data: any): any => {
     let parsed;
     try {
         parsed = JSON.parse(data);
-    } catch (e) {} // tslint:disable-line:no-empty
+    } catch (e) {} // eslint-disable-line no-empty
     return parsed;
 };
 

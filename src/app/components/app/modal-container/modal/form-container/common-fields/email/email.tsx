@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { FieldError, FieldErrorsImpl, Merge, UseFormRegister } from 'react-hook-form';
-import { formatEmail, validateEmail } from 'checkout/utils';
-import { Locale } from 'checkout/locale';
+
 import { Input } from 'checkout/components';
+import { Locale } from 'checkout/locale';
+import { formatEmail, validateEmail } from 'checkout/utils';
 import isNil from 'checkout/utils/is-nil';
 
 export type EmailProps = {
@@ -18,13 +19,13 @@ export const Email = ({ register, locale, fieldError, isDirty }: EmailProps) => 
             required: true,
             validate: (value) => !validateEmail(value) || 'Email is invalid',
         })}
-        placeholder={locale['form.input.email.placeholder']}
-        mark={true}
-        type="email"
-        id="email-input"
-        onInput={formatEmail}
         autoComplete="email"
-        error={!isNil(fieldError)}
         dirty={isDirty}
+        error={!isNil(fieldError)}
+        id="email-input"
+        mark={true}
+        placeholder={locale['form.input.email.placeholder']}
+        type="email"
+        onInput={formatEmail}
     />
 );

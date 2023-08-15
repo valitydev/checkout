@@ -1,5 +1,5 @@
-import * as React from 'react';
 import kjua from 'kjua';
+import * as React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`

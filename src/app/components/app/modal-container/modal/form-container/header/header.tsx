@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { findInfoWithPrevious, findNamed } from 'checkout/utils';
-import { FormInfo, ModalForms, ModalName, ModalState } from 'checkout/hooks';
-import { HeaderWrapper } from '../header-wrapper';
-import { Title } from '../title';
 import { ChevronButton } from 'checkout/components';
+import { FormInfo, ModalForms, ModalName, ModalState } from 'checkout/hooks';
 import { Direction } from 'checkout/hooks';
+import { findInfoWithPrevious, findNamed } from 'checkout/utils';
 
 import { ModalContext } from '../../../modal-context';
+import { HeaderWrapper } from '../header-wrapper';
+import { Title } from '../title';
+
+
 
 const getDestination = (modals: ModalState[]): FormInfo => {
     const modalForms = findNamed(modals, ModalName.modalForms) as ModalForms;
@@ -24,9 +26,9 @@ export const Header = ({ title }: { title: string }) => {
         <HeaderWrapper>
             {destination && (
                 <ChevronButton
+                    id="desktop-back-btn"
                     type="left"
                     onClick={() => goToFormInfo(destination, Direction.back)}
-                    id="desktop-back-btn"
                 />
             )}
             <Title>{title}</Title>

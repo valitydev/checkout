@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useContext, useEffect, useMemo, useRef } from 'react';
+import styled from 'styled-components';
 
 import {
     EventInteractionObject,
@@ -9,7 +10,6 @@ import {
     TokenizedInteractionObject,
 } from 'checkout/hooks';
 import { findNamed, prepareForm } from 'checkout/utils';
-import styled from 'styled-components';
 import { device } from 'checkout/utils/device';
 
 import { InitialContext } from '../../initial-context';
@@ -73,7 +73,7 @@ export const UserInteractionModal = () => {
 
     return (
         <Container key="3ds" id="interact-container">
-            <IFrame id="interactionFrame" ref={iFrameElement} src={src} />
+            <IFrame ref={iFrameElement} id="interactionFrame" src={src} />
         </Container>
     );
 };

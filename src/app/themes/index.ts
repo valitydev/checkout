@@ -1,6 +1,6 @@
-import { Theme } from './theme';
 import plantation from './plantation';
 import rhino from './rhino';
+import { Theme } from './theme';
 
 const themes = [plantation, rhino];
 

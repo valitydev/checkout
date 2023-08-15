@@ -1,6 +1,7 @@
 import { InitConfig } from 'checkout/config';
-import { resolveInvoiceTemplate } from './resolve-invoice-template';
+
 import { resolveInvoice } from './resolve-invoice';
+import { resolveInvoiceTemplate } from './resolve-invoice-template';
 import { AmountInfo } from './types';
 import { Model } from '..';
 

@@ -1,5 +1,5 @@
-import { Locale } from 'checkout/locale';
 import { LogicError } from 'checkout/backend';
+import { Locale } from 'checkout/locale';
 
 const getDescription = (l: Locale, e: LogicError): string => {
     const result = l[e.code] ? l[e.code] : e.code;

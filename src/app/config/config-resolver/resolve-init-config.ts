@@ -1,14 +1,15 @@
-import { resolveBoolean } from './resolve-boolean';
-import { resolveInteger } from './resolve-integer';
-import { InitConfig } from '../init-config';
-import { resolveIntegrationType } from './resolve-integration-type';
-import { resolveString } from './resolve-string';
 import { HoldExpirationType } from 'checkout/backend/model';
-import { resolveObject } from './resolve-object';
-import { detectLocale } from '../../../locale';
-import { resolveRedirectUrl } from './resolve-redirect-url';
+
+import { resolveBoolean } from './resolve-boolean';
 import { resolveEmail } from './resolve-email';
+import { resolveInteger } from './resolve-integer';
+import { resolveIntegrationType } from './resolve-integration-type';
+import { resolveObject } from './resolve-object';
 import { resolvePhoneNumber } from './resolve-phone-number';
+import { resolveRedirectUrl } from './resolve-redirect-url';
+import { resolveString } from './resolve-string';
+import { detectLocale } from '../../../locale';
+import { InitConfig } from '../init-config';
 
 const setDefault = <P, D>(userParam: P, defaultValue: D): P | D =>
     userParam === null || userParam === undefined ? defaultValue : userParam;

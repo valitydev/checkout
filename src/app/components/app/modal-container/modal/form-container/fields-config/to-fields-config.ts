@@ -5,6 +5,7 @@ import {
     InvoiceTemplateSingleLine,
 } from 'checkout/backend';
 import { InitConfig } from 'checkout/config';
+
 import { AmountConfig, EmailConfig, FieldsConfig, PhoneNumberConfig } from './fields-config';
 
 const toSingleLineAmountConfig = (c: InvoiceTemplateSingleLine): AmountConfig => {

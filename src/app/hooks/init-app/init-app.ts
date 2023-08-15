@@ -1,8 +1,9 @@
 import { getLocale } from 'checkout/backend';
-import { fetchModel } from './fetch-model';
-import { getAmountInfo } from './amount-info';
-import { initAvailablePaymentMethods } from './init-available-payment-methods';
 import { InitParams } from 'checkout/initialize';
+
+import { getAmountInfo } from './amount-info';
+import { fetchModel } from './fetch-model';
+import { initAvailablePaymentMethods } from './init-available-payment-methods';
 import { InitialData } from './types';
 
 export const initApp = async ({ initConfig, appConfig, origin }: InitParams): Promise<InitialData> => {

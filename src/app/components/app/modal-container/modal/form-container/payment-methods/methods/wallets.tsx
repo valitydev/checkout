@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
+import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
 import { FormName, WalletProvidersFormInfo } from 'checkout/hooks';
+
 import { Method } from './method';
 import { Text } from './text';
-import { PaymentMethodIcon, PaymentMethodTitle } from 'checkout/components/ui';
-
 import { InitialContext } from '../../../../../initial-context';
 import { ModalContext } from '../../../../modal-context';
 
@@ -18,7 +18,7 @@ export const Wallets = () => {
     };
 
     return (
-        <Method onClick={onClick} id="wallets-payment-method">
+        <Method id="wallets-payment-method" onClick={onClick}>
             <PaymentMethodIcon name="wallets" />
             <Text>
                 <PaymentMethodTitle>{locale['form.payment.method.name.wallet.label']}</PaymentMethodTitle>

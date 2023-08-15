@@ -1,4 +1,11 @@
 import { useCallback, useReducer } from 'react';
+
+import { ServiceProvider } from 'checkout/backend';
+import { InitConfig } from 'checkout/config';
+import { findNamed } from 'checkout/utils';
+
+import { PaymentMethod } from './init-app';
+import { InteractionModel, provideInteraction, toInitialState } from './modal';
 import {
     FormInfo,
     ModalForms,
@@ -10,11 +17,7 @@ import {
     SlideDirection,
 } from './modal/types';
 
-import { PaymentMethod } from './init-app';
-import { InteractionModel, provideInteraction, toInitialState } from './modal';
-import { InitConfig } from 'checkout/config';
-import { findNamed } from 'checkout/utils';
-import { ServiceProvider } from 'checkout/backend';
+
 
 type State = ModalState[];
 

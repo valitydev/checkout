@@ -1,4 +1,5 @@
 import { number } from 'card-validator';
+
 import { replaceFullWidthChars } from 'checkout/utils';
 
 export function formatCVC(value: string, cardNumber: string): string {

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+
 import { device } from 'checkout/utils/device';
 
 export const GlobalStyle = createGlobalStyle`

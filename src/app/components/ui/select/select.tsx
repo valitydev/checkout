@@ -49,3 +49,5 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(({ children, er
         {!error && dirty && <Marks />}
     </SelectWrapper>
 ));
+
+Select.displayName = 'Select';

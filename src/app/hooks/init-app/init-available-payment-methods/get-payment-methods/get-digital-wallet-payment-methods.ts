@@ -1,12 +1,13 @@
-import groupBy from 'checkout/utils/group-by';
 import { DigitalWallet, METADATA_NAMESPACE, ServiceProvider } from 'checkout/backend';
+import { assertUnreachable } from 'checkout/utils';
+import groupBy from 'checkout/utils/group-by';
+
+import { filterByPaymentMethodProviders } from './filter-by-payment-method-providers';
 import {
     DigitalWalletPaymentMethod,
     PaymentMethodName as PaymentMethodNameState,
     KnownDigitalWalletProviderCategories,
 } from '../types';
-import { assertUnreachable } from 'checkout/utils';
-import { filterByPaymentMethodProviders } from './filter-by-payment-method-providers';
 
 const metadataReducer = (result: ServiceProvider[], serviceProvider: ServiceProvider): ServiceProvider[] =>
     serviceProvider?.metadata?.[METADATA_NAMESPACE] ? result.concat(serviceProvider) : result;

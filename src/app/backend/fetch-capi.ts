@@ -1,5 +1,5 @@
-import guid from 'checkout/utils/guid';
 import delay from 'checkout/utils/delay';
+import guid from 'checkout/utils/guid';
 
 export type FetchCapiParams = {
     endpoint: string;

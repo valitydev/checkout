@@ -1,4 +1,5 @@
 import { InvoiceTemplateMultiLine } from 'checkout/backend';
+
 import { AmountInfo } from './types';
 
 export const getAmountFromMultiLine = (details: InvoiceTemplateMultiLine, locale: string): AmountInfo => ({

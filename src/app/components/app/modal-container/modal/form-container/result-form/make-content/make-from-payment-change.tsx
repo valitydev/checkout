@@ -1,10 +1,12 @@
-import { Locale } from 'checkout/locale';
 import { InvoiceEvent, LogicError, PaymentError, PaymentStatusChanged, PaymentStatuses } from 'checkout/backend';
-import { ResultFormContent } from './result-form-content';
-import { getFailedDescription } from './get-failed-description';
+import { Locale } from 'checkout/locale';
 import { getLastChange } from 'checkout/utils';
-import { ResultFormType } from './result-form-content';
 import isObject from 'checkout/utils/is-object';
+
+import { getFailedDescription } from './get-failed-description';
+import { ResultFormContent } from './result-form-content';
+import { ResultFormType } from './result-form-content';
+
 
 export const refunded = (l: Locale): ResultFormContent => ({
     hasActions: false,

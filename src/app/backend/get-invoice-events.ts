@@ -1,6 +1,7 @@
+import { InvoiceEvent } from 'checkout/backend/model';
+
 import { fetchCapi } from '.';
 import v from './capi-version';
-import { InvoiceEvent } from 'checkout/backend/model';
 
 export const getInvoiceEvents = (
     capiEndpoint: string,

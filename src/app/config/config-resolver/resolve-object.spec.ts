@@ -1,5 +1,6 @@
-import { resolveObject } from './resolve-object';
 import { getMessageInvalidValue } from 'checkout/log-messages';
+
+import { resolveObject } from './resolve-object';
 
 jest.mock('../../log-messages');
 const getMessageInvalidValueMock = getMessageInvalidValue as any;

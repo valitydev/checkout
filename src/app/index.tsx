@@ -3,8 +3,8 @@ import { createRoot } from 'react-dom/client';
 
 import { App } from './components/app';
 import { initialize } from './initialize';
-import { CommunicatorEvents } from '../communicator';
 import isNil from './utils/is-nil';
+import { CommunicatorEvents } from '../communicator';
 
 const ON_COMPLETE_TIMEOUT_MS = 1000 * 5;
 

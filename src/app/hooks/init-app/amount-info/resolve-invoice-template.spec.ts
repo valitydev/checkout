@@ -1,7 +1,9 @@
-import { getAmountFromSingleLine } from './get-amount-from-single-line';
-import { getAmountFromMultiLine } from './get-amount-from-multi-line';
-import { resolveInvoiceTemplate } from './resolve-invoice-template';
 import { TemplateType } from 'checkout/backend';
+
+import { getAmountFromMultiLine } from './get-amount-from-multi-line';
+import { getAmountFromSingleLine } from './get-amount-from-single-line';
+import { resolveInvoiceTemplate } from './resolve-invoice-template';
+
 
 jest.mock('./get-amount-from-single-line');
 jest.mock('./get-amount-from-multi-line');

@@ -1,4 +1,5 @@
 import { ClientInfo, PaymentResource, PaymentTool } from 'checkout/backend/model';
+
 import v from './capi-version';
 import { fetchCapi } from './fetch-capi';
 

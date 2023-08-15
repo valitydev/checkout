@@ -1,4 +1,5 @@
 import { PayerType, PaymentResourcePayer } from 'checkout/backend';
+
 import { createPaymentResource } from './create-payment-resource';
 import { createSessionInfo } from './create-session-info';
 import { toContactInfo } from './to-contact-info';

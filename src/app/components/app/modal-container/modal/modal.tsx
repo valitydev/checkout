@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { Info } from './info';
-import { FormContainer } from './form-container';
-import { FormBlock } from './form-block';
 import { Footer } from './footer';
+import { FormBlock } from './form-block';
+import { FormContainer } from './form-container';
+import { Info } from './info';
 
 export const Modal = () => (
     <>

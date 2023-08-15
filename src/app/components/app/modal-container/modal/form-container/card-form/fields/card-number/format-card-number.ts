@@ -1,5 +1,6 @@
-import { FormEvent } from 'react';
 import { number } from 'card-validator';
+import { FormEvent } from 'react';
+
 import { replaceFullWidthChars, safeVal } from 'checkout/utils';
 
 function format(num: string): string {

@@ -1,6 +1,7 @@
 import { useCallback, useReducer } from 'react';
 
 import { InitParams } from 'checkout/initialize';
+
 import { InitialData, initApp } from './init-app';
 
 type State =

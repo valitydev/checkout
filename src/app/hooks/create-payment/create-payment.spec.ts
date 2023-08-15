@@ -1,6 +1,7 @@
 import { PaymentTerminalFormValues } from 'checkout/hooks';
-import { PaymentMethodName } from '../init-app';
+
 import { createPayment } from './create-payment';
+import { PaymentMethodName } from '../init-app';
 
 const fetchMock = (result, status = 200, ok = true) =>
     Promise.resolve({

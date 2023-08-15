@@ -1,17 +1,17 @@
+import isMobile from 'ismobilejs';
 import * as React from 'react';
 import { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import isMobile from 'ismobilejs';
+
+import { QrCodeFormMetadata } from 'checkout/backend';
+import { Button, CopyToClipboardButton, getMetadata, Hr, Input } from 'checkout/components/ui';
+import { QrCodeInteractionFormInfo } from 'checkout/hooks';
+import isNil from 'checkout/utils/is-nil';
 
 import { QRCode } from './qr-code';
-import { QrCodeInteractionFormInfo } from 'checkout/hooks';
-import { Button, CopyToClipboardButton, getMetadata, Hr, Input } from 'checkout/components/ui';
-import { QrCodeFormMetadata } from 'checkout/backend';
-import isNil from 'checkout/utils/is-nil';
-import { useActiveModalForm } from '../use-active-modal-form';
-
 import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';
+import { useActiveModalForm } from '../use-active-modal-form';
 
 const Instruction = styled.p`
     font-weight: 500;
@@ -61,9 +61,9 @@ export const QrCodeInteractionForm = ({ onMount }: { onMount: () => void }) => {
                     {qrCodeForm.isCopyCodeBlock && (
                         <>
                             <Input
-                                id="qr-code-input"
                                 ref={qrCodeInputRef}
                                 defaultValue={request.qrCode}
+                                id="qr-code-input"
                                 readOnly={true}
                             ></Input>
                             <CopyToClipboardButton onClick={() => copyToClipboard()} />

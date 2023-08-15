@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
 
-import { FormInfo, FormName, ResultFormInfo, ResultType, WalletFormInfo } from 'checkout/hooks';
-import { getMetadata, MetadataLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
 import { PaymentMethodName, ServiceProvider } from 'checkout/backend';
-import isNil from 'checkout/utils/is-nil';
+import { getMetadata, MetadataLogo, PaymentMethodItemContainer } from 'checkout/components/ui';
+import { FormInfo, FormName, ResultFormInfo, ResultType, WalletFormInfo } from 'checkout/hooks';
 import { PaymentTerminalFormValues, useCreatePayment } from 'checkout/hooks';
+import isNil from 'checkout/utils/is-nil';
+
 import { ModalContext } from '../../../modal-context';
 
 export type SetFormInfoAction = (formInfo: FormInfo) => any;

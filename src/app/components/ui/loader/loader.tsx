@@ -17,16 +17,16 @@ const LoaderWrapper = styled.svg`
 `;
 
 const LoaderDef: React.FC<WithThemeProps> = ({ theme }) => (
-    <LoaderWrapper width="64px" height="64px" viewBox="0 0 57 57">
+    <LoaderWrapper height="64px" viewBox="0 0 57 57" width="64px">
         <defs>
-            <linearGradient x1="100%" y1="0%" x2="0%" y2="100%" id="gradient">
+            <linearGradient id="gradient" x1="100%" x2="0%" y1="0%" y2="100%">
                 {theme.background.loader.map((color, idx) => (
-                    <stop key={idx} stopColor={color[0]} offset={color[1]} />
+                    <stop key={idx} offset={color[1]} stopColor={color[0]} />
                 ))}
             </linearGradient>
         </defs>
-        <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-            <g transform="translate(-655.000000, -383.000000)" strokeWidth="4" stroke={`url(#gradient)`}>
+        <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+            <g stroke={`url(#gradient)`} strokeWidth="4" transform="translate(-655.000000, -383.000000)">
                 <circle cx="683.5" cy="411.5" r="26.5" />
             </g>
         </g>

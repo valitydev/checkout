@@ -1,7 +1,7 @@
 import { InvoiceTemplateDetails } from './invoice-template-details';
 import { InvoiceTemplateLineCost } from './invoice-template-line-cost';
-import { InvoiceLineTaxMode } from '../invoice-cart/invoice-line-tax-mode';
 import { TemplateType } from './template-type';
+import { InvoiceLineTaxMode } from '../invoice-cart/invoice-line-tax-mode';
 
 export class InvoiceTemplateSingleLine extends InvoiceTemplateDetails {
     templateType: TemplateType.InvoiceTemplateSingleLine;

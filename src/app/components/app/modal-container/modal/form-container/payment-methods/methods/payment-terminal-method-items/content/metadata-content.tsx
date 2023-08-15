@@ -10,7 +10,7 @@ export const MetadataContent: React.FC<{
     const { logo, title } = getMetadata(serviceProvider);
     return (
         <>
-            {title && <MetadataTitle metadata={title} localeCode={localeCode} />}
+            {title && <MetadataTitle localeCode={localeCode} metadata={title} />}
             {logo && <MetadataLogo metadata={logo} />}
         </>
     );

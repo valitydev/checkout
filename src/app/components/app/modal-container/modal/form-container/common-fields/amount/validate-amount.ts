@@ -1,6 +1,6 @@
-import toNumber from 'checkout/utils/to-number';
-import isNumber from 'checkout/utils/is-number';
 import { CostType, InvoiceTemplateLineCostRange, InvoiceTemplateLineCostUnlim } from 'checkout/backend';
+import isNumber from 'checkout/utils/is-number';
+import toNumber from 'checkout/utils/to-number';
 
 function validate(amount: number, min?: number, max?: number): boolean {
     if (!amount || !isNumber(amount) || amount <= 0) {

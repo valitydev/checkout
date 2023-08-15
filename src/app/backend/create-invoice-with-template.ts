@@ -1,6 +1,7 @@
+import { InvoiceAndToken, InvoiceParamsWithTemplate } from 'checkout/backend/model';
+
 import { fetchCapi } from '.';
 import v from './capi-version';
-import { InvoiceAndToken, InvoiceParamsWithTemplate } from 'checkout/backend/model';
 
 export const createInvoiceWithTemplate = (
     capiEndpoint: string,

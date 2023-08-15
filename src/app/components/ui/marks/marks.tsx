@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { motion } from 'framer-motion';
+import * as React from 'react';
 import styled, { css } from 'styled-components';
 
 import { ReactComponent as Checkmark } from '../icon/checkmark.svg';
@@ -31,7 +31,7 @@ const CheckmarkIcon = styled(Checkmark)`
 `;
 
 export const Marks = () => (
-    <motion.div variants={fadeIn} initial="hidden" animate="show" exit="exit">
+    <motion.div animate="show" exit="exit" initial="hidden" variants={fadeIn}>
         <CheckmarkIcon />
     </motion.div>
 );

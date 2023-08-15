@@ -2,9 +2,9 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 import BankCard from './bank-card.svg';
+import OnlineBanking from './online-banking.svg';
 import Terminals from './terminals.svg';
 import Wallets from './wallets.svg';
-import OnlineBanking from './online-banking.svg';
 
 const IconClasses = {
     'bank-card': BankCard,

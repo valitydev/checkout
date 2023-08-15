@@ -1,4 +1,5 @@
 import intersection from 'checkout/utils/intersection';
+
 import { InitConfig } from '../init-config';
 
 const typesDef: {

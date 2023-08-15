@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
+
 import { MetadataTextLocalization, ServiceProviderMetadataSelect } from 'checkout/backend';
 import { Select } from 'checkout/components';
 import { countries, Country, CountrySubdivision } from 'checkout/utils';
@@ -51,8 +52,8 @@ export const MetadataSelect = ({
                 required,
                 validate: (value) => !validate(value) || `${name} field is invalid`,
             })}
-            error={!isNil(fieldError)}
             dirty={isDirty}
+            error={!isNil(fieldError)}
         >
             <option value="">{getDefOptionLabel(localeCode, localization)}</option>
             {options.map(({ value, label }, i) => (

@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { useContext, useEffect, useMemo, useState } from 'react';
 
-import { MethodsList } from './methods';
-import { OtherPaymentMethodsLink } from './other-payment-methods-link';
-import { Title } from '../title';
-import { HeaderWrapper } from '../header-wrapper';
 import { PaymentMethod } from 'checkout/hooks';
 
+import { MethodsList } from './methods';
+import { OtherPaymentMethodsLink } from './other-payment-methods-link';
 import { InitialContext } from '../../../../initial-context';
+import { HeaderWrapper } from '../header-wrapper';
+import { Title } from '../title';
+
 
 const sortByPriority = (methods: PaymentMethod[]): PaymentMethod[] =>
     methods.sort((m1, m2) => (m1.priority > m2.priority ? 1 : -1));
@@ -32,7 +33,7 @@ export const PaymentMethods = ({ onMount }: { onMount: () => void }) => {
             </HeaderWrapper>
             <MethodsList methods={visibleMethods} />
             {visibleMethods.length < allMethods.length && (
-                <OtherPaymentMethodsLink onClick={() => setIsShowAll(true)} locale={locale} />
+                <OtherPaymentMethodsLink locale={locale} onClick={() => setIsShowAll(true)} />
             )}
         </form>
     );

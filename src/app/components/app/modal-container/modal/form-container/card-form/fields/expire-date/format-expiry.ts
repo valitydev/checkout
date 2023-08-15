@@ -1,5 +1,6 @@
-import { replaceFullWidthChars, safeVal } from 'checkout/utils';
 import { FormEvent } from 'react';
+
+import { replaceFullWidthChars, safeVal } from 'checkout/utils';
 
 function format(expiry: string): string {
     const parts = expiry.match(/^\D*(\d{1,2})(\D+)?(\d{1,4})?/);

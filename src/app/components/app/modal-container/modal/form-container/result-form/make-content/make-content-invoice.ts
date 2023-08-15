@@ -1,9 +1,10 @@
 import { InvoiceChangeType, InvoiceChange, InvoiceStatusChanged, PaymentStatusChanged } from 'checkout/backend';
 import { Locale } from 'checkout/locale';
-import { ResultFormContent } from './result-form-content';
+
 import { makeFromInvoiceChangeHook } from './make-from-invoice-change';
 import { makeFromPaymentChangeHook } from './make-from-payment-change';
 import { makeFromPaymentStarted } from './make-from-payment-started';
+import { ResultFormContent } from './result-form-content';
 
 export const makeContentInvoiceHook = (l: Locale, change: InvoiceChange): ResultFormContent => {
     switch (change.changeType) {

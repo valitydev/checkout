@@ -1,3 +1,5 @@
+import isNil from 'checkout/utils/is-nil';
+
 import {
     DigitalWalletPaymentMethod,
     KnownProviderCategories,
@@ -5,7 +7,6 @@ import {
     PaymentMethodName,
     PaymentTerminalPaymentMethod,
 } from './types';
-import isNil from 'checkout/utils/is-nil';
 
 export const terminalDigitalWalletReducer = (
     acc: PaymentMethod[],

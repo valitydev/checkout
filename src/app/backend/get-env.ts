@@ -1,4 +1,5 @@
 import { getNocacheValue } from 'checkout/utils';
+
 import { fetchCapi } from './fetch-capi';
 
 export interface Env {

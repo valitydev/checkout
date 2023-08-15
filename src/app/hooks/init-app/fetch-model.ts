@@ -4,9 +4,9 @@ import {
     getInvoiceTemplateByID,
     getInvoicePaymentMethodsByTemplateID,
 } from 'checkout/backend';
+import { InitConfig } from 'checkout/config';
 
 import { getServiceProviders } from './get-service-providers';
-import { InitConfig } from 'checkout/config';
 import { Model } from './types';
 
 type InvoiceTemplateParams = {

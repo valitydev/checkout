@@ -1,8 +1,8 @@
-import { toMinorAmount } from 'checkout/utils';
 import { InvoiceAndToken, InvoiceTemplate, createInvoiceWithTemplate as request } from 'checkout/backend';
+import { toMinorAmount } from 'checkout/utils';
 
-import { AmountInfo } from '../init-app';
 import { PayableInvoiceData } from './types';
+import { AmountInfo } from '../init-app';
 
 const getAmount = (amountInfo: AmountInfo, formAmount: string): number => {
     switch (amountInfo.status) {

@@ -1,10 +1,11 @@
-import isNumber from 'checkout/utils/is-number';
 import {
     CostType,
     InvoiceTemplateLineCostFixed,
     InvoiceTemplateLineCostRange,
     InvoiceTemplateSingleLine,
 } from 'checkout/backend/model';
+import isNumber from 'checkout/utils/is-number';
+
 import { AmountInfo } from './types';
 
 const getStatus = (configAmount: number) => (isNumber(configAmount) ? 'final' : 'notKnown');

@@ -1,6 +1,6 @@
-import { initialize, CommunicatorEvents, communicatorInstanceName } from '../communicator';
 import { Initializer } from './initializer';
 import { InitConfig } from '../app/config';
+import { initialize, CommunicatorEvents, communicatorInstanceName } from '../communicator';
 import { serializeUrlParams } from '../serialize-url-params';
 
 export class PopupInitializer extends Initializer {

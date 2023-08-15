@@ -1,8 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { Methods } from './methods';
 import { PaymentMethod } from 'checkout/hooks';
+
+import { Methods } from './methods';
 
 const List = styled.ul`
     margin: 0;

@@ -1,4 +1,5 @@
 import { FormField } from 'checkout/backend';
+
 import { expandWithRedirect } from './uri-template';
 
 const createInput = (origin: string, formField: FormField): HTMLInputElement => {

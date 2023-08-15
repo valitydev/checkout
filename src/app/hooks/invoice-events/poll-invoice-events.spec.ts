@@ -1,4 +1,5 @@
 import { InvoiceChangeType } from 'checkout/backend';
+
 import { pollInvoiceEvents } from './poll-invoice-events';
 
 const fetchValueMock = (result, status = 200, ok = true) => ({

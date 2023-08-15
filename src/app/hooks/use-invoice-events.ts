@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
-import isNil from 'checkout/utils/is-nil';
-import { PayableInvoiceData } from './create-payment';
-import { PollingResult, pollInvoiceEvents } from './invoice-events';
+
 import { InvoiceChange, InvoiceChangeType, getInvoiceEvents } from 'checkout/backend';
 import { findChange } from 'checkout/utils/event-utils';
+import isNil from 'checkout/utils/is-nil';
+
+import { PayableInvoiceData } from './create-payment';
+import { PollingResult, pollInvoiceEvents } from './invoice-events';
 
 const API_METHOD_CALL_MS = 1000;
 const DEFAULT_TIMEOUT_MS = 60 * 1000 * 10;

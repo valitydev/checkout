@@ -1,4 +1,5 @@
 import { Locale } from 'checkout/locale';
+
 import { ResultFormContent, ResultFormType } from './result-form-content';
 
 const started = (l: Locale): ResultFormContent => ({

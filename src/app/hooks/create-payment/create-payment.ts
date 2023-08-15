@@ -1,7 +1,8 @@
+import { Payment, createPayment as request } from 'checkout/backend';
+
 import { createPayer } from './payer';
 import { toPaymentFlow } from './to-payment-flow';
 import { CreatePaymentParams } from './types';
-import { Payment, createPayment as request } from 'checkout/backend';
 
 export const createPayment = async ({
     capiEndpoint,

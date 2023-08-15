@@ -1,5 +1,6 @@
-import { resolveInitConfig } from './resolve-init-config';
 import { HoldExpirationType } from 'checkout/backend';
+
+import { resolveInitConfig } from './resolve-init-config';
 
 it('should return resolved init config', () => {
     const param = {
@@ -33,7 +34,6 @@ it('should return resolved init config', () => {
         amount: 1000,
         email: 'test@test.com',
         description: 'some description',
-        // @ts-ignore
         metadata: undefined,
         name: 'some name',
         netBanking: true,

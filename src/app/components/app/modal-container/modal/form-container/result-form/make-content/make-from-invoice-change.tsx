@@ -1,7 +1,8 @@
 import { InvoiceEvent, InvoiceStatusChanged, InvoiceStatuses, LogicError, LogicErrorCode } from 'checkout/backend';
 import { Locale } from 'checkout/locale';
-import { ResultFormContent, ResultFormType } from './result-form-content';
 import { getLastChange } from 'checkout/utils';
+
+import { ResultFormContent, ResultFormType } from './result-form-content';
 
 const refunded = (l: Locale): ResultFormContent => ({
     hasActions: false,

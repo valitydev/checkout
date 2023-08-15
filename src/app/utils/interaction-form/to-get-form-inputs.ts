@@ -1,5 +1,6 @@
 import { BrowserGetRequest } from 'checkout/backend';
 import { getEncodedUrlParams } from 'checkout/utils';
+
 import { expandWithRedirect, hasTerminationUriTemplate } from './uri-template';
 
 const createInput = (name: string, value: any): HTMLInputElement => {

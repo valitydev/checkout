@@ -1,5 +1,5 @@
-import { resolveInvoice } from './resolve-invoice';
 import { getAmountInfo } from './get-amount-info';
+import { resolveInvoice } from './resolve-invoice';
 import { resolveInvoiceTemplate } from './resolve-invoice-template';
 
 jest.mock('./resolve-invoice');

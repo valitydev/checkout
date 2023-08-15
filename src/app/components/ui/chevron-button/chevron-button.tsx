@@ -38,7 +38,7 @@ export type ChevronButtonProps = {
 };
 
 export const ChevronButton: React.FC<ChevronButtonProps> = ({ id, onClick, type, disabled }) => (
-    <Button aria-disabled={disabled} id={id} onClick={onClick} disabled={disabled}>
+    <Button aria-disabled={disabled} disabled={disabled} id={id} onClick={onClick}>
         {type === 'left' && <ChevronLeftIcon />} {type === 'right' && <ChevronRightIcon />}
     </Button>
 );

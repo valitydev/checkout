@@ -1,7 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
 
-import { useInitApp } from './use-init-app';
 import { PaymentMethodName } from 'checkout/backend';
+
+import { useInitApp } from './use-init-app';
 
 const fetchMock = (result, status = 200, ok = true) =>
     Promise.resolve({

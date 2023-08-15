@@ -1,5 +1,6 @@
-import { replaceFullWidthChars, safeVal } from 'checkout/utils';
 import { FormEvent } from 'react';
+
+import { replaceFullWidthChars, safeVal } from 'checkout/utils';
 
 const createNumArr = (num: string): string[] => {
     let numTempArr;

@@ -1,4 +1,5 @@
 import isString from 'checkout/utils/is-string';
+
 import { getMessageInvalidValue } from '../../log-messages';
 
 const getString = (userString: any): string => {

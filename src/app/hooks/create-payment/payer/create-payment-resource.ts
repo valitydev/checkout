@@ -1,5 +1,7 @@
 import { load } from '@fingerprintjs/fingerprintjs';
+
 import { PaymentResource, createPaymentResource as request } from 'checkout/backend';
+
 import { toPaymentTool } from './to-payment-tool';
 import { FormData } from '../types';
 

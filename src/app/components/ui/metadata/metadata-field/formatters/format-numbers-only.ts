@@ -1,4 +1,5 @@
 import { FormEvent } from 'react';
+
 import { MetadataFieldFormatter } from 'checkout/backend';
 import { safeVal } from 'checkout/utils';
 import isNil from 'checkout/utils/is-nil';

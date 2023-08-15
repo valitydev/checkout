@@ -2,15 +2,16 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
+import { useInitApp, useTheme } from 'checkout/hooks';
 import { InitParams } from 'checkout/initialize';
-import { Overlay } from './overlay';
-import { ModalContainer } from './modal-container';
-import { LayoutLoader } from './layout-loader';
+
 import { AppWrapper } from './app-wrapper';
 import { GlobalStyle } from './global-style';
 import { InitialContext } from './initial-context';
-import { useInitApp, useTheme } from 'checkout/hooks';
+import { LayoutLoader } from './layout-loader';
+import { ModalContainer } from './modal-container';
 import { ModalError } from './modal-error';
+import { Overlay } from './overlay';
 import { ResultContext } from './result-context';
 
 export type AppProps = {

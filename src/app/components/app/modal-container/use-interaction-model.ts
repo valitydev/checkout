@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { InvoiceChange, PaymentInteractionRequested, PaymentResourcePayer, PaymentStarted } from 'checkout/backend';
-import isNil from 'checkout/utils/is-nil';
 import { InteractionModel } from 'checkout/hooks';
+import isNil from 'checkout/utils/is-nil';
 
 export const useInteractionModel = () => {
     const [paymentInteraction, setPaymentInteraction] = useState<InvoiceChange>(null);

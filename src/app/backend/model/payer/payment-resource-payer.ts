@@ -1,6 +1,6 @@
 import { Payer } from './payer';
-import { ContactInfo } from '../contact-info';
 import { PayerType } from './payer-type';
+import { ContactInfo } from '../contact-info';
 import { PaymentToolDetails } from '../payment-tool-details';
 
 export type SessionInfo = {

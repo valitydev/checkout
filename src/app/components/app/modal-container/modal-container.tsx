@@ -1,18 +1,21 @@
+import { motion } from 'framer-motion';
 import * as React from 'react';
 import { useContext, useEffect, useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-import isNil from 'checkout/utils/is-nil';
-import { Modal } from './modal';
-import { UserInteractionModal } from './user-interaction-modal';
-import { ModalName, ResultFormInfo, ResultType } from 'checkout/hooks';
-import { InitialContext } from '../initial-context';
-import { PayableInvoiceContext } from './payable-invoice-context';
-import { PayableInvoiceData, useInvoiceEvents, useModal } from 'checkout/hooks';
 import { InvoiceChangeType } from 'checkout/backend';
+import { ModalName, ResultFormInfo, ResultType } from 'checkout/hooks';
+import { PayableInvoiceData, useInvoiceEvents, useModal } from 'checkout/hooks';
+import isNil from 'checkout/utils/is-nil';
+
+import { Modal } from './modal';
 import { ModalContext } from './modal-context';
+import { PayableInvoiceContext } from './payable-invoice-context';
 import { useInteractionModel } from './use-interaction-model';
+import { UserInteractionModal } from './user-interaction-modal';
+import { InitialContext } from '../initial-context';
+
+
 
 const Container = styled.div`
     height: 100%;
@@ -114,7 +117,7 @@ export const ModalContainer = () => {
     const activeModalName = useMemo(() => modalState.find((modal) => modal.active).name, [modalState]);
 
     return (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+        <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
             <Container>
                 <ModalContext.Provider
                     value={{

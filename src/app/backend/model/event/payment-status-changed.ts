@@ -1,6 +1,7 @@
+import { PaymentError } from 'checkout/backend';
+
 import { InvoiceChange } from './invoice-change';
 import { InvoiceChangeType } from './invoice-change-type';
-import { PaymentError } from 'checkout/backend';
 
 export enum PaymentStatuses {
     processed = 'processed',

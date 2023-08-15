@@ -22,7 +22,7 @@ const styles = {
 };
 
 const setStyles = (element, styles) => {
-    for (let property in styles) {
+    for (const property in styles) {
         element.style[property] = styles[property];
     }
 };

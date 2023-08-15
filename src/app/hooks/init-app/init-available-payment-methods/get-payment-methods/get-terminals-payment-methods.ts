@@ -1,8 +1,9 @@
-import groupBy from 'checkout/utils/group-by';
-import { KnownProviderCategories, PaymentMethod, PaymentMethodName } from '../types';
 import { PaymentTerminal, ServiceProvider } from 'checkout/backend';
 import { assertUnreachable } from 'checkout/utils';
+import groupBy from 'checkout/utils/group-by';
+
 import { filterByPaymentMethodProviders } from './filter-by-payment-method-providers';
+import { KnownProviderCategories, PaymentMethod, PaymentMethodName } from '../types';
 
 interface InitConfigChunk {
     onlineBanking: boolean;

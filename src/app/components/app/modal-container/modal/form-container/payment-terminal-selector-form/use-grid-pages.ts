@@ -1,5 +1,6 @@
-import { ServiceProvider } from 'checkout/backend';
 import { useCallback, useReducer } from 'react';
+
+import { ServiceProvider } from 'checkout/backend';
 
 type ServiceProviderPage = {
     items: ServiceProvider[];

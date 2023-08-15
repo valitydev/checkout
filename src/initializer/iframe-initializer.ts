@@ -1,7 +1,9 @@
-import { initialize, CommunicatorEvents, communicatorInstanceName } from '../communicator';
+import { InitConfig } from 'checkout/config';
+
 import { IframeContainer } from './iframe-container';
 import { Initializer } from './initializer';
-import { InitConfig } from 'checkout/config';
+import { initialize, CommunicatorEvents, communicatorInstanceName } from '../communicator';
+
 
 export class IframeInitializer extends Initializer {
     private container: IframeContainer;

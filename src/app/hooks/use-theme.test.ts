@@ -1,9 +1,10 @@
 import { renderHook } from '@testing-library/react';
 
-import { useTheme } from './use-theme';
 import { ThemeName } from 'checkout/themes';
 import plantation from 'checkout/themes/plantation';
 import rhino from 'checkout/themes/rhino';
+
+import { useTheme } from './use-theme';
 
 describe('useTheme', () => {
     test('should apply init config theme', () => {
