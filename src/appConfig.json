@@ -1,23 +1,8 @@
 {
-    "capiEndpoint": "<capi endpoint>",
-    "wrapperEndpoint": "<wrapper endpoint>",
-    "applePayMerchantID": "<apple pay merchant id>",
-    "samsungPayMerchantName": "<samsung pay merchant name>",
-    "samsungPayServiceID": "<samsung pay service id>",
     "brandless": false,
     "fixedTheme": "",
-    "brandName": "Vality",
-    "yandexPay": {
-        "merchantName": "Vality",
-        "merchantID": "00000000-0000-0000-0000-000000000000",
-        "gatewayMerchantID": "vality"
-    },
-    "googlePay": {
-        "merchantName": "Vality",
-        "merchantID": "12345678901234567890",
-        "gateway": "vality",
-        "gatewayMerchantID": "vality",
-        "merchantOrigin": "vality.dev/checkout"
-    },
-    "sentryDsn": "<Sentry DSN: https://sentry.io/settings/<company>/projects/<project>/keys/>"
+    "capiEndpoint": "<capi endpoint>",
+    "wrapperEndpoint": "<wrapper endpoint>",
+    "urlShortenerEndpoint": "<wrapper endpoint>",
+    "sentryDsn": "<sentry dsn>"
 }

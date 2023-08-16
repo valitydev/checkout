@@ -9,7 +9,7 @@ import isString from 'checkout/utils/is-string';
 const applyReplacePattern = <T>(rawValue: T, pattern?: string, replaceValue = ''): string | T => {
     if (!isNil(pattern) && isString(rawValue)) {
         const regExp = new RegExp(pattern, 'g');
-        return rawValue.replaceAll(regExp, replaceValue);
+        return rawValue.replace(regExp, replaceValue);
     }
     return rawValue;
 };

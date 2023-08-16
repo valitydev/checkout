@@ -16,7 +16,7 @@ const IconClasses = {
 type name = keyof typeof IconClasses;
 
 export const PaymentMethodIcon = styled<React.FC<{ name: name; className?: string }>>((props) => {
-    const IconClass = IconClasses[props.name];
+    const IconClass: any = IconClasses[props.name];
     return (
         <div className={props.className}>
             <IconClass />

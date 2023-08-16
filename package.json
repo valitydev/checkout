@@ -6,7 +6,7 @@
     "dev": "vite --c vite.config.app.ts",
     "build:app": "vite build --c vite.config.app.ts",
     "build:checkout": "vite build --c vite.config.checkout.ts",
-    "build": "npm run build:checkout && npm run build:app",
+    "build": "tsc && npm run build:checkout && npm run build:app",
     "preview": "npm run build && vite --c vite.config.preview.ts",
     "test": "jest",
     "test:watch": "jest --watch",

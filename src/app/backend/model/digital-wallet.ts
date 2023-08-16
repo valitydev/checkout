@@ -1,6 +1,5 @@
-import { PaymentMethod, PaymentMethodName } from './payment-method';
+import { PaymentMethod } from './payment-method';
 
 export class DigitalWallet extends PaymentMethod {
-    method: PaymentMethodName.DigitalWallet;
     providers: string[];
 }
