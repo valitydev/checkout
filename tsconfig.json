@@ -19,7 +19,7 @@
         "baseUrl": ".",
         "paths": {
             "checkout/*": ["./src/app/*", "./src/locale/*"]
-        },
+        }
     },
     "include": ["./src/**/*", "./types/**/*"]
 }
