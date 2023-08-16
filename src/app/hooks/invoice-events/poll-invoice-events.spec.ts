@@ -1,10 +1,11 @@
 import { InvoiceChangeType } from 'checkout/backend';
+
 import { pollInvoiceEvents } from './poll-invoice-events';
 
 const fetchValueMock = (result, status = 200, ok = true) => ({
     status,
     ok,
-    json: async () => result
+    json: async () => result,
 });
 
 describe('pollInvoiceEvents', () => {
@@ -17,8 +18,8 @@ describe('pollInvoiceEvents', () => {
         stopPollingTypes: [
             InvoiceChangeType.InvoiceStatusChanged,
             InvoiceChangeType.PaymentStatusChanged,
-            InvoiceChangeType.PaymentInteractionRequested
-        ]
+            InvoiceChangeType.PaymentInteractionRequested,
+        ],
     };
     const getEventsUrl = (capiEndpoint: string, invoiceID: string, eventID?: number, limit = 20) => {
         const eventIDParam = eventID ? `&eventID=${eventID}` : '';
@@ -35,7 +36,7 @@ describe('pollInvoiceEvents', () => {
 
             const delays = {
                 pollingTimeout: 300,
-                apiMethodCall: 100
+                apiMethodCall: 100,
             };
             const result = await pollInvoiceEvents({ ...params, delays });
             await delay(300); // for checking that after timeout there are no more api calls
@@ -43,7 +44,7 @@ describe('pollInvoiceEvents', () => {
             expect(mockFetch).toHaveBeenCalledTimes(4);
 
             const expected = {
-                status: 'TIMEOUT'
+                status: 'TIMEOUT',
             };
             expect(result).toStrictEqual(expected);
         });
@@ -56,23 +57,23 @@ describe('pollInvoiceEvents', () => {
                         changes: [
                             {
                                 changeType: 'InvoiceCreated',
-                                invoice: 'invoice mock'
-                            }
+                                invoice: 'invoice mock',
+                            },
                         ],
                         createdAt: '2023-05-25T17:31:57.248146Z',
-                        id: 1
+                        id: 1,
                     },
                     {
                         changes: [
                             {
                                 changeType: 'PaymentStarted',
-                                payment: 'payment mock'
-                            }
+                                payment: 'payment mock',
+                            },
                         ],
                         createdAt: '2023-05-25T17:31:58.442598Z',
-                        id: 2
-                    }
-                ])
+                        id: 2,
+                    },
+                ]),
             );
             mockFetch.mockResolvedValueOnce(fetchValueMock([]));
             mockFetch.mockResolvedValueOnce(
@@ -82,19 +83,19 @@ describe('pollInvoiceEvents', () => {
                             {
                                 changeType: 'PaymentInteractionRequested',
                                 paymentID: '1',
-                                userInteraction: 'user interaction mock'
-                            }
+                                userInteraction: 'user interaction mock',
+                            },
                         ],
                         createdAt: '2023-05-25T17:32:01.601868Z',
-                        id: 7
-                    }
-                ])
+                        id: 7,
+                    },
+                ]),
             );
             global.fetch = mockFetch;
 
             const delays = {
                 pollingTimeout: 100,
-                apiMethodCall: 10
+                apiMethodCall: 10,
             };
             const result = await pollInvoiceEvents({ ...params, delays });
 
@@ -109,8 +110,8 @@ describe('pollInvoiceEvents', () => {
                 change: {
                     changeType: 'PaymentInteractionRequested',
                     paymentID: '1',
-                    userInteraction: 'user interaction mock'
-                }
+                    userInteraction: 'user interaction mock',
+                },
             };
             expect(result).toStrictEqual(expected);
         });
@@ -124,9 +125,9 @@ describe('pollInvoiceEvents', () => {
                     {
                         changes: ['someChange_01', 'someChange_02'],
                         createdAt: '2023-05-25T17:31:58.442598Z',
-                        id: 19
-                    }
-                ])
+                        id: 19,
+                    },
+                ]),
             );
             mockFetch.mockResolvedValueOnce(fetchValueMock([]));
             mockFetch.mockResolvedValueOnce(
@@ -138,21 +139,25 @@ describe('pollInvoiceEvents', () => {
                             {
                                 changeType: 'PaymentInteractionRequested',
                                 paymentID: '1',
-                                userInteraction: 'user interaction mock'
-                            }
+                                userInteraction: 'user interaction mock',
+                            },
                         ],
                         createdAt: '2023-05-25T17:32:01.601868Z',
-                        id: 21
-                    }
-                ])
+                        id: 21,
+                    },
+                ]),
             );
             global.fetch = mockFetch;
 
             const delays = {
                 pollingTimeout: 100,
-                apiMethodCall: 10
+                apiMethodCall: 10,
             };
-            const result = await pollInvoiceEvents({ ...params, delays, ...{ eventID: 15 } });
+            const result = await pollInvoiceEvents({
+                ...params,
+                delays,
+                ...{ eventID: 15 },
+            });
 
             expect(mockFetch).toHaveBeenCalledTimes(3);
             expect(mockFetch).toHaveBeenCalledWith(getEventsUrl(capiEndpoint, invoiceID, 15), expect.any(Object));
@@ -165,8 +170,8 @@ describe('pollInvoiceEvents', () => {
                 change: {
                     changeType: 'PaymentInteractionRequested',
                     paymentID: '1',
-                    userInteraction: 'user interaction mock'
-                }
+                    userInteraction: 'user interaction mock',
+                },
             };
             expect(result).toStrictEqual(expected);
         });

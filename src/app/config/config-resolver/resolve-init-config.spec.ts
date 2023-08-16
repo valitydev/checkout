@@ -1,5 +1,6 @@
-import { resolveInitConfig } from './resolve-init-config';
 import { HoldExpirationType } from 'checkout/backend';
+
+import { resolveInitConfig } from './resolve-init-config';
 
 it('should return resolved init config', () => {
     const param = {
@@ -12,7 +13,7 @@ it('should return resolved init config', () => {
         description: 'some description',
         email: 'test@test.com',
         redirectUrl: 'some url',
-        theme: 'main'
+        theme: 'main',
     };
 
     const actual = resolveInitConfig(param as any);
@@ -33,7 +34,6 @@ it('should return resolved init config', () => {
         amount: 1000,
         email: 'test@test.com',
         description: 'some description',
-        // @ts-ignore
         metadata: undefined,
         name: 'some name',
         netBanking: true,
@@ -45,7 +45,7 @@ it('should return resolved init config', () => {
         terminalBankCard: true,
         terminalFormValues: undefined,
         terminalWallets: true,
-        upi: true
+        upi: true,
     };
     expect(actual).toEqual(expected);
 });

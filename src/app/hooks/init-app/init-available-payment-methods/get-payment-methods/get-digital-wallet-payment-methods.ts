@@ -1,19 +1,20 @@
-import groupBy from 'checkout/utils/group-by';
 import { DigitalWallet, METADATA_NAMESPACE, ServiceProvider } from 'checkout/backend';
+import { assertUnreachable } from 'checkout/utils';
+import groupBy from 'checkout/utils/group-by';
+
+import { filterByPaymentMethodProviders } from './filter-by-payment-method-providers';
 import {
     DigitalWalletPaymentMethod,
     PaymentMethodName as PaymentMethodNameState,
-    KnownDigitalWalletProviderCategories
+    KnownDigitalWalletProviderCategories,
 } from '../types';
-import { assertUnreachable } from 'checkout/utils';
-import { filterByPaymentMethodProviders } from './filter-by-payment-method-providers';
 
 const metadataReducer = (result: ServiceProvider[], serviceProvider: ServiceProvider): ServiceProvider[] =>
     serviceProvider?.metadata?.[METADATA_NAMESPACE] ? result.concat(serviceProvider) : result;
 
 const categoryReducer = (
     result: ServiceProvider[],
-    [category, serviceProviders]: [KnownDigitalWalletProviderCategories, ServiceProvider[]]
+    [category, serviceProviders]: [KnownDigitalWalletProviderCategories, ServiceProvider[]],
 ): ServiceProvider[] => {
     switch (category) {
         case KnownDigitalWalletProviderCategories.DigitalWallet:
@@ -30,7 +31,7 @@ export const getDigitalWalletPaymentMethods = (
     serviceProviders: ServiceProvider[],
     isMethod: boolean,
     paymentFlowHold: boolean,
-    recurring: boolean
+    recurring: boolean,
 ): DigitalWalletPaymentMethod[] => {
     if (!isMethod) {
         return [];
@@ -47,7 +48,7 @@ export const getDigitalWalletPaymentMethods = (
     return [
         {
             name: PaymentMethodNameState.DigitalWallet,
-            serviceProviders: reduced
-        }
+            serviceProviders: reduced,
+        },
     ];
 };

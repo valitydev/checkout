@@ -1,9 +1,10 @@
-import { ModalName, ModalState } from './modal-state';
 import { BrowserRequest } from 'checkout/backend';
+
+import { ModalName, ModalState } from './modal-state';
 
 export enum ModalInteractionType {
     TokenizedInteraction = 'TokenizedInteraction',
-    EventInteraction = 'EventInteraction'
+    EventInteraction = 'EventInteraction',
 }
 
 interface InteractionObject {

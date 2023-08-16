@@ -18,11 +18,11 @@ const styles = {
     top: '0',
     width: '100%',
     height: '100%',
-    zIndex: 2147483647
+    zIndex: 2147483647,
 };
 
 const setStyles = (element, styles) => {
-    for (let property in styles) {
+    for (const property in styles) {
         element.style[property] = styles[property];
     }
 };
@@ -37,7 +37,7 @@ const create = (origin: string): HTMLIFrameElement => {
     iframe.setAttribute('allowpaymentrequest', '');
     setStyles(iframe, {
         ...iframe.style,
-        ...styles
+        ...styles,
     });
     return iframe;
 };

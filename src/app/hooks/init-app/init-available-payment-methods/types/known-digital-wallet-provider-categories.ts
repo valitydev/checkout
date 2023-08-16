@@ -1,3 +1,3 @@
 export enum KnownDigitalWalletProviderCategories {
-    DigitalWallet = 'digitalwallet'
+    DigitalWallet = 'digitalwallet',
 }

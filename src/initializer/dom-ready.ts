@@ -34,8 +34,7 @@ export const domReady = (): Promise<string> => {
             let top: any = false;
             try {
                 top = window.frameElement === null && document.documentElement;
-                /* tslint:disable: no-empty */
-            } catch (e) {}
+            } catch (e) {} // eslint-disable-line no-empty
             if (top && top.doScroll) {
                 (function scrollCheck() {
                     if (ready) {

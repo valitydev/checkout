@@ -1,7 +1,7 @@
 export enum SlideDirection {
     right = 'slideRightAnimation',
     left = 'slideLeftAnimation',
-    none = 'none'
+    none = 'none',
 }
 
 export interface FormViewInfo {

@@ -1,7 +1,7 @@
 export enum ResultFormType {
     ERROR = 'error',
     WARNING = 'warning',
-    SUCCESS = 'success'
+    SUCCESS = 'success',
 }
 
 export interface ResultFormContent {

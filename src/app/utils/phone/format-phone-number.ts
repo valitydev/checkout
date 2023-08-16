@@ -1,5 +1,5 @@
-import { FormEvent } from 'react';
 import { AsYouType } from 'libphonenumber-js/min';
+import { FormEvent } from 'react';
 
 export const formatOnInput = (value: string): string => {
     if (value === '') {

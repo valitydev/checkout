@@ -1,22 +1,23 @@
 import { renderHook } from '@testing-library/react';
 
-import { useTheme } from './use-theme';
 import { ThemeName } from 'checkout/themes';
 import plantation from 'checkout/themes/plantation';
 import rhino from 'checkout/themes/rhino';
+
+import { useTheme } from './use-theme';
 
 describe('useTheme', () => {
     test('should apply init config theme', () => {
         const { result } = renderHook(() =>
             useTheme({
                 appConfig: {
-                    fixedTheme: ThemeName.plantation
+                    fixedTheme: ThemeName.plantation,
                 },
                 initConfig: {
-                    theme: 'rhino'
+                    theme: 'rhino',
                 },
-                origin: ''
-            })
+                origin: '',
+            }),
         );
 
         expect(result.current).toStrictEqual(rhino);
@@ -26,11 +27,11 @@ describe('useTheme', () => {
         const { result } = renderHook(() =>
             useTheme({
                 appConfig: {
-                    fixedTheme: ThemeName.plantation
+                    fixedTheme: ThemeName.plantation,
                 },
                 initConfig: {},
-                origin: ''
-            })
+                origin: '',
+            }),
         );
 
         expect(result.current).toStrictEqual(plantation);
@@ -41,8 +42,8 @@ describe('useTheme', () => {
             useTheme({
                 appConfig: {},
                 initConfig: {},
-                origin: ''
-            })
+                origin: '',
+            }),
         );
 
         expect(result.current).toStrictEqual(plantation);
@@ -53,10 +54,10 @@ describe('useTheme', () => {
             useTheme({
                 appConfig: {},
                 initConfig: {
-                    theme: 'rhino'
+                    theme: 'rhino',
                 },
-                origin: ''
-            })
+                origin: '',
+            }),
         );
 
         expect(result.current).toStrictEqual(rhino);

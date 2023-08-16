@@ -1,4 +1,5 @@
 import { BrowserRequest } from 'checkout/backend';
+
 import { FormInfo, FormName } from '../form-info';
 
 export class RedirectFormInfo extends FormInfo {

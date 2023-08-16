@@ -1,6 +1,7 @@
-import toNumber from 'checkout/utils/to-number';
 import isNumber from 'checkout/utils/is-number';
 import isString from 'checkout/utils/is-string';
+import toNumber from 'checkout/utils/to-number';
+
 import { getMessageInvalidValue } from '../../log-messages';
 
 const getFromNumber = (userInteger: number): number | null => (Number.isInteger(userInteger) ? userInteger : undefined);

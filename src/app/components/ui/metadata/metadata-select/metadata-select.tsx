@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
+
 import { MetadataTextLocalization, ServiceProviderMetadataSelect } from 'checkout/backend';
 import { Select } from 'checkout/components';
 import { countries, Country, CountrySubdivision } from 'checkout/utils';
@@ -16,7 +17,10 @@ export interface MetadataSelectProps {
 
 const findCountry = (countryCode: string) => (country: Country) => country.code === countryCode;
 
-const toOptions = ({ name, code }: CountrySubdivision) => ({ label: name, value: code });
+const toOptions = ({ name, code }: CountrySubdivision) => ({
+    label: name,
+    value: code,
+});
 
 const getDefOptionLabel = (localeCode: string, localization: MetadataTextLocalization) =>
     localization[localeCode] || localization['en'];
@@ -36,7 +40,7 @@ export const MetadataSelect = ({
     register,
     localeCode,
     fieldError,
-    isDirty
+    isDirty,
 }: MetadataSelectProps) => {
     const registerName = wrappedName ? `${wrappedName}.${name}` : name;
     const subdivisions = countries.find(findCountry(src.countryCode)).sub;
@@ -46,10 +50,11 @@ export const MetadataSelect = ({
         <Select
             {...register(registerName, {
                 required,
-                validate: (value) => !validate(value) || `${name} field is invalid`
+                validate: (value) => !validate(value) || `${name} field is invalid`,
             })}
+            dirty={isDirty}
             error={!isNil(fieldError)}
-            dirty={isDirty}>
+        >
             <option value="">{getDefOptionLabel(localeCode, localization)}</option>
             {options.map(({ value, label }, i) => (
                 <option key={i} value={value}>

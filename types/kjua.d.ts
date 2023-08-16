@@ -51,7 +51,7 @@ declare module 'kjua' {
     }
 
     function kjua<T extends KjuaOptions['render'] = 'image'>(
-        options: KjuaOptions & { render?: T }
+        options: KjuaOptions & { render?: T },
     ): T extends 'canvas' ? HTMLCanvasElement : HTMLImageElement;
     namespace kjua {
         export { KjuaOptions as Options };

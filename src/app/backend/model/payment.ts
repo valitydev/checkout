@@ -1,7 +1,8 @@
-import { PaymentFlow } from './payment-flow';
-import { Payer } from './payer';
-import { PaymentStatus } from './payment-status';
 import { PaymentError } from 'checkout/backend';
+
+import { Payer } from './payer';
+import { PaymentFlow } from './payment-flow';
+import { PaymentStatus } from './payment-status';
 
 export class Payment {
     id: string;

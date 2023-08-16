@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useMemo } from 'react';
 import styled from 'styled-components';
+
 import { device } from 'checkout/utils/device';
 
 const ModalErrorWrapper = styled.div`

@@ -1,6 +1,7 @@
 import { CardData, PaymentMethodName, PaymentTool, PaymentToolType } from 'checkout/backend';
 import { CardFormValues, PaymentTerminalFormValues, WalletFormValues } from 'checkout/hooks';
 import replaceSpaces from 'checkout/utils/replace-spaces';
+
 import { FormData } from '../types';
 
 const toPaymentToolBankCard = (values: CardFormValues): CardData => {
@@ -11,19 +12,19 @@ const toPaymentToolBankCard = (values: CardFormValues): CardData => {
         cardNumber,
         expDate,
         cvv: values.secureCode,
-        cardHolder: values.cardHolder
+        cardHolder: values.cardHolder,
     };
 };
 
 const toPaymentToolDigitalWallet = (values: WalletFormValues) => ({
     paymentToolType: PaymentToolType.DigitalWalletData,
-    ...values
+    ...values,
 });
 
 const toPaymentToolTerminal = (values: PaymentTerminalFormValues) => ({
     paymentToolType: PaymentToolType.PaymentTerminalData,
     provider: values.provider,
-    metadata: values.metadata
+    metadata: values.metadata,
 });
 
 export const toPaymentTool = (formValues: FormData): PaymentTool => {

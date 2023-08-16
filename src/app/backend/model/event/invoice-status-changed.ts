@@ -6,7 +6,7 @@ export enum InvoiceStatuses {
     cancelled = 'cancelled',
     fulfilled = 'fulfilled',
     unpaid = 'unpaid',
-    refunded = 'refunded'
+    refunded = 'refunded',
 }
 
 export class InvoiceStatusChanged extends InvoiceChange {

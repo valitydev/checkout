@@ -2,8 +2,6 @@
     "printWidth": 120,
     "tabWidth": 4,
     "singleQuote": true,
-    "jsxBracketSameLine": true,
-    "arrowParens": "always",
     "overrides": [
         {
             "files": "*.svg",

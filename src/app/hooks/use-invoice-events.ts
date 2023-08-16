@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
-import isNil from 'checkout/utils/is-nil';
-import { PayableInvoiceData } from './create-payment';
-import { PollingResult, pollInvoiceEvents } from './invoice-events';
+
 import { InvoiceChange, InvoiceChangeType, getInvoiceEvents } from 'checkout/backend';
 import { findChange } from 'checkout/utils/event-utils';
+import isNil from 'checkout/utils/is-nil';
+
+import { PayableInvoiceData } from './create-payment';
+import { PollingResult, pollInvoiceEvents } from './invoice-events';
 
 const API_METHOD_CALL_MS = 1000;
 const DEFAULT_TIMEOUT_MS = 60 * 1000 * 10;
@@ -27,28 +29,28 @@ const dataReducer = (_state: State, action: Action): State => {
         case 'SET_FAILURE':
             return {
                 status: 'FAILURE',
-                error: action.error
+                error: action.error,
             };
         case 'POLL_EVENTS_TIMEOUT':
             return {
-                status: 'POLLING_TIMEOUT'
+                status: 'POLLING_TIMEOUT',
             };
         case 'SET_POLLING_RESULT':
             return {
                 status: 'POLLING_SUCCESS',
-                payload: action.payload
+                payload: action.payload,
             };
         case 'SET_SEARCH_RESULT':
             return {
                 status: 'EVENT_CHANGE_FOUND',
-                payload: action.payload
+                payload: action.payload,
             };
     }
 };
 
 export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData) => {
     const [eventsState, dispatch] = useReducer(dataReducer, {
-        status: 'PRISTINE'
+        status: 'PRISTINE',
     });
     const [pollingResult, setPollingResult] = useState<PollingResult>(null);
 
@@ -66,13 +68,13 @@ export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData)
                             InvoiceChangeType.PaymentStarted,
                             InvoiceChangeType.InvoiceStatusChanged,
                             InvoiceChangeType.PaymentStatusChanged,
-                            InvoiceChangeType.PaymentInteractionRequested
+                            InvoiceChangeType.PaymentInteractionRequested,
                         ],
                         delays: {
                             pollingTimeout,
-                            apiMethodCall: API_METHOD_CALL_MS
+                            apiMethodCall: API_METHOD_CALL_MS,
                         },
-                        eventID
+                        eventID,
                     });
                     setPollingResult(pollingResult);
                 } catch (error) {
@@ -82,7 +84,7 @@ export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData)
             };
             fetchData();
         },
-        [capiEndpoint, data]
+        [capiEndpoint, data],
     );
 
     useEffect(() => {
@@ -97,7 +99,10 @@ export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData)
                     startPolling(pollingResult.eventID, PAYMENT_STARTED_TIMEOUT_MS);
                 } else {
                     startPolling(pollingResult.eventID);
-                    dispatch({ type: 'SET_POLLING_RESULT', payload: pollingResult.change });
+                    dispatch({
+                        type: 'SET_POLLING_RESULT',
+                        payload: pollingResult.change,
+                    });
                 }
                 break;
         }
@@ -115,7 +120,7 @@ export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData)
                     } else {
                         dispatch({
                             type: 'SET_FAILURE',
-                            error: new Error(`Event change: "${foundType}" is not found`)
+                            error: new Error(`Event change: "${foundType}" is not found`),
                         });
                     }
                 } catch (error) {
@@ -125,7 +130,7 @@ export const useInvoiceEvents = (capiEndpoint: string, data: PayableInvoiceData)
             };
             fetchData();
         },
-        [capiEndpoint, data]
+        [capiEndpoint, data],
     );
 
     return { eventsState, startPolling, searchEventsChange };

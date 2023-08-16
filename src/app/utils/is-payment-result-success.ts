@@ -1,12 +1,12 @@
-import last from 'checkout/utils/last';
 import {
     InvoiceEvent,
     InvoiceChangeType,
     InvoiceStatusChanged,
     PaymentStatusChanged,
     PaymentStatuses,
-    InvoiceStatuses
+    InvoiceStatuses,
 } from 'checkout/backend';
+import last from 'checkout/utils/last';
 
 const fromPaymentStatusChanged = (change: PaymentStatusChanged): boolean => {
     switch (change.status) {

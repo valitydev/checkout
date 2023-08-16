@@ -40,7 +40,7 @@ it('Number, string, boolean, null, undefined params', () => {
         integer: 123,
         null: null,
         str: 'hello',
-        undef: undefined
+        undef: undefined,
     });
 });
 

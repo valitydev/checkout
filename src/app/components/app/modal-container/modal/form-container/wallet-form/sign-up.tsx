@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+
 import { Locale } from 'checkout/locale';
 
 const SignUpText = styled.p`

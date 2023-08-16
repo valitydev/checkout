@@ -1,13 +1,13 @@
-import * as React from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
-import { validateExpireDate } from './validate-expire-date';
-import { Locale } from 'checkout/locale';
-import { formatExpiry } from './format-expiry';
 import { Input } from 'checkout/components';
-import { CardFormInputs } from '../../card-form-inputs';
+import { Locale } from 'checkout/locale';
 import isNil from 'checkout/utils/is-nil';
+
+import { formatExpiry } from './format-expiry';
+import { validateExpireDate } from './validate-expire-date';
 import { ReactComponent as CalendarIcon } from '../../../../../../../ui/icon/calendar.svg';
+import { CardFormInputs } from '../../card-form-inputs';
 
 export type ExpireDateProps = {
     register: UseFormRegister<CardFormInputs>;
@@ -20,16 +20,16 @@ export const ExpireDate = ({ register, locale, fieldError, isDirty }: ExpireDate
     <Input
         {...register('expireDate', {
             required: true,
-            validate: (value) => !validateExpireDate(value) || 'Exp date is invalid'
+            validate: (value) => !validateExpireDate(value) || 'Exp date is invalid',
         })}
-        icon={<CalendarIcon />}
-        placeholder={locale['form.input.expiry.placeholder']}
-        mark={true}
-        type="tel"
-        id="expire-date-input"
-        onInput={formatExpiry}
         autoComplete="cc-exp"
-        error={!isNil(fieldError)}
         dirty={isDirty}
+        error={!isNil(fieldError)}
+        icon={<CalendarIcon />}
+        id="expire-date-input"
+        mark={true}
+        placeholder={locale['form.input.expiry.placeholder']}
+        type="tel"
+        onInput={formatExpiry}
     />
 );

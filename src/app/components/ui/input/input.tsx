@@ -85,8 +85,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     ({ className, error, dirty, mark, icon, ...props }, ref) => (
         <InputWrapper {...{ className, $error: error, $mark: mark }}>
             {icon && <Icon>{icon}</Icon>}
-            <StyledInput {...props} $hasIcon={!!icon} ref={ref} />
+            <StyledInput {...props} ref={ref} $hasIcon={!!icon} />
             {mark && dirty && !error && <Marks />}
         </InputWrapper>
-    )
+    ),
 );
+
+Input.displayName = 'Input';

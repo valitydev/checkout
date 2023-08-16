@@ -1,31 +1,30 @@
-import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { PaymentTerminalFormInfo, ResultFormInfo, ResultType, PaymentTerminalFormValues } from 'checkout/hooks';
-import { Header } from '../header';
-import { PayButton } from '../pay-button';
-import { FormGroup } from '../form-group';
 import { getMetadata, MetadataField, MetadataLogo, MetadataSelect } from 'checkout/components/ui';
-import { Email, Phone } from '../common-fields';
-import { LogoContainer } from './logo-container';
-import { formatMetadataValue } from './format-metadata-value';
-import { sortByIndex } from './sort-by-index';
-import { VpaInstruction } from './vpa-instruction';
+import { PaymentTerminalFormInfo, ResultFormInfo, ResultType, PaymentTerminalFormValues } from 'checkout/hooks';
 import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
-import { useActiveModalForm } from '../use-active-modal-form';
 import { isEmptyObject } from 'checkout/utils/is-empty-object';
-import { useDefaultFormValues } from './use-default-form-values';
-import { Container } from './container';
 
+import { Container } from './container';
+import { formatMetadataValue } from './format-metadata-value';
+import { LogoContainer } from './logo-container';
+import { sortByIndex } from './sort-by-index';
+import { useDefaultFormValues } from './use-default-form-values';
+import { VpaInstruction } from './vpa-instruction';
 import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';
+import { Email, Phone } from '../common-fields';
+import { FormGroup } from '../form-group';
+import { Header } from '../header';
+import { PayButton } from '../pay-button';
+import { useActiveModalForm } from '../use-active-modal-form';
 
 export const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
     const {
         locale,
         initConfig,
-        model: { serviceProviders }
+        model: { serviceProviders },
     } = useContext(InitialContext);
     const { modalState, setViewInfoError, goToFormInfo, prepareToPay } = useContext(ModalContext);
     const { createPaymentState, setFormData } = useCreatePayment();
@@ -37,10 +36,10 @@ export const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
         register,
         handleSubmit,
         getValues,
-        formState: { errors, dirtyFields, isSubmitted, isValid }
+        formState: { errors, dirtyFields, isSubmitted, isValid },
     } = useForm<PaymentTerminalFormValues>({
         mode: 'onChange',
-        defaultValues
+        defaultValues,
     });
     const [formTouched, setFormTouched] = useState(false);
 
@@ -64,8 +63,8 @@ export const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
         if (createPaymentState.status === 'FAILURE') {
             goToFormInfo(
                 new ResultFormInfo(ResultType.hookError, {
-                    error: createPaymentState.error
-                })
+                    error: createPaymentState.error,
+                }),
             );
         }
     }, [createPaymentState]);
@@ -79,16 +78,16 @@ export const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
                 paymentSessionInfo,
                 metadata: {
                     ...prefilledMetadataValues,
-                    ...formatMetadataValue(form, values?.metadata)
-                }
-            }
+                    ...formatMetadataValue(form, values?.metadata),
+                },
+            },
         };
         prepareToPay();
         setFormData(payload);
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} onClick={() => setFormTouched(true)}>
+        <form onClick={() => setFormTouched(true)} onSubmit={handleSubmit(onSubmit)}>
             <Container>
                 <div>
                     <Header title={serviceProvider?.brandName} />
@@ -102,22 +101,22 @@ export const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
                             <FormGroup key={m.name} direction={'column'}>
                                 {m.type === 'select' && (
                                     <MetadataSelect
-                                        metadata={m}
-                                        wrappedName="metadata"
-                                        localeCode={initConfig.locale}
-                                        register={register}
                                         fieldError={errors?.metadata?.[m.name]}
                                         isDirty={dirtyFields?.metadata?.[m.name]}
+                                        localeCode={initConfig.locale}
+                                        metadata={m}
+                                        register={register}
+                                        wrappedName="metadata"
                                     />
                                 )}
                                 {m.type !== 'select' && (
                                     <MetadataField
-                                        metadata={m}
-                                        localeCode={initConfig.locale}
-                                        wrappedName="metadata"
-                                        register={register}
                                         fieldError={errors?.metadata?.[m.name]}
                                         isDirty={dirtyFields?.metadata?.[m.name]}
+                                        localeCode={initConfig.locale}
+                                        metadata={m}
+                                        register={register}
+                                        wrappedName="metadata"
                                     />
                                 )}
                                 {m?.addon === 'vpa' && <VpaInstruction locale={locale} />}
@@ -126,20 +125,20 @@ export const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
                     {contactInfo?.email && (
                         <FormGroup>
                             <Email
-                                locale={locale}
-                                register={register}
                                 fieldError={errors.email}
                                 isDirty={dirtyFields.email}
+                                locale={locale}
+                                register={register}
                             />
                         </FormGroup>
                     )}
                     {contactInfo?.phoneNumber && (
                         <FormGroup>
                             <Phone
-                                locale={locale}
-                                register={register}
                                 fieldError={errors.phoneNumber}
                                 isDirty={dirtyFields.email}
+                                locale={locale}
+                                register={register}
                             />
                         </FormGroup>
                     )}

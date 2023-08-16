@@ -1,30 +1,31 @@
-import { Locale } from 'checkout/locale';
 import { InvoiceEvent, LogicError, PaymentError, PaymentStatusChanged, PaymentStatuses } from 'checkout/backend';
-import { ResultFormContent } from './result-form-content';
-import { getFailedDescription } from './get-failed-description';
+import { Locale } from 'checkout/locale';
 import { getLastChange } from 'checkout/utils';
-import { ResultFormType } from './result-form-content';
 import isObject from 'checkout/utils/is-object';
+
+import { getFailedDescription } from './get-failed-description';
+import { ResultFormContent } from './result-form-content';
+import { ResultFormType } from './result-form-content';
 
 export const refunded = (l: Locale): ResultFormContent => ({
     hasActions: false,
     hasDone: true,
     header: l['form.header.final.refunded.label'],
-    type: ResultFormType.WARNING
+    type: ResultFormType.WARNING,
 });
 
 export const pending = (l: Locale): ResultFormContent => ({
     hasActions: true,
     hasDone: false,
     header: l['form.header.final.pending.label'],
-    type: ResultFormType.WARNING
+    type: ResultFormType.WARNING,
 });
 
 export const cancelled = (l: Locale): ResultFormContent => ({
     hasActions: true,
     hasDone: false,
     header: l['form.header.final.cancelled.label'],
-    type: ResultFormType.WARNING
+    type: ResultFormType.WARNING,
 });
 
 export const failed = (l: Locale, e: PaymentError | LogicError): ResultFormContent => ({
@@ -32,7 +33,7 @@ export const failed = (l: Locale, e: PaymentError | LogicError): ResultFormConte
     hasDone: false,
     header: l['form.header.final.failed.label'],
     description: getFailedDescription(l, e),
-    type: ResultFormType.ERROR
+    type: ResultFormType.ERROR,
 });
 
 const getErrorDescription = (error: unknown): string => {
@@ -49,14 +50,14 @@ export const failedHook = (l: Locale, error: unknown): ResultFormContent => ({
     hasDone: false,
     header: l['form.header.final.failed.label'],
     description: getErrorDescription(error),
-    type: ResultFormType.ERROR
+    type: ResultFormType.ERROR,
 });
 
 const processed = (l: Locale): ResultFormContent => ({
     hasActions: false,
     hasDone: true,
     header: l['form.header.final.success.label'],
-    type: ResultFormType.SUCCESS
+    type: ResultFormType.SUCCESS,
 });
 
 export const makeFromPaymentChange = (l: Locale, e: InvoiceEvent[]) => {

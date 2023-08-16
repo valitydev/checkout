@@ -16,10 +16,10 @@ export const Container = styled.div`
     align-items: center;
 `;
 
-export const MetadataTitle: React.FC<{ localeCode: string; metadata: ServiceProviderTitleMetadata }> = ({
-    localeCode,
-    metadata: { icon, localization }
-}) => (
+export const MetadataTitle: React.FC<{
+    localeCode: string;
+    metadata: ServiceProviderTitleMetadata;
+}> = ({ localeCode, metadata: { icon, localization } }) => (
     <Container>
         <PaymentMethodIcon name={icon} />
         <PaymentMethodTitle>{getText(localeCode, localization)}</PaymentMethodTitle>

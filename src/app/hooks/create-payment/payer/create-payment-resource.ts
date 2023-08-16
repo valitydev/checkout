@@ -1,5 +1,7 @@
 import { load } from '@fingerprintjs/fingerprintjs';
+
 import { PaymentResource, createPaymentResource as request } from 'checkout/backend';
+
 import { toPaymentTool } from './to-payment-tool';
 import { FormData } from '../types';
 
@@ -17,12 +19,12 @@ const getFingerprint = (): Promise<string> =>
 export const createPaymentResource = async (
     capiEndpoint: string,
     invoiceAccessToken: string,
-    formData: FormData
+    formData: FormData,
 ): Promise<PaymentResource> => {
     const paymentTool = toPaymentTool(formData);
     const clientInfo = {
         fingerprint: await getFingerprint(),
-        ...getClientInfoUrl()
+        ...getClientInfoUrl(),
     };
     return request(capiEndpoint, invoiceAccessToken, paymentTool, clientInfo);
 };

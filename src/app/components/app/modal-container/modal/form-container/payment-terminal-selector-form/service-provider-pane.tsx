@@ -49,10 +49,10 @@ const PaneLogo: React.FC<{ logo: ServiceProviderIconMetadata }> = ({ logo }) => 
     </PaneLogoContainer>
 );
 
-export const ServiceProviderPane: React.FC<{ serviceProvider: ServiceProvider; onClick: (id: string) => void }> = ({
-    serviceProvider,
-    onClick
-}) => {
+export const ServiceProviderPane: React.FC<{
+    serviceProvider: ServiceProvider;
+    onClick: (id: string) => void;
+}> = ({ serviceProvider, onClick }) => {
     const { logo } = getMetadata(serviceProvider);
     return (
         <PaneContainer onClick={() => onClick(serviceProvider.id)}>

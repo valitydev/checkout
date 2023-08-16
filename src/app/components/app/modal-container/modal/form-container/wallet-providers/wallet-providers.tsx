@@ -1,14 +1,14 @@
-import * as React from 'react';
 import { useContext, useEffect } from 'react';
 
+import { DigitalWalletPaymentMethod, PaymentMethodName } from 'checkout/hooks';
+
+import { InitialContext } from '../../../../initial-context';
 import { Header } from '../header';
 import { WalletProviderPaymentMethodItem } from '../wallet-provider-payment-method-item';
-import { InitialContext } from '../../../../initial-context';
-import { DigitalWalletPaymentMethod, PaymentMethodName } from 'checkout/hooks';
 
 const getAvailablePaymentMethod = (
     availablePaymentMethods,
-    methodName: PaymentMethodName
+    methodName: PaymentMethodName,
 ): DigitalWalletPaymentMethod => availablePaymentMethods.find((m) => m.name === methodName);
 
 export const WalletProviders = ({ onMount }: { onMount: () => void }) => {

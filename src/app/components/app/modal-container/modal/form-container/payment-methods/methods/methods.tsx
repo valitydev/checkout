@@ -1,16 +1,15 @@
-import * as React from 'react';
-
-import { assertUnreachable } from 'checkout/utils';
-import { Wallets } from './wallets';
-import { BankCard } from './bank-card';
-import { WalletProviderPaymentMethodItem } from '../../wallet-provider-payment-method-item';
-import { PaymentTerminalMethodItems } from './payment-terminal-method-items';
 import {
     DigitalWalletPaymentMethod,
     PaymentMethod,
     PaymentMethodName,
-    PaymentTerminalPaymentMethod
+    PaymentTerminalPaymentMethod,
 } from 'checkout/hooks';
+import { assertUnreachable } from 'checkout/utils';
+
+import { BankCard } from './bank-card';
+import { PaymentTerminalMethodItems } from './payment-terminal-method-items';
+import { Wallets } from './wallets';
+import { WalletProviderPaymentMethodItem } from '../../wallet-provider-payment-method-item';
 
 const Method = ({ method }: { method: PaymentMethod }) => {
     switch (method.name) {

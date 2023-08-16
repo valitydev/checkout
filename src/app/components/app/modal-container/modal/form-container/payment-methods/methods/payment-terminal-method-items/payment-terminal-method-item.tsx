@@ -1,19 +1,18 @@
-import * as React from 'react';
 import { useContext, useEffect } from 'react';
-import isNil from 'checkout/utils/is-nil';
 
+import { PaymentMethodName, ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
+import { getMetadata, PaymentMethodItemContainer } from 'checkout/components/ui';
 import {
     FormName,
     PaymentTerminalFormInfo,
     PaymentTerminalSelectorFormInfo,
     ResultFormInfo,
-    ResultType
+    ResultType,
 } from 'checkout/hooks';
-import { getMetadata, PaymentMethodItemContainer } from 'checkout/components/ui';
-import { PaymentMethodName, ServiceProvider, ServiceProviderContactInfo } from 'checkout/backend';
-import { Content } from './content';
 import { PaymentTerminalPaymentMethod, useCreatePayment, PaymentTerminalFormValues } from 'checkout/hooks';
+import isNil from 'checkout/utils/is-nil';
 
+import { Content } from './content';
 import { InitialContext } from '../../../../../../initial-context';
 import { ModalContext } from '../../../../../modal-context';
 
@@ -30,7 +29,7 @@ const isRequiredPhoneNumber = (contactInfo: ServiceProviderContactInfo, phoneNum
 const isRequiredPaymentTerminalForm = (
     serviceProvider: ServiceProvider,
     emailPrefilled: boolean,
-    phoneNumberPrefilled: boolean
+    phoneNumberPrefilled: boolean,
 ): boolean => {
     const { form, contactInfo } = getMetadata(serviceProvider);
     return (
@@ -59,8 +58,8 @@ export const PaymentTerminalMethodItem = ({ method }: PaymentTerminalMethodItemP
                 setFormData({
                     method: PaymentMethodName.PaymentTerminal,
                     values: {
-                        provider: serviceProvider.id
-                    } as PaymentTerminalFormValues
+                        provider: serviceProvider.id,
+                    } as PaymentTerminalFormValues,
                 });
             }
         }
@@ -78,7 +77,7 @@ export const PaymentTerminalMethodItem = ({ method }: PaymentTerminalMethodItemP
 
     return (
         <PaymentMethodItemContainer id={`${Math.floor(Math.random() * 100)}-payment-method-item`} onClick={onClick}>
-            <Content method={method} localeCode={initConfig.locale} />
+            <Content localeCode={initConfig.locale} method={method} />
         </PaymentMethodItemContainer>
     );
 };

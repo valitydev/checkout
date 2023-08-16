@@ -1,5 +1,6 @@
-import { safeVal } from 'checkout/utils';
 import { FormEvent } from 'react';
+
+import { safeVal } from 'checkout/utils';
 
 export const formatCardHolder = (e: FormEvent<HTMLInputElement>) => {
     const target = e.currentTarget;

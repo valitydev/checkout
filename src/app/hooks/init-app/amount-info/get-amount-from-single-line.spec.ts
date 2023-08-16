@@ -5,15 +5,15 @@ it('InvoiceTemplateLineCostFixed should return amount', () => {
         price: {
             costType: 'InvoiceTemplateLineCostFixed',
             amount: 149900,
-            currency: 'RUB'
-        }
+            currency: 'RUB',
+        },
     } as any;
     const actual = getAmountFromSingleLine(singleLine, 111, 'ru');
     const expected = {
         status: 'final',
         currencyCode: 'RUB',
         locale: 'ru',
-        minorValue: 149900
+        minorValue: 149900,
     };
     expect(actual).toEqual(expected);
 });
@@ -24,10 +24,10 @@ describe('InvoiceTemplateLineCostRange', () => {
             costType: 'InvoiceTemplateLineCostRange',
             range: {
                 lowerBound: 1000,
-                upperBound: 2000
+                upperBound: 2000,
             },
-            currency: 'RUB'
-        }
+            currency: 'RUB',
+        },
     } as any;
 
     it('with amountConfig should return final status', () => {
@@ -36,7 +36,7 @@ describe('InvoiceTemplateLineCostRange', () => {
             status: 'final',
             currencyCode: 'RUB',
             minorValue: 111,
-            locale: 'ru'
+            locale: 'ru',
         };
         expect(actual).toEqual(expected);
     });
@@ -47,7 +47,7 @@ describe('InvoiceTemplateLineCostRange', () => {
             status: 'notKnown',
             currencyCode: 'RUB',
             locale: 'ru',
-            minorValue: undefined
+            minorValue: undefined,
         };
         expect(actual).toEqual(expected);
     });
@@ -56,8 +56,8 @@ describe('InvoiceTemplateLineCostRange', () => {
 describe('InvoiceTemplateLineCostUnlim', () => {
     const singleLine = {
         price: {
-            costType: 'InvoiceTemplateLineCostUnlim'
-        }
+            costType: 'InvoiceTemplateLineCostUnlim',
+        },
     } as any;
 
     it('with amountConfig should return final status', () => {
@@ -66,7 +66,7 @@ describe('InvoiceTemplateLineCostUnlim', () => {
             status: 'final',
             currencyCode: 'RUB',
             minorValue: 111,
-            locale: 'ru'
+            locale: 'ru',
         };
         expect(actual).toEqual(expected);
     });
@@ -76,7 +76,7 @@ describe('InvoiceTemplateLineCostUnlim', () => {
         const expected = {
             status: 'notKnown',
             currencyCode: 'RUB',
-            locale: 'ru'
+            locale: 'ru',
         };
         expect(actual).toEqual(expected);
     });

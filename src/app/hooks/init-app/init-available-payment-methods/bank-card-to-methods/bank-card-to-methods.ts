@@ -1,8 +1,9 @@
-import { PaymentMethod as PaymentMethodState, PaymentMethodName as PaymentMethodNameState } from '../types';
 import { InitConfig } from 'checkout/config';
 
+import { PaymentMethod as PaymentMethodState, PaymentMethodName as PaymentMethodNameState } from '../types';
+
 export function bankCardToMethods(initConfig: InitConfig): PaymentMethodState[] {
-    let result: PaymentMethodState[] = [];
+    const result: PaymentMethodState[] = [];
     if (initConfig.bankCard) {
         result.push({ name: PaymentMethodNameState.BankCard });
     }

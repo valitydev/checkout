@@ -1,11 +1,10 @@
-import * as React from 'react';
 import { useContext } from 'react';
 import styled from 'styled-components';
 
-import { formatAmount } from 'checkout/utils';
 import { Button } from 'checkout/components';
-import { Locale } from 'checkout/locale';
 import { AmountInfo } from 'checkout/hooks';
+import { Locale } from 'checkout/locale';
+import { formatAmount } from 'checkout/utils';
 
 import { InitialContext } from '../../../../initial-context';
 
@@ -23,7 +22,7 @@ export const PayButton = () => {
     const { locale, amountInfo } = useContext(InitialContext);
     const label = toLabel(locale, amountInfo);
     return (
-        <PayButtonWrapper type="submit" color="primary" id="pay-btn">
+        <PayButtonWrapper color="primary" id="pay-btn" type="submit">
             {label}
         </PayButtonWrapper>
     );

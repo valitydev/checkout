@@ -8,7 +8,7 @@ function baseAssignValue(object, key, value) {
             configurable: true,
             enumerable: true,
             value: value,
-            writable: true
+            writable: true,
         });
     } else {
         object[key] = value;

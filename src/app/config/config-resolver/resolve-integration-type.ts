@@ -1,15 +1,19 @@
 import intersection from 'checkout/utils/intersection';
+
 import { InitConfig } from '../init-config';
 
-const typesDef: { type: 'invoiceTemplate' | 'invoice'; requiredFields: string[] }[] = [
+const typesDef: {
+    type: 'invoiceTemplate' | 'invoice';
+    requiredFields: string[];
+}[] = [
     {
         type: 'invoiceTemplate',
-        requiredFields: ['invoiceTemplateID', 'invoiceTemplateAccessToken']
+        requiredFields: ['invoiceTemplateID', 'invoiceTemplateAccessToken'],
     },
     {
         type: 'invoice',
-        requiredFields: ['invoiceID', 'invoiceAccessToken']
-    }
+        requiredFields: ['invoiceID', 'invoiceAccessToken'],
+    },
 ];
 
 export const resolveIntegrationType = (userConfig: InitConfig): InitConfig => {
@@ -24,8 +28,8 @@ export const resolveIntegrationType = (userConfig: InitConfig): InitConfig => {
     return found.requiredFields.reduce(
         (acc, current) => ({
             ...acc,
-            [current]: (userConfig as { [param: string]: string })[current]
+            [current]: (userConfig as { [param: string]: string })[current],
         }),
-        { integrationType: found.type }
+        { integrationType: found.type },
     );
 };

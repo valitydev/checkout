@@ -7,7 +7,7 @@ it('should return amount', () => {
                 cost: 100000,
                 price: 100000,
                 product: 'Product 1',
-                quantity: 1
+                quantity: 1,
             },
             {
                 cost: 400000,
@@ -16,8 +16,8 @@ it('should return amount', () => {
                 quantity: 2,
                 taxMode: {
                     rate: '0%',
-                    type: 'InvoiceLineTaxVAT'
-                }
+                    type: 'InvoiceLineTaxVAT',
+                },
             },
             {
                 cost: 500000,
@@ -26,19 +26,19 @@ it('should return amount', () => {
                 quantity: 1,
                 taxMode: {
                     rate: '18%',
-                    type: 'InvoiceLineTaxVAT'
-                }
-            }
+                    type: 'InvoiceLineTaxVAT',
+                },
+            },
         ],
         currency: 'RUB',
-        templateType: 'InvoiceTemplateMultiLine'
+        templateType: 'InvoiceTemplateMultiLine',
     } as any;
     const actual = getAmountFromMultiLine(multiLine, 'ru');
     const expected = {
         status: 'final',
         currencyCode: 'RUB',
         minorValue: 1000000,
-        locale: 'ru'
+        locale: 'ru',
     };
     expect(actual).toEqual(expected);
 });

@@ -5,12 +5,12 @@ export default defineConfig({
         outDir: 'dist',
         lib: {
             entry: './src/initializer/index.ts',
-            name: 'checkout'
+            name: 'checkout',
         },
         rollupOptions: {
             output: {
-                entryFileNames: 'checkout.js'
-            }
-        }
-    }
+                entryFileNames: 'checkout.js',
+            },
+        },
+    },
 });

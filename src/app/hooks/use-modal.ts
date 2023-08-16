@@ -1,4 +1,11 @@
 import { useCallback, useReducer } from 'react';
+
+import { ServiceProvider } from 'checkout/backend';
+import { InitConfig } from 'checkout/config';
+import { findNamed } from 'checkout/utils';
+
+import { PaymentMethod } from './init-app';
+import { InteractionModel, provideInteraction, toInitialState } from './modal';
 import {
     FormInfo,
     ModalForms,
@@ -7,20 +14,14 @@ import {
     Named,
     PaymentMethodsFormInfo,
     PaymentStatus,
-    SlideDirection
+    SlideDirection,
 } from './modal/types';
-
-import { PaymentMethod } from './init-app';
-import { InteractionModel, provideInteraction, toInitialState } from './modal';
-import { InitConfig } from 'checkout/config';
-import { findNamed } from 'checkout/utils';
-import { ServiceProvider } from 'checkout/backend';
 
 type State = ModalState[];
 
 export enum Direction {
     back = 'back',
-    forward = 'forward'
+    forward = 'forward',
 }
 
 type Action =
@@ -91,12 +92,12 @@ const updateFound = (s: ModalState[], found: ModalForms, formInfo: FormInfo, dir
         viewInfo: {
             ...found.viewInfo,
             inProcess: false,
-            slideDirection: toSlideDirection(direction)
+            slideDirection: toSlideDirection(direction),
         },
         formsInfo: addOrUpdate(found.formsInfo, {
             ...formInfo,
-            active: true
-        } as FormInfo)
+            active: true,
+        } as FormInfo),
     } as ModalForms);
 };
 
@@ -114,8 +115,8 @@ const setActiveToPristine = (s: ModalState[]): ModalState[] => {
               ...modal,
               formsInfo: addOrUpdate(modal.formsInfo, {
                   ...started,
-                  paymentStatus: PaymentStatus.pristine
-              } as FormInfo)
+                  paymentStatus: PaymentStatus.pristine,
+              } as FormInfo),
           } as ModalForms)
         : s;
 };
@@ -127,12 +128,12 @@ const prepareToPay = (s: ModalState[]): ModalState[] => {
         ...modal,
         viewInfo: {
             ...modal.viewInfo,
-            inProcess: true
+            inProcess: true,
         },
         formsInfo: addOrUpdate(modal.formsInfo, {
             ...active,
-            paymentStatus: PaymentStatus.started
-        } as FormInfo)
+            paymentStatus: PaymentStatus.started,
+        } as FormInfo),
     } as ModalForms);
 };
 
@@ -142,8 +143,8 @@ const updateViewInfo = (s: ModalState[], field: string, value: any): ModalState[
         ...modal,
         viewInfo: {
             ...modal.viewInfo,
-            [field]: value
-        }
+            [field]: value,
+        },
     } as ModalForms);
 };
 
@@ -156,13 +157,13 @@ const prepareToRetry = (s: ModalState[], toPristine: boolean): ModalState[] => {
         ...modal,
         viewInfo: {
             ...modal.viewInfo,
-            slideDirection: SlideDirection.left
+            slideDirection: SlideDirection.left,
         },
         formsInfo: addOrUpdate(modal.formsInfo, {
             ...started,
             paymentStatus: toPristine ? PaymentStatus.pristine : PaymentStatus.needRetry,
-            active: true
-        } as FormInfo)
+            active: true,
+        } as FormInfo),
     } as ModalForms);
 };
 
@@ -171,16 +172,16 @@ const forgetPaymentAttempt = (s: ModalState[]) => {
     const pristine = addOrUpdate(modal.formsInfo, {
         ...findStarted(modal.formsInfo),
         paymentStatus: PaymentStatus.pristine,
-        active: false
+        active: false,
     } as FormInfo);
     return addOrUpdate(s, {
         ...modal,
         viewInfo: {
             ...modal.viewInfo,
             slideDirection: SlideDirection.left,
-            inProcess: false
+            inProcess: false,
         },
-        formsInfo: addOrUpdate(pristine, new PaymentMethodsFormInfo())
+        formsInfo: addOrUpdate(pristine, new PaymentMethodsFormInfo()),
     } as ModalForms);
 };
 
@@ -223,11 +224,17 @@ export const useModal = ({ integrationType, availablePaymentMethods, serviceProv
     const [modalState, dispatch] = useReducer(dataReducer, init(integrationType, availablePaymentMethods));
 
     const toInitialState = useCallback(() => {
-        dispatch({ type: 'TO_INITIAL_STATE', payload: availablePaymentMethods });
+        dispatch({
+            type: 'TO_INITIAL_STATE',
+            payload: availablePaymentMethods,
+        });
     }, [availablePaymentMethods]);
 
     const goToFormInfo = useCallback((formInfo: FormInfo, direction: Direction = Direction.forward) => {
-        dispatch({ type: 'GO_TO_FORM_INFO', payload: { formInfo, direction } });
+        dispatch({
+            type: 'GO_TO_FORM_INFO',
+            payload: { formInfo, direction },
+        });
     }, []);
 
     const prepareToPay = useCallback(() => {
@@ -248,9 +255,12 @@ export const useModal = ({ integrationType, availablePaymentMethods, serviceProv
 
     const toInteractionState = useCallback(
         (interactionModel: InteractionModel) => {
-            dispatch({ type: 'TO_INTERACTION_STATE', payload: provideInteraction(serviceProviders, interactionModel) });
+            dispatch({
+                type: 'TO_INTERACTION_STATE',
+                payload: provideInteraction(serviceProviders, interactionModel),
+            });
         },
-        [serviceProviders]
+        [serviceProviders],
     );
 
     return {
@@ -261,6 +271,6 @@ export const useModal = ({ integrationType, availablePaymentMethods, serviceProv
         prepareToRetry,
         forgetPaymentAttempt,
         setViewInfoError,
-        toInteractionState
+        toInteractionState,
     };
 };

@@ -1,8 +1,8 @@
-import { toMinorAmount } from 'checkout/utils';
 import { InvoiceAndToken, InvoiceTemplate, createInvoiceWithTemplate as request } from 'checkout/backend';
+import { toMinorAmount } from 'checkout/utils';
 
-import { AmountInfo } from '../init-app';
 import { PayableInvoiceData } from './types';
+import { AmountInfo } from '../init-app';
 
 const getAmount = (amountInfo: AmountInfo, formAmount: string): number => {
     switch (amountInfo.status) {
@@ -15,10 +15,10 @@ const getAmount = (amountInfo: AmountInfo, formAmount: string): number => {
 
 const toPayableInvoiceData = ({
     invoice: { id, dueDate, externalID },
-    invoiceAccessToken
+    invoiceAccessToken,
 }: InvoiceAndToken): PayableInvoiceData => ({
     invoice: { id, dueDate, externalID },
-    invoiceAccessToken: invoiceAccessToken.payload
+    invoiceAccessToken: invoiceAccessToken.payload,
 });
 
 export type CreateInvoiceParams = {
@@ -34,12 +34,12 @@ export const createInvoiceWithTemplate = async ({
     invoiceTemplateAccessToken,
     invoiceTemplate: { metadata, id },
     amountInfo,
-    formAmount
+    formAmount,
 }: CreateInvoiceParams): Promise<PayableInvoiceData> => {
     const params = {
         amount: getAmount(amountInfo, formAmount),
         metadata,
-        currency: amountInfo.currencyCode
+        currency: amountInfo.currencyCode,
     };
     const invoiceAndToken = await request(capiEndpoint, invoiceTemplateAccessToken, id, params);
     return toPayableInvoiceData(invoiceAndToken);

@@ -1,18 +1,18 @@
-import * as React from 'react';
-import { useContext, useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
-import isNil from 'checkout/utils/is-nil';
-import { Modal } from './modal';
-import { UserInteractionModal } from './user-interaction-modal';
-import { ModalName, ResultFormInfo, ResultType } from 'checkout/hooks';
-import { InitialContext } from '../initial-context';
-import { PayableInvoiceContext } from './payable-invoice-context';
-import { PayableInvoiceData, useInvoiceEvents, useModal } from 'checkout/hooks';
 import { InvoiceChangeType } from 'checkout/backend';
+import { ModalName, ResultFormInfo, ResultType } from 'checkout/hooks';
+import { PayableInvoiceData, useInvoiceEvents, useModal } from 'checkout/hooks';
+import isNil from 'checkout/utils/is-nil';
+
+import { Modal } from './modal';
 import { ModalContext } from './modal-context';
+import { PayableInvoiceContext } from './payable-invoice-context';
 import { useInteractionModel } from './use-interaction-model';
+import { UserInteractionModal } from './user-interaction-modal';
+import { InitialContext } from '../initial-context';
 
 const Container = styled.div`
     height: 100%;
@@ -24,7 +24,7 @@ export const ModalContainer = () => {
         appConfig: { capiEndpoint },
         initConfig,
         model: { serviceProviders, invoice, invoiceAccessToken },
-        availablePaymentMethods
+        availablePaymentMethods,
     } = useContext(InitialContext);
     const {
         modalState,
@@ -34,11 +34,11 @@ export const ModalContainer = () => {
         prepareToRetry,
         forgetPaymentAttempt,
         setViewInfoError,
-        toInteractionState
+        toInteractionState,
     } = useModal({
         integrationType: initConfig.integrationType,
         availablePaymentMethods,
-        serviceProviders
+        serviceProviders,
     });
     const [payableInvoiceData, setPayableInvoiceData] = useState<PayableInvoiceData>(null);
     const { eventsState, startPolling, searchEventsChange } = useInvoiceEvents(capiEndpoint, payableInvoiceData);
@@ -50,9 +50,9 @@ export const ModalContainer = () => {
                 invoice: {
                     id: invoice.id,
                     dueDate: invoice.dueDate,
-                    externalID: invoice.externalID
+                    externalID: invoice.externalID,
                 },
-                invoiceAccessToken
+                invoiceAccessToken,
             });
         }
     }, []);
@@ -85,8 +85,8 @@ export const ModalContainer = () => {
                 case InvoiceChangeType.PaymentStatusChanged:
                     goToFormInfo(
                         new ResultFormInfo(ResultType.hookProcessed, {
-                            change
-                        })
+                            change,
+                        }),
                     );
                     break;
             }
@@ -100,8 +100,8 @@ export const ModalContainer = () => {
         if (eventsState.status === 'FAILURE') {
             goToFormInfo(
                 new ResultFormInfo(ResultType.hookError, {
-                    error: eventsState.error
-                })
+                    error: eventsState.error,
+                }),
             );
         }
     }, [payableInvoiceData, eventsState]);
@@ -114,7 +114,7 @@ export const ModalContainer = () => {
     const activeModalName = useMemo(() => modalState.find((modal) => modal.active).name, [modalState]);
 
     return (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+        <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
             <Container>
                 <ModalContext.Provider
                     value={{
@@ -123,8 +123,9 @@ export const ModalContainer = () => {
                         prepareToPay,
                         prepareToRetry,
                         forgetPaymentAttempt,
-                        setViewInfoError
-                    }}>
+                        setViewInfoError,
+                    }}
+                >
                     <PayableInvoiceContext.Provider value={{ payableInvoiceData, setPayableInvoiceData }}>
                         {activeModalName === ModalName.modalForms && <Modal />}
                         {activeModalName === ModalName.modalInteraction && <UserInteractionModal />}

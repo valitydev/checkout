@@ -1,23 +1,22 @@
-import * as React from 'react';
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { CardForm } from './card-form';
 import { FormName, ModalForms, ModalName, SlideDirection } from 'checkout/hooks';
-import { PaymentMethods } from './payment-methods';
-import { FormLoader } from './form-loader';
-import { ResultForm } from './result-form';
-import { WalletForm } from './wallet-form';
 import { findNamed } from 'checkout/utils';
 import { device } from 'checkout/utils/device';
-import { NoAvailablePaymentMethodForm } from './no-available-payment-method-form';
-import { WalletProviders } from './wallet-providers';
-import { RedirectForm } from './redirect-form';
-import { PaymentTerminalForm } from './payment-terminal-form';
-import { QrCodeInteractionForm } from './qr-code-interaction-form';
-import { PaymentTerminalSelectorForm } from './payment-terminal-selector-form';
 
+import { CardForm } from './card-form';
+import { FormLoader } from './form-loader';
+import { NoAvailablePaymentMethodForm } from './no-available-payment-method-form';
+import { PaymentMethods } from './payment-methods';
+import { PaymentTerminalForm } from './payment-terminal-form';
+import { PaymentTerminalSelectorForm } from './payment-terminal-selector-form';
+import { QrCodeInteractionForm } from './qr-code-interaction-form';
+import { RedirectForm } from './redirect-form';
+import { ResultForm } from './result-form';
+import { WalletForm } from './wallet-form';
+import { WalletProviders } from './wallet-providers';
 import { ModalContext } from '../../modal-context';
 
 const Container = styled.div`
@@ -87,12 +86,12 @@ export const FormContainer = () => {
 
     const {
         formName,
-        viewInfo: { slideDirection, inProcess }
+        viewInfo: { slideDirection, inProcess },
     } = useMemo(() => {
         const found = findNamed(modalState, ModalName.modalForms) as ModalForms;
         return {
             formName: found.formsInfo.find((item) => item.active)?.name,
-            viewInfo: found.viewInfo
+            viewInfo: found.viewInfo,
         };
     }, [modalState]);
 
@@ -111,11 +110,12 @@ export const FormContainer = () => {
         <Container>
             <Form height={height}>
                 <motion.div
-                    ref={contentElement}
                     key={formName}
-                    initial={{ x: toInitialPos(slideDirection) }}
+                    ref={contentElement}
                     animate={{ x: 0 }}
-                    transition={{ duration: 0.3 }}>
+                    initial={{ x: toInitialPos(slideDirection) }}
+                    transition={{ duration: 0.3 }}
+                >
                     {renderForm(formName, onMount)}
                     {inProcess && <FormLoader />}
                 </motion.div>

@@ -10,5 +10,5 @@ export enum PaymentSystem {
     discover = 'discover',
     unionpay = 'unionpay',
     jcb = 'jcb',
-    nspkmir = 'nspkmir'
+    nspkmir = 'nspkmir',
 }

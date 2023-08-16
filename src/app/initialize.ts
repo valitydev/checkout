@@ -1,11 +1,12 @@
-import * as creditCardType from 'credit-card-type';
-import * as Sentry from '@sentry/react';
 import { CaptureConsole as CaptureConsoleIntegration } from '@sentry/integrations';
+import * as Sentry from '@sentry/react';
+import * as creditCardType from 'credit-card-type';
 
-import { listen, Transport, StubTransport, CommunicatorEvents, communicatorInstanceName } from '../communicator';
-import { getUrlParams, URLParams } from 'checkout/utils';
 import { InitConfig, resolveInitConfig } from 'checkout/config';
+import { getUrlParams, URLParams } from 'checkout/utils';
+
 import { AppConfig, getAppConfig, getEnv } from './backend';
+import { listen, Transport, StubTransport, CommunicatorEvents, communicatorInstanceName } from '../communicator';
 import { getOrigin } from '../get-origin';
 
 /**
@@ -19,8 +20,8 @@ creditCardType.addCard({
     lengths: [16],
     code: {
         name: 'CVV',
-        size: 3
-    }
+        size: 3,
+    },
 });
 
 creditCardType.addCard({
@@ -31,8 +32,8 @@ creditCardType.addCard({
     lengths: [16],
     code: {
         name: 'CVV',
-        size: 3
-    }
+        size: 3,
+    },
 });
 
 const initSentry = async (dsn: string) => {
@@ -43,14 +44,14 @@ const initSentry = async (dsn: string) => {
         integrations: [
             new Sentry.BrowserTracing(),
             new CaptureConsoleIntegration({
-                levels: ['warn', 'error']
+                levels: ['warn', 'error'],
             }),
-            new Sentry.Replay()
+            new Sentry.Replay(),
         ],
         tracesSampleRate: 0.2,
         release: env.version,
         replaysOnErrorSampleRate: 1.0,
-        replaysSessionSampleRate: 0.1
+        replaysSessionSampleRate: 0.1,
     });
 };
 
@@ -85,8 +86,8 @@ export const initialize = async (): Promise<[Transport, InitParams]> => {
             {
                 initConfig,
                 appConfig,
-                origin
-            }
+                origin,
+            },
         ];
     } catch (e) {
         console.error(e);

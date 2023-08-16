@@ -1,6 +1,7 @@
 import { BrowserPostRequest, BrowserRequest, RequestType } from 'checkout/backend';
-import { toPostFormInputs } from './to-post-form-inputs';
+
 import { toGetFormInputs } from './to-get-form-inputs';
+import { toPostFormInputs } from './to-post-form-inputs';
 
 const toInputs = (origin: string, request: BrowserRequest): HTMLInputElement[] => {
     switch (request.requestType) {
@@ -23,7 +24,7 @@ const toMethod = (request: BrowserRequest): 'POST' | 'GET' => {
 export const prepareForm = (
     origin: string,
     request: BrowserRequest,
-    target: '_self' | '_blank' = '_self'
+    target: '_self' | '_blank' = '_self',
 ): HTMLFormElement => {
     const form = document.createElement('form');
     form.action = request.uriTemplate;

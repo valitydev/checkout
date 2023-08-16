@@ -1,7 +1,7 @@
+import { Constants } from './constants';
+import { log } from './log';
 import { RealTransport } from './real-transport';
 import { Transport } from './transport';
-import { log } from './log';
-import { Constants } from './constants';
 
 const timeout = (ms: number): Promise<Transport> =>
     new Promise((_resolve, reject) => {

@@ -1,7 +1,8 @@
-import { initialize, CommunicatorEvents, communicatorInstanceName } from '../communicator';
+import { InitConfig } from 'checkout/config';
+
 import { IframeContainer } from './iframe-container';
 import { Initializer } from './initializer';
-import { InitConfig } from 'checkout/config';
+import { initialize, CommunicatorEvents, communicatorInstanceName } from '../communicator';
 
 export class IframeInitializer extends Initializer {
     private container: IframeContainer;
@@ -16,7 +17,10 @@ export class IframeInitializer extends Initializer {
         this.container.show();
         initialize(target, this.origin, communicatorInstanceName).then((transport) => {
             this.opened();
-            transport.emit(CommunicatorEvents.init, { ...this.config, ...openConfig });
+            transport.emit(CommunicatorEvents.init, {
+                ...this.config,
+                ...openConfig,
+            });
             transport.on(CommunicatorEvents.finished, () => {
                 transport.destroy();
                 this.container.reinitialize();

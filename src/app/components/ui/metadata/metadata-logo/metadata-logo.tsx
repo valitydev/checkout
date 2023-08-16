@@ -8,6 +8,6 @@ const MetadataImage = styled.img<{ height: string; width: string }>`
     width: ${({ width }) => width};
 `;
 
-export const MetadataLogo: React.FC<{ metadata: ServiceProviderIconMetadata }> = ({
-    metadata: { height, width, src }
-}) => <MetadataImage height={height} width={width} src={src} />;
+export const MetadataLogo: React.FC<{
+    metadata: ServiceProviderIconMetadata;
+}> = ({ metadata: { height, width, src } }) => <MetadataImage height={height} src={src} width={width} />;

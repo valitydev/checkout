@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import { ServiceProviderMetadataField, ServiceProviderMetadataForm } from 'checkout/backend';
 import { InitConfig } from 'checkout/config';
 import { PaymentTerminalFormValues } from 'checkout/hooks';
@@ -8,14 +9,14 @@ import isString from 'checkout/utils/is-string';
 const applyReplacePattern = <T>(rawValue: T, pattern?: string, replaceValue = ''): string | T => {
     if (!isNil(pattern) && isString(rawValue)) {
         const regExp = new RegExp(pattern, 'g');
-        return rawValue.replaceAll(regExp, replaceValue);
+        return rawValue.replace(regExp, replaceValue);
     }
     return rawValue;
 };
 
 export const prepareFormValues = (
     form: ServiceProviderMetadataField[],
-    terminalFormValues: object
+    terminalFormValues: object,
 ): Partial<PaymentTerminalFormValues> => ({
     metadata: form.reduce((acc, formField) => {
         const value = terminalFormValues[formField.name];
@@ -28,9 +29,9 @@ export const prepareFormValues = (
         }
         return {
             ...acc,
-            [formField.name]: appliedValue
+            [formField.name]: appliedValue,
         };
-    }, {})
+    }, {}),
 });
 
 const toDefaultFormValuesMetadata = (terminalFormValues: object, form: ServiceProviderMetadataForm) => {
@@ -43,7 +44,11 @@ const toDefaultFormValues = (initConfig: InitConfig, form: ServiceProviderMetada
     const email = initConfig?.email;
     const phoneNumber = initConfig?.phoneNumber;
     const terminalFormValues = initConfig?.terminalFormValues;
-    return { email, phoneNumber, metadata: toDefaultFormValuesMetadata(terminalFormValues, form) };
+    return {
+        email,
+        phoneNumber,
+        metadata: toDefaultFormValuesMetadata(terminalFormValues, form),
+    };
 };
 
 export const useDefaultFormValues = (initConfig: InitConfig, form: ServiceProviderMetadataForm) =>

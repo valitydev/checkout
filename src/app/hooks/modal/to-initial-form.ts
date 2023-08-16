@@ -3,8 +3,10 @@ import {
     KnownProviderCategories,
     PaymentMethod,
     PaymentMethodName,
-    PaymentTerminalPaymentMethod
+    PaymentTerminalPaymentMethod,
 } from 'checkout/hooks';
+import { assertUnreachable } from 'checkout/utils';
+
 import {
     CardFormInfo,
     FormInfo,
@@ -12,9 +14,8 @@ import {
     NoAvailablePaymentMethodFormInfo,
     WalletProvidersFormInfo,
     PaymentTerminalFormInfo,
-    PaymentTerminalSelectorFormInfo
+    PaymentTerminalSelectorFormInfo,
 } from './types';
-import { assertUnreachable } from 'checkout/utils';
 
 const toPaymentTerminalForms = ({ category, serviceProviders }: PaymentTerminalPaymentMethod) => {
     switch (category) {

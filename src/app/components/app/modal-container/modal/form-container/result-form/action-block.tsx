@@ -1,12 +1,11 @@
-import * as React from 'react';
 import { useContext, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { Button } from 'checkout/components';
-import { Locale } from 'checkout/locale';
-import { FormInfo, FormName, ModalForms, ModalName, PaymentStatus } from 'checkout/hooks';
-import { findNamed } from 'checkout/utils';
 import { Link } from 'checkout/components/ui/link';
+import { FormInfo, FormName, ModalForms, ModalName, PaymentStatus } from 'checkout/hooks';
+import { Locale } from 'checkout/locale';
+import { findNamed } from 'checkout/utils';
 
 import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';
@@ -53,7 +52,7 @@ export const ActionBlock = () => {
         const info = (findNamed(modalState, ModalName.modalForms) as ModalForms).formsInfo;
         return {
             startedInfo: info.find((item) => item.paymentStatus === PaymentStatus.started),
-            hasMultiMethods: !!findNamed(info, FormName.paymentMethods)
+            hasMultiMethods: !!findNamed(info, FormName.paymentMethods),
         };
     }, [modalState]);
 
@@ -66,7 +65,7 @@ export const ActionBlock = () => {
             {!initConfig.isExternalIDIncluded && (
                 <>
                     {payOtherCapability(startedInfo) && (
-                        <Button color="primary" onClick={() => retry(true)} id="reenter-btn">
+                        <Button color="primary" id="reenter-btn" onClick={() => retry(true)}>
                             {toReenterButtonText(startedInfo, locale)}
                         </Button>
                     )}

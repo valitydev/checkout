@@ -5,9 +5,9 @@ import {
     PaymentToolDetailsType,
     QrCodeDisplayRequest,
     Redirect,
-    ServiceProvider
+    ServiceProvider,
 } from 'checkout/backend';
-import { InteractionModel } from './types/interaction-model';
+import { getMetadata } from 'checkout/components/ui/metadata/utils/get-metadata';
 import {
     EventInteractionObject,
     ModalForms,
@@ -15,18 +15,19 @@ import {
     ModalInteractionType,
     ModalState,
     QrCodeInteractionFormInfo,
-    RedirectFormInfo
+    RedirectFormInfo,
 } from 'checkout/hooks';
 import isNil from 'checkout/utils/is-nil';
-import { getMetadata } from 'checkout/components/ui/metadata/utils/get-metadata';
+
+import { InteractionModel } from './types/interaction-model';
 
 const toModalInteraction = (userInteraction: Redirect): ModalInteraction =>
     new ModalInteraction(
         {
             type: ModalInteractionType.EventInteraction,
-            request: userInteraction.request
+            request: userInteraction.request,
         } as EventInteractionObject,
-        true
+        true,
     );
 
 const providePaymentTerminalPaymentTool = (userInteraction: Redirect, serviceProvider: ServiceProvider) => {
@@ -48,7 +49,7 @@ const provideRedirect = (userInteraction: Redirect, activeServiceProvider: Servi
 
 const provideQrCode = (
     userInteraction: QrCodeDisplayRequest,
-    activeServiceProvider: ServiceProvider | null
+    activeServiceProvider: ServiceProvider | null,
 ): ModalForms => {
     let providerID = null;
     if (activeServiceProvider) {
@@ -60,7 +61,7 @@ const provideQrCode = (
 
 const getActiveServiceProvider = (
     serviceProviders: ServiceProvider[],
-    paymentToolDetails: PaymentToolDetails
+    paymentToolDetails: PaymentToolDetails,
 ): ServiceProvider | null => {
     if (paymentToolDetails.detailsType === PaymentToolDetailsType.PaymentToolDetailsPaymentTerminal) {
         const provider = (paymentToolDetails as PaymentToolDetailsPaymentTerminal).provider;
@@ -71,7 +72,7 @@ const getActiveServiceProvider = (
 
 export const provideInteraction = (
     serviceProviders: ServiceProvider[],
-    { paymentToolDetails, userInteraction }: InteractionModel
+    { paymentToolDetails, userInteraction }: InteractionModel,
 ): ModalState => {
     const activeServiceProvider = getActiveServiceProvider(serviceProviders, paymentToolDetails);
     switch (userInteraction.interactionType) {

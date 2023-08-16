@@ -1,7 +1,6 @@
-import * as React from 'react';
-
 import { KnownProviderCategories, PaymentTerminalPaymentMethod } from 'checkout/hooks';
 import { assertUnreachable } from 'checkout/utils';
+
 import { PaymentTerminalMethodItem } from './payment-terminal-method-item';
 
 export interface PaymentTerminalMethodItemsProps {

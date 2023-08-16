@@ -4,9 +4,9 @@ const mapKeys = (obj, mapper) =>
     Object.entries(obj).reduce(
         (acc, [key, value]) => ({
             ...acc,
-            [mapper(value, key)]: value
+            [mapper(value, key)]: value,
         }),
-        {}
+        {},
     );
 
 const getOuterForm = (element: HTMLScriptElement) => {
@@ -21,7 +21,7 @@ const prepareUserConfig = (element: HTMLScriptElement): object => ({
         if (outerForm) {
             outerForm.submit();
         }
-    }
+    },
 });
 
 export class HtmlIntegration {

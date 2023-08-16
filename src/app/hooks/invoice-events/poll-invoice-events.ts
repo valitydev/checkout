@@ -7,7 +7,7 @@ const GET_INVOICE_EVENTS_LIMIT = 20;
 
 const getChange = (
     event: InvoiceEvent | undefined,
-    stopPollingChangeTypes: InvoiceChangeType[]
+    stopPollingChangeTypes: InvoiceChangeType[],
 ): InvoiceChange | undefined => {
     if (isNil(event) || isNil(event.changes)) {
         return undefined;
@@ -28,7 +28,7 @@ const fetchEvents = async (params: PollInvoiceEventsParams, isStop: () => boolea
         invoiceAccessToken,
         invoiceID,
         GET_INVOICE_EVENTS_LIMIT,
-        eventID
+        eventID,
     );
     const lastEvent = last(events);
     const change = getChange(lastEvent, stopPollingTypes);
@@ -36,7 +36,7 @@ const fetchEvents = async (params: PollInvoiceEventsParams, isStop: () => boolea
         return {
             status: 'POLLED',
             eventID: lastEvent.id,
-            change
+            change,
         };
     }
     if (isStop()) {
@@ -74,7 +74,7 @@ export const pollInvoiceEvents = async (params: PollInvoiceEventsParams): Promis
     if (isNil(result)) {
         stopPolling = true;
         return {
-            status: 'TIMEOUT'
+            status: 'TIMEOUT',
         };
     }
     return result;

@@ -1,16 +1,15 @@
-import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { Header } from '../header';
 import { FormName, PaymentTerminalFormInfo, PaymentTerminalSelectorFormInfo } from 'checkout/hooks';
-import { Locale } from 'checkout/locale';
-import { ServiceProvidersGrid } from './service-providers-grid';
-import { getAvailableTerminalPaymentMethod } from '../get-available-terminal-payment-method';
 import { KnownProviderCategories } from 'checkout/hooks';
+import { Locale } from 'checkout/locale';
 
-import { ModalContext } from '../../../modal-context';
+import { ServiceProvidersGrid } from './service-providers-grid';
 import { InitialContext } from '../../../../initial-context';
+import { ModalContext } from '../../../modal-context';
+import { getAvailableTerminalPaymentMethod } from '../get-available-terminal-payment-method';
+import { Header } from '../header';
 import { useActiveModalForm } from '../use-active-modal-form';
 
 const Container = styled.div`

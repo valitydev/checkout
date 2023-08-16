@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { ResultFormType } from '../make-content';
+
 import { ErrorIcon } from './error-icon';
-import { WarningIcon } from './warning-icon';
 import { SuccessIcon } from './success-icon';
+import { WarningIcon } from './warning-icon';
+import { ResultFormType } from '../make-content';
 
 interface ResultIconProps {
     type: ResultFormType;

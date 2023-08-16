@@ -1,5 +1,6 @@
 import { MetadataFieldFormatter } from 'checkout/backend';
 import { assertUnreachable } from 'checkout/utils';
+
 import { formatNumbersOnly } from './format-numbers-only';
 
 export const getMetadataFieldFormatter = (formatter: MetadataFieldFormatter) => {

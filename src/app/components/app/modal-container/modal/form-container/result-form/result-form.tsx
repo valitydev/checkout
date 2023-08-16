@@ -1,16 +1,15 @@
-import * as React from 'react';
 import { useContext, useEffect, useMemo } from 'react';
 import styled, { css } from 'styled-components';
 
 import { FormName, ModalForms, ModalName, ResultFormInfo, ResultType } from 'checkout/hooks';
+import { device } from 'checkout/utils/device';
+import { findNamed } from 'checkout/utils/find-named';
+import isNil from 'checkout/utils/is-nil';
+
+import { ActionBlock } from './action-block';
 import { ResultFormType, makeContentInvoiceHook } from './make-content';
 import { failedHook, pending } from './make-content/make-from-payment-change';
-import { ActionBlock } from './action-block';
 import { ResultIcon } from './result-icons';
-import { device } from 'checkout/utils/device';
-import isNil from 'checkout/utils/is-nil';
-import { findNamed } from 'checkout/utils/find-named';
-
 import { InitialContext } from '../../../../initial-context';
 import { ResultContext } from '../../../../result-context';
 import { ModalContext } from '../../../modal-context';
@@ -77,7 +76,7 @@ export const ResultForm = ({ onMount }: { onMount: () => void }) => {
                 hasActions: false,
                 hasDone: false,
                 header: '',
-                description: ''
+                description: '',
             };
         }
         switch (resultFormInfo.resultType) {

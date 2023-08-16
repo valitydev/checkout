@@ -1,41 +1,42 @@
 import { InvoiceEvent, InvoiceStatusChanged, InvoiceStatuses, LogicError, LogicErrorCode } from 'checkout/backend';
 import { Locale } from 'checkout/locale';
-import { ResultFormContent, ResultFormType } from './result-form-content';
 import { getLastChange } from 'checkout/utils';
+
+import { ResultFormContent, ResultFormType } from './result-form-content';
 
 const refunded = (l: Locale): ResultFormContent => ({
     hasActions: false,
     hasDone: false,
     header: l['form.header.final.invoice.refunded.label'],
-    type: ResultFormType.WARNING
+    type: ResultFormType.WARNING,
 });
 
 const alreadyPaid = (l: Locale): ResultFormContent => ({
     hasActions: false,
     hasDone: false,
     header: l['form.header.final.invoice.paid.already.label'],
-    type: ResultFormType.SUCCESS
+    type: ResultFormType.SUCCESS,
 });
 
 const paid = (l: Locale): ResultFormContent => ({
     hasActions: false,
     hasDone: true,
     header: l['form.header.final.invoice.paid.label'],
-    type: ResultFormType.SUCCESS
+    type: ResultFormType.SUCCESS,
 });
 
 const cancelled = (l: Locale): ResultFormContent => ({
     hasActions: false,
     hasDone: false,
     header: l['form.header.final.invoice.cancelled.label'],
-    type: ResultFormType.ERROR
+    type: ResultFormType.ERROR,
 });
 
 const fulfilled = (l: Locale): ResultFormContent => ({
     hasActions: false,
     hasDone: false,
     header: l['form.header.final.invoice.fulfilled.label'],
-    type: ResultFormType.SUCCESS
+    type: ResultFormType.SUCCESS,
 });
 
 export const makeFromInvoiceChange = (l: Locale, e: InvoiceEvent[], error: LogicError) => {

@@ -1,12 +1,12 @@
-import * as React from 'react';
 import { useMemo } from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
+
+import { MetadataFieldFormatter, MetadataTextLocalization, ServiceProviderMetadataField } from 'checkout/backend';
+import { Input } from 'checkout/components';
+import { formatPhoneNumber, formatOnFocus, validateEmail, validatePhone } from 'checkout/utils';
 import isNil from 'checkout/utils/is-nil';
 import partialRight from 'checkout/utils/partial-right';
 
-import { MetadataFieldFormatter, MetadataTextLocalization, ServiceProviderMetadataField } from 'checkout/backend';
-import { formatPhoneNumber, formatOnFocus, validateEmail, validatePhone } from 'checkout/utils';
-import { Input } from 'checkout/components';
 import { getInputTypeFormatter, getMetadataFieldFormatter } from './formatters';
 
 const getAutocomplete = (type: JSX.IntrinsicElements['input']['type']): string | null => {
@@ -44,25 +44,24 @@ const getPlaceholder = (localeCode: string, localization: MetadataTextLocalizati
     return localization[localeCode] || localization['en'];
 };
 
-const createValidator = (type: JSX.IntrinsicElements['input']['type'], required: boolean, pattern?: string) => (
-    value
-) => {
-    if (!required && isNil(value)) {
-        return undefined;
-    }
-    if (type === 'email') {
-        return validateEmail(value);
-    }
-    if (type === 'tel') {
-        return validatePhone(value);
-    }
-    if (pattern) {
-        return !new RegExp(pattern).test(value);
-    }
-    if (required) {
-        return !value || !value.trim();
-    }
-};
+const createValidator =
+    (type: JSX.IntrinsicElements['input']['type'], required: boolean, pattern?: string) => (value) => {
+        if (!required && isNil(value)) {
+            return undefined;
+        }
+        if (type === 'email') {
+            return validateEmail(value);
+        }
+        if (type === 'tel') {
+            return validatePhone(value);
+        }
+        if (pattern) {
+            return !new RegExp(pattern).test(value);
+        }
+        if (required) {
+            return !value || !value.trim();
+        }
+    };
 
 export interface MetadataFieldProps {
     metadata: ServiceProviderMetadataField;
@@ -79,7 +78,7 @@ export const MetadataField = ({
     wrappedName,
     register,
     fieldError,
-    isDirty
+    isDirty,
 }: MetadataFieldProps) => {
     const validate = useMemo(() => createValidator(type, required, pattern), [name]);
     const registerName = wrappedName ? `${wrappedName}.${name}` : name;
@@ -87,17 +86,17 @@ export const MetadataField = ({
         <Input
             {...register(registerName, {
                 required: true,
-                validate: (value) => !validate(value) || `${name} field is invalid`
+                validate: (value) => !validate(value) || `${name} field is invalid`,
             })}
-            type={type}
-            placeholder={getPlaceholder(localeCode, localization)}
-            mark={true}
-            onInput={getOnInputHandler(type, formatter)}
-            onFocus={getOnFocusHandler(type)}
             autoComplete={getAutocomplete(type)}
-            inputMode={inputMode}
-            error={!isNil(fieldError)}
             dirty={isDirty}
+            error={!isNil(fieldError)}
+            inputMode={inputMode}
+            mark={true}
+            placeholder={getPlaceholder(localeCode, localization)}
+            type={type}
+            onFocus={getOnFocusHandler(type)}
+            onInput={getOnInputHandler(type, formatter)}
         />
     );
 };

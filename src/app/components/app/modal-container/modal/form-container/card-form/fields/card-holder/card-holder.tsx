@@ -1,13 +1,13 @@
-import * as React from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
-import { validateCardHolder } from './validate-card-holder';
-import { Locale } from 'checkout/locale';
-import { formatCardHolder } from './format-card-holder';
 import { Input } from 'checkout/components';
-import { CardFormInputs } from '../../card-form-inputs';
+import { Locale } from 'checkout/locale';
 import isNil from 'checkout/utils/is-nil';
+
+import { formatCardHolder } from './format-card-holder';
+import { validateCardHolder } from './validate-card-holder';
 import { ReactComponent as UserIcon } from '../../../../../../../ui/icon/user.svg';
+import { CardFormInputs } from '../../card-form-inputs';
 
 export type CardHolderProps = {
     register: UseFormRegister<CardFormInputs>;
@@ -20,16 +20,16 @@ export const CardHolder = ({ register, locale, fieldError, isDirty }: CardHolder
     <Input
         {...register('cardHolder', {
             required: true,
-            validate: (value) => !validateCardHolder(value) || 'Card holder is invalid'
+            validate: (value) => !validateCardHolder(value) || 'Card holder is invalid',
         })}
-        icon={<UserIcon />}
-        placeholder={locale['form.input.cardholder.placeholder']}
-        mark={true}
-        id="card-holder-input"
-        onInput={formatCardHolder}
         autoComplete="cc-name"
-        spellCheck={false}
-        error={!isNil(fieldError)}
         dirty={isDirty}
+        error={!isNil(fieldError)}
+        icon={<UserIcon />}
+        id="card-holder-input"
+        mark={true}
+        placeholder={locale['form.input.cardholder.placeholder']}
+        spellCheck={false}
+        onInput={formatCardHolder}
     />
 );

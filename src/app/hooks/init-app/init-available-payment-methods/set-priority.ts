@@ -1,5 +1,6 @@
-import { KnownProviderCategories, PaymentMethod, PaymentMethodName, PaymentTerminalPaymentMethod } from './types';
 import { assertUnreachable } from 'checkout/utils';
+
+import { KnownProviderCategories, PaymentMethod, PaymentMethodName, PaymentTerminalPaymentMethod } from './types';
 
 const getPriority = (method: PaymentMethod): number => {
     switch (method.name) {
@@ -23,6 +24,7 @@ const getPriority = (method: PaymentMethod): number => {
                 default:
                     assertUnreachable(category);
             }
+            break;
         case PaymentMethodName.DigitalWallet:
             return 8;
         default:
@@ -33,5 +35,5 @@ const getPriority = (method: PaymentMethod): number => {
 export const setPriority = (methods: PaymentMethod[]): PaymentMethod[] =>
     methods.map((method) => ({
         ...method,
-        priority: getPriority(method)
+        priority: getPriority(method),
     }));

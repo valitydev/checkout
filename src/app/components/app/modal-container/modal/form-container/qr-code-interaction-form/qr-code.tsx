@@ -1,5 +1,5 @@
-import * as React from 'react';
 import kjua from 'kjua';
+import * as React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -18,8 +18,8 @@ export const QRCode: React.FC<{ text: string }> = ({ text }) => (
                 ecLevel: 'H',
                 quiet: 0,
                 mode: 'plain',
-                text
-            }).outerHTML
+                text,
+            }).outerHTML,
         }}
     />
 );

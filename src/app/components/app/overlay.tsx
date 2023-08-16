@@ -1,6 +1,4 @@
-import * as React from 'react';
 import { motion } from 'framer-motion';
-
 import styled, { css } from 'styled-components';
 
 const OverlayBg = styled.div`
@@ -20,7 +18,7 @@ const OverlayBg = styled.div`
 `;
 
 export const Overlay = () => (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+    <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 0.5 }}>
         <OverlayBg key="overlay" />
     </motion.div>
 );

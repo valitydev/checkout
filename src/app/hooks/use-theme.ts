@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
-import { getTheme } from 'checkout/themes';
+
 import { InitParams } from 'checkout/initialize';
+import { getTheme } from 'checkout/themes';
 
 export const useTheme = ({ appConfig, initConfig }: InitParams) => {
     const fixedThemeName = appConfig.fixedTheme;

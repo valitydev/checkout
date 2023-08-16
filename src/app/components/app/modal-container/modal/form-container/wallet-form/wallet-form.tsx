@@ -1,20 +1,19 @@
-import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { FormGroup } from '../form-group';
-import { ResultFormInfo, ResultType, WalletFormInfo, WalletFormValues } from 'checkout/hooks';
-import { PayButton } from '../pay-button';
-import { Header } from '../header';
-import { SignUp } from './sign-up';
 import { getMetadata, MetadataField, MetadataLogo, obscurePassword, sortByIndex } from 'checkout/components/ui';
-import { LogoContainer } from './logo-container';
+import { ResultFormInfo, ResultType, WalletFormInfo, WalletFormValues } from 'checkout/hooks';
 import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
-import { useActiveModalForm } from '../use-active-modal-form';
 import { isEmptyObject } from 'checkout/utils/is-empty-object';
 
+import { LogoContainer } from './logo-container';
+import { SignUp } from './sign-up';
 import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';
+import { FormGroup } from '../form-group';
+import { Header } from '../header';
+import { PayButton } from '../pay-button';
+import { useActiveModalForm } from '../use-active-modal-form';
 
 export const WalletForm = ({ onMount }: { onMount: () => void }) => {
     const { locale, initConfig } = useContext(InitialContext);
@@ -25,9 +24,9 @@ export const WalletForm = ({ onMount }: { onMount: () => void }) => {
     const {
         register,
         handleSubmit,
-        formState: { errors, dirtyFields, isSubmitted }
+        formState: { errors, dirtyFields, isSubmitted },
     } = useForm<WalletFormValues>({
-        mode: 'onChange'
+        mode: 'onChange',
     });
 
     useEffect(() => {
@@ -44,8 +43,8 @@ export const WalletForm = ({ onMount }: { onMount: () => void }) => {
         if (createPaymentState.status === 'FAILURE') {
             goToFormInfo(
                 new ResultFormInfo(ResultType.hookError, {
-                    error: createPaymentState.error
-                })
+                    error: createPaymentState.error,
+                }),
             );
         }
     }, [createPaymentState]);
@@ -56,8 +55,8 @@ export const WalletForm = ({ onMount }: { onMount: () => void }) => {
             method: PaymentMethodName.DigitalWallet,
             values: {
                 provider: activeProvider?.id,
-                ...(form ? obscurePassword(form, values) : values)
-            }
+                ...(form ? obscurePassword(form, values) : values),
+            },
         });
     };
 
@@ -74,16 +73,16 @@ export const WalletForm = ({ onMount }: { onMount: () => void }) => {
                     {form?.sort(sortByIndex).map((m) => (
                         <FormGroup key={m.name}>
                             <MetadataField
-                                metadata={m}
-                                localeCode={initConfig.locale}
-                                register={register}
                                 fieldError={errors?.[m.name]}
                                 isDirty={dirtyFields?.[m.name]}
+                                localeCode={initConfig.locale}
+                                metadata={m}
+                                register={register}
                             />
                         </FormGroup>
                     ))}
                     <PayButton />
-                    {signUpLink && <SignUp locale={locale} link={signUpLink} />}
+                    {signUpLink && <SignUp link={signUpLink} locale={locale} />}
                 </>
             )}
         </form>

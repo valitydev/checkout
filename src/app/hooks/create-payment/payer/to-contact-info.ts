@@ -1,7 +1,7 @@
-import replaceSpaces from 'checkout/utils/replace-spaces';
-import isNil from 'checkout/utils/is-nil';
-import { PayableFormValues, PaymentTerminalFormValues } from 'checkout/hooks';
 import { ContactInfo } from 'checkout/backend';
+import { PayableFormValues, PaymentTerminalFormValues } from 'checkout/hooks';
+import isNil from 'checkout/utils/is-nil';
+import replaceSpaces from 'checkout/utils/replace-spaces';
 
 const mapFrom = (obj: { email?: string; phoneNumber?: string }, targetKeys = ['email', 'phoneNumber']): ContactInfo => {
     const defaultResult = {} as ContactInfo;
@@ -15,14 +15,14 @@ const mapFrom = (obj: { email?: string; phoneNumber?: string }, targetKeys = ['e
         }
         return {
             ...acc,
-            [targetKey]: replaceSpaces(val)
+            [targetKey]: replaceSpaces(val),
         };
     }, defaultResult);
 };
 
 export const toContactInfo = (
     initConfig: { email: string; phoneNumber: string },
-    formValues: PayableFormValues
+    formValues: PayableFormValues,
 ): ContactInfo => {
     const fromFormValues = mapFrom(formValues);
     const fromMetadata = mapFrom((formValues as PaymentTerminalFormValues)?.metadata);
@@ -30,7 +30,7 @@ export const toContactInfo = (
     const byPriority = {
         ...fromFormValues,
         ...fromMetadata,
-        ...fromInitConfig
+        ...fromInitConfig,
     };
     return byPriority;
 };

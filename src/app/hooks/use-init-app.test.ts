@@ -1,17 +1,18 @@
 import { act, renderHook } from '@testing-library/react';
 
-import { useInitApp } from './use-init-app';
 import { PaymentMethodName } from 'checkout/backend';
+
+import { useInitApp } from './use-init-app';
 
 const fetchMock = (result, status = 200, ok = true) =>
     Promise.resolve({
         status,
         ok,
-        json: () => Promise.resolve(result)
+        json: () => Promise.resolve(result),
     });
 
 const getLocaleMock = fetchMock({
-    'mock.locale.key': 'Mock locale value'
+    'mock.locale.key': 'Mock locale value',
 });
 
 describe('useInitApp', () => {
@@ -20,8 +21,8 @@ describe('useInitApp', () => {
         category: 'onlinebanking',
         id: 'providerID_001',
         metadata: {
-            'dev.vality.checkout': {}
-        }
+            'dev.vality.checkout': {},
+        },
     });
 
     const getServiceProviderByIdMock_002 = fetchMock({
@@ -29,31 +30,35 @@ describe('useInitApp', () => {
         category: 'pix',
         id: 'providerID_002',
         metadata: {
-            'dev.vality.checkout': {}
-        }
+            'dev.vality.checkout': {},
+        },
     });
 
     describe('init with invoice template', () => {
         const getInvoiceTemplateMock = fetchMock({
             createdAt: '2023-05-10T08:34:22.263596Z',
             details: {
-                price: { amount: 100, costType: 'InvoiceTemplateLineCostFixed', currency: 'USD' },
+                price: {
+                    amount: 100,
+                    costType: 'InvoiceTemplateLineCostFixed',
+                    currency: 'USD',
+                },
                 product: 'test',
-                templateType: 'InvoiceTemplateSingleLine'
+                templateType: 'InvoiceTemplateSingleLine',
             },
             id: '1n1ELRnJcBP',
             lifetime: { days: 21, months: 5, years: 0 },
-            shopID: '000rrrrr-0000-0000-0000-45388402c928'
+            shopID: '000rrrrr-0000-0000-0000-45388402c928',
         });
 
         const getInvoicePaymentMethodsByTemplateIdMock = fetchMock([
             {
-                method: PaymentMethodName.BankCard
+                method: PaymentMethodName.BankCard,
             },
             {
                 method: PaymentMethodName.PaymentTerminal,
-                providers: ['providerID_001', 'providerID_002']
-            }
+                providers: ['providerID_001', 'providerID_002'],
+            },
         ]);
 
         test('should success init', async () => {
@@ -82,7 +87,7 @@ describe('useInitApp', () => {
             await act(async () =>
                 result.current.init({
                     appConfig: {
-                        capiEndpoint: 'https://api.test.com'
+                        capiEndpoint: 'https://api.test.com',
                     },
                     initConfig: {
                         integrationType: 'invoiceTemplate',
@@ -91,10 +96,10 @@ describe('useInitApp', () => {
                         locale: 'en',
                         bankCard: true,
                         onlineBanking: true,
-                        pix: true
+                        pix: true,
                     },
-                    origin: 'https://checkout.test.com'
-                })
+                    origin: 'https://checkout.test.com',
+                }),
             );
             const state = result.current.state;
             expect(state.status).toBe('SUCCESS');
@@ -108,7 +113,7 @@ describe('useInitApp', () => {
                     locale: 'en',
                     bankCard: true,
                     onlineBanking: true,
-                    pix: true
+                    pix: true,
                 },
                 appConfig: { capiEndpoint: 'https://api.test.com' },
                 origin: 'https://checkout.test.com',
@@ -116,35 +121,47 @@ describe('useInitApp', () => {
                 model: {
                     paymentMethods: [
                         { method: 'BankCard' },
-                        { method: 'PaymentTerminal', providers: ['providerID_001', 'providerID_002'] }
+                        {
+                            method: 'PaymentTerminal',
+                            providers: ['providerID_001', 'providerID_002'],
+                        },
                     ],
                     invoiceTemplate: {
                         createdAt: '2023-05-10T08:34:22.263596Z',
                         details: {
-                            price: { amount: 100, costType: 'InvoiceTemplateLineCostFixed', currency: 'USD' },
+                            price: {
+                                amount: 100,
+                                costType: 'InvoiceTemplateLineCostFixed',
+                                currency: 'USD',
+                            },
                             product: 'test',
-                            templateType: 'InvoiceTemplateSingleLine'
+                            templateType: 'InvoiceTemplateSingleLine',
                         },
                         id: '1n1ELRnJcBP',
                         lifetime: { days: 21, months: 5, years: 0 },
-                        shopID: '000rrrrr-0000-0000-0000-45388402c928'
+                        shopID: '000rrrrr-0000-0000-0000-45388402c928',
                     },
                     serviceProviders: [
                         {
                             brandName: 'Provider Brand Name 1',
                             category: 'onlinebanking',
                             id: 'providerID_001',
-                            metadata: { 'dev.vality.checkout': {} }
+                            metadata: { 'dev.vality.checkout': {} },
                         },
                         {
                             brandName: 'Provider Brand Name 2',
                             category: 'pix',
                             id: 'providerID_002',
-                            metadata: { 'dev.vality.checkout': {} }
-                        }
-                    ]
+                            metadata: { 'dev.vality.checkout': {} },
+                        },
+                    ],
                 },
-                amountInfo: { status: 'final', minorValue: 100, currencyCode: 'USD', locale: 'en' },
+                amountInfo: {
+                    status: 'final',
+                    minorValue: 100,
+                    currencyCode: 'USD',
+                    locale: 'en',
+                },
                 availablePaymentMethods: [
                     { name: 'BankCard', priority: 1 },
                     {
@@ -155,10 +172,10 @@ describe('useInitApp', () => {
                                 brandName: 'Provider Brand Name 1',
                                 category: 'onlinebanking',
                                 id: 'providerID_001',
-                                metadata: { 'dev.vality.checkout': {} }
-                            }
+                                metadata: { 'dev.vality.checkout': {} },
+                            },
                         ],
-                        priority: 3
+                        priority: 3,
                     },
                     {
                         name: 'PaymentTerminal',
@@ -168,12 +185,12 @@ describe('useInitApp', () => {
                                 brandName: 'Provider Brand Name 2',
                                 category: 'pix',
                                 id: 'providerID_002',
-                                metadata: { 'dev.vality.checkout': {} }
-                            }
+                                metadata: { 'dev.vality.checkout': {} },
+                            },
                         ],
-                        priority: 7
-                    }
-                ]
+                        priority: 7,
+                    },
+                ],
             };
 
             expect(state.data).toStrictEqual(expected);
@@ -193,7 +210,7 @@ describe('useInitApp', () => {
             await act(async () =>
                 result.current.init({
                     appConfig: {
-                        capiEndpoint: 'https://api.test.com'
+                        capiEndpoint: 'https://api.test.com',
                     },
                     initConfig: {
                         integrationType: 'invoiceTemplate',
@@ -202,16 +219,20 @@ describe('useInitApp', () => {
                         locale: 'en',
                         bankCard: true,
                         onlineBanking: true,
-                        pix: true
+                        pix: true,
                     },
-                    origin: 'https://checkout.test.com'
-                })
+                    origin: 'https://checkout.test.com',
+                }),
             );
             const state = result.current.state;
             expect(state.status).toBe('FAILURE');
             expect(errorSpy).toHaveBeenCalled();
             if (state.status !== 'FAILURE') return;
-            expect(state.error).toStrictEqual({ details: errorMsg, status: 500, statusText: undefined });
+            expect(state.error).toStrictEqual({
+                details: errorMsg,
+                status: 500,
+                statusText: undefined,
+            });
         });
     });
 
@@ -227,19 +248,19 @@ describe('useInitApp', () => {
             metadata: {},
             product: 'test',
             shopID: 'cb323cb7-2abc-4626-a786-b70d8abbd0ec',
-            status: 'unpaid'
+            status: 'unpaid',
         };
 
         const getInvoiceMock = fetchMock(invoice);
 
         const getInvoicePaymentMethodsByTemplateIdMock = fetchMock([
             {
-                method: PaymentMethodName.BankCard
+                method: PaymentMethodName.BankCard,
             },
             {
                 method: PaymentMethodName.PaymentTerminal,
-                providers: ['providerID_001', 'providerID_002']
-            }
+                providers: ['providerID_001', 'providerID_002'],
+            },
         ]);
 
         test('should success init', async () => {
@@ -268,7 +289,7 @@ describe('useInitApp', () => {
             await act(async () =>
                 result.current.init({
                     appConfig: {
-                        capiEndpoint: 'https://api.test.com'
+                        capiEndpoint: 'https://api.test.com',
                     },
                     initConfig: {
                         integrationType: 'invoice',
@@ -277,10 +298,10 @@ describe('useInitApp', () => {
                         locale: 'en',
                         bankCard: true,
                         onlineBanking: true,
-                        pix: true
+                        pix: true,
                     },
-                    origin: 'https://checkout.test.com'
-                })
+                    origin: 'https://checkout.test.com',
+                }),
             );
             const state = result.current.state;
             expect(state.status).toBe('SUCCESS');
@@ -294,7 +315,7 @@ describe('useInitApp', () => {
                     locale: 'en',
                     bankCard: true,
                     onlineBanking: true,
-                    pix: true
+                    pix: true,
                 },
                 appConfig: { capiEndpoint: 'https://api.test.com' },
                 origin: 'https://checkout.test.com',
@@ -302,11 +323,21 @@ describe('useInitApp', () => {
                 model: {
                     paymentMethods: [
                         { method: 'BankCard' },
-                        { method: 'PaymentTerminal', providers: ['providerID_001', 'providerID_002'] }
+                        {
+                            method: 'PaymentTerminal',
+                            providers: ['providerID_001', 'providerID_002'],
+                        },
                     ],
                     invoice: {
                         amount: 100000,
-                        cart: [{ cost: 100000, price: 100000, product: 'test', quantity: 1 }],
+                        cart: [
+                            {
+                                cost: 100000,
+                                price: 100000,
+                                product: 'test',
+                                quantity: 1,
+                            },
+                        ],
                         createdAt: '2023-05-11T12:14:44.001097Z',
                         currency: 'RUB',
                         description: '',
@@ -315,25 +346,30 @@ describe('useInitApp', () => {
                         metadata: {},
                         product: 'test',
                         shopID: 'cb323cb7-2abc-4626-a786-b70d8abbd0ec',
-                        status: 'unpaid'
+                        status: 'unpaid',
                     },
                     serviceProviders: [
                         {
                             brandName: 'Provider Brand Name 1',
                             category: 'onlinebanking',
                             id: 'providerID_001',
-                            metadata: { 'dev.vality.checkout': {} }
+                            metadata: { 'dev.vality.checkout': {} },
                         },
                         {
                             brandName: 'Provider Brand Name 2',
                             category: 'pix',
                             id: 'providerID_002',
-                            metadata: { 'dev.vality.checkout': {} }
-                        }
+                            metadata: { 'dev.vality.checkout': {} },
+                        },
                     ],
-                    invoiceAccessToken: 'eyJhbGciOiJ...'
+                    invoiceAccessToken: 'eyJhbGciOiJ...',
                 },
-                amountInfo: { status: 'final', minorValue: 100000, currencyCode: 'RUB', locale: 'en' },
+                amountInfo: {
+                    status: 'final',
+                    minorValue: 100000,
+                    currencyCode: 'RUB',
+                    locale: 'en',
+                },
                 availablePaymentMethods: [
                     { name: 'BankCard', priority: 1 },
                     {
@@ -344,10 +380,10 @@ describe('useInitApp', () => {
                                 brandName: 'Provider Brand Name 1',
                                 category: 'onlinebanking',
                                 id: 'providerID_001',
-                                metadata: { 'dev.vality.checkout': {} }
-                            }
+                                metadata: { 'dev.vality.checkout': {} },
+                            },
                         ],
-                        priority: 3
+                        priority: 3,
                     },
                     {
                         name: 'PaymentTerminal',
@@ -357,12 +393,12 @@ describe('useInitApp', () => {
                                 brandName: 'Provider Brand Name 2',
                                 category: 'pix',
                                 id: 'providerID_002',
-                                metadata: { 'dev.vality.checkout': {} }
-                            }
+                                metadata: { 'dev.vality.checkout': {} },
+                            },
                         ],
-                        priority: 7
-                    }
-                ]
+                        priority: 7,
+                    },
+                ],
             };
 
             expect(state.data).toStrictEqual(expected);

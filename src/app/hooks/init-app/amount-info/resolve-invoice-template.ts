@@ -1,12 +1,13 @@
 import { InvoiceTemplate, InvoiceTemplateMultiLine, InvoiceTemplateSingleLine, TemplateType } from 'checkout/backend';
-import { getAmountFromSingleLine } from './get-amount-from-single-line';
+
 import { getAmountFromMultiLine } from './get-amount-from-multi-line';
+import { getAmountFromSingleLine } from './get-amount-from-single-line';
 import { AmountInfo } from './types';
 
 export const resolveInvoiceTemplate = (
     invoiceTemplate: InvoiceTemplate,
     configAmount: number,
-    locale: string
+    locale: string,
 ): AmountInfo => {
     switch (invoiceTemplate.details.templateType) {
         case TemplateType.InvoiceTemplateSingleLine:

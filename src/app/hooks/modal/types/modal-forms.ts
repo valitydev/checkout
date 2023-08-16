@@ -1,5 +1,5 @@
-import { ModalName, ModalState } from './modal-state';
 import { FormInfo, FormViewInfo, SlideDirection } from './form-info';
+import { ModalName, ModalState } from './modal-state';
 
 export class ModalForms extends ModalState {
     formsInfo: FormInfo[];
@@ -10,7 +10,7 @@ export class ModalForms extends ModalState {
         this.name = ModalName.modalForms;
         this.viewInfo = {
             slideDirection: SlideDirection.none,
-            inProcess
+            inProcess,
         };
         this.formsInfo = formsInfo;
         this.active = active;

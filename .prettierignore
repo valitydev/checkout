@@ -1,38 +1,7 @@
-# Exclude everything by default
-/**/*
-
-# Include all folders
-!/**/*/
-
-# Includes
-!*.js
-!*.jsx
-
-!*.ts
-!*.tsx
-
-!*.css
-!*.scss
-
-!*.html
-!*.md
-!*.svg
-
-!*.json
-!*.prettierrc
-!*.babelrc
-
-# Excludes
 package-lock.json
 package.json
 node_modules
 dist
-
-# VS Code
-.vscode
-
-# IDEA
-.idea
 
 # Crowdin formats json in his own way
 src/locale/*.json

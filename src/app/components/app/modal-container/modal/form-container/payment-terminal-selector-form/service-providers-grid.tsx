@@ -1,10 +1,12 @@
 import * as React from 'react';
-import styled from 'styled-components';
-import { ServiceProvider } from 'checkout/backend';
-import { ServiceProviderPane } from './service-provider-pane';
 import { useCallback, useContext, useMemo } from 'react';
-import { PageNavigation } from './page-navigation';
+import styled from 'styled-components';
+
+import { ServiceProvider } from 'checkout/backend';
 import { Input } from 'checkout/components';
+
+import { PageNavigation } from './page-navigation';
+import { ServiceProviderPane } from './service-provider-pane';
 import { useGridPages } from './use-grid-pages';
 import { InitialContext } from '../../../../initial-context';
 
@@ -38,7 +40,7 @@ export const ServiceProvidersGrid: React.FC<ServiceProvidersGridProps> = ({ serv
     const { locale } = useContext(InitialContext);
     const [{ totalPages, page, isNext, isPrevious, pageItems }, { next, previous, filter }] = useGridPages(
         serviceProviders,
-        ITEMS_ON_PAGE
+        ITEMS_ON_PAGE,
     );
 
     const onChange = useCallback((e) => {
@@ -60,12 +62,12 @@ export const ServiceProvidersGrid: React.FC<ServiceProvidersGridProps> = ({ serv
             </GridContainer>
             {totalPages > 1 && (
                 <PageNavigation
-                    previous={previous}
-                    next={next}
-                    page={page}
-                    totalPages={totalPages}
                     isNext={isNext}
                     isPrevious={isPrevious}
+                    next={next}
+                    page={page}
+                    previous={previous}
+                    totalPages={totalPages}
                 />
             )}
         </Flex>

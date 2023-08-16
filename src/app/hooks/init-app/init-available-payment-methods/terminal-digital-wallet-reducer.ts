@@ -1,17 +1,18 @@
+import isNil from 'checkout/utils/is-nil';
+
 import {
     DigitalWalletPaymentMethod,
     KnownProviderCategories,
     PaymentMethod,
     PaymentMethodName,
-    PaymentTerminalPaymentMethod
+    PaymentTerminalPaymentMethod,
 } from './types';
-import isNil from 'checkout/utils/is-nil';
 
 export const terminalDigitalWalletReducer = (
     acc: PaymentMethod[],
     curr: PaymentMethod,
     _index,
-    methods: PaymentMethod[]
+    methods: PaymentMethod[],
 ) => {
     if (curr.name === PaymentMethodName.PaymentTerminal) {
         const paymentTerminal = curr as PaymentTerminalPaymentMethod;
@@ -25,7 +26,7 @@ export const terminalDigitalWalletReducer = (
     if (curr.name === PaymentMethodName.DigitalWallet) {
         const digitalWallet = curr as DigitalWalletPaymentMethod;
         const paymentTerminal = methods.find(
-            (m) => m.name === PaymentMethodName.PaymentTerminal
+            (m) => m.name === PaymentMethodName.PaymentTerminal,
         ) as PaymentTerminalPaymentMethod;
         if (!isNil(paymentTerminal) && paymentTerminal.category === KnownProviderCategories.DigitalWallet) {
             digitalWallet.serviceProviders = digitalWallet.serviceProviders.concat(paymentTerminal.serviceProviders);

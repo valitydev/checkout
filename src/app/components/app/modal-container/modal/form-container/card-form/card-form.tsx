@@ -1,26 +1,25 @@
-import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { FormGroup } from '../form-group';
-import { CardHolder, CardNumber, ExpireDate, SecureCode } from './fields';
 import { ResultFormInfo, ResultType } from 'checkout/hooks';
-import { PayButton } from '../pay-button';
-import { Header } from '../header';
-import { toAmountConfig, toCardHolderConfig } from '../fields-config';
-import { Amount } from '../common-fields';
 import { PaymentMethodName, useCreatePayment } from 'checkout/hooks';
 import { isEmptyObject } from 'checkout/utils/is-empty-object';
-import { CardFormInputs } from './card-form-inputs';
 
+import { CardFormInputs } from './card-form-inputs';
+import { CardHolder, CardNumber, ExpireDate, SecureCode } from './fields';
 import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';
+import { Amount } from '../common-fields';
+import { toAmountConfig, toCardHolderConfig } from '../fields-config';
+import { FormGroup } from '../form-group';
+import { Header } from '../header';
+import { PayButton } from '../pay-button';
 
 export const CardForm = ({ onMount }: { onMount: () => void }) => {
     const {
         locale,
         initConfig,
-        model: { invoiceTemplate }
+        model: { invoiceTemplate },
     } = useContext(InitialContext);
     const { setViewInfoError, goToFormInfo, prepareToPay } = useContext(ModalContext);
     const { createPaymentState, setFormData } = useCreatePayment();
@@ -28,7 +27,7 @@ export const CardForm = ({ onMount }: { onMount: () => void }) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors, dirtyFields, isSubmitted }
+        formState: { errors, dirtyFields, isSubmitted },
     } = useForm<CardFormInputs>({ mode: 'onChange' });
     const cardHolder = toCardHolderConfig(initConfig.requireCardHolder);
     const amount = toAmountConfig(initConfig, invoiceTemplate);
@@ -47,8 +46,8 @@ export const CardForm = ({ onMount }: { onMount: () => void }) => {
         if (createPaymentState.status === 'FAILURE') {
             goToFormInfo(
                 new ResultFormInfo(ResultType.hookError, {
-                    error: createPaymentState.error
-                })
+                    error: createPaymentState.error,
+                }),
             );
         }
     }, [createPaymentState]);
@@ -63,35 +62,35 @@ export const CardForm = ({ onMount }: { onMount: () => void }) => {
             <Header title={locale['form.header.pay.card.label']} />
             <FormGroup>
                 <CardNumber
-                    locale={locale}
                     fieldError={errors.cardNumber}
                     isDirty={dirtyFields.cardNumber}
+                    locale={locale}
                     register={register}
                     watch={watch}
                 />
             </FormGroup>
             <FormGroup $gap={10}>
                 <ExpireDate
-                    locale={locale}
                     fieldError={errors.expireDate}
                     isDirty={dirtyFields.expireDate}
+                    locale={locale}
                     register={register}
                 />
                 <SecureCode
-                    locale={locale}
+                    cardNumber={watch('cardNumber')}
                     fieldError={errors.secureCode}
                     isDirty={dirtyFields.secureCode}
-                    register={register}
+                    locale={locale}
                     obscureCardCvv={initConfig?.obscureCardCvv}
-                    cardNumber={watch('cardNumber')}
+                    register={register}
                 />
             </FormGroup>
             {cardHolder.visible && (
                 <FormGroup>
                     <CardHolder
-                        locale={locale}
                         fieldError={errors.cardHolder}
                         isDirty={dirtyFields.cardHolder}
+                        locale={locale}
                         register={register}
                     />
                 </FormGroup>
@@ -100,10 +99,10 @@ export const CardForm = ({ onMount }: { onMount: () => void }) => {
                 <FormGroup>
                     <Amount
                         cost={amount.cost}
-                        locale={locale}
-                        localeCode={initConfig.locale}
                         fieldError={errors.amount}
                         isDirty={dirtyFields.amount}
+                        locale={locale}
+                        localeCode={initConfig.locale}
                         register={register}
                     />
                 </FormGroup>

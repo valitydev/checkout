@@ -1,9 +1,9 @@
 import { useContext, useCallback, useReducer } from 'react';
 
 import isNil from 'checkout/utils/is-nil';
+
 import { createInvoiceWithTemplate, createPayment } from './create-payment';
 import { FormData } from './create-payment';
-
 import { InitialContext } from '../components/app/initial-context';
 import { PayableInvoiceContext } from '../components/app/modal-container/payable-invoice-context';
 
@@ -16,13 +16,13 @@ const dataReducer = (state: State, action: Action): State => {
         case 'CREATE_PAYMENT_SUCCESS':
             return {
                 ...state,
-                status: 'SUCCESS'
+                status: 'SUCCESS',
             };
         case 'CREATE_PAYMENT_FAILURE':
             return {
                 ...state,
                 status: 'FAILURE',
-                error: action.error
+                error: action.error,
             };
     }
 };
@@ -33,12 +33,12 @@ export const useCreatePayment = () => {
         appConfig,
         model: { invoiceTemplate },
         amountInfo,
-        origin
+        origin,
     } = useContext(InitialContext);
     const { payableInvoiceData, setPayableInvoiceData } = useContext(PayableInvoiceContext);
 
     const [createPaymentState, dispatch] = useReducer(dataReducer, {
-        status: 'PRISTINE'
+        status: 'PRISTINE',
     });
 
     const setFormData = useCallback(
@@ -52,7 +52,7 @@ export const useCreatePayment = () => {
                             invoiceTemplateAccessToken: initConfig.invoiceTemplateAccessToken,
                             invoiceTemplate,
                             amountInfo,
-                            formAmount: formData.values?.amount
+                            formAmount: formData.values?.amount,
                         });
                         setPayableInvoiceData(data);
                     }
@@ -69,10 +69,10 @@ export const useCreatePayment = () => {
                             holdExpiration: initConfig.holdExpiration,
                             recurring: initConfig.recurring,
                             metadata: initConfig.metadata,
-                            isExternalIDIncluded: initConfig.isExternalIDIncluded
+                            isExternalIDIncluded: initConfig.isExternalIDIncluded,
                         },
                         formData,
-                        payableInvoice: data
+                        payableInvoice: data,
                     });
                     dispatch({ type: 'CREATE_PAYMENT_SUCCESS' });
                 } catch (error) {
@@ -82,7 +82,7 @@ export const useCreatePayment = () => {
             };
             fetchData();
         },
-        [payableInvoiceData]
+        [payableInvoiceData],
     );
 
     return { createPaymentState, setFormData };

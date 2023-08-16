@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { ReactSVG } from 'react-svg';
 import { useContext } from 'react';
+import { ReactSVG } from 'react-svg';
 import styled from 'styled-components';
 
 import { InitialContext } from '../../initial-context';
