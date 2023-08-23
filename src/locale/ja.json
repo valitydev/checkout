@@ -1,4 +1,5 @@
 {
+    "info.back": "戻る",
     "info.order.label": "注文詳細",
     "info.modal.no.available.payment.method": "利用できる支払方法はありません",
     "form.header.payment.methods.label": "お支払い方法を選択してください",

@@ -33,7 +33,10 @@ const Form = styled.div<{ height?: number }>`
     background: #fff;
     border-radius: 16px;
     border: 1px solid ${({ theme }) => theme.form.border};
-    padding: 24px;
+    padding: 16px;
+    @media ${device.desktop} {
+        padding: 24px;
+    }
     overflow: hidden;
     transition: height 0.3s;
     height: ${({ height }) => (height ? `${height}px` : 'auto')};

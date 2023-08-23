@@ -1,4 +1,5 @@
 {
+    "info.back": "뒤로",
     "info.order.label": "주문 세부 사항",
     "info.modal.no.available.payment.method": "사용 가능한 결제 수단이 없습니다",
     "form.header.payment.methods.label": "결제 수단을 선택하십시오",

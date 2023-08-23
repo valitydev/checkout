@@ -5,7 +5,7 @@ import { Info } from './info';
 
 export const Modal = () => (
     <>
-        <FormBlock id="form-container">
+        <FormBlock>
             <Info />
             <FormContainer />
         </FormBlock>
