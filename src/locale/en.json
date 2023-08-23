@@ -1,4 +1,5 @@
 {
+    "info.back": "Back",
     "info.order.label": "Order details",
     "info.modal.no.available.payment.method": "No available payment methods",
     "form.header.payment.methods.label": "Please choose a payment method",

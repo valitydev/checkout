@@ -1,4 +1,5 @@
 {
+    "info.back": "Voltar",
     "info.order.label": "Detalhe do Pagamento",
     "info.modal.no.available.payment.method": "Sem opções de pagamento disponível",
     "form.header.payment.methods.label": "Por favor escolha seu método de pagamento",
