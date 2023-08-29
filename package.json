@@ -37,7 +37,6 @@
   "devDependencies": {
     "@testing-library/react": "14.0.0",
     "@types/card-validator": "4.1.0",
-    "@types/credit-card-type": "9.0.0",
     "@types/jest": "29.5.0",
     "@types/node": "16.11.25",
     "@types/react": "18.2.14",
