@@ -56,17 +56,3 @@ jobs:
                   key: ${{ github.sha }}
             - name: Build
               run: npm run build
-            - name: set config
-              run: |
-                  printf "$APP_ENV_FILE" > dist/v1/appConfig.json
-              shell: bash
-              env:
-                  APP_ENV_FILE: ${{secrets.APP_CONFIG_CF}}
-            - name: Publish to CF Pages
-              uses: cloudflare/pages-action@1
-              with:
-                  apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-                  accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-                  projectName: 'payform'
-                  directory: 'dist'
-                  gitHubToken: ${{ secrets.GITHUB_TOKEN }}
