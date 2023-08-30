@@ -48,7 +48,7 @@ jobs:
                   projectName: 'payform'
                   directory: 'dist'
                   gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-                  branch: master
+                  branch: main
             - name: Create Sentry release
               uses: getsentry/action-release@v1
               env:
