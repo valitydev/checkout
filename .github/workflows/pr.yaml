@@ -56,11 +56,6 @@ jobs:
                   key: ${{ github.sha }}
             - name: Build
               run: npm run build
-    temp-deploy:
-        name: tempdeploy
-        runs-on: ubuntu-latest
-        needs: [build]
-        steps:
             - name: set config
               run: |
                   printf "$APP_ENV_FILE" > dist/v1/appConfig.json
