@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { lazy, useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { InvoiceChangeType } from 'checkout/backend';
@@ -7,19 +7,21 @@ import { ModalName, ResultFormInfo, ResultType } from 'checkout/hooks';
 import { PayableInvoiceData, useInvoiceEvents, useModal } from 'checkout/hooks';
 import isNil from 'checkout/utils/is-nil';
 
-import { Modal } from './modal';
 import { ModalContext } from './modal-context';
 import { PayableInvoiceContext } from './payable-invoice-context';
 import { useInteractionModel } from './use-interaction-model';
-import { UserInteractionModal } from './user-interaction-modal';
 import { InitialContext } from '../initial-context';
+
+const Modal = lazy(() => import('./modal/modal'));
+
+const UserInteractionModal = lazy(() => import('./user-interaction-modal/user-interaction-modal'));
 
 const Container = styled.div`
     height: 100%;
     position: relative;
 `;
 
-export const ModalContainer = () => {
+const ModalContainer = () => {
     const {
         appConfig: { capiEndpoint },
         initConfig,
@@ -135,3 +137,5 @@ export const ModalContainer = () => {
         </motion.div>
     );
 };
+
+export default ModalContainer;

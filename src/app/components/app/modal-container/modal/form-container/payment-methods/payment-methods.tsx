@@ -14,7 +14,7 @@ const sortByPriority = (methods: PaymentMethod[]): PaymentMethod[] =>
 const sliceMethods = (methods: PaymentMethod[], showAll: boolean, limit = 3) =>
     showAll ? methods : methods.slice(0, limit);
 
-export const PaymentMethods = ({ onMount }: { onMount: () => void }) => {
+const PaymentMethods = ({ onMount }: { onMount: () => void }) => {
     const { locale, availablePaymentMethods } = useContext(InitialContext);
     const [isShowAll, setIsShowAll] = useState(false);
     const allMethods = useMemo(() => sortByPriority(availablePaymentMethods), [availablePaymentMethods]);
@@ -36,3 +36,5 @@ export const PaymentMethods = ({ onMount }: { onMount: () => void }) => {
         </form>
     );
 };
+
+export default PaymentMethods;

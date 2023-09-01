@@ -3,7 +3,7 @@ import { FormBlock } from './form-block';
 import { FormContainer } from './form-container';
 import { Info } from './info';
 
-export const Modal = () => (
+const Modal = () => (
     <>
         <FormBlock>
             <Info />
@@ -12,3 +12,5 @@ export const Modal = () => (
         <Footer />
     </>
 );
+
+export default Modal;

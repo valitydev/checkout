@@ -15,7 +15,7 @@ import { FormGroup } from '../form-group';
 import { Header } from '../header';
 import { PayButton } from '../pay-button';
 
-export const CardForm = ({ onMount }: { onMount: () => void }) => {
+const CardForm = ({ onMount }: { onMount: () => void }) => {
     const {
         locale,
         initConfig,
@@ -111,3 +111,5 @@ export const CardForm = ({ onMount }: { onMount: () => void }) => {
         </form>
     );
 };
+
+export default CardForm;

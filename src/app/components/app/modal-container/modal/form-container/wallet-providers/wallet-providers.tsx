@@ -11,7 +11,7 @@ const getAvailablePaymentMethod = (
     methodName: PaymentMethodName,
 ): DigitalWalletPaymentMethod => availablePaymentMethods.find((m) => m.name === methodName);
 
-export const WalletProviders = ({ onMount }: { onMount: () => void }) => {
+const WalletProviders = ({ onMount }: { onMount: () => void }) => {
     const context = useContext(InitialContext);
     const { locale, availablePaymentMethods } = context;
     const paymentMethod = getAvailablePaymentMethod(availablePaymentMethods, PaymentMethodName.DigitalWallet);
@@ -29,3 +29,5 @@ export const WalletProviders = ({ onMount }: { onMount: () => void }) => {
         </div>
     );
 };
+
+export default WalletProviders;

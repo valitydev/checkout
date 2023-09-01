@@ -17,7 +17,7 @@ const Container = styled.div`
     height: 360px;
 `;
 
-export const RedirectForm = ({ onMount }: { onMount: () => void }) => {
+const RedirectForm = ({ onMount }: { onMount: () => void }) => {
     const containerRef = useRef(null);
     const [form, setForm] = useState(null);
     const { origin } = useContext(InitialContext);
@@ -41,3 +41,5 @@ export const RedirectForm = ({ onMount }: { onMount: () => void }) => {
         </Container>
     );
 };
+
+export default RedirectForm;

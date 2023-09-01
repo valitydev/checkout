@@ -20,7 +20,7 @@ import { Header } from '../header';
 import { PayButton } from '../pay-button';
 import { useActiveModalForm } from '../use-active-modal-form';
 
-export const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
+const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
     const {
         locale,
         initConfig,
@@ -148,3 +148,5 @@ export const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
         </form>
     );
 };
+
+export default PaymentTerminalForm;

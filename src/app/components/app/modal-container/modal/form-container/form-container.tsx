@@ -1,22 +1,12 @@
 import { motion } from 'framer-motion';
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { FormName, ModalForms, ModalName, SlideDirection } from 'checkout/hooks';
 import { findNamed } from 'checkout/utils';
 import { device } from 'checkout/utils/device';
 
-import { CardForm } from './card-form';
 import { FormLoader } from './form-loader';
-import { NoAvailablePaymentMethodForm } from './no-available-payment-method-form';
-import { PaymentMethods } from './payment-methods';
-import { PaymentTerminalForm } from './payment-terminal-form';
-import { PaymentTerminalSelectorForm } from './payment-terminal-selector-form';
-import { QrCodeInteractionForm } from './qr-code-interaction-form';
-import { RedirectForm } from './redirect-form';
-import { ResultForm } from './result-form';
-import { WalletForm } from './wallet-form';
-import { WalletProviders } from './wallet-providers';
 import { ModalContext } from '../../modal-context';
 
 const Container = styled.div`
@@ -41,6 +31,30 @@ const Form = styled.div<{ height?: number }>`
     transition: height 0.3s;
     height: ${({ height }) => (height ? `${height}px` : 'auto')};
 `;
+
+const PaymentMethods = lazy(() => import('./payment-methods/payment-methods'));
+
+const CardForm = lazy(() => import('./card-form/card-form'));
+
+const WalletForm = lazy(() => import('./wallet-form/wallet-form'));
+
+const WalletProviders = lazy(() => import('./wallet-providers/wallet-providers'));
+
+const ResultForm = lazy(() => import('./result-form/result-form'));
+
+const NoAvailablePaymentMethodForm = lazy(
+    () => import('./no-available-payment-method-form/no-available-payment-method-form'),
+);
+
+const RedirectForm = lazy(() => import('./redirect-form/redirect-form'));
+
+const PaymentTerminalForm = lazy(() => import('./payment-terminal-form/payment-terminal-form'));
+
+const PaymentTerminalSelectorForm = lazy(
+    () => import('./payment-terminal-selector-form/payment-terminal-selector-form'),
+);
+
+const QrCodeInteractionForm = lazy(() => import('./qr-code-interaction-form//qr-code-interaction-form'));
 
 const renderForm = (name: FormName, onMount: () => void) => {
     switch (name) {

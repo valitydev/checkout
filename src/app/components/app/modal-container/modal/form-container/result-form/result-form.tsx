@@ -63,7 +63,7 @@ const Form = styled.form<{ $hasActions: boolean }>`
     }
 `;
 
-export const ResultForm = ({ onMount }: { onMount: () => void }) => {
+const ResultForm = ({ onMount }: { onMount: () => void }) => {
     const { locale } = useContext(InitialContext);
     const { setIsComplete } = useContext(ResultContext);
     const { modalState } = useContext(ModalContext);
@@ -110,3 +110,5 @@ export const ResultForm = ({ onMount }: { onMount: () => void }) => {
         </Form>
     );
 };
+
+export default ResultForm;

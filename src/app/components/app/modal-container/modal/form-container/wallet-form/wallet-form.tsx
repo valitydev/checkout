@@ -15,7 +15,7 @@ import { Header } from '../header';
 import { PayButton } from '../pay-button';
 import { useActiveModalForm } from '../use-active-modal-form';
 
-export const WalletForm = ({ onMount }: { onMount: () => void }) => {
+const WalletForm = ({ onMount }: { onMount: () => void }) => {
     const { locale, initConfig } = useContext(InitialContext);
     const { modalState, goToFormInfo, prepareToPay, setViewInfoError } = useContext(ModalContext);
     const { createPaymentState, setFormData } = useCreatePayment();
@@ -88,3 +88,5 @@ export const WalletForm = ({ onMount }: { onMount: () => void }) => {
         </form>
     );
 };
+
+export default WalletForm;
