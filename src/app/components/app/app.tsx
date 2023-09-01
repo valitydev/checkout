@@ -1,4 +1,4 @@
-import { lazy, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import { useInitApp, useTheme } from 'checkout/hooks';
@@ -8,11 +8,10 @@ import { AppWrapper } from './app-wrapper';
 import { GlobalStyle } from './global-style';
 import { InitialContext } from './initial-context';
 import { LayoutLoader } from './layout-loader';
+import ModalContainer from './modal-container/modal-container';
 import { ModalError } from './modal-error';
 import { Overlay } from './overlay';
 import { ResultContext } from './result-context';
-
-const ModalContainer = lazy(() => import('./modal-container/modal-container'));
 
 export type AppProps = {
     initParams: InitParams;
