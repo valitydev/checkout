@@ -20,7 +20,7 @@ const Container = styled.div`
 
 const toHeader = (locale: Locale, category: KnownProviderCategories) => locale[`form.header.${category}.label`];
 
-export const PaymentTerminalSelectorForm = ({ onMount }: { onMount: () => void }) => {
+const PaymentTerminalSelectorForm = ({ onMount }: { onMount: () => void }) => {
     const { locale, availablePaymentMethods } = useContext(InitialContext);
     const { modalState, goToFormInfo } = useContext(ModalContext);
     const { category } = useActiveModalForm<PaymentTerminalSelectorFormInfo>(modalState);
@@ -45,3 +45,5 @@ export const PaymentTerminalSelectorForm = ({ onMount }: { onMount: () => void }
         </Container>
     );
 };
+
+export default PaymentTerminalSelectorForm;

@@ -8,7 +8,7 @@ const Container = styled.div`
     padding: 80px 0;
 `;
 
-export const NoAvailablePaymentMethodForm = ({ onMount }: { onMount: () => void }) => {
+const NoAvailablePaymentMethodForm = ({ onMount }: { onMount: () => void }) => {
     const { locale } = useContext(InitialContext);
 
     useEffect(() => {
@@ -21,3 +21,5 @@ export const NoAvailablePaymentMethodForm = ({ onMount }: { onMount: () => void 
         </Container>
     );
 };
+
+export default NoAvailablePaymentMethodForm;

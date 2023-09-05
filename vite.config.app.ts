@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react';
+import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import svgr from 'vite-plugin-svgr';
@@ -38,6 +39,7 @@ export default defineConfig({
                 },
             ],
         }),
+        visualizer(),
     ],
     server: {
         port: 7050,

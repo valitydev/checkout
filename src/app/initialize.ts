@@ -1,5 +1,3 @@
-import { CaptureConsole as CaptureConsoleIntegration } from '@sentry/integrations';
-import * as Sentry from '@sentry/react';
 import * as creditCardType from 'credit-card-type';
 
 import { InitConfig, resolveInitConfig } from 'checkout/config';
@@ -37,16 +35,18 @@ creditCardType.addCard({
 });
 
 const initSentry = async (dsn: string) => {
+    const { init, BrowserTracing, Replay } = await import('@sentry/react');
+    const { CaptureConsole } = await import('@sentry/integrations');
     const env = await getEnv();
-    Sentry.init({
+    init({
         environment: 'production',
         dsn,
         integrations: [
-            new Sentry.BrowserTracing(),
-            new CaptureConsoleIntegration({
+            new BrowserTracing(),
+            new CaptureConsole({
                 levels: ['warn', 'error'],
             }),
-            new Sentry.Replay(),
+            new Replay(),
         ],
         tracesSampleRate: 0.2,
         release: env.version,

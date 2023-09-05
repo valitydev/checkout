@@ -45,7 +45,7 @@ const IFrame = styled.iframe`
     }
 `;
 
-export const UserInteractionModal = () => {
+const UserInteractionModal = () => {
     const iFrameElement = useRef(null);
     const { origin } = useContext(InitialContext);
     const { modalState } = useContext(ModalContext);
@@ -76,3 +76,5 @@ export const UserInteractionModal = () => {
         </Container>
     );
 };
+
+export default UserInteractionModal;

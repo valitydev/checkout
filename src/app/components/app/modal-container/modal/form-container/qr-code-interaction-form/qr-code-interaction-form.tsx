@@ -31,7 +31,7 @@ const isQrCodeRedirect = (formMetadata: QrCodeFormMetadata) =>
     (isMobile(window.navigator).phone || isMobile(window.navigator).tablet) &&
     formMetadata.qrCodeRedirect === 'mobile';
 
-export const QrCodeInteractionForm = ({ onMount }: { onMount: () => void }) => {
+const QrCodeInteractionForm = ({ onMount }: { onMount: () => void }) => {
     const qrCodeInputRef = useRef(null);
     const {
         locale,
@@ -87,3 +87,5 @@ export const QrCodeInteractionForm = ({ onMount }: { onMount: () => void }) => {
         </Container>
     );
 };
+
+export default QrCodeInteractionForm;
