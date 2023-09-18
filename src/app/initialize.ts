@@ -48,7 +48,7 @@ const initSentry = async (dsn: string) => {
             }),
             new Replay(),
         ],
-        tracesSampleRate: 0.2,
+        tracesSampleRate: 0.1,
         release: env.version,
         replaysOnErrorSampleRate: 1.0,
         replaysSessionSampleRate: 0.1,
