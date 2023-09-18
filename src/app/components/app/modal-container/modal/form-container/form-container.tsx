@@ -7,6 +7,9 @@ import { findNamed } from 'checkout/utils';
 import { device } from 'checkout/utils/device';
 
 import { FormLoader } from './form-loader';
+import NoAvailablePaymentMethodForm from './no-available-payment-method-form/no-available-payment-method-form';
+import RedirectForm from './redirect-form/redirect-form';
+import ResultForm from './result-form/result-form';
 import { ModalContext } from '../../modal-context';
 
 const Container = styled.div`
@@ -39,14 +42,6 @@ const CardForm = lazy(() => import('./card-form/card-form'));
 const WalletForm = lazy(() => import('./wallet-form/wallet-form'));
 
 const WalletProviders = lazy(() => import('./wallet-providers/wallet-providers'));
-
-const ResultForm = lazy(() => import('./result-form/result-form'));
-
-const NoAvailablePaymentMethodForm = lazy(
-    () => import('./no-available-payment-method-form/no-available-payment-method-form'),
-);
-
-const RedirectForm = lazy(() => import('./redirect-form/redirect-form'));
 
 const PaymentTerminalForm = lazy(() => import('./payment-terminal-form/payment-terminal-form'));
 
