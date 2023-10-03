@@ -138,7 +138,7 @@ describe('createSessionInfo', () => {
                 });
 
                 test('nullable initConfigRedirectUrl should shorten without initConfigRedirectUrl', async () => {
-                    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+                    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
                     const result = await createSessionInfo(
                         urlShortenerEndpoint,
                         origin,
@@ -161,7 +161,7 @@ describe('createSessionInfo', () => {
                             headers: expect.any(Object),
                         }),
                     );
-                    expect(errorSpy).toHaveBeenCalled();
+                    expect(warnSpy).toHaveBeenCalled();
                 });
             });
         });

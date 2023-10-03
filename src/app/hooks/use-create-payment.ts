@@ -27,6 +27,11 @@ const dataReducer = (state: State, action: Action): State => {
     }
 };
 
+const extractError = (error) => {
+    const message = error?.details?.message;
+    return isNil(message) ? error : message;
+};
+
 export const useCreatePayment = () => {
     const {
         initConfig,
@@ -77,7 +82,7 @@ export const useCreatePayment = () => {
                     dispatch({ type: 'CREATE_PAYMENT_SUCCESS' });
                 } catch (error) {
                     dispatch({ type: 'CREATE_PAYMENT_FAILURE', error });
-                    console.error('Create payment failure', error);
+                    console.error('Create payment failure', extractError(error));
                 }
             };
             fetchData();
