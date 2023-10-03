@@ -23,7 +23,7 @@ const toRedirectUrlType = (formValues: FormData, initConfigRedirectUrl: string |
                 return 'self';
             }
             if (metaType === 'outer' && isNil(initConfigRedirectUrl)) {
-                console.error('Initial redirectUrl must be specified with metadata redirectUrlInfo outer type');
+                console.warn('Initial redirectUrl must be specified with metadata redirectUrlInfo outer type');
                 return 'self';
             }
             return metaType;
