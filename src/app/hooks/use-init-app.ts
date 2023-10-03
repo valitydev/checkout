@@ -44,7 +44,6 @@ export const useInitApp = () => {
                 });
             } catch (error) {
                 dispatch({ type: 'APP_INIT_FAILURE', error });
-                console.error('Initialize app failure', error);
             }
         };
         fetchData();

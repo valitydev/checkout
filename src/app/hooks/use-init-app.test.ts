@@ -198,7 +198,6 @@ describe('useInitApp', () => {
 
         test('should failure init', async () => {
             const errorMsg = 'API error example';
-            const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
             const mockFetch = jest.fn();
             mockFetch.mockResolvedValue(fetchMock(errorMsg, 500, false));
@@ -226,7 +225,6 @@ describe('useInitApp', () => {
             );
             const state = result.current.state;
             expect(state.status).toBe('FAILURE');
-            expect(errorSpy).toHaveBeenCalled();
             if (state.status !== 'FAILURE') return;
             expect(state.error).toStrictEqual({
                 details: errorMsg,
