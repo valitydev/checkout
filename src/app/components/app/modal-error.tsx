@@ -2,14 +2,16 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import styled from 'styled-components';
 
+import { Button } from 'checkout/components';
 import { device } from 'checkout/utils/device';
+import isNil from 'checkout/utils/is-nil';
 
 const ModalErrorWrapper = styled.div`
     position: fixed;
     height: 100%;
     width: 100%;
     background: #fff;
-    padding: 48px;
+    padding: 24px;
     box-sizing: border-box;
 
     @media ${device.desktop} {
@@ -18,6 +20,12 @@ const ModalErrorWrapper = styled.div`
         position: relative;
         border-radius: 16px;
     }
+`;
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 `;
 
 const Title = styled.h2`
@@ -30,31 +38,54 @@ const Title = styled.h2`
 
 const Message = styled.p`
     margin: 0;
-    padding-top: 24px;
-    font-size: 12px;
+    font-size: 14px;
     color: ${({ theme }) => theme.font.primaryColor};
 `;
 
 const isObject = (value: unknown): value is object => typeof value === 'object' && value !== null;
+
+const DEFAULT_MESSAGE = 'Something went wrong. Try reloading.';
+
+const extractError = (error) => {
+    const isNotFound = !isNil(error.status) && error.status === 404;
+    const errorMessage = error?.details?.message;
+    return {
+        message: isNil(errorMessage) ? DEFAULT_MESSAGE : errorMessage,
+        retryAvailable: !isNotFound,
+    };
+};
 
 interface ModalErrorProps {
     error: unknown;
 }
 
 export const ModalError: React.FC<ModalErrorProps> = ({ error }) => {
-    const errorMessage = useMemo(() => {
+    const { message, retryAvailable } = useMemo(() => {
         if (error instanceof Error) {
-            return `${error.name}: ${error.message}`;
+            return {
+                message: `${error.name}: ${error.message}`,
+                retryAvailable: true,
+            };
         } else if (isObject(error)) {
-            return JSON.stringify(error);
+            return extractError(error);
         }
-        return 'Unknown error';
+        return {
+            message: DEFAULT_MESSAGE,
+            retryAvailable: true,
+        };
     }, [error]);
 
     return (
         <ModalErrorWrapper>
-            <Title>Initialization failure</Title>
-            <Message>{errorMessage}</Message>
+            <Container>
+                <Title>Initialization failure</Title>
+                <Message>{message}</Message>
+                {retryAvailable && (
+                    <Button color="primary" onClick={() => location.reload()}>
+                        Retry
+                    </Button>
+                )}
+            </Container>
         </ModalErrorWrapper>
     );
 };
