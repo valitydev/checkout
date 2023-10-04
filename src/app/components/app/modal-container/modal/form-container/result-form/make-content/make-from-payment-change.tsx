@@ -1,7 +1,14 @@
-import { InvoiceEvent, LogicError, PaymentError, PaymentStatusChanged, PaymentStatuses } from 'checkout/backend';
+import {
+    InvoiceEvent,
+    LogicError,
+    PaymentError,
+    PaymentStatusChanged,
+    PaymentStatuses,
+    ResponseError,
+} from 'checkout/backend';
 import { Locale } from 'checkout/locale';
 import { getLastChange } from 'checkout/utils';
-import isObject from 'checkout/utils/is-object';
+import isNil from 'checkout/utils/is-nil';
 
 import { getFailedDescription } from './get-failed-description';
 import { ResultFormContent } from './result-form-content';
@@ -36,16 +43,22 @@ export const failed = (l: Locale, e: PaymentError | LogicError): ResultFormConte
     type: ResultFormType.ERROR,
 });
 
-const getErrorDescription = (error: unknown): string => {
-    if (error instanceof Error) {
-        return `${error.name}: ${error.message}`;
-    } else if (isObject(error)) {
-        return JSON.stringify(error);
-    }
-    return 'Unknown error';
+const isResponseErrorWithMessage = (error: ResponseError): error is ResponseError => {
+    if (isNil(error)) return false;
+    return !isNil(error?.details?.message);
 };
 
-export const failedHook = (l: Locale, error: unknown): ResultFormContent => ({
+const getErrorDescription = (error: ResponseError | Error): string => {
+    if (error instanceof Error) {
+        return `${error.name}: ${error.message}`;
+    }
+    if (isResponseErrorWithMessage(error)) {
+        return error.details.message;
+    }
+    return JSON.stringify(error);
+};
+
+export const failedHook = (l: Locale, error: ResponseError | Error): ResultFormContent => ({
     hasActions: true,
     hasDone: false,
     header: l['form.header.final.failed.label'],
@@ -75,7 +88,6 @@ export const makeFromPaymentChange = (l: Locale, e: InvoiceEvent[]) => {
         case PaymentStatuses.refunded:
             return refunded(l);
     }
-    throw new Error('Unsupported PaymentStatusChanged');
 };
 
 export const makeFromPaymentChangeHook = (l: Locale, change: PaymentStatusChanged) => {

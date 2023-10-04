@@ -82,7 +82,7 @@ export const ModalError: React.FC<ModalErrorProps> = ({ error }) => {
                 <Message>{message}</Message>
                 {retryAvailable && (
                     <Button color="primary" onClick={() => location.reload()}>
-                        Retry
+                        Reload
                     </Button>
                 )}
             </Container>

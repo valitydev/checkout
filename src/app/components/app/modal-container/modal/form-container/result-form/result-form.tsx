@@ -1,8 +1,7 @@
 import { useContext, useEffect, useMemo } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { FormName, ModalForms, ModalName, ResultFormInfo, ResultType } from 'checkout/hooks';
-import { device } from 'checkout/utils/device';
 import { findNamed } from 'checkout/utils/find-named';
 import isNil from 'checkout/utils/is-nil';
 
@@ -32,35 +31,12 @@ const Description = styled.p`
     margin: 0;
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ $hasActions: boolean }>`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 24px 0;
     gap: 24px;
-`;
-
-const Form = styled.form<{ $hasActions: boolean }>`
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    align-items: center;
-    padding: 25px 0;
-
-    @media ${device.desktop} {
-        // The amount of indentations from the top and bottom should be the same for different window sizes,
-        // so that when the window size is changed, it does not break
-        padding-top: 50px;
-
-        ${({ $hasActions }) =>
-            !$hasActions &&
-            css`
-                padding-bottom: 50px;
-            `}
-    }
-
-    ${Container} {
-        width: 100%;
-    }
 `;
 
 const ResultForm = ({ onMount }: { onMount: () => void }) => {
@@ -100,14 +76,12 @@ const ResultForm = ({ onMount }: { onMount: () => void }) => {
     }, [hasDone]);
 
     return (
-        <Form $hasActions={hasActions}>
-            <Container>
-                <ResultIcon type={type} />
-                <Title>{header}</Title>
-                <Description> {description}</Description>
-                {hasActions ? <ActionBlock /> : false}
-            </Container>
-        </Form>
+        <Container $hasActions={hasActions}>
+            <ResultIcon type={type} />
+            <Title>{header}</Title>
+            <Description> {description}</Description>
+            {hasActions ? <ActionBlock /> : false}
+        </Container>
     );
 };
 

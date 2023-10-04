@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
 
-import { InvoiceChange, InvoiceChangeType, getInvoiceEvents } from 'checkout/backend';
+import { InvoiceChange, InvoiceChangeType, ResponseError, getInvoiceEvents } from 'checkout/backend';
 import { findChange } from 'checkout/utils/event-utils';
 import isNil from 'checkout/utils/is-nil';
 
@@ -16,10 +16,10 @@ type State =
     | { status: 'POLLING_TIMEOUT' }
     | { status: 'POLLING_SUCCESS'; payload: InvoiceChange }
     | { status: 'EVENT_CHANGE_FOUND'; payload: InvoiceChange }
-    | { status: 'FAILURE'; error: unknown };
+    | { status: 'FAILURE'; error: ResponseError | Error };
 
 type Action =
-    | { type: 'SET_FAILURE'; error: unknown }
+    | { type: 'SET_FAILURE'; error: ResponseError | Error }
     | { type: 'POLL_EVENTS_TIMEOUT' }
     | { type: 'SET_POLLING_RESULT'; payload: InvoiceChange }
     | { type: 'SET_SEARCH_RESULT'; payload: InvoiceChange };
