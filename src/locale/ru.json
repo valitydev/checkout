@@ -11,6 +11,7 @@
     "form.header.final.invoice.paid.already.label": "Уже оплачено",
     "form.header.final.invoice.cancelled.label": "Инвойс отменен",
     "form.header.final.invoice.fulfilled.label": "Инвойс погашен",
+    "form.header.final.error.label": "Ошибка",
     "form.header.final.started.label": "В процессе",
     "form.header.final.failed.label": "Не оплачено",
     "form.header.final.refunded.label": "Возмещен",

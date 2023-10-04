@@ -11,6 +11,7 @@
     "form.header.final.invoice.paid.already.label": "Already fully paid",
     "form.header.final.invoice.cancelled.label": "Invoice is cancelled",
     "form.header.final.invoice.fulfilled.label": "Invoice is paid off",
+    "form.header.final.error.label": "Error",
     "form.header.final.started.label": "Pending",
     "form.header.final.failed.label": "Not paid",
     "form.header.final.refunded.label": "Refunded",

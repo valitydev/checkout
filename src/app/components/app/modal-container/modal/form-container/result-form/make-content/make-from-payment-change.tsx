@@ -35,7 +35,7 @@ export const cancelled = (l: Locale): ResultFormContent => ({
     type: ResultFormType.WARNING,
 });
 
-export const failed = (l: Locale, e: PaymentError | LogicError): ResultFormContent => ({
+const failed = (l: Locale, e: PaymentError | LogicError): ResultFormContent => ({
     hasActions: true,
     hasDone: false,
     header: l['form.header.final.failed.label'],
@@ -61,7 +61,7 @@ const getErrorDescription = (error: ResponseError | Error): string => {
 export const failedHook = (l: Locale, error: ResponseError | Error): ResultFormContent => ({
     hasActions: true,
     hasDone: false,
-    header: l['form.header.final.failed.label'],
+    header: l['form.header.final.error.label'],
     description: getErrorDescription(error),
     type: ResultFormType.ERROR,
 });
