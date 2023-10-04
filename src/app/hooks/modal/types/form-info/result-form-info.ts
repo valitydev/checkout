@@ -1,4 +1,4 @@
-import { InvoiceChange } from 'checkout/backend';
+import { InvoiceChange, ResponseError } from 'checkout/backend';
 
 import { FormInfo, FormName } from '../form-info';
 
@@ -9,7 +9,7 @@ export enum ResultType {
 }
 
 export type HookPayload = {
-    error?: unknown;
+    error?: ResponseError | Error;
     change?: InvoiceChange;
 };
 

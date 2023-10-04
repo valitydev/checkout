@@ -1,5 +1,6 @@
 import { useContext, useCallback, useReducer } from 'react';
 
+import { ResponseError } from 'checkout/backend';
 import isNil from 'checkout/utils/is-nil';
 
 import { createInvoiceWithTemplate, createPayment } from './create-payment';
@@ -7,9 +8,9 @@ import { FormData } from './create-payment';
 import { InitialContext } from '../components/app/initial-context';
 import { PayableInvoiceContext } from '../components/app/modal-container/payable-invoice-context';
 
-type State = { status: 'PRISTINE' } | { status: 'SUCCESS' } | { status: 'FAILURE'; error: unknown };
+type State = { status: 'PRISTINE' } | { status: 'SUCCESS' } | { status: 'FAILURE'; error: ResponseError | Error };
 
-type Action = { type: 'CREATE_PAYMENT_SUCCESS' } | { type: 'CREATE_PAYMENT_FAILURE'; error: unknown };
+type Action = { type: 'CREATE_PAYMENT_SUCCESS' } | { type: 'CREATE_PAYMENT_FAILURE'; error: ResponseError | Error };
 
 const dataReducer = (state: State, action: Action): State => {
     switch (action.type) {

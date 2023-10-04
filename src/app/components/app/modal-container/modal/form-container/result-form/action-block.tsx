@@ -3,8 +3,7 @@ import styled from 'styled-components';
 
 import { Button } from 'checkout/components';
 import { Link } from 'checkout/components/ui/link';
-import { FormInfo, FormName, ModalForms, ModalName, PaymentStatus } from 'checkout/hooks';
-import { Locale } from 'checkout/locale';
+import { FormName, ModalForms, ModalName, PaymentStatus } from 'checkout/hooks';
 import { findNamed } from 'checkout/utils';
 
 import { InitialContext } from '../../../../initial-context';
@@ -30,25 +29,11 @@ const ErrorBlock = styled.div`
     }
 `;
 
-const toReenterButtonText = (startedInfo: FormInfo, locale: Locale): string => {
-    switch (startedInfo.name) {
-        case FormName.cardForm:
-            return locale['form.button.use.other.card.label'];
-        case FormName.walletForm:
-            return locale['form.button.use.other.wallet.label'];
-        default:
-            return locale['form.button.use.other.default.label'];
-    }
-};
-
-const payOtherCapability = (startedInfo: FormInfo): boolean =>
-    startedInfo && startedInfo.name !== FormName.paymentMethods;
-
 export const ActionBlock = () => {
     const { locale, initConfig } = useContext(InitialContext);
-    const { modalState, prepareToRetry, forgetPaymentAttempt } = useContext(ModalContext);
+    const { modalState, forgetPaymentAttempt } = useContext(ModalContext);
 
-    const { startedInfo, hasMultiMethods } = useMemo(() => {
+    const { hasMultiMethods } = useMemo(() => {
         const info = (findNamed(modalState, ModalName.modalForms) as ModalForms).formsInfo;
         return {
             startedInfo: info.find((item) => item.paymentStatus === PaymentStatus.started),
@@ -56,19 +41,13 @@ export const ActionBlock = () => {
         };
     }, [modalState]);
 
-    const retry = (resetFormData: boolean) => {
-        prepareToRetry(resetFormData);
-    };
-
     return (
         <ErrorBlock>
             {!initConfig.isExternalIDIncluded && (
                 <>
-                    {payOtherCapability(startedInfo) && (
-                        <Button color="primary" id="reenter-btn" onClick={() => retry(true)}>
-                            {toReenterButtonText(startedInfo, locale)}
-                        </Button>
-                    )}
+                    <Button color="primary" onClick={() => location.reload()}>
+                        {locale['form.button.reload']}
+                    </Button>
                     {hasMultiMethods && (
                         <OthersButton onClick={() => forgetPaymentAttempt()}>
                             {locale['form.payment.method.name.others.label']}
