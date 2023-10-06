@@ -1,4 +1,3 @@
-import delay from 'checkout/utils/delay';
 import guid from 'checkout/utils/guid';
 
 export type FetchCapiParams = {
@@ -16,48 +15,29 @@ const getDetails = async (response: Response) => {
     }
 };
 
-const provideResponse = async (response: Response, retryDelay: number, retryLimit: number, attempt: number = 0) => {
-    try {
-        if (response.ok) {
-            attempt++;
-            return await response.json();
-        }
-        return Promise.reject({
-            status: response.status,
-            statusText: response.statusText || undefined,
-            details: await getDetails(response),
-        });
-    } catch (ex) {
-        if (attempt === retryLimit) {
-            return Promise.reject(ex);
-        }
-        await delay(retryDelay);
-        return provideResponse(response, retryDelay, retryLimit, attempt);
+const provideResponse = async (response: Response) => {
+    if (response.ok) {
+        return await response.json();
     }
+    return Promise.reject({
+        status: response.status,
+        statusText: response.statusText || undefined,
+        details: await getDetails(response),
+    });
 };
 
-const doFetch = async (param: FetchCapiParams, retryDelay: number, retryLimit: number, attempt: number = 0) => {
-    try {
-        attempt++;
-        return await fetch(param.endpoint, {
-            method: param.method || 'GET',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                Authorization: param.accessToken ? `Bearer ${param.accessToken}` : undefined,
-                'X-Request-ID': guid(),
-            },
-            body: param.body ? JSON.stringify(param.body) : undefined,
-        });
-    } catch (ex) {
-        if (attempt === retryLimit) {
-            return Promise.reject(ex);
-        }
-        await delay(retryDelay);
-        return doFetch(param, retryDelay, retryLimit, attempt);
-    }
-};
+const doFetch = async (param: FetchCapiParams) =>
+    fetch(param.endpoint, {
+        method: param.method || 'GET',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            Authorization: param.accessToken ? `Bearer ${param.accessToken}` : undefined,
+            'X-Request-ID': guid(),
+        },
+        body: param.body ? JSON.stringify(param.body) : undefined,
+    });
 
-export const fetchCapi = async <T>(param: FetchCapiParams, retryDelay = 1000, retryLimit = 20): Promise<T> => {
-    const response = await doFetch(param, retryDelay, retryLimit);
-    return await provideResponse(response, retryDelay, retryLimit);
+export const fetchCapi = async <T>(param: FetchCapiParams): Promise<T> => {
+    const response = await doFetch(param);
+    return await provideResponse(response);
 };
