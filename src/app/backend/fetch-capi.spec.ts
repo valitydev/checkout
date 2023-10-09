@@ -86,9 +86,16 @@ describe('fetch capi', () => {
         }
     });
 
-    test('should catch json reject', async () => {
+    test('should retry json reject', async () => {
         const errorMsg = 'Read json error';
-        const mockFetchJson = jest.fn().mockRejectedValueOnce(errorMsg);
+        const expected = {
+            someField: 'someValue',
+        };
+        const mockFetchJson = jest
+            .fn()
+            .mockRejectedValueOnce(errorMsg)
+            .mockRejectedValueOnce(errorMsg)
+            .mockResolvedValueOnce(expected);
         const mockFetch = jest.fn().mockResolvedValue({
             status: 200,
             ok: true,
@@ -99,10 +106,69 @@ describe('fetch capi', () => {
         const endpoint = 'https://api.test.com/endpoint';
         const accessToken = 'testToken';
 
+        const retryDelay = 50;
+        const retryLimit = 10;
+
+        const result = await fetchCapi({ endpoint, accessToken }, retryDelay, retryLimit);
+        expect(result).toStrictEqual(expected);
+        expect(mockFetchJson).toHaveBeenCalledTimes(3);
+    });
+
+    test('should retry failed fetch requests', async () => {
+        const expected = {
+            someField: 'someValue',
+        };
+
+        const mockFetch = jest
+            .fn()
+            .mockRejectedValueOnce(new Error('TypeError: Failed to fetch'))
+            .mockRejectedValueOnce(new Error('TypeError: Failed to fetch'))
+            .mockResolvedValueOnce({
+                status: 200,
+                ok: true,
+                json: async () => expected,
+            });
+        global.fetch = mockFetch;
+
+        const endpoint = 'https://api.test.com/endpoint';
+        const accessToken = 'testToken';
+
+        const retryDelay = 50;
+        const retryLimit = 10;
+
+        const result = await fetchCapi({ endpoint, accessToken }, retryDelay, retryLimit);
+
+        expect(result).toStrictEqual(expected);
+        expect(mockFetch).toHaveBeenCalledTimes(3);
+        const requestInit = {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json;charset=utf-8',
+                'X-Request-ID': expect.any(String),
+            },
+            method: 'GET',
+        };
+        expect(mockFetch).toHaveBeenCalledWith(endpoint, requestInit);
+        expect(mockFetch).toHaveBeenCalledWith(endpoint, requestInit);
+        expect(mockFetch).toHaveBeenCalledWith(endpoint, requestInit);
+    });
+
+    test('should retry failed fetch requests based on config', async () => {
+        const expectedError = new Error('TypeError: Failed to fetch');
+        const mockFetch = jest.fn().mockRejectedValue(expectedError);
+        global.fetch = mockFetch;
+
+        const endpoint = 'https://api.test.com/endpoint';
+        const accessToken = 'testToken';
+
+        const retryDelay = 50;
+        const retryLimit = 10;
+
         try {
-            await fetchCapi({ endpoint, accessToken });
+            await fetchCapi({ endpoint, accessToken }, retryDelay, retryLimit);
         } catch (error) {
-            expect(error).toStrictEqual(errorMsg);
+            expect(error).toEqual(expectedError);
         }
+        expect(mockFetch).toHaveBeenCalledTimes(retryLimit);
     });
 });
