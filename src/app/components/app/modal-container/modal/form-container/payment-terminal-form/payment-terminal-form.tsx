@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { getMetadata, MetadataField, MetadataLogo, MetadataSelect } from 'checkout/components/ui';
@@ -43,15 +43,17 @@ const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
     });
     const [formTouched, setFormTouched] = useState(false);
 
+    const isInstantPayment = useMemo(() => !formTouched && isValid, [isValid, formTouched]);
+
     useEffect(() => {
         onMount();
     }, []);
 
     useEffect(() => {
-        if (!formTouched && isValid) {
+        if (isInstantPayment && createPaymentState.status === 'PRISTINE') {
             onSubmit(getValues());
         }
-    }, [isValid, formTouched]);
+    }, [isInstantPayment]);
 
     useEffect(() => {
         if (isSubmitted && !isEmptyObject(errors)) {
@@ -87,65 +89,69 @@ const PaymentTerminalForm = ({ onMount }: { onMount: () => void }) => {
     };
 
     return (
-        <form onClick={() => setFormTouched(true)} onSubmit={handleSubmit(onSubmit)}>
-            <Container>
-                <div>
-                    <Header title={serviceProvider?.brandName} />
-                    {logo && (
-                        <LogoContainer>
-                            <MetadataLogo metadata={logo} />
-                        </LogoContainer>
-                    )}
-                    {form &&
-                        form?.sort(sortByIndex).map((m) => (
-                            <FormGroup key={m.name} direction={'column'}>
-                                {m.type === 'select' && (
-                                    <MetadataSelect
-                                        fieldError={errors?.metadata?.[m.name]}
-                                        isDirty={dirtyFields?.metadata?.[m.name]}
-                                        localeCode={initConfig.locale}
-                                        metadata={m}
+        <>
+            {!isInstantPayment && (
+                <form onClick={() => setFormTouched(true)} onSubmit={handleSubmit(onSubmit)}>
+                    <Container>
+                        <div>
+                            <Header title={serviceProvider?.brandName} />
+                            {logo && (
+                                <LogoContainer>
+                                    <MetadataLogo metadata={logo} />
+                                </LogoContainer>
+                            )}
+                            {form &&
+                                form?.sort(sortByIndex).map((m) => (
+                                    <FormGroup key={m.name} direction={'column'}>
+                                        {m.type === 'select' && (
+                                            <MetadataSelect
+                                                fieldError={errors?.metadata?.[m.name]}
+                                                isDirty={dirtyFields?.metadata?.[m.name]}
+                                                localeCode={initConfig.locale}
+                                                metadata={m}
+                                                register={register}
+                                                wrappedName="metadata"
+                                            />
+                                        )}
+                                        {m.type !== 'select' && (
+                                            <MetadataField
+                                                fieldError={errors?.metadata?.[m.name]}
+                                                isDirty={dirtyFields?.metadata?.[m.name]}
+                                                localeCode={initConfig.locale}
+                                                metadata={m}
+                                                register={register}
+                                                wrappedName="metadata"
+                                            />
+                                        )}
+                                        {m?.addon === 'vpa' && <VpaInstruction locale={locale} />}
+                                    </FormGroup>
+                                ))}
+                            {contactInfo?.email && (
+                                <FormGroup>
+                                    <Email
+                                        fieldError={errors.email}
+                                        isDirty={dirtyFields.email}
+                                        locale={locale}
                                         register={register}
-                                        wrappedName="metadata"
                                     />
-                                )}
-                                {m.type !== 'select' && (
-                                    <MetadataField
-                                        fieldError={errors?.metadata?.[m.name]}
-                                        isDirty={dirtyFields?.metadata?.[m.name]}
-                                        localeCode={initConfig.locale}
-                                        metadata={m}
+                                </FormGroup>
+                            )}
+                            {contactInfo?.phoneNumber && (
+                                <FormGroup>
+                                    <Phone
+                                        fieldError={errors.phoneNumber}
+                                        isDirty={dirtyFields.email}
+                                        locale={locale}
                                         register={register}
-                                        wrappedName="metadata"
                                     />
-                                )}
-                                {m?.addon === 'vpa' && <VpaInstruction locale={locale} />}
-                            </FormGroup>
-                        ))}
-                    {contactInfo?.email && (
-                        <FormGroup>
-                            <Email
-                                fieldError={errors.email}
-                                isDirty={dirtyFields.email}
-                                locale={locale}
-                                register={register}
-                            />
-                        </FormGroup>
-                    )}
-                    {contactInfo?.phoneNumber && (
-                        <FormGroup>
-                            <Phone
-                                fieldError={errors.phoneNumber}
-                                isDirty={dirtyFields.email}
-                                locale={locale}
-                                register={register}
-                            />
-                        </FormGroup>
-                    )}
-                </div>
-                <PayButton />
-            </Container>
-        </form>
+                                </FormGroup>
+                            )}
+                        </div>
+                        <PayButton />
+                    </Container>
+                </form>
+            )}
+        </>
     );
 };
 
