@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, startTransition } from 'react';
 import styled from 'styled-components';
 
 import { FormName, PaymentTerminalFormInfo, PaymentTerminalSelectorFormInfo } from 'checkout/hooks';
@@ -37,9 +37,11 @@ const PaymentTerminalSelectorForm = ({ onMount }: { onMount: () => void }) => {
             {serviceProviders && (
                 <ServiceProvidersGrid
                     serviceProviders={serviceProviders}
-                    onPaneClick={(providerID) =>
-                        goToFormInfo(new PaymentTerminalFormInfo(providerID, FormName.paymentTerminalSelector))
-                    }
+                    onPaneClick={(providerID) => {
+                        startTransition(() => {
+                            goToFormInfo(new PaymentTerminalFormInfo(providerID, FormName.paymentTerminalSelector));
+                        });
+                    }}
                 />
             )}
         </Container>

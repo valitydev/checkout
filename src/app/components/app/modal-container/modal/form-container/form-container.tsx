@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
 import { lazy, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import styled from 'styled-components';
 
+import { ErrorBoundaryFallback } from 'checkout/components/ui';
 import { FormName, ModalForms, ModalName, SlideDirection } from 'checkout/hooks';
 import { findNamed } from 'checkout/utils';
 import { device } from 'checkout/utils/device';
@@ -128,7 +130,7 @@ export const FormContainer = () => {
                     initial={{ x: toInitialPos(slideDirection) }}
                     transition={{ duration: 0.3 }}
                 >
-                    {renderForm(formName, onMount)}
+                    <ErrorBoundary fallback={<ErrorBoundaryFallback />}>{renderForm(formName, onMount)}</ErrorBoundary>
                     {inProcess && <FormLoader />}
                 </motion.div>
             </Form>
