@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import { lazy, useContext, useEffect, useMemo, useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import styled from 'styled-components';
 
 import { InvoiceChangeType } from 'checkout/backend';
-import { ModalName, ResultFormInfo, ResultType } from 'checkout/hooks';
+import { ErrorBoundaryFallback } from 'checkout/components/ui';
+import { ModalName, ModalState, ResultFormInfo, ResultType } from 'checkout/hooks';
 import { PayableInvoiceData, useInvoiceEvents, useModal } from 'checkout/hooks';
 import isNil from 'checkout/utils/is-nil';
 
@@ -20,6 +22,16 @@ const Container = styled.div`
     height: 100%;
     position: relative;
 `;
+
+const Modals = ({ modalState }: { modalState: ModalState[] }) => {
+    const activeModalName = useMemo(() => modalState.find((modal) => modal.active).name, [modalState]);
+    return (
+        <ErrorBoundary fallback={<ErrorBoundaryFallback />}>
+            {activeModalName === ModalName.modalForms && <Modal />}
+            {activeModalName === ModalName.modalInteraction && <UserInteractionModal />}
+        </ErrorBoundary>
+    );
+};
 
 const ModalContainer = () => {
     const {
@@ -113,8 +125,6 @@ const ModalContainer = () => {
         toInteractionState(interactionModel);
     }, [interactionModel]);
 
-    const activeModalName = useMemo(() => modalState.find((modal) => modal.active).name, [modalState]);
-
     return (
         <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
             <Container>
@@ -129,8 +139,8 @@ const ModalContainer = () => {
                     }}
                 >
                     <PayableInvoiceContext.Provider value={{ payableInvoiceData, setPayableInvoiceData }}>
-                        {activeModalName === ModalName.modalForms && <Modal />}
-                        {activeModalName === ModalName.modalInteraction && <UserInteractionModal />}
+                        {/* eslint-disable-next-line react/jsx-max-depth */}
+                        <Modals modalState={modalState}></Modals>
                     </PayableInvoiceContext.Provider>
                 </ModalContext.Provider>
             </Container>
