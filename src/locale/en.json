@@ -7,7 +7,7 @@
     "form.header.pay.card.label": "Pay with a card",
     "form.header.pay.upi.label": "Unified payment interface",
     "form.header.final.success.label": "Successful payment",
-    "form.header.final.invoice.paid.label": "Fully paid",
+    "form.header.final.invoice.paid.label": "Success",
     "form.header.final.invoice.paid.already.label": "Already fully paid",
     "form.header.final.invoice.cancelled.label": "Invoice is cancelled",
     "form.header.final.invoice.fulfilled.label": "Invoice is paid off",
