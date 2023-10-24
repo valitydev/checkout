@@ -44,7 +44,7 @@ const initSentry = async (dsn: string) => {
         integrations: [
             new BrowserTracing(),
             new CaptureConsole({
-                levels: ['warn', 'error'],
+                levels: ['error'],
             }),
             new Replay(),
         ],
