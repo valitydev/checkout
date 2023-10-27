@@ -34,18 +34,6 @@ creditCardType.addCard({
     },
 });
 
-creditCardType.addCard({
-    niceType: 'Test',
-    type: 'test',
-    patterns: [3527, 3508],
-    gaps: [4, 8, 12],
-    lengths: [16],
-    code: {
-        name: 'CVV',
-        size: 3,
-    },
-});
-
 const initSentry = async (dsn: string) => {
     const { init, BrowserTracing, Replay } = await import('@sentry/react');
     const { CaptureConsole } = await import('@sentry/integrations');
