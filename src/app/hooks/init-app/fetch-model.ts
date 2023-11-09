@@ -39,8 +39,10 @@ const resolveInvoiceTemplate = async (
 };
 
 const resolveInvoice = async (endpoint: string, { invoiceID, invoiceAccessToken }: InvoiceParams): Promise<Model> => {
-    const invoice = await getInvoiceByID(endpoint, invoiceAccessToken, invoiceID);
-    const paymentMethods = await getInvoicePaymentMethods(endpoint, invoiceAccessToken, invoiceID);
+    const [invoice, paymentMethods] = await Promise.all([
+        getInvoiceByID(endpoint, invoiceAccessToken, invoiceID),
+        getInvoicePaymentMethods(endpoint, invoiceAccessToken, invoiceID),
+    ]);
     const serviceProviders = await getServiceProviders(paymentMethods, endpoint, invoiceAccessToken);
     return { paymentMethods, invoice, serviceProviders, invoiceAccessToken };
 };
