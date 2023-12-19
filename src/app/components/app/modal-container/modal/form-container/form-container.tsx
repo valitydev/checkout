@@ -51,7 +51,9 @@ const PaymentTerminalSelectorForm = lazy(
     () => import('./payment-terminal-selector-form/payment-terminal-selector-form'),
 );
 
-const QrCodeInteractionForm = lazy(() => import('./qr-code-interaction-form//qr-code-interaction-form'));
+const QrCodeInteractionForm = lazy(() => import('./qr-code-interaction-form/qr-code-interaction-form'));
+
+const ApiExtensionForm = lazy(() => import('./api-extension-form/api-extension-form'));
 
 const renderForm = (name: FormName, onMount: () => void) => {
     switch (name) {
@@ -75,6 +77,8 @@ const renderForm = (name: FormName, onMount: () => void) => {
             return <PaymentTerminalSelectorForm onMount={onMount} />;
         case FormName.qrCodeInteractionForm:
             return <QrCodeInteractionForm onMount={onMount} />;
+        case FormName.apiExtensionForm:
+            return <ApiExtensionForm onMount={onMount} />;
         default:
             return null;
     }

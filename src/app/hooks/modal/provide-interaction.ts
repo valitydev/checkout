@@ -1,4 +1,5 @@
 import {
+    ApiExtensionRequest,
     InteractionType,
     PaymentToolDetails,
     PaymentToolDetailsPaymentTerminal,
@@ -9,6 +10,7 @@ import {
 } from 'checkout/backend';
 import { getMetadata } from 'checkout/components/ui/metadata/utils/get-metadata';
 import {
+    ApiExtensionFormInfo,
     EventInteractionObject,
     ModalForms,
     ModalInteraction,
@@ -70,9 +72,14 @@ const getActiveServiceProvider = (
     return null;
 };
 
+const provideApiExtensionRequest = (userInteraction: ApiExtensionRequest, paymentID: string) => {
+    const formInfo = new ApiExtensionFormInfo(userInteraction, paymentID);
+    return new ModalForms([formInfo], true);
+};
+
 export const provideInteraction = (
     serviceProviders: ServiceProvider[],
-    { paymentToolDetails, userInteraction }: InteractionModel,
+    { paymentToolDetails, userInteraction, paymentID }: InteractionModel,
 ): ModalState => {
     const activeServiceProvider = getActiveServiceProvider(serviceProviders, paymentToolDetails);
     switch (userInteraction.interactionType) {
@@ -80,5 +87,7 @@ export const provideInteraction = (
             return provideRedirect(userInteraction as Redirect, activeServiceProvider);
         case InteractionType.QrCodeDisplayRequest:
             return provideQrCode(userInteraction as QrCodeDisplayRequest, activeServiceProvider);
+        case InteractionType.ApiExtensionRequest:
+            return provideApiExtensionRequest(userInteraction as ApiExtensionRequest, paymentID);
     }
 };

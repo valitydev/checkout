@@ -28,12 +28,10 @@ const resolveInvoiceTemplate = async (
     endpoint: string,
     { invoiceTemplateID, invoiceTemplateAccessToken }: InvoiceTemplateParams,
 ): Promise<Model> => {
-    const invoiceTemplate = await getInvoiceTemplateByID(endpoint, invoiceTemplateAccessToken, invoiceTemplateID);
-    const paymentMethods = await getInvoicePaymentMethodsByTemplateID(
-        endpoint,
-        invoiceTemplateAccessToken,
-        invoiceTemplateID,
-    );
+    const [invoiceTemplate, paymentMethods] = await Promise.all([
+        getInvoiceTemplateByID(endpoint, invoiceTemplateAccessToken, invoiceTemplateID),
+        getInvoicePaymentMethodsByTemplateID(endpoint, invoiceTemplateAccessToken, invoiceTemplateID),
+    ]);
     const serviceProviders = await getServiceProviders(paymentMethods, endpoint, invoiceTemplateAccessToken);
     return { paymentMethods, invoiceTemplate, serviceProviders };
 };
