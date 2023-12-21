@@ -15,3 +15,5 @@ export type DestinationSBP = {
     bankName?: string;
     recipientName?: string;
 };
+
+export type Destination = DestinationBankCard | DestinationSBP;
