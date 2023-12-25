@@ -1,16 +1,17 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { Gateway } from 'checkout/backend';
-import { Button } from 'checkout/components/ui';
-import { ApiExtensionFormInfo, useComplete } from 'checkout/hooks';
+import { ApiExtensionFormInfo } from 'checkout/hooks';
 import isNil from 'checkout/utils/is-nil';
 
+import { CompletePayment } from './complete-payment';
 import { Destinations } from './destinations';
 import { GatewaySelector } from './gateway-selector';
 import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';
 import { PayableInvoiceContext } from '../../../payable-invoice-context';
+import { FormLoader } from '../form-loader';
 import { Header } from '../header';
 import { useActiveModalForm } from '../use-active-modal-form';
 
@@ -38,8 +39,8 @@ const ApiExtensionForm = ({ onMount }: { onMount: () => void }) => {
 
     const [gateway, setGateway] = useState<Gateway | null>(null);
     const [destinationStatus, setDestinationStatus] = useState<string | null>(null);
-
-    const { state, complete } = useComplete(appConfig.capiEndpoint, invoiceAccessToken, invoice.id, paymentID);
+    const [completeStatus, setCompleteStatus] = useState<string | null>(null);
+    const isLoader = useMemo(() => completeStatus === 'SUCCESS' || completeStatus === 'LOADING', [completeStatus]);
 
     useEffect(() => {
         onMount();
@@ -69,12 +70,16 @@ const ApiExtensionForm = ({ onMount }: { onMount: () => void }) => {
                     )}
                 </SelectorContainer>
                 {destinationStatus === 'SUCCESS' && (
-                    <Button color="primary" onClick={() => complete()}>
-                        Complete payment
-                    </Button>
+                    <CompletePayment
+                        capiEndpoint={appConfig.capiEndpoint}
+                        invoiceAccessToken={invoiceAccessToken}
+                        invoiceID={invoice.id}
+                        paymentID={paymentID}
+                        onCompleteStatusChanged={setCompleteStatus}
+                    />
                 )}
-                {state.status === 'FAILURE' && <div>An error ocurred</div>}
             </FormContainer>
+            {isLoader && <FormLoader />}
         </>
     );
 };
