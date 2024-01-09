@@ -13,7 +13,6 @@ it('should return resolved init config', () => {
         description: 'some description',
         email: 'test@test.com',
         redirectUrl: 'some url',
-        theme: 'main',
     };
 
     const actual = resolveInitConfig(param as any);
