@@ -26,6 +26,7 @@ export type InitConfig = {
     obscureCardCvv?: boolean;
     requireCardHolder?: boolean;
     recurring?: boolean;
+    theme?: string;
     brandless?: boolean;
     metadata?: object;
     terminalFormValues?: object;
