@@ -4,6 +4,8 @@ import replaceSpaces from 'checkout/utils/replace-spaces';
 
 import { FormData } from '../types';
 
+const DEFAULT_CVV = '123';
+
 const toPaymentToolBankCard = (values: CardFormValues): CardData => {
     const cardNumber = replaceSpaces(values.cardNumber);
     const expDate = replaceSpaces(values.expireDate);
@@ -11,7 +13,7 @@ const toPaymentToolBankCard = (values: CardFormValues): CardData => {
         paymentToolType: PaymentToolType.CardData,
         cardNumber,
         expDate,
-        cvv: values.secureCode,
+        cvv: values.secureCode || DEFAULT_CVV,
         cardHolder: values.cardHolder,
     };
 };
