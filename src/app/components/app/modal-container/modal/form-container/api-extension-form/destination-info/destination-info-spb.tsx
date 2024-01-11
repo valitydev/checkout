@@ -1,30 +1,30 @@
 import { DestinationSBP } from 'checkout/backend';
+import { Locale } from 'checkout/locale';
 
 import { Container, Label, Row, Value } from './common-components';
 
 export type DestinationInfoSpbProps = {
+    locale: Locale;
     destination: DestinationSBP;
 };
 
-export const DestinationInfoSpb = ({ destination }: DestinationInfoSpbProps) => {
-    return (
-        <Container>
+export const DestinationInfoSpb = ({ locale, destination }: DestinationInfoSpbProps) => (
+    <Container>
+        {destination?.bankName && (
             <Row>
-                <Label>Phone number:</Label>
-                <Value>{destination.phoneNumber}</Value>
+                <Label>{locale['form.p2p.destination.spb.bank.name']}</Label>
+                <Value>{destination.bankName}</Value>
             </Row>
-            {destination?.recipientName && (
-                <Row>
-                    <Label>Recipient name:</Label>
-                    <Value>{destination.recipientName}</Value>
-                </Row>
-            )}
-            {destination?.bankName && (
-                <Row>
-                    <Label>Bank name:</Label>
-                    <Value>{destination.bankName}</Value>
-                </Row>
-            )}
-        </Container>
-    );
-};
+        )}
+        <Row>
+            <Label>{locale['form.p2p.destination.spb.phone']}</Label>
+            <Value>{destination.phoneNumber}</Value>
+        </Row>
+        {destination?.recipientName && (
+            <Row>
+                <Label>{locale['form.p2p.destination.spb.recipient']}</Label>
+                <Value>{destination.recipientName}</Value>
+            </Row>
+        )}
+    </Container>
+);

@@ -14,13 +14,20 @@ export const Row = styled.div`
 export const Label = styled.p`
     font-weight: 400;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 16px;
     margin: 0;
 `;
 
 export const Value = styled.p`
     font-weight: 500;
     font-size: 14px;
+    line-height: 16px;
+    margin: 0;
+`;
+
+export const Info = styled.p`
+    font-weight: 500;
+    font-size: 16px;
     line-height: 24px;
     margin: 0;
 `;

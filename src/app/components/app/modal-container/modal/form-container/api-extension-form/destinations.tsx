@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 
 import { useDestinations } from 'checkout/hooks';
+import { Locale } from 'checkout/locale';
 import isNil from 'checkout/utils/is-nil';
 
 import { DestinationInfo } from './destination-info';
 
 export type DestinationsProps = {
+    locale: Locale;
     capiEndpoint: string;
     invoiceAccessToken: string;
     invoiceID: string;
@@ -15,6 +17,7 @@ export type DestinationsProps = {
 };
 
 export const Destinations = ({
+    locale,
     capiEndpoint,
     invoiceAccessToken,
     invoiceID,
@@ -35,10 +38,12 @@ export const Destinations = ({
 
     return (
         <>
-            {state.status === 'LOADING' && <div>Loading...</div>}
-            {state.status === 'FAILURE' && <div>An error ocurred</div>}
+            {state.status === 'LOADING' && <div>{locale['form.p2p.loading']}</div>}
+            {state.status === 'FAILURE' && <div>{locale['form.p2p.error']}</div>}
             {state.status === 'SUCCESS' &&
-                state.data.map((destination, i) => <DestinationInfo key={i} destination={destination} />)}
+                state.data.map((destination, i) => (
+                    <DestinationInfo key={i} destination={destination} locale={locale} />
+                ))}
         </>
     );
 };

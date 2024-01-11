@@ -3,8 +3,10 @@ import { useEffect } from 'react';
 import { Gateway } from 'checkout/backend';
 import { Select } from 'checkout/components/ui';
 import { useGateways } from 'checkout/hooks/p2p';
+import { Locale } from 'checkout/locale';
 
 export type GatewaySelectorProps = {
+    locale: Locale;
     capiEndpoint: string;
     invoiceAccessToken: string;
     invoiceID: string;
@@ -17,6 +19,7 @@ export const GatewaySelector = ({
     invoiceAccessToken,
     invoiceID,
     paymentID,
+    locale,
     onSelect,
 }: GatewaySelectorProps) => {
     const { state, getGateways } = useGateways(capiEndpoint, invoiceAccessToken, invoiceID, paymentID);
@@ -27,12 +30,12 @@ export const GatewaySelector = ({
 
     return (
         <>
-            {state.status === 'PRISTINE' && <div>Loading...</div>}
-            {state.status === 'FAILURE' && <div>An error ocurred</div>}
+            {state.status === 'PRISTINE' && <div>{locale['form.p2p.loading']}</div>}
+            {state.status === 'FAILURE' && <div>{locale['form.p2p.error']}</div>}
             {state.status === 'SUCCESS' && (
                 <Select dirty={false} error={false}>
                     <option value="" onClick={() => onSelect(null)}>
-                        Select gateway...
+                        {locale['form.p2p.select.destination']}
                     </option>
                     {state.data.map((gateway, i) => (
                         <option key={i} value={gateway.id} onClick={() => onSelect(gateway)}>

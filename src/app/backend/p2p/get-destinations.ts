@@ -1,4 +1,4 @@
-import { DestinationBankCard, DestinationSBP } from './model';
+import { Destination } from './model';
 import { fetchCapi } from '../fetch-capi';
 
 export const getDestinations = (
@@ -7,7 +7,7 @@ export const getDestinations = (
     invoiceID: string,
     paymentID: string,
     gatewayID: string,
-): Promise<DestinationBankCard[] | DestinationSBP[]> =>
+): Promise<Destination[]> =>
     fetchCapi({
         endpoint: `${capiEndpoint}/p2p/payments/destinations?invoiceId=${invoiceID}&paymentId=${paymentID}&gatewayId=${gatewayID}`,
         accessToken,

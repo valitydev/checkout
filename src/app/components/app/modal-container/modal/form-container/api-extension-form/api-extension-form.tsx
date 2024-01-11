@@ -12,14 +12,13 @@ import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';
 import { PayableInvoiceContext } from '../../../payable-invoice-context';
 import { FormLoader } from '../form-loader';
-import { Header } from '../header';
 import { useActiveModalForm } from '../use-active-modal-form';
 
 const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 24px;
-    min-height: 360px;
+    min-height: 380px;
     justify-content: space-between;
 `;
 
@@ -33,7 +32,7 @@ const ApiExtensionForm = ({ onMount }: { onMount: () => void }) => {
     const {
         payableInvoiceData: { invoiceAccessToken, invoice },
     } = useContext(PayableInvoiceContext);
-    const { appConfig } = useContext(InitialContext);
+    const { appConfig, locale } = useContext(InitialContext);
     const { modalState } = useContext(ModalContext);
     const { paymentID } = useActiveModalForm<ApiExtensionFormInfo>(modalState);
 
@@ -48,13 +47,13 @@ const ApiExtensionForm = ({ onMount }: { onMount: () => void }) => {
 
     return (
         <>
-            <Header title="P2P" />
             <FormContainer>
                 <SelectorContainer>
                     <GatewaySelector
                         capiEndpoint={appConfig.capiEndpoint}
                         invoiceAccessToken={invoiceAccessToken}
                         invoiceID={invoice.id}
+                        locale={locale}
                         paymentID={paymentID}
                         onSelect={setGateway}
                     ></GatewaySelector>
@@ -65,6 +64,7 @@ const ApiExtensionForm = ({ onMount }: { onMount: () => void }) => {
                             getDestinationsStatusChanged={setDestinationStatus}
                             invoiceAccessToken={invoiceAccessToken}
                             invoiceID={invoice.id}
+                            locale={locale}
                             paymentID={paymentID}
                         ></Destinations>
                     )}
@@ -74,6 +74,7 @@ const ApiExtensionForm = ({ onMount }: { onMount: () => void }) => {
                         capiEndpoint={appConfig.capiEndpoint}
                         invoiceAccessToken={invoiceAccessToken}
                         invoiceID={invoice.id}
+                        locale={locale}
                         paymentID={paymentID}
                         onCompleteStatusChanged={setCompleteStatus}
                     />

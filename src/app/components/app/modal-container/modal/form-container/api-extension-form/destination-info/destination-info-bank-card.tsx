@@ -1,24 +1,24 @@
 import { DestinationBankCard } from 'checkout/backend/p2p';
+import { Locale } from 'checkout/locale';
 
 import { Container, Label, Row, Value } from './common-components';
 
 export type DestinationInfoBankCardInfo = {
+    locale: Locale;
     destination: DestinationBankCard;
 };
 
-export const DestinationInfoBankCard = ({ destination }: DestinationInfoBankCardInfo) => {
-    return (
-        <Container>
+export const DestinationInfoBankCard = ({ locale, destination }: DestinationInfoBankCardInfo) => (
+    <Container>
+        <Row>
+            <Label>{locale['form.p2p.destination.bank.card.pan']}</Label>
+            <Value>{destination.pan}</Value>
+        </Row>
+        {destination?.bankName && (
             <Row>
-                <Label>Card number:</Label>
-                <Value>{destination.pan}</Value>
+                <Label>{locale['form.p2p.destination.bank.name']}</Label>
+                <Value>{destination.bankName}</Value>
             </Row>
-            {destination?.bankName && (
-                <Row>
-                    <Label>Bank name:</Label>
-                    <Value>{destination.bankName}</Value>
-                </Row>
-            )}
-        </Container>
-    );
-};
+        )}
+    </Container>
+);

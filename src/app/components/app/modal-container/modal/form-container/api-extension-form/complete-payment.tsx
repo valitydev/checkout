@@ -3,7 +3,10 @@ import styled from 'styled-components';
 
 import { Button } from 'checkout/components/ui';
 import { useComplete } from 'checkout/hooks/p2p';
+import { Locale } from 'checkout/locale';
 import isNil from 'checkout/utils/is-nil';
+
+import { Info } from './destination-info/common-components';
 
 const Container = styled.div`
     display: flex;
@@ -12,6 +15,7 @@ const Container = styled.div`
 `;
 
 export type CompletePaymentProps = {
+    locale: Locale;
     capiEndpoint: string;
     invoiceAccessToken: string;
     invoiceID: string;
@@ -20,6 +24,7 @@ export type CompletePaymentProps = {
 };
 
 export const CompletePayment = ({
+    locale,
     capiEndpoint,
     invoiceAccessToken,
     invoiceID,
@@ -38,10 +43,11 @@ export const CompletePayment = ({
 
     return (
         <Container>
+            <Info>{locale['form.p2p.complete.info']}</Info>
             <Button color="primary" onClick={complete}>
-                Complete payment
+                {locale['form.p2p.complete.button']}
             </Button>
-            {status === 'FAILURE' && <div>An error ocurred</div>}
+            {status === 'FAILURE' && <div>{locale['form.p2p.error']}</div>}
         </Container>
     );
 };

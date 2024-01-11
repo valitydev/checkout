@@ -7,11 +7,7 @@ export const getGateways = (
     invoiceID: string,
     paymentID: string,
 ): Promise<Gateway[]> =>
-    fetchCapi(
-        {
-            endpoint: `${capiEndpoint}/p2p/payments/gateways?invoiceId=${invoiceID}&paymentId=${paymentID}`,
-            accessToken,
-        },
-        1,
-        1,
-    );
+    fetchCapi({
+        endpoint: `${capiEndpoint}/p2p/payments/gateways?invoiceId=${invoiceID}&paymentId=${paymentID}`,
+        accessToken,
+    });
