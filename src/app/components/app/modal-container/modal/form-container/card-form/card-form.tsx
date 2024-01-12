@@ -7,6 +7,7 @@ import { isEmptyObject } from 'checkout/utils/is-empty-object';
 
 import { CardFormInputs } from './card-form-inputs';
 import { CardHolder, CardNumber, ExpireDate, SecureCode } from './fields';
+import { isSecureCodeAvailable } from './is-secure-code-available';
 import { InitialContext } from '../../../../initial-context';
 import { ModalContext } from '../../../modal-context';
 import { Amount } from '../common-fields';
@@ -52,6 +53,8 @@ const CardForm = ({ onMount }: { onMount: () => void }) => {
         }
     }, [createPaymentState]);
 
+    const isSecureCode = isSecureCodeAvailable(watch('cardNumber'));
+
     const onSubmit: SubmitHandler<CardFormInputs> = (values) => {
         prepareToPay();
         setFormData({ method: PaymentMethodName.BankCard, values });
@@ -76,14 +79,16 @@ const CardForm = ({ onMount }: { onMount: () => void }) => {
                     locale={locale}
                     register={register}
                 />
-                <SecureCode
-                    cardNumber={watch('cardNumber')}
-                    fieldError={errors.secureCode}
-                    isDirty={dirtyFields.secureCode}
-                    locale={locale}
-                    obscureCardCvv={initConfig?.obscureCardCvv}
-                    register={register}
-                />
+                {isSecureCode && (
+                    <SecureCode
+                        cardNumber={watch('cardNumber')}
+                        fieldError={errors.secureCode}
+                        isDirty={dirtyFields.secureCode}
+                        locale={locale}
+                        obscureCardCvv={initConfig?.obscureCardCvv}
+                        register={register}
+                    />
+                )}
             </FormGroup>
             {cardHolder.visible && (
                 <FormGroup>
