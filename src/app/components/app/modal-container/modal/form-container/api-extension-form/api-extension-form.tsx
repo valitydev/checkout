@@ -18,7 +18,7 @@ const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 24px;
-    min-height: 380px;
+    min-height: 500px;
     justify-content: space-between;
 `;
 

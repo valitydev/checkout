@@ -20,6 +20,7 @@ const palette = {
     BlueRibbon: '#0038FF',
     Candlelight: '#ffe05c',
     Silver: '#979797',
+    Orange: '#ffe484',
 };
 
 const theme: Theme = {
@@ -72,6 +73,9 @@ const theme: Theme = {
     linkButton: {
         color: palette.Zeus,
         hover: palette.Zeus,
+    },
+    alert: {
+        background: palette.Orange,
     },
 };
 
