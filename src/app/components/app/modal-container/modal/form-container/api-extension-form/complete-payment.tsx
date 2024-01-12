@@ -6,7 +6,7 @@ import { useComplete } from 'checkout/hooks/p2p';
 import { Locale } from 'checkout/locale';
 import isNil from 'checkout/utils/is-nil';
 
-import { Info } from './destination-info/common-components';
+import { Info } from './common-components';
 
 const Container = styled.div`
     display: flex;

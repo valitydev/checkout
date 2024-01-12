@@ -3,12 +3,13 @@ import styled from 'styled-components';
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
 `;
 
-export const Row = styled.div`
+export const Row = styled.div<{ $gap?: number }>`
     display: flex;
     justify-content: space-between;
+    gap: ${({ $gap }) => `${$gap}px` || 0};
 `;
 
 export const Label = styled.p`
@@ -23,6 +24,7 @@ export const Value = styled.p`
     font-size: 14px;
     line-height: 16px;
     margin: 0;
+    text-align: end;
 `;
 
 export const Info = styled.p`

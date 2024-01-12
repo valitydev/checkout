@@ -1,7 +1,8 @@
 import { DestinationBankCard } from 'checkout/backend/p2p';
 import { Locale } from 'checkout/locale';
 
-import { Container, Label, Row, Value } from './common-components';
+import { CopyToClipboard } from './copy-to-clipboard';
+import { Container, Label, Row, Value } from '../common-components';
 
 export type DestinationInfoBankCardInfo = {
     locale: Locale;
@@ -12,7 +13,10 @@ export const DestinationInfoBankCard = ({ locale, destination }: DestinationInfo
     <Container>
         <Row>
             <Label>{locale['form.p2p.destination.bank.card.pan']}</Label>
-            <Value>{destination.pan}</Value>
+            <Row $gap={8}>
+                <Value>{destination.pan}</Value>
+                <CopyToClipboard copyValue={destination.pan} />
+            </Row>
         </Row>
         {destination?.bankName && (
             <Row>

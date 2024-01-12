@@ -1,7 +1,7 @@
 import { Destination } from 'checkout/backend';
 import { Locale } from 'checkout/locale';
 
-import { Info, Container } from './common-components';
+import { Info, Container } from '../common-components';
 import { DestinationInfoBankCard } from './destination-info-bank-card';
 import { DestinationInfoSpb } from './destination-info-spb';
 
