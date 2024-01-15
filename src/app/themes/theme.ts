@@ -50,4 +50,7 @@ export interface Theme {
         color: string;
         hover: string;
     };
+    alert: {
+        background: string;
+    };
 }

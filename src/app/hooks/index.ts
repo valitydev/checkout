@@ -7,3 +7,5 @@ export * from './use-theme';
 export * from './use-create-payment';
 export * from './use-invoice-events';
 export * from './use-modal';
+
+export * from './p2p';

@@ -12,6 +12,7 @@ export enum FormName {
     paymentTerminalForm = 'paymentTerminalForm',
     paymentTerminalSelector = 'paymentTerminalSelector',
     qrCodeInteractionForm = 'qrCodeInteractionForm',
+    apiExtensionForm = 'apiExtensionForm',
 }
 
 export abstract class FormInfo implements Named {

@@ -11,3 +11,4 @@ export * from './redirect-form-info';
 export * from './payment-terminal-form-info';
 export * from './qr-code-interaction-form-info';
 export * from './payment-terminal-selector-form-info';
+export * from './api-extension-form-info';

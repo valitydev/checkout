@@ -8,7 +8,7 @@ import { PayableInvoiceData } from './create-payment';
 import { PollingResult, pollInvoiceEvents } from './invoice-events';
 
 const API_METHOD_CALL_MS = 1000;
-const DEFAULT_TIMEOUT_MS = 60 * 1000 * 10;
+const DEFAULT_TIMEOUT_MS = 60 * 1000 * 20;
 const PAYMENT_STARTED_TIMEOUT_MS = 60 * 1000;
 
 type State =

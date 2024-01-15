@@ -12,9 +12,11 @@ export const useInteractionModel = () => {
     useEffect(() => {
         if (isNil(paymentInteraction) || isNil(paymentStarted)) return;
         const userInteraction = (paymentInteraction as PaymentInteractionRequested)?.userInteraction;
-        const payer = (paymentStarted as PaymentStarted)?.payment?.payer as PaymentResourcePayer;
+        const payment = (paymentStarted as PaymentStarted)?.payment;
+        const payer = payment?.payer as PaymentResourcePayer;
+        const paymentID = payment.id;
         const paymentToolDetails = payer && payer?.paymentToolDetails;
-        setInteractionModel({ userInteraction, paymentToolDetails });
+        setInteractionModel({ userInteraction, paymentToolDetails, paymentID });
     }, [paymentInteraction, paymentStarted]);
 
     return { interactionModel, setPaymentInteraction, setPaymentStarted };
