@@ -69,7 +69,7 @@ const ApiExtensionForm = ({ onMount }: { onMount: () => void }) => {
                         ></Destinations>
                     )}
                 </SelectorContainer>
-                {destinationStatus === 'SUCCESS' && (
+                {!isNil(gateway) && destinationStatus === 'SUCCESS' && (
                     <CompletePayment
                         capiEndpoint={appConfig.capiEndpoint}
                         invoiceAccessToken={invoiceAccessToken}

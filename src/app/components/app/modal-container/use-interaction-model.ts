@@ -9,7 +9,6 @@ export const useInteractionModel = () => {
     const [paymentStarted, setPaymentStarted] = useState<InvoiceChange>(null);
     const [interactionModel, setInteractionModel] = useState<InteractionModel>(null);
 
-    // TODO fix infinite call
     useEffect(() => {
         if (isNil(paymentInteraction) || isNil(paymentStarted)) return;
         const userInteraction = (paymentInteraction as PaymentInteractionRequested)?.userInteraction;
