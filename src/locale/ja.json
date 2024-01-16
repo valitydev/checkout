@@ -16,6 +16,7 @@
     "form.header.final.failed.label": "未払い",
     "form.header.final.refunded.label": "返金済み",
     "form.header.final.pending.label": "保留中",
+    "form.header.final.pending.description": "",
     "form.header.final.cancelled.label": "キャンセル済",
     "form.final.failed.cancelled.text": "支払いがキャンセルされました",
     "form.final.started.pay.text": "支払いは保留中です",

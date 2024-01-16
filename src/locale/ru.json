@@ -16,6 +16,7 @@
     "form.header.final.failed.label": "Не оплачено",
     "form.header.final.refunded.label": "Возмещен",
     "form.header.final.pending.label": "В процессе",
+    "form.header.final.pending.description": "",
     "form.header.final.cancelled.label": "Отменен",
     "form.final.failed.cancelled.text": "Платеж был отменен",
     "form.final.started.pay.text": "Платёж в процессе",

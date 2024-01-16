@@ -16,6 +16,7 @@
     "form.header.final.failed.label": "Erro no pagamento",
     "form.header.final.refunded.label": "Reembolsado",
     "form.header.final.pending.label": "Pendente",
+    "form.header.final.pending.description": "",
     "form.header.final.cancelled.label": "Cancelado",
     "form.final.failed.cancelled.text": "O pagamento foi cancelado",
     "form.final.started.pay.text": "O pagamento está pendente",

@@ -16,6 +16,7 @@
     "form.header.final.failed.label": "미결제",
     "form.header.final.refunded.label": "환불됨",
     "form.header.final.pending.label": "대기 중",
+    "form.header.final.pending.description": "입금이 승인되었습니다. 10분안에 충전이 완료됩니다.",
     "form.header.final.cancelled.label": "취소됨",
     "form.final.failed.cancelled.text": "결제가 취소되었습니다",
     "form.final.started.pay.text": "결제가 승인되어 처리 중입니다. 5-15분 내에 승인될 것으로 예상입니다",

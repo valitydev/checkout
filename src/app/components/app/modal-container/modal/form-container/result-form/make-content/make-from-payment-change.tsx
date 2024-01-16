@@ -26,6 +26,7 @@ export const pending = (l: Locale): ResultFormContent => ({
     hasDone: false,
     header: l['form.header.final.pending.label'],
     type: ResultFormType.WARNING,
+    description: l['form.header.final.pending.description'],
 });
 
 export const cancelled = (l: Locale): ResultFormContent => ({

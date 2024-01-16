@@ -16,6 +16,7 @@
     "form.header.final.failed.label": "পরিশোধ হয়নি",
     "form.header.final.refunded.label": "ফেরত দেওয়া হয়েছে",
     "form.header.final.pending.label": "মুলতুবি",
+    "form.header.final.pending.description": "",
     "form.header.final.cancelled.label": "বাতিল করা হয়েছে",
     "form.final.failed.cancelled.text": "পেমেন্ট বাতিল করা হয়েছে",
     "form.final.started.pay.text": "পেমেন্ট মুলতুবি আছে",
