@@ -16,6 +16,7 @@
     "form.header.final.failed.label": "Ödenmedi",
     "form.header.final.refunded.label": "İade edildi",
     "form.header.final.pending.label": "Beklemede",
+    "form.header.final.pending.description": "",
     "form.header.final.cancelled.label": "İptal edildi",
     "form.final.failed.cancelled.text": "Ödeme iptal edildi",
     "form.final.started.pay.text": "Ödeme bekleniyor",
