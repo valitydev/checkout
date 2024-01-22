@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     position: relative;
 `;
 
-export function ContainerLayout() {
+export function GlobalContainer() {
     const { model } = useContext(PaymentModelContext);
     const container = toContainer(model);
 
