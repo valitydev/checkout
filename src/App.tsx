@@ -8,7 +8,7 @@ import { getTheme } from 'checkout/themes';
 import { CustomizationContext, PaymentModelContext } from './common/contexts';
 import { ContainerLayout, InitializationFailed } from './components';
 import { LayoutLoader, Overlay, AppWrapper, GlobalStyle } from './components/legacy';
-import { useInitialize, useInitPaymentModel } from './hooks';
+import { useInitialize, useInitPaymentModel } from './common/hooks';
 
 type AppLayoutProps = {
     initParams: InitParams;

@@ -7,7 +7,7 @@ import { Locale } from 'checkout/locale';
 import { Back } from './Back';
 import { formatAmount } from '../../../common/utils';
 import { device } from '../../../common/utils';
-import { PaymentAmount } from '../../../hooks/useInitPaymentModel';
+import { PaymentAmount } from '../../../common/hooks/useInitPaymentModel';
 
 const InfoWrapper = styled.div`
     padding: 16px;

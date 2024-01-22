@@ -1,4 +1,4 @@
-import { PaymentModel } from '../../../hooks';
+import { PaymentModel } from '../../../common/hooks';
 import { Container } from '../types';
 
 export const toContainer = (model: PaymentModel): Container => {
