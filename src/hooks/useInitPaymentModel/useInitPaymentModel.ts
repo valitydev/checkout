@@ -27,12 +27,12 @@ const dataReducer = (state: State, action: Action): State => {
     }
 };
 
-export const usePaymentModel = () => {
-    const [paymentModelState, dispatch] = useReducer(dataReducer, {
+export const useInitPaymentModel = () => {
+    const [state, dispatch] = useReducer(dataReducer, {
         status: 'PROCESSING',
     });
 
-    const initPaymentModel = useCallback((initParams: InitParams) => {
+    const init = useCallback((initParams: InitParams) => {
         (async () => {
             dispatch({ type: 'INIT_STARTED' });
             const payload = await initModel(initParams);
@@ -43,5 +43,5 @@ export const usePaymentModel = () => {
         })();
     }, []);
 
-    return { paymentModelState, initPaymentModel };
+    return { state, init };
 };

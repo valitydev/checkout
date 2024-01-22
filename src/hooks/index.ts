@@ -1,4 +1,4 @@
 export { useInitialize } from './useInitialize';
-export { usePaymentModel } from './usePaymentModel';
+export { useInitPaymentModel } from './useInitPaymentModel';
 
-export type { PaymentModel } from './usePaymentModel';
+export type { PaymentModel } from './useInitPaymentModel';

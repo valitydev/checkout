@@ -5,7 +5,6 @@ import { PaymentModel } from './types';
 const delay = (ms = 3000) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const initPaymentModel = async (initParams: InitParams): Promise<PaymentModel> => {
-    console.log('initPaymentModel', initParams);
     await delay();
     const payloadMock: PaymentModel = {
         paymentState: {
@@ -23,8 +22,8 @@ export const initPaymentModel = async (initParams: InitParams): Promise<PaymentM
         paymentAmount: {
             value: 10000,
             currency: 'RUB',
-            locale: 'en',
         },
     };
+    console.log('initPaymentModel: initParams -> model', initParams, payloadMock);
     return payloadMock;
 };

@@ -1,10 +1,9 @@
 type Metadata = { [key: string]: any }; // Replace with a more specific type
 type UserInteraction = { [key: string]: any }; // Replace with a more specific type
 
-type PaymentAmount = {
+export type PaymentAmount = {
     value: number;
     currency: string;
-    locale: string;
 };
 
 type PaymentTerminal = {

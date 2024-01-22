@@ -5,22 +5,30 @@ import { AppWrapper } from 'checkout/components/app/app-wrapper';
 import { GlobalStyle } from 'checkout/components/app/global-style';
 import { LayoutLoader } from 'checkout/components/app/layout-loader';
 import { Overlay } from 'checkout/components/app/overlay';
+import { InitConfig } from 'checkout/config';
 import { InitParams } from 'checkout/initialize';
 import { getTheme } from 'checkout/themes';
 
-import { InitializationFailed } from './components';
-import { useInitialize, usePaymentModel } from './hooks';
+import { CustomizationContext, PaymentModelContext } from './common/contexts';
+import { ContainerLayout, InitializationFailed } from './components';
+import { useInitialize, useInitPaymentModel } from './hooks';
 
 type AppLayoutProps = {
     initParams: InitParams;
 };
 
+const toCustomizationContext = ({ name, description, locale }: InitConfig) => ({
+    name,
+    description,
+    localeCode: locale,
+});
+
 export function AppLayout({ initParams }: AppLayoutProps) {
     const theme = getTheme(initParams.appConfig.fixedTheme);
-    const { paymentModelState, initPaymentModel } = usePaymentModel();
+    const { state, init } = useInitPaymentModel();
 
     useEffect(() => {
-        initPaymentModel(initParams);
+        init(initParams);
     }, [initParams]);
 
     return (
@@ -28,9 +36,15 @@ export function AppLayout({ initParams }: AppLayoutProps) {
             <GlobalStyle theme={theme} />
             <AppWrapper>
                 <Overlay />
-                {paymentModelState.status === 'PROCESSING' && <LayoutLoader />}
-                {paymentModelState.status === 'FAILURE' && <h1>FAILURE</h1>}
-                {paymentModelState.status === 'STANDBY' && <h1>STANDBY</h1>}
+                {state.status === 'PROCESSING' && <LayoutLoader />}
+                {state.status === 'STANDBY' && (
+                    <PaymentModelContext.Provider value={{ model: state.data }}>
+                        <CustomizationContext.Provider value={toCustomizationContext(initParams.initConfig)}>
+                            <ContainerLayout />
+                        </CustomizationContext.Provider>
+                    </PaymentModelContext.Provider>
+                )}
+                {state.status === 'FAILURE' && <p>FAILURE</p>}
             </AppWrapper>
         </ThemeProvider>
     );
