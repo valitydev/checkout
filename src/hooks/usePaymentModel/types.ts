@@ -32,8 +32,7 @@ type InvoiceTemplateContext = {
     invoiceTemplateAccessToken: string;
 };
 
-type CreatePaymentContext = {
-    type: 'instantPayment' | 'userInputPayment';
+type PaymentCreationContext = {
     invoiceContext: InvoiceContext | InvoiceTemplateContext;
     terminalFormValues?: object;
     paymentMetadata?: object;
@@ -75,10 +74,9 @@ type PaymentState =
     | PaymentFailed
     | PaymentInteractionRequested;
 
-export type CheckoutModel = {
+export type PaymentModel = {
     paymentState: PaymentState;
-    paymentMethods: PaymentMethod[];
-    createPaymentContext: CreatePaymentContext;
-    amount: PaymentAmount;
-    redirectUrl?: string;
+    availablePaymentMethods: PaymentMethod[];
+    paymentCreationContext: PaymentCreationContext;
+    paymentAmount: PaymentAmount;
 };
