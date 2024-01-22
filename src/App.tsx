@@ -1,16 +1,13 @@
 import { useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import { AppWrapper } from 'checkout/components/app/app-wrapper';
-import { GlobalStyle } from 'checkout/components/app/global-style';
-import { LayoutLoader } from 'checkout/components/app/layout-loader';
-import { Overlay } from 'checkout/components/app/overlay';
 import { InitConfig } from 'checkout/config';
 import { InitParams } from 'checkout/initialize';
 import { getTheme } from 'checkout/themes';
 
 import { CustomizationContext, PaymentModelContext } from './common/contexts';
 import { ContainerLayout, InitializationFailed } from './components';
+import { LayoutLoader, Overlay, AppWrapper, GlobalStyle } from './components/legacy';
 import { useInitialize, useInitPaymentModel } from './hooks';
 
 type AppLayoutProps = {

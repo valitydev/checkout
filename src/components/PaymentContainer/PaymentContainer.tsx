@@ -2,9 +2,10 @@ import { useContext, useEffect } from 'react';
 
 import { useLocale } from './useLocale';
 import { CustomizationContext, LocaleContext, PaymentModelContext } from '../../common/contexts';
+import { FormContainer } from '../FormContainer';
 import { FormBlock, Info } from '../legacy';
 
-export function UnifiedContainer() {
+export function PaymentContainer() {
     const { state, load } = useLocale();
     const { localeCode, name, description } = useContext(CustomizationContext);
     const { model } = useContext(PaymentModelContext);
@@ -24,6 +25,7 @@ export function UnifiedContainer() {
                         name={name}
                         paymentAmount={model.paymentAmount}
                     ></Info>
+                    <FormContainer />
                 </LocaleContext.Provider>
             )}
             {state.status === 'FAILURE' && <p>Load locale failure.</p>}

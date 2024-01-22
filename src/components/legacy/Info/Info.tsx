@@ -3,10 +3,10 @@ import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import { Locale } from 'checkout/locale';
-import { device } from 'checkout/utils/device';
 
 import { Back } from './Back';
 import { formatAmount } from '../../../common/utils';
+import { device } from '../../../common/utils';
 import { PaymentAmount } from '../../../hooks/useInitPaymentModel';
 
 const InfoWrapper = styled.div`

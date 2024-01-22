@@ -2,8 +2,8 @@ type ThirdPartyContainer = {
     name: 'thirdPartyContainer';
 };
 
-type UnifiedContainer = {
-    name: 'unifiedContainer';
+type PaymentContainer = {
+    name: 'paymentContainer';
 };
 
-export type Container = ThirdPartyContainer | UnifiedContainer;
+export type Container = ThirdPartyContainer | PaymentContainer;

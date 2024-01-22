@@ -2,21 +2,20 @@ import styled from 'styled-components';
 
 import { device } from '../../common/utils';
 
-export const FormBlock = styled.div`
+export const AppWrapper = styled.div`
     position: relative;
     height: 100%;
+    min-height: 100%;
     width: 100%;
-    background: ${({ theme }) => theme.form.background};
 
     @media ${device.desktop} {
-        height: auto;
-        min-height: auto;
-        width: 680px;
-        border-radius: 16px;
         display: flex;
+        flex-direction: column;
         flex-wrap: nowrap;
-        flex-direction: row;
-        padding: 30px;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        padding: 45px 0;
         box-sizing: border-box;
     }
 `;
