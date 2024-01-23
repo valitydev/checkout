@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { toContainer } from './utils';
 import { PaymentModelContext } from '../../common/contexts';
-import { PaymentContainer } from '../PaymentContainer';
+import { ViewContainer } from '../ViewContainer';
 
 const Wrapper = styled.div`
     height: 100%;
@@ -18,7 +18,7 @@ export function GlobalContainer() {
     return (
         <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
             <Wrapper>
-                {container.name === 'paymentContainer' && <PaymentContainer />}
+                {container.name === 'viewContainer' && <ViewContainer />}
                 {container.name === 'thirdPartyContainer' && <div>thirdPartyContainer</div>}
             </Wrapper>
         </motion.div>

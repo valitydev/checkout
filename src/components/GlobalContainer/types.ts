@@ -2,8 +2,8 @@ type ThirdPartyContainer = {
     name: 'thirdPartyContainer';
 };
 
-type PaymentContainer = {
-    name: 'paymentContainer';
+type ViewContainer = {
+    name: 'viewContainer';
 };
 
-export type Container = ThirdPartyContainer | PaymentContainer;
+export type Container = ThirdPartyContainer | ViewContainer;

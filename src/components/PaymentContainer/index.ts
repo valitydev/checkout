@@ -1,1 +1,0 @@
-export { PaymentContainer } from './PaymentContainer';
