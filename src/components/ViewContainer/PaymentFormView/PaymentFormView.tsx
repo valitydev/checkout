@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 
 export function PaymentFormView() {
     const { l } = useContext(LocaleContext);
-    const { viewModel } = useContext(ViewModelContext);
+    const { viewModel, onSetPaymentPayload } = useContext(ViewModelContext);
     const { paymentFormViewModel } = usePaymentFormViewModel(viewModel);
 
     return (
@@ -23,7 +23,7 @@ export function PaymentFormView() {
             <HeaderWrapper>
                 <Title>{l['form.header.pay.card.label']}</Title>
             </HeaderWrapper>
-            <PaymentFormViewModelContext.Provider value={{ paymentFormViewModel }}>
+            <PaymentFormViewModelContext.Provider value={{ paymentFormViewModel, onSubmitForm: onSetPaymentPayload }}>
                 {paymentFormViewModel.name === 'cardForm' && <CardForm />}
             </PaymentFormViewModelContext.Provider>
         </Wrapper>

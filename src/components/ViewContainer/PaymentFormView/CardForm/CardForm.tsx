@@ -9,28 +9,21 @@ import { isSecureCodeAvailable } from './utils';
 import { CustomizationContext, LocaleContext } from '../../../../common/contexts';
 import { FormGroup, PayButton } from '../../../../components/legacy';
 import { PaymentFormViewModelContext } from '../PaymentFormViewModelContext';
-
-export type CardFormInputs = {
-    cardNumber: string;
-    expireDate: string;
-    secureCode: string;
-    cardHolder: string;
-    amount: string;
-};
+import { CardFormInputs } from '../types';
 
 export function CardForm() {
     const { l } = useContext(LocaleContext);
     const { obscureCardCvv, requireCardHolder } = useContext(CustomizationContext);
-    const { paymentFormViewModel } = useContext(PaymentFormViewModelContext);
+    const { paymentFormViewModel, onSubmitForm } = useContext(PaymentFormViewModelContext);
     const {
         register,
         handleSubmit,
         watch,
-        formState: { errors, dirtyFields, isSubmitted },
+        formState: { errors, dirtyFields },
     } = useForm<CardFormInputs>({ mode: 'onChange' });
 
     const onSubmit: SubmitHandler<CardFormInputs> = (values) => {
-        console.log(values);
+        onSubmitForm(values);
     };
 
     const isSecureCode = isSecureCodeAvailable(watch('cardNumber'));

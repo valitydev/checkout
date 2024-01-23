@@ -14,7 +14,6 @@ const toPaymentFormViewModel = (viewModel: ViewModel): PaymentFormViewModel => {
 
 type Action = {
     type: 'ACTION_NAME';
-    payload: any;
 };
 
 const dataReducer = (state: PaymentFormViewModel, action: Action): PaymentFormViewModel => {
@@ -25,7 +24,7 @@ const dataReducer = (state: PaymentFormViewModel, action: Action): PaymentFormVi
 };
 
 export const usePaymentFormViewModel = (viewModel: ViewModel) => {
-    const [paymentFormViewModel, dispatch] = useReducer(dataReducer, toPaymentFormViewModel(viewModel));
+    const [paymentFormViewModel] = useReducer(dataReducer, toPaymentFormViewModel(viewModel));
 
     return { paymentFormViewModel };
 };

@@ -8,7 +8,7 @@ import { validateCardNumber } from './validateCardNumber';
 import { ReactComponent as CardIcon } from '../../../../../app/components/ui/icon/card.svg';
 import { isNil } from '../../../../../common/utils';
 import { Input, CardTypeIcon } from '../../../../legacy';
-import { CardFormInputs } from '../CardForm';
+import { CardFormInputs } from '../../types';
 
 const InputContainer = styled.div`
     width: 100%;

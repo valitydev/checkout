@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { PaymentModelContext } from '../../../common/contexts';
 import { device } from '../../../common/utils';
 import { FormLoader } from '../../legacy';
 import { PaymentFormView } from '../PaymentFormView';
-import { SlideAnimationDirection } from '../types';
+import { PaymentPayload, SlideAnimationDirection } from '../types';
 import { useViewModel } from '../useViewModel';
 import { ViewModelContext } from '../ViewModelContext';
 
@@ -50,11 +50,15 @@ export function ViewContainerInner() {
     const contentElement = useRef(null);
     const [height, setHeight] = useState(0);
 
-    const { model } = useContext(PaymentModelContext);
+    const { model, startPayment } = useContext(PaymentModelContext);
     const { viewModel, goTo } = useViewModel(model);
 
     useEffect(() => {
         setHeight(contentElement.current?.clientHeight || DEFAULT_HEIGHT_PX);
+    }, []);
+
+    const onSetPaymentPayload = useCallback((payload: PaymentPayload) => {
+        startPayment(payload);
     }, []);
 
     const activeViewName = viewModel.activeView.name;
@@ -69,7 +73,7 @@ export function ViewContainerInner() {
                     initial={{ x: toInitialPos(viewModel.direction) }}
                     transition={{ duration: 0.3 }}
                 >
-                    <ViewModelContext.Provider value={{ viewModel, goTo }}>
+                    <ViewModelContext.Provider value={{ viewModel, goTo, onSetPaymentPayload }}>
                         {activeViewName === 'paymentFormView' && <PaymentFormView />}
                         {activeViewName === 'paymentMethodSelectorView' && <>paymentMethodSelectorView</>}
                         {activeViewName === 'paymentResultView' && <>paymentResultView</>}

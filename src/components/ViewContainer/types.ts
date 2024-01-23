@@ -26,3 +26,5 @@ export type ViewModel = {
     viewAmount: ViewAmount;
     views: View[];
 };
+
+export type PaymentPayload = Record<string, any>;
