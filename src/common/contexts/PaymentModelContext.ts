@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { PaymentModel } from '../hooks';
+import { PaymentModel } from '../paymentModel';
 
 export type PaymentPayload = Record<string, any>;
 

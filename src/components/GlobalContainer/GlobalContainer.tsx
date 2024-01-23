@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
-import { useCallback } from 'react';
 import styled from 'styled-components';
 
+import { usePaymentModel } from './usePaymentModel';
 import { toContainer } from './utils';
 import { PaymentModelContext } from '../../common/contexts';
-import { PaymentModel } from '../../common/hooks';
+import { PaymentModel } from '../../common/paymentModel';
 import { ViewContainer } from '../ViewContainer';
 
 const Wrapper = styled.div`
@@ -17,11 +17,8 @@ export type GlobalContainerProps = {
 };
 
 export function GlobalContainer({ initPaymentModel }: GlobalContainerProps) {
-    const container = toContainer(initPaymentModel);
-
-    const startPayment = useCallback((payload: any) => {
-        console.log('startPayment', payload);
-    }, []);
+    const { paymentModel, startPayment } = usePaymentModel(initPaymentModel);
+    const container = toContainer(paymentModel);
 
     return (
         <PaymentModelContext.Provider value={{ model: initPaymentModel, startPayment }}>

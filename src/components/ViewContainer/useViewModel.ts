@@ -1,7 +1,7 @@
 import { useCallback, useReducer } from 'react';
 
 import { PaymentFormView, PaymentResultView, SlideAnimationDirection, ViewModel, ViewName } from './types';
-import { PaymentModel } from '../../common/hooks';
+import { PaymentModel } from '../../common/paymentModel';
 
 type Action = {
     type: 'GO_TO';

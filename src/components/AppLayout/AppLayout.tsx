@@ -4,9 +4,9 @@ import { ThemeProvider } from 'styled-components';
 import { InitParams } from 'checkout/initialize';
 import { getTheme } from 'checkout/themes';
 
+import { useInitPaymentModel } from './useInitPaymentModel';
 import { toCustomizationContext } from './utils';
 import { CustomizationContext } from '../../common/contexts';
-import { useInitPaymentModel } from '../../common/hooks';
 import { GlobalContainer } from '../GlobalContainer';
 import { LayoutLoader, Overlay, AppWrapper, GlobalStyle } from '../legacy';
 
@@ -16,7 +16,7 @@ type AppLayoutProps = {
 
 export function AppLayout({ initParams }: AppLayoutProps) {
     const theme = getTheme(initParams.appConfig.fixedTheme);
-    const { state, init } = useInitPaymentModel();
+    const { initPaymentModelState, init } = useInitPaymentModel();
 
     useEffect(() => {
         init(initParams);
@@ -27,13 +27,13 @@ export function AppLayout({ initParams }: AppLayoutProps) {
             <GlobalStyle theme={theme} />
             <AppWrapper>
                 <Overlay />
-                {state.status === 'PROCESSING' && <LayoutLoader />}
-                {state.status === 'STANDBY' && (
+                {initPaymentModelState.status === 'PROCESSING' && <LayoutLoader />}
+                {initPaymentModelState.status === 'STANDBY' && (
                     <CustomizationContext.Provider value={toCustomizationContext(initParams.initConfig)}>
-                        <GlobalContainer initPaymentModel={state.data} />
+                        <GlobalContainer initPaymentModel={initPaymentModelState.data} />
                     </CustomizationContext.Provider>
                 )}
-                {state.status === 'FAILURE' && <p>FAILURE</p>}
+                {initPaymentModelState.status === 'FAILURE' && <p>FAILURE</p>}
             </AppWrapper>
         </ThemeProvider>
     );

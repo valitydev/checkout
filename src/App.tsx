@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import { useInitialize } from './common/hooks';
 import { InitializationFailed, AppLayout } from './components';
+import { useInitialize } from './useInitialize';
 
 export function App() {
     const { state, init } = useInitialize();

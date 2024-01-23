@@ -1,6 +1,6 @@
 import { InitParams } from 'checkout/initialize';
 
-import { PaymentModel } from './types';
+import { PaymentModel } from './model';
 
 const delay = (ms = 3000) => new Promise((resolve) => setTimeout(resolve, ms));
 

@@ -2,8 +2,7 @@ import { useCallback, useReducer } from 'react';
 
 import { InitParams } from 'checkout/initialize';
 
-import { initPaymentModel as initModel } from './initPaymentModel';
-import { PaymentModel } from './types';
+import { initPaymentModel, PaymentModel } from '../../common/paymentModel';
 
 type State = { status: 'PROCESSING' } | { status: 'STANDBY'; data: PaymentModel } | { status: 'FAILURE' };
 
@@ -28,14 +27,14 @@ const dataReducer = (state: State, action: Action): State => {
 };
 
 export const useInitPaymentModel = () => {
-    const [state, dispatch] = useReducer(dataReducer, {
+    const [initPaymentModelState, dispatch] = useReducer(dataReducer, {
         status: 'PROCESSING',
     });
 
     const init = useCallback((initParams: InitParams) => {
         (async () => {
             dispatch({ type: 'INIT_STARTED' });
-            const payload = await initModel(initParams);
+            const payload = await initPaymentModel(initParams);
             dispatch({
                 type: 'INIT_SUCCESS',
                 payload,
@@ -43,5 +42,5 @@ export const useInitPaymentModel = () => {
         })();
     }, []);
 
-    return { state, init };
+    return { initPaymentModelState, init };
 };
