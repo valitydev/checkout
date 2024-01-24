@@ -66,7 +66,7 @@ type PaymentInteractionRequested = {
     interaction: UserInteraction;
 };
 
-type PaymentState =
+export type PaymentState =
     | PaymentUninitialized
     | PaymentPending
     | PaymentProcessed
@@ -79,3 +79,22 @@ export type PaymentModel = {
     paymentCreationContext: PaymentCreationContext;
     paymentAmount: PaymentAmount;
 };
+
+export type CommonStartPaymentPayload = {
+    email?: string;
+    phoneNumber?: string;
+};
+
+export type StartPaymentBankCardPayload = {
+    methodName: 'BankCard';
+    cardNumber: string;
+    expireDate: string;
+    secureCode: string;
+    cardHolder?: string;
+} & CommonStartPaymentPayload;
+
+export type StartPaymentTerminalPayload = {
+    methodName: 'PaymentTerminal';
+} & CommonStartPaymentPayload;
+
+export type StartPaymentPayload = StartPaymentBankCardPayload | StartPaymentTerminalPayload;

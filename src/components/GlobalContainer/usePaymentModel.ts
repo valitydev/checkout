@@ -1,14 +1,29 @@
 import { useCallback, useReducer } from 'react';
 
-import { PaymentModel } from '../../common/paymentModel';
+import { PaymentModel, PaymentState, StartPaymentPayload } from '../../common/paymentModel';
+import { delay } from '../../common/utils';
 
-type Action = { type: 'START_PAYMENT'; payload: any };
+export type PaymentModelChange =
+    | {
+          status: 'PRISTINE';
+          model: PaymentModel;
+      }
+    | {
+          status: 'PAYMENT_STATE_CHANGED';
+          paymentState: PaymentState;
+      };
 
-const dataReducer = (state: PaymentModel, action: Action): PaymentModel => {
+type Action = { type: 'SET_PAYMENT_STATE'; payload: PaymentState };
+
+const dataReducer = (state: PaymentModelChange, action: Action): PaymentModelChange => {
     switch (action.type) {
-        case 'START_PAYMENT':
+        case 'SET_PAYMENT_STATE':
             return {
                 ...state,
+                status: 'PAYMENT_STATE_CHANGED',
+                paymentState: {
+                    ...action.payload,
+                },
             };
         default:
             return state;
@@ -16,12 +31,17 @@ const dataReducer = (state: PaymentModel, action: Action): PaymentModel => {
 };
 
 export const usePaymentModel = (initModel: PaymentModel) => {
-    const [paymentModel, dispatch] = useReducer(dataReducer, initModel);
+    const [paymentModelChange, dispatch] = useReducer(dataReducer, { status: 'PRISTINE', model: initModel });
 
-    const startPayment = useCallback((payload: any) => {
-        console.log('startPayment', payload);
-        dispatch({ type: 'START_PAYMENT', payload });
+    const startPayment = useCallback((payload: StartPaymentPayload) => {
+        (async () => {
+            await delay(3000);
+            const payload: PaymentState = {
+                name: 'processed',
+            };
+            dispatch({ type: 'SET_PAYMENT_STATE', payload });
+        })();
     }, []);
 
-    return { paymentModel, startPayment };
+    return { paymentModelChange, startPayment };
 };

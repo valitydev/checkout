@@ -1,8 +1,13 @@
-import { PaymentModel } from '../../../common/paymentModel';
 import { Container } from '../types';
+import { PaymentModelChange } from '../usePaymentModel';
 
-export const toContainer = (model: PaymentModel): Container => {
-    const containerMock: Container = { name: 'viewContainer' };
-    console.log('toContainer: model -> container', model, containerMock);
-    return containerMock;
+export const toContainer = (paymentModelState: PaymentModelChange): Container => {
+    switch (paymentModelState.status) {
+        case 'PRISTINE':
+            return { name: 'viewContainer' };
+        case 'PAYMENT_STATE_CHANGED':
+            return { name: 'viewContainer' };
+        default:
+            return { name: 'viewContainer' };
+    }
 };

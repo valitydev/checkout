@@ -5,8 +5,6 @@ import styled from 'styled-components';
 import { Locale } from 'checkout/locale';
 
 import { Back } from './Back';
-import { PaymentAmount } from '../../../common/paymentModel';
-import { formatAmount } from '../../../common/utils';
 import { device } from '../../../common/utils';
 
 const InfoWrapper = styled.div`
@@ -61,14 +59,12 @@ const DescriptionContainer = styled.div`
 
 export type InfoProps = {
     l: Locale;
-    localeCode: string;
-    paymentAmount: PaymentAmount;
+    viewAmount: string;
     name?: string;
     description?: string;
 };
 
-export const Info = ({ name, description, l, paymentAmount, localeCode }: InfoProps) => {
-    const formattedAmount = formatAmount(paymentAmount, localeCode);
+export const Info = ({ name, description, l, viewAmount }: InfoProps) => {
     const isBackVisible = useMemo(() => isMobile(window.navigator).phone || isMobile(window.navigator).tablet, []);
 
     return (
@@ -79,7 +75,7 @@ export const Info = ({ name, description, l, paymentAmount, localeCode }: InfoPr
                 </div>
             )}
             {name ? <CompanyName id="company-name-label">{name}</CompanyName> : false}
-            {formattedAmount ? <Amount>{formattedAmount}</Amount> : false}
+            {viewAmount ? <Amount>{viewAmount}</Amount> : false}
             {description && (
                 <DescriptionContainer>
                     <Order>{l['info.order.label']}</Order>

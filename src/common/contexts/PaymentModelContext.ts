@@ -1,15 +1,18 @@
 import { createContext } from 'react';
 
+import { PaymentModelChange } from '../../components/GlobalContainer/usePaymentModel';
 import { PaymentModel } from '../paymentModel';
 
 export type PaymentPayload = Record<string, any>;
 
 export type PaymentModelContextProps = {
-    model: PaymentModel | null;
+    initPaymentModel: PaymentModel;
+    paymentModelChange: PaymentModelChange | null;
     startPayment: (payload: PaymentPayload) => void;
 };
 
 export const PaymentModelContext = createContext<PaymentModelContextProps>({
-    model: null,
+    initPaymentModel: null,
+    paymentModelChange: null,
     startPayment: () => {},
 });

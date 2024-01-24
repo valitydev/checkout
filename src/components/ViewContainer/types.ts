@@ -1,21 +1,27 @@
+export type ViewName = 'PaymentFormView' | 'PaymentMethodSelectorView' | 'PaymentResultView' | 'QrCodeView';
+
 export type PaymentFormView = {
-    name: 'paymentFormView';
+    name: 'PaymentFormView';
 };
 
 export type PaymentMethodSelectorView = {
-    name: 'paymentMethodSelectorView';
+    name: 'PaymentMethodSelectorView';
 };
 
+export type LocaleCode = string;
+
 export type PaymentResultView = {
-    name: 'paymentResultView';
+    name: 'PaymentResultView';
+    iconName: 'Success' | 'Warning' | 'Error';
+    label: LocaleCode;
+    description?: LocaleCode;
 };
 
 export type QRCodeView = {
-    name: 'qrCodeView';
+    name: 'QrCodeView';
 };
 
 export type ViewAmount = string;
-export type ViewName = string;
 export type SlideAnimationDirection = 'forward' | 'backward';
 export type View = QRCodeView | PaymentResultView | PaymentMethodSelectorView | PaymentFormView;
 
@@ -24,7 +30,7 @@ export type ViewModel = {
     direction: SlideAnimationDirection;
     isLoading: boolean;
     viewAmount: ViewAmount;
-    views: View[];
+    views: Map<ViewName, View>;
 };
 
 export type PaymentPayload = Record<string, any>;

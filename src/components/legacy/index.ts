@@ -12,3 +12,6 @@ export { FormGroup } from './FormGroup';
 export { Input } from './Input';
 export { CardTypeIcon } from './CardTypeIcon';
 export { Button } from './Button';
+export { ErrorIcon } from './ErrorIcon';
+export { WarningIcon } from './WarningIcon';
+export { SuccessIcon } from './SuccessIcon';

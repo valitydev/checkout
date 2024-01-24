@@ -1,14 +1,23 @@
-import { useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
+import { PaymentPayload } from './types';
 import { useLocale } from './useLocale';
+import { useViewModel } from './useViewModel';
 import { ViewContainerInner } from './ViewContainerInner';
+import { ViewModelContext } from './ViewModelContext';
 import { CustomizationContext, LocaleContext, PaymentModelContext } from '../../common/contexts';
 import { FormBlock, Info } from '../legacy';
 
 export function ViewContainer() {
     const { state, load } = useLocale();
     const { localeCode, name, description } = useContext(CustomizationContext);
-    const { model } = useContext(PaymentModelContext);
+    const { initPaymentModel, paymentModelChange, startPayment } = useContext(PaymentModelContext);
+    const { viewModel, goTo, setIsLoading } = useViewModel(initPaymentModel, paymentModelChange);
+
+    const onSetPaymentPayload = useCallback((payload: PaymentPayload) => {
+        setIsLoading(true);
+        startPayment(payload);
+    }, []);
 
     useEffect(() => {
         load(localeCode);
@@ -18,14 +27,15 @@ export function ViewContainer() {
         <FormBlock>
             {state.status === 'SUCCESS' && (
                 <LocaleContext.Provider value={{ l: state.data }}>
-                    <Info
-                        description={description}
-                        l={state.data}
-                        localeCode={localeCode}
-                        name={name}
-                        paymentAmount={model.paymentAmount}
-                    ></Info>
-                    <ViewContainerInner />
+                    <ViewModelContext.Provider value={{ viewModel, goTo, onSetPaymentPayload }}>
+                        <Info
+                            description={description}
+                            l={state.data}
+                            name={name}
+                            viewAmount={viewModel.viewAmount}
+                        ></Info>
+                        <ViewContainerInner />
+                    </ViewModelContext.Provider>
                 </LocaleContext.Provider>
             )}
             {state.status === 'FAILURE' && <p>Load locale failure.</p>}

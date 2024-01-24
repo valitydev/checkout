@@ -1,11 +1,10 @@
 import { InitParams } from 'checkout/initialize';
 
 import { PaymentModel } from './model';
-
-const delay = (ms = 3000) => new Promise((resolve) => setTimeout(resolve, ms));
+import { delay } from '../utils';
 
 export const initPaymentModel = async (initParams: InitParams): Promise<PaymentModel> => {
-    await delay();
+    await delay(3000);
     const payloadMock: PaymentModel = {
         paymentState: {
             name: 'uninitialized',
@@ -24,6 +23,5 @@ export const initPaymentModel = async (initParams: InitParams): Promise<PaymentM
             currency: 'RUB',
         },
     };
-    console.log('initPaymentModel: initParams -> model', initParams, payloadMock);
     return payloadMock;
 };

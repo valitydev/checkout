@@ -17,11 +17,11 @@ export type GlobalContainerProps = {
 };
 
 export function GlobalContainer({ initPaymentModel }: GlobalContainerProps) {
-    const { paymentModel, startPayment } = usePaymentModel(initPaymentModel);
-    const container = toContainer(paymentModel);
+    const { paymentModelChange, startPayment } = usePaymentModel(initPaymentModel);
+    const container = toContainer(paymentModelChange);
 
     return (
-        <PaymentModelContext.Provider value={{ model: initPaymentModel, startPayment }}>
+        <PaymentModelContext.Provider value={{ initPaymentModel, paymentModelChange, startPayment }}>
             <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
                 <Wrapper>
                     {container.name === 'viewContainer' && <ViewContainer />}

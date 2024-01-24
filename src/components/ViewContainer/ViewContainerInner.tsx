@@ -1,14 +1,13 @@
 import { motion } from 'framer-motion';
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { PaymentModelContext } from '../../../common/contexts';
-import { device } from '../../../common/utils';
-import { FormLoader } from '../../legacy';
-import { PaymentFormView } from '../PaymentFormView';
-import { PaymentPayload, SlideAnimationDirection } from '../types';
-import { useViewModel } from '../useViewModel';
-import { ViewModelContext } from '../ViewModelContext';
+import { PaymentFormView } from './PaymentFormView';
+import { PaymentResultView } from './PaymentResultView';
+import { SlideAnimationDirection } from './types';
+import { ViewModelContext } from './ViewModelContext';
+import { device } from '../../common/utils';
+import { FormLoader } from '../legacy';
 
 const Wrapper = styled.div`
     padding: 16px;
@@ -49,16 +48,10 @@ const DEFAULT_HEIGHT_PX = 300;
 export function ViewContainerInner() {
     const contentElement = useRef(null);
     const [height, setHeight] = useState(0);
-
-    const { model, startPayment } = useContext(PaymentModelContext);
-    const { viewModel, goTo } = useViewModel(model);
+    const { viewModel } = useContext(ViewModelContext);
 
     useEffect(() => {
         setHeight(contentElement.current?.clientHeight || DEFAULT_HEIGHT_PX);
-    }, []);
-
-    const onSetPaymentPayload = useCallback((payload: PaymentPayload) => {
-        startPayment(payload);
     }, []);
 
     const activeViewName = viewModel.activeView.name;
@@ -73,12 +66,10 @@ export function ViewContainerInner() {
                     initial={{ x: toInitialPos(viewModel.direction) }}
                     transition={{ duration: 0.3 }}
                 >
-                    <ViewModelContext.Provider value={{ viewModel, goTo, onSetPaymentPayload }}>
-                        {activeViewName === 'paymentFormView' && <PaymentFormView />}
-                        {activeViewName === 'paymentMethodSelectorView' && <>paymentMethodSelectorView</>}
-                        {activeViewName === 'paymentResultView' && <>paymentResultView</>}
-                        {activeViewName === 'qrCodeView' && <>qrCodeView</>}
-                    </ViewModelContext.Provider>
+                    {activeViewName === 'PaymentFormView' && <PaymentFormView />}
+                    {activeViewName === 'PaymentMethodSelectorView' && <>paymentMethodSelectorView</>}
+                    {activeViewName === 'PaymentResultView' && <PaymentResultView />}
+                    {activeViewName === 'QrCodeView' && <>qrCodeView</>}
                     {viewModel.isLoading && <FormLoader />}
                 </motion.div>
             </Layout>
