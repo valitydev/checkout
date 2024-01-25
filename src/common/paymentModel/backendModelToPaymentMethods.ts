@@ -1,7 +1,7 @@
 import { PaymentMethodName, PaymentTerminal, ServiceProvider } from 'checkout/backend';
 
 import { BackendModel } from './getBackendModel';
-import { PaymentMethod } from './model';
+import { PaymentMethod } from './types';
 
 const fromPaymentTerminal = (terminalProviderIDs: string[], serviceProviders: ServiceProvider[]): PaymentMethod[] => {
     return [];

@@ -7,7 +7,7 @@ import {
 } from 'checkout/backend';
 
 import { BackendModel, BackendModelInvoice, BackendModelInvoiceTemplate } from './getBackendModel';
-import { PaymentAmount } from './model';
+import { PaymentAmount } from './types';
 
 const fromInvoiceTemplateMultiLine = (details: InvoiceTemplateMultiLine): PaymentAmount => ({
     value: details.cart.reduce((p, c) => p + c.price * c.quantity, 0),

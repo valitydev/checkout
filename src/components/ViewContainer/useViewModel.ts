@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useReducer } from 'react';
 
-import { PaymentFormView, PaymentResultView, SlideAnimationDirection, View, ViewModel, ViewName } from './types';
+import { SlideAnimationDirection, View, ViewModel, ViewName } from './types';
+import { PaymentCondition, PaymentProcessed, PaymentUninitialized } from '../../common/paymentCondition';
 import { PaymentModel } from '../../common/paymentModel';
-import { PaymentModelChange } from '../GlobalContainer/usePaymentModel';
+import { formatAmount } from '../../common/utils';
 
 type Action =
     | {
-          type: 'SET_VIEW_MODEL';
-          payload: ViewModel;
+          type: 'SET_ACTIVE_VIEW';
+          payload: View;
       }
     | {
           type: 'GO_TO';
@@ -15,68 +16,59 @@ type Action =
               viewName: ViewName;
               direction: SlideAnimationDirection;
           };
-      }
-    | {
-          type: 'SET_IS_LOADING';
-          payload: boolean;
       };
 
 const dataReducer = (state: ViewModel, action: Action): ViewModel => {
     switch (action.type) {
-        case 'SET_VIEW_MODEL':
-            return {
-                ...action.payload,
-            };
-        case 'GO_TO':
+        case 'SET_ACTIVE_VIEW':
             return {
                 ...state,
+                activeView: action.payload,
+                views: state.views.set(action.payload.name, action.payload),
             };
         default:
             return state;
     }
 };
 
-const paymentFormView: PaymentFormView = {
-    name: 'PaymentFormView',
-};
-const paymentResultView: PaymentResultView = {
-    name: 'PaymentResultView',
-    iconName: 'Success',
-    label: 'form.header.final.invoice.paid.label',
-};
-
-const toActiveView = (paymentModel: PaymentModel): View => {
-    switch (paymentModel.paymentState.name) {
-        case 'uninitialized':
-            return paymentResultView;
-        case 'processed':
-            return paymentResultView;
-    }
-};
-
-const toViewModel = (paymentModel: PaymentModel): ViewModel => {
-    const result: ViewModel = {
-        activeView: toActiveView(paymentModel),
-        direction: 'forward',
+const initViewModel = (model: PaymentModel, localeCode: string): ViewModel => {
+    return {
         isLoading: false,
-        viewAmount: 'RUB 1000',
-        views: new Map<any, any>([
-            ['PaymentFormView', paymentFormView],
-            ['PaymentResultView', paymentResultView],
-        ]),
+        direction: 'forward',
+        viewAmount: formatAmount(model.paymentAmount, localeCode),
+        views: new Map<ViewName, View>(),
     };
-    return result;
 };
 
-export const useViewModel = (initModel: PaymentModel, modelChange: PaymentModelChange) => {
-    const [viewModel, dispatch] = useReducer(dataReducer, toViewModel(initModel));
+const applyProcessed = (model: PaymentModel, condition: PaymentProcessed): View => {
+    return {
+        name: 'PaymentResultView',
+        iconName: 'Success',
+        label: 'form.header.final.invoice.paid.label',
+    };
+};
+
+const applyUninitialized = (model: PaymentModel, condition: PaymentUninitialized): View => {
+    return {
+        name: 'PaymentFormView',
+    };
+};
+
+export const useViewModel = (localeCode: string, model: PaymentModel, condition: PaymentCondition) => {
+    const [viewModel, dispatch] = useReducer(dataReducer, initViewModel(model, localeCode));
 
     useEffect(() => {
-        if (modelChange.status === 'PAYMENT_STATE_CHANGED') {
-            const payload = toViewModel({ paymentState: modelChange.paymentState } as any);
-            dispatch({ type: 'SET_VIEW_MODEL', payload });
+        switch (condition.name) {
+            case 'uninitialized':
+                const uninitializedPayload = applyUninitialized(model, condition);
+                dispatch({ type: 'SET_ACTIVE_VIEW', payload: uninitializedPayload });
+                break;
+            case 'processed':
+                const processedPayload = applyProcessed(model, condition);
+                dispatch({ type: 'SET_ACTIVE_VIEW', payload: processedPayload });
+                break;
         }
-    }, [modelChange]);
+    }, [condition]);
 
     const goTo = useCallback((viewName: ViewName, direction: SlideAnimationDirection = 'forward') => {
         dispatch({ type: 'GO_TO', payload: { viewName, direction } });

@@ -10,7 +10,7 @@ import {
 } from 'checkout/backend';
 
 import { getServiceProviders } from './getServiceProviders';
-import { InvoiceContext, InvoiceTemplateContext } from './model';
+import { InvoiceContext, InvoiceTemplateContext } from './types';
 
 type CommonBackendModel = {
     paymentMethods: PaymentMethod[];

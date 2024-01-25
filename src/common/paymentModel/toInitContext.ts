@@ -1,7 +1,7 @@
 import { InitConfig } from 'checkout/config';
 import { InitParams } from 'checkout/initialize';
 
-import { InitContext, InvoiceContext, InvoiceTemplateContext } from './model';
+import { InitContext, InvoiceContext, InvoiceTemplateContext } from './types';
 import { isNil } from '../utils';
 
 const isInvoiceParams = (params: InitConfig): params is InvoiceContext => params.integrationType === 'invoice';

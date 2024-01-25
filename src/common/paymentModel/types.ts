@@ -1,5 +1,4 @@
 type Metadata = { [key: string]: any }; // Replace with a more specific type
-type UserInteraction = { [key: string]: any }; // Replace with a more specific type
 
 export type PaymentAmount = {
     value: number;
@@ -45,43 +44,10 @@ export type InitContext = {
     readonly isExternalIDIncluded?: boolean;
 };
 
-type PaymentUninitialized = {
-    name: 'uninitialized';
-};
-
-type PaymentPending = {
-    name: 'pending';
-};
-
-type PaymentProcessed = {
-    name: 'processed';
-};
-
-type PaymentError = { message: string; code: number /* other relevant fields */ };
-
-type PaymentFailed = {
-    name: 'failed';
-    error: PaymentError;
-};
-
-type PaymentInteractionRequested = {
-    name: 'interactionRequested';
-    interaction: UserInteraction;
-};
-
-export type PaymentState =
-    | PaymentUninitialized
-    | PaymentPending
-    | PaymentProcessed
-    | PaymentFailed
-    | PaymentInteractionRequested;
-
 export type PaymentModel = {
     readonly initContext: InitContext;
     readonly paymentMethods: PaymentMethod[];
     readonly paymentAmount: PaymentAmount;
-
-    paymentState: PaymentState;
 };
 
 export type CommonStartPaymentPayload = {

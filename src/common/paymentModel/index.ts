@@ -4,8 +4,7 @@ export type {
     PaymentModel,
     PaymentAmount,
     StartPaymentPayload,
-    PaymentState,
     InitContext,
     InvoiceContext,
     InvoiceTemplateContext,
-} from './model';
+} from './types';

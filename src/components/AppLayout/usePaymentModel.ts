@@ -4,11 +4,14 @@ import { InitParams } from 'checkout/initialize';
 
 import { initPaymentModel, PaymentModel } from '../../common/paymentModel';
 
-type State = { status: 'PROCESSING' } | { status: 'STANDBY'; data: PaymentModel } | { status: 'FAILURE' };
+type PaymentModelState =
+    | { status: 'PROCESSING' }
+    | { status: 'INITIALIZED'; data: PaymentModel }
+    | { status: 'FAILURE' };
 
 type Action = { type: 'INIT_STARTED' } | { type: 'INIT_SUCCESS'; payload: PaymentModel };
 
-const dataReducer = (state: State, action: Action): State => {
+const dataReducer = (state: PaymentModelState, action: Action): PaymentModelState => {
     switch (action.type) {
         case 'INIT_STARTED':
             return {
@@ -18,7 +21,7 @@ const dataReducer = (state: State, action: Action): State => {
         case 'INIT_SUCCESS':
             return {
                 ...state,
-                status: 'STANDBY',
+                status: 'INITIALIZED',
                 data: action.payload,
             };
         default:
@@ -26,8 +29,8 @@ const dataReducer = (state: State, action: Action): State => {
     }
 };
 
-export const useInitPaymentModel = () => {
-    const [initPaymentModelState, dispatch] = useReducer(dataReducer, {
+export const usePaymentModel = () => {
+    const [paymentModelState, dispatch] = useReducer(dataReducer, {
         status: 'PROCESSING',
     });
 
@@ -42,5 +45,5 @@ export const useInitPaymentModel = () => {
         })();
     }, []);
 
-    return { initPaymentModelState, init };
+    return { paymentModelState, init };
 };

@@ -1,13 +1,10 @@
+import { PaymentCondition } from '../../../common/paymentCondition';
 import { Container } from '../types';
-import { PaymentModelChange } from '../usePaymentModel';
 
-export const toContainer = (paymentModelState: PaymentModelChange): Container => {
-    switch (paymentModelState.status) {
-        case 'PRISTINE':
-            return { name: 'viewContainer' };
-        case 'PAYMENT_STATE_CHANGED':
-            return { name: 'viewContainer' };
-        default:
-            return { name: 'viewContainer' };
+export const toContainer = (paymentCondition: PaymentCondition): Container => {
+    switch (paymentCondition.name) {
+        case 'uninitialized':
+        case 'processed':
+            return { name: 'ViewContainer' };
     }
 };

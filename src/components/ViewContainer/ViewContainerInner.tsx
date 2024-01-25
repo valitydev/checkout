@@ -6,7 +6,7 @@ import { PaymentFormView } from './PaymentFormView';
 import { PaymentResultView } from './PaymentResultView';
 import { SlideAnimationDirection } from './types';
 import { ViewModelContext } from './ViewModelContext';
-import { device } from '../../common/utils';
+import { device, isNil } from '../../common/utils';
 import { FormLoader } from '../legacy';
 
 const Wrapper = styled.div`
@@ -54,24 +54,26 @@ export function ViewContainerInner() {
         setHeight(contentElement.current?.clientHeight || DEFAULT_HEIGHT_PX);
     }, []);
 
-    const activeViewName = viewModel.activeView.name;
+    const activeViewName = viewModel?.activeView.name;
 
     return (
         <Wrapper>
             <Layout height={height}>
-                <motion.div
-                    key={activeViewName}
-                    ref={contentElement}
-                    animate={{ x: 0 }}
-                    initial={{ x: toInitialPos(viewModel.direction) }}
-                    transition={{ duration: 0.3 }}
-                >
-                    {activeViewName === 'PaymentFormView' && <PaymentFormView />}
-                    {activeViewName === 'PaymentMethodSelectorView' && <>paymentMethodSelectorView</>}
-                    {activeViewName === 'PaymentResultView' && <PaymentResultView />}
-                    {activeViewName === 'QrCodeView' && <>qrCodeView</>}
-                    {viewModel.isLoading && <FormLoader />}
-                </motion.div>
+                {!isNil(activeViewName) && (
+                    <motion.div
+                        key={activeViewName}
+                        ref={contentElement}
+                        animate={{ x: 0 }}
+                        initial={{ x: toInitialPos(viewModel.direction) }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        {activeViewName === 'PaymentFormView' && <PaymentFormView />}
+                        {activeViewName === 'PaymentMethodSelectorView' && <>PaymentMethodSelectorView</>}
+                        {activeViewName === 'PaymentResultView' && <PaymentResultView />}
+                        {activeViewName === 'QrCodeView' && <>QrCodeView</>}
+                        {viewModel.isLoading && <FormLoader />}
+                    </motion.div>
+                )}
             </Layout>
         </Wrapper>
     );

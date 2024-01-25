@@ -1,9 +1,9 @@
 type ThirdPartyContainer = {
-    name: 'thirdPartyContainer';
+    name: 'ThirdPartyContainer';
 };
 
 type ViewContainer = {
-    name: 'viewContainer';
+    name: 'ViewContainer';
 };
 
 export type Container = ThirdPartyContainer | ViewContainer;

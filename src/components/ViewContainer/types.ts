@@ -26,11 +26,11 @@ export type SlideAnimationDirection = 'forward' | 'backward';
 export type View = QRCodeView | PaymentResultView | PaymentMethodSelectorView | PaymentFormView;
 
 export type ViewModel = {
-    activeView: View;
     direction: SlideAnimationDirection;
     isLoading: boolean;
     viewAmount: ViewAmount;
     views: Map<ViewName, View>;
+    activeView?: View;
 };
 
 export type PaymentPayload = Record<string, any>;
