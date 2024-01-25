@@ -8,13 +8,13 @@ export type PaymentMethodSelectorView = {
     name: 'PaymentMethodSelectorView';
 };
 
-export type LocaleCode = string;
+export type LocalePath = string;
 
 export type PaymentResultView = {
     name: 'PaymentResultView';
     iconName: 'Success' | 'Warning' | 'Error';
-    label: LocaleCode;
-    description?: LocaleCode;
+    label: LocalePath;
+    description?: LocalePath;
 };
 
 export type QRCodeView = {

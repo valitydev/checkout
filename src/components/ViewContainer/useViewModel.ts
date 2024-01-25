@@ -31,11 +31,6 @@ const dataReducer = (state: ViewModel, action: Action): ViewModel => {
             return {
                 ...state,
             };
-        case 'SET_IS_LOADING':
-            return {
-                ...state,
-                isLoading: action.payload,
-            };
         default:
             return state;
     }
@@ -87,9 +82,5 @@ export const useViewModel = (initModel: PaymentModel, modelChange: PaymentModelC
         dispatch({ type: 'GO_TO', payload: { viewName, direction } });
     }, []);
 
-    const setIsLoading = useCallback((isLoading: boolean) => {
-        dispatch({ type: 'SET_IS_LOADING', payload: isLoading });
-    }, []);
-
-    return { viewModel, goTo, setIsLoading };
+    return { viewModel, goTo };
 };

@@ -12,12 +12,7 @@ export function ViewContainer() {
     const { state, load } = useLocale();
     const { localeCode, name, description } = useContext(CustomizationContext);
     const { initPaymentModel, paymentModelChange, startPayment } = useContext(PaymentModelContext);
-    const { viewModel, goTo, setIsLoading } = useViewModel(initPaymentModel, paymentModelChange);
-
-    const onSetPaymentPayload = useCallback((payload: PaymentPayload) => {
-        setIsLoading(true);
-        startPayment(payload);
-    }, []);
+    const { viewModel, goTo } = useViewModel(initPaymentModel, paymentModelChange);
 
     useEffect(() => {
         load(localeCode);
@@ -27,7 +22,7 @@ export function ViewContainer() {
         <FormBlock>
             {state.status === 'SUCCESS' && (
                 <LocaleContext.Provider value={{ l: state.data }}>
-                    <ViewModelContext.Provider value={{ viewModel, goTo, onSetPaymentPayload }}>
+                    <ViewModelContext.Provider value={{ viewModel, goTo, onSetPaymentPayload: startPayment }}>
                         <Info
                             description={description}
                             l={state.data}

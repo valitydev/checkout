@@ -1,6 +1,6 @@
 import * as Currencies from '@dinero.js/currencies';
 
-import { PaymentAmount } from '../hooks/useInitPaymentModel';
+import { PaymentAmount } from '../paymentModel';
 
 const getAmountByExponent = ({ value, currency }: PaymentAmount): number =>
     value / Number('1e' + Currencies[currency].exponent);

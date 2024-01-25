@@ -3,7 +3,7 @@ import { renderHook, waitFor, act } from '@testing-library/react';
 import { initialize } from './app/initialize';
 import { useInitialize } from './useInitialize';
 
-jest.mock('../app/initialize', () => ({
+jest.mock('./app/initialize', () => ({
     initialize: jest.fn(),
 }));
 

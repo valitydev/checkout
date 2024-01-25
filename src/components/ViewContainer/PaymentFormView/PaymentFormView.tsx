@@ -21,7 +21,7 @@ export function PaymentFormView() {
     return (
         <Wrapper>
             <HeaderWrapper>
-                <Title>{l['form.header.pay.card.label']}</Title>
+                <Title>{l[paymentFormViewModel.formTitle]}</Title>
             </HeaderWrapper>
             <PaymentFormViewModelContext.Provider value={{ paymentFormViewModel, onSubmitForm: onSetPaymentPayload }}>
                 {paymentFormViewModel.name === 'cardForm' && <CardForm />}

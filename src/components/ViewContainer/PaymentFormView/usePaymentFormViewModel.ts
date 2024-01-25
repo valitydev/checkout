@@ -7,6 +7,7 @@ const toPaymentFormViewModel = (viewModel: ViewModel): PaymentFormViewModel => {
     const result: PaymentFormViewModel = {
         name: 'cardForm',
         viewAmount: 'RUB 1000',
+        formTitle: 'form.header.pay.card.label',
     };
     return result;
 };

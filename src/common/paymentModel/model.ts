@@ -17,29 +17,32 @@ type BankCard = {
     name: 'BankCard';
 };
 
-type PaymentMethod = PaymentTerminal | BankCard;
+export type PaymentMethod = PaymentTerminal | BankCard;
 
-type InvoiceContext = {
-    type: 'invoice';
+export type InvoiceContext = {
+    type: 'InvoiceContext';
     invoiceID: string;
     invoiceAccessToken: string;
 };
 
-type InvoiceTemplateContext = {
-    type: 'invoiceTemplate';
+export type InvoiceTemplateContext = {
+    type: 'InvoiceTemplateContext';
     invoiceTemplateID: string;
     invoiceTemplateAccessToken: string;
 };
 
-type PaymentCreationContext = {
-    invoiceContext: InvoiceContext | InvoiceTemplateContext;
-    terminalFormValues?: object;
-    paymentMetadata?: object;
-    contactInfo?: {
-        email?: string;
-        phoneNumber?: string;
-    };
-    isExternalIDIncluded: boolean;
+export type InitContextContactInfo = {
+    email?: string;
+    phoneNumber?: string;
+};
+
+export type InitContext = {
+    readonly apiEndpoint: string;
+    readonly invoiceContext: InvoiceContext | InvoiceTemplateContext;
+    readonly contactInfo?: InitContextContactInfo;
+    readonly terminalFormValues?: object;
+    readonly paymentMetadata?: object;
+    readonly isExternalIDIncluded?: boolean;
 };
 
 type PaymentUninitialized = {
@@ -74,10 +77,11 @@ export type PaymentState =
     | PaymentInteractionRequested;
 
 export type PaymentModel = {
+    readonly initContext: InitContext;
+    readonly paymentMethods: PaymentMethod[];
+    readonly paymentAmount: PaymentAmount;
+
     paymentState: PaymentState;
-    availablePaymentMethods: PaymentMethod[];
-    paymentCreationContext: PaymentCreationContext;
-    paymentAmount: PaymentAmount;
 };
 
 export type CommonStartPaymentPayload = {

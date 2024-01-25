@@ -6,18 +6,22 @@ export type CardFormInputs = {
     amount: string;
 };
 
+type LocalePath = string;
 type ViewAmount = string;
 
 type MetadataForm = {
     name: 'metadataForm';
-    viewAmount: ViewAmount;
     formData?: any;
-};
+} & CommonForm;
 
 type CardForm = {
     name: 'cardForm';
-    viewAmount: ViewAmount;
     formData?: CardFormInputs;
+} & CommonForm;
+
+type CommonForm = {
+    viewAmount: ViewAmount;
+    formTitle: LocalePath;
 };
 
 export type PaymentFormViewModel = CardForm | MetadataForm;
