@@ -4,12 +4,20 @@ import { PaymentFormViewModel } from './types';
 import { ViewModel } from '../types';
 
 const toPaymentFormViewModel = (viewModel: ViewModel): PaymentFormViewModel => {
-    const result: PaymentFormViewModel = {
-        name: 'cardForm',
-        viewAmount: 'RUB 1000',
-        formTitle: 'form.header.pay.card.label',
-    };
-    return result;
+    const view = viewModel.views.get(viewModel.activeView);
+    if (view.name !== 'PaymentFormView') {
+        throw new Error(`Wrong View. Expected: PaymentFormView, actual: ${view.name}`);
+    }
+    switch (view.paymentMethod.name) {
+        case 'BankCard':
+            return {
+                name: 'CardForm',
+                viewAmount: viewModel.viewAmount,
+                formTitle: 'form.header.pay.card.label',
+            };
+        case 'PaymentTerminal':
+            throw new Error('Unimplemented PaymentTerminal View');
+    }
 };
 
 type Action = {

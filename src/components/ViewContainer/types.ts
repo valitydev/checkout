@@ -1,4 +1,4 @@
-import { PaymentMethod } from '../../common/paymentModel';
+import { PaymentMethod, StartPaymentPayload } from '../../common/paymentModel';
 
 export type ViewName = 'PaymentFormView' | 'PaymentMethodSelectorView' | 'PaymentResultView' | 'QrCodeView';
 
@@ -38,4 +38,4 @@ export type ViewModel = {
     activeView?: ViewName;
 };
 
-export type PaymentPayload = Record<string, any>;
+export type PaymentPayload = StartPaymentPayload;

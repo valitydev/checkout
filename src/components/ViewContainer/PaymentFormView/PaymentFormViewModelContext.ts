@@ -1,11 +1,10 @@
 import { createContext } from 'react';
-import { FieldValues } from 'react-hook-form';
 
-import { PaymentFormViewModel } from './types';
+import { PaymentFormViewModel, SubmitFormValues } from './types';
 
 export type PaymentFormViewModelContextProps = {
     paymentFormViewModel: PaymentFormViewModel | null;
-    onSubmitForm: <TFieldValues extends FieldValues>(data: TFieldValues) => void;
+    onSubmitForm: (data: SubmitFormValues) => void;
 };
 
 export const PaymentFormViewModelContext = createContext<PaymentFormViewModelContextProps>({

@@ -61,21 +61,25 @@ export type PaymentModelInvoice = InvoiceContext & CommonPaymentModel;
 export type PaymentModelInvoiceTemplate = InvoiceTemplateContext & CommonPaymentModel;
 export type PaymentModel = PaymentModelInvoice | PaymentModelInvoiceTemplate;
 
-export type CommonStartPaymentPayload = {
+export type CommonStartPaymentValues = {
     email?: string;
     phoneNumber?: string;
 };
 
+export type BankCardValues = {
+    cardNumber: string;
+    secureCode: string;
+    expireDate?: string;
+    cardHolder?: string;
+} & CommonStartPaymentValues;
+
 export type StartPaymentBankCardPayload = {
     methodName: 'BankCard';
-    cardNumber: string;
-    expireDate: string;
-    secureCode: string;
-    cardHolder?: string;
-} & CommonStartPaymentPayload;
+    values: BankCardValues;
+};
 
 export type StartPaymentTerminalPayload = {
     methodName: 'PaymentTerminal';
-} & CommonStartPaymentPayload;
+};
 
 export type StartPaymentPayload = StartPaymentBankCardPayload | StartPaymentTerminalPayload;

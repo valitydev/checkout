@@ -40,7 +40,7 @@ const dataReducer = (state: ViewModel, action: Action): ViewModel => {
 };
 
 const toViews = (paymentMethods: PaymentMethod[]): Map<ViewName, View> => {
-    let views = paymentMethods.reduce((acc, curr) => {
+    let views = paymentMethods.reduce<[ViewName, View][]>((acc, curr) => {
         switch (curr.name) {
             case 'BankCard':
             case 'PaymentTerminal':

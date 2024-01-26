@@ -24,8 +24,10 @@ const dataReducer = (state: PaymentCondition, action: Action): PaymentCondition 
 export const usePaymentCondition = (model: PaymentModel, initCondition: PaymentCondition) => {
     const [paymentCondition, dispatch] = useReducer(dataReducer, initCondition);
 
-    const startPayment = useCallback((payload: StartPaymentPayload) => {
+    const startPayment = useCallback((startPaymentPayload: StartPaymentPayload) => {
         (async () => {
+            console.log('StartPaymentPayload', startPaymentPayload);
+
             await delay(3000);
             const payload: PaymentCondition = {
                 name: 'processed',

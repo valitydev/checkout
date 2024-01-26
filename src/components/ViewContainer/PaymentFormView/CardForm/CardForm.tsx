@@ -23,7 +23,10 @@ export function CardForm() {
     } = useForm<CardFormInputs>({ mode: 'onChange' });
 
     const onSubmit: SubmitHandler<CardFormInputs> = (values) => {
-        onSubmitForm(values);
+        onSubmitForm({
+            formName: 'CardForm',
+            values,
+        });
     };
 
     const isSecureCode = isSecureCodeAvailable(watch('cardNumber'));
