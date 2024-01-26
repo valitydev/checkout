@@ -1,7 +1,12 @@
+import { PaymentMethod } from '../../common/paymentModel';
+
 export type ViewName = 'PaymentFormView' | 'PaymentMethodSelectorView' | 'PaymentResultView' | 'QrCodeView';
+
+export type PaymentFormViewPaymentMethod = PaymentMethod;
 
 export type PaymentFormView = {
     name: 'PaymentFormView';
+    paymentMethod: PaymentFormViewPaymentMethod;
 };
 
 export type PaymentMethodSelectorView = {
@@ -30,7 +35,7 @@ export type ViewModel = {
     isLoading: boolean;
     viewAmount: ViewAmount;
     views: Map<ViewName, View>;
-    activeView?: View;
+    activeView?: ViewName;
 };
 
 export type PaymentPayload = Record<string, any>;

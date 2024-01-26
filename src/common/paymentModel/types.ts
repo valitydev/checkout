@@ -18,37 +18,48 @@ type BankCard = {
 
 export type PaymentMethod = PaymentTerminal | BankCard;
 
-export type InvoiceContext = {
-    type: 'InvoiceContext';
-    invoiceID: string;
-    invoiceAccessToken: string;
-};
-
-export type InvoiceTemplateContext = {
-    type: 'InvoiceTemplateContext';
-    invoiceTemplateID: string;
-    invoiceTemplateAccessToken: string;
-};
-
 export type InitContextContactInfo = {
     email?: string;
     phoneNumber?: string;
 };
 
 export type InitContext = {
-    readonly apiEndpoint: string;
-    readonly invoiceContext: InvoiceContext | InvoiceTemplateContext;
     readonly contactInfo?: InitContextContactInfo;
     readonly terminalFormValues?: object;
     readonly paymentMetadata?: object;
     readonly isExternalIDIncluded?: boolean;
 };
 
-export type PaymentModel = {
+export type CommonPaymentModel = {
+    readonly apiEndpoint: string;
     readonly initContext: InitContext;
     readonly paymentMethods: PaymentMethod[];
     readonly paymentAmount: PaymentAmount;
 };
+
+export type InvoiceTemplateParams = {
+    invoiceTemplateID: string;
+    invoiceTemplateAccessToken: string;
+};
+
+export type InvoiceParams = {
+    invoiceID: string;
+    invoiceAccessToken: string;
+};
+
+export type InvoiceTemplateContext = {
+    readonly type: 'InvoiceTemplateContext';
+    readonly invoiceTemplateParams: InvoiceTemplateParams;
+};
+
+export type InvoiceContext = {
+    readonly type: 'InvoiceContext';
+    readonly invoiceParams: InvoiceParams;
+};
+
+export type PaymentModelInvoice = InvoiceContext & CommonPaymentModel;
+export type PaymentModelInvoiceTemplate = InvoiceTemplateContext & CommonPaymentModel;
+export type PaymentModel = PaymentModelInvoice | PaymentModelInvoiceTemplate;
 
 export type CommonStartPaymentPayload = {
     email?: string;

@@ -21,12 +21,8 @@ const dataReducer = (state: PaymentCondition, action: Action): PaymentCondition 
     }
 };
 
-const toPaymentCondition = (model: PaymentModel): PaymentCondition => {
-    return { name: 'uninitialized' };
-};
-
-export const usePaymentCondition = (model: PaymentModel) => {
-    const [paymentCondition, dispatch] = useReducer(dataReducer, toPaymentCondition(model));
+export const usePaymentCondition = (model: PaymentModel, initCondition: PaymentCondition) => {
+    const [paymentCondition, dispatch] = useReducer(dataReducer, initCondition);
 
     const startPayment = useCallback((payload: StartPaymentPayload) => {
         (async () => {

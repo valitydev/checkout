@@ -54,26 +54,27 @@ export function ViewContainerInner() {
         setHeight(contentElement.current?.clientHeight || DEFAULT_HEIGHT_PX);
     }, []);
 
-    const activeViewName = viewModel?.activeView.name;
+    const activeView = viewModel?.activeView;
 
     return (
         <Wrapper>
             <Layout height={height}>
-                {!isNil(activeViewName) && (
+                {!isNil(activeView) && (
                     <motion.div
-                        key={activeViewName}
+                        key={activeView}
                         ref={contentElement}
                         animate={{ x: 0 }}
                         initial={{ x: toInitialPos(viewModel.direction) }}
                         transition={{ duration: 0.3 }}
                     >
-                        {activeViewName === 'PaymentFormView' && <PaymentFormView />}
-                        {activeViewName === 'PaymentMethodSelectorView' && <>PaymentMethodSelectorView</>}
-                        {activeViewName === 'PaymentResultView' && <PaymentResultView />}
-                        {activeViewName === 'QrCodeView' && <>QrCodeView</>}
+                        {activeView === 'PaymentFormView' && <PaymentFormView />}
+                        {activeView === 'PaymentMethodSelectorView' && <>PaymentMethodSelectorView</>}
+                        {activeView === 'PaymentResultView' && <PaymentResultView />}
+                        {activeView === 'QrCodeView' && <>QrCodeView</>}
                         {viewModel.isLoading && <FormLoader />}
                     </motion.div>
                 )}
+                {isNil(activeView) && <p>Active view name is null</p>}
             </Layout>
         </Wrapper>
     );

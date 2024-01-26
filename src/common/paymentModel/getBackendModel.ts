@@ -10,7 +10,7 @@ import {
 } from 'checkout/backend';
 
 import { getServiceProviders } from './getServiceProviders';
-import { InvoiceContext, InvoiceTemplateContext } from './types';
+import { InvoiceContext, InvoiceParams, InvoiceTemplateContext, InvoiceTemplateParams } from './types';
 
 type CommonBackendModel = {
     paymentMethods: PaymentMethod[];
@@ -31,7 +31,7 @@ export type BackendModel = BackendModelInvoice | BackendModelInvoiceTemplate;
 
 const getInvoiceTemplateModel = async (
     apiEndpoint: string,
-    { invoiceTemplateID, invoiceTemplateAccessToken }: InvoiceTemplateContext,
+    { invoiceTemplateID, invoiceTemplateAccessToken }: InvoiceTemplateParams,
 ): Promise<BackendModelInvoiceTemplate> => {
     try {
         const [invoiceTemplate, paymentMethods] = await Promise.all([
@@ -49,7 +49,7 @@ const getInvoiceTemplateModel = async (
 
 const getInvoiceModel = async (
     apiEndpoint: string,
-    { invoiceID, invoiceAccessToken }: InvoiceContext,
+    { invoiceID, invoiceAccessToken }: InvoiceParams,
 ): Promise<BackendModelInvoice> => {
     try {
         const [invoice, paymentMethods] = await Promise.all([
@@ -66,12 +66,12 @@ const getInvoiceModel = async (
 
 export const getBackendModel = async (
     apiEndpoint: string,
-    invoiceContext: InvoiceContext | InvoiceTemplateContext,
+    context: InvoiceTemplateContext | InvoiceContext,
 ): Promise<BackendModel> => {
-    switch (invoiceContext.type) {
+    switch (context.type) {
         case 'InvoiceTemplateContext':
-            return getInvoiceTemplateModel(apiEndpoint, invoiceContext);
+            return getInvoiceTemplateModel(apiEndpoint, context.invoiceTemplateParams);
         case 'InvoiceContext':
-            return getInvoiceModel(apiEndpoint, invoiceContext);
+            return getInvoiceModel(apiEndpoint, context.invoiceParams);
     }
 };

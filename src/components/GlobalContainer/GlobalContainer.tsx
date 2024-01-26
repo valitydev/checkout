@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { usePaymentCondition } from './usePaymentCondition';
 import { toContainer } from './utils';
 import { PaymentContext } from '../../common/contexts';
+import { PaymentCondition } from '../../common/paymentCondition';
 import { PaymentModel } from '../../common/paymentModel';
 import { ViewContainer } from '../ViewContainer';
 
@@ -14,10 +15,11 @@ const Wrapper = styled.div`
 
 export type GlobalContainerProps = {
     paymentModel: PaymentModel;
+    initPaymentCondition: PaymentCondition;
 };
 
-export function GlobalContainer({ paymentModel }: GlobalContainerProps) {
-    const { paymentCondition, startPayment } = usePaymentCondition(paymentModel);
+export function GlobalContainer({ paymentModel, initPaymentCondition }: GlobalContainerProps) {
+    const { paymentCondition, startPayment } = usePaymentCondition(paymentModel, initPaymentCondition);
     const container = toContainer(paymentCondition);
 
     return (
