@@ -8,4 +8,5 @@ export type {
     PaymentProcessedStatus,
     PaymentFailed,
     PaymentError,
+    PaymentInteractionType,
 } from './types';

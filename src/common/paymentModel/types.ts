@@ -1,15 +1,27 @@
-type Metadata = { [key: string]: any }; // Replace with a more specific type
+import { ServiceProviderMetadata } from 'checkout/backend';
 
 export type PaymentAmount = {
     value: number;
     currency: string;
 };
 
-type PaymentTerminal = {
-    name: 'PaymentTerminal';
+export type KnownProviderCategory =
+    | 'onlinebanking'
+    | 'netbanking'
+    | 'upi'
+    | 'digitalwallet'
+    | 'pix'
+    | 'paymentterminal';
+
+export type TerminalServiceProvider = {
     id: string;
-    category: string;
-    metadata: Metadata;
+    metadata?: ServiceProviderMetadata;
+};
+
+export type PaymentTerminal = {
+    name: 'PaymentTerminal';
+    category: KnownProviderCategory;
+    providers: TerminalServiceProvider[];
 };
 
 type BankCard = {

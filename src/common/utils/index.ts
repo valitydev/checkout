@@ -7,3 +7,6 @@ export { delay } from './delay';
 export { assertUnreachable } from './assertUnreachable';
 export { replaceSpaces } from './replaceSpaces';
 export { last } from './last';
+export { groupBy } from './groupBy';
+export { getMetadata } from './getMetadata';
+export { prepareForm } from './interactionForm';

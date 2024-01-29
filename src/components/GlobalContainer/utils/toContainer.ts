@@ -10,6 +10,11 @@ export const toContainer = (paymentCondition: PaymentCondition): Container => {
         case 'paymentProcessFailed':
             return { name: 'ViewContainer' };
         case 'interactionRequested':
-            return { name: 'ThirdPartyContainer' };
+            switch (paymentCondition.type) {
+                case 'frame':
+                    return { name: 'ThirdPartyContainer' };
+                case 'self':
+                    return { name: 'SelfRedirectContainer' };
+            }
     }
 };

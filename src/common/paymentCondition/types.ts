@@ -1,4 +1,4 @@
-type UserInteraction = { [key: string]: any }; // Replace with a more specific type
+import { UserInteraction } from 'checkout/backend';
 
 export type PaymentUninitialized = {
     name: 'uninitialized';
@@ -25,19 +25,26 @@ export type PaymentFailed = {
     error: PaymentError;
 };
 
-type PollingTimeoutException = {
-    type: 'pollingTimeout';
+export type PollingTimeoutException = {
+    type: 'PollingTimeoutException';
 };
 
-type PaymentProcessException = PollingTimeoutException;
+export type ApiCallException = {
+    type: 'ApiCallException';
+};
+
+type PaymentProcessException = PollingTimeoutException | ApiCallException;
 
 export type PaymentProcessFailed = {
     name: 'paymentProcessFailed';
     exception: PaymentProcessException;
 };
 
+export type PaymentInteractionType = 'frame' | 'self';
+
 export type PaymentInteractionRequested = {
     name: 'interactionRequested';
+    type: PaymentInteractionType;
     interaction: UserInteraction;
 };
 

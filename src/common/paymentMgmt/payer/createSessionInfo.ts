@@ -1,8 +1,10 @@
-import { SessionInfo, ShortenedUrlParams, shortenUrl } from 'checkout/backend';
+import { CheckoutServiceProviderMetadata, SessionInfo, ShortenedUrlParams, shortenUrl } from 'checkout/backend';
 
 import { toSelfRedirectUrl } from './toSelfRedirectUrl';
-import { PaymentMethod, PaymentModelInvoice } from '../../paymentModel';
+import { isNil } from '../../../common/utils';
+import { PaymentModelInvoice } from '../../paymentModel';
 import { StartPaymentPayload } from '../types';
+import { extractServiceProviderMetadata } from '../utils';
 
 export const shorten = (
     urlShortenerEndpoint: string,
@@ -13,31 +15,15 @@ export const shorten = (
 
 const isSkipUserInteractionParam = (payload: StartPaymentPayload) => payload.methodName === 'PaymentTerminal';
 
-const toRedirectUrlType = (
-    payload: StartPaymentPayload,
-    paymentMethods: PaymentMethod[],
-    initConfigRedirectUrl: string | null,
-): 'outer' | 'self' => {
-    switch (payload.methodName) {
-        case 'PaymentTerminal':
-            const metaType = 'self';
-
-            // TODO need to implement getting metaType from PaymentMethod[]
-
-            // const values = formValues.values as PaymentTerminalFormValues;
-            // const metaType = values?.paymentSessionInfo?.redirectUrlInfo?.type;
-            // if (isNil(metaType)) {
-            //     return 'self';
-            // }
-            // if (metaType === 'outer' && isNil(initConfigRedirectUrl)) {
-            //     console.warn('Initial redirectUrl must be specified with metadata redirectUrlInfo outer type');
-            //     return 'self';
-            // }
-
-            return metaType;
-        default:
-            return 'self';
+const toRedirectUrlType = ({ paymentSessionInfo }: CheckoutServiceProviderMetadata): 'outer' | 'self' => {
+    if (isNil(paymentSessionInfo)) {
+        return 'self';
     }
+    const metaType = paymentSessionInfo?.redirectUrlInfo?.type;
+    if (isNil(metaType)) {
+        return 'self';
+    }
+    return metaType;
 };
 
 export const createSessionInfo = async (
@@ -54,7 +40,8 @@ export const createSessionInfo = async (
         paymentMethods,
     } = model;
     let redirectUrl;
-    const redirectUrlType = toRedirectUrlType(payload, paymentMethods, initContext.redirectUrl);
+    const serviceProviderMetadata = extractServiceProviderMetadata(paymentMethods, payload);
+    const redirectUrlType = toRedirectUrlType(serviceProviderMetadata);
     switch (redirectUrlType) {
         case 'self':
             redirectUrl = await shorten(urlShortenerEndpoint, invoiceAccessToken, {

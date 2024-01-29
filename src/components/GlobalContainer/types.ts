@@ -6,4 +6,8 @@ type ViewContainer = {
     name: 'ViewContainer';
 };
 
-export type Container = ThirdPartyContainer | ViewContainer;
+type SelfRedirectContainer = {
+    name: 'SelfRedirectContainer';
+};
+
+export type Container = ThirdPartyContainer | SelfRedirectContainer | ViewContainer;

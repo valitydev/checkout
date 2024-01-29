@@ -1,22 +1,15 @@
 import { useCallback, useReducer } from 'react';
 
-import {
-    InvoiceChange,
-    InvoiceChangeType,
-    InvoiceStatusChanged,
-    InvoiceStatuses,
-    PaymentInteractionRequested,
-    PaymentStatusChanged,
-    PaymentStatuses,
-} from 'checkout/backend';
+import { CheckoutServiceProviderMetadata, InvoiceChangeType } from 'checkout/backend';
 
 import { PaymentCondition } from '../../common/paymentCondition';
 import {
-    PollingResult,
     StartPaymentPayload,
     createPayment,
     determineModel,
+    extractServiceProviderMetadata,
     pollInvoiceEvents,
+    pollingResToPaymentCondition,
 } from '../../common/paymentMgmt';
 import { PaymentModel, PaymentModelInvoice } from '../../common/paymentModel';
 import { isNil } from '../../common/utils';
@@ -25,12 +18,14 @@ type State = {
     condition: PaymentCondition;
     lastEventId: number;
     modelInvoice?: PaymentModelInvoice;
+    metadata?: CheckoutServiceProviderMetadata;
 };
 
 type Action =
     | { type: 'SET_CONDITION'; payload: PaymentCondition }
     | { type: 'SET_MODEL_INVOICE'; payload: PaymentModelInvoice }
-    | { type: 'SET_LAST_EVENT_ID'; payload: number };
+    | { type: 'SET_LAST_EVENT_ID'; payload: number }
+    | { type: 'SET_METADATA'; payload: CheckoutServiceProviderMetadata };
 
 const dataReducer = (state: State, action: Action): State => {
     switch (action.type) {
@@ -39,6 +34,21 @@ const dataReducer = (state: State, action: Action): State => {
                 ...state,
                 condition: action.payload,
             };
+        case 'SET_LAST_EVENT_ID':
+            return {
+                ...state,
+                lastEventId: action.payload,
+            };
+        case 'SET_METADATA':
+            return {
+                ...state,
+                metadata: action.payload,
+            };
+        case 'SET_MODEL_INVOICE':
+            return {
+                ...state,
+                modelInvoice: action.payload,
+            };
         default:
             return state;
     }
@@ -46,69 +56,6 @@ const dataReducer = (state: State, action: Action): State => {
 
 const API_METHOD_CALL_MS = 1000;
 const DEFAULT_TIMEOUT_MS = 60 * 1000 * 20;
-
-const applyInvoiceStatusChanged = (change: InvoiceStatusChanged): PaymentCondition => {
-    console.log(`InvoiceStatusChanged: ${change.status}`, change);
-    switch (change.status) {
-        case InvoiceStatuses.paid:
-            return { name: 'processed', status: 'InvoicePaid' };
-        case InvoiceStatuses.fulfilled:
-            return { name: 'processed', status: 'InvoiceFulfilled' };
-        case InvoiceStatuses.cancelled:
-        case InvoiceStatuses.refunded:
-        case InvoiceStatuses.unpaid:
-            throw new Error(`Unimplemented invoice status: ${change.status}`);
-    }
-};
-
-const applyPaymentStatusChanged = (change: PaymentStatusChanged): PaymentCondition => {
-    console.log(`PaymentStatusChanged: ${change.status}`, change);
-    switch (change.status) {
-        case PaymentStatuses.captured:
-            return { name: 'processed', status: 'PaymentCaptured' };
-        case PaymentStatuses.failed:
-            return { name: 'paymentFailed', error: change.error };
-        case PaymentStatuses.pending:
-        case PaymentStatuses.cancelled:
-        case PaymentStatuses.processed:
-        case PaymentStatuses.refunded:
-            throw new Error(`Unimplemented payment status: ${change.status}`);
-    }
-};
-
-const applyInvoiceChange = (change: InvoiceChange): PaymentCondition => {
-    switch (change.changeType) {
-        case InvoiceChangeType.InvoiceStatusChanged:
-            return applyInvoiceStatusChanged(change as InvoiceStatusChanged);
-        case InvoiceChangeType.PaymentStatusChanged:
-            return applyPaymentStatusChanged(change as PaymentStatusChanged);
-        case InvoiceChangeType.PaymentInteractionRequested:
-            return {
-                name: 'interactionRequested',
-                interaction: (change as PaymentInteractionRequested).userInteraction,
-            };
-    }
-};
-
-const applyPollingResult = (pollingResult: PollingResult): { condition: PaymentCondition; eventId: number } => {
-    switch (pollingResult.status) {
-        case 'POLLED':
-            return {
-                eventId: pollingResult.eventID,
-                condition: applyInvoiceChange(pollingResult.change),
-            };
-        case 'TIMEOUT':
-            return {
-                eventId: 0,
-                condition: {
-                    name: 'paymentProcessFailed',
-                    exception: {
-                        type: 'pollingTimeout',
-                    },
-                },
-            };
-    }
-};
 
 export const usePaymentCondition = (model: PaymentModel, initCondition: PaymentCondition) => {
     const [state, dispatch] = useReducer(dataReducer, {
@@ -140,7 +87,9 @@ export const usePaymentCondition = (model: PaymentModel, initCondition: PaymentC
                     apiMethodCall: API_METHOD_CALL_MS,
                 },
             });
-            const { eventId, condition } = applyPollingResult(pollingResult);
+            const metadata = extractServiceProviderMetadata(modelInvoice.paymentMethods, startPaymentPayload);
+            dispatch({ type: 'SET_METADATA', payload: metadata });
+            const { eventId, condition } = pollingResToPaymentCondition(pollingResult, metadata);
             dispatch({ type: 'SET_LAST_EVENT_ID', payload: eventId });
             dispatch({ type: 'SET_CONDITION', payload: condition });
         })();
@@ -148,10 +97,10 @@ export const usePaymentCondition = (model: PaymentModel, initCondition: PaymentC
 
     const continuePayment = useCallback(() => {
         async () => {
-            dispatch({ type: 'SET_CONDITION', payload: { name: 'pending' } });
             if (isNil(state.modelInvoice)) {
                 throw new Error('Model invoice should be defined');
             }
+            dispatch({ type: 'SET_CONDITION', payload: { name: 'pending' } });
             const {
                 apiEndpoint,
                 invoiceParams: { invoiceID, invoiceAccessToken },
@@ -166,7 +115,7 @@ export const usePaymentCondition = (model: PaymentModel, initCondition: PaymentC
                     apiMethodCall: API_METHOD_CALL_MS,
                 },
             });
-            const { eventId, condition } = applyPollingResult(pollingResult);
+            const { eventId, condition } = pollingResToPaymentCondition(pollingResult, state.metadata);
             dispatch({ type: 'SET_LAST_EVENT_ID', payload: eventId });
             dispatch({ type: 'SET_CONDITION', payload: condition });
         };
