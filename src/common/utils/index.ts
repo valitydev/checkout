@@ -5,3 +5,5 @@ export { replaceFullWidthChars } from './replaceFullWidthChars';
 export { safeVal } from './safeVal';
 export { delay } from './delay';
 export { assertUnreachable } from './assertUnreachable';
+export { replaceSpaces } from './replaceSpaces';
+export { last } from './last';

@@ -2,7 +2,6 @@ export { initPaymentModel } from './initPaymentModel';
 
 export type {
     PaymentAmount,
-    StartPaymentPayload,
     InitContext,
     InvoiceContext,
     InvoiceTemplateContext,

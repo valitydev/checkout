@@ -1,4 +1,5 @@
-import { PaymentMethod, StartPaymentPayload } from '../../common/paymentModel';
+import { StartPaymentPayload } from '../../common/paymentMgmt';
+import { PaymentMethod } from '../../common/paymentModel';
 
 export type ViewName = 'PaymentFormView' | 'PaymentMethodSelectorView' | 'PaymentResultView' | 'QrCodeView';
 
@@ -19,7 +20,7 @@ export type PaymentResultView = {
     name: 'PaymentResultView';
     iconName: 'Success' | 'Warning' | 'Error';
     label: LocalePath;
-    description?: LocalePath;
+    description?: string;
 };
 
 export type QRCodeView = {

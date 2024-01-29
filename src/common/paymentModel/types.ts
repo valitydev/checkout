@@ -28,10 +28,15 @@ export type InitContext = {
     readonly terminalFormValues?: object;
     readonly paymentMetadata?: object;
     readonly isExternalIDIncluded?: boolean;
+    readonly redirectUrl?: string;
+    readonly metadata?: object;
 };
 
 export type CommonPaymentModel = {
     readonly apiEndpoint: string;
+    readonly urlShortenerEndpoint: string;
+    readonly origin: string;
+    readonly localeCode: string;
     readonly initContext: InitContext;
     readonly paymentMethods: PaymentMethod[];
     readonly paymentAmount: PaymentAmount;
@@ -50,36 +55,16 @@ export type InvoiceParams = {
 export type InvoiceTemplateContext = {
     readonly type: 'InvoiceTemplateContext';
     readonly invoiceTemplateParams: InvoiceTemplateParams;
+    readonly metadata: object;
 };
 
 export type InvoiceContext = {
     readonly type: 'InvoiceContext';
     readonly invoiceParams: InvoiceParams;
+    readonly dueDate: string;
+    readonly externalID: string;
 };
 
 export type PaymentModelInvoice = InvoiceContext & CommonPaymentModel;
 export type PaymentModelInvoiceTemplate = InvoiceTemplateContext & CommonPaymentModel;
 export type PaymentModel = PaymentModelInvoice | PaymentModelInvoiceTemplate;
-
-export type CommonStartPaymentValues = {
-    email?: string;
-    phoneNumber?: string;
-};
-
-export type BankCardValues = {
-    cardNumber: string;
-    secureCode: string;
-    expireDate?: string;
-    cardHolder?: string;
-} & CommonStartPaymentValues;
-
-export type StartPaymentBankCardPayload = {
-    methodName: 'BankCard';
-    values: BankCardValues;
-};
-
-export type StartPaymentTerminalPayload = {
-    methodName: 'PaymentTerminal';
-};
-
-export type StartPaymentPayload = StartPaymentBankCardPayload | StartPaymentTerminalPayload;

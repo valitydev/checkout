@@ -66,7 +66,7 @@ const getInvoiceModel = async (
 
 export const getBackendModel = async (
     apiEndpoint: string,
-    context: InvoiceTemplateContext | InvoiceContext,
+    context: Partial<InvoiceTemplateContext | InvoiceContext>,
 ): Promise<BackendModel> => {
     switch (context.type) {
         case 'InvoiceTemplateContext':

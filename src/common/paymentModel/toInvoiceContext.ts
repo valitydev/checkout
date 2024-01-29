@@ -3,7 +3,7 @@ import { InitConfig } from 'checkout/config';
 import { InvoiceContext, InvoiceTemplateContext } from './types';
 import { isNil } from '../utils';
 
-export const toInvoiceContext = (initConfig: InitConfig): InvoiceTemplateContext | InvoiceContext => {
+export const toInvoiceContext = (initConfig: InitConfig): Partial<InvoiceTemplateContext | InvoiceContext> => {
     if (initConfig.integrationType === 'invoiceTemplate') {
         if (isNil(initConfig.invoiceTemplateID) || isNil(initConfig.invoiceTemplateAccessToken)) {
             throw new Error('Missing required fields for InvoiceTemplateContext');

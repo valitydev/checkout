@@ -8,15 +8,32 @@ export type PaymentPending = {
     name: 'pending';
 };
 
+export type PaymentProcessedStatus = 'InvoicePaid' | 'InvoiceFulfilled' | 'PaymentCaptured';
+
 export type PaymentProcessed = {
     name: 'processed';
+    status: PaymentProcessedStatus;
 };
 
-type PaymentError = { message: string; code: number /* other relevant fields */ };
+export type PaymentError = {
+    code: string;
+    subError?: PaymentError;
+};
 
 export type PaymentFailed = {
-    name: 'failed';
+    name: 'paymentFailed';
     error: PaymentError;
+};
+
+type PollingTimeoutException = {
+    type: 'pollingTimeout';
+};
+
+type PaymentProcessException = PollingTimeoutException;
+
+export type PaymentProcessFailed = {
+    name: 'paymentProcessFailed';
+    exception: PaymentProcessException;
 };
 
 export type PaymentInteractionRequested = {
@@ -29,4 +46,5 @@ export type PaymentCondition =
     | PaymentPending
     | PaymentProcessed
     | PaymentFailed
-    | PaymentInteractionRequested;
+    | PaymentInteractionRequested
+    | PaymentProcessFailed;

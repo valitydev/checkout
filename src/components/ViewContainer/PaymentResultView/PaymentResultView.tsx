@@ -52,7 +52,7 @@ export function PaymentResultView() {
                 <Wrapper>
                     <ResultIcon iconName={view.iconName} />
                     <Label>{l[view.label]}</Label>
-                    {!isNil(view.description) && <Description>{l[view.description]}</Description>}
+                    {!isNil(view.description) && <Description>{view.description}</Description>}
                 </Wrapper>
             )}
         </>

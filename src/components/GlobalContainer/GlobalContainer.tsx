@@ -27,7 +27,7 @@ export function GlobalContainer({ paymentModel, initPaymentCondition }: GlobalCo
             <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
                 <Wrapper>
                     {container.name === 'ViewContainer' && <ViewContainer />}
-                    {container.name === 'ThirdPartyContainer' && <div>thirdPartyContainer</div>}
+                    {container.name === 'ThirdPartyContainer' && <div>ThirdPartyContainer</div>}
                 </Wrapper>
             </motion.div>
         </PaymentContext.Provider>

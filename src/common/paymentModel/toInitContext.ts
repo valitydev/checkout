@@ -18,4 +18,6 @@ export const toInitContext = (initConfig: InitConfig): InitContext => ({
     paymentMetadata: initConfig.metadata,
     isExternalIDIncluded: initConfig.isExternalIDIncluded,
     contactInfo: toContactInfo(initConfig),
+    redirectUrl: initConfig.redirectUrl,
+    metadata: initConfig.metadata,
 });

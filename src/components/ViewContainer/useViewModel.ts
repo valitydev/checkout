@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useReducer } from 'react';
 
-import { SlideAnimationDirection, View, ViewModel, ViewName } from './types';
-import { PaymentCondition, PaymentProcessed } from '../../common/paymentCondition';
+import { PaymentResultView, SlideAnimationDirection, View, ViewModel, ViewName } from './types';
+import { PaymentCondition, PaymentProcessed, PaymentFailed } from '../../common/paymentCondition';
 import { PaymentMethod, PaymentModel } from '../../common/paymentModel';
 import { formatAmount } from '../../common/utils';
 
@@ -11,8 +11,12 @@ type Action =
           payload: ViewName;
       }
     | {
-          type: 'ADD_VIEW';
+          type: 'SET_VIEW';
           payload: View;
+      }
+    | {
+          type: 'SET_LOADING';
+          payload: boolean;
       }
     | {
           type: 'GO_TO';
@@ -29,10 +33,15 @@ const dataReducer = (state: ViewModel, action: Action): ViewModel => {
                 ...state,
                 activeView: action.payload,
             };
-        case 'ADD_VIEW':
+        case 'SET_VIEW':
             return {
                 ...state,
                 views: state.views.set(action.payload.name, action.payload),
+            };
+        case 'SET_LOADING':
+            return {
+                ...state,
+                isLoading: action.payload,
             };
         default:
             return state;
@@ -64,11 +73,20 @@ const initViewModel = (model: PaymentModel, localeCode: string): ViewModel => {
     };
 };
 
-const toPaymentResultView = (model: PaymentModel, condition: PaymentProcessed): PaymentResultView => {
+const applyPaymentProcessed = (condition: PaymentProcessed): PaymentResultView => {
     return {
         name: 'PaymentResultView',
         iconName: 'Success',
         label: 'form.header.final.invoice.paid.label',
+    };
+};
+
+const applyPaymentFailed = (condition: PaymentFailed): PaymentResultView => {
+    return {
+        name: 'PaymentResultView',
+        iconName: 'Error',
+        label: 'form.header.final.failed.label',
+        description: condition.error.code,
     };
 };
 
@@ -89,9 +107,17 @@ export const useViewModel = (localeCode: string, model: PaymentModel, condition:
                 dispatch({ type: 'SET_ACTIVE_VIEW', payload: uninitializedPayload });
                 break;
             case 'processed':
-                const resultView = toPaymentResultView(model, condition);
-                dispatch({ type: 'ADD_VIEW', payload: resultView });
+                dispatch({ type: 'SET_LOADING', payload: false });
+                dispatch({ type: 'SET_VIEW', payload: applyPaymentProcessed(condition) });
                 dispatch({ type: 'SET_ACTIVE_VIEW', payload: 'PaymentResultView' });
+                break;
+            case 'paymentFailed':
+                dispatch({ type: 'SET_LOADING', payload: false });
+                dispatch({ type: 'SET_VIEW', payload: applyPaymentFailed(condition) });
+                dispatch({ type: 'SET_ACTIVE_VIEW', payload: 'PaymentResultView' });
+                break;
+            case 'pending':
+                dispatch({ type: 'SET_LOADING', payload: true });
                 break;
         }
     }, [condition]);
