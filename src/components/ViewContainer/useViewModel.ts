@@ -1,8 +1,22 @@
 import { useCallback, useEffect, useReducer } from 'react';
 
-import { PaymentResultView, SlideAnimationDirection, View, ViewModel, ViewName } from './types';
-import { PaymentCondition, PaymentProcessed, PaymentFailed } from '../../common/paymentCondition';
-import { PaymentMethod, PaymentModel } from '../../common/paymentModel';
+import {
+    ApiExtensionView,
+    PaymentResultView,
+    QRCodeView,
+    SlideAnimationDirection,
+    View,
+    ViewModel,
+    ViewName,
+} from './types';
+import {
+    PaymentCondition,
+    PaymentProcessed,
+    PaymentFailed,
+    PaymentInteractionQRCode,
+    PaymentInteractionApiExtension,
+} from '../../common/paymentCondition';
+import { PaymentModel } from '../../common/paymentModel';
 import { formatAmount } from '../../common/utils';
 
 type Action =
@@ -96,6 +110,18 @@ const applyPaymentFailed = (condition: PaymentFailed): PaymentResultView => {
     };
 };
 
+const applyInteractionQRCode = (condition: PaymentInteractionQRCode): QRCodeView => {
+    return {
+        name: 'QrCodeView',
+    };
+};
+
+const applyInteractionApiExtension = (condition: PaymentInteractionApiExtension): ApiExtensionView => {
+    return {
+        name: 'ApiExtensionView',
+    };
+};
+
 const applyUninitialized = (model: PaymentModel): ViewName => {
     if (model.paymentMethods.length > 1) {
         return 'PaymentMethodSelectorView';
@@ -109,8 +135,7 @@ export const useViewModel = (localeCode: string, model: PaymentModel, condition:
     useEffect(() => {
         switch (condition.name) {
             case 'uninitialized':
-                const uninitializedPayload = applyUninitialized(model);
-                dispatch({ type: 'SET_ACTIVE_VIEW', payload: uninitializedPayload });
+                dispatch({ type: 'SET_ACTIVE_VIEW', payload: applyUninitialized(model) });
                 break;
             case 'processed':
                 dispatch({ type: 'SET_LOADING', payload: false });
@@ -124,6 +149,21 @@ export const useViewModel = (localeCode: string, model: PaymentModel, condition:
                 break;
             case 'pending':
                 dispatch({ type: 'SET_LOADING', payload: true });
+                break;
+        }
+    }, [condition]);
+
+    useEffect(() => {
+        if (condition.name !== 'interactionRequested') return;
+        const interaction = condition.interaction;
+        switch (interaction.type) {
+            case 'PaymentInteractionQRCode':
+                dispatch({ type: 'SET_VIEW', payload: applyInteractionQRCode(interaction) });
+                dispatch({ type: 'SET_ACTIVE_VIEW', payload: 'QrCodeView' });
+                break;
+            case 'PaymentInteractionApiExtension':
+                dispatch({ type: 'SET_VIEW', payload: applyInteractionApiExtension(interaction) });
+                dispatch({ type: 'SET_ACTIVE_VIEW', payload: 'ApiExtensionView' });
                 break;
         }
     }, [condition]);

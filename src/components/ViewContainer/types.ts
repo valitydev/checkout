@@ -6,7 +6,8 @@ export type ViewName =
     | 'PaymentMethodSelectorView'
     | 'PaymentResultView'
     | 'QrCodeView'
-    | 'TerminalSelectorView';
+    | 'TerminalSelectorView'
+    | 'ApiExtensionView';
 
 export type PaymentFormViewPaymentMethod = PaymentMethod;
 export type PaymentFormViewInitContext = {
@@ -42,9 +43,19 @@ export type QRCodeView = {
     name: 'QrCodeView';
 };
 
+export type ApiExtensionView = {
+    name: 'ApiExtensionView';
+};
+
 export type ViewAmount = string;
 export type SlideAnimationDirection = 'forward' | 'backward';
-export type View = QRCodeView | PaymentResultView | PaymentMethodSelectorView | PaymentFormView | TerminalSelectorView;
+export type View =
+    | ApiExtensionView
+    | QRCodeView
+    | PaymentResultView
+    | PaymentMethodSelectorView
+    | PaymentFormView
+    | TerminalSelectorView;
 
 export type ViewModel = {
     direction: SlideAnimationDirection;

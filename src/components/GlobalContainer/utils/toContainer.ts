@@ -10,11 +10,17 @@ export const toContainer = (paymentCondition: PaymentCondition): Container => {
         case 'paymentProcessFailed':
             return { name: 'ViewContainer' };
         case 'interactionRequested':
-            switch (paymentCondition.type) {
-                case 'frame':
-                    return { name: 'ThirdPartyContainer' };
-                case 'self':
-                    return { name: 'SelfRedirectContainer' };
+            switch (paymentCondition.interaction.type) {
+                case 'PaymentInteractionQRCode':
+                case 'PaymentInteractionApiExtension':
+                    return { name: 'ViewContainer' };
+                case 'PaymentInteractionRedirect':
+                    switch (paymentCondition.interaction.redirectType) {
+                        case 'frame':
+                            return { name: 'ThirdPartyContainer' };
+                        case 'self':
+                            return { name: 'SelfRedirectContainer' };
+                    }
             }
     }
 };

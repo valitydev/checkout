@@ -1,2 +1,4 @@
 export { pollingResToPaymentCondition } from './pollingResToPaymentCondition';
-export { extractServiceProviderMetadata } from './extractServiceProviderMetadata';
+export { getServiceProviderMetadata } from './getServiceProviderMetadata';
+export { invoiceChangeToPaymentCondition } from './invoiceChangeToPaymentCondition';
+export { applyPaymentInteractionRequested } from './applyPaymentInteractionRequested';

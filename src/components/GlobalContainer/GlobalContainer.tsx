@@ -21,6 +21,7 @@ export type GlobalContainerProps = {
 
 export function GlobalContainer({ paymentModel, initPaymentCondition }: GlobalContainerProps) {
     const { paymentCondition, startPayment } = usePaymentCondition(paymentModel, initPaymentCondition);
+    // const { userInteraction, setPaymentCondition } = useActivePaymentProvider(paymentModel);
     const container = toContainer(paymentCondition);
 
     return (

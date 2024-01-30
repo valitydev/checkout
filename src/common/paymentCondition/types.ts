@@ -1,4 +1,4 @@
-import { UserInteraction } from 'checkout/backend';
+import { BrowserRequest } from 'checkout/backend';
 
 export type PaymentUninitialized = {
     name: 'uninitialized';
@@ -40,12 +40,26 @@ export type PaymentProcessFailed = {
     exception: PaymentProcessException;
 };
 
-export type PaymentInteractionType = 'frame' | 'self';
+export type PaymentInteractionRedirectType = 'frame' | 'self';
+
+export type PaymentInteractionRedirect = {
+    type: 'PaymentInteractionRedirect';
+    redirectType: PaymentInteractionRedirectType;
+    request: BrowserRequest;
+};
+
+export type PaymentInteractionQRCode = {
+    type: 'PaymentInteractionQRCode';
+    qrCode: string;
+};
+
+export type PaymentInteractionApiExtension = {
+    type: 'PaymentInteractionApiExtension';
+};
 
 export type PaymentInteractionRequested = {
     name: 'interactionRequested';
-    type: PaymentInteractionType;
-    interaction: UserInteraction;
+    interaction: PaymentInteractionRedirect | PaymentInteractionQRCode | PaymentInteractionApiExtension;
 };
 
 export type PaymentCondition =

@@ -2,12 +2,12 @@ import { useCallback, useReducer } from 'react';
 
 import { CheckoutServiceProviderMetadata, InvoiceChangeType } from 'checkout/backend';
 
-import { PaymentCondition } from '../../common/paymentCondition';
+import { PaymentCondition, PaymentInteractionRedirectType } from '../../common/paymentCondition';
 import {
     StartPaymentPayload,
     createPayment,
     determineModel,
-    extractServiceProviderMetadata,
+    getServiceProviderMetadata,
     pollInvoiceEvents,
     pollingResToPaymentCondition,
 } from '../../common/paymentMgmt';
@@ -87,9 +87,16 @@ export const usePaymentCondition = (model: PaymentModel, initCondition: PaymentC
                     apiMethodCall: API_METHOD_CALL_MS,
                 },
             });
-            const metadata = extractServiceProviderMetadata(modelInvoice.paymentMethods, startPaymentPayload);
-            dispatch({ type: 'SET_METADATA', payload: metadata });
-            const { eventId, condition } = pollingResToPaymentCondition(pollingResult, metadata);
+            let redirectType: PaymentInteractionRedirectType = 'self';
+            if (startPaymentPayload.methodName === 'PaymentTerminal') {
+                const metadata = getServiceProviderMetadata(
+                    modelInvoice.paymentMethods,
+                    startPaymentPayload.values.provider,
+                );
+                redirectType = metadata?.userInteraction?.type;
+                dispatch({ type: 'SET_METADATA', payload: metadata });
+            }
+            const { eventId, condition } = pollingResToPaymentCondition(pollingResult, redirectType);
             dispatch({ type: 'SET_LAST_EVENT_ID', payload: eventId });
             dispatch({ type: 'SET_CONDITION', payload: condition });
         })();
@@ -115,7 +122,10 @@ export const usePaymentCondition = (model: PaymentModel, initCondition: PaymentC
                     apiMethodCall: API_METHOD_CALL_MS,
                 },
             });
-            const { eventId, condition } = pollingResToPaymentCondition(pollingResult, state.metadata);
+            const { eventId, condition } = pollingResToPaymentCondition(
+                pollingResult,
+                state.metadata?.userInteraction?.type,
+            );
             dispatch({ type: 'SET_LAST_EVENT_ID', payload: eventId });
             dispatch({ type: 'SET_CONDITION', payload: condition });
         };

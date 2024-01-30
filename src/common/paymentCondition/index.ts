@@ -8,5 +8,9 @@ export type {
     PaymentProcessedStatus,
     PaymentFailed,
     PaymentError,
-    PaymentInteractionType,
+    PaymentInteractionRedirectType,
+    PaymentInteractionRequested,
+    PaymentInteractionRedirect,
+    PaymentInteractionApiExtension,
+    PaymentInteractionQRCode,
 } from './types';

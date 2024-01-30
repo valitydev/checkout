@@ -1,4 +1,4 @@
-import { ServiceProviderMetadata } from 'checkout/backend';
+import { InvoiceStatus, ServiceProviderMetadata } from 'checkout/backend';
 
 export type PaymentAmount = {
     readonly value: number;
@@ -75,6 +75,7 @@ export type InvoiceContext = {
     readonly invoiceParams: InvoiceParams;
     readonly dueDate: string;
     readonly externalID: string;
+    readonly status: InvoiceStatus;
 };
 
 export type PaymentModelInvoice = InvoiceContext & CommonPaymentModel;

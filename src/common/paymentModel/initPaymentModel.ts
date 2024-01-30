@@ -9,12 +9,13 @@ import { InvoiceContext, InvoiceTemplateContext, PaymentModel } from './types';
 
 const applyInvoice = (
     { invoiceParams, type }: Partial<InvoiceContext>,
-    { invoice: { dueDate, externalID } }: BackendModelInvoice,
+    { invoice: { dueDate, externalID, status } }: BackendModelInvoice,
 ): InvoiceContext => ({
     type,
     invoiceParams,
     dueDate,
     externalID,
+    status,
 });
 
 const applyInvoiceTemplate = (

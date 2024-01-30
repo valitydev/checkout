@@ -1,10 +1,10 @@
-import { CheckoutServiceProviderMetadata, SessionInfo, ShortenedUrlParams, shortenUrl } from 'checkout/backend';
+import { PaymentSessionInfoMetadata, SessionInfo, ShortenedUrlParams, shortenUrl } from 'checkout/backend';
 
 import { toSelfRedirectUrl } from './toSelfRedirectUrl';
 import { isNil } from '../../../common/utils';
 import { PaymentModelInvoice } from '../../paymentModel';
 import { StartPaymentPayload } from '../types';
-import { extractServiceProviderMetadata } from '../utils';
+import { getServiceProviderMetadata } from '../utils';
 
 export const shorten = (
     urlShortenerEndpoint: string,
@@ -15,7 +15,7 @@ export const shorten = (
 
 const isSkipUserInteractionParam = (payload: StartPaymentPayload) => payload.methodName === 'PaymentTerminal';
 
-const toRedirectUrlType = ({ paymentSessionInfo }: CheckoutServiceProviderMetadata): 'outer' | 'self' => {
+const toRedirectUrlType = (paymentSessionInfo: PaymentSessionInfoMetadata): 'outer' | 'self' => {
     if (isNil(paymentSessionInfo)) {
         return 'self';
     }
@@ -40,8 +40,12 @@ export const createSessionInfo = async (
         paymentMethods,
     } = model;
     let redirectUrl;
-    const serviceProviderMetadata = extractServiceProviderMetadata(paymentMethods, payload);
-    const redirectUrlType = toRedirectUrlType(serviceProviderMetadata);
+    let paymentSessionInfo;
+    if (payload.methodName === 'PaymentTerminal') {
+        const metadata = getServiceProviderMetadata(paymentMethods, payload.values.provider);
+        paymentSessionInfo = metadata.paymentSessionInfo;
+    }
+    const redirectUrlType = toRedirectUrlType(paymentSessionInfo);
     switch (redirectUrlType) {
         case 'self':
             redirectUrl = await shorten(urlShortenerEndpoint, invoiceAccessToken, {
