@@ -6,7 +6,7 @@ import { Button } from './Button';
 import { ViewAmount } from '../ViewContainer';
 
 const PayButtonWrapper = styled(Button)`
-    margin-top: 20px;
+    margin-top: 24px;
 `;
 
 export type PayButtonProps = {

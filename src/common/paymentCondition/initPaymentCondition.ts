@@ -77,12 +77,11 @@ const fromPaymentTerminal = async (
         if (result) {
             return result;
         }
-        return isNil(terminalFormValues[curr.name]);
+        return isNil(terminalFormValues) || isNil(terminalFormValues[curr.name]);
     }, false);
     if (!isFormRenderRequired) {
         return provideInstantPayment(model, id, { ...terminalFormValues, ...prefilledMetadataValues });
     }
-
     return {
         name: 'uninitialized',
     };

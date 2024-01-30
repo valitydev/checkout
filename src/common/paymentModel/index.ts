@@ -13,4 +13,5 @@ export type {
     PaymentMethod,
     PaymentTerminal,
     TerminalServiceProvider,
+    InitContextContactInfo,
 } from './types';

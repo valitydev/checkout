@@ -1,6 +1,6 @@
 import { TemplateExpression, parse } from 'uri-template';
 
-import isString from 'checkout/utils/is-string';
+import { isString } from '../isString';
 
 const hasTerminationUriParam = (expression: TemplateExpression): boolean =>
     !!expression.params.find((param) => param.name === 'termination_uri');

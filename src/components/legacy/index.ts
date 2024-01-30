@@ -15,3 +15,7 @@ export { Button } from './Button';
 export { ErrorIcon } from './ErrorIcon';
 export { WarningIcon } from './WarningIcon';
 export { SuccessIcon } from './SuccessIcon';
+export { MetadataField, MetadataLogo, MetadataSelect, MetadataTitle, obscurePassword, sortByIndex } from './metadata';
+export { Email } from './Email';
+export { Phone } from './Phone';
+export { Select } from './Select';

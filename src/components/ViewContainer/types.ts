@@ -1,12 +1,27 @@
 import { StartPaymentPayload } from '../../common/paymentMgmt';
-import { PaymentMethod } from '../../common/paymentModel';
+import { InitContextContactInfo, PaymentMethod } from '../../common/paymentModel';
 
-export type ViewName = 'PaymentFormView' | 'PaymentMethodSelectorView' | 'PaymentResultView' | 'QrCodeView';
+export type ViewName =
+    | 'PaymentFormView'
+    | 'PaymentMethodSelectorView'
+    | 'PaymentResultView'
+    | 'QrCodeView'
+    | 'TerminalSelectorView';
 
 export type PaymentFormViewPaymentMethod = PaymentMethod;
+export type PaymentFormViewInitContext = {
+    contactInfo?: InitContextContactInfo;
+    terminalFormValues?: object;
+};
 
 export type PaymentFormView = {
     name: 'PaymentFormView';
+    paymentMethod: PaymentFormViewPaymentMethod;
+    initContext: PaymentFormViewInitContext;
+};
+
+export type TerminalSelectorView = {
+    name: 'TerminalSelectorView';
     paymentMethod: PaymentFormViewPaymentMethod;
 };
 
@@ -29,7 +44,7 @@ export type QRCodeView = {
 
 export type ViewAmount = string;
 export type SlideAnimationDirection = 'forward' | 'backward';
-export type View = QRCodeView | PaymentResultView | PaymentMethodSelectorView | PaymentFormView;
+export type View = QRCodeView | PaymentResultView | PaymentMethodSelectorView | PaymentFormView | TerminalSelectorView;
 
 export type ViewModel = {
     direction: SlideAnimationDirection;

@@ -1,8 +1,8 @@
 import { ServiceProviderMetadata } from 'checkout/backend';
 
 export type PaymentAmount = {
-    value: number;
-    currency: string;
+    readonly value: number;
+    readonly currency: string;
 };
 
 export type KnownProviderCategory =
@@ -14,25 +14,25 @@ export type KnownProviderCategory =
     | 'paymentterminal';
 
 export type TerminalServiceProvider = {
-    id: string;
-    metadata?: ServiceProviderMetadata;
+    readonly id: string;
+    readonly metadata?: ServiceProviderMetadata;
 };
 
 export type PaymentTerminal = {
-    name: 'PaymentTerminal';
-    category: KnownProviderCategory;
-    providers: TerminalServiceProvider[];
+    readonly name: 'PaymentTerminal';
+    readonly category: KnownProviderCategory;
+    readonly providers: TerminalServiceProvider[];
 };
 
 type BankCard = {
-    name: 'BankCard';
+    readonly name: 'BankCard';
 };
 
 export type PaymentMethod = PaymentTerminal | BankCard;
 
 export type InitContextContactInfo = {
-    email?: string;
-    phoneNumber?: string;
+    readonly email?: string;
+    readonly phoneNumber?: string;
 };
 
 export type InitContext = {
@@ -55,13 +55,13 @@ export type CommonPaymentModel = {
 };
 
 export type InvoiceTemplateParams = {
-    invoiceTemplateID: string;
-    invoiceTemplateAccessToken: string;
+    readonly invoiceTemplateID: string;
+    readonly invoiceTemplateAccessToken: string;
 };
 
 export type InvoiceParams = {
-    invoiceID: string;
-    invoiceAccessToken: string;
+    readonly invoiceID: string;
+    readonly invoiceAccessToken: string;
 };
 
 export type InvoiceTemplateContext = {

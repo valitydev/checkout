@@ -48,12 +48,18 @@ const dataReducer = (state: ViewModel, action: Action): ViewModel => {
     }
 };
 
-const toViews = (paymentMethods: PaymentMethod[]): Map<ViewName, View> => {
-    let views = paymentMethods.reduce<[ViewName, View][]>((acc, curr) => {
-        switch (curr.name) {
+const toViews = ({ paymentMethods, initContext }: PaymentModel): Map<ViewName, View> => {
+    let views = paymentMethods.reduce<[ViewName, View][]>((acc, paymentMethod) => {
+        switch (paymentMethod.name) {
             case 'BankCard':
+                return acc.concat([['PaymentFormView', { name: 'PaymentFormView', paymentMethod, initContext }]]);
             case 'PaymentTerminal':
-                return acc.concat([['PaymentFormView', { name: 'PaymentFormView', paymentMethod: curr }]]);
+                if (paymentMethod.providers.length === 1) {
+                    return acc.concat([['PaymentFormView', { name: 'PaymentFormView', paymentMethod, initContext }]]);
+                }
+                return acc.concat([
+                    ['TerminalSelectorView', { name: 'TerminalSelectorView', paymentMethod: paymentMethod }],
+                ]);
             default:
                 return acc;
         }
@@ -69,7 +75,7 @@ const initViewModel = (model: PaymentModel, localeCode: string): ViewModel => {
         isLoading: false,
         direction: 'forward',
         viewAmount: formatAmount(model.paymentAmount, localeCode),
-        views: toViews(model.paymentMethods),
+        views: toViews(model),
     };
 };
 

@@ -1,20 +1,40 @@
+import {
+    PrefilledMetadataValues,
+    ServiceProviderContactInfo,
+    ServiceProviderIconMetadata,
+    ServiceProviderMetadataForm,
+} from 'checkout/backend';
+
+import { InitContextContactInfo } from '../../../common/paymentModel';
+
 type LocalePath = string;
 type ViewAmount = string;
 
-type MetadataForm = {
+export type MetadataFormModel = {
     name: 'MetadataForm';
-} & CommonForm;
+    provider: string;
+    metadata: {
+        form: ServiceProviderMetadataForm;
+        logo?: ServiceProviderIconMetadata;
+        contactInfo?: ServiceProviderContactInfo;
+        prefilledMetadataValues?: PrefilledMetadataValues;
+    };
+    initContext: {
+        contactInfo?: InitContextContactInfo;
+        terminalFormValues?: object;
+    };
+} & CommonFormModel;
 
-type CardForm = {
+export type CardFormModel = {
     name: 'CardForm';
-} & CommonForm;
-
-type CommonForm = {
-    viewAmount: ViewAmount;
     formTitle: LocalePath;
+} & CommonFormModel;
+
+type CommonFormModel = {
+    viewAmount: ViewAmount;
 };
 
-export type PaymentFormViewModel = CardForm | MetadataForm;
+export type PaymentFormModel = CardFormModel | MetadataFormModel;
 
 export type CommonSubmitFormValues = {
     email?: string;
@@ -28,9 +48,19 @@ export type CardFormInputs = {
     cardHolder?: string;
 } & CommonSubmitFormValues;
 
+export type MetadataFormInputs = {
+    provider: string;
+    metadata?: any;
+} & CommonSubmitFormValues;
+
 export type CardFormSubmitFormValues = {
     formName: 'CardForm';
     values: CardFormInputs;
 };
 
-export type SubmitFormValues = CardFormSubmitFormValues;
+export type MetadataFormSubmitFormValues = {
+    formName: 'MetadataForm';
+    values: MetadataFormInputs;
+};
+
+export type SubmitFormValues = CardFormSubmitFormValues | MetadataFormSubmitFormValues;

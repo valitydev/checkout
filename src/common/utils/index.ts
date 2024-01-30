@@ -10,3 +10,11 @@ export { last } from './last';
 export { groupBy } from './groupBy';
 export { getMetadata } from './getMetadata';
 export { prepareForm } from './interactionForm';
+export { partialRight } from './partialRight';
+export { formatPhoneNumber, getPhoneCountryCode, validatePhone, formatOnFocus } from './phone';
+export { formatEmail, validateEmail } from './email';
+export { isString } from './isString';
+export { getEncodedUrlParams } from './getEncodedUrlParams';
+
+export type { CountrySubdivision, Country } from './countries';
+export { countries } from './countries';
