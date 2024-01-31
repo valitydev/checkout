@@ -7,16 +7,10 @@ import { ExpireDate } from './ExpireDate';
 import { SecureCode } from './SecureCode';
 import { CardFormInputs } from './types';
 import { isSecureCodeAvailable } from './utils';
-import { CustomizationContext, LocaleContext } from '../../../../common/contexts';
-import { BankCard } from '../../../../common/paymentModel';
+import { CustomizationContext, LocaleContext, ViewModelContext } from '../../../../common/contexts';
 import { FormGroup, HeaderWrapper, PayButton, Title } from '../../../../components/legacy';
-import { ViewModelContext } from '../../ViewModelContext';
 
-export type MetadataFormProps = {
-    paymentMethod: BankCard;
-};
-
-export function CardForm({ paymentMethod: { methodName } }: MetadataFormProps) {
+export function CardForm() {
     const { l } = useContext(LocaleContext);
     const { viewAmount, onSetPaymentPayload } = useContext(ViewModelContext);
     const { obscureCardCvv, requireCardHolder } = useContext(CustomizationContext);
@@ -29,7 +23,7 @@ export function CardForm({ paymentMethod: { methodName } }: MetadataFormProps) {
 
     const onSubmit: SubmitHandler<CardFormInputs> = (values) => {
         onSetPaymentPayload({
-            methodName,
+            methodName: 'BankCard',
             values,
         });
     };

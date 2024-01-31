@@ -1,4 +1,4 @@
-import { InvoiceStatus, ServiceProviderMetadata } from 'checkout/backend';
+import { InvoiceStatuses, ServiceProviderMetadata } from 'checkout/backend';
 
 export type PaymentAmount = {
     readonly value: number;
@@ -17,6 +17,8 @@ export type TerminalServiceProvider = {
     readonly id: string;
     readonly metadata?: ServiceProviderMetadata;
 };
+
+export type PaymentMethodName = 'PaymentTerminal' | 'BankCard';
 
 export type PaymentTerminal = {
     readonly methodName: 'PaymentTerminal';
@@ -76,7 +78,7 @@ export type InvoiceContext = {
     readonly invoiceParams: InvoiceParams;
     readonly dueDate: string;
     readonly externalID: string;
-    readonly status: InvoiceStatus;
+    readonly status: InvoiceStatuses;
 };
 
 export type PaymentModelInvoice = InvoiceContext & CommonPaymentModel;

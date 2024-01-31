@@ -3,8 +3,13 @@ import { useContext, useEffect, useMemo } from 'react';
 import { useLocale } from './useLocale';
 import { useViewModel } from './useViewModel';
 import { ViewContainerInner } from './ViewContainerInner';
-import { ViewModelContext } from './ViewModelContext';
-import { CustomizationContext, LocaleContext, PaymentContext, PaymentModelContext } from '../../common/contexts';
+import {
+    CustomizationContext,
+    LocaleContext,
+    PaymentContext,
+    PaymentModelContext,
+    ViewModelContext,
+} from '../../common/contexts';
 import { formatAmount } from '../../common/utils';
 import { FormBlock, Info } from '../legacy';
 

@@ -5,8 +5,12 @@ import { LogoContainer } from './LogoContainer';
 import { MetadataFormInputs } from './types';
 import { useDefaultFormValues } from './useDefaultFormValues';
 import { formatMetadataValue } from './utils';
-import { CustomizationContext, LocaleContext, PaymentModelContext } from '../../../../common/contexts';
-import { PaymentTerminal } from '../../../../common/paymentModel';
+import {
+    CustomizationContext,
+    LocaleContext,
+    PaymentModelContext,
+    ViewModelContext,
+} from '../../../../common/contexts';
 import { findMetadata, isNil } from '../../../../common/utils';
 import {
     Email,
@@ -18,18 +22,12 @@ import {
     Phone,
     sortByIndex,
 } from '../../../legacy';
-import { ViewModelContext } from '../../ViewModelContext';
 
 export type MetadataFormProps = {
-    paymentMethod: PaymentTerminal;
+    provider: string;
 };
 
-export function MetadataForm({ paymentMethod: { methodName, providers } }: MetadataFormProps) {
-    if (providers.length !== 1) {
-        throw new Error('MetadataForm. Providers length must be 1');
-    }
-
-    const provider = providers[0];
+export function MetadataForm({ provider }: MetadataFormProps) {
     const { l } = useContext(LocaleContext);
     const { viewAmount, onSetPaymentPayload } = useContext(ViewModelContext);
     const { localeCode } = useContext(CustomizationContext);
@@ -48,7 +46,7 @@ export function MetadataForm({ paymentMethod: { methodName, providers } }: Metad
 
     const onSubmit: SubmitHandler<MetadataFormInputs> = (values) => {
         onSetPaymentPayload({
-            methodName,
+            methodName: 'PaymentTerminal',
             values: {
                 provider,
                 metadata: {

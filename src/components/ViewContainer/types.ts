@@ -1,4 +1,4 @@
-import { PaymentMethod } from '../../common/paymentModel';
+import { PaymentMethodName } from '../../common/paymentModel';
 
 export type ViewName =
     | 'PaymentFormView'
@@ -10,25 +10,21 @@ export type ViewName =
 
 export type PaymentFormView = {
     name: 'PaymentFormView';
-    paymentMethod: PaymentMethod;
+    methodName: PaymentMethodName;
+    provider?: string;
 };
 
 export type TerminalSelectorView = {
     name: 'TerminalSelectorView';
-    paymentMethod: PaymentMethod;
+    providers: string[];
 };
 
 export type PaymentMethodSelectorView = {
     name: 'PaymentMethodSelectorView';
 };
 
-export type LocalePath = string;
-
 export type PaymentResultView = {
     name: 'PaymentResultView';
-    iconName: 'Success' | 'Warning' | 'Error';
-    label: LocalePath;
-    description?: string;
 };
 
 export type QRCodeView = {

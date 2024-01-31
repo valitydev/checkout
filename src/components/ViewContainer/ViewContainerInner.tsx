@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { PaymentFormView } from './PaymentFormView';
 import { PaymentResultView } from './PaymentResultView';
 import { SlideAnimationDirection } from './types';
-import { ViewModelContext } from './ViewModelContext';
+import { ViewModelContext } from '../../common/contexts';
 import { device, isNil } from '../../common/utils';
 import { FormLoader } from '../legacy';
 

@@ -2,10 +2,10 @@ import { useContext } from 'react';
 import styled from 'styled-components';
 
 import { LocaleContext } from '../../../common/contexts';
+import { ViewModelContext } from '../../../common/contexts';
 import { isNil } from '../../../common/utils';
 import { ErrorIcon, SuccessIcon, WarningIcon } from '../../../components/legacy';
 import { PaymentResultView as PaymentResultViewType } from '../types';
-import { ViewModelContext } from '../ViewModelContext';
 
 const Wrapper = styled.div`
     display: flex;

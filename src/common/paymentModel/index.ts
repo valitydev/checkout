@@ -15,4 +15,5 @@ export type {
     BankCard,
     TerminalServiceProvider,
     InitContextContactInfo,
+    PaymentMethodName,
 } from './types';

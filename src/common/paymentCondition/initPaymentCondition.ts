@@ -1,4 +1,4 @@
-import { InvoiceChangeType, InvoiceStatus, getInvoiceEvents } from 'checkout/backend';
+import { InvoiceChangeType, InvoiceStatuses, getInvoiceEvents } from 'checkout/backend';
 
 import { getLastPaymentStartedInfo } from './getLastPaymentStartedInfo';
 import { PaymentCondition } from './types';
@@ -129,13 +129,13 @@ const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<Payment
             invoiceParams.invoiceID,
             GET_INVOICE_EVENTS_LIMIT,
         );
-        const { userInteraction, paymentId, provider } = getLastPaymentStartedInfo(events);
+        const { userInteraction, provider, paymentId } = getLastPaymentStartedInfo(events);
         if (!isNil(userInteraction)) {
             return applyPaymentInteractionRequested(userInteraction, provider);
         }
         if (!isNil(paymentId)) {
             return {
-                name: 'pending',
+                name: 'paymentStarted',
             };
         }
     } catch (ex) {
@@ -152,12 +152,12 @@ const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<Payment
 
 const provideInvoice = async (model: PaymentModelInvoice): Promise<PaymentCondition> => {
     switch (model.status) {
-        case InvoiceStatus.cancelled:
-        case InvoiceStatus.fulfilled:
-        case InvoiceStatus.paid:
-        case InvoiceStatus.refunded:
-            return { name: 'processed' };
-        case InvoiceStatus.unpaid:
+        case InvoiceStatuses.cancelled:
+        case InvoiceStatuses.fulfilled:
+        case InvoiceStatuses.paid:
+        case InvoiceStatuses.refunded:
+            return { name: 'invoiceStatusChanged', status: model.status };
+        case InvoiceStatuses.unpaid:
             return provideInvoiceUnpaid(model);
     }
 };

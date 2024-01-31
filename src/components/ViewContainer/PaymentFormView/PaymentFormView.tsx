@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import { CardForm } from './CardForm';
 import { MetadataForm } from './MetadataForm';
-import { ViewModelContext } from '../ViewModelContext';
+import { ViewModelContext } from '../../../common/contexts';
 
 export function PaymentFormView() {
     const { viewModel } = useContext(ViewModelContext);
@@ -12,12 +12,10 @@ export function PaymentFormView() {
         throw new Error(`Wrong View. Expected: PaymentFormView, actual: ${view.name}`);
     }
 
-    const paymentMethod = view.paymentMethod;
-
     return (
         <>
-            {paymentMethod.methodName === 'BankCard' && <CardForm paymentMethod={paymentMethod} />}
-            {paymentMethod.methodName === 'PaymentTerminal' && <MetadataForm paymentMethod={paymentMethod} />}
+            {view.methodName === 'BankCard' && <CardForm />}
+            {view.methodName === 'PaymentTerminal' && <MetadataForm provider={view.provider} />}
         </>
     );
 }

@@ -27,12 +27,4 @@ export type StartPaymentTerminalPayload = {
     values: TerminalValues;
 };
 
-export type StartPaymentDigitalWalletPayload = {
-    methodName: 'DigitalWallet';
-    values: CommonStartPaymentValues;
-};
-
-export type StartPaymentPayload =
-    | StartPaymentBankCardPayload
-    | StartPaymentTerminalPayload
-    | StartPaymentDigitalWalletPayload;
+export type StartPaymentPayload = StartPaymentBankCardPayload | StartPaymentTerminalPayload;

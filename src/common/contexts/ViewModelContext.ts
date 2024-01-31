@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
-import { SlideAnimationDirection, ViewModel, ViewName } from './types';
-import { StartPaymentPayload } from '../../common/paymentMgmt';
+import { SlideAnimationDirection, ViewModel, ViewName } from '../../components/ViewContainer/types';
+import { StartPaymentPayload } from '../paymentMgmt';
 
 export type ViewModelContextProps = {
     viewModel: ViewModel | null;

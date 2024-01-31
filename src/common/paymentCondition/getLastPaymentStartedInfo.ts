@@ -30,20 +30,21 @@ const getProvider = (started: PaymentStarted): string | null => {
 
 export const getLastPaymentStartedInfo = (events: InvoiceEvent[]): LastPaymentStartedInfo =>
     events.reduce((result, event) => {
-        const started = event.changes.find(({ changeType }) => changeType === InvoiceChangeType.PaymentStarted);
+        const started = event.changes.find(
+            ({ changeType }) => changeType === InvoiceChangeType.PaymentStarted,
+        ) as PaymentStarted;
         if (!isNil(started)) {
             result = {
                 ...result,
-                paymentId: (started as PaymentStarted).payment.id,
-                provider: getProvider(started as PaymentStarted),
+                paymentId: started.payment.id,
+                provider: getProvider(started),
             };
         }
 
-        const interaction = event.changes.find(
+        const interactionRequested = event.changes.find(
             ({ changeType }) => changeType === InvoiceChangeType.PaymentInteractionRequested,
-        );
-        if (!isNil(interaction)) {
-            const interactionRequested = interaction as PaymentInteractionRequested;
+        ) as PaymentInteractionRequested;
+        if (!isNil(interactionRequested)) {
             if (result.paymentId !== interactionRequested.paymentID) {
                 return result;
             }
@@ -55,9 +56,8 @@ export const getLastPaymentStartedInfo = (events: InvoiceEvent[]): LastPaymentSt
 
         const interactionCompleted = event.changes.find(
             ({ changeType }) => changeType === InvoiceChangeType.PaymentInteractionCompleted,
-        );
+        ) as PaymentInteractionCompleted;
         if (!isNil(interactionCompleted)) {
-            const interactionCompleted = interaction as PaymentInteractionCompleted;
             if (result.paymentId !== interactionCompleted.paymentID) {
                 return result;
             }
@@ -69,10 +69,9 @@ export const getLastPaymentStartedInfo = (events: InvoiceEvent[]): LastPaymentSt
 
         const statusChanged = event.changes.find(
             ({ changeType }) => changeType === InvoiceChangeType.PaymentStatusChanged,
-        );
+        ) as PaymentStatusChanged;
         if (!isNil(statusChanged)) {
-            const paymentStatusChanged = statusChanged as PaymentStatusChanged;
-            if (result.paymentId === paymentStatusChanged.paymentID) {
+            if (result.paymentId === statusChanged.paymentID) {
                 return {};
             }
             return result;

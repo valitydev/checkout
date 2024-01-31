@@ -1,21 +1,7 @@
 import { useCallback, useEffect, useReducer } from 'react';
 
-import {
-    ApiExtensionView,
-    PaymentResultView,
-    QRCodeView,
-    SlideAnimationDirection,
-    View,
-    ViewModel,
-    ViewName,
-} from './types';
-import {
-    PaymentCondition,
-    PaymentProcessed,
-    PaymentFailed,
-    PaymentInteractionQRCode,
-    PaymentInteractionApiExtension,
-} from '../../common/paymentCondition';
+import { SlideAnimationDirection, View, ViewModel, ViewName } from './types';
+import { PaymentCondition } from '../../common/paymentCondition';
 import { PaymentModel } from '../../common/paymentModel';
 
 type Action =
@@ -63,16 +49,18 @@ const dataReducer = (state: ViewModel, action: Action): ViewModel => {
 
 const toViews = ({ paymentMethods }: PaymentModel): Map<ViewName, View> => {
     let views = paymentMethods.reduce<[ViewName, View][]>((acc, paymentMethod) => {
-        switch (paymentMethod.methodName) {
+        const { methodName } = paymentMethod;
+        switch (methodName) {
             case 'BankCard':
-                return acc.concat([['PaymentFormView', { name: 'PaymentFormView', paymentMethod }]]);
+                return acc.concat([['PaymentFormView', { name: 'PaymentFormView', methodName }]]);
             case 'PaymentTerminal':
-                if (paymentMethod.providers.length === 1) {
-                    return acc.concat([['PaymentFormView', { name: 'PaymentFormView', paymentMethod }]]);
+                const { providers } = paymentMethod;
+                if (providers.length === 1) {
+                    return acc.concat([
+                        ['PaymentFormView', { name: 'PaymentFormView', methodName, provider: providers[0] }],
+                    ]);
                 }
-                return acc.concat([
-                    ['TerminalSelectorView', { name: 'TerminalSelectorView', paymentMethod: paymentMethod }],
-                ]);
+                return acc.concat([['TerminalSelectorView', { name: 'TerminalSelectorView', providers }]]);
             default:
                 return acc;
         }
@@ -91,35 +79,6 @@ const initViewModel = (model: PaymentModel): ViewModel => {
     };
 };
 
-const applyPaymentProcessed = (condition: PaymentProcessed): PaymentResultView => {
-    return {
-        name: 'PaymentResultView',
-        iconName: 'Success',
-        label: 'form.header.final.invoice.paid.label',
-    };
-};
-
-const applyPaymentFailed = (condition: PaymentFailed): PaymentResultView => {
-    return {
-        name: 'PaymentResultView',
-        iconName: 'Error',
-        label: 'form.header.final.failed.label',
-        description: condition.error.code,
-    };
-};
-
-const applyInteractionQRCode = (condition: PaymentInteractionQRCode): QRCodeView => {
-    return {
-        name: 'QrCodeView',
-    };
-};
-
-const applyInteractionApiExtension = (condition: PaymentInteractionApiExtension): ApiExtensionView => {
-    return {
-        name: 'ApiExtensionView',
-    };
-};
-
 const applyUninitialized = (model: PaymentModel): ViewName => {
     if (model.paymentMethods.length > 1) {
         return 'PaymentMethodSelectorView';
@@ -135,15 +94,16 @@ export const useViewModel = (model: PaymentModel, condition: PaymentCondition) =
             case 'uninitialized':
                 dispatch({ type: 'SET_ACTIVE_VIEW', payload: applyUninitialized(model) });
                 break;
-            case 'processed':
+            case 'invoiceStatusChanged':
+            case 'paymentStatusChanged':
+            case 'paymentStarted':
                 dispatch({ type: 'SET_LOADING', payload: false });
-                dispatch({ type: 'SET_VIEW', payload: applyPaymentProcessed(condition) });
+                dispatch({ type: 'SET_VIEW', payload: { name: 'PaymentResultView' } });
                 dispatch({ type: 'SET_ACTIVE_VIEW', payload: 'PaymentResultView' });
                 break;
-            case 'paymentFailed':
+            case 'paymentProcessFailed':
                 dispatch({ type: 'SET_LOADING', payload: false });
-                dispatch({ type: 'SET_VIEW', payload: applyPaymentFailed(condition) });
-                dispatch({ type: 'SET_ACTIVE_VIEW', payload: 'PaymentResultView' });
+                throw new Error('Unimplemented paymentProcessFailed condition');
                 break;
             case 'pending':
                 dispatch({ type: 'SET_LOADING', payload: true });
@@ -153,14 +113,15 @@ export const useViewModel = (model: PaymentModel, condition: PaymentCondition) =
 
     useEffect(() => {
         if (condition.name !== 'interactionRequested') return;
+        dispatch({ type: 'SET_LOADING', payload: false });
         const interaction = condition.interaction;
         switch (interaction.type) {
             case 'PaymentInteractionQRCode':
-                dispatch({ type: 'SET_VIEW', payload: applyInteractionQRCode(interaction) });
+                dispatch({ type: 'SET_VIEW', payload: { name: 'QrCodeView' } });
                 dispatch({ type: 'SET_ACTIVE_VIEW', payload: 'QrCodeView' });
                 break;
             case 'PaymentInteractionApiExtension':
-                dispatch({ type: 'SET_VIEW', payload: applyInteractionApiExtension(interaction) });
+                dispatch({ type: 'SET_VIEW', payload: { name: 'ApiExtensionView' } });
                 dispatch({ type: 'SET_ACTIVE_VIEW', payload: 'ApiExtensionView' });
                 break;
         }

@@ -3,15 +3,14 @@ export { initPaymentCondition } from './initPaymentCondition';
 export type {
     PaymentCondition,
     PaymentUninitialized,
-    PaymentProcessed,
+    PaymentStatusChanged,
+    InvoiceStatusChanged,
     PaymentPending,
-    PaymentProcessedStatus,
-    PaymentFailed,
-    PaymentError,
     PaymentInteractionRedirectType,
     PaymentInteractionRequested,
     PaymentInteractionRedirect,
     PaymentInteractionApiExtension,
     PaymentInteractionQRCode,
     Interaction,
+    PaymentStarted,
 } from './types';
