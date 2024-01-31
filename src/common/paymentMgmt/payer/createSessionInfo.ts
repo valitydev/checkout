@@ -1,10 +1,9 @@
 import { PaymentSessionInfoMetadata, SessionInfo, ShortenedUrlParams, shortenUrl } from 'checkout/backend';
 
 import { toSelfRedirectUrl } from './toSelfRedirectUrl';
-import { isNil } from '../../../common/utils';
+import { findMetadata, isNil } from '../../../common/utils';
 import { PaymentModelInvoice } from '../../paymentModel';
 import { StartPaymentPayload } from '../types';
-import { getServiceProviderMetadata } from '../utils';
 
 export const shorten = (
     urlShortenerEndpoint: string,
@@ -37,12 +36,12 @@ export const createSessionInfo = async (
         dueDate,
         localeCode,
         initContext,
-        paymentMethods,
+        serviceProviders,
     } = model;
     let redirectUrl;
     let paymentSessionInfo;
     if (payload.methodName === 'PaymentTerminal') {
-        const metadata = getServiceProviderMetadata(paymentMethods, payload.values.provider);
+        const metadata = findMetadata(serviceProviders, payload.values.provider);
         paymentSessionInfo = metadata.paymentSessionInfo;
     }
     const redirectUrlType = toRedirectUrlType(paymentSessionInfo);

@@ -1,5 +1,4 @@
 import { CardFormModel, MetadataFormModel, PaymentFormModel } from './types';
-import { getMetadata, isNil } from '../../../common/utils';
 import { PaymentFormView, ViewModel } from '../types';
 
 const toCardFormModel = (viewAmount: string): CardFormModel => ({
@@ -8,31 +7,17 @@ const toCardFormModel = (viewAmount: string): CardFormModel => ({
     viewAmount,
 });
 
-const toPaymentTerminalModel = (
-    { paymentMethod, initContext }: PaymentFormView,
-    viewAmount: string,
-): MetadataFormModel => {
+const toPaymentTerminalModel = ({ paymentMethod }: PaymentFormView, viewAmount: string): MetadataFormModel => {
     if (paymentMethod.name !== 'PaymentTerminal') throw new Error('Wrong view payment method name');
     const providers = paymentMethod.providers;
     if (providers.length > 1) {
         throw new Error('Payment method: PaymentTerminal must contain only one provider.');
     }
     const provider = providers[0];
-    const { form, logo, contactInfo, prefilledMetadataValues } = getMetadata(provider.metadata);
-    if (isNil(form)) {
-        throw new Error('Service provider metadata form must be specified.');
-    }
     return {
         name: 'MetadataForm',
-        provider: provider.id,
-        metadata: {
-            form,
-            logo,
-            contactInfo,
-            prefilledMetadataValues,
-        },
+        provider,
         viewAmount,
-        initContext,
     };
 };
 

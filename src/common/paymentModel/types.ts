@@ -21,7 +21,7 @@ export type TerminalServiceProvider = {
 export type PaymentTerminal = {
     readonly name: 'PaymentTerminal';
     readonly category: KnownProviderCategory;
-    readonly providers: TerminalServiceProvider[];
+    readonly providers: string[];
 };
 
 type BankCard = {
@@ -52,6 +52,7 @@ export type CommonPaymentModel = {
     readonly initContext: InitContext;
     readonly paymentMethods: PaymentMethod[];
     readonly paymentAmount: PaymentAmount;
+    readonly serviceProviders?: TerminalServiceProvider[];
 };
 
 export type InvoiceTemplateParams = {

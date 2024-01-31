@@ -59,6 +59,7 @@ export const initPaymentModel = async ({ initConfig, appConfig, origin }: InitPa
         initContext,
         paymentMethods,
         paymentAmount,
+        serviceProviders: backendModel.serviceProviders,
     };
     return result;
 };

@@ -11,10 +11,7 @@ const categoryReducer = (
     const paymentMethod: PaymentMethod = {
         name: 'PaymentTerminal',
         category,
-        providers: serviceProviders.map(({ id, metadata }) => ({
-            id,
-            metadata,
-        })),
+        providers: serviceProviders.map(({ id }) => id),
     };
     switch (category) {
         case 'onlinebanking':

@@ -7,12 +7,11 @@ import {
     StartPaymentPayload,
     createPayment,
     determineModel,
-    getServiceProviderMetadata,
     pollInvoiceEvents,
     pollingResToPaymentCondition,
 } from '../../common/paymentMgmt';
 import { PaymentModel, PaymentModelInvoice } from '../../common/paymentModel';
-import { isNil } from '../../common/utils';
+import { findMetadata } from '../../common/utils';
 
 type State = {
     condition: PaymentCondition;
@@ -72,6 +71,7 @@ export const usePaymentCondition = (model: PaymentModel, initCondition: PaymentC
             const {
                 apiEndpoint,
                 invoiceParams: { invoiceID, invoiceAccessToken },
+                serviceProviders,
             } = modelInvoice;
             const pollingResult = await pollInvoiceEvents({
                 apiEndpoint,
@@ -89,10 +89,7 @@ export const usePaymentCondition = (model: PaymentModel, initCondition: PaymentC
             });
             let redirectType: PaymentInteractionRedirectType = 'self';
             if (startPaymentPayload.methodName === 'PaymentTerminal') {
-                const metadata = getServiceProviderMetadata(
-                    modelInvoice.paymentMethods,
-                    startPaymentPayload.values.provider,
-                );
+                const metadata = findMetadata(serviceProviders, startPaymentPayload.values.provider);
                 redirectType = metadata?.userInteraction?.type;
                 dispatch({ type: 'SET_METADATA', payload: metadata });
             }
@@ -102,34 +99,7 @@ export const usePaymentCondition = (model: PaymentModel, initCondition: PaymentC
         })();
     }, []);
 
-    const continuePayment = useCallback(() => {
-        async () => {
-            if (isNil(state.modelInvoice)) {
-                throw new Error('Model invoice should be defined');
-            }
-            dispatch({ type: 'SET_CONDITION', payload: { name: 'pending' } });
-            const {
-                apiEndpoint,
-                invoiceParams: { invoiceID, invoiceAccessToken },
-            } = state.modelInvoice;
-            const pollingResult = await pollInvoiceEvents({
-                apiEndpoint,
-                invoiceAccessToken,
-                invoiceID,
-                stopPollingTypes: [InvoiceChangeType.InvoiceStatusChanged, InvoiceChangeType.PaymentStatusChanged],
-                delays: {
-                    pollingTimeout: DEFAULT_TIMEOUT_MS,
-                    apiMethodCall: API_METHOD_CALL_MS,
-                },
-            });
-            const { eventId, condition } = pollingResToPaymentCondition(
-                pollingResult,
-                state.metadata?.userInteraction?.type,
-            );
-            dispatch({ type: 'SET_LAST_EVENT_ID', payload: eventId });
-            dispatch({ type: 'SET_CONDITION', payload: condition });
-        };
-    }, []);
+    const continuePayment = useCallback(() => {}, []);
 
     return { paymentCondition: state.condition, startPayment, continuePayment };
 };

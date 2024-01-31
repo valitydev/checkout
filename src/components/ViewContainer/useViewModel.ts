@@ -62,14 +62,14 @@ const dataReducer = (state: ViewModel, action: Action): ViewModel => {
     }
 };
 
-const toViews = ({ paymentMethods, initContext }: PaymentModel): Map<ViewName, View> => {
+const toViews = ({ paymentMethods }: PaymentModel): Map<ViewName, View> => {
     let views = paymentMethods.reduce<[ViewName, View][]>((acc, paymentMethod) => {
         switch (paymentMethod.name) {
             case 'BankCard':
-                return acc.concat([['PaymentFormView', { name: 'PaymentFormView', paymentMethod, initContext }]]);
+                return acc.concat([['PaymentFormView', { name: 'PaymentFormView', paymentMethod }]]);
             case 'PaymentTerminal':
                 if (paymentMethod.providers.length === 1) {
-                    return acc.concat([['PaymentFormView', { name: 'PaymentFormView', paymentMethod, initContext }]]);
+                    return acc.concat([['PaymentFormView', { name: 'PaymentFormView', paymentMethod }]]);
                 }
                 return acc.concat([
                     ['TerminalSelectorView', { name: 'TerminalSelectorView', paymentMethod: paymentMethod }],

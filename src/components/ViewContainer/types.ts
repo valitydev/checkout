@@ -1,5 +1,5 @@
 import { StartPaymentPayload } from '../../common/paymentMgmt';
-import { InitContextContactInfo, PaymentMethod } from '../../common/paymentModel';
+import { PaymentMethod } from '../../common/paymentModel';
 
 export type ViewName =
     | 'PaymentFormView'
@@ -9,21 +9,14 @@ export type ViewName =
     | 'TerminalSelectorView'
     | 'ApiExtensionView';
 
-export type PaymentFormViewPaymentMethod = PaymentMethod;
-export type PaymentFormViewInitContext = {
-    contactInfo?: InitContextContactInfo;
-    terminalFormValues?: object;
-};
-
 export type PaymentFormView = {
     name: 'PaymentFormView';
-    paymentMethod: PaymentFormViewPaymentMethod;
-    initContext: PaymentFormViewInitContext;
+    paymentMethod: PaymentMethod;
 };
 
 export type TerminalSelectorView = {
     name: 'TerminalSelectorView';
-    paymentMethod: PaymentFormViewPaymentMethod;
+    paymentMethod: PaymentMethod;
 };
 
 export type PaymentMethodSelectorView = {

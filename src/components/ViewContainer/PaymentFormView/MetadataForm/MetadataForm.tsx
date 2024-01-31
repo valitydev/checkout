@@ -4,8 +4,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { LogoContainer } from './LogoContainer';
 import { useDefaultFormValues } from './useDefaultFormValues';
 import { formatMetadataValue } from './utils';
-import { CustomizationContext, LocaleContext } from '../../../../common/contexts';
-import { isNil } from '../../../../common/utils';
+import { CustomizationContext, LocaleContext, PaymentModelContext } from '../../../../common/contexts';
+import { findMetadata, isNil } from '../../../../common/utils';
 import {
     Email,
     FormGroup,
@@ -26,13 +26,12 @@ export type MetadataFormProps = {
 export function MetadataForm({ formModel, onSubmitForm }: MetadataFormProps) {
     const { l } = useContext(LocaleContext);
     const { localeCode } = useContext(CustomizationContext);
-
     const {
-        metadata: { form, contactInfo, logo, prefilledMetadataValues },
-        provider,
-        initContext,
-        viewAmount,
-    } = formModel;
+        paymentModel: { initContext, serviceProviders },
+    } = useContext(PaymentModelContext);
+    const { provider, viewAmount } = formModel;
+    const { form, contactInfo, logo, prefilledMetadataValues } = findMetadata(serviceProviders, provider);
+
     const {
         register,
         handleSubmit,

@@ -4,13 +4,14 @@ import { useLocale } from './useLocale';
 import { useViewModel } from './useViewModel';
 import { ViewContainerInner } from './ViewContainerInner';
 import { ViewModelContext } from './ViewModelContext';
-import { CustomizationContext, LocaleContext, PaymentContext } from '../../common/contexts';
+import { CustomizationContext, LocaleContext, PaymentContext, PaymentModelContext } from '../../common/contexts';
 import { FormBlock, Info } from '../legacy';
 
 export function ViewContainer() {
     const { state, load } = useLocale();
     const { localeCode, name, description } = useContext(CustomizationContext);
-    const { paymentModel, paymentCondition, startPayment } = useContext(PaymentContext);
+    const { paymentCondition, startPayment } = useContext(PaymentContext);
+    const { paymentModel } = useContext(PaymentModelContext);
     const { viewModel, goTo } = useViewModel(localeCode, paymentModel, paymentCondition);
 
     useEffect(() => {

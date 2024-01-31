@@ -1,4 +1,4 @@
-import { InvoiceChangeType, InvoiceStatus, getInvoiceEvents } from 'checkout/backend';
+import { InvoiceChangeType, InvoiceStatus, UserInteractionMetadata, getInvoiceEvents } from 'checkout/backend';
 
 import { getLastPaymentStartedInfo } from './getLastPaymentStartedInfo';
 import { PaymentCondition } from './types';
@@ -7,13 +7,12 @@ import {
     TerminalValuesMetadata,
     createPayment,
     determineModel,
-    getServiceProviderMetadata,
     pollInvoiceEvents,
     pollingResToPaymentCondition,
 } from '../paymentMgmt';
 import { applyPaymentInteractionRequested } from '../paymentMgmt/utils';
 import { PaymentModel, PaymentModelInvoice, PaymentTerminal } from '../paymentModel';
-import { getMetadata, isNil } from '../utils';
+import { findMetadata, isNil } from '../utils';
 
 const getModelInvoice = async (model: PaymentModel): Promise<PaymentModelInvoice> => {
     switch (model.type) {
@@ -28,6 +27,7 @@ const provideInstantPayment = async (
     model: PaymentModel,
     provider: string,
     metadata?: TerminalValuesMetadata,
+    userInteraction?: UserInteractionMetadata,
 ): Promise<PaymentCondition> => {
     try {
         const modelInvoice = await getModelInvoice(model);
@@ -39,7 +39,6 @@ const provideInstantPayment = async (
         const {
             apiEndpoint,
             invoiceParams: { invoiceID, invoiceAccessToken },
-            paymentMethods,
         } = modelInvoice;
         const pollingResult = await pollInvoiceEvents({
             apiEndpoint,
@@ -56,7 +55,6 @@ const provideInstantPayment = async (
             },
         });
 
-        const { userInteraction } = getServiceProviderMetadata(paymentMethods, provider);
         const { eventId, condition } = pollingResToPaymentCondition(pollingResult, userInteraction?.type);
         return condition;
     } catch (ex) {
@@ -78,10 +76,10 @@ const providePaymentTerminal = async (
             name: 'uninitialized',
         };
     }
-    const { id, metadata } = paymentMethod.providers[0];
-    const { form, prefilledMetadataValues } = getMetadata(metadata);
-    if (isNil(metadata) || isNil(form)) {
-        return provideInstantPayment(model, id, { ...prefilledMetadataValues });
+    const provider = paymentMethod.providers[0];
+    const { form, prefilledMetadataValues, userInteraction } = findMetadata(model.serviceProviders, provider);
+    if (isNil(form)) {
+        return provideInstantPayment(model, provider, { ...prefilledMetadataValues }, userInteraction);
     }
 
     const terminalFormValues = model.initContext.terminalFormValues;
@@ -92,7 +90,12 @@ const providePaymentTerminal = async (
         return isNil(terminalFormValues) || isNil(terminalFormValues[curr.name]);
     }, false);
     if (!isFormRenderRequired) {
-        return provideInstantPayment(model, id, { ...terminalFormValues, ...prefilledMetadataValues });
+        return provideInstantPayment(
+            model,
+            provider,
+            { ...terminalFormValues, ...prefilledMetadataValues },
+            userInteraction,
+        );
     }
     return {
         name: 'uninitialized',
@@ -128,7 +131,7 @@ const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<Payment
     );
     const { userInteraction, paymentId, provider } = getLastPaymentStartedInfo(events);
     if (!isNil(userInteraction)) {
-        const metadata = getServiceProviderMetadata(model.paymentMethods, provider);
+        const metadata = findMetadata(model.serviceProviders, provider);
         return applyPaymentInteractionRequested(userInteraction, metadata?.userInteraction?.type);
     }
     if (!isNil(paymentId)) {

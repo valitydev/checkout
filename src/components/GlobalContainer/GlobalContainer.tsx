@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { usePaymentCondition } from './usePaymentCondition';
 import { toContainer } from './utils';
-import { PaymentContext } from '../../common/contexts';
+import { PaymentContext, PaymentModelContext } from '../../common/contexts';
 import { PaymentCondition } from '../../common/paymentCondition';
 import { PaymentModel } from '../../common/paymentModel';
 import { SelfRedirectContainer } from '../SelfRedirectContainer';
@@ -21,18 +21,19 @@ export type GlobalContainerProps = {
 
 export function GlobalContainer({ paymentModel, initPaymentCondition }: GlobalContainerProps) {
     const { paymentCondition, startPayment } = usePaymentCondition(paymentModel, initPaymentCondition);
-    // const { userInteraction, setPaymentCondition } = useActivePaymentProvider(paymentModel);
     const container = toContainer(paymentCondition);
 
     return (
-        <PaymentContext.Provider value={{ paymentModel, paymentCondition, startPayment }}>
-            <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
-                <Wrapper>
-                    {container.name === 'ViewContainer' && <ViewContainer />}
-                    {container.name === 'ThirdPartyContainer' && <div>ThirdPartyContainer</div>}
-                    {container.name === 'SelfRedirectContainer' && <SelfRedirectContainer />}
-                </Wrapper>
-            </motion.div>
-        </PaymentContext.Provider>
+        <PaymentModelContext.Provider value={{ paymentModel }}>
+            <PaymentContext.Provider value={{ paymentCondition, startPayment }}>
+                <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
+                    <Wrapper>
+                        {container.name === 'ViewContainer' && <ViewContainer />}
+                        {container.name === 'ThirdPartyContainer' && <div>ThirdPartyContainer</div>}
+                        {container.name === 'SelfRedirectContainer' && <SelfRedirectContainer />}
+                    </Wrapper>
+                </motion.div>
+            </PaymentContext.Provider>
+        </PaymentModelContext.Provider>
     );
 }

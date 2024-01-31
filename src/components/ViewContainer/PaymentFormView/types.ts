@@ -1,28 +1,9 @@
-import {
-    PrefilledMetadataValues,
-    ServiceProviderContactInfo,
-    ServiceProviderIconMetadata,
-    ServiceProviderMetadataForm,
-} from 'checkout/backend';
-
-import { InitContextContactInfo } from '../../../common/paymentModel';
-
 type LocalePath = string;
 type ViewAmount = string;
 
 export type MetadataFormModel = {
     name: 'MetadataForm';
     provider: string;
-    metadata: {
-        form: ServiceProviderMetadataForm;
-        logo?: ServiceProviderIconMetadata;
-        contactInfo?: ServiceProviderContactInfo;
-        prefilledMetadataValues?: PrefilledMetadataValues;
-    };
-    initContext: {
-        contactInfo?: InitContextContactInfo;
-        terminalFormValues?: object;
-    };
 } & CommonFormModel;
 
 export type CardFormModel = {
