@@ -1,16 +1,16 @@
 import { invoiceChangeToPaymentCondition } from './invoiceChangeToPaymentCondition';
-import { PaymentCondition, PaymentInteractionRedirectType } from '../../paymentCondition';
+import { PaymentCondition } from '../../paymentCondition';
 import { PollingResult } from '../pollInvoiceEvents';
 
 export const pollingResToPaymentCondition = (
     pollingResult: PollingResult,
-    type: PaymentInteractionRedirectType,
+    provider: string | null,
 ): { condition: PaymentCondition; eventId: number } => {
     switch (pollingResult.status) {
         case 'POLLED':
             return {
                 eventId: pollingResult.eventID,
-                condition: invoiceChangeToPaymentCondition(pollingResult.change, type),
+                condition: invoiceChangeToPaymentCondition(pollingResult.change, provider),
             };
         case 'TIMEOUT':
             return {

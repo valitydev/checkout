@@ -9,7 +9,7 @@ import {
 } from 'checkout/backend';
 
 import { applyPaymentInteractionRequested } from './applyPaymentInteractionRequested';
-import { PaymentCondition, PaymentInteractionRedirectType } from '../../paymentCondition';
+import { PaymentCondition } from '../../paymentCondition';
 
 const applyInvoiceStatusChanged = (change: InvoiceStatusChanged): PaymentCondition => {
     console.log(`InvoiceStatusChanged: ${change.status}`, change);
@@ -41,16 +41,14 @@ const applyPaymentStatusChanged = (change: PaymentStatusChanged): PaymentConditi
     }
 };
 
-export const invoiceChangeToPaymentCondition = (
-    change: InvoiceChange,
-    type: PaymentInteractionRedirectType,
-): PaymentCondition => {
+export const invoiceChangeToPaymentCondition = (change: InvoiceChange, provider: string | null): PaymentCondition => {
     switch (change.changeType) {
         case InvoiceChangeType.InvoiceStatusChanged:
             return applyInvoiceStatusChanged(change as InvoiceStatusChanged);
         case InvoiceChangeType.PaymentStatusChanged:
             return applyPaymentStatusChanged(change as PaymentStatusChanged);
         case InvoiceChangeType.PaymentInteractionRequested:
-            return applyPaymentInteractionRequested((change as PaymentInteractionRequested).userInteraction, type);
+            const userInteraction = (change as PaymentInteractionRequested).userInteraction;
+            return applyPaymentInteractionRequested(userInteraction, provider);
     }
 };

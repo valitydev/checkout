@@ -44,7 +44,6 @@ export type PaymentInteractionRedirectType = 'frame' | 'self';
 
 export type PaymentInteractionRedirect = {
     type: 'PaymentInteractionRedirect';
-    redirectType: PaymentInteractionRedirectType;
     request: BrowserRequest;
 };
 
@@ -57,9 +56,12 @@ export type PaymentInteractionApiExtension = {
     type: 'PaymentInteractionApiExtension';
 };
 
+export type Interaction = PaymentInteractionRedirect | PaymentInteractionQRCode | PaymentInteractionApiExtension;
+
 export type PaymentInteractionRequested = {
     name: 'interactionRequested';
-    interaction: PaymentInteractionRedirect | PaymentInteractionQRCode | PaymentInteractionApiExtension;
+    interaction: Interaction;
+    provider?: string;
 };
 
 export type PaymentCondition =

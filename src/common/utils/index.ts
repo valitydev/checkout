@@ -8,8 +8,6 @@ export { assertUnreachable } from './assertUnreachable';
 export { replaceSpaces } from './replaceSpaces';
 export { last } from './last';
 export { groupBy } from './groupBy';
-export { getMetadata } from './getMetadata';
-export { prepareForm } from './interactionForm';
 export { partialRight } from './partialRight';
 export { formatPhoneNumber, getPhoneCountryCode, validatePhone, formatOnFocus } from './phone';
 export { formatEmail, validateEmail } from './email';

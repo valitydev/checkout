@@ -15,12 +15,7 @@ export const toContainer = (paymentCondition: PaymentCondition): Container => {
                 case 'PaymentInteractionApiExtension':
                     return { name: 'ViewContainer' };
                 case 'PaymentInteractionRedirect':
-                    switch (paymentCondition.interaction.redirectType) {
-                        case 'frame':
-                            return { name: 'ThirdPartyContainer' };
-                        case 'self':
-                            return { name: 'SelfRedirectContainer' };
-                    }
+                    return { name: 'RedirectContainer' };
             }
     }
 };

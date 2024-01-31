@@ -1,7 +1,7 @@
 import { BrowserGetRequest } from 'checkout/backend';
 
 import { expandWithRedirect, hasTerminationUriTemplate } from './expandWithRedirect';
-import { getEncodedUrlParams } from '../getEncodedUrlParams';
+import { getEncodedUrlParams } from '../../../common/utils';
 
 const createInput = (name: string, value: any): HTMLInputElement => {
     const formParam = document.createElement('input');

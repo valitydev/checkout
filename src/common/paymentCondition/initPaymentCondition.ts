@@ -1,10 +1,9 @@
-import { InvoiceChangeType, InvoiceStatus, UserInteractionMetadata, getInvoiceEvents } from 'checkout/backend';
+import { InvoiceChangeType, InvoiceStatus, getInvoiceEvents } from 'checkout/backend';
 
 import { getLastPaymentStartedInfo } from './getLastPaymentStartedInfo';
 import { PaymentCondition } from './types';
 import {
     StartPaymentPayload,
-    TerminalValuesMetadata,
     createPayment,
     determineModel,
     pollInvoiceEvents,
@@ -23,23 +22,27 @@ const getModelInvoice = async (model: PaymentModel): Promise<PaymentModelInvoice
     }
 };
 
-const provideInstantPayment = async (
-    model: PaymentModel,
-    provider: string,
-    metadata?: TerminalValuesMetadata,
-    userInteraction?: UserInteractionMetadata,
-): Promise<PaymentCondition> => {
+const provideInstantPayment = async (model: PaymentModel, provider: string): Promise<PaymentCondition> => {
     try {
         const modelInvoice = await getModelInvoice(model);
-        const startPaymentPayload: StartPaymentPayload = {
-            methodName: 'PaymentTerminal',
-            values: { provider, metadata },
-        };
-        await createPayment(modelInvoice, startPaymentPayload);
         const {
             apiEndpoint,
             invoiceParams: { invoiceID, invoiceAccessToken },
+            initContext,
+            serviceProviders,
         } = modelInvoice;
+        const { prefilledMetadataValues } = findMetadata(serviceProviders, provider);
+        const startPaymentPayload: StartPaymentPayload = {
+            methodName: 'PaymentTerminal',
+            values: {
+                provider,
+                metadata: {
+                    ...initContext?.terminalFormValues,
+                    ...prefilledMetadataValues,
+                },
+            },
+        };
+        await createPayment(modelInvoice, startPaymentPayload);
         const pollingResult = await pollInvoiceEvents({
             apiEndpoint,
             invoiceAccessToken,
@@ -55,9 +58,10 @@ const provideInstantPayment = async (
             },
         });
 
-        const { eventId, condition } = pollingResToPaymentCondition(pollingResult, userInteraction?.type);
+        const { eventId, condition } = pollingResToPaymentCondition(pollingResult, provider);
         return condition;
     } catch (ex) {
+        console.error(ex);
         return {
             name: 'paymentProcessFailed',
             exception: {
@@ -77,9 +81,9 @@ const providePaymentTerminal = async (
         };
     }
     const provider = paymentMethod.providers[0];
-    const { form, prefilledMetadataValues, userInteraction } = findMetadata(model.serviceProviders, provider);
+    const { form } = findMetadata(model.serviceProviders, provider);
     if (isNil(form)) {
-        return provideInstantPayment(model, provider, { ...prefilledMetadataValues }, userInteraction);
+        return provideInstantPayment(model, provider);
     }
 
     const terminalFormValues = model.initContext.terminalFormValues;
@@ -90,12 +94,7 @@ const providePaymentTerminal = async (
         return isNil(terminalFormValues) || isNil(terminalFormValues[curr.name]);
     }, false);
     if (!isFormRenderRequired) {
-        return provideInstantPayment(
-            model,
-            provider,
-            { ...terminalFormValues, ...prefilledMetadataValues },
-            userInteraction,
-        );
+        return provideInstantPayment(model, provider);
     }
     return {
         name: 'uninitialized',
@@ -122,21 +121,30 @@ const providePaymentModel = async (model: PaymentModel): Promise<PaymentConditio
 const GET_INVOICE_EVENTS_LIMIT = 20;
 
 const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<PaymentCondition> => {
-    const { invoiceParams, apiEndpoint } = model;
-    const events = await getInvoiceEvents(
-        apiEndpoint,
-        invoiceParams.invoiceAccessToken,
-        invoiceParams.invoiceID,
-        GET_INVOICE_EVENTS_LIMIT,
-    );
-    const { userInteraction, paymentId, provider } = getLastPaymentStartedInfo(events);
-    if (!isNil(userInteraction)) {
-        const metadata = findMetadata(model.serviceProviders, provider);
-        return applyPaymentInteractionRequested(userInteraction, metadata?.userInteraction?.type);
-    }
-    if (!isNil(paymentId)) {
+    try {
+        const { invoiceParams, apiEndpoint } = model;
+        const events = await getInvoiceEvents(
+            apiEndpoint,
+            invoiceParams.invoiceAccessToken,
+            invoiceParams.invoiceID,
+            GET_INVOICE_EVENTS_LIMIT,
+        );
+        const { userInteraction, paymentId, provider } = getLastPaymentStartedInfo(events);
+        if (!isNil(userInteraction)) {
+            return applyPaymentInteractionRequested(userInteraction, provider);
+        }
+        if (!isNil(paymentId)) {
+            return {
+                name: 'pending',
+            };
+        }
+    } catch (ex) {
+        console.error(ex);
         return {
-            name: 'pending',
+            name: 'paymentProcessFailed',
+            exception: {
+                type: 'ApiCallException',
+            },
         };
     }
     return providePaymentModel(model);

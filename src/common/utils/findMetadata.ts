@@ -1,8 +1,12 @@
-import { CheckoutServiceProviderMetadata } from 'checkout/backend';
+import { CheckoutServiceProviderMetadata, METADATA_NAMESPACE, ServiceProviderMetadata } from 'checkout/backend';
 
-import { getMetadata } from './getMetadata';
 import { isNil } from './isNil';
 import { TerminalServiceProvider } from '../paymentModel';
+
+export const getMetadata = (
+    metadata: ServiceProviderMetadata | null,
+    namespace = METADATA_NAMESPACE,
+): CheckoutServiceProviderMetadata => metadata?.[namespace] || {};
 
 export const findMetadata = (
     serviceProviders: TerminalServiceProvider[] | null,

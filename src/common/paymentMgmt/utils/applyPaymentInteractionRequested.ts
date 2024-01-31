@@ -1,35 +1,31 @@
 import { InteractionType, QrCodeDisplayRequest, Redirect, UserInteraction } from 'checkout/backend';
 
-import { PaymentCondition, PaymentInteractionRedirectType } from '../../paymentCondition';
+import { Interaction, PaymentInteractionRequested } from '../../paymentCondition';
 
-export const applyPaymentInteractionRequested = (
-    userInteraction: UserInteraction,
-    redirectType: PaymentInteractionRedirectType = 'self',
-): PaymentCondition => {
+const toInteraction = (userInteraction: UserInteraction): Interaction => {
     switch (userInteraction.interactionType) {
         case InteractionType.Redirect:
             return {
-                name: 'interactionRequested',
-                interaction: {
-                    type: 'PaymentInteractionRedirect',
-                    redirectType,
-                    request: (userInteraction as Redirect).request,
-                },
+                type: 'PaymentInteractionRedirect',
+                request: (userInteraction as Redirect).request,
             };
         case InteractionType.QrCodeDisplayRequest:
             return {
-                name: 'interactionRequested',
-                interaction: {
-                    type: 'PaymentInteractionQRCode',
-                    qrCode: (userInteraction as QrCodeDisplayRequest).qrCode,
-                },
+                type: 'PaymentInteractionQRCode',
+                qrCode: (userInteraction as QrCodeDisplayRequest).qrCode,
             };
         case InteractionType.ApiExtensionRequest:
             return {
-                name: 'interactionRequested',
-                interaction: {
-                    type: 'PaymentInteractionApiExtension',
-                },
+                type: 'PaymentInteractionApiExtension',
             };
     }
 };
+
+export const applyPaymentInteractionRequested = (
+    userInteraction: UserInteraction,
+    provider: string | null,
+): PaymentInteractionRequested => ({
+    name: 'interactionRequested',
+    provider,
+    interaction: toInteraction(userInteraction),
+});

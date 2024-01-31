@@ -6,7 +6,7 @@ import { toContainer } from './utils';
 import { PaymentContext, PaymentModelContext } from '../../common/contexts';
 import { PaymentCondition } from '../../common/paymentCondition';
 import { PaymentModel } from '../../common/paymentModel';
-import { SelfRedirectContainer } from '../SelfRedirectContainer';
+import { RedirectContainer } from '../RedirectContainer';
 import { ViewContainer } from '../ViewContainer';
 
 const Wrapper = styled.div`
@@ -29,8 +29,7 @@ export function GlobalContainer({ paymentModel, initPaymentCondition }: GlobalCo
                 <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
                     <Wrapper>
                         {container.name === 'ViewContainer' && <ViewContainer />}
-                        {container.name === 'ThirdPartyContainer' && <div>ThirdPartyContainer</div>}
-                        {container.name === 'SelfRedirectContainer' && <SelfRedirectContainer />}
+                        {container.name === 'RedirectContainer' && <RedirectContainer />}
                     </Wrapper>
                 </motion.div>
             </PaymentContext.Provider>

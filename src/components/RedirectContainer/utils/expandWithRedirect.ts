@@ -1,6 +1,6 @@
 import { TemplateExpression, parse } from 'uri-template';
 
-import { isString } from '../isString';
+import { isString } from '../../../common/utils';
 
 const hasTerminationUriParam = (expression: TemplateExpression): boolean =>
     !!expression.params.find((param) => param.name === 'termination_uri');
@@ -23,7 +23,7 @@ export const hasTerminationUriTemplate = (value: any): boolean => {
 
 export const expandWithRedirect = (origin: string, template: string, decode: boolean = false): string => {
     const parsed = parse(template);
-    const redirectUrl = `${origin}/v1/finish-interaction.html`;
+    const redirectUrl = `${origin}/v1/finish-interaction.html`; // TODO: remove finish-interaction.html
     const expanded = parsed.expand({ termination_uri: redirectUrl });
     return decode ? decodeURIComponent(expanded) : expanded;
 };

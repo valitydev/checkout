@@ -1,13 +1,9 @@
-type ThirdPartyContainer = {
-    name: 'ThirdPartyContainer';
-};
-
 type ViewContainer = {
     name: 'ViewContainer';
 };
 
-type SelfRedirectContainer = {
-    name: 'SelfRedirectContainer';
+type RedirectContainer = {
+    name: 'RedirectContainer';
 };
 
-export type Container = ThirdPartyContainer | SelfRedirectContainer | ViewContainer;
+export type Container = RedirectContainer | ViewContainer;
