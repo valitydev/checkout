@@ -1,4 +1,3 @@
-import { StartPaymentPayload } from '../../common/paymentMgmt';
 import { PaymentMethod } from '../../common/paymentModel';
 
 export type ViewName =
@@ -53,9 +52,6 @@ export type View =
 export type ViewModel = {
     direction: SlideAnimationDirection;
     isLoading: boolean;
-    viewAmount: ViewAmount;
     views: Map<ViewName, View>;
     activeView?: ViewName;
 };
-
-export type PaymentPayload = StartPaymentPayload;

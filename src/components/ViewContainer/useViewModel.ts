@@ -17,7 +17,6 @@ import {
     PaymentInteractionApiExtension,
 } from '../../common/paymentCondition';
 import { PaymentModel } from '../../common/paymentModel';
-import { formatAmount } from '../../common/utils';
 
 type Action =
     | {
@@ -64,7 +63,7 @@ const dataReducer = (state: ViewModel, action: Action): ViewModel => {
 
 const toViews = ({ paymentMethods }: PaymentModel): Map<ViewName, View> => {
     let views = paymentMethods.reduce<[ViewName, View][]>((acc, paymentMethod) => {
-        switch (paymentMethod.name) {
+        switch (paymentMethod.methodName) {
             case 'BankCard':
                 return acc.concat([['PaymentFormView', { name: 'PaymentFormView', paymentMethod }]]);
             case 'PaymentTerminal':
@@ -84,11 +83,10 @@ const toViews = ({ paymentMethods }: PaymentModel): Map<ViewName, View> => {
     return new Map<ViewName, View>(views);
 };
 
-const initViewModel = (model: PaymentModel, localeCode: string): ViewModel => {
+const initViewModel = (model: PaymentModel): ViewModel => {
     return {
         isLoading: false,
         direction: 'forward',
-        viewAmount: formatAmount(model.paymentAmount, localeCode),
         views: toViews(model),
     };
 };
@@ -129,8 +127,8 @@ const applyUninitialized = (model: PaymentModel): ViewName => {
     return 'PaymentFormView';
 };
 
-export const useViewModel = (localeCode: string, model: PaymentModel, condition: PaymentCondition) => {
-    const [viewModel, dispatch] = useReducer(dataReducer, initViewModel(model, localeCode));
+export const useViewModel = (model: PaymentModel, condition: PaymentCondition) => {
+    const [viewModel, dispatch] = useReducer(dataReducer, initViewModel(model));
 
     useEffect(() => {
         switch (condition.name) {

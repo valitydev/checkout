@@ -1,39 +1,23 @@
-import { useCallback, useContext } from 'react';
+import { useContext } from 'react';
 
 import { CardForm } from './CardForm';
 import { MetadataForm } from './MetadataForm';
-import { toPaymentFormModel } from './toPaymentFormModel';
-import { SubmitFormValues } from './types';
-import { PaymentPayload } from '../types';
 import { ViewModelContext } from '../ViewModelContext';
 
-const toPaymentPayload = (data: SubmitFormValues): PaymentPayload => {
-    switch (data.formName) {
-        case 'CardForm':
-            return {
-                methodName: 'BankCard',
-                values: data.values,
-            };
-        case 'MetadataForm':
-            return {
-                methodName: 'PaymentTerminal',
-                values: data.values,
-            };
-    }
-};
-
 export function PaymentFormView() {
-    const { viewModel, onSetPaymentPayload } = useContext(ViewModelContext);
-    const formModel = toPaymentFormModel(viewModel);
+    const { viewModel } = useContext(ViewModelContext);
+    const view = viewModel.views.get(viewModel.activeView);
 
-    const onSubmitForm = useCallback((data: SubmitFormValues) => {
-        onSetPaymentPayload(toPaymentPayload(data));
-    }, []);
+    if (view.name !== 'PaymentFormView') {
+        throw new Error(`Wrong View. Expected: PaymentFormView, actual: ${view.name}`);
+    }
+
+    const paymentMethod = view.paymentMethod;
 
     return (
         <>
-            {formModel.name === 'CardForm' && <CardForm formModel={formModel} onSubmitForm={onSubmitForm} />}
-            {formModel.name === 'MetadataForm' && <MetadataForm formModel={formModel} onSubmitForm={onSubmitForm} />}
+            {paymentMethod.methodName === 'BankCard' && <CardForm paymentMethod={paymentMethod} />}
+            {paymentMethod.methodName === 'PaymentTerminal' && <MetadataForm paymentMethod={paymentMethod} />}
         </>
     );
 }

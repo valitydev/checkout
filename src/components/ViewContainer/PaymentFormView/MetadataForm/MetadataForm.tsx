@@ -2,9 +2,11 @@ import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { LogoContainer } from './LogoContainer';
+import { MetadataFormInputs } from './types';
 import { useDefaultFormValues } from './useDefaultFormValues';
 import { formatMetadataValue } from './utils';
 import { CustomizationContext, LocaleContext, PaymentModelContext } from '../../../../common/contexts';
+import { PaymentTerminal } from '../../../../common/paymentModel';
 import { findMetadata, isNil } from '../../../../common/utils';
 import {
     Email,
@@ -16,22 +18,25 @@ import {
     Phone,
     sortByIndex,
 } from '../../../legacy';
-import { MetadataFormModel, MetadataFormInputs, MetadataFormSubmitFormValues } from '../types';
+import { ViewModelContext } from '../../ViewModelContext';
 
 export type MetadataFormProps = {
-    formModel: MetadataFormModel;
-    onSubmitForm: (data: MetadataFormSubmitFormValues) => void;
+    paymentMethod: PaymentTerminal;
 };
 
-export function MetadataForm({ formModel, onSubmitForm }: MetadataFormProps) {
+export function MetadataForm({ paymentMethod: { methodName, providers } }: MetadataFormProps) {
+    if (providers.length !== 1) {
+        throw new Error('MetadataForm. Providers length must be 1');
+    }
+
+    const provider = providers[0];
     const { l } = useContext(LocaleContext);
+    const { viewAmount, onSetPaymentPayload } = useContext(ViewModelContext);
     const { localeCode } = useContext(CustomizationContext);
     const {
         paymentModel: { initContext, serviceProviders },
     } = useContext(PaymentModelContext);
-    const { provider, viewAmount } = formModel;
     const { form, contactInfo, logo, prefilledMetadataValues } = findMetadata(serviceProviders, provider);
-
     const {
         register,
         handleSubmit,
@@ -42,8 +47,8 @@ export function MetadataForm({ formModel, onSubmitForm }: MetadataFormProps) {
     });
 
     const onSubmit: SubmitHandler<MetadataFormInputs> = (values) => {
-        onSubmitForm({
-            formName: 'MetadataForm',
+        onSetPaymentPayload({
+            methodName,
             values: {
                 provider,
                 metadata: {

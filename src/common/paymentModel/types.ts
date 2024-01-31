@@ -19,13 +19,13 @@ export type TerminalServiceProvider = {
 };
 
 export type PaymentTerminal = {
-    readonly name: 'PaymentTerminal';
+    readonly methodName: 'PaymentTerminal';
     readonly category: KnownProviderCategory;
     readonly providers: string[];
 };
 
-type BankCard = {
-    readonly name: 'BankCard';
+export type BankCard = {
+    readonly methodName: 'BankCard';
 };
 
 export type PaymentMethod = PaymentTerminal | BankCard;

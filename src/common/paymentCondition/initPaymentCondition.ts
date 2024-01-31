@@ -108,7 +108,7 @@ const providePaymentModel = async (model: PaymentModel): Promise<PaymentConditio
         };
     }
     const paymentMethod = model.paymentMethods[0];
-    switch (paymentMethod.name) {
+    switch (paymentMethod.methodName) {
         case 'BankCard':
             return {
                 name: 'uninitialized',

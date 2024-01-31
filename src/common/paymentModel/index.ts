@@ -12,6 +12,7 @@ export type {
     InvoiceTemplateParams,
     PaymentMethod,
     PaymentTerminal,
+    BankCard,
     TerminalServiceProvider,
     InitContextContactInfo,
 } from './types';

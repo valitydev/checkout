@@ -9,7 +9,7 @@ const categoryReducer = (
     [category, serviceProviders]: [KnownProviderCategory, ServiceProvider[]],
 ) => {
     const paymentMethod: PaymentMethod = {
-        name: 'PaymentTerminal',
+        methodName: 'PaymentTerminal',
         category,
         providers: serviceProviders.map(({ id }) => id),
     };
@@ -48,7 +48,7 @@ export const backendModelToPaymentMethods = (model: BackendModel): PaymentMethod
     return model.paymentMethods.reduce((result, backendPaymentMethod) => {
         switch (backendPaymentMethod.method) {
             case PaymentMethodName.BankCard:
-                return result.concat([{ name: 'BankCard' }]);
+                return result.concat([{ methodName: 'BankCard' }]);
             case PaymentMethodName.PaymentTerminal:
                 const terminal = backendPaymentMethod as PaymentTerminal;
                 return result.concat(fromPaymentTerminal(terminal.providers, model.serviceProviders));
