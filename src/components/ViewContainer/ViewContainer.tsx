@@ -6,7 +6,7 @@ import { ViewContainerInner } from './ViewContainerInner';
 import {
     CustomizationContext,
     LocaleContext,
-    PaymentContext,
+    PaymentConditionsContext,
     PaymentModelContext,
     ViewModelContext,
 } from '../../common/contexts';
@@ -16,9 +16,9 @@ import { FormBlock, Info } from '../legacy';
 export function ViewContainer() {
     const { state, load } = useLocale();
     const { localeCode, name, description } = useContext(CustomizationContext);
-    const { paymentCondition, startPayment } = useContext(PaymentContext);
+    const { conditions } = useContext(PaymentConditionsContext);
     const { paymentModel } = useContext(PaymentModelContext);
-    const { viewModel, goTo } = useViewModel(paymentModel, paymentCondition);
+    const { viewModel, goTo } = useViewModel(paymentModel, conditions);
 
     const viewAmount = useMemo(() => formatAmount(paymentModel.paymentAmount, localeCode), [localeCode]);
 
@@ -31,9 +31,7 @@ export function ViewContainer() {
             {state.status === 'SUCCESS' && (
                 <LocaleContext.Provider value={{ l: state.data }}>
                     <Info description={description} l={state.data} name={name} viewAmount={viewAmount}></Info>
-                    <ViewModelContext.Provider
-                        value={{ viewModel, viewAmount, goTo, onSetPaymentPayload: startPayment }}
-                    >
+                    <ViewModelContext.Provider value={{ viewModel, viewAmount, goTo }}>
                         <ViewContainerInner />
                     </ViewModelContext.Provider>
                 </LocaleContext.Provider>

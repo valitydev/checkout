@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useReducer } from 'react';
+import { useCallback, useEffect, useMemo, useReducer } from 'react';
 
 import { SlideAnimationDirection, View, ViewModel, ViewName } from './types';
-import { PaymentCondition } from '../../common/paymentCondition';
+import { PaymentCondition, PaymentInteractionRequested } from '../../common/paymentCondition';
 import { PaymentModel } from '../../common/paymentModel';
+import { isNil, last } from '../../common/utils';
 
 type Action =
     | {
@@ -86,46 +87,55 @@ const applyUninitialized = (model: PaymentModel): ViewName => {
     return 'PaymentFormView';
 };
 
-export const useViewModel = (model: PaymentModel, condition: PaymentCondition) => {
+const interactionToView = ({ interaction }: PaymentInteractionRequested): View => {
+    switch (interaction.type) {
+        case 'PaymentInteractionQRCode':
+            return { name: 'QrCodeView' };
+        case 'PaymentInteractionApiExtension':
+            return { name: 'ApiExtensionView' };
+    }
+};
+
+export const useViewModel = (model: PaymentModel, conditions: PaymentCondition[]) => {
     const [viewModel, dispatch] = useReducer(dataReducer, initViewModel(model));
 
+    const lastCondition = useMemo(() => last(conditions), [conditions]);
+
     useEffect(() => {
-        switch (condition.name) {
-            case 'uninitialized':
-                dispatch({ type: 'SET_ACTIVE_VIEW', payload: applyUninitialized(model) });
+        if (isNil(lastCondition)) return;
+        switch (lastCondition.name) {
+            case 'paymentProcessStarted':
+                dispatch({ type: 'SET_LOADING', payload: true });
                 break;
+            default:
+                dispatch({ type: 'SET_LOADING', payload: false });
+                break;
+        }
+    }, [lastCondition]);
+
+    useEffect(() => {
+        if (isNil(lastCondition)) {
+            dispatch({ type: 'SET_ACTIVE_VIEW', payload: applyUninitialized(model) });
+            return;
+        }
+        switch (lastCondition.name) {
             case 'invoiceStatusChanged':
             case 'paymentStatusChanged':
+            case 'interactionCompleted':
+            case 'paymentStatusUnknown':
             case 'paymentStarted':
-                dispatch({ type: 'SET_LOADING', payload: false });
                 dispatch({ type: 'SET_VIEW', payload: { name: 'PaymentResultView' } });
                 dispatch({ type: 'SET_ACTIVE_VIEW', payload: 'PaymentResultView' });
                 break;
             case 'paymentProcessFailed':
-                dispatch({ type: 'SET_LOADING', payload: false });
                 throw new Error('Unimplemented paymentProcessFailed condition');
-                break;
-            case 'pending':
-                dispatch({ type: 'SET_LOADING', payload: true });
-                break;
-        }
-    }, [condition]);
-
-    useEffect(() => {
-        if (condition.name !== 'interactionRequested') return;
-        dispatch({ type: 'SET_LOADING', payload: false });
-        const interaction = condition.interaction;
-        switch (interaction.type) {
-            case 'PaymentInteractionQRCode':
-                dispatch({ type: 'SET_VIEW', payload: { name: 'QrCodeView' } });
-                dispatch({ type: 'SET_ACTIVE_VIEW', payload: 'QrCodeView' });
-                break;
-            case 'PaymentInteractionApiExtension':
-                dispatch({ type: 'SET_VIEW', payload: { name: 'ApiExtensionView' } });
-                dispatch({ type: 'SET_ACTIVE_VIEW', payload: 'ApiExtensionView' });
+            case 'interactionRequested':
+                const interactionView = interactionToView(lastCondition);
+                dispatch({ type: 'SET_VIEW', payload: interactionView });
+                dispatch({ type: 'SET_ACTIVE_VIEW', payload: interactionView.name });
                 break;
         }
-    }, [condition]);
+    }, [lastCondition]);
 
     const goTo = useCallback((viewName: ViewName, direction: SlideAnimationDirection = 'forward') => {
         dispatch({ type: 'GO_TO', payload: { viewName, direction } });

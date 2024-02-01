@@ -7,12 +7,13 @@ import { ExpireDate } from './ExpireDate';
 import { SecureCode } from './SecureCode';
 import { CardFormInputs } from './types';
 import { isSecureCodeAvailable } from './utils';
-import { CustomizationContext, LocaleContext, ViewModelContext } from '../../../../common/contexts';
+import { CustomizationContext, LocaleContext, PaymentContext, ViewModelContext } from '../../../../common/contexts';
 import { FormGroup, HeaderWrapper, PayButton, Title } from '../../../../components/legacy';
 
 export function CardForm() {
     const { l } = useContext(LocaleContext);
-    const { viewAmount, onSetPaymentPayload } = useContext(ViewModelContext);
+    const { viewAmount } = useContext(ViewModelContext);
+    const { startPayment } = useContext(PaymentContext);
     const { obscureCardCvv, requireCardHolder } = useContext(CustomizationContext);
     const {
         register,
@@ -22,7 +23,7 @@ export function CardForm() {
     } = useForm<CardFormInputs>({ mode: 'onChange' });
 
     const onSubmit: SubmitHandler<CardFormInputs> = (values) => {
-        onSetPaymentPayload({
+        startPayment({
             methodName: 'BankCard',
             values,
         });

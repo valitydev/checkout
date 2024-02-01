@@ -31,7 +31,7 @@ export function AppLayout({ initParams }: AppLayoutProps) {
                 {modelsState.status === 'INITIALIZED' && (
                     <CustomizationContext.Provider value={toCustomizationContext(initParams.initConfig)}>
                         <GlobalContainer
-                            initPaymentCondition={modelsState.data.paymentCondition}
+                            initConditions={modelsState.data.conditions}
                             paymentModel={modelsState.data.paymentModel}
                         />
                     </CustomizationContext.Provider>

@@ -1,26 +1,35 @@
 import { useContext, useMemo } from 'react';
 
 import { SelfRedirectContainer } from './SelfRedirectContainer';
-import { PaymentContext, PaymentModelContext } from '../../common/contexts';
-import { findMetadata, isNil } from '../../common/utils';
+import { PaymentConditionsContext, PaymentModelContext } from '../../common/contexts';
+import { PaymentStarted } from '../../common/paymentCondition';
+import { findMetadata, isNil, last } from '../../common/utils';
 
 export function RedirectContainer() {
-    const { paymentCondition } = useContext(PaymentContext);
+    const { conditions } = useContext(PaymentConditionsContext);
+    const lastCondition = last(conditions);
     const {
         paymentModel: { origin, serviceProviders },
     } = useContext(PaymentModelContext);
 
-    if (paymentCondition.name !== 'interactionRequested') {
+    if (lastCondition.name !== 'interactionRequested') {
         throw new Error('Invalid payment condition');
     }
-    if (paymentCondition.interaction.type !== 'PaymentInteractionRedirect') {
+    if (lastCondition.interaction.type !== 'PaymentInteractionRedirect') {
         throw new Error('Invalid payment interaction');
     }
 
-    const {
-        provider,
-        interaction: { request },
-    } = paymentCondition;
+    const paymentStarted = conditions.find((condition) => {
+        if (condition.name === 'paymentStarted') {
+            return condition.paymentId === lastCondition.paymentId;
+        }
+    }) as PaymentStarted;
+
+    if (isNil(paymentStarted.provider)) {
+        throw new Error('Payment started condition should contain provider');
+    }
+
+    const provider = paymentStarted.provider;
 
     const redirectType = useMemo(
         (defaultType = 'self') => {
@@ -29,6 +38,10 @@ export function RedirectContainer() {
         },
         [provider, serviceProviders],
     );
+
+    const {
+        interaction: { request },
+    } = lastCondition;
 
     return (
         <>

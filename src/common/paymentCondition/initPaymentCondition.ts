@@ -1,17 +1,10 @@
 import { InvoiceChangeType, InvoiceStatuses, getInvoiceEvents } from 'checkout/backend';
 
-import { getLastPaymentStartedInfo } from './getLastPaymentStartedInfo';
 import { PaymentCondition } from './types';
-import {
-    StartPaymentPayload,
-    createPayment,
-    determineModel,
-    pollInvoiceEvents,
-    pollingResToPaymentCondition,
-} from '../paymentMgmt';
-import { applyPaymentInteractionRequested } from '../paymentMgmt/utils';
+import { invoiceEventsToConditions, pollingResultToConditions } from './utils';
+import { StartPaymentPayload, createPayment, determineModel, pollInvoiceEvents } from '../paymentMgmt';
 import { PaymentModel, PaymentModelInvoice, PaymentTerminal } from '../paymentModel';
-import { findMetadata, isNil } from '../utils';
+import { findMetadata, isNil, last } from '../utils';
 
 const getModelInvoice = async (model: PaymentModel): Promise<PaymentModelInvoice> => {
     switch (model.type) {
@@ -22,7 +15,11 @@ const getModelInvoice = async (model: PaymentModel): Promise<PaymentModelInvoice
     }
 };
 
-const provideInstantPayment = async (model: PaymentModel, provider: string): Promise<PaymentCondition> => {
+const provideInstantPayment = async (
+    model: PaymentModel,
+    provider: string,
+    lastEventId: number,
+): Promise<PaymentCondition[]> => {
     try {
         const modelInvoice = await getModelInvoice(model);
         const {
@@ -43,47 +40,45 @@ const provideInstantPayment = async (model: PaymentModel, provider: string): Pro
             },
         };
         await createPayment(modelInvoice, startPaymentPayload);
+        const DEFAULT_TIMEOUT_MS = 60 * 1000 * 3;
+        const API_METHOD_CALL_MS = 1000;
         const pollingResult = await pollInvoiceEvents({
             apiEndpoint,
             invoiceAccessToken,
             invoiceID,
-            stopPollingTypes: [
-                InvoiceChangeType.InvoiceStatusChanged,
-                InvoiceChangeType.PaymentStatusChanged,
-                InvoiceChangeType.PaymentInteractionRequested,
-            ],
+            startFromEventID: lastEventId,
+            stopPollingTypes: [InvoiceChangeType.PaymentStatusChanged, InvoiceChangeType.PaymentInteractionRequested],
             delays: {
-                pollingTimeout: 60 * 1000 * 20,
-                apiMethodCall: 1000,
+                pollingTimeout: DEFAULT_TIMEOUT_MS,
+                apiMethodCall: API_METHOD_CALL_MS,
             },
         });
-
-        const { eventId, condition } = pollingResToPaymentCondition(pollingResult, provider);
-        return condition;
+        return pollingResultToConditions(pollingResult);
     } catch (ex) {
         console.error(ex);
-        return {
-            name: 'paymentProcessFailed',
-            exception: {
-                type: 'ApiCallException',
+        return [
+            {
+                name: 'paymentProcessFailed',
+                exception: {
+                    type: 'ApiCallException',
+                },
             },
-        };
+        ];
     }
 };
 
 const providePaymentTerminal = async (
     model: PaymentModel,
     paymentMethod: PaymentTerminal,
-): Promise<PaymentCondition> => {
+    lastEventId: number,
+): Promise<PaymentCondition[]> => {
     if (paymentMethod.providers.length > 1) {
-        return {
-            name: 'uninitialized',
-        };
+        return [];
     }
     const provider = paymentMethod.providers[0];
     const { form } = findMetadata(model.serviceProviders, provider);
     if (isNil(form)) {
-        return provideInstantPayment(model, provider);
+        return provideInstantPayment(model, provider, lastEventId);
     }
 
     const terminalFormValues = model.initContext.terminalFormValues;
@@ -94,33 +89,28 @@ const providePaymentTerminal = async (
         return isNil(terminalFormValues) || isNil(terminalFormValues[curr.name]);
     }, false);
     if (!isFormRenderRequired) {
-        return provideInstantPayment(model, provider);
+        return provideInstantPayment(model, provider, lastEventId);
     }
-    return {
-        name: 'uninitialized',
-    };
+    return [];
 };
 
-const providePaymentModel = async (model: PaymentModel): Promise<PaymentCondition> => {
+const providePaymentModel = async (model: PaymentModel, lastEventId: number): Promise<PaymentCondition[]> => {
     if (model.paymentMethods.length > 1) {
-        return {
-            name: 'uninitialized',
-        };
+        return [];
     }
     const paymentMethod = model.paymentMethods[0];
     switch (paymentMethod.methodName) {
         case 'BankCard':
-            return {
-                name: 'uninitialized',
-            };
+            return [];
         case 'PaymentTerminal':
-            return providePaymentTerminal(model, paymentMethod);
+            return providePaymentTerminal(model, paymentMethod, lastEventId);
     }
 };
 
 const GET_INVOICE_EVENTS_LIMIT = 20;
 
-const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<PaymentCondition> => {
+const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<PaymentCondition[]> => {
+    let lastEventId = 0;
     try {
         const { invoiceParams, apiEndpoint } = model;
         const events = await getInvoiceEvents(
@@ -129,43 +119,46 @@ const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<Payment
             invoiceParams.invoiceID,
             GET_INVOICE_EVENTS_LIMIT,
         );
-        const { userInteraction, provider, paymentId } = getLastPaymentStartedInfo(events);
-        if (!isNil(userInteraction)) {
-            return applyPaymentInteractionRequested(userInteraction, provider);
-        }
-        if (!isNil(paymentId)) {
-            return {
-                name: 'paymentStarted',
-            };
+        const conditions = invoiceEventsToConditions(events);
+        lastEventId = last(events).id;
+        const lastCondition = last(conditions);
+        switch (lastCondition.name) {
+            case 'paymentStarted':
+            case 'interactionRequested':
+                return conditions;
         }
     } catch (ex) {
         console.error(ex);
-        return {
-            name: 'paymentProcessFailed',
-            exception: {
-                type: 'ApiCallException',
+        return [
+            {
+                name: 'paymentProcessFailed',
+                exception: {
+                    type: 'ApiCallException',
+                },
             },
-        };
+        ];
     }
-    return providePaymentModel(model);
+    return providePaymentModel(model, lastEventId);
 };
 
-const provideInvoice = async (model: PaymentModelInvoice): Promise<PaymentCondition> => {
+const provideInvoice = async (model: PaymentModelInvoice): Promise<PaymentCondition[]> => {
     switch (model.status) {
         case InvoiceStatuses.cancelled:
         case InvoiceStatuses.fulfilled:
         case InvoiceStatuses.paid:
         case InvoiceStatuses.refunded:
-            return { name: 'invoiceStatusChanged', status: model.status };
+            return [{ name: 'invoiceStatusChanged', status: model.status }];
         case InvoiceStatuses.unpaid:
             return provideInvoiceUnpaid(model);
     }
 };
 
-export const initPaymentCondition = (model: PaymentModel): Promise<PaymentCondition> => {
+export const initPaymentCondition = (model: PaymentModel): Promise<PaymentCondition[]> => {
     switch (model.type) {
         case 'InvoiceTemplateContext':
-            return providePaymentModel(model);
+            // Invoice template context does not have last event id
+            const lastEventId = 0;
+            return providePaymentModel(model, lastEventId);
         case 'InvoiceContext':
             return provideInvoice(model);
     }

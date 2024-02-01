@@ -1,55 +1,49 @@
-import { InvoiceChange, InvoiceChangeType, InvoiceEvent, getInvoiceEvents } from 'checkout/backend';
+import { InvoiceChangeType, InvoiceEvent, getInvoiceEvents } from 'checkout/backend';
 
 import { delay, isNil, last } from '../utils';
 
 const GET_INVOICE_EVENTS_LIMIT = 20;
 
-const getChange = (
-    event: InvoiceEvent | undefined,
-    stopPollingChangeTypes: InvoiceChangeType[],
-): InvoiceChange | undefined => {
+const isChangeFound = (event: InvoiceEvent | undefined, stopPollingTypes: InvoiceChangeType[]): boolean => {
     if (isNil(event) || isNil(event.changes)) {
-        return undefined;
+        return false;
     }
-    const change = last(event.changes);
-    if (isNil(change)) {
-        return undefined;
-    }
-    if (stopPollingChangeTypes.includes(change.changeType)) {
-        return change;
-    }
+    return event.changes.reduce((result, { changeType }) => {
+        if (result) {
+            return result;
+        }
+        return stopPollingTypes.includes(changeType);
+    }, false);
 };
 
 const fetchEvents = async (params: PollInvoiceEventsParams, isStop: () => boolean): Promise<PollingResult> => {
-    const { apiEndpoint, invoiceAccessToken, invoiceID, eventID, stopPollingTypes, delays } = params;
+    const { apiEndpoint, invoiceAccessToken, invoiceID, startFromEventID, stopPollingTypes, delays } = params;
     const events = await getInvoiceEvents(
         apiEndpoint,
         invoiceAccessToken,
         invoiceID,
         GET_INVOICE_EVENTS_LIMIT,
-        eventID,
+        startFromEventID,
     );
     const lastEvent = last(events);
-    const change = getChange(lastEvent, stopPollingTypes);
-    if (!isNil(change)) {
+    if (isChangeFound(lastEvent, stopPollingTypes)) {
         return {
             status: 'POLLED',
-            eventID: lastEvent.id,
-            change,
+            events,
         };
     }
     if (isStop()) {
         return Promise.resolve(null);
     }
     await delay(delays.apiMethodCall);
-    return await fetchEvents({ ...params, eventID: isNil(lastEvent) ? eventID : lastEvent.id }, isStop);
+    return await fetchEvents({ ...params, startFromEventID }, isStop);
 };
 
 export type PollInvoiceEventsParams = {
     apiEndpoint: string;
     invoiceAccessToken: string;
     invoiceID: string;
-    eventID?: number;
+    startFromEventID?: number;
     stopPollingTypes: InvoiceChangeType[];
     delays: {
         pollingTimeout: number;
@@ -59,8 +53,7 @@ export type PollInvoiceEventsParams = {
 
 export type PollingResultPolled = {
     status: 'POLLED';
-    eventID: number;
-    change: InvoiceChange;
+    events: InvoiceEvent[];
 };
 
 export type PollingResultTimeout = {

@@ -1,11 +1,10 @@
 export { initPaymentCondition } from './initPaymentCondition';
+export { pollingResultToConditions } from './utils';
 
 export type {
     PaymentCondition,
-    PaymentUninitialized,
     PaymentStatusChanged,
     InvoiceStatusChanged,
-    PaymentPending,
     PaymentInteractionRedirectType,
     PaymentInteractionRequested,
     PaymentInteractionRedirect,

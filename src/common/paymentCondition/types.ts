@@ -1,41 +1,40 @@
 import { BrowserRequest, InvoiceStatuses, PaymentError, PaymentStatuses } from 'checkout/backend';
 
-export type PaymentUninitialized = {
-    name: 'uninitialized';
-};
-
-export type PaymentPending = {
-    name: 'pending';
-};
-
-export type PaymentStarted = {
-    name: 'paymentStarted';
-};
-
-export type PaymentStatusChanged = {
-    name: 'paymentStatusChanged';
-    status: PaymentStatuses;
-    error?: PaymentError;
-};
-
-export type InvoiceStatusChanged = {
-    name: 'invoiceStatusChanged';
-    status: InvoiceStatuses;
-};
-
-export type PollingTimeoutException = {
-    type: 'PollingTimeoutException';
+export type PaymentProcessStarted = {
+    name: 'paymentProcessStarted';
 };
 
 export type ApiCallException = {
     type: 'ApiCallException';
 };
 
-type PaymentProcessException = PollingTimeoutException | ApiCallException;
-
 export type PaymentProcessFailed = {
     name: 'paymentProcessFailed';
-    exception: PaymentProcessException;
+    exception: ApiCallException;
+};
+
+export type PaymentStarted = {
+    name: 'paymentStarted';
+    eventId: number;
+    paymentId: string;
+    provider?: string;
+};
+
+export type PaymentStatusChanged = {
+    name: 'paymentStatusChanged';
+    eventId: number;
+    paymentId: string;
+    status: PaymentStatuses;
+    error?: PaymentError;
+};
+
+export type PaymentStatusUnknown = {
+    name: 'paymentStatusUnknown';
+};
+
+export type InvoiceStatusChanged = {
+    name: 'invoiceStatusChanged';
+    status: InvoiceStatuses;
 };
 
 export type PaymentInteractionRedirectType = 'frame' | 'self';
@@ -58,15 +57,23 @@ export type Interaction = PaymentInteractionRedirect | PaymentInteractionQRCode 
 
 export type PaymentInteractionRequested = {
     name: 'interactionRequested';
+    paymentId: string;
     interaction: Interaction;
-    provider?: string;
+    eventId: number;
+};
+
+export type PaymentInteractionCompleted = {
+    name: 'interactionCompleted';
+    paymentId: string;
+    eventId: number;
 };
 
 export type PaymentCondition =
-    | PaymentUninitialized
-    | PaymentPending
+    | PaymentProcessStarted
+    | PaymentProcessFailed
+    | PaymentStarted
+    | PaymentStatusUnknown
     | PaymentStatusChanged
     | InvoiceStatusChanged
     | PaymentInteractionRequested
-    | PaymentProcessFailed
-    | PaymentStarted;
+    | PaymentInteractionCompleted;

@@ -8,6 +8,7 @@ import { formatMetadataValue } from './utils';
 import {
     CustomizationContext,
     LocaleContext,
+    PaymentContext,
     PaymentModelContext,
     ViewModelContext,
 } from '../../../../common/contexts';
@@ -29,7 +30,8 @@ export type MetadataFormProps = {
 
 export function MetadataForm({ provider }: MetadataFormProps) {
     const { l } = useContext(LocaleContext);
-    const { viewAmount, onSetPaymentPayload } = useContext(ViewModelContext);
+    const { viewAmount } = useContext(ViewModelContext);
+    const { startPayment } = useContext(PaymentContext);
     const { localeCode } = useContext(CustomizationContext);
     const {
         paymentModel: { initContext, serviceProviders },
@@ -45,7 +47,7 @@ export function MetadataForm({ provider }: MetadataFormProps) {
     });
 
     const onSubmit: SubmitHandler<MetadataFormInputs> = (values) => {
-        onSetPaymentPayload({
+        startPayment({
             methodName: 'PaymentTerminal',
             values: {
                 provider,

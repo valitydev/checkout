@@ -7,7 +7,7 @@ import { initPaymentModel, PaymentModel } from '../../common/paymentModel';
 
 type ModelsStateData = {
     paymentModel: PaymentModel;
-    paymentCondition: PaymentCondition;
+    conditions: PaymentCondition[];
 };
 
 type ModelsState = { status: 'PROCESSING' } | { status: 'INITIALIZED'; data: ModelsStateData } | { status: 'FAILURE' };
@@ -47,10 +47,10 @@ export const useInitModels = () => {
             dispatch({ type: 'INIT_STARTED' });
             try {
                 const paymentModel = await initPaymentModel(initParams);
-                const paymentCondition = await initPaymentCondition(paymentModel);
+                const conditions = await initPaymentCondition(paymentModel);
                 dispatch({
                     type: 'INIT_SUCCESS',
-                    payload: { paymentModel, paymentCondition },
+                    payload: { paymentModel, conditions },
                 });
             } catch (ex) {
                 console.error(ex);

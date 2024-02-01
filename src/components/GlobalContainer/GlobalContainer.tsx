@@ -1,9 +1,10 @@
+/* eslint-disable react/jsx-max-depth */
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 import { usePaymentCondition } from './usePaymentCondition';
 import { toContainer } from './utils';
-import { PaymentContext, PaymentModelContext } from '../../common/contexts';
+import { PaymentConditionsContext, PaymentContext, PaymentModelContext } from '../../common/contexts';
 import { PaymentCondition } from '../../common/paymentCondition';
 import { PaymentModel } from '../../common/paymentModel';
 import { RedirectContainer } from '../RedirectContainer';
@@ -16,23 +17,25 @@ const Wrapper = styled.div`
 
 export type GlobalContainerProps = {
     paymentModel: PaymentModel;
-    initPaymentCondition: PaymentCondition;
+    initConditions: PaymentCondition[];
 };
 
-export function GlobalContainer({ paymentModel, initPaymentCondition }: GlobalContainerProps) {
-    const { paymentCondition, startPayment } = usePaymentCondition(paymentModel, initPaymentCondition);
-    const container = toContainer(paymentCondition);
+export function GlobalContainer({ paymentModel, initConditions }: GlobalContainerProps) {
+    const { conditions, startPayment } = usePaymentCondition(paymentModel, initConditions);
+    const containerName = toContainer(conditions);
 
     return (
         <PaymentModelContext.Provider value={{ paymentModel }}>
-            <PaymentContext.Provider value={{ paymentCondition, startPayment }}>
-                <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
-                    <Wrapper>
-                        {container.name === 'ViewContainer' && <ViewContainer />}
-                        {container.name === 'RedirectContainer' && <RedirectContainer />}
-                    </Wrapper>
-                </motion.div>
-            </PaymentContext.Provider>
+            <PaymentConditionsContext.Provider value={{ conditions }}>
+                <PaymentContext.Provider value={{ startPayment }}>
+                    <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
+                        <Wrapper>
+                            {containerName === 'ViewContainer' && <ViewContainer />}
+                            {containerName === 'RedirectContainer' && <RedirectContainer />}
+                        </Wrapper>
+                    </motion.div>
+                </PaymentContext.Provider>
+            </PaymentConditionsContext.Provider>
         </PaymentModelContext.Provider>
     );
 }

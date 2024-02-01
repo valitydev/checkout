@@ -1,21 +1,19 @@
 import { PaymentCondition } from '../../../common/paymentCondition';
-import { Container } from '../types';
+import { isNil, last } from '../../../common/utils';
+import { ContainerName } from '../types';
 
-export const toContainer = (paymentCondition: PaymentCondition): Container => {
-    switch (paymentCondition.name) {
-        case 'uninitialized':
-        case 'processed':
-        case 'pending':
-        case 'paymentFailed':
-        case 'paymentProcessFailed':
-            return { name: 'ViewContainer' };
+export const toContainer = (conditions: PaymentCondition[]): ContainerName => {
+    const condition = last(conditions);
+    if (isNil(condition)) return 'ViewContainer';
+    switch (condition.name) {
         case 'interactionRequested':
-            switch (paymentCondition.interaction.type) {
+            switch (condition.interaction.type) {
                 case 'PaymentInteractionQRCode':
                 case 'PaymentInteractionApiExtension':
-                    return { name: 'ViewContainer' };
+                    return 'ViewContainer';
                 case 'PaymentInteractionRedirect':
-                    return { name: 'RedirectContainer' };
+                    return 'RedirectContainer';
             }
     }
+    return 'ViewContainer';
 };
