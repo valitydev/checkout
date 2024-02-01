@@ -2,10 +2,17 @@ import { useCallback, useReducer } from 'react';
 
 import { InvoiceChangeType } from 'checkout/backend';
 
+import { getLastEventId } from './utils';
 import { PaymentCondition, pollingResultToConditions } from '../../common/paymentCondition';
-import { StartPaymentPayload, createPayment, determineModel, pollInvoiceEvents } from '../../common/paymentMgmt';
+import {
+    PollInvoiceEventsDelay,
+    StartPaymentPayload,
+    createPayment,
+    determineModel,
+    pollInvoiceEvents,
+} from '../../common/paymentMgmt';
 import { PaymentModel, PaymentModelInvoice } from '../../common/paymentModel';
-import { last, isNil } from '../../common/utils';
+import { isNil } from '../../common/utils';
 
 type State = {
     conditions: PaymentCondition[];
@@ -33,48 +40,53 @@ const dataReducer = (state: State, action: Action): State => {
     }
 };
 
-const getLastEventId = (conditions: PaymentCondition[]): number => {
-    const lastCondition = last(conditions);
-    if (isNil(lastCondition)) return 0;
-    // 'eventId' is not present in every condition object type.
-    return isNil((lastCondition as any).eventId) && 0;
-};
-
 export const usePaymentCondition = (model: PaymentModel, initConditions: PaymentCondition[]) => {
     const [state, dispatch] = useReducer(dataReducer, {
         conditions: initConditions,
     });
 
-    const startPayment = useCallback((startPaymentPayload: StartPaymentPayload) => {
+    const startPayment = useCallback(
+        (startPaymentPayload: StartPaymentPayload) => {
+            (async () => {
+                try {
+                    dispatch({ type: 'COMBINE_CONDITIONS', payload: [{ name: 'paymentProcessStarted' }] });
+                    const modelInvoice = await getModelInvoice();
+                    await createPayment(modelInvoice, startPaymentPayload);
+                    await startPolling(
+                        modelInvoice,
+                        [InvoiceChangeType.PaymentStatusChanged, InvoiceChangeType.PaymentInteractionRequested],
+                        {
+                            pollingTimeout: 60 * 1000 * 3,
+                            apiMethodCall: 1000,
+                        },
+                    );
+                } catch (ex) {
+                    console.error(ex);
+                    dispatch({
+                        type: 'COMBINE_CONDITIONS',
+                        payload: [
+                            {
+                                name: 'paymentProcessFailed',
+                                exception: {
+                                    type: 'ApiCallException',
+                                },
+                            },
+                        ],
+                    });
+                }
+            })();
+        },
+        [model, state],
+    );
+
+    const startWaitingPaymentResult = useCallback(() => {
         (async () => {
-            const conditions = state.conditions;
             try {
-                dispatch({ type: 'COMBINE_CONDITIONS', payload: [{ name: 'paymentProcessStarted' }] });
-                const modelInvoice = await determineModel(model);
-                dispatch({ type: 'SET_MODEL_INVOICE', payload: modelInvoice });
-                await createPayment(modelInvoice, startPaymentPayload);
-                const {
-                    apiEndpoint,
-                    invoiceParams: { invoiceID, invoiceAccessToken },
-                } = modelInvoice;
-                const lastEventId = getLastEventId(conditions);
-                const DEFAULT_TIMEOUT_MS = 60 * 1000 * 3;
-                const API_METHOD_CALL_MS = 1000;
-                const pollingResult = await pollInvoiceEvents({
-                    apiEndpoint,
-                    invoiceAccessToken,
-                    invoiceID,
-                    startFromEventID: lastEventId,
-                    stopPollingTypes: [
-                        InvoiceChangeType.PaymentStatusChanged,
-                        InvoiceChangeType.PaymentInteractionRequested,
-                    ],
-                    delays: {
-                        pollingTimeout: DEFAULT_TIMEOUT_MS,
-                        apiMethodCall: API_METHOD_CALL_MS,
-                    },
+                const modelInvoice = await getModelInvoice();
+                await startPolling(modelInvoice, [InvoiceChangeType.PaymentStatusChanged], {
+                    pollingTimeout: 60 * 1000 * 25,
+                    apiMethodCall: 3000,
                 });
-                dispatch({ type: 'COMBINE_CONDITIONS', payload: pollingResultToConditions(pollingResult) });
             } catch (ex) {
                 console.error(ex);
                 dispatch({
@@ -90,9 +102,37 @@ export const usePaymentCondition = (model: PaymentModel, initConditions: Payment
                 });
             }
         })();
-    }, []);
+    }, [model, state]);
 
-    const continuePayment = useCallback(() => {}, []);
+    const getModelInvoice = async () => {
+        if (isNil(state.modelInvoice)) {
+            const modelInvoice = await determineModel(model);
+            dispatch({ type: 'SET_MODEL_INVOICE', payload: modelInvoice });
+            return modelInvoice;
+        }
+        return state.modelInvoice;
+    };
 
-    return { conditions: state.conditions, startPayment, continuePayment };
+    const startPolling = async (
+        modelInvoice: PaymentModelInvoice,
+        stopPollingTypes: InvoiceChangeType[],
+        delays: PollInvoiceEventsDelay,
+    ) => {
+        const {
+            apiEndpoint,
+            invoiceParams: { invoiceID, invoiceAccessToken },
+        } = modelInvoice;
+        const lastEventId = getLastEventId(state.conditions);
+        const pollingResult = await pollInvoiceEvents({
+            apiEndpoint,
+            invoiceAccessToken,
+            invoiceID,
+            startFromEventID: lastEventId,
+            stopPollingTypes,
+            delays,
+        });
+        dispatch({ type: 'COMBINE_CONDITIONS', payload: pollingResultToConditions(pollingResult) });
+    };
+
+    return { conditions: state.conditions, startPayment, startWaitingPaymentResult };
 };

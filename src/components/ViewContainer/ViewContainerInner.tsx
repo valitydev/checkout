@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { PaymentFormView } from './PaymentFormView';
 import { PaymentResultView } from './PaymentResultView';
+import { QrCodeView } from './QrCodeView';
 import { SlideAnimationDirection } from './types';
 import { ViewModelContext } from '../../common/contexts';
 import { device, isNil } from '../../common/utils';
@@ -70,7 +71,7 @@ export function ViewContainerInner() {
                         {activeView === 'PaymentFormView' && <PaymentFormView />}
                         {activeView === 'PaymentMethodSelectorView' && <>PaymentMethodSelectorView</>}
                         {activeView === 'PaymentResultView' && <PaymentResultView />}
-                        {activeView === 'QrCodeView' && <>QrCodeView</>}
+                        {activeView === 'QrCodeView' && <QrCodeView />}
                         {viewModel.isLoading && <FormLoader />}
                     </motion.div>
                 )}

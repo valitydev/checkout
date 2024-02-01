@@ -21,13 +21,13 @@ export type GlobalContainerProps = {
 };
 
 export function GlobalContainer({ paymentModel, initConditions }: GlobalContainerProps) {
-    const { conditions, startPayment } = usePaymentCondition(paymentModel, initConditions);
+    const { conditions, startPayment, startWaitingPaymentResult } = usePaymentCondition(paymentModel, initConditions);
     const containerName = toContainer(conditions);
 
     return (
         <PaymentModelContext.Provider value={{ paymentModel }}>
             <PaymentConditionsContext.Provider value={{ conditions }}>
-                <PaymentContext.Provider value={{ startPayment }}>
+                <PaymentContext.Provider value={{ startPayment, startWaitingPaymentResult }}>
                     <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
                         <Wrapper>
                             {containerName === 'ViewContainer' && <ViewContainer />}

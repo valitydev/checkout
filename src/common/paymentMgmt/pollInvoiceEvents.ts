@@ -39,16 +39,18 @@ const fetchEvents = async (params: PollInvoiceEventsParams, isStop: () => boolea
     return await fetchEvents({ ...params, startFromEventID }, isStop);
 };
 
+export type PollInvoiceEventsDelay = {
+    pollingTimeout: number;
+    apiMethodCall: number;
+};
+
 export type PollInvoiceEventsParams = {
     apiEndpoint: string;
     invoiceAccessToken: string;
     invoiceID: string;
     startFromEventID?: number;
     stopPollingTypes: InvoiceChangeType[];
-    delays: {
-        pollingTimeout: number;
-        apiMethodCall: number;
-    };
+    delays: PollInvoiceEventsDelay;
 };
 
 export type PollingResultPolled = {

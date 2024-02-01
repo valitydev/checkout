@@ -8,4 +8,5 @@ export type {
     PollingResultPolled,
     PollingResultTimeout,
     PollInvoiceEventsParams,
+    PollInvoiceEventsDelay,
 } from './pollInvoiceEvents';

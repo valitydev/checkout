@@ -19,3 +19,5 @@ export { MetadataField, MetadataLogo, MetadataSelect, MetadataTitle, obscurePass
 export { Email } from './Email';
 export { Phone } from './Phone';
 export { Select } from './Select';
+export { CopyToClipboardButton } from './CopyToClipboardButton';
+export { Hr } from './Hr';
