@@ -55,11 +55,6 @@ export const ActionBlock = () => {
                     )}
                 </>
             )}
-            {initConfig.redirectUrl && (
-                <OthersButton onClick={() => window.open(initConfig.redirectUrl, '_self')}>
-                    {locale['form.button.back.to.website']}
-                </OthersButton>
-            )}
         </ErrorBlock>
     );
 };
