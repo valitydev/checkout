@@ -1,6 +1,4 @@
-/* eslint-disable react/jsx-max-depth */
 import { motion } from 'framer-motion';
-import styled from 'styled-components';
 
 import { usePaymentCondition } from './usePaymentCondition';
 import { toContainer } from './utils';
@@ -9,11 +7,6 @@ import { PaymentCondition } from '../../common/paymentCondition';
 import { PaymentModel } from '../../common/paymentModel';
 import { RedirectContainer } from '../RedirectContainer';
 import { ViewContainer } from '../ViewContainer';
-
-const Wrapper = styled.div`
-    height: 100%;
-    position: relative;
-`;
 
 export type GlobalContainerProps = {
     paymentModel: PaymentModel;
@@ -29,10 +22,8 @@ export function GlobalContainer({ paymentModel, initConditions }: GlobalContaine
             <PaymentConditionsContext.Provider value={{ conditions }}>
                 <PaymentContext.Provider value={{ startPayment, startWaitingPaymentResult }}>
                     <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
-                        <Wrapper>
-                            {containerName === 'ViewContainer' && <ViewContainer />}
-                            {containerName === 'RedirectContainer' && <RedirectContainer />}
-                        </Wrapper>
+                        {containerName === 'ViewContainer' && <ViewContainer />}
+                        {containerName === 'RedirectContainer' && <RedirectContainer />}
                     </motion.div>
                 </PaymentContext.Provider>
             </PaymentConditionsContext.Provider>

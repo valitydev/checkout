@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { InitParams } from 'checkout/initialize';
 import { getTheme } from 'checkout/themes';
 
+import { ModalError } from './ModalError';
 import { useInitModels } from './useInitModels';
 import { toCustomizationContext } from './utils';
 import { CustomizationContext } from '../../common/contexts';
@@ -36,7 +37,7 @@ export function AppLayout({ initParams }: AppLayoutProps) {
                         />
                     </CustomizationContext.Provider>
                 )}
-                {modelsState.status === 'FAILURE' && <p>FAILURE</p>}
+                {modelsState.status === 'FAILURE' && <ModalError error={modelsState.error} />}
             </AppWrapper>
         </ThemeProvider>
     );

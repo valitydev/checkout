@@ -21,3 +21,4 @@ export { Phone } from './Phone';
 export { Select } from './Select';
 export { CopyToClipboardButton } from './CopyToClipboardButton';
 export { Hr } from './Hr';
+export { Link } from './Link';

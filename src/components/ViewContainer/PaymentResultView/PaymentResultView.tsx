@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 
-import { LocaleContext } from '../../../common/contexts';
-import { ViewModelContext } from '../../../common/contexts';
-import { isNil } from '../../../common/utils';
-import { ErrorIcon, SuccessIcon, WarningIcon } from '../../../components/legacy';
-import { PaymentResultView as PaymentResultViewType } from '../types';
+import { IconName } from './types';
+import { getResultInfo } from './utils';
+import { LocaleContext, PaymentConditionsContext, PaymentModelContext } from '../../../common/contexts';
+import { isNil, last } from '../../../common/utils';
+import { ErrorIcon, Link, SuccessIcon, WarningIcon } from '../../../components/legacy';
 
 const Wrapper = styled.div`
     display: flex;
@@ -33,28 +33,40 @@ const Description = styled.p`
     margin: 0;
 `;
 
-const ResultIcon = ({ iconName }: { iconName: PaymentResultViewType['iconName'] }) => (
+const OthersButton = styled(Link)`
+    padding-top: 12px;
+`;
+
+const ResultIcon = ({ iconName }: { iconName: IconName }) => (
     <>
-        {iconName === 'Success' && <SuccessIcon />}
-        {iconName === 'Warning' && <WarningIcon />}
-        {iconName === 'Error' && <ErrorIcon />}
+        {iconName === 'SuccessIcon' && <SuccessIcon />}
+        {iconName === 'WarningIcon' && <WarningIcon />}
+        {iconName === 'ErrorIcon' && <ErrorIcon />}
     </>
 );
 
 export function PaymentResultView() {
     const { l } = useContext(LocaleContext);
-    const { viewModel } = useContext(ViewModelContext);
-    const view = viewModel.views.get('PaymentResultView');
+    const { conditions } = useContext(PaymentConditionsContext);
+    const {
+        paymentModel: { initContext },
+    } = useContext(PaymentModelContext);
+
+    const lastCondition = last(conditions);
+    const { iconName, label, description } = getResultInfo(lastCondition);
 
     return (
         <>
-            {view.name === 'PaymentResultView' && (
-                <Wrapper>
-                    <ResultIcon iconName={view.iconName} />
-                    <Label>{l[view.label]}</Label>
-                    {!isNil(view.description) && <Description>{view.description}</Description>}
-                </Wrapper>
-            )}
+            <Wrapper>
+                <ResultIcon iconName={iconName} />
+                <Label>{l[label]}</Label>
+                {!isNil(description) && <Description>{l[description]}</Description>}
+                {initContext?.redirectUrl && (
+                    <OthersButton onClick={() => window.open(initContext.redirectUrl, '_self')}>
+                        {l['form.button.back.to.website']}
+                    </OthersButton>
+                )}
+            </Wrapper>
         </>
     );
 }

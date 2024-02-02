@@ -10,9 +10,15 @@ type ModelsStateData = {
     conditions: PaymentCondition[];
 };
 
-type ModelsState = { status: 'PROCESSING' } | { status: 'INITIALIZED'; data: ModelsStateData } | { status: 'FAILURE' };
+type ModelsState =
+    | { status: 'PROCESSING' }
+    | { status: 'INITIALIZED'; data: ModelsStateData }
+    | { status: 'FAILURE'; error: unknown };
 
-type Action = { type: 'INIT_STARTED' } | { type: 'INIT_SUCCESS'; payload: ModelsStateData } | { type: 'INIT_FAILED' };
+type Action =
+    | { type: 'INIT_STARTED' }
+    | { type: 'INIT_SUCCESS'; payload: ModelsStateData }
+    | { type: 'INIT_FAILED'; error: unknown };
 
 const dataReducer = (state: ModelsState, action: Action): ModelsState => {
     switch (action.type) {
@@ -31,6 +37,7 @@ const dataReducer = (state: ModelsState, action: Action): ModelsState => {
             return {
                 ...state,
                 status: 'FAILURE',
+                error: action.error,
             };
         default:
             return state;
@@ -52,9 +59,8 @@ export const useInitModels = () => {
                     type: 'INIT_SUCCESS',
                     payload: { paymentModel, conditions },
                 });
-            } catch (ex) {
-                console.error(ex);
-                dispatch({ type: 'INIT_FAILED' });
+            } catch (error) {
+                dispatch({ type: 'INIT_FAILED', error });
             }
         })();
     }, []);
