@@ -1,5 +1,6 @@
 import { useContext, useMemo } from 'react';
 
+import { FrameRedirectContainer } from './FrameRedirectContainer';
 import { SelfRedirectContainer } from './SelfRedirectContainer';
 import { PaymentConditionsContext, PaymentModelContext } from '../../common/contexts';
 import { PaymentStarted } from '../../common/paymentCondition';
@@ -25,18 +26,13 @@ export function RedirectContainer() {
         }
     }) as PaymentStarted;
 
-    if (isNil(paymentStarted.provider)) {
-        throw new Error('Payment started condition should contain provider');
-    }
-
-    const provider = paymentStarted.provider;
-
     const redirectType = useMemo(
         (defaultType = 'self') => {
-            const { userInteraction } = findMetadata(serviceProviders, provider);
+            if (isNil(paymentStarted?.provider)) return defaultType;
+            const { userInteraction } = findMetadata(serviceProviders, paymentStarted.provider);
             return isNil(userInteraction) ? defaultType : userInteraction.type;
         },
-        [provider, serviceProviders],
+        [paymentStarted, serviceProviders],
     );
 
     const {
@@ -46,7 +42,7 @@ export function RedirectContainer() {
     return (
         <>
             {redirectType === 'self' && <SelfRedirectContainer origin={origin} request={request} />}
-            {redirectType === 'frame' && <>FrameRedirectContainer</>}
+            {redirectType === 'frame' && <FrameRedirectContainer origin={origin} request={request} />}
         </>
     );
 }
