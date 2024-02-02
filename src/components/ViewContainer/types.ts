@@ -36,7 +36,7 @@ export type ApiExtensionView = {
 };
 
 export type ViewAmount = string;
-export type SlideAnimationDirection = 'forward' | 'backward';
+export type SlideAnimationDirection = 'forward' | 'backward' | 'none';
 export type View =
     | ApiExtensionView
     | QRCodeView

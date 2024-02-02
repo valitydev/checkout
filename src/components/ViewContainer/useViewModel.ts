@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useReducer } from 'react';
+import { useEffect, useMemo, useReducer } from 'react';
 
 import { SlideAnimationDirection, View, ViewModel, ViewName } from './types';
 import { PaymentCondition, PaymentInteractionRequested } from '../../common/paymentCondition';
@@ -19,11 +19,8 @@ type Action =
           payload: boolean;
       }
     | {
-          type: 'GO_TO';
-          payload: {
-              viewName: ViewName;
-              direction: SlideAnimationDirection;
-          };
+          type: 'SET_DIRECTION';
+          payload: SlideAnimationDirection;
       };
 
 const dataReducer = (state: ViewModel, action: Action): ViewModel => {
@@ -42,6 +39,11 @@ const dataReducer = (state: ViewModel, action: Action): ViewModel => {
             return {
                 ...state,
                 isLoading: action.payload,
+            };
+        case 'SET_DIRECTION':
+            return {
+                ...state,
+                direction: action.payload,
             };
         default:
             return state;
@@ -75,7 +77,7 @@ const toViews = ({ paymentMethods }: PaymentModel): Map<ViewName, View> => {
 const initViewModel = (model: PaymentModel): ViewModel => {
     return {
         isLoading: false,
-        direction: 'forward',
+        direction: 'none',
         views: toViews(model),
     };
 };
@@ -125,6 +127,7 @@ export const useViewModel = (model: PaymentModel, conditions: PaymentCondition[]
             case 'paymentStatusUnknown':
             case 'paymentStarted':
                 dispatch({ type: 'SET_VIEW', payload: { name: 'PaymentResultView' } });
+                dispatch({ type: 'SET_DIRECTION', payload: 'forward' });
                 dispatch({ type: 'SET_ACTIVE_VIEW', payload: 'PaymentResultView' });
                 break;
             case 'paymentProcessFailed':
@@ -132,14 +135,11 @@ export const useViewModel = (model: PaymentModel, conditions: PaymentCondition[]
             case 'interactionRequested':
                 const interactionView = interactionToView(lastCondition);
                 dispatch({ type: 'SET_VIEW', payload: interactionView });
+                dispatch({ type: 'SET_DIRECTION', payload: 'forward' });
                 dispatch({ type: 'SET_ACTIVE_VIEW', payload: interactionView.name });
                 break;
         }
     }, [lastCondition]);
 
-    const goTo = useCallback((viewName: ViewName, direction: SlideAnimationDirection = 'forward') => {
-        dispatch({ type: 'GO_TO', payload: { viewName, direction } });
-    }, []);
-
-    return { viewModel, goTo };
+    return { viewModel };
 };

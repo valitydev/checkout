@@ -39,7 +39,7 @@ const toInitialPos = (slideDirection: SlideAnimationDirection): number => {
             return -300;
         case 'forward':
             return 300;
-        default:
+        case 'none':
             return 0;
     }
 };
@@ -51,11 +51,11 @@ export function ViewContainerInner() {
     const [height, setHeight] = useState(0);
     const { viewModel } = useContext(ViewModelContext);
 
+    const activeView = viewModel?.activeView;
+
     useEffect(() => {
         setHeight(contentElement.current?.clientHeight || DEFAULT_HEIGHT_PX);
-    }, []);
-
-    const activeView = viewModel?.activeView;
+    }, [activeView]);
 
     return (
         <Wrapper>
