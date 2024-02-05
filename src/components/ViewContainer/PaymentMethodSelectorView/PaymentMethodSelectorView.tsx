@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import styled from 'styled-components';
 
 import { BankCard } from './BankCard';
+import { PaymentCategory } from './PaymentCategory';
 import { PaymentTerminal } from './PaymentTerminal';
 import { LocaleContext, ViewModelContext } from '../../../common/contexts';
 import { HeaderWrapper, Title } from '../../../components/legacy';
@@ -33,10 +34,11 @@ export function PaymentMethodSelectorView() {
                         case 'BankCard':
                             return <BankCard key={key} />;
                         case 'PaymentTerminal':
-                            if (method.providers.length === 1) {
-                                return <PaymentTerminal key={key} provider={method.providers[0]} />;
+                            const { providers, category } = method;
+                            if (providers.length === 1) {
+                                return <PaymentTerminal key={key} provider={providers[0]} />;
                             }
-                            return <div key={key}>Terminal payment method selector</div>;
+                            return <PaymentCategory key={key} category={category} />;
                     }
                 })}
             </MethodList>

@@ -15,6 +15,7 @@ export type KnownProviderCategory =
 
 export type TerminalServiceProvider = {
     readonly id: string;
+    readonly brandName: string;
     readonly metadata?: ServiceProviderMetadata;
 };
 

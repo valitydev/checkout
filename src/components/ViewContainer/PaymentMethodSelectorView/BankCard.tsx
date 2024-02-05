@@ -19,7 +19,7 @@ export function BankCard() {
     }, [views]);
 
     return (
-        <Method id="bank-card-payment-method" onClick={() => goTo(cardFormId, 'backward')}>
+        <Method onClick={() => goTo(cardFormId)}>
             <PaymentMethodIcon name="bank-card" />
             <PaymentMethodTitle>{l['form.payment.method.name.card.label']}</PaymentMethodTitle>
         </Method>

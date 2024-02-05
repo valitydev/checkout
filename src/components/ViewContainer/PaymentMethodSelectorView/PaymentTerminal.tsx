@@ -34,7 +34,7 @@ export function PaymentTerminal({ provider }: PaymentTerminalProps) {
     return (
         <PaymentMethodItemContainer
             id={`${Math.floor(Math.random() * 100)}-payment-method-item`}
-            onClick={() => goTo(viewId, 'backward')}
+            onClick={() => goTo(viewId)}
         >
             {!isNil(logo) && <MetadataLogo metadata={logo} />}
             {isNil(logo) && <>{provider}</>}

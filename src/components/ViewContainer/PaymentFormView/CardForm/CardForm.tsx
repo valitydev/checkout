@@ -39,7 +39,9 @@ export function CardForm() {
     return (
         <>
             <HeaderWrapper>
-                {!isNil(previousViewId) && <ChevronButton type="left" onClick={() => goTo(previousViewId)} />}
+                {!isNil(previousViewId) && (
+                    <ChevronButton type="left" onClick={() => goTo(previousViewId, 'backward')} />
+                )}
                 <Title>{l['form.header.pay.card.label']}</Title>
             </HeaderWrapper>
             <form onSubmit={handleSubmit(onSubmit)}>

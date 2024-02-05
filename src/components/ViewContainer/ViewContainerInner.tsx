@@ -6,6 +6,7 @@ import { PaymentFormView } from './PaymentFormView';
 import { PaymentMethodSelectorView } from './PaymentMethodSelectorView';
 import { PaymentResultView } from './PaymentResultView';
 import { QrCodeView } from './QrCodeView';
+import { TerminalSelectorView } from './TerminalSelectorView';
 import { SlideAnimationDirection } from './types';
 import { ViewModelContext } from '../../common/contexts';
 import { device } from '../../common/utils';
@@ -37,9 +38,9 @@ const Layout = styled.div<{ height?: number }>`
 const toInitialPos = (slideDirection: SlideAnimationDirection): number => {
     switch (slideDirection) {
         case 'backward':
-            return 300;
-        case 'forward':
             return -300;
+        case 'forward':
+            return 300;
         case 'none':
             return 0;
     }
@@ -70,7 +71,7 @@ export function ViewContainerInner() {
                 >
                     {activeView === 'NoAvailablePaymentMethodsView' && <>NoAvailablePaymentMethodsView</>}
                     {activeView === 'PaymentMethodSelectorView' && <PaymentMethodSelectorView />}
-                    {activeView === 'TerminalSelectorView' && <>TerminalSelectorView</>}
+                    {activeView === 'TerminalSelectorView' && <TerminalSelectorView />}
                     {activeView === 'PaymentFormView' && <PaymentFormView />}
                     {activeView === 'PaymentResultView' && <PaymentResultView />}
                     {activeView === 'QrCodeView' && <QrCodeView />}

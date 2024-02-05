@@ -69,7 +69,7 @@ export function MetadataForm({ provider }: MetadataFormProps) {
         <>
             {!isNil(previousViewId) && (
                 <HeaderWrapper>
-                    <ChevronButton type="left" onClick={() => goTo(previousViewId)} />
+                    <ChevronButton type="left" onClick={() => goTo(previousViewId, 'backward')} />
                 </HeaderWrapper>
             )}
             {!isNil(logo) && (
