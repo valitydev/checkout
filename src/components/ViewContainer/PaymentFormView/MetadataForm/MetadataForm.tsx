@@ -14,8 +14,10 @@ import {
 } from '../../../../common/contexts';
 import { findMetadata, isNil } from '../../../../common/utils';
 import {
+    ChevronButton,
     Email,
     FormGroup,
+    HeaderWrapper,
     MetadataField,
     MetadataLogo,
     MetadataSelect,
@@ -30,7 +32,11 @@ export type MetadataFormProps = {
 
 export function MetadataForm({ provider }: MetadataFormProps) {
     const { l } = useContext(LocaleContext);
-    const { viewAmount } = useContext(ViewModelContext);
+    const {
+        viewAmount,
+        viewModel: { previousViewId },
+        goTo,
+    } = useContext(ViewModelContext);
     const { startPayment } = useContext(PaymentContext);
     const { localeCode } = useContext(CustomizationContext);
     const {
@@ -61,6 +67,11 @@ export function MetadataForm({ provider }: MetadataFormProps) {
 
     return (
         <>
+            {!isNil(previousViewId) && (
+                <HeaderWrapper>
+                    <ChevronButton type="left" onClick={() => goTo(previousViewId)} />
+                </HeaderWrapper>
+            )}
             {!isNil(logo) && (
                 <LogoContainer>
                     <MetadataLogo metadata={logo} />

@@ -7,8 +7,8 @@ import { isNil, last } from '../../common/utils';
 
 type Action =
     | {
-          type: 'SET_ACTIVE_VIEW';
-          payload: ViewName;
+          type: 'SET_ACTIVE_VIEW_ID';
+          payload: string;
       }
     | {
           type: 'SET_VIEW';
@@ -21,14 +21,18 @@ type Action =
     | {
           type: 'SET_DIRECTION';
           payload: SlideAnimationDirection;
+      }
+    | {
+          type: 'SET_PREVIOUS_VIEW_ID';
+          payload: string | null;
       };
 
 const dataReducer = (state: ViewModel, action: Action): ViewModel => {
     switch (action.type) {
-        case 'SET_ACTIVE_VIEW':
+        case 'SET_ACTIVE_VIEW_ID':
             return {
                 ...state,
-                activeView: action.payload,
+                activeViewId: action.payload,
             };
         case 'SET_VIEW':
             return {
@@ -45,39 +49,54 @@ const dataReducer = (state: ViewModel, action: Action): ViewModel => {
                 ...state,
                 direction: action.payload,
             };
+        case 'SET_PREVIOUS_VIEW_ID':
+            return {
+                ...state,
+                previousViewId: action.payload,
+            };
         default:
             return state;
     }
 };
 
-const toViews = (paymentMethods: PaymentMethod[]): Map<ViewName, View> => {
+const toViews = (paymentMethods: PaymentMethod[]): Map<string, View> => {
     let views: View[] = [];
     if (paymentMethods.length === 0) {
-        views = [{ name: 'NoAvailablePaymentMethodsView' }];
+        views = [{ name: 'NoAvailablePaymentMethodsView', id: 'NoAvailablePaymentMethodsView' }];
     }
     if (paymentMethods.length > 1) {
-        views = [{ name: 'PaymentMethodSelectorView', paymentMethods }];
+        views = [{ name: 'PaymentMethodSelectorView', paymentMethods, id: 'PaymentMethodSelectorView' }];
     }
-    views = paymentMethods.reduce<View[]>((acc, paymentMethod) => {
+    views = paymentMethods.reduce<View[]>((acc, paymentMethod, key) => {
         const { methodName } = paymentMethod;
         switch (methodName) {
             case 'BankCard':
-                return acc.concat([{ name: 'PaymentFormView', methodName }]);
+                return acc.concat([{ name: 'PaymentFormView', methodName, id: `PaymentFormView_${key}` }]);
             case 'PaymentTerminal':
                 const { providers, category } = paymentMethod;
                 if (providers.length === 1) {
-                    return acc.concat([{ name: 'PaymentFormView', methodName, provider: providers[0] }]);
+                    return acc.concat([
+                        {
+                            name: 'PaymentFormView',
+                            methodName,
+                            provider: providers[0],
+                            id: `PaymentFormView_${key}`,
+                        },
+                    ]);
                 }
-                return acc.concat([{ name: 'TerminalSelectorView', providers, category }]);
+                return acc.concat([
+                    { name: 'TerminalSelectorView', providers, category, id: `PaymentFormView_${key}` },
+                ]);
             default:
                 return acc;
         }
     }, views);
-    const wrapToMapValue = (view: View): [ViewName, View] => [view.name, view];
+    const wrapToMapValue = (view: View): [string, View] => [view.id, view];
     return new Map(views.map(wrapToMapValue));
 };
 
-const toActiveView = (views: Map<ViewName, View>): ViewName => {
+// TODO need refactoring
+const toActiveView = (views: Map<string, View>): ViewName => {
     if (views.has('NoAvailablePaymentMethodsView')) {
         return 'NoAvailablePaymentMethodsView';
     }
@@ -98,16 +117,17 @@ const initViewModel = (paymentMethods: PaymentMethod[]): ViewModel => {
         isLoading: false,
         direction: 'none',
         views,
-        activeView: toActiveView(views),
+        activeViewId: toActiveView(views),
+        previousViewId: null,
     };
 };
 
 const interactionToView = ({ interaction }: PaymentInteractionRequested): View => {
     switch (interaction.type) {
         case 'PaymentInteractionQRCode':
-            return { name: 'QrCodeView' };
+            return { name: 'QrCodeView', id: 'QrCodeView' };
         case 'PaymentInteractionApiExtension':
-            return { name: 'ApiExtensionView' };
+            return { name: 'ApiExtensionView', id: 'ApiExtensionView' };
     }
 };
 
@@ -136,9 +156,9 @@ export const useViewModel = (paymentMethods: PaymentMethod[], conditions: Paymen
             case 'interactionCompleted':
             case 'paymentStatusUnknown':
             case 'paymentStarted':
-                dispatch({ type: 'SET_VIEW', payload: { name: 'PaymentResultView' } });
+                dispatch({ type: 'SET_VIEW', payload: { name: 'PaymentResultView', id: 'PaymentResultView' } });
                 dispatch({ type: 'SET_DIRECTION', payload: 'forward' });
-                dispatch({ type: 'SET_ACTIVE_VIEW', payload: 'PaymentResultView' });
+                dispatch({ type: 'SET_ACTIVE_VIEW_ID', payload: 'PaymentResultView' });
                 break;
             case 'paymentProcessFailed':
                 throw new Error('Unimplemented paymentProcessFailed condition');
@@ -146,10 +166,21 @@ export const useViewModel = (paymentMethods: PaymentMethod[], conditions: Paymen
                 const interactionView = interactionToView(lastCondition);
                 dispatch({ type: 'SET_VIEW', payload: interactionView });
                 dispatch({ type: 'SET_DIRECTION', payload: 'forward' });
-                dispatch({ type: 'SET_ACTIVE_VIEW', payload: interactionView.name });
+                dispatch({ type: 'SET_ACTIVE_VIEW_ID', payload: interactionView.name });
                 break;
         }
     }, [lastCondition]);
 
-    return { viewModel };
+    const goTo = (viewId: string, direction: SlideAnimationDirection = 'forward') => {
+        if (viewId === viewModel.previousViewId) {
+            dispatch({ type: 'SET_PREVIOUS_VIEW_ID', payload: null });
+        }
+        if (isNil(viewModel.previousViewId)) {
+            dispatch({ type: 'SET_PREVIOUS_VIEW_ID', payload: viewModel.activeViewId });
+        }
+        dispatch({ type: 'SET_DIRECTION', payload: direction });
+        dispatch({ type: 'SET_ACTIVE_VIEW_ID', payload: viewId });
+    };
+
+    return { viewModel, goTo };
 };

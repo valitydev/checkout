@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Locale } from 'checkout/locale';
 
-import { ReactComponent as ChevronLeftIcon } from '../../../app/components/ui/icon/chevron-left.svg';
+import { ReactComponent as ChevronLeftIcon } from '../icon/chevron-left.svg';
 
 const Container = styled.div`
     cursor: pointer;

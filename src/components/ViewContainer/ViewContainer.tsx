@@ -20,7 +20,7 @@ export function ViewContainer() {
     const {
         paymentModel: { paymentAmount, paymentMethods },
     } = useContext(PaymentModelContext);
-    const { viewModel } = useViewModel(paymentMethods, conditions);
+    const { viewModel, goTo } = useViewModel(paymentMethods, conditions);
 
     const viewAmount = useMemo(() => formatAmount(paymentAmount, localeCode), [localeCode]);
 
@@ -33,7 +33,7 @@ export function ViewContainer() {
             {state.status === 'SUCCESS' && (
                 <LocaleContext.Provider value={{ l: state.data }}>
                     <Info description={description} l={state.data} name={name} viewAmount={viewAmount}></Info>
-                    <ViewModelContext.Provider value={{ viewModel, viewAmount }}>
+                    <ViewModelContext.Provider value={{ viewModel, viewAmount, goTo }}>
                         <ViewContainerInner />
                     </ViewModelContext.Provider>
                 </LocaleContext.Provider>

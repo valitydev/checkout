@@ -2,11 +2,11 @@ import { number } from 'card-validator';
 import * as React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import { ReactComponent as Maestro } from '../../app/components/ui/icon/card/maestro.svg';
-import { ReactComponent as Mastercard } from '../../app/components/ui/icon/card/mastercard.svg';
-import { ReactComponent as Mir } from '../../app/components/ui/icon/card/mir.svg';
-import { ReactComponent as Unionpay } from '../../app/components/ui/icon/card/unionpay.svg';
-import { ReactComponent as Visa } from '../../app/components/ui/icon/card/visa.svg';
+import { ReactComponent as Maestro } from './icon/card/maestro.svg';
+import { ReactComponent as Mastercard } from './icon/card/mastercard.svg';
+import { ReactComponent as Mir } from './icon/card/mir.svg';
+import { ReactComponent as Unionpay } from './icon/card/unionpay.svg';
+import { ReactComponent as Visa } from './icon/card/visa.svg';
 
 const growth = keyframes`
     from {

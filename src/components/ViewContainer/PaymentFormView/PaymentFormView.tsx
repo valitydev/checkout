@@ -5,8 +5,10 @@ import { MetadataForm } from './MetadataForm';
 import { ViewModelContext } from '../../../common/contexts';
 
 export function PaymentFormView() {
-    const { viewModel } = useContext(ViewModelContext);
-    const view = viewModel.views.get(viewModel.activeView);
+    const {
+        viewModel: { views, activeViewId },
+    } = useContext(ViewModelContext);
+    const view = views.get(activeViewId);
 
     if (view.name !== 'PaymentFormView') {
         throw new Error(`Wrong View. Expected: PaymentFormView, actual: ${view.name}`);

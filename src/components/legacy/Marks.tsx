@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 
-import { ReactComponent as Checkmark } from '../../app/components/ui/icon/checkmark.svg';
+import { ReactComponent as Checkmark } from './icon/checkmark.svg';
 
 const fadeIn = {
     hidden: { opacity: 0 },

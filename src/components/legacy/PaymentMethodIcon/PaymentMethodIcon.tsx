@@ -1,10 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import BankCard from './bank-card.svg';
-import OnlineBanking from './online-banking.svg';
-import Terminals from './terminals.svg';
-import Wallets from './wallets.svg';
+import { ReactComponent as BankCard } from './bank-card.svg';
+import { ReactComponent as OnlineBanking } from './online-banking.svg';
+import { ReactComponent as Terminals } from './terminals.svg';
+import { ReactComponent as Wallets } from './wallets.svg';
 
 const IconClasses = {
     'bank-card': BankCard,
@@ -17,6 +17,7 @@ type name = keyof typeof IconClasses;
 
 export const PaymentMethodIcon = styled<React.FC<{ name: name; className?: string }>>((props) => {
     const IconClass: any = IconClasses[props.name];
+
     return (
         <div className={props.className}>
             <IconClass />

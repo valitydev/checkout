@@ -1,3 +1,3 @@
 export { ViewContainer } from './ViewContainer';
 
-export type { ViewModel, ViewAmount } from './types';
+export type { ViewModel, ViewAmount, ViewName, SlideAnimationDirection } from './types';

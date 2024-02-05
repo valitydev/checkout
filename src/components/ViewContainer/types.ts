@@ -10,35 +10,42 @@ export type ViewName =
     | 'NoAvailablePaymentMethodsView';
 
 export type PaymentFormView = {
+    id: string;
     name: 'PaymentFormView';
     methodName: PaymentMethodName;
     provider?: string;
 };
 
 export type TerminalSelectorView = {
+    id: string;
     name: 'TerminalSelectorView';
     category: KnownProviderCategory;
     providers: string[];
 };
 
 export type PaymentMethodSelectorView = {
+    id: string;
     name: 'PaymentMethodSelectorView';
     paymentMethods: PaymentMethod[];
 };
 
 export type PaymentResultView = {
+    id: string;
     name: 'PaymentResultView';
 };
 
 export type QRCodeView = {
+    id: string;
     name: 'QrCodeView';
 };
 
 export type ApiExtensionView = {
+    id: string;
     name: 'ApiExtensionView';
 };
 
 export type NoAvailablePaymentMethodsView = {
+    id: string;
     name: 'NoAvailablePaymentMethodsView';
 };
 
@@ -56,6 +63,7 @@ export type View =
 export type ViewModel = {
     direction: SlideAnimationDirection;
     isLoading: boolean;
-    views: Map<ViewName, View>;
-    activeView: ViewName;
+    views: Map<string, View>;
+    activeViewId: string;
+    previousViewId: string | null;
 };

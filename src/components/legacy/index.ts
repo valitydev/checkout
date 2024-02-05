@@ -22,3 +22,8 @@ export { Select } from './Select';
 export { CopyToClipboardButton } from './CopyToClipboardButton';
 export { Hr } from './Hr';
 export { Link } from './Link';
+export { Method } from './Method';
+export { PaymentMethodIcon } from './PaymentMethodIcon';
+export { PaymentMethodTitle } from './PaymentMethodTitle';
+export { PaymentMethodItemContainer } from './PaymentMethodItemContainer';
+export { ChevronButton } from './ChevronButton';

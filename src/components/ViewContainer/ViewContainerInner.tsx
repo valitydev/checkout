@@ -3,11 +3,12 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { PaymentFormView } from './PaymentFormView';
+import { PaymentMethodSelectorView } from './PaymentMethodSelectorView';
 import { PaymentResultView } from './PaymentResultView';
 import { QrCodeView } from './QrCodeView';
 import { SlideAnimationDirection } from './types';
 import { ViewModelContext } from '../../common/contexts';
-import { device, isNil } from '../../common/utils';
+import { device } from '../../common/utils';
 import { FormLoader } from '../legacy';
 
 const Wrapper = styled.div`
@@ -36,9 +37,9 @@ const Layout = styled.div<{ height?: number }>`
 const toInitialPos = (slideDirection: SlideAnimationDirection): number => {
     switch (slideDirection) {
         case 'backward':
-            return -300;
-        case 'forward':
             return 300;
+        case 'forward':
+            return -300;
         case 'none':
             return 0;
     }
@@ -51,7 +52,7 @@ export function ViewContainerInner() {
     const [height, setHeight] = useState(0);
     const { viewModel } = useContext(ViewModelContext);
 
-    const activeView = viewModel.activeView;
+    const activeView = viewModel.views.get(viewModel.activeViewId).name;
 
     useEffect(() => {
         setHeight(contentElement.current?.clientHeight || DEFAULT_HEIGHT_PX);
@@ -60,24 +61,22 @@ export function ViewContainerInner() {
     return (
         <Wrapper>
             <Layout height={height}>
-                {!isNil(activeView) && (
-                    <motion.div
-                        key={activeView}
-                        ref={contentElement}
-                        animate={{ x: 0 }}
-                        initial={{ x: toInitialPos(viewModel.direction) }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        {activeView === 'NoAvailablePaymentMethodsView' && <>NoAvailablePaymentMethodsView</>}
-                        {activeView === 'PaymentMethodSelectorView' && <>PaymentMethodSelectorView</>}
-                        {activeView === 'TerminalSelectorView' && <>TerminalSelectorView</>}
-                        {activeView === 'PaymentFormView' && <PaymentFormView />}
-                        {activeView === 'PaymentResultView' && <PaymentResultView />}
-                        {activeView === 'QrCodeView' && <QrCodeView />}
-                        {activeView === 'ApiExtensionView' && <>ApiExtensionView</>}
-                        {viewModel.isLoading && <FormLoader />}
-                    </motion.div>
-                )}
+                <motion.div
+                    key={activeView}
+                    ref={contentElement}
+                    animate={{ x: 0 }}
+                    initial={{ x: toInitialPos(viewModel.direction) }}
+                    transition={{ duration: 0.3 }}
+                >
+                    {activeView === 'NoAvailablePaymentMethodsView' && <>NoAvailablePaymentMethodsView</>}
+                    {activeView === 'PaymentMethodSelectorView' && <PaymentMethodSelectorView />}
+                    {activeView === 'TerminalSelectorView' && <>TerminalSelectorView</>}
+                    {activeView === 'PaymentFormView' && <PaymentFormView />}
+                    {activeView === 'PaymentResultView' && <PaymentResultView />}
+                    {activeView === 'QrCodeView' && <QrCodeView />}
+                    {activeView === 'ApiExtensionView' && <>ApiExtensionView</>}
+                    {viewModel.isLoading && <FormLoader />}
+                </motion.div>
             </Layout>
         </Wrapper>
     );

@@ -8,11 +8,16 @@ import { SecureCode } from './SecureCode';
 import { CardFormInputs } from './types';
 import { isSecureCodeAvailable } from './utils';
 import { CustomizationContext, LocaleContext, PaymentContext, ViewModelContext } from '../../../../common/contexts';
-import { FormGroup, HeaderWrapper, PayButton, Title } from '../../../../components/legacy';
+import { isNil } from '../../../../common/utils';
+import { ChevronButton, FormGroup, HeaderWrapper, PayButton, Title } from '../../../../components/legacy';
 
 export function CardForm() {
     const { l } = useContext(LocaleContext);
-    const { viewAmount } = useContext(ViewModelContext);
+    const {
+        viewAmount,
+        viewModel: { previousViewId },
+        goTo,
+    } = useContext(ViewModelContext);
     const { startPayment } = useContext(PaymentContext);
     const { obscureCardCvv, requireCardHolder } = useContext(CustomizationContext);
     const {
@@ -34,6 +39,7 @@ export function CardForm() {
     return (
         <>
             <HeaderWrapper>
+                {!isNil(previousViewId) && <ChevronButton type="left" onClick={() => goTo(previousViewId)} />}
                 <Title>{l['form.header.pay.card.label']}</Title>
             </HeaderWrapper>
             <form onSubmit={handleSubmit(onSubmit)}>
