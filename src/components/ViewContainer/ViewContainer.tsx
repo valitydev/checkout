@@ -17,10 +17,12 @@ export function ViewContainer() {
     const { state, load } = useLocale();
     const { localeCode, name, description } = useContext(CustomizationContext);
     const { conditions } = useContext(PaymentConditionsContext);
-    const { paymentModel } = useContext(PaymentModelContext);
-    const { viewModel, goTo } = useViewModel(paymentModel, conditions);
+    const {
+        paymentModel: { paymentAmount, paymentMethods },
+    } = useContext(PaymentModelContext);
+    const { viewModel } = useViewModel(paymentMethods, conditions);
 
-    const viewAmount = useMemo(() => formatAmount(paymentModel.paymentAmount, localeCode), [localeCode]);
+    const viewAmount = useMemo(() => formatAmount(paymentAmount, localeCode), [localeCode]);
 
     useEffect(() => {
         load(localeCode);
@@ -31,7 +33,7 @@ export function ViewContainer() {
             {state.status === 'SUCCESS' && (
                 <LocaleContext.Provider value={{ l: state.data }}>
                     <Info description={description} l={state.data} name={name} viewAmount={viewAmount}></Info>
-                    <ViewModelContext.Provider value={{ viewModel, viewAmount, goTo }}>
+                    <ViewModelContext.Provider value={{ viewModel, viewAmount }}>
                         <ViewContainerInner />
                     </ViewModelContext.Provider>
                 </LocaleContext.Provider>

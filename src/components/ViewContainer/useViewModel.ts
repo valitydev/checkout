@@ -2,7 +2,7 @@ import { useEffect, useMemo, useReducer } from 'react';
 
 import { SlideAnimationDirection, View, ViewModel, ViewName } from './types';
 import { PaymentCondition, PaymentInteractionRequested } from '../../common/paymentCondition';
-import { PaymentModel } from '../../common/paymentModel';
+import { PaymentMethod } from '../../common/paymentModel';
 import { isNil, last } from '../../common/utils';
 
 type Action =
@@ -50,43 +50,56 @@ const dataReducer = (state: ViewModel, action: Action): ViewModel => {
     }
 };
 
-const toViews = ({ paymentMethods }: PaymentModel): Map<ViewName, View> => {
-    let views = paymentMethods.reduce<[ViewName, View][]>((acc, paymentMethod) => {
+const toViews = (paymentMethods: PaymentMethod[]): Map<ViewName, View> => {
+    let views: View[] = [];
+    if (paymentMethods.length === 0) {
+        views = [{ name: 'NoAvailablePaymentMethodsView' }];
+    }
+    if (paymentMethods.length > 1) {
+        views = [{ name: 'PaymentMethodSelectorView', paymentMethods }];
+    }
+    views = paymentMethods.reduce<View[]>((acc, paymentMethod) => {
         const { methodName } = paymentMethod;
         switch (methodName) {
             case 'BankCard':
-                return acc.concat([['PaymentFormView', { name: 'PaymentFormView', methodName }]]);
+                return acc.concat([{ name: 'PaymentFormView', methodName }]);
             case 'PaymentTerminal':
-                const { providers } = paymentMethod;
+                const { providers, category } = paymentMethod;
                 if (providers.length === 1) {
-                    return acc.concat([
-                        ['PaymentFormView', { name: 'PaymentFormView', methodName, provider: providers[0] }],
-                    ]);
+                    return acc.concat([{ name: 'PaymentFormView', methodName, provider: providers[0] }]);
                 }
-                return acc.concat([['TerminalSelectorView', { name: 'TerminalSelectorView', providers }]]);
+                return acc.concat([{ name: 'TerminalSelectorView', providers, category }]);
             default:
                 return acc;
         }
-    }, []);
-    if (views.length > 1) {
-        views = views.concat([['PaymentMethodSelectorView', { name: 'PaymentMethodSelectorView' }]]);
-    }
-    return new Map<ViewName, View>(views);
+    }, views);
+    const wrapToMapValue = (view: View): [ViewName, View] => [view.name, view];
+    return new Map(views.map(wrapToMapValue));
 };
 
-const initViewModel = (model: PaymentModel): ViewModel => {
+const toActiveView = (views: Map<ViewName, View>): ViewName => {
+    if (views.has('NoAvailablePaymentMethodsView')) {
+        return 'NoAvailablePaymentMethodsView';
+    }
+    if (views.has('PaymentMethodSelectorView')) {
+        return 'PaymentMethodSelectorView';
+    }
+    if (views.has('TerminalSelectorView')) {
+        return 'TerminalSelectorView';
+    }
+    if (views.has('PaymentFormView')) {
+        return 'PaymentFormView';
+    }
+};
+
+const initViewModel = (paymentMethods: PaymentMethod[]): ViewModel => {
+    const views = toViews(paymentMethods);
     return {
         isLoading: false,
         direction: 'none',
-        views: toViews(model),
+        views,
+        activeView: toActiveView(views),
     };
-};
-
-const applyUninitialized = (model: PaymentModel): ViewName => {
-    if (model.paymentMethods.length > 1) {
-        return 'PaymentMethodSelectorView';
-    }
-    return 'PaymentFormView';
 };
 
 const interactionToView = ({ interaction }: PaymentInteractionRequested): View => {
@@ -98,8 +111,8 @@ const interactionToView = ({ interaction }: PaymentInteractionRequested): View =
     }
 };
 
-export const useViewModel = (model: PaymentModel, conditions: PaymentCondition[]) => {
-    const [viewModel, dispatch] = useReducer(dataReducer, initViewModel(model));
+export const useViewModel = (paymentMethods: PaymentMethod[], conditions: PaymentCondition[]) => {
+    const [viewModel, dispatch] = useReducer(dataReducer, initViewModel(paymentMethods));
 
     const lastCondition = useMemo(() => last(conditions), [conditions]);
 
@@ -116,10 +129,7 @@ export const useViewModel = (model: PaymentModel, conditions: PaymentCondition[]
     }, [lastCondition]);
 
     useEffect(() => {
-        if (isNil(lastCondition)) {
-            dispatch({ type: 'SET_ACTIVE_VIEW', payload: applyUninitialized(model) });
-            return;
-        }
+        if (isNil(lastCondition)) return;
         switch (lastCondition.name) {
             case 'invoiceStatusChanged':
             case 'paymentStatusChanged':

@@ -1,4 +1,4 @@
-import { PaymentMethodName } from '../../common/paymentModel';
+import { KnownProviderCategory, PaymentMethod, PaymentMethodName } from '../../common/paymentModel';
 
 export type ViewName =
     | 'PaymentFormView'
@@ -6,7 +6,8 @@ export type ViewName =
     | 'PaymentResultView'
     | 'QrCodeView'
     | 'TerminalSelectorView'
-    | 'ApiExtensionView';
+    | 'ApiExtensionView'
+    | 'NoAvailablePaymentMethodsView';
 
 export type PaymentFormView = {
     name: 'PaymentFormView';
@@ -16,11 +17,13 @@ export type PaymentFormView = {
 
 export type TerminalSelectorView = {
     name: 'TerminalSelectorView';
+    category: KnownProviderCategory;
     providers: string[];
 };
 
 export type PaymentMethodSelectorView = {
     name: 'PaymentMethodSelectorView';
+    paymentMethods: PaymentMethod[];
 };
 
 export type PaymentResultView = {
@@ -35,6 +38,10 @@ export type ApiExtensionView = {
     name: 'ApiExtensionView';
 };
 
+export type NoAvailablePaymentMethodsView = {
+    name: 'NoAvailablePaymentMethodsView';
+};
+
 export type ViewAmount = string;
 export type SlideAnimationDirection = 'forward' | 'backward' | 'none';
 export type View =
@@ -43,11 +50,12 @@ export type View =
     | PaymentResultView
     | PaymentMethodSelectorView
     | PaymentFormView
-    | TerminalSelectorView;
+    | TerminalSelectorView
+    | NoAvailablePaymentMethodsView;
 
 export type ViewModel = {
     direction: SlideAnimationDirection;
     isLoading: boolean;
     views: Map<ViewName, View>;
-    activeView?: ViewName;
+    activeView: ViewName;
 };

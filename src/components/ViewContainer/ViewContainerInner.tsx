@@ -51,7 +51,7 @@ export function ViewContainerInner() {
     const [height, setHeight] = useState(0);
     const { viewModel } = useContext(ViewModelContext);
 
-    const activeView = viewModel?.activeView;
+    const activeView = viewModel.activeView;
 
     useEffect(() => {
         setHeight(contentElement.current?.clientHeight || DEFAULT_HEIGHT_PX);
@@ -68,14 +68,16 @@ export function ViewContainerInner() {
                         initial={{ x: toInitialPos(viewModel.direction) }}
                         transition={{ duration: 0.3 }}
                     >
-                        {activeView === 'PaymentFormView' && <PaymentFormView />}
+                        {activeView === 'NoAvailablePaymentMethodsView' && <>NoAvailablePaymentMethodsView</>}
                         {activeView === 'PaymentMethodSelectorView' && <>PaymentMethodSelectorView</>}
+                        {activeView === 'TerminalSelectorView' && <>TerminalSelectorView</>}
+                        {activeView === 'PaymentFormView' && <PaymentFormView />}
                         {activeView === 'PaymentResultView' && <PaymentResultView />}
                         {activeView === 'QrCodeView' && <QrCodeView />}
+                        {activeView === 'ApiExtensionView' && <>ApiExtensionView</>}
                         {viewModel.isLoading && <FormLoader />}
                     </motion.div>
                 )}
-                {isNil(activeView) && <p>Active view name is null</p>}
             </Layout>
         </Wrapper>
     );
