@@ -10,8 +10,8 @@ export type BankCardPaneProps = {
 export function BankCardPane({ destinationViewId }: BankCardPaneProps) {
     const { l } = useContext(LocaleContext);
     const {
-        goTo,
         viewModel: { views },
+        forward,
     } = useContext(ViewModelContext);
 
     const destination = views.get(destinationViewId);
@@ -21,7 +21,7 @@ export function BankCardPane({ destinationViewId }: BankCardPaneProps) {
     }
 
     return (
-        <Method onClick={() => goTo(destinationViewId)}>
+        <Method onClick={() => forward(destinationViewId)}>
             <PaymentMethodIcon name="bank-card" />
             <PaymentMethodTitle>{l['form.payment.method.name.card.label']}</PaymentMethodTitle>
         </Method>

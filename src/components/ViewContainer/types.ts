@@ -76,5 +76,6 @@ export type ViewModel = {
     isLoading: boolean;
     views: Map<string, View>;
     activeViewId: string;
-    previousViewId: string | null;
+    history: string[];
+    hasBackward: boolean;
 };

@@ -2,13 +2,14 @@ import { useContext } from 'react';
 
 import { ServiceProvidersGrid } from './ServiceProvidersGrid';
 import { LocaleContext, ViewModelContext } from '../../../common/contexts';
-import { HeaderWrapper, Title } from '../../../components/legacy';
+import { ChevronButton, HeaderWrapper, Title } from '../../../components/legacy';
 
 export function TerminalSelectorView() {
     const { l } = useContext(LocaleContext);
     const {
-        viewModel: { views, activeViewId },
-        goTo,
+        viewModel: { views, activeViewId, hasBackward },
+        backward,
+        forward,
     } = useContext(ViewModelContext);
 
     const view = views.get(activeViewId);
@@ -19,9 +20,11 @@ export function TerminalSelectorView() {
     return (
         <>
             <HeaderWrapper>
+                {hasBackward && <ChevronButton type="left" onClick={backward} />}
+
                 <Title>{l[`form.header.${view.category}.label`]}</Title>
             </HeaderWrapper>
-            <ServiceProvidersGrid items={view.items} onPaneClick={goTo} />
+            <ServiceProvidersGrid items={view.items} onPaneClick={forward} />
         </>
     );
 }

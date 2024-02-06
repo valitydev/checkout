@@ -34,8 +34,8 @@ export function MetadataForm({ provider }: MetadataFormProps) {
     const { l } = useContext(LocaleContext);
     const {
         viewAmount,
-        viewModel: { previousViewId },
-        goTo,
+        viewModel: { hasBackward },
+        backward,
     } = useContext(ViewModelContext);
     const { startPayment } = useContext(PaymentContext);
     const { localeCode } = useContext(CustomizationContext);
@@ -67,9 +67,9 @@ export function MetadataForm({ provider }: MetadataFormProps) {
 
     return (
         <>
-            {!isNil(previousViewId) && (
+            {!isNil(hasBackward) && (
                 <HeaderWrapper>
-                    <ChevronButton type="left" onClick={() => goTo(previousViewId, 'backward')} />
+                    <ChevronButton type="left" onClick={backward} />
                 </HeaderWrapper>
             )}
             {!isNil(logo) && (

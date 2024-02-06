@@ -13,7 +13,7 @@ export function PaymentTerminalPane({ destinationViewId }: PaymentTerminalPanePr
         paymentModel: { serviceProviders },
     } = useContext(PaymentModelContext);
     const {
-        goTo,
+        forward,
         viewModel: { views },
     } = useContext(ViewModelContext);
     const destination = views.get(destinationViewId);
@@ -27,7 +27,7 @@ export function PaymentTerminalPane({ destinationViewId }: PaymentTerminalPanePr
     return (
         <PaymentMethodItemContainer
             id={`${Math.floor(Math.random() * 100)}-payment-method-item`}
-            onClick={() => goTo(destinationViewId)}
+            onClick={() => forward(destinationViewId)}
         >
             {!isNil(logo) && <MetadataLogo metadata={logo} />}
             {isNil(logo) && <>{destination.provider}</>}

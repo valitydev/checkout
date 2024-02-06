@@ -9,7 +9,7 @@ export type TerminalSelectorPaneProps = {
 
 export function TerminalSelectorPane({ destinationViewId }: TerminalSelectorPaneProps) {
     const {
-        goTo,
+        forward,
         viewModel: { views },
     } = useContext(ViewModelContext);
 
@@ -20,7 +20,7 @@ export function TerminalSelectorPane({ destinationViewId }: TerminalSelectorPane
     }
 
     return (
-        <Method onClick={() => goTo(destinationViewId)}>
+        <Method onClick={() => forward(destinationViewId)}>
             <PaymentMethodIcon name="terminals" />
             <PaymentMethodTitle>{destination.category}</PaymentMethodTitle>
         </Method>

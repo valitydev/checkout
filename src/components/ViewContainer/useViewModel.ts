@@ -1,22 +1,11 @@
 import { useEffect, useMemo, useReducer } from 'react';
 
-import {
-    PaymentFormView,
-    PaymentMethodSelectorItem,
-    SlideAnimationDirection,
-    TerminalSelectorView,
-    View,
-    ViewModel,
-} from './types';
+import { PaymentFormView, PaymentMethodSelectorItem, TerminalSelectorView, View, ViewModel } from './types';
 import { PaymentCondition, PaymentInteractionRequested } from '../../common/paymentCondition';
 import { PaymentMethod } from '../../common/paymentModel';
 import { isNil, last } from '../../common/utils';
 
 type Action =
-    | {
-          type: 'SET_ACTIVE_VIEW_ID';
-          payload: string;
-      }
     | {
           type: 'SET_VIEW';
           payload: View;
@@ -26,41 +15,72 @@ type Action =
           payload: boolean;
       }
     | {
-          type: 'SET_DIRECTION';
-          payload: SlideAnimationDirection;
+          type: 'FORWARD';
+          payload: string;
       }
     | {
-          type: 'SET_PREVIOUS_VIEW_ID';
-          payload: string | null;
-      };
+          type: 'BACKWARD';
+      }
+    | { type: 'GO_TO'; payload: string };
+
+const setView = (state: ViewModel, view: View): ViewModel => ({
+    ...state,
+    views: state.views.set(view.id, view),
+    activeViewId: view.id,
+    direction: 'forward',
+});
+
+const forward = (state: ViewModel, viewId: string): ViewModel => {
+    const history = state.history.concat();
+    history.push(state.activeViewId);
+    return {
+        ...state,
+        activeViewId: viewId,
+        direction: 'forward',
+        history,
+        hasBackward: true,
+    };
+};
+
+const backward = (state: ViewModel): ViewModel => {
+    if (!state.hasBackward) return state;
+    const history = state.history.concat();
+    const activeViewId = history.pop();
+    return {
+        ...state,
+        activeViewId,
+        direction: 'backward',
+        history,
+        hasBackward: history.length > 0,
+    };
+};
+
+const goTo = (state: ViewModel, viewId: string): ViewModel => {
+    const foundIndex = state.history.findIndex((id) => id === viewId);
+    if (foundIndex === -1) return state;
+    return {
+        ...state,
+        history: state.history.slice(0, foundIndex + 1),
+        activeViewId: viewId,
+        direction: 'backward',
+    };
+};
 
 const dataReducer = (state: ViewModel, action: Action): ViewModel => {
     switch (action.type) {
-        case 'SET_ACTIVE_VIEW_ID':
-            return {
-                ...state,
-                activeViewId: action.payload,
-            };
         case 'SET_VIEW':
-            return {
-                ...state,
-                views: state.views.set(action.payload.name, action.payload),
-            };
+            return setView(state, action.payload);
         case 'SET_LOADING':
             return {
                 ...state,
                 isLoading: action.payload,
             };
-        case 'SET_DIRECTION':
-            return {
-                ...state,
-                direction: action.payload,
-            };
-        case 'SET_PREVIOUS_VIEW_ID':
-            return {
-                ...state,
-                previousViewId: action.payload,
-            };
+        case 'FORWARD':
+            return forward(state, action.payload);
+        case 'BACKWARD':
+            return backward(state);
+        case 'GO_TO':
+            return goTo(state, action.payload);
         default:
             return state;
     }
@@ -155,7 +175,8 @@ const initViewModel = (paymentMethods: PaymentMethod[]): ViewModel => {
         direction: 'none',
         views,
         activeViewId,
-        previousViewId: null,
+        history: [],
+        hasBackward: false,
     };
 };
 
@@ -194,30 +215,27 @@ export const useViewModel = (paymentMethods: PaymentMethod[], conditions: Paymen
             case 'paymentStatusUnknown':
             case 'paymentStarted':
                 dispatch({ type: 'SET_VIEW', payload: { name: 'PaymentResultView', id: 'PaymentResultView' } });
-                dispatch({ type: 'SET_DIRECTION', payload: 'forward' });
-                dispatch({ type: 'SET_ACTIVE_VIEW_ID', payload: 'PaymentResultView' });
                 break;
-            case 'paymentProcessFailed':
-                throw new Error('Unimplemented paymentProcessFailed condition');
             case 'interactionRequested':
                 const interactionView = interactionToView(lastCondition);
                 dispatch({ type: 'SET_VIEW', payload: interactionView });
-                dispatch({ type: 'SET_DIRECTION', payload: 'forward' });
-                dispatch({ type: 'SET_ACTIVE_VIEW_ID', payload: interactionView.name });
                 break;
+            case 'paymentProcessFailed':
+                throw new Error('Unimplemented paymentProcessFailed condition');
         }
     }, [lastCondition]);
 
-    const goTo = (viewId: string, direction: SlideAnimationDirection = 'forward') => {
-        if (viewId === viewModel.previousViewId) {
-            dispatch({ type: 'SET_PREVIOUS_VIEW_ID', payload: null });
-        }
-        if (isNil(viewModel.previousViewId)) {
-            dispatch({ type: 'SET_PREVIOUS_VIEW_ID', payload: viewModel.activeViewId });
-        }
-        dispatch({ type: 'SET_DIRECTION', payload: direction });
-        dispatch({ type: 'SET_ACTIVE_VIEW_ID', payload: viewId });
+    const forward = (viewId: string) => {
+        dispatch({ type: 'FORWARD', payload: viewId });
     };
 
-    return { viewModel, goTo };
+    const backward = () => {
+        dispatch({ type: 'BACKWARD' });
+    };
+
+    const goTo = (viewId: string) => {
+        dispatch({ type: 'GO_TO', payload: viewId });
+    };
+
+    return { viewModel, goTo, forward, backward };
 };
