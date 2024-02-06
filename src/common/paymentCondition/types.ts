@@ -1,5 +1,11 @@
 import { BrowserRequest, InvoiceStatuses, PaymentError, PaymentStatuses } from 'checkout/backend';
 
+export type InvoiceDetermined = {
+    name: 'invoiceDetermined';
+    invoiceID: string;
+    invoiceAccessToken: string;
+};
+
 export type PaymentProcessStarted = {
     name: 'paymentProcessStarted';
 };
@@ -69,6 +75,7 @@ export type PaymentInteractionCompleted = {
 };
 
 export type PaymentCondition =
+    | InvoiceDetermined
     | PaymentProcessStarted
     | PaymentProcessFailed
     | PaymentStarted

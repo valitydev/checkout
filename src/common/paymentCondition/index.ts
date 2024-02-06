@@ -12,4 +12,5 @@ export type {
     PaymentInteractionQRCode,
     Interaction,
     PaymentStarted,
+    InvoiceDetermined,
 } from './types';

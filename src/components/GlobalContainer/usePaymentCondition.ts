@@ -104,6 +104,7 @@ export const usePaymentCondition = (model: PaymentModel, initConditions: Payment
         })();
     }, [model, state]);
 
+    // TODO add invoiceDetermined condition
     const getModelInvoice = async () => {
         if (isNil(state.modelInvoice)) {
             const modelInvoice = await determineModel(model);

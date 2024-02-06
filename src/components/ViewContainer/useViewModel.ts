@@ -27,7 +27,7 @@ const setView = (state: ViewModel, view: View): ViewModel => ({
     ...state,
     views: state.views.set(view.id, view),
     activeViewId: view.id,
-    direction: 'forward',
+    direction: 'none',
 });
 
 const forward = (state: ViewModel, viewId: string): ViewModel => {
@@ -66,15 +66,17 @@ const goTo = (state: ViewModel, viewId: string): ViewModel => {
     };
 };
 
+const setIsLoading = (state: ViewModel, isLoading: boolean): ViewModel => ({
+    ...state,
+    isLoading,
+});
+
 const dataReducer = (state: ViewModel, action: Action): ViewModel => {
     switch (action.type) {
         case 'SET_VIEW':
             return setView(state, action.payload);
         case 'SET_LOADING':
-            return {
-                ...state,
-                isLoading: action.payload,
-            };
+            return setIsLoading(state, action.payload);
         case 'FORWARD':
             return forward(state, action.payload);
         case 'BACKWARD':

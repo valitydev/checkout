@@ -1,0 +1,1 @@
+export { DestinationInfo } from './DestinationInfo';

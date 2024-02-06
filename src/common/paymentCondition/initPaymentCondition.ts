@@ -1,6 +1,6 @@
 import { InvoiceChangeType, InvoiceStatuses, getInvoiceEvents } from 'checkout/backend';
 
-import { PaymentCondition } from './types';
+import { InvoiceDetermined, PaymentCondition } from './types';
 import { invoiceEventsToConditions, pollingResultToConditions } from './utils';
 import { StartPaymentPayload, createPayment, determineModel, pollInvoiceEvents } from '../paymentMgmt';
 import { PaymentModel, PaymentModelInvoice, PaymentTerminal } from '../paymentModel';
@@ -53,7 +53,13 @@ const provideInstantPayment = async (
                 apiMethodCall: API_METHOD_CALL_MS,
             },
         });
-        return pollingResultToConditions(pollingResult);
+        const invoiceDetermined: InvoiceDetermined = {
+            name: 'invoiceDetermined',
+            invoiceID,
+            invoiceAccessToken,
+        };
+        const conditions = pollingResultToConditions(pollingResult);
+        return [invoiceDetermined, ...conditions];
     } catch (ex) {
         console.error(ex);
         return [
@@ -153,13 +159,18 @@ const provideInvoice = async (model: PaymentModelInvoice): Promise<PaymentCondit
     }
 };
 
-export const initPaymentCondition = (model: PaymentModel): Promise<PaymentCondition[]> => {
+export const initPaymentCondition = async (model: PaymentModel): Promise<PaymentCondition[]> => {
     switch (model.type) {
         case 'InvoiceTemplateContext':
             // Invoice template context does not have last event id
             const lastEventId = 0;
             return providePaymentModel(model, lastEventId);
         case 'InvoiceContext':
-            return provideInvoice(model);
+            const invoiceConditions = await provideInvoice(model);
+            const invoiceDetermined = invoiceConditions.find((c) => c.name === 'invoiceDetermined');
+            if (isNil(invoiceDetermined)) {
+                return [{ name: 'invoiceDetermined', ...model.invoiceParams }, ...invoiceConditions];
+            }
+            return invoiceConditions;
     }
 };

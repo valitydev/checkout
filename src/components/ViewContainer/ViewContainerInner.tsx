@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
+import { ApiExtensionView } from './ApiExtensionView';
+import { NoAvailablePaymentMethodsView } from './NoAvailablePaymentMethodsView';
 import { PaymentFormView } from './PaymentFormView';
 import { PaymentMethodSelectorView } from './PaymentMethodSelectorView';
 import { PaymentResultView } from './PaymentResultView';
@@ -51,9 +53,11 @@ const DEFAULT_HEIGHT_PX = 300;
 export function ViewContainerInner() {
     const contentElement = useRef(null);
     const [height, setHeight] = useState(0);
-    const { viewModel } = useContext(ViewModelContext);
+    const {
+        viewModel: { views, activeViewId, direction, isLoading },
+    } = useContext(ViewModelContext);
 
-    const activeView = viewModel.views.get(viewModel.activeViewId).name;
+    const activeView = views.get(activeViewId).name;
 
     useEffect(() => {
         setHeight(contentElement.current?.clientHeight || DEFAULT_HEIGHT_PX);
@@ -66,17 +70,17 @@ export function ViewContainerInner() {
                     key={activeView}
                     ref={contentElement}
                     animate={{ x: 0 }}
-                    initial={{ x: toInitialPos(viewModel.direction) }}
+                    initial={{ x: toInitialPos(direction) }}
                     transition={{ duration: 0.3 }}
                 >
-                    {activeView === 'NoAvailablePaymentMethodsView' && <>NoAvailablePaymentMethodsView</>}
+                    {activeView === 'NoAvailablePaymentMethodsView' && <NoAvailablePaymentMethodsView />}
                     {activeView === 'PaymentMethodSelectorView' && <PaymentMethodSelectorView />}
                     {activeView === 'TerminalSelectorView' && <TerminalSelectorView />}
                     {activeView === 'PaymentFormView' && <PaymentFormView />}
                     {activeView === 'PaymentResultView' && <PaymentResultView />}
                     {activeView === 'QrCodeView' && <QrCodeView />}
-                    {activeView === 'ApiExtensionView' && <>ApiExtensionView</>}
-                    {viewModel.isLoading && <FormLoader />}
+                    {activeView === 'ApiExtensionView' && <ApiExtensionView />}
+                    {isLoading && <FormLoader />}
                 </motion.div>
             </Layout>
         </Wrapper>
