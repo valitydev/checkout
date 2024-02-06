@@ -1,6 +1,13 @@
 import { useEffect, useMemo, useReducer } from 'react';
 
-import { SlideAnimationDirection, View, ViewModel, ViewName } from './types';
+import {
+    PaymentFormView,
+    PaymentMethodSelectorItem,
+    SlideAnimationDirection,
+    TerminalSelectorView,
+    View,
+    ViewModel,
+} from './types';
 import { PaymentCondition, PaymentInteractionRequested } from '../../common/paymentCondition';
 import { PaymentMethod } from '../../common/paymentModel';
 import { isNil, last } from '../../common/utils';
@@ -59,65 +66,95 @@ const dataReducer = (state: ViewModel, action: Action): ViewModel => {
     }
 };
 
-const toViews = (paymentMethods: PaymentMethod[]): Map<string, View> => {
-    let views: View[] = [];
+const toViews = (paymentMethods: PaymentMethod[]): [Map<string, View>, string] => {
+    const wrapToMapValue = (view: View): [string, View] => [view.id, view];
+
     if (paymentMethods.length === 0) {
-        views = [{ name: 'NoAvailablePaymentMethodsView', id: 'NoAvailablePaymentMethodsView' }];
+        return [
+            new Map(
+                [{ name: 'NoAvailablePaymentMethodsView', id: 'NoAvailablePaymentMethodsView' }].map(wrapToMapValue),
+            ),
+            'NoAvailablePaymentMethodsView',
+        ];
     }
-    if (paymentMethods.length > 1) {
-        views = [{ name: 'PaymentMethodSelectorView', paymentMethods, id: 'PaymentMethodSelectorView' }];
-    }
-    views = paymentMethods.reduce<View[]>((acc, paymentMethod, key) => {
-        const { methodName } = paymentMethod;
-        switch (methodName) {
-            case 'BankCard':
-                return acc.concat([{ name: 'PaymentFormView', methodName, id: `PaymentFormView_${key}` }]);
-            case 'PaymentTerminal':
-                const { providers, category } = paymentMethod;
-                if (providers.length === 1) {
-                    return acc.concat([
-                        {
+
+    const [views, pmSelectorItems, viewId] = paymentMethods.reduce<[View[], PaymentMethodSelectorItem[], string]>(
+        ([views, pmSelectorItems, viewId], paymentMethod, key) => {
+            const { methodName } = paymentMethod;
+            switch (methodName) {
+                case 'BankCard':
+                    const bankCardId = `PaymentFormView_${key}`;
+                    const bankCardView: PaymentFormView = { name: 'PaymentFormView', id: bankCardId, methodName };
+                    const bankCardSelectorItem: PaymentMethodSelectorItem = { name: methodName, viewId: bankCardId };
+                    return [[...views, bankCardView], [...pmSelectorItems, bankCardSelectorItem], bankCardId];
+                case 'PaymentTerminal':
+                    const { providers, category } = paymentMethod;
+
+                    if (providers.length === 1) {
+                        const singleProviderTerminalId = `PaymentFormView_${key}`;
+                        const singleProviderTerminalView: PaymentFormView = {
                             name: 'PaymentFormView',
+                            id: singleProviderTerminalId,
                             methodName,
                             provider: providers[0],
-                            id: `PaymentFormView_${key}`,
-                        },
-                    ]);
-                }
-                return acc.concat([
-                    { name: 'TerminalSelectorView', providers, category, id: `PaymentFormView_${key}` },
-                ]);
-            default:
-                return acc;
-        }
-    }, views);
-    const wrapToMapValue = (view: View): [string, View] => [view.id, view];
-    return new Map(views.map(wrapToMapValue));
-};
+                        };
+                        const singleProviderSelectorItem: PaymentMethodSelectorItem = {
+                            name: methodName,
+                            viewId: singleProviderTerminalId,
+                            provider: providers[0],
+                        };
+                        return [
+                            [...views, singleProviderTerminalView],
+                            [...pmSelectorItems, singleProviderSelectorItem],
+                            singleProviderTerminalId,
+                        ];
+                    }
 
-// TODO need refactoring
-const toActiveView = (views: Map<string, View>): ViewName => {
-    if (views.has('NoAvailablePaymentMethodsView')) {
-        return 'NoAvailablePaymentMethodsView';
+                    const paymentTerminalViews: PaymentFormView[] = providers.map((provider, providerKey) => ({
+                        name: 'PaymentFormView',
+                        id: `PaymentFormView_${key}_${providerKey}`,
+                        methodName,
+                        provider,
+                    }));
+                    const terminalSelectorId = `TerminalSelectorView_${key}`;
+                    const terminalSelectorView: TerminalSelectorView = {
+                        name: 'TerminalSelectorView',
+                        id: terminalSelectorId,
+                        category,
+                        items: paymentTerminalViews.map(({ id, provider }) => ({ viewId: id, provider })),
+                    };
+                    const terminalSelectorItem: PaymentMethodSelectorItem = {
+                        name: 'TerminalSelector',
+                        viewId: terminalSelectorId,
+                    };
+                    return [
+                        [...views, ...paymentTerminalViews, terminalSelectorView],
+                        [...pmSelectorItems, terminalSelectorItem],
+                        terminalSelectorId,
+                    ];
+                default:
+                    return [views, pmSelectorItems, viewId];
+            }
+        },
+        [[], [], ''],
+    );
+
+    let activeViewId = viewId;
+    if (pmSelectorItems.length > 1) {
+        views.push({ name: 'PaymentMethodSelectorView', id: 'PaymentMethodSelectorView', items: pmSelectorItems });
+        activeViewId = 'PaymentMethodSelectorView';
     }
-    if (views.has('PaymentMethodSelectorView')) {
-        return 'PaymentMethodSelectorView';
-    }
-    if (views.has('TerminalSelectorView')) {
-        return 'TerminalSelectorView';
-    }
-    if (views.has('PaymentFormView')) {
-        return 'PaymentFormView';
-    }
+
+    return [new Map(views.map(wrapToMapValue)), activeViewId];
 };
 
 const initViewModel = (paymentMethods: PaymentMethod[]): ViewModel => {
-    const views = toViews(paymentMethods);
+    const [views, activeViewId] = toViews(paymentMethods);
     return {
         isLoading: false,
         direction: 'none',
         views,
-        activeViewId: toActiveView(views),
+        activeViewId,
         previousViewId: null,
     };
 };

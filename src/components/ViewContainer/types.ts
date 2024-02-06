@@ -1,4 +1,4 @@
-import { KnownProviderCategory, PaymentMethod, PaymentMethodName } from '../../common/paymentModel';
+import { KnownProviderCategory, PaymentMethodName } from '../../common/paymentModel';
 
 export type ViewName =
     | 'PaymentFormView'
@@ -16,17 +16,28 @@ export type PaymentFormView = {
     provider?: string;
 };
 
+export type TerminalSelectorItem = {
+    provider: string;
+    viewId: string;
+};
+
 export type TerminalSelectorView = {
     id: string;
     name: 'TerminalSelectorView';
     category: KnownProviderCategory;
-    providers: string[];
+    items: TerminalSelectorItem[];
+};
+
+export type PaymentMethodSelectorItem = {
+    name: PaymentMethodName | 'TerminalSelector';
+    viewId: string;
+    provider?: string;
 };
 
 export type PaymentMethodSelectorView = {
     id: string;
     name: 'PaymentMethodSelectorView';
-    paymentMethods: PaymentMethod[];
+    items: PaymentMethodSelectorItem[];
 };
 
 export type PaymentResultView = {
@@ -56,8 +67,8 @@ export type View =
     | QRCodeView
     | PaymentResultView
     | PaymentMethodSelectorView
-    | PaymentFormView
     | TerminalSelectorView
+    | PaymentFormView
     | NoAvailablePaymentMethodsView;
 
 export type ViewModel = {

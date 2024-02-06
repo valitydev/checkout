@@ -6,6 +6,7 @@ import { ServiceProviderPane } from './ServiceProviderPane';
 import { useGridPages } from './useGrigPages';
 import { LocaleContext, PaymentModelContext } from '../../../../common/contexts';
 import { Input } from '../../../legacy';
+import { TerminalSelectorItem } from '../../types';
 
 const GridContainer = styled.div`
     height: 312px;
@@ -29,20 +30,22 @@ const Flex = styled.div`
 const ITEMS_ON_PAGE = 8;
 
 export type ServiceProvidersGridProps = {
+    items: TerminalSelectorItem[];
     onPaneClick(provider: string): void;
 };
 
-export function ServiceProvidersGrid({ onPaneClick }: ServiceProvidersGridProps) {
+export function ServiceProvidersGrid({ onPaneClick, items }: ServiceProvidersGridProps) {
     const { l } = useContext(LocaleContext);
     const {
         paymentModel: { serviceProviders },
     } = useContext(PaymentModelContext);
 
     const [{ totalPages, page, isNext, isPrevious, pageItems }, { next, previous, filter }] = useGridPages(
+        items,
         serviceProviders,
         ITEMS_ON_PAGE,
     );
-    const isSearchAvailable = useMemo(() => serviceProviders.length > ITEMS_ON_PAGE, [serviceProviders]);
+    const isSearchAvailable = useMemo(() => items.length > ITEMS_ON_PAGE, [serviceProviders]);
     const placeholder = useMemo(() => `${l['form.serviceProvidersGrid.search']}...`, []);
 
     const onChange = useCallback((e) => {
@@ -54,8 +57,8 @@ export function ServiceProvidersGrid({ onPaneClick }: ServiceProvidersGridProps)
             {isSearchAvailable && <Input placeholder={placeholder} onChange={onChange} />}
             <GridContainer>
                 <Grid>
-                    {pageItems.map((p, i) => (
-                        <ServiceProviderPane key={i} serviceProvider={p} onClick={onPaneClick} />
+                    {pageItems.map((gridItem, i) => (
+                        <ServiceProviderPane key={i} gridItem={gridItem} onClick={onPaneClick} />
                     ))}
                 </Grid>
             </GridContainer>

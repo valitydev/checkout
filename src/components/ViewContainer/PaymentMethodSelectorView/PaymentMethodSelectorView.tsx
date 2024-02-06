@@ -1,13 +1,13 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 
-import { BankCard } from './BankCard';
-import { PaymentCategory } from './PaymentCategory';
-import { PaymentTerminal } from './PaymentTerminal';
+import { BankCardPane } from './BankCardPane';
+import { PaymentTerminalPane } from './PaymentTerminalPane';
+import { TerminalSelectorPane } from './TerminalSelectorPane';
 import { LocaleContext, ViewModelContext } from '../../../common/contexts';
 import { HeaderWrapper, Title } from '../../../components/legacy';
 
-const MethodList = styled.div`
+const PanesWrapper = styled.div`
     display: flex;
     flex-direction: column;
 `;
@@ -28,20 +28,18 @@ export function PaymentMethodSelectorView() {
             <HeaderWrapper>
                 <Title>{l['form.header.payment.methods.label']}</Title>
             </HeaderWrapper>
-            <MethodList>
-                {view.paymentMethods.map((method, key) => {
-                    switch (method.methodName) {
+            <PanesWrapper>
+                {view.items.map(({ name, viewId }, key) => {
+                    switch (name) {
                         case 'BankCard':
-                            return <BankCard key={key} />;
+                            return <BankCardPane key={key} destinationViewId={viewId} />;
                         case 'PaymentTerminal':
-                            const { providers, category } = method;
-                            if (providers.length === 1) {
-                                return <PaymentTerminal key={key} provider={providers[0]} />;
-                            }
-                            return <PaymentCategory key={key} category={category} />;
+                            return <PaymentTerminalPane key={key} destinationViewId={viewId} />;
+                        case 'TerminalSelector':
+                            return <TerminalSelectorPane key={key} destinationViewId={viewId} />;
                     }
                 })}
-            </MethodList>
+            </PanesWrapper>
         </>
     );
 }

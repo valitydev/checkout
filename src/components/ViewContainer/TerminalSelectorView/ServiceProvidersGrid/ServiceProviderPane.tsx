@@ -8,7 +8,7 @@ import {
     ServiceProviderMetadata,
 } from 'checkout/backend';
 
-import { TerminalServiceProvider } from '../../../../common/paymentModel';
+import { GridItem } from './useGrigPages';
 import { MetadataLogo } from '../../../../components/legacy';
 
 const PaneContainer = styled.div`
@@ -61,15 +61,16 @@ export const getMetadata = (
     namespace = METADATA_NAMESPACE,
 ): CheckoutServiceProviderMetadata => metadata?.[namespace] || {};
 
-export const ServiceProviderPane: React.FC<{
-    serviceProvider: TerminalServiceProvider;
-    onClick: (id: string) => void;
-}> = ({ serviceProvider, onClick }) => {
-    const { logo } = getMetadata(serviceProvider.metadata);
+export type ServiceProviderPaneProps = {
+    gridItem: GridItem;
+    onClick: (viewId: string) => void;
+};
+
+export function ServiceProviderPane({ gridItem: { logo, viewId, brandName }, onClick }: ServiceProviderPaneProps) {
     return (
-        <PaneContainer onClick={() => onClick(serviceProvider.id)}>
+        <PaneContainer onClick={() => onClick(viewId)}>
             {logo && <PaneLogo logo={logo} />}
-            <PaneLabel>{serviceProvider.brandName}</PaneLabel>
+            <PaneLabel>{brandName}</PaneLabel>
         </PaneContainer>
     );
-};
+}

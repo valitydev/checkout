@@ -1,18 +1,32 @@
 import { useCallback, useReducer } from 'react';
 
+import {
+    CheckoutServiceProviderMetadata,
+    METADATA_NAMESPACE,
+    ServiceProviderIconMetadata,
+    ServiceProviderMetadata,
+} from 'checkout/backend';
+
 import { TerminalServiceProvider } from '../../../../common/paymentModel';
+import { TerminalSelectorItem } from '../../types';
 
 type ServiceProviderPage = {
-    items: TerminalServiceProvider[];
+    items: GridItem[];
 };
 
-const toPages = (serviceProviders: TerminalServiceProvider[], itemsOnPage: number): ServiceProviderPage[] => {
+export type GridItem = {
+    viewId: string;
+    brandName: string;
+    logo: ServiceProviderIconMetadata | null;
+};
+
+const toPages = (gridItems: GridItem[], itemsOnPage: number): ServiceProviderPage[] => {
     let result = [];
     let start = 0;
     let end = itemsOnPage;
     let isMorePages = true;
     do {
-        const sliced = serviceProviders.slice(start, end);
+        const sliced = gridItems.slice(start, end);
         isMorePages = sliced.length !== 0;
         if (isMorePages) {
             start = start + itemsOnPage;
@@ -30,13 +44,13 @@ const toPages = (serviceProviders: TerminalServiceProvider[], itemsOnPage: numbe
 
 type State = {
     pages: ServiceProviderPage[];
-    pageItems: TerminalServiceProvider[];
+    pageItems: GridItem[];
     isNext: boolean;
     isPrevious: boolean;
     page: number;
     totalPages: number;
-    serviceProviders: TerminalServiceProvider[];
     itemsOnPage: number;
+    allItems: GridItem[];
 };
 
 type Action =
@@ -47,8 +61,34 @@ type Action =
           payload: string;
       };
 
-const initPages = (serviceProviders: TerminalServiceProvider[], itemsOnPage: number): State => {
-    const pages = toPages(serviceProviders, itemsOnPage);
+const getMetadata = (
+    metadata: ServiceProviderMetadata | null,
+    namespace = METADATA_NAMESPACE,
+): CheckoutServiceProviderMetadata => metadata?.[namespace] || {};
+
+const mapToGridItem =
+    (serviceProviders: TerminalServiceProvider[]) =>
+    ({ provider, viewId }: TerminalSelectorItem): GridItem => {
+        const { brandName, metadata } = serviceProviders.find(({ id }) => id === provider);
+        const { logo } = getMetadata(metadata);
+        return {
+            viewId,
+            brandName,
+            logo,
+        };
+    };
+
+const mapToInitState = (
+    serviceProviders: TerminalServiceProvider[],
+    terminalSelectorItems: TerminalSelectorItem[],
+    itemsOnPage: number,
+): State => {
+    const allItems = terminalSelectorItems.map(mapToGridItem(serviceProviders));
+    return initState(allItems, itemsOnPage);
+};
+
+const initState = (allItems: GridItem[], itemsOnPage: number): State => {
+    const pages = toPages(allItems, itemsOnPage);
     return {
         pages,
         pageItems: pages.length > 0 ? pages[0].items : [],
@@ -56,8 +96,8 @@ const initPages = (serviceProviders: TerminalServiceProvider[], itemsOnPage: num
         isNext: pages.length > 1,
         page: 1,
         totalPages: pages.length,
-        serviceProviders,
         itemsOnPage,
+        allItems,
     };
 };
 
@@ -94,18 +134,19 @@ const previous = (state: State): State => {
 
 const byBrandName =
     (filterStr: string) =>
-    ({ brandName }: TerminalServiceProvider) =>
+    ({ brandName }: GridItem) =>
         brandName.toLowerCase().includes(filterStr.toLowerCase());
 
 const filterPages = (state: State, filterStr: string): State => {
-    let filtered = state.serviceProviders.concat();
+    let filtered = state.allItems.concat();
     if (filterStr !== '') {
-        filtered = state.serviceProviders.filter(byBrandName(filterStr));
+        filtered = state.allItems.filter(byBrandName(filterStr));
     }
+
     return {
         ...state,
-        ...initPages(filtered, state.itemsOnPage),
-        serviceProviders: state.serviceProviders.concat(),
+        ...initState(filtered, state.itemsOnPage),
+        allItems: state.allItems.concat(),
     };
 };
 
@@ -121,6 +162,7 @@ const gridPagesReducer = (state: State, action: Action): State => {
 };
 
 export const useGridPages = (
+    items: TerminalSelectorItem[],
     serviceProviders: TerminalServiceProvider[],
     itemsOnPage: number,
 ): [
@@ -131,7 +173,7 @@ export const useGridPages = (
         filter: (str: string) => void;
     },
 ] => {
-    const [state, dispatch] = useReducer(gridPagesReducer, initPages(serviceProviders, itemsOnPage));
+    const [state, dispatch] = useReducer(gridPagesReducer, mapToInitState(serviceProviders, items, itemsOnPage));
 
     const next = useCallback(() => {
         dispatch({ type: 'NEXT' });
