@@ -17,4 +17,5 @@ export type {
     InitContextContactInfo,
     PaymentMethodName,
     KnownProviderCategory,
+    CommonPaymentModel,
 } from './types';

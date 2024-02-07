@@ -1,9 +1,10 @@
 import { BrowserRequest, InvoiceStatuses, PaymentError, PaymentStatuses } from 'checkout/backend';
 
+import { InvoiceContext } from '../paymentModel';
+
 export type InvoiceDetermined = {
     name: 'invoiceDetermined';
-    invoiceID: string;
-    invoiceAccessToken: string;
+    invoiceContext: InvoiceContext;
 };
 
 export type PaymentProcessStarted = {

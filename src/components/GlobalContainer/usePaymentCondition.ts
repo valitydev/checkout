@@ -1,9 +1,9 @@
-import { useCallback, useReducer } from 'react';
+import { useReducer } from 'react';
 
 import { InvoiceChangeType } from 'checkout/backend';
 
 import { getLastEventId } from './utils';
-import { PaymentCondition, pollingResultToConditions } from '../../common/paymentCondition';
+import { InvoiceDetermined, PaymentCondition, pollingResultToConditions } from '../../common/paymentCondition';
 import {
     PollInvoiceEventsDelay,
     StartPaymentPayload,
@@ -11,79 +11,64 @@ import {
     determineModel,
     pollInvoiceEvents,
 } from '../../common/paymentMgmt';
-import { PaymentModel, PaymentModelInvoice } from '../../common/paymentModel';
+import { CommonPaymentModel, InvoiceContext, PaymentModel } from '../../common/paymentModel';
 import { isNil } from '../../common/utils';
-
-type State = {
-    conditions: PaymentCondition[];
-    modelInvoice?: PaymentModelInvoice;
-};
 
 type Action =
     | { type: 'COMBINE_CONDITIONS'; payload: PaymentCondition[] }
-    | { type: 'SET_MODEL_INVOICE'; payload: PaymentModelInvoice };
+    | { type: 'SET_INVOICE_DETERMINED'; payload: PaymentCondition };
 
-const dataReducer = (state: State, action: Action): State => {
+const dataReducer = (conditions: PaymentCondition[], action: Action): PaymentCondition[] => {
     switch (action.type) {
         case 'COMBINE_CONDITIONS':
-            return {
-                ...state,
-                conditions: state.conditions.concat(action.payload),
-            };
-        case 'SET_MODEL_INVOICE':
-            return {
-                ...state,
-                modelInvoice: action.payload,
-            };
+            return conditions.concat(action.payload);
+        case 'SET_INVOICE_DETERMINED':
+            return [action.payload, ...conditions];
         default:
-            return state;
+            return conditions;
     }
 };
 
 export const usePaymentCondition = (model: PaymentModel, initConditions: PaymentCondition[]) => {
-    const [state, dispatch] = useReducer(dataReducer, {
-        conditions: initConditions,
-    });
+    const [conditions, dispatch] = useReducer(dataReducer, initConditions);
 
-    const startPayment = useCallback(
-        (startPaymentPayload: StartPaymentPayload) => {
-            (async () => {
-                try {
-                    dispatch({ type: 'COMBINE_CONDITIONS', payload: [{ name: 'paymentProcessStarted' }] });
-                    const modelInvoice = await getModelInvoice();
-                    await createPayment(modelInvoice, startPaymentPayload);
-                    await startPolling(
-                        modelInvoice,
-                        [InvoiceChangeType.PaymentStatusChanged, InvoiceChangeType.PaymentInteractionRequested],
-                        {
-                            pollingTimeout: 60 * 1000 * 3,
-                            apiMethodCall: 1000,
-                        },
-                    );
-                } catch (ex) {
-                    console.error(ex);
-                    dispatch({
-                        type: 'COMBINE_CONDITIONS',
-                        payload: [
-                            {
-                                name: 'paymentProcessFailed',
-                                exception: {
-                                    type: 'ApiCallException',
-                                },
-                            },
-                        ],
-                    });
-                }
-            })();
-        },
-        [model, state],
-    );
-
-    const startWaitingPaymentResult = useCallback(() => {
+    const startPayment = (startPaymentPayload: StartPaymentPayload) => {
         (async () => {
             try {
-                const modelInvoice = await getModelInvoice();
-                await startPolling(modelInvoice, [InvoiceChangeType.PaymentStatusChanged], {
+                const { invoiceContext } = await determineInvoice();
+                dispatch({ type: 'COMBINE_CONDITIONS', payload: [{ name: 'paymentProcessStarted' }] });
+                await createPayment(model, invoiceContext, startPaymentPayload);
+                await startPolling(
+                    model,
+                    invoiceContext,
+                    [InvoiceChangeType.PaymentStatusChanged, InvoiceChangeType.PaymentInteractionRequested],
+                    {
+                        pollingTimeout: 60 * 1000 * 3,
+                        apiMethodCall: 1000,
+                    },
+                );
+            } catch (ex) {
+                console.error(ex);
+                dispatch({
+                    type: 'COMBINE_CONDITIONS',
+                    payload: [
+                        {
+                            name: 'paymentProcessFailed',
+                            exception: {
+                                type: 'ApiCallException',
+                            },
+                        },
+                    ],
+                });
+            }
+        })();
+    };
+
+    const startWaitingPaymentResult = () => {
+        (async () => {
+            try {
+                const { invoiceContext } = await determineInvoice();
+                await startPolling(model, invoiceContext, [InvoiceChangeType.PaymentStatusChanged], {
                     pollingTimeout: 60 * 1000 * 25,
                     apiMethodCall: 3000,
                 });
@@ -102,28 +87,29 @@ export const usePaymentCondition = (model: PaymentModel, initConditions: Payment
                 });
             }
         })();
-    }, [model, state]);
+    };
 
-    // TODO add invoiceDetermined condition
-    const getModelInvoice = async () => {
-        if (isNil(state.modelInvoice)) {
-            const modelInvoice = await determineModel(model);
-            dispatch({ type: 'SET_MODEL_INVOICE', payload: modelInvoice });
-            return modelInvoice;
+    const determineInvoice = async (): Promise<InvoiceDetermined> => {
+        let invoiceDetermined = conditions.find((c) => c.name === 'invoiceDetermined') as InvoiceDetermined;
+        if (!isNil(invoiceDetermined)) {
+            return invoiceDetermined;
         }
-        return state.modelInvoice;
+        const invoiceContext = await determineModel(model);
+        invoiceDetermined = { name: 'invoiceDetermined', invoiceContext };
+        dispatch({ type: 'SET_INVOICE_DETERMINED', payload: invoiceDetermined });
+        return invoiceDetermined;
     };
 
     const startPolling = async (
-        modelInvoice: PaymentModelInvoice,
+        { apiEndpoint }: CommonPaymentModel,
+        invoiceContext: InvoiceContext,
         stopPollingTypes: InvoiceChangeType[],
         delays: PollInvoiceEventsDelay,
     ) => {
         const {
-            apiEndpoint,
             invoiceParams: { invoiceID, invoiceAccessToken },
-        } = modelInvoice;
-        const lastEventId = getLastEventId(state.conditions);
+        } = invoiceContext;
+        const lastEventId = getLastEventId(conditions);
         const pollingResult = await pollInvoiceEvents({
             apiEndpoint,
             invoiceAccessToken,
@@ -135,5 +121,5 @@ export const usePaymentCondition = (model: PaymentModel, initConditions: Payment
         dispatch({ type: 'COMBINE_CONDITIONS', payload: pollingResultToConditions(pollingResult) });
     };
 
-    return { conditions: state.conditions, startPayment, startWaitingPaymentResult };
+    return { conditions, startPayment, startWaitingPaymentResult };
 };

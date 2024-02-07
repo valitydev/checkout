@@ -1,7 +1,7 @@
 import { createInvoiceWithTemplate } from './createInvoiceWithTemplate';
-import { PaymentModel, PaymentModelInvoice } from '../paymentModel';
+import { InvoiceContext, PaymentModel } from '../paymentModel';
 
-export const determineModel = (model: PaymentModel): Promise<PaymentModelInvoice> => {
+export const determineModel = (model: PaymentModel): Promise<InvoiceContext> => {
     switch (model.type) {
         case 'InvoiceTemplateContext':
             return createInvoiceWithTemplate(model);

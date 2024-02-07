@@ -2,10 +2,14 @@ import { FlowType, Payment, createPayment as request } from 'checkout/backend';
 
 import { createPayer } from './payer';
 import { StartPaymentPayload } from './types';
-import { PaymentModelInvoice } from '../paymentModel';
+import { CommonPaymentModel, InvoiceContext } from '../paymentModel';
 
-export const createPayment = async (model: PaymentModelInvoice, payload: StartPaymentPayload): Promise<Payment> => {
-    const payer = await createPayer(model, payload);
+export const createPayment = async (
+    model: CommonPaymentModel,
+    invoiceContext: InvoiceContext,
+    payload: StartPaymentPayload,
+): Promise<Payment> => {
+    const payer = await createPayer(model, invoiceContext, payload);
     const { isExternalIDIncluded, metadata } = model.initContext;
     const params = {
         flow: {
@@ -14,8 +18,8 @@ export const createPayment = async (model: PaymentModelInvoice, payload: StartPa
         payer,
         metadata,
         makeRecurrent: false,
-        externalID: isExternalIDIncluded ? model.externalID : undefined,
+        externalID: isExternalIDIncluded ? invoiceContext.externalID : undefined,
     };
-    const { invoiceID, invoiceAccessToken } = model.invoiceParams;
+    const { invoiceID, invoiceAccessToken } = invoiceContext.invoiceParams;
     return await request(model.apiEndpoint, invoiceAccessToken, invoiceID, params);
 };

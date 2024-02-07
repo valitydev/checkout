@@ -3,10 +3,10 @@ import { InvoiceChangeType, InvoiceStatuses, getInvoiceEvents } from 'checkout/b
 import { InvoiceDetermined, PaymentCondition } from './types';
 import { invoiceEventsToConditions, pollingResultToConditions } from './utils';
 import { StartPaymentPayload, createPayment, determineModel, pollInvoiceEvents } from '../paymentMgmt';
-import { PaymentModel, PaymentModelInvoice, PaymentTerminal } from '../paymentModel';
+import { InvoiceContext, PaymentModel, PaymentModelInvoice, PaymentTerminal } from '../paymentModel';
 import { findMetadata, isNil, last } from '../utils';
 
-const getModelInvoice = async (model: PaymentModel): Promise<PaymentModelInvoice> => {
+const getInvoiceContext = async (model: PaymentModel): Promise<InvoiceContext> => {
     switch (model.type) {
         case 'InvoiceContext':
             return model;
@@ -21,13 +21,11 @@ const provideInstantPayment = async (
     lastEventId: number,
 ): Promise<PaymentCondition[]> => {
     try {
-        const modelInvoice = await getModelInvoice(model);
+        const { apiEndpoint, initContext, serviceProviders } = model;
+        const invoiceContext = await getInvoiceContext(model);
         const {
-            apiEndpoint,
             invoiceParams: { invoiceID, invoiceAccessToken },
-            initContext,
-            serviceProviders,
-        } = modelInvoice;
+        } = invoiceContext;
         const { prefilledMetadataValues } = findMetadata(serviceProviders, provider);
         const startPaymentPayload: StartPaymentPayload = {
             methodName: 'PaymentTerminal',
@@ -39,7 +37,7 @@ const provideInstantPayment = async (
                 },
             },
         };
-        await createPayment(modelInvoice, startPaymentPayload);
+        await createPayment(model, invoiceContext, startPaymentPayload);
         const DEFAULT_TIMEOUT_MS = 60 * 1000 * 3;
         const API_METHOD_CALL_MS = 1000;
         const pollingResult = await pollInvoiceEvents({
@@ -55,8 +53,7 @@ const provideInstantPayment = async (
         });
         const invoiceDetermined: InvoiceDetermined = {
             name: 'invoiceDetermined',
-            invoiceID,
-            invoiceAccessToken,
+            invoiceContext,
         };
         const conditions = pollingResultToConditions(pollingResult);
         return [invoiceDetermined, ...conditions];
@@ -113,7 +110,7 @@ const providePaymentModel = async (model: PaymentModel, lastEventId: number): Pr
     }
 };
 
-const GET_INVOICE_EVENTS_LIMIT = 20;
+const GET_INVOICE_EVENTS_LIMIT = 50;
 
 const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<PaymentCondition[]> => {
     let lastEventId = 0;
@@ -166,11 +163,11 @@ export const initPaymentCondition = async (model: PaymentModel): Promise<Payment
             const lastEventId = 0;
             return providePaymentModel(model, lastEventId);
         case 'InvoiceContext':
-            const invoiceConditions = await provideInvoice(model);
-            const invoiceDetermined = invoiceConditions.find((c) => c.name === 'invoiceDetermined');
+            const conditions = await provideInvoice(model);
+            const invoiceDetermined = conditions.find((c) => c.name === 'invoiceDetermined');
             if (isNil(invoiceDetermined)) {
-                return [{ name: 'invoiceDetermined', ...model.invoiceParams }, ...invoiceConditions];
+                return [{ name: 'invoiceDetermined', invoiceContext: model }, ...conditions];
             }
-            return invoiceConditions;
+            return conditions;
     }
 };

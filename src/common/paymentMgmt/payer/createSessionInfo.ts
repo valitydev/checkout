@@ -2,7 +2,7 @@ import { PaymentSessionInfoMetadata, SessionInfo, ShortenedUrlParams, shortenUrl
 
 import { toSelfRedirectUrl } from './toSelfRedirectUrl';
 import { findMetadata, isNil } from '../../../common/utils';
-import { PaymentModelInvoice } from '../../paymentModel';
+import { CommonPaymentModel, InvoiceContext } from '../../paymentModel';
 import { StartPaymentPayload } from '../types';
 
 export const shorten = (
@@ -26,18 +26,15 @@ const toRedirectUrlType = (paymentSessionInfo: PaymentSessionInfoMetadata): 'out
 };
 
 export const createSessionInfo = async (
-    model: PaymentModelInvoice,
+    model: CommonPaymentModel,
+    invoiceContext: InvoiceContext,
     payload: StartPaymentPayload,
 ): Promise<SessionInfo> => {
+    const { urlShortenerEndpoint, origin, localeCode, initContext, serviceProviders } = model;
     const {
-        urlShortenerEndpoint,
         invoiceParams: { invoiceAccessToken, invoiceID },
-        origin,
         dueDate,
-        localeCode,
-        initContext,
-        serviceProviders,
-    } = model;
+    } = invoiceContext;
     let redirectUrl;
     let paymentSessionInfo;
     if (payload.methodName === 'PaymentTerminal') {
