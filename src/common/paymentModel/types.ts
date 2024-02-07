@@ -39,6 +39,7 @@ export type InitContextContactInfo = {
 };
 
 export type InitContext = {
+    readonly skipUserInteraction: boolean;
     readonly contactInfo?: InitContextContactInfo;
     readonly terminalFormValues?: object;
     readonly paymentMetadata?: object;

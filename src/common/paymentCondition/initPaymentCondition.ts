@@ -55,7 +55,7 @@ const provideInstantPayment = async (
             name: 'invoiceDetermined',
             invoiceContext,
         };
-        const conditions = pollingResultToConditions(pollingResult);
+        const conditions = pollingResultToConditions(pollingResult, initContext.skipUserInteraction);
         return [invoiceDetermined, ...conditions];
     } catch (ex) {
         console.error(ex);
@@ -115,14 +115,18 @@ const GET_INVOICE_EVENTS_LIMIT = 50;
 const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<PaymentCondition[]> => {
     let lastEventId = 0;
     try {
-        const { invoiceParams, apiEndpoint } = model;
+        const {
+            invoiceParams,
+            apiEndpoint,
+            initContext: { skipUserInteraction },
+        } = model;
         const events = await getInvoiceEvents(
             apiEndpoint,
             invoiceParams.invoiceAccessToken,
             invoiceParams.invoiceID,
             GET_INVOICE_EVENTS_LIMIT,
         );
-        const conditions = invoiceEventsToConditions(events);
+        const conditions = invoiceEventsToConditions(events, skipUserInteraction);
         lastEventId = last(events).id;
         const lastCondition = last(conditions);
         switch (lastCondition.name) {

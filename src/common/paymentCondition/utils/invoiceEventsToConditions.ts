@@ -14,6 +14,7 @@ import {
     UserInteraction,
 } from 'checkout/backend';
 
+import { isNil } from '../../../common/utils';
 import { Interaction, PaymentCondition } from '../types';
 
 const getProvider = (started: PaymentStarted): string | null => {
@@ -25,9 +26,12 @@ const getProvider = (started: PaymentStarted): string | null => {
     return null;
 };
 
-const toInteraction = (userInteraction: UserInteraction): Interaction => {
+const toInteraction = (userInteraction: UserInteraction, skipUserInteraction: boolean): Interaction | null => {
     switch (userInteraction.interactionType) {
         case InteractionType.Redirect:
+            if (skipUserInteraction) {
+                return null;
+            }
             return {
                 type: 'PaymentInteractionRedirect',
                 request: (userInteraction as Redirect).request,
@@ -44,7 +48,7 @@ const toInteraction = (userInteraction: UserInteraction): Interaction => {
     }
 };
 
-export const invoiceEventsToConditions = (events: InvoiceEvent[]): PaymentCondition[] => {
+export const invoiceEventsToConditions = (events: InvoiceEvent[], skipUserInteraction: boolean): PaymentCondition[] => {
     return events.reduce((result, { changes, id }) => {
         const conditions = changes.reduce((acc, change) => {
             switch (change.changeType) {
@@ -75,12 +79,16 @@ export const invoiceEventsToConditions = (events: InvoiceEvent[]): PaymentCondit
                 }
                 case InvoiceChangeType.PaymentInteractionRequested: {
                     const interactionRequested = change as PaymentInteractionRequested;
+                    const interaction = toInteraction(interactionRequested.userInteraction, skipUserInteraction);
+                    if (isNil(interaction)) {
+                        return acc;
+                    }
                     return [
                         ...acc,
                         {
                             name: 'interactionRequested',
                             eventId: id,
-                            interaction: toInteraction(interactionRequested.userInteraction),
+                            interaction: toInteraction(interactionRequested.userInteraction, skipUserInteraction),
                             paymentId: interactionRequested.paymentID,
                         },
                     ];
