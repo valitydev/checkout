@@ -1,4 +1,4 @@
-export type CommonStartPaymentValues = {
+export type ContactInfoValues = {
     email?: string;
     phoneNumber?: string;
 };
@@ -8,7 +8,8 @@ export type TerminalValuesMetadata = Record<string, any>;
 export type TerminalValues = {
     provider: string;
     metadata?: TerminalValuesMetadata;
-} & CommonStartPaymentValues;
+    contactInfo?: ContactInfoValues;
+};
 
 export type StartPaymentTerminalPayload = {
     methodName: 'PaymentTerminal';
@@ -20,7 +21,7 @@ export type BankCardValues = {
     secureCode: string;
     expireDate?: string;
     cardHolder?: string;
-} & CommonStartPaymentValues;
+};
 
 export type StartPaymentBankCardPayload = {
     methodName: 'BankCard';

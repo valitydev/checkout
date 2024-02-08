@@ -1,4 +1,4 @@
 export class ContactInfo {
-    email: string;
-    phoneNumber: string;
+    email?: string;
+    phoneNumber?: string;
 }

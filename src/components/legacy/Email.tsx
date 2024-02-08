@@ -6,15 +6,16 @@ import { Input } from './Input';
 import { isNil, formatEmail, validateEmail } from '../../common/utils';
 
 export type EmailProps = {
+    registerName: string;
     register: UseFormRegister<any>;
     locale: Locale;
     fieldError: FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
     isDirty: boolean;
 };
 
-export const Email = ({ register, locale, fieldError, isDirty }: EmailProps) => (
+export const Email = ({ registerName, register, locale, fieldError, isDirty }: EmailProps) => (
     <Input
-        {...register('email', {
+        {...register(registerName, {
             required: true,
             validate: (value) => !validateEmail(value) || 'Email is invalid',
         })}

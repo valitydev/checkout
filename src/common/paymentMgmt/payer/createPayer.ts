@@ -12,19 +12,18 @@ export const createPayer = async (
     invoiceContext: InvoiceContext,
     payload: StartPaymentPayload,
 ): Promise<PaymentResourcePayer> => {
-    const { apiEndpoint, initContext } = model;
+    const { apiEndpoint } = model;
     const { invoiceParams } = invoiceContext;
     const paymentTool = toPaymentTool(payload);
     const [{ paymentToolToken, paymentSession }, sessionInfo] = await Promise.all([
         createPaymentResource(apiEndpoint, invoiceParams.invoiceAccessToken, paymentTool),
         createSessionInfo(model, invoiceContext, payload),
     ]);
-    const contactInfo = toContactInfo(initContext.contactInfo, payload.values);
     return {
         payerType: PayerType.PaymentResourcePayer,
         paymentToolToken,
         paymentSession,
-        contactInfo,
+        contactInfo: toContactInfo(payload),
         sessionInfo,
     };
 };

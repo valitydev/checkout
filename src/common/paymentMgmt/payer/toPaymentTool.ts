@@ -29,7 +29,5 @@ export const toPaymentTool = (payload: StartPaymentPayload): PaymentTool => {
             return toPaymentToolBankCard(payload.values);
         case 'PaymentTerminal':
             return toPaymentToolTerminal(payload.values);
-        case 'DigitalWallet':
-            throw new Error('Unimplemented StartPaymentPayload: DigitalWallet');
     }
 };

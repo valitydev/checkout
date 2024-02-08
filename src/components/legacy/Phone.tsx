@@ -6,15 +6,16 @@ import { Input } from './Input';
 import { isNil, formatPhoneNumber, validatePhone } from '../../common/utils';
 
 export interface PhoneProps {
+    registerName: string;
     register: UseFormRegister<any>;
     locale: Locale;
     fieldError: FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
     isDirty: boolean;
 }
 
-export const Phone = ({ register, locale, fieldError, isDirty }: PhoneProps) => (
+export const Phone = ({ registerName, register, locale, fieldError, isDirty, onChange }: PhoneProps) => (
     <Input
-        {...register('phoneNumber', {
+        {...register(registerName, {
             required: true,
             validate: (value) => !validatePhone(value) || 'Phone number is invalid',
         })}

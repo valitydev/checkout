@@ -1,10 +1,7 @@
-import { useMemo } from 'react';
-
 import { ServiceProviderMetadataField, ServiceProviderMetadataForm } from 'checkout/backend';
 
-import { InitContextContactInfo } from '../../../../common/paymentModel';
-import { isNil, isString } from '../../../../common/utils';
-import { MetadataFormInputs } from '../types';
+import { TerminalValues } from '../../paymentMgmt';
+import { isNil, isString } from '../../utils';
 
 const applyReplacePattern = <T>(rawValue: T, pattern?: string, replaceValue = ''): string | T => {
     if (!isNil(pattern) && isString(rawValue)) {
@@ -17,7 +14,7 @@ const applyReplacePattern = <T>(rawValue: T, pattern?: string, replaceValue = ''
 export const prepareFormValues = (
     form: ServiceProviderMetadataField[],
     terminalFormValues: object,
-): Partial<MetadataFormInputs> => ({
+): Partial<TerminalValues> => ({
     metadata: form.reduce((acc, formField) => {
         const value = terminalFormValues[formField.name];
         if (isNil(value)) {
@@ -34,27 +31,8 @@ export const prepareFormValues = (
     }, {}),
 });
 
-const toDefaultFormValuesMetadata = (terminalFormValues: object, form: ServiceProviderMetadataForm) => {
+export const toDefaultFormValuesMetadata = (terminalFormValues: object, form: ServiceProviderMetadataForm) => {
     if (isNil(terminalFormValues) || isNil(form)) return null;
     const { metadata } = prepareFormValues(form, terminalFormValues);
     return metadata;
 };
-
-const toDefaultFormValues = (
-    contactInfo: InitContextContactInfo,
-    terminalFormValues: object,
-    form: ServiceProviderMetadataForm,
-) => {
-    const email = contactInfo?.email;
-    const phoneNumber = contactInfo?.phoneNumber;
-    return {
-        email,
-        phoneNumber,
-        metadata: toDefaultFormValuesMetadata(terminalFormValues, form),
-    };
-};
-
-export const useDefaultFormValues = (
-    { contactInfo, terminalFormValues }: { contactInfo?: InitContextContactInfo; terminalFormValues?: object },
-    form: ServiceProviderMetadataForm,
-) => useMemo(() => toDefaultFormValues(contactInfo, terminalFormValues, form), [contactInfo, terminalFormValues, form]);

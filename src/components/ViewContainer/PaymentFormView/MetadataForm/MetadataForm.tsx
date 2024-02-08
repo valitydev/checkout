@@ -1,9 +1,7 @@
 import { useContext } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { FieldError, SubmitHandler, useForm } from 'react-hook-form';
 
 import { LogoContainer } from './LogoContainer';
-import { MetadataFormInputs } from './types';
-import { useDefaultFormValues } from './useDefaultFormValues';
 import { formatMetadataValue } from './utils';
 import {
     CustomizationContext,
@@ -12,6 +10,8 @@ import {
     PaymentModelContext,
     ViewModelContext,
 } from '../../../../common/contexts';
+import { toDefaultFormValuesMetadata } from '../../../../common/paymentCondition';
+import { TerminalValues } from '../../../../common/paymentMgmt';
 import { findMetadata, isNil } from '../../../../common/utils';
 import {
     ChevronButton,
@@ -43,23 +43,28 @@ export function MetadataForm({ provider }: MetadataFormProps) {
         paymentModel: { initContext, serviceProviders },
     } = useContext(PaymentModelContext);
     const { form, contactInfo, logo, prefilledMetadataValues } = findMetadata(serviceProviders, provider);
+
     const {
         register,
         handleSubmit,
         formState: { errors, dirtyFields },
     } = useForm({
         mode: 'onChange',
-        defaultValues: useDefaultFormValues(initContext, form),
+        defaultValues: {
+            contactInfo: initContext.contactInfo,
+            metadata: toDefaultFormValuesMetadata(initContext.terminalFormValues, form),
+        },
     });
 
-    const onSubmit: SubmitHandler<MetadataFormInputs> = (values) => {
+    const onSubmit: SubmitHandler<TerminalValues> = ({ contactInfo, metadata }) => {
         startPayment({
             methodName: 'PaymentTerminal',
             values: {
                 provider,
+                contactInfo,
                 metadata: {
+                    ...formatMetadataValue(form, metadata),
                     ...prefilledMetadataValues,
-                    ...formatMetadataValue(form, values?.metadata),
                 },
             },
         });
@@ -67,7 +72,7 @@ export function MetadataForm({ provider }: MetadataFormProps) {
 
     return (
         <>
-            {!isNil(hasBackward) && (
+            {hasBackward && (
                 <HeaderWrapper>
                     <ChevronButton type="left" onClick={backward} />
                 </HeaderWrapper>
@@ -83,7 +88,7 @@ export function MetadataForm({ provider }: MetadataFormProps) {
                         <FormGroup key={m.name} direction={'column'}>
                             {m.type === 'select' && (
                                 <MetadataSelect
-                                    fieldError={errors?.metadata?.[m.name]}
+                                    fieldError={errors?.metadata?.[m.name] as FieldError}
                                     isDirty={dirtyFields?.metadata?.[m.name]}
                                     localeCode={localeCode}
                                     metadata={m}
@@ -93,7 +98,7 @@ export function MetadataForm({ provider }: MetadataFormProps) {
                             )}
                             {m.type !== 'select' && (
                                 <MetadataField
-                                    fieldError={errors?.metadata?.[m.name]}
+                                    fieldError={errors?.metadata?.[m.name] as FieldError}
                                     isDirty={dirtyFields?.metadata?.[m.name]}
                                     localeCode={localeCode}
                                     metadata={m}
@@ -105,16 +110,23 @@ export function MetadataForm({ provider }: MetadataFormProps) {
                     ))}
                 {contactInfo?.email && (
                     <FormGroup>
-                        <Email fieldError={errors.email} isDirty={dirtyFields.email} locale={l} register={register} />
+                        <Email
+                            fieldError={errors?.contactInfo?.email}
+                            isDirty={dirtyFields?.contactInfo?.email}
+                            locale={l}
+                            register={register}
+                            registerName="contactInfo.email"
+                        />
                     </FormGroup>
                 )}
                 {contactInfo?.phoneNumber && (
                     <FormGroup>
                         <Phone
-                            fieldError={errors.phoneNumber}
-                            isDirty={dirtyFields.email}
+                            fieldError={errors?.contactInfo?.phoneNumber}
+                            isDirty={dirtyFields?.contactInfo?.email}
                             locale={l}
                             register={register}
+                            registerName="contactInfo.phoneNumber"
                         />
                     </FormGroup>
                 )}

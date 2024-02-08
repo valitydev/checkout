@@ -1,9 +1,7 @@
-import { InitContextContactInfo } from 'src/common/paymentModel/types';
-
 import { ContactInfo } from 'checkout/backend';
 
 import { isNil, replaceSpaces } from '../../utils';
-import { CommonStartPaymentValues } from '../types';
+import { StartPaymentPayload } from '../types';
 
 const mapFrom = (obj: { email?: string; phoneNumber?: string }, targetKeys = ['email', 'phoneNumber']): ContactInfo => {
     const defaultResult = {} as ContactInfo;
@@ -22,18 +20,45 @@ const mapFrom = (obj: { email?: string; phoneNumber?: string }, targetKeys = ['e
     }, defaultResult);
 };
 
-export const toContactInfo = (
-    initContextContactInfo: InitContextContactInfo,
-    payload: CommonStartPaymentValues,
-): ContactInfo => {
-    const fromFormValues = mapFrom(payload);
-    const fromMetadata = {}; // TODO implement getting contact info from PaymentTerminal metadata
-    // const fromMetadata = mapFrom((payload as PaymentTerminalFormValues)?.metadata);
-    const fromInitConfig = mapFrom(initContextContactInfo);
-    const byPriority = {
-        ...fromFormValues,
-        ...fromMetadata,
-        ...fromInitConfig,
-    };
-    return byPriority;
+const replaceSpacesFromObjectValues = (obj) => {
+    Object.keys(obj).forEach((key) => {
+        const value = obj[key];
+        if (typeof value === 'string') {
+            obj[key] = replaceSpaces(value);
+        } else if (typeof value === 'object' && value !== null) {
+            replaceSpacesFromObjectValues(value);
+        } else if (Array.isArray(value)) {
+            value.forEach((item, index) => {
+                if (typeof item === 'string') {
+                    value[index] = replaceSpaces(item);
+                } else if (typeof item === 'object' && item !== null) {
+                    replaceSpacesFromObjectValues(item);
+                }
+            });
+        }
+    });
+    return obj;
+};
+
+export const toContactInfo = ({ methodName, values }: StartPaymentPayload): ContactInfo => {
+    switch (methodName) {
+        case 'PaymentTerminal':
+            const fromMetadata = mapFrom(values?.metadata);
+            const fromContactInfo = isNil(values?.contactInfo)
+                ? {}
+                : // TODO: Delete this function once space removal has been implemented for the phoneNumber field.
+                  replaceSpacesFromObjectValues(values?.contactInfo);
+            if (!isNil(fromMetadata)) {
+                /*
+                    Implement a check for this case's usage (e.g., Sentry logging).
+                    If unused, eliminate retrieval of contact info from metadata.
+                */
+            }
+            return {
+                ...fromMetadata,
+                ...fromContactInfo,
+            };
+        case 'BankCard':
+            return {};
+    }
 };

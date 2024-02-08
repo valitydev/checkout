@@ -1,5 +1,5 @@
 export { initPaymentCondition } from './initPaymentCondition';
-export { pollingResultToConditions } from './utils';
+export { pollingResultToConditions, toDefaultFormValuesMetadata } from './utils';
 
 export type {
     PaymentCondition,

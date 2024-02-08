@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 
-export type PaymentPayload = Record<string, any>;
+import { StartPaymentPayload } from '../paymentMgmt';
 
 export type PaymentModelContextProps = {
-    startPayment: (payload: PaymentPayload) => void;
+    startPayment: (payload: StartPaymentPayload) => void;
     startWaitingPaymentResult: () => void;
 };
 
