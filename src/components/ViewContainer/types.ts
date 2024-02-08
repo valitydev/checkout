@@ -60,6 +60,11 @@ export type NoAvailablePaymentMethodsView = {
     name: 'NoAvailablePaymentMethodsView';
 };
 
+export type PaymentProcessFailedView = {
+    id: string;
+    name: 'PaymentProcessFailedView';
+};
+
 export type ViewAmount = string;
 export type SlideAnimationDirection = 'forward' | 'backward' | 'none';
 export type View =
@@ -69,7 +74,8 @@ export type View =
     | PaymentMethodSelectorView
     | TerminalSelectorView
     | PaymentFormView
-    | NoAvailablePaymentMethodsView;
+    | NoAvailablePaymentMethodsView
+    | PaymentProcessFailedView;
 
 export type ViewModel = {
     direction: SlideAnimationDirection;

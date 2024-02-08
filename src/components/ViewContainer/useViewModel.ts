@@ -223,7 +223,10 @@ export const useViewModel = (paymentMethods: PaymentMethod[], conditions: Paymen
                 dispatch({ type: 'SET_VIEW', payload: interactionView });
                 break;
             case 'paymentProcessFailed':
-                throw new Error('Unimplemented paymentProcessFailed condition');
+                dispatch({
+                    type: 'SET_VIEW',
+                    payload: { name: 'PaymentProcessFailedView', id: 'PaymentProcessFailedView' },
+                });
         }
     }, [lastCondition]);
 

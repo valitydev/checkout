@@ -95,14 +95,11 @@ const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<Payment
             case 'interactionRequested':
                 return conditions;
         }
-    } catch (ex) {
-        console.error(ex);
+    } catch (exception) {
         return [
             {
                 name: 'paymentProcessFailed',
-                exception: {
-                    type: 'ApiCallException',
-                },
+                exception,
             },
         ];
     }

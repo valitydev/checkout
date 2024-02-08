@@ -13,7 +13,7 @@ const ModalErrorWrapper = styled.div`
     box-sizing: border-box;
 
     @media ${device.desktop} {
-        max-height: 690px;
+        max-height: 680px;
         width: 680px;
         position: relative;
         border-radius: 16px;

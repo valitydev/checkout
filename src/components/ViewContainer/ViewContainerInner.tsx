@@ -6,6 +6,7 @@ import { ApiExtensionView } from './ApiExtensionView';
 import { NoAvailablePaymentMethodsView } from './NoAvailablePaymentMethodsView';
 import { PaymentFormView } from './PaymentFormView';
 import { PaymentMethodSelectorView } from './PaymentMethodSelectorView';
+import { PaymentProcessFailedView } from './PaymentProcessFailedView';
 import { PaymentResultView } from './PaymentResultView';
 import { QrCodeView } from './QrCodeView';
 import { TerminalSelectorView } from './TerminalSelectorView';
@@ -80,6 +81,7 @@ export function ViewContainerInner() {
                     {activeView === 'PaymentResultView' && <PaymentResultView />}
                     {activeView === 'QrCodeView' && <QrCodeView />}
                     {activeView === 'ApiExtensionView' && <ApiExtensionView />}
+                    {activeView === 'PaymentProcessFailedView' && <PaymentProcessFailedView />}
                     {isLoading && <FormLoader />}
                 </motion.div>
             </Layout>

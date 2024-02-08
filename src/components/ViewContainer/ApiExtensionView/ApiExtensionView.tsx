@@ -34,9 +34,11 @@ export function ApiExtensionView() {
     const { startWaitingPaymentResult } = useContext(PaymentContext);
 
     const { paymentId } = conditions.find((c) => c.name === 'paymentStarted') as PaymentStarted;
-    const { invoiceID, invoiceAccessToken } = conditions.find(
-        (c) => c.name === 'invoiceDetermined',
-    ) as InvoiceDetermined;
+    const {
+        invoiceContext: {
+            invoiceParams: { invoiceID, invoiceAccessToken },
+        },
+    } = conditions.find((c) => c.name === 'invoiceDetermined') as InvoiceDetermined;
 
     const [gateway, setGateway] = useState<Gateway | null>(null);
     const [destinationStatus, setDestinationStatus] = useState<string | null>(null);

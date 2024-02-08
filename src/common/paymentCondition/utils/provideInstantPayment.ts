@@ -64,14 +64,11 @@ export const provideInstantPayment = async (
         };
         const conditions = pollingResultToConditions(pollingResult, skipUserInteraction);
         return [invoiceDetermined, ...conditions];
-    } catch (ex) {
-        console.error(ex);
+    } catch (exception) {
         return [
             {
                 name: 'paymentProcessFailed',
-                exception: {
-                    type: 'ApiCallException',
-                },
+                exception,
             },
         ];
     }

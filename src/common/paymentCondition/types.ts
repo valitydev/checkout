@@ -11,9 +11,7 @@ export type PaymentProcessStarted = {
     name: 'paymentProcessStarted';
 };
 
-export type ApiCallException = {
-    type: 'ApiCallException';
-};
+export type ApiCallException = any;
 
 export type PaymentProcessFailed = {
     name: 'paymentProcessFailed';
