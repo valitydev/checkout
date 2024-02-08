@@ -10,7 +10,19 @@ import { invoiceEventsToConditions, provideInstantPayment } from './utils';
 import { InitContext, PaymentModel, PaymentModelInvoice, PaymentTerminal } from '../paymentModel';
 import { findMetadata, isNil, last } from '../utils';
 
-const isContactInfoInstantPayment = (metadata: ServiceProviderContactInfo, initContext: InitContext): boolean => {
+/*
+    Instant payment is available under the following conditions:
+        - The ServiceProviderContactInfo is prefilled.
+        - Either the email or phoneNumber in ServiceProviderContactInfo is provided (i.e., true),
+          AND the InitContext also contains corresponding email or phoneNumber values.
+*/
+const isInstantPaymentContactInfoEligible = (
+    metadata: ServiceProviderContactInfo,
+    initContext: InitContext,
+): boolean => {
+    if (isNil(metadata)) {
+        return true;
+    }
     const { email, phoneNumber } = metadata;
     const { contactInfo } = initContext;
     if (email && !isNil(contactInfo.email)) {
@@ -22,7 +34,7 @@ const isContactInfoInstantPayment = (metadata: ServiceProviderContactInfo, initC
     return false;
 };
 
-const isFormInstantPayment = (form: ServiceProviderMetadataForm, initContext: InitContext): boolean => {
+const isInstantPaymentFormEligible = (form: ServiceProviderMetadataForm, initContext: InitContext): boolean => {
     if (isNil(form)) {
         return true;
     }
@@ -48,11 +60,12 @@ const providePaymentTerminal = async (
         return [];
     }
     const provider = paymentMethod.providers[0];
-    const { form, contactInfo } = findMetadata(model.serviceProviders, provider);
-    if (!isContactInfoInstantPayment(contactInfo, model.initContext)) {
+    const { serviceProviders, initContext } = model;
+    const { form, contactInfo } = findMetadata(serviceProviders, provider);
+    if (!isInstantPaymentContactInfoEligible(contactInfo, initContext)) {
         return [];
     }
-    if (!isFormInstantPayment(form, model.initContext)) {
+    if (!isInstantPaymentFormEligible(form, initContext)) {
         return [];
     }
     return provideInstantPayment(model, provider, lastEventId);
@@ -121,7 +134,7 @@ const provideInvoice = async (model: PaymentModelInvoice): Promise<PaymentCondit
 export const initPaymentCondition = async (model: PaymentModel): Promise<PaymentCondition[]> => {
     switch (model.type) {
         case 'InvoiceTemplateContext':
-            // Invoice template context does not have last event id
+            // Invoice template context does not have events
             const lastEventId = 0;
             return providePaymentModel(model, lastEventId);
         case 'InvoiceContext':

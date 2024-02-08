@@ -35,29 +35,32 @@ export const createSessionInfo = async (
         invoiceParams: { invoiceAccessToken, invoiceID },
         dueDate,
     } = invoiceContext;
-    let redirectUrl;
     let paymentSessionInfo;
     if (payload.methodName === 'PaymentTerminal') {
         const metadata = findMetadata(serviceProviders, payload.values.provider);
         paymentSessionInfo = metadata.paymentSessionInfo;
     }
     const redirectUrlType = toRedirectUrlType(paymentSessionInfo);
+    const selfRedirectUrl = toSelfRedirectUrl(
+        origin,
+        invoiceID,
+        invoiceAccessToken,
+        initContext.redirectUrl,
+        localeCode,
+        isSkipUserInteractionParam(payload),
+    );
+    let redirectUrl = selfRedirectUrl;
     switch (redirectUrlType) {
         case 'self':
             redirectUrl = await shorten(urlShortenerEndpoint, invoiceAccessToken, {
-                sourceUrl: toSelfRedirectUrl(
-                    origin,
-                    invoiceID,
-                    invoiceAccessToken,
-                    initContext.redirectUrl,
-                    localeCode,
-                    isSkipUserInteractionParam(payload),
-                ),
+                sourceUrl: selfRedirectUrl,
                 expiresAt: dueDate,
             });
             break;
         case 'outer':
-            redirectUrl = initContext.redirectUrl;
+            if (!isNil(initContext.redirectUrl)) {
+                redirectUrl = initContext.redirectUrl;
+            }
             break;
     }
     return { redirectUrl };

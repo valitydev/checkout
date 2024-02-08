@@ -52,6 +52,8 @@ export const backendModelToPaymentMethods = (model: BackendModel): PaymentMethod
             case PaymentMethodName.PaymentTerminal:
                 const terminal = backendPaymentMethod as PaymentTerminal;
                 return result.concat(fromPaymentTerminal(terminal.providers, model.serviceProviders));
+            default:
+                return result;
         }
     }, []);
 };

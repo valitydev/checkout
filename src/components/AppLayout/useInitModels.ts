@@ -60,6 +60,7 @@ export const useInitModels = () => {
                     payload: { paymentModel, conditions },
                 });
             } catch (error) {
+                console.error(error);
                 dispatch({ type: 'INIT_FAILED', error });
             }
         })();

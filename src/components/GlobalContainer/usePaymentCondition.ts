@@ -47,16 +47,13 @@ export const usePaymentCondition = (model: PaymentModel, initConditions: Payment
                         apiMethodCall: 1000,
                     },
                 );
-            } catch (ex) {
-                console.error(ex);
+            } catch (exception) {
                 dispatch({
                     type: 'COMBINE_CONDITIONS',
                     payload: [
                         {
                             name: 'paymentProcessFailed',
-                            exception: {
-                                type: 'ApiCallException',
-                            },
+                            exception,
                         },
                     ],
                 });
@@ -72,16 +69,13 @@ export const usePaymentCondition = (model: PaymentModel, initConditions: Payment
                     pollingTimeout: 60 * 1000 * 25,
                     apiMethodCall: 3000,
                 });
-            } catch (ex) {
-                console.error(ex);
+            } catch (exception) {
                 dispatch({
                     type: 'COMBINE_CONDITIONS',
                     payload: [
                         {
                             name: 'paymentProcessFailed',
-                            exception: {
-                                type: 'ApiCallException',
-                            },
+                            exception,
                         },
                     ],
                 });
