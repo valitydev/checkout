@@ -1,10 +1,13 @@
+import isMobile from 'ismobilejs';
 import { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+
+import { QrCodeFormMetadata } from 'checkout/backend';
 
 import { QRCode } from './QrCode';
 import { LocaleContext, PaymentConditionsContext, PaymentContext, PaymentModelContext } from '../../../common/contexts';
 import { PaymentInteractionRequested, PaymentStarted } from '../../../common/paymentCondition';
-import { findMetadata } from '../../../common/utils';
+import { findMetadata, isNil } from '../../../common/utils';
 import { Button, CopyToClipboardButton, Hr, Input } from '../../../components/legacy';
 
 const Instruction = styled.p`
@@ -21,6 +24,11 @@ const Wrapper = styled.div`
     gap: 16px;
 `;
 
+const isQrCodeRedirect = (formMetadata: QrCodeFormMetadata) =>
+    !isNil(formMetadata) &&
+    (isMobile(window.navigator).phone || isMobile(window.navigator).tablet) &&
+    formMetadata.qrCodeRedirect === 'mobile';
+
 export function QrCodeView() {
     const qrCodeInputRef = useRef(null);
     const { l } = useContext(LocaleContext);
@@ -36,6 +44,7 @@ export function QrCodeView() {
     if (interaction.type !== 'PaymentInteractionQRCode') throw new Error('Invalid interaction type');
 
     useEffect(() => {
+        isQrCodeRedirect(qrCodeForm) && window.open(interaction.qrCode, '_self');
         startWaitingPaymentResult();
     }, []);
 
