@@ -1,6 +1,7 @@
 import { useContext, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
+import { Link } from 'checkout/components/ui';
 import { FormName, ModalForms, ModalName, ResultFormInfo, ResultType } from 'checkout/hooks';
 import { findNamed } from 'checkout/utils/find-named';
 import isNil from 'checkout/utils/is-nil';
@@ -12,6 +13,10 @@ import { ResultIcon } from './result-icons';
 import { InitialContext } from '../../../../initial-context';
 import { ResultContext } from '../../../../result-context';
 import { ModalContext } from '../../../modal-context';
+
+const OthersButton = styled(Link)`
+    padding-top: 12px;
+`;
 
 const Title = styled.h2`
     font-weight: 500;
@@ -40,7 +45,7 @@ const Container = styled.div<{ $hasActions: boolean }>`
 `;
 
 const ResultForm = ({ onMount }: { onMount: () => void }) => {
-    const { locale } = useContext(InitialContext);
+    const { locale, initConfig } = useContext(InitialContext);
     const { setIsComplete } = useContext(ResultContext);
     const { modalState } = useContext(ModalContext);
     const { hasActions, type, header, description, hasDone } = useMemo(() => {
@@ -81,6 +86,11 @@ const ResultForm = ({ onMount }: { onMount: () => void }) => {
             <Title>{header}</Title>
             <Description> {description}</Description>
             {hasActions ? <ActionBlock /> : false}
+            {initConfig?.redirectUrl && (
+                <OthersButton onClick={() => window.open(initConfig.redirectUrl, '_self')}>
+                    {locale['form.button.back.to.website']}
+                </OthersButton>
+            )}
         </Container>
     );
 };
