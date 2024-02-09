@@ -30,3 +30,5 @@ export function GlobalContainer({ paymentModel, initConditions }: GlobalContaine
         </PaymentModelContext.Provider>
     );
 }
+
+export default GlobalContainer;

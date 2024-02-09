@@ -27,3 +27,4 @@ export { PaymentMethodIcon } from './PaymentMethodIcon';
 export { PaymentMethodTitle } from './PaymentMethodTitle';
 export { PaymentMethodItemContainer } from './PaymentMethodItemContainer';
 export { ChevronButton } from './ChevronButton';
+export { ErrorBoundaryFallback } from './ErrorBoundaryFallback';
