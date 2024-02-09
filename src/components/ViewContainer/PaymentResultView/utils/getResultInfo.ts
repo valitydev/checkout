@@ -51,6 +51,7 @@ const fromPaymentStatusChanged = (condition: PaymentStatusChanged): ResultInfo =
                 iconName: 'WarningIcon',
                 label: 'form.header.final.pending.label',
                 description: 'form.header.final.pending.description',
+                hasActions: true,
             };
         case PaymentStatuses.failed:
             const error = condition.error;
@@ -58,6 +59,7 @@ const fromPaymentStatusChanged = (condition: PaymentStatusChanged): ResultInfo =
                 iconName: 'ErrorIcon',
                 label: 'form.header.final.failed.label',
                 description: error?.code,
+                hasActions: true,
             };
     }
 };

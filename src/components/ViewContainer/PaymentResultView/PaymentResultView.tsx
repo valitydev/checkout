@@ -10,7 +10,7 @@ import {
     PaymentModelContext,
 } from '../../../common/contexts';
 import { isNil, last } from '../../../common/utils';
-import { ErrorIcon, Link, SuccessIcon, WarningIcon } from '../../../components/legacy';
+import { Button, ErrorIcon, Link, SuccessIcon, WarningIcon } from '../../../components/legacy';
 
 const Wrapper = styled.div`
     display: flex;
@@ -59,7 +59,7 @@ export function PaymentResultView() {
     const { onComplete } = useContext(CompletePaymentContext);
 
     const lastCondition = last(conditions);
-    const { iconName, label, description } = getResultInfo(lastCondition);
+    const { iconName, label, description, hasActions } = getResultInfo(lastCondition);
 
     useEffect(() => {
         switch (lastCondition.name) {
@@ -82,6 +82,11 @@ export function PaymentResultView() {
                 <ResultIcon iconName={iconName} />
                 <Label>{l[label]}</Label>
                 {!isNil(description) && <Description>{l[description]}</Description>}
+                {hasActions && (
+                    <Button color="primary" onClick={() => location.reload()}>
+                        {l['form.button.reload']}
+                    </Button>
+                )}
                 {initContext?.redirectUrl && (
                     <OthersButton onClick={() => window.open(initContext.redirectUrl, '_self')}>
                         {l['form.button.back.to.website']}
