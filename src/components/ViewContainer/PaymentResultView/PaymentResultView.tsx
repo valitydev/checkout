@@ -1,9 +1,14 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { IconName } from './types';
 import { getResultInfo } from './utils';
-import { LocaleContext, PaymentConditionsContext, PaymentModelContext } from '../../../common/contexts';
+import {
+    CompletePaymentContext,
+    LocaleContext,
+    PaymentConditionsContext,
+    PaymentModelContext,
+} from '../../../common/contexts';
 import { isNil, last } from '../../../common/utils';
 import { ErrorIcon, Link, SuccessIcon, WarningIcon } from '../../../components/legacy';
 
@@ -51,9 +56,25 @@ export function PaymentResultView() {
     const {
         paymentModel: { initContext },
     } = useContext(PaymentModelContext);
+    const { onComplete } = useContext(CompletePaymentContext);
 
     const lastCondition = last(conditions);
     const { iconName, label, description } = getResultInfo(lastCondition);
+
+    useEffect(() => {
+        switch (lastCondition.name) {
+            case 'invoiceStatusChanged':
+                if (lastCondition.status === 'paid') {
+                    onComplete();
+                }
+                break;
+            case 'paymentStatusChanged':
+                if (lastCondition.status === 'processed' || lastCondition.status === 'captured') {
+                    onComplete();
+                }
+                break;
+        }
+    }, [onComplete, lastCondition]);
 
     return (
         <>

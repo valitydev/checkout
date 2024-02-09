@@ -15,7 +15,7 @@ export function QRCode({ text }: QRCodeProps) {
         <Wrapper
             dangerouslySetInnerHTML={{
                 __html: kjua({
-                    size: 256,
+                    size: 224,
                     fill: '#2596A1',
                     rounded: 100,
                     crisp: true,

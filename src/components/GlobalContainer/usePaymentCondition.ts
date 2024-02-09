@@ -35,8 +35,8 @@ export const usePaymentCondition = (model: PaymentModel, initConditions: Payment
     const startPayment = (startPaymentPayload: StartPaymentPayload) => {
         (async () => {
             try {
-                const { invoiceContext } = await determineInvoice();
                 dispatch({ type: 'COMBINE_CONDITIONS', payload: [{ name: 'paymentProcessStarted' }] });
+                const { invoiceContext } = await determineInvoice();
                 await createPayment(model, invoiceContext, startPaymentPayload);
                 await startPolling(
                     model,
