@@ -7,7 +7,7 @@ import { validateExpireDate } from './validateExpireDate';
 import { ReactComponent as CalendarIcon } from '../../../../../app/components/ui/icon/calendar.svg';
 import { isNil } from '../../../../../common/utils';
 import { Input } from '../../../../legacy';
-import { CardFormInputs } from '../../types';
+import { CardFormInputs } from '../types';
 
 export type ExpireDateProps = {
     register: UseFormRegister<CardFormInputs>;

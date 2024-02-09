@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev2": "vite --c vite.config.app2.ts",
-    "build:app2": "vite build --c vite.config.app2.ts",
     "dev": "vite --c vite.config.app.ts",
     "build:app": "vite build --c vite.config.app.ts",
     "build:checkout": "vite build --c vite.config.checkout.ts",

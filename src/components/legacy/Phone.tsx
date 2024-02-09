@@ -13,7 +13,7 @@ export interface PhoneProps {
     isDirty: boolean;
 }
 
-export const Phone = ({ registerName, register, locale, fieldError, isDirty, onChange }: PhoneProps) => (
+export const Phone = ({ registerName, register, locale, fieldError, isDirty }: PhoneProps) => (
     <Input
         {...register(registerName, {
             required: true,

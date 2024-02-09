@@ -21,10 +21,6 @@ describe('pollInvoiceEvents', () => {
             InvoiceChangeType.PaymentInteractionRequested,
         ],
     };
-    const getEventsUrl = (capiEndpoint: string, invoiceID: string, eventID?: number, limit = 20) => {
-        const eventIDParam = eventID ? `&eventID=${eventID}` : '';
-        return `${capiEndpoint}/v2/processing/invoices/${invoiceID}/events?limit=${limit}${eventIDParam}`;
-    };
 
     describe('non specified eventID', () => {
         const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -100,18 +96,22 @@ describe('pollInvoiceEvents', () => {
             const result = await pollInvoiceEvents({ ...params, delays });
 
             expect(mockFetch).toHaveBeenCalledTimes(3);
-            expect(mockFetch).toHaveBeenCalledWith(getEventsUrl(apiEndpoint, invoiceID), expect.any(Object));
-            expect(mockFetch).toHaveBeenCalledWith(getEventsUrl(apiEndpoint, invoiceID), expect.any(Object));
-            expect(mockFetch).toHaveBeenCalledWith(getEventsUrl(apiEndpoint, invoiceID, 2), expect.any(Object));
 
             const expected = {
                 status: 'POLLED',
-                eventID: 7,
-                change: {
-                    changeType: 'PaymentInteractionRequested',
-                    paymentID: '1',
-                    userInteraction: 'user interaction mock',
-                },
+                events: [
+                    {
+                        changes: [
+                            {
+                                changeType: 'PaymentInteractionRequested',
+                                paymentID: '1',
+                                userInteraction: 'user interaction mock',
+                            },
+                        ],
+                        createdAt: '2023-05-25T17:32:01.601868Z',
+                        id: 7,
+                    },
+                ],
             };
             expect(result).toStrictEqual(expected);
         });
@@ -160,18 +160,24 @@ describe('pollInvoiceEvents', () => {
             });
 
             expect(mockFetch).toHaveBeenCalledTimes(3);
-            expect(mockFetch).toHaveBeenCalledWith(getEventsUrl(apiEndpoint, invoiceID, 15), expect.any(Object));
-            expect(mockFetch).toHaveBeenCalledWith(getEventsUrl(apiEndpoint, invoiceID, 19), expect.any(Object));
-            expect(mockFetch).toHaveBeenCalledWith(getEventsUrl(apiEndpoint, invoiceID, 19), expect.any(Object));
 
             const expected = {
                 status: 'POLLED',
-                eventID: 21,
-                change: {
-                    changeType: 'PaymentInteractionRequested',
-                    paymentID: '1',
-                    userInteraction: 'user interaction mock',
-                },
+                events: [
+                    {
+                        changes: [
+                            'someChange_01',
+                            'someChange_02',
+                            {
+                                changeType: 'PaymentInteractionRequested',
+                                paymentID: '1',
+                                userInteraction: 'user interaction mock',
+                            },
+                        ],
+                        createdAt: '2023-05-25T17:32:01.601868Z',
+                        id: 21,
+                    },
+                ],
             };
             expect(result).toStrictEqual(expected);
         });

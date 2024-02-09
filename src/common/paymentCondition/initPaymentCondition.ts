@@ -1,7 +1,7 @@
 import {
     InvoiceStatuses,
     ServiceProviderContactInfo,
-    ServiceProviderMetadataForm,
+    ServiceProviderMetadataField,
     getInvoiceEvents,
 } from 'checkout/backend';
 
@@ -34,21 +34,20 @@ const isInstantPaymentContactInfoEligible = (
     return false;
 };
 
-const isInstantPaymentFormEligible = (form: ServiceProviderMetadataForm, initContext: InitContext): boolean => {
+const isInstantPaymentFormEligible = (
+    form: ServiceProviderMetadataField[],
+    { terminalFormValues }: InitContext,
+): boolean => {
     if (isNil(form)) {
         return true;
     }
-    const terminalFormValues = initContext?.terminalFormValues;
     const isFormRenderRequired = form.reduce((result, curr) => {
         if (result) {
-            return result;
+            return true;
         }
         return isNil(terminalFormValues) || isNil(terminalFormValues[curr.name]);
     }, false);
-    if (!isFormRenderRequired) {
-        return true;
-    }
-    return false;
+    return !isFormRenderRequired;
 };
 
 const providePaymentTerminal = async (

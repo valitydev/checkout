@@ -7,7 +7,7 @@ import { validateCardHolder } from './validateCardHolder';
 import { ReactComponent as UserIcon } from '../../../../../app/components/ui/icon/user.svg';
 import { isNil } from '../../../../../common/utils';
 import { Input } from '../../../../legacy';
-import { CardFormInputs } from '../../types';
+import { CardFormInputs } from '../types';
 
 export type CardHolderProps = {
     register: UseFormRegister<CardFormInputs>;
