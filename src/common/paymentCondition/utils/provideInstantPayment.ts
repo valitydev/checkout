@@ -65,6 +65,7 @@ export const provideInstantPayment = async (
         const conditions = pollingResultToConditions(pollingResult, skipUserInteraction);
         return [invoiceDetermined, ...conditions];
     } catch (exception) {
+        console.error(exception);
         return [
             {
                 name: 'paymentProcessFailed',

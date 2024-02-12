@@ -102,12 +102,16 @@ const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<Payment
         const conditions = invoiceEventsToConditions(events, skipUserInteraction);
         lastEventId = last(events).id;
         const lastCondition = last(conditions);
-        switch (lastCondition.name) {
-            case 'paymentStarted':
-            case 'interactionRequested':
-                return conditions;
+        if (!isNil(lastCondition)) {
+            switch (lastCondition.name) {
+                case 'paymentStarted':
+                case 'interactionRequested':
+                case 'interactionCompleted':
+                    return conditions;
+            }
         }
     } catch (exception) {
+        console.error(exception);
         return [
             {
                 name: 'paymentProcessFailed',
