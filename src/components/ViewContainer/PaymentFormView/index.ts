@@ -1,0 +1,1 @@
+export { PaymentFormView } from './PaymentFormView';

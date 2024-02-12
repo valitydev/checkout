@@ -6,5 +6,5 @@ import { detectLocale } from '../../locale';
 
 export const getLocale = (locale: string): Promise<Locale> =>
     fetchCapi({
-        endpoint: `../v1/locale/${detectLocale(locale)}.json?nocache=${getNocacheValue()}`,
+        endpoint: `./locale/${detectLocale(locale)}.json?nocache=${getNocacheValue()}`,
     });

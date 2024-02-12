@@ -1,0 +1,1 @@
+export { PaymentMethodSelectorView } from './PaymentMethodSelectorView';

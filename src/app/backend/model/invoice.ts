@@ -1,5 +1,5 @@
+import { InvoiceStatuses } from './event';
 import { InvoiceLine } from './invoice-cart/invoice-line';
-import { InvoiceStatus } from './invoice-status';
 
 export class Invoice {
     id: string;
@@ -12,7 +12,7 @@ export class Invoice {
     metadata: object;
     product: string;
     description: string;
-    status: InvoiceStatus;
+    status: InvoiceStatuses;
     reason: string;
     cart: InvoiceLine[];
     externalID: string;

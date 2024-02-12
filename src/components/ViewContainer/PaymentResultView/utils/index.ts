@@ -1,0 +1,1 @@
+export { getResultInfo } from './getResultInfo';
