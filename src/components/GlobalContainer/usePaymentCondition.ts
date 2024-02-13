@@ -12,7 +12,7 @@ import {
     pollInvoiceEvents,
 } from '../../common/paymentMgmt';
 import { CommonPaymentModel, InvoiceContext, PaymentModel } from '../../common/paymentModel';
-import { isNil } from '../../common/utils';
+import { extractError, isNil } from '../../common/utils';
 
 type Action =
     | { type: 'COMBINE_CONDITIONS'; payload: PaymentCondition[] }
@@ -48,6 +48,7 @@ export const usePaymentCondition = (model: PaymentModel, initConditions: Payment
                     },
                 );
             } catch (exception) {
+                console.error('startPayment error:', extractError(exception));
                 dispatch({
                     type: 'COMBINE_CONDITIONS',
                     payload: [
@@ -70,6 +71,7 @@ export const usePaymentCondition = (model: PaymentModel, initConditions: Payment
                     apiMethodCall: 3000,
                 });
             } catch (exception) {
+                console.error('startWaitingPaymentResult error:', extractError(exception));
                 dispatch({
                     type: 'COMBINE_CONDITIONS',
                     payload: [

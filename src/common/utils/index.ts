@@ -14,6 +14,7 @@ export { formatEmail, validateEmail } from './email';
 export { isString } from './isString';
 export { getEncodedUrlParams } from './getEncodedUrlParams';
 export { findMetadata } from './findMetadata';
+export { extractError } from './extractError';
 
 export type { CountrySubdivision, Country } from './countries';
 export { countries } from './countries';

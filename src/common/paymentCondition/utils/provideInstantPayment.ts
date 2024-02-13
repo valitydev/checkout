@@ -4,7 +4,7 @@ import { pollingResultToConditions } from './pollingResultToConditions';
 import { toDefaultFormValuesMetadata } from './toDefaultFormValuesMetadata';
 import { StartPaymentPayload, createPayment, determineModel, pollInvoiceEvents } from '../../paymentMgmt';
 import { InvoiceContext, PaymentModel } from '../../paymentModel';
-import { findMetadata } from '../../utils';
+import { extractError, findMetadata } from '../../utils';
 import { InvoiceDetermined, PaymentCondition } from '../types';
 
 const getInvoiceContext = async (model: PaymentModel): Promise<InvoiceContext> => {
@@ -65,7 +65,7 @@ export const provideInstantPayment = async (
         const conditions = pollingResultToConditions(pollingResult, skipUserInteraction);
         return [invoiceDetermined, ...conditions];
     } catch (exception) {
-        console.error(exception);
+        console.error('provideInstantPayment error:', extractError(exception));
         return [
             {
                 name: 'paymentProcessFailed',
