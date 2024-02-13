@@ -8,7 +8,7 @@ import {
 import { PaymentCondition } from './types';
 import { invoiceEventsToConditions, provideInstantPayment } from './utils';
 import { InitContext, PaymentModel, PaymentModelInvoice, PaymentTerminal } from '../paymentModel';
-import { findMetadata, isNil, last } from '../utils';
+import { extractError, findMetadata, isNil, last } from '../utils';
 
 /*
     Instant payment is available under the following conditions:
@@ -111,7 +111,7 @@ const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<Payment
             }
         }
     } catch (exception) {
-        console.error(exception);
+        console.error('provideInvoiceUnpaid error:', extractError(exception));
         return [
             {
                 name: 'paymentProcessFailed',
