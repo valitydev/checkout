@@ -3,15 +3,10 @@ import { InitConfig } from 'checkout/config';
 import { InitContext } from './types';
 import { isNil } from '../utils';
 
-const toContactInfo = ({ phoneNumber, email }: InitConfig) => {
-    if (isNil(phoneNumber) && isNil(email)) {
-        return undefined;
-    }
-    return {
-        phoneNumber,
-        email,
-    };
-};
+const toContactInfo = ({ phoneNumber, email }: InitConfig) => ({
+    phoneNumber: isNil(phoneNumber) ? undefined : phoneNumber,
+    email: isNil(email) ? undefined : email,
+});
 
 export const toInitContext = (initConfig: InitConfig): InitContext => ({
     skipUserInteraction: initConfig?.skipUserInteraction || false,
