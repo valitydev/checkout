@@ -33,12 +33,17 @@ export const GatewaySelector = ({
             {state.status === 'PRISTINE' && <div>{locale['form.p2p.loading']}</div>}
             {state.status === 'FAILURE' && <div>{locale['form.p2p.error']}</div>}
             {state.status === 'SUCCESS' && (
-                <Select dirty={false} error={false}>
-                    <option value="" onClick={() => onSelect(null)}>
-                        {locale['form.p2p.select.destination']}
-                    </option>
+                <Select
+                    dirty={false}
+                    error={false}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                        const found = state.data.find((gateway) => gateway.id === e.target.value);
+                        onSelect(found);
+                    }}
+                >
+                    <option value="">{locale['form.p2p.select.destination']}</option>
                     {state.data.map((gateway, i) => (
-                        <option key={i} value={gateway.id} onClick={() => onSelect(gateway)}>
+                        <option key={i} value={gateway.id}>
                             {gateway.name}
                         </option>
                     ))}

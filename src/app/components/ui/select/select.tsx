@@ -39,15 +39,18 @@ export type SelectProps = {
     children: React.ReactNode;
     error: boolean;
     dirty: boolean;
+    onChange?: React.FormEventHandler;
 };
 
-export const Select = forwardRef<HTMLSelectElement, SelectProps>(({ children, error, dirty, ...props }, ref) => (
-    <SelectWrapper>
-        <StyledSelect $isError={error} {...props} ref={ref}>
-            {children}
-        </StyledSelect>
-        {!error && dirty && <Marks />}
-    </SelectWrapper>
-));
+export const Select = forwardRef<HTMLSelectElement, SelectProps>(
+    ({ children, error, dirty, onChange, ...props }, ref) => (
+        <SelectWrapper onChange={onChange}>
+            <StyledSelect $isError={error} {...props} ref={ref}>
+                {children}
+            </StyledSelect>
+            {!error && dirty && <Marks />}
+        </SelectWrapper>
+    ),
+);
 
 Select.displayName = 'Select';
