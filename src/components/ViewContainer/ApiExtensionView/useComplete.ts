@@ -44,6 +44,7 @@ export const useComplete = (capiEndpoint: string, accessToken: string, invoiceID
                     type: 'COMPLETE_SUCCESS',
                 });
             } catch (error) {
+                console.error('complete error', error);
                 dispatch({ type: 'COMPLETE_FAILURE', error });
             }
         };
