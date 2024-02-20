@@ -1,4 +1,4 @@
-import { useCallback, useReducer } from 'react';
+import { useCallback, useReducer, useRef } from 'react';
 
 import { Destination, getDestinations as getApiDestinations } from 'checkout/backend';
 
@@ -39,22 +39,38 @@ export const useDestinations = (capiEndpoint: string, accessToken: string, invoi
     const [state, dispatch] = useReducer(dataFetchReducer, {
         status: 'PRISTINE',
     });
+    // In React dev mode, calling getDestinations twice in quick succession can lead to a 500 error.
+    const lastGatewayIDRef = useRef<string | null>(null);
 
-    const getDestinations = useCallback((gatewayID: string) => {
-        const fetchData = async () => {
-            try {
-                dispatch({ type: 'GET_DESTINATIONS_INIT' });
-                const payload = await getApiDestinations(capiEndpoint, accessToken, invoiceID, paymentID, gatewayID);
-                dispatch({
-                    type: 'GET_DESTINATIONS_SUCCESS',
-                    payload,
-                });
-            } catch (error) {
-                dispatch({ type: 'GET_DESTINATIONS_FAILURE', error });
+    const getDestinations = useCallback(
+        (gatewayID: string) => {
+            if (lastGatewayIDRef.current === gatewayID) {
+                return;
             }
-        };
-        fetchData();
-    }, []);
+            lastGatewayIDRef.current = gatewayID;
+
+            const fetchData = async () => {
+                try {
+                    dispatch({ type: 'GET_DESTINATIONS_INIT' });
+                    const payload = await getApiDestinations(
+                        capiEndpoint,
+                        accessToken,
+                        invoiceID,
+                        paymentID,
+                        gatewayID,
+                    );
+                    dispatch({
+                        type: 'GET_DESTINATIONS_SUCCESS',
+                        payload,
+                    });
+                } catch (error) {
+                    dispatch({ type: 'GET_DESTINATIONS_FAILURE', error });
+                }
+            };
+            fetchData();
+        },
+        [capiEndpoint, accessToken, invoiceID, paymentID],
+    );
 
     return { state, getDestinations };
 };
