@@ -31,9 +31,6 @@ jobs:
               with:
                   registry-username: ${{ github.actor }}
                   registry-access-token: ${{ secrets.GITHUB_TOKEN }}
-                  dockerfile-path: .
-              env:
-                  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
             - name: set config
               run: |
                   printf "$APP_ENV_FILE" > dist/v1/appConfig.json
