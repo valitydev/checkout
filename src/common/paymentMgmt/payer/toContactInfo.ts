@@ -55,8 +55,8 @@ export const toContactInfo = ({ methodName, values }: StartPaymentPayload): Cont
                 */
             }
             return {
-                ...fromMetadata,
                 ...fromContactInfo,
+                ...fromMetadata,
             };
         case 'BankCard':
             return {};
