@@ -46,6 +46,7 @@ export type InitContext = {
     readonly isExternalIDIncluded?: boolean;
     readonly redirectUrl?: string;
     readonly metadata?: object;
+    readonly recurring?: boolean;
 };
 
 export type CommonPaymentModel = {
