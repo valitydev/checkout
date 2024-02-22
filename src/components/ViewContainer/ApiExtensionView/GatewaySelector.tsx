@@ -31,8 +31,10 @@ export const GatewaySelector = ({
 
     useEffect(() => {
         if (state.status !== 'SUCCESS') return;
-        state.data.length === 1 && onSelect(state.data[0]);
-        setIsGatewaySelected(true);
+        if (state.data.length === 1) {
+            onSelect(state.data[0]);
+            setIsGatewaySelected(true);
+        }
     }, [state]);
 
     return (
