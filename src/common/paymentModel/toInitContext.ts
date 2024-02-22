@@ -16,4 +16,5 @@ export const toInitContext = (initConfig: InitConfig): InitContext => ({
     contactInfo: toContactInfo(initConfig),
     redirectUrl: initConfig.redirectUrl,
     metadata: initConfig.metadata,
+    recurring: initConfig.recurring,
 });
