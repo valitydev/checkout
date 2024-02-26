@@ -41,13 +41,13 @@ const replaceSpacesFromObjectValues = (obj) => {
 };
 
 export const toContactInfo = ({ methodName, values }: StartPaymentPayload): ContactInfo => {
+    const fromContactInfo = isNil(values?.contactInfo)
+        ? {}
+        : // TODO: Delete this function once space removal has been implemented for the phoneNumber field.
+          replaceSpacesFromObjectValues(values?.contactInfo);
     switch (methodName) {
         case 'PaymentTerminal':
             const fromMetadata = mapFrom(values?.metadata);
-            const fromContactInfo = isNil(values?.contactInfo)
-                ? {}
-                : // TODO: Delete this function once space removal has been implemented for the phoneNumber field.
-                  replaceSpacesFromObjectValues(values?.contactInfo);
             if (!isNil(fromMetadata)) {
                 /*
                     Implement a check for this case's usage (e.g., Sentry logging).
@@ -59,6 +59,8 @@ export const toContactInfo = ({ methodName, values }: StartPaymentPayload): Cont
                 ...fromMetadata,
             };
         case 'BankCard':
-            return {};
+            return {
+                ...fromContactInfo,
+            };
     }
 };

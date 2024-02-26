@@ -21,6 +21,7 @@ export type BankCardValues = {
     secureCode: string;
     expireDate?: string;
     cardHolder?: string;
+    contactInfo?: ContactInfoValues;
 };
 
 export type StartPaymentBankCardPayload = {
