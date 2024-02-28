@@ -48,7 +48,7 @@ export const usePaymentCondition = (model: PaymentModel, initConditions: Payment
                     },
                 );
             } catch (exception) {
-                console.error('startPayment error:', extractError(exception));
+                console.error(`startPayment error: ${extractError(exception)}`, exception);
                 dispatch({
                     type: 'COMBINE_CONDITIONS',
                     payload: [
@@ -71,7 +71,7 @@ export const usePaymentCondition = (model: PaymentModel, initConditions: Payment
                     apiMethodCall: 3000,
                 });
             } catch (exception) {
-                console.error('startWaitingPaymentResult error:', extractError(exception));
+                console.error(`startWaitingPaymentResult error: ${extractError(exception)}`, exception);
                 dispatch({
                     type: 'COMBINE_CONDITIONS',
                     payload: [

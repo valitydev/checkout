@@ -1,4 +1,5 @@
 import { useCallback, useReducer } from 'react';
+import { extractError } from 'src/common/utils';
 
 import { InitParams } from 'checkout/initialize';
 
@@ -60,7 +61,7 @@ export const useInitModels = () => {
                     payload: { paymentModel, conditions },
                 });
             } catch (error) {
-                console.error(error);
+                console.error(`useInitModels error: ${extractError(error)}`, error);
                 dispatch({ type: 'INIT_FAILED', error });
             }
         })();
