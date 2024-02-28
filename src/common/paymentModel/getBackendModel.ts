@@ -33,35 +33,24 @@ const getInvoiceTemplateModel = async (
     apiEndpoint: string,
     { invoiceTemplateID, invoiceTemplateAccessToken }: InvoiceTemplateParams,
 ): Promise<BackendModelInvoiceTemplate> => {
-    try {
-        const [invoiceTemplate, paymentMethods] = await Promise.all([
-            getInvoiceTemplateByID(apiEndpoint, invoiceTemplateAccessToken, invoiceTemplateID),
-            getInvoicePaymentMethodsByTemplateID(apiEndpoint, invoiceTemplateAccessToken, invoiceTemplateID),
-        ]);
-        const serviceProviders = await getServiceProviders(paymentMethods, apiEndpoint, invoiceTemplateAccessToken);
-
-        return { type: 'BackendModelInvoiceTemplate', paymentMethods, invoiceTemplate, serviceProviders };
-    } catch (error) {
-        console.error('Error fetching invoice template model:', error);
-        throw error;
-    }
+    const [invoiceTemplate, paymentMethods] = await Promise.all([
+        getInvoiceTemplateByID(apiEndpoint, invoiceTemplateAccessToken, invoiceTemplateID),
+        getInvoicePaymentMethodsByTemplateID(apiEndpoint, invoiceTemplateAccessToken, invoiceTemplateID),
+    ]);
+    const serviceProviders = await getServiceProviders(paymentMethods, apiEndpoint, invoiceTemplateAccessToken);
+    return { type: 'BackendModelInvoiceTemplate', paymentMethods, invoiceTemplate, serviceProviders };
 };
 
 const getInvoiceModel = async (
     apiEndpoint: string,
     { invoiceID, invoiceAccessToken }: InvoiceParams,
 ): Promise<BackendModelInvoice> => {
-    try {
-        const [invoice, paymentMethods] = await Promise.all([
-            getInvoiceByID(apiEndpoint, invoiceAccessToken, invoiceID),
-            getInvoicePaymentMethods(apiEndpoint, invoiceAccessToken, invoiceID),
-        ]);
-        const serviceProviders = await getServiceProviders(paymentMethods, apiEndpoint, invoiceAccessToken);
-        return { type: 'BackendModelInvoice', paymentMethods, invoice, serviceProviders };
-    } catch (error) {
-        console.error('Error fetching invoice model:', error);
-        throw error;
-    }
+    const [invoice, paymentMethods] = await Promise.all([
+        getInvoiceByID(apiEndpoint, invoiceAccessToken, invoiceID),
+        getInvoicePaymentMethods(apiEndpoint, invoiceAccessToken, invoiceID),
+    ]);
+    const serviceProviders = await getServiceProviders(paymentMethods, apiEndpoint, invoiceAccessToken);
+    return { type: 'BackendModelInvoice', paymentMethods, invoice, serviceProviders };
 };
 
 export const getBackendModel = async (
