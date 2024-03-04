@@ -16,4 +16,11 @@ export type DestinationSBP = {
     recipientName?: string;
 };
 
-export type Destination = DestinationBankCard | DestinationSBP;
+export type DestinationBankAccount = {
+    destinationType: 'BankAccount';
+    account: string;
+    bankName?: string;
+    recipientName?: string;
+};
+
+export type Destination = DestinationBankCard | DestinationSBP | DestinationBankAccount;

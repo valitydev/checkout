@@ -1,7 +1,7 @@
-import { DestinationSBP } from 'checkout/backend';
 import { Locale } from 'checkout/locale';
 
 import { CopyToClipboard } from './CopyToClipboard';
+import { DestinationSBP } from '../../../../common/backend/p2p';
 import { Container, Label, Row, Value } from '../commonComponents';
 
 export type DestinationInfoSpbProps = {
