@@ -45,7 +45,7 @@
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Выберите платежную систему:",
     "form.qr.code": "Для оплаты отсканируйте QR-код в мобильном приложении банка или штатной камерой телефона",
     "form.p2p.loading": "Загрузка...",
-    "form.p2p.error": "Произошла ошибка сервера",
+    "form.p2p.error": "Создайте заявку на другую сумму или попробуйте повторить позднее",
     "form.p2p.select.destination": "Выберите банк...",
     "form.p2p.destination.info": "Осуществите перевод, используя следующие реквизиты:",
     "form.p2p.destination.bank.card.pan": "Номер карты:",

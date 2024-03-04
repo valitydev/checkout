@@ -1,11 +1,10 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
-import { Gateway } from 'checkout/backend';
-
 import { CompletePayment } from './CompletePayment';
 import { Destinations } from './Destinations';
 import { GatewaySelector } from './GatewaySelector';
+import { Gateway } from '../../../common/backend/p2p';
 import { LocaleContext, PaymentConditionsContext, PaymentContext, PaymentModelContext } from '../../../common/contexts';
 import { InvoiceDetermined, PaymentStarted } from '../../../common/paymentCondition';
 import { isNil } from '../../../common/utils';

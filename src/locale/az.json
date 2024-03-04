@@ -45,7 +45,7 @@
     "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Ödəniş sistemini seçin:",
     "form.qr.code": "Ödənişi tamamlamaq üçün bank tətbiqinizlə və ya telefon kamera ilə QR kodunu skan edin",
     "form.p2p.loading": "Yüklənir...",
-    "form.p2p.error": "Server xətası baş verdi",
+    "form.p2p.error": "Fərqli bir məbləğ üçün bir ərizə yaradın və ya daha sonra təkrarlamağa çalışın",
     "form.p2p.select.destination": "Təyinat yeri seçin...",
     "form.p2p.destination.info": "Sifariş ödənişi:",
     "form.p2p.destination.bank.card.pan": "Bu karta:",

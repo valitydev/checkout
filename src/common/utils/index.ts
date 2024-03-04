@@ -15,6 +15,7 @@ export { isString } from './isString';
 export { getEncodedUrlParams } from './getEncodedUrlParams';
 export { findMetadata } from './findMetadata';
 export { extractError } from './extractError';
+export { fetchApi } from './fetchApi';
 
 export type { CountrySubdivision, Country } from './countries';
 export { countries } from './countries';

@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { Gateway } from 'checkout/backend';
-import { Select } from 'checkout/components/ui';
-import { useGateways } from 'checkout/hooks/p2p';
 import { Locale } from 'checkout/locale';
+
+import { useGateways } from './useGateways';
+import { Gateway } from '../../../common/backend/p2p';
+import { Select } from '../../../components/legacy';
 
 export type GatewaySelectorProps = {
     locale: Locale;
