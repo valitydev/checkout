@@ -1,10 +1,11 @@
 import { useContext } from 'react';
 
-import { Destination } from 'checkout/backend';
 import { Locale } from 'checkout/locale';
 
+import { DestinationInfoBankAccount } from './DestinationInfoBankAccount';
 import { DestinationInfoBankCard } from './DestinationInfoBankCard';
 import { DestinationInfoSpb } from './DestinationInfoSpb';
+import { Destination } from '../../../../common/backend/p2p';
 import { ViewModelContext } from '../../../../common/contexts';
 import { Info, Container, Row, Label, Value, Alert } from '../commonComponents';
 
@@ -36,6 +37,9 @@ export const DestinationInfo = ({ locale, destination }: DestinationInfoProps) =
             )}
             {destination.destinationType === 'DestinationSBP' && (
                 <DestinationInfoSpb destination={destination} locale={locale} />
+            )}
+            {destination.destinationType === 'BankAccount' && (
+                <DestinationInfoBankAccount destination={destination} locale={locale} />
             )}
         </Container>
     );

@@ -1,6 +1,6 @@
 import { useCallback, useReducer, useRef } from 'react';
 
-import { Destination, getDestinations as getApiDestinations } from 'checkout/backend';
+import { Destination, getDestinations as getApiDestinations } from '../../../common/backend/p2p';
 
 type State =
     | { status: 'PRISTINE' }

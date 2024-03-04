@@ -1,6 +1,6 @@
 import { useCallback, useReducer } from 'react';
 
-import { Gateway, getGateways as getApiGateways } from 'checkout/backend';
+import { Gateway, getGateways as getApiGateways } from '../../../common/backend/p2p';
 
 type State =
     | { status: 'PRISTINE' }

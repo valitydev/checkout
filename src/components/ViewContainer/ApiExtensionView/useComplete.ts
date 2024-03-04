@@ -1,6 +1,6 @@
 import { useCallback, useReducer } from 'react';
 
-import { complete as completeApi } from 'checkout/backend/p2p';
+import { complete as completeApi } from '../../../common/backend/p2p';
 
 type State =
     | { status: 'PRISTINE' }
