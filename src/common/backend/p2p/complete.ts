@@ -10,7 +10,7 @@ export const complete = async (capiEndpoint: string, accessToken: string, info: 
     try {
         await fetchApi(capiEndpoint, accessToken, 'POST', 'p2p/payments/complete', info);
     } catch (error) {
-        console.error(`Failed to fetch destinations: ${extractError(error)}`);
-        throw new Error(`Failed to fetch destinations: ${extractError(error)}`);
+        console.error(`Failed to fetch complete. ${extractError(error)}`);
+        throw new Error(`Failed to fetch complete. ${extractError(error)}`);
     }
 };

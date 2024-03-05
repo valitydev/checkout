@@ -25,7 +25,7 @@ describe('fetchApi', () => {
         });
 
         await expect(fetchApi('https://api.example.com', 'token123', 'POST', 'path', {})).rejects.toThrow(
-            `API error: 500 Endpoint: https://api.example.com/path`,
+            `Status: 500 Endpoint: https://api.example.com/path`,
         );
     });
 
@@ -39,7 +39,7 @@ describe('fetchApi', () => {
         });
 
         await expect(fetchApi('https://api.example.com', 'token123', 'POST', 'path', {})).rejects.toThrow(
-            `API error: 400 Endpoint: https://api.example.com/path ${JSON.stringify(errorDetails)}`,
+            `Status: 400 Endpoint: https://api.example.com/path ${JSON.stringify(errorDetails)}`,
         );
     });
 });
