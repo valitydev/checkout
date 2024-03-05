@@ -18,7 +18,7 @@ export const getDestinations = async (
         const response = await fetchApi(capiEndpoint, accessToken, 'GET', path);
         return await response.json();
     } catch (error) {
-        console.error(`Failed to fetch destinations: ${extractError(error)}`);
-        throw new Error(`Failed to fetch destinations: ${extractError(error)}`);
+        console.error(`Failed to fetch destinations. ${extractError(error)}`);
+        throw new Error(`Failed to fetch destinations. ${extractError(error)}`);
     }
 };

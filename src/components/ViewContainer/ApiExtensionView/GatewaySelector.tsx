@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { Locale } from 'checkout/locale';
 
@@ -16,45 +16,41 @@ export type GatewaySelectorProps = {
 };
 
 export const GatewaySelector = ({
+    locale,
     capiEndpoint,
     invoiceAccessToken,
     invoiceID,
     paymentID,
-    locale,
     onSelect,
 }: GatewaySelectorProps) => {
     const { state, getGateways } = useGateways(capiEndpoint, invoiceAccessToken, invoiceID, paymentID);
-    const [isGatewaySelected, setIsGatewaySelected] = useState<boolean>(false);
 
     useEffect(() => {
         getGateways();
-    }, []);
+    }, [getGateways]);
 
     useEffect(() => {
-        if (state.status !== 'SUCCESS') return;
-        if (state.data.length === 1) {
+        if (state.status === 'SUCCESS' && state.data.length === 1) {
             onSelect(state.data[0]);
-            setIsGatewaySelected(true);
         }
-    }, [state]);
+    }, [state, onSelect]);
 
     return (
         <>
-            {state.status === 'PRISTINE' && <div>{locale['form.p2p.loading']}</div>}
+            {state.status === 'LOADING' && <div>{locale['form.p2p.loading']}</div>}
             {state.status === 'FAILURE' && <div>{locale['form.p2p.error']}</div>}
-            {state.status === 'SUCCESS' && !isGatewaySelected && (
+            {state.status === 'SUCCESS' && (
                 <Select
                     dirty={false}
                     error={false}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                        const found = state.data.find((gateway) => gateway.id === e.target.value);
-                        onSelect(found);
-                        setIsGatewaySelected(true);
+                        const selectedGateway = state.data.find((gateway) => gateway.id === e.target.value);
+                        onSelect(selectedGateway || null);
                     }}
                 >
                     <option value="">{locale['form.p2p.select.destination']}</option>
-                    {state.data.map((gateway, i) => (
-                        <option key={i} value={gateway.id}>
+                    {state.data.map((gateway) => (
+                        <option key={gateway.id} value={gateway.id}>
                             {gateway.name}
                         </option>
                     ))}

@@ -67,7 +67,7 @@ export const usePaymentCondition = (model: PaymentModel, initConditions: Payment
             try {
                 const { invoiceContext } = await determineInvoice();
                 await startPolling(model, invoiceContext, [InvoiceChangeType.PaymentStatusChanged], {
-                    pollingTimeout: 60 * 1000 * 25,
+                    pollingTimeout: 60 * 1000 * 20,
                     apiMethodCall: 3000,
                 });
             } catch (exception) {

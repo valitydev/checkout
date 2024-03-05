@@ -45,21 +45,25 @@ export function ApiExtensionView() {
     const isLoader = useMemo(() => completeStatus === 'SUCCESS' || completeStatus === 'LOADING', [completeStatus]);
 
     useEffect(() => {
-        startWaitingPaymentResult();
-    }, []);
+        if (completeStatus === 'SUCCESS') {
+            startWaitingPaymentResult();
+        }
+    }, [completeStatus]);
 
     return (
         <>
             <FormContainer>
                 <SelectorContainer>
-                    <GatewaySelector
-                        capiEndpoint={apiEndpoint}
-                        invoiceAccessToken={invoiceAccessToken}
-                        invoiceID={invoiceID}
-                        locale={l}
-                        paymentID={paymentId}
-                        onSelect={setGateway}
-                    ></GatewaySelector>
+                    {isNil(gateway) && (
+                        <GatewaySelector
+                            capiEndpoint={apiEndpoint}
+                            invoiceAccessToken={invoiceAccessToken}
+                            invoiceID={invoiceID}
+                            locale={l}
+                            paymentID={paymentId}
+                            onSelect={setGateway}
+                        ></GatewaySelector>
+                    )}
                     {!isNil(gateway) && (
                         <Destinations
                             capiEndpoint={apiEndpoint}

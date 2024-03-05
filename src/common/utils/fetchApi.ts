@@ -18,7 +18,7 @@ export async function fetchApi(
     });
 
     if (!response.ok) {
-        let errorDetails = `API error: ${response.status} Endpoint: ${endpoint}/${path}`;
+        let errorDetails = `Status: ${response.status} Endpoint: ${endpoint}/${path}`;
         try {
             const errorBody = await response.json();
             errorDetails += ` ${JSON.stringify(errorBody)}`;
