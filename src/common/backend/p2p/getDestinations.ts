@@ -1,5 +1,5 @@
 import { Destination } from './types';
-import { extractError, fetchApi } from '../../../common/utils';
+import { fetchApi } from '../../../common/utils';
 
 export const getDestinations = async (
     capiEndpoint: string,
@@ -14,11 +14,6 @@ export const getDestinations = async (
         gatewayId: gatewayID,
     }).toString();
     const path = `p2p/payments/destinations?${queryParams}`;
-    try {
-        const response = await fetchApi(capiEndpoint, accessToken, 'GET', path);
-        return await response.json();
-    } catch (error) {
-        console.error(`Failed to fetch destinations. ${extractError(error)}`);
-        throw new Error(`Failed to fetch destinations. ${extractError(error)}`);
-    }
+    const response = await fetchApi(capiEndpoint, accessToken, 'GET', path);
+    return await response.json();
 };
