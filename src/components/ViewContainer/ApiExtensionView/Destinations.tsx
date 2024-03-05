@@ -25,10 +25,16 @@ export const Destinations = ({
     gatewayID,
     getDestinationsStatusChanged,
 }: DestinationsProps) => {
-    const { state, getDestinations } = useDestinations(capiEndpoint, invoiceAccessToken, invoiceID, paymentID);
+    const { state, getDestinations } = useDestinations(
+        capiEndpoint,
+        invoiceAccessToken,
+        invoiceID,
+        paymentID,
+        gatewayID,
+    );
 
     useEffect(() => {
-        getDestinations(gatewayID);
+        getDestinations();
     }, [gatewayID]);
 
     useEffect(() => {

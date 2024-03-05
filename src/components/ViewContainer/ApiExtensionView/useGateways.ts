@@ -4,17 +4,14 @@ import { Gateway, getGateways as getApiGateways } from '../../../common/backend/
 import { extractError } from '../../../common/utils';
 
 type State =
-    | { status: 'PRISTINE' | 'LOADING'; retryCount: number }
-    | { status: 'SUCCESS'; data: Gateway[]; retryCount: number }
-    | { status: 'FAILURE'; retryCount: number };
+    | { status: 'PRISTINE' | 'LOADING' | 'FAILURE'; retryCount: number }
+    | { status: 'SUCCESS'; data: Gateway[]; retryCount: number };
 
 type Action =
     | { type: 'FETCH_START' }
     | { type: 'FETCH_SUCCESS'; payload: Gateway[] }
-    | { type: 'FETCH_ATTEMPT_FAILURE' }
     | { type: 'FETCH_FAILURE' }
-    | { type: 'RETRY' }
-    | { type: 'RESET_RETRY' };
+    | { type: 'RETRY' };
 
 const reducer = (state: State, action: Action): State => {
     switch (action.type) {
@@ -22,14 +19,10 @@ const reducer = (state: State, action: Action): State => {
             return { ...state, status: 'LOADING' };
         case 'FETCH_SUCCESS':
             return { status: 'SUCCESS', data: action.payload, retryCount: 0 };
-        case 'FETCH_ATTEMPT_FAILURE':
-            return { status: 'LOADING', retryCount: state.retryCount };
         case 'FETCH_FAILURE':
             return { status: 'FAILURE', retryCount: state.retryCount };
         case 'RETRY':
             return { ...state, retryCount: state.retryCount + 1 };
-        case 'RESET_RETRY':
-            return { ...state, retryCount: 0 };
         default:
             return state;
     }
@@ -50,7 +43,6 @@ export const useGateways = (capiEndpoint: string, accessToken: string, invoiceID
             const gateways = await getApiGateways(capiEndpoint, accessToken, invoiceID, paymentID);
             dispatch({ type: 'FETCH_SUCCESS', payload: gateways });
         } catch (error) {
-            dispatch({ type: 'FETCH_ATTEMPT_FAILURE' });
             if (state.retryCount < MAX_RETRY_ATTEMPTS) {
                 dispatch({ type: 'RETRY' });
             }
@@ -62,7 +54,7 @@ export const useGateways = (capiEndpoint: string, accessToken: string, invoiceID
     }, [capiEndpoint, accessToken, invoiceID, paymentID, state.retryCount]);
 
     useEffect(() => {
-        if (state.status === 'FAILURE' && state.retryCount < MAX_RETRY_ATTEMPTS) {
+        if (state.status === 'LOADING' && state.retryCount > 0 && state.retryCount < MAX_RETRY_ATTEMPTS) {
             const timer = setTimeout(getGateways, RETRY_TIMEOUT_MS);
             return () => clearTimeout(timer);
         }
