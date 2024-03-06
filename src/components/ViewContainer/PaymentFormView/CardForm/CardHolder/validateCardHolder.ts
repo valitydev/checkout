@@ -1,4 +1,4 @@
-import { isContainCardNumber } from 'checkout/utils';
+import { isContainCardNumber } from '../../../../../common/utils';
 
 const CARD_HOLDER_REGEXP = /^[a-zA-Z0-9 .,'/-]+$/;
 

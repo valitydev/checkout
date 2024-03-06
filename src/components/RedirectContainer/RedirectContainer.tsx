@@ -4,7 +4,8 @@ import { FrameRedirectContainer } from './FrameRedirectContainer';
 import { SelfRedirectContainer } from './SelfRedirectContainer';
 import { PaymentConditionsContext, PaymentModelContext } from '../../common/contexts';
 import { PaymentStarted } from '../../common/paymentCondition';
-import { findMetadata, isNil, last } from '../../common/utils';
+import { isNil, last } from '../../common/utils';
+import { findMetadata } from '../../common/utils/findMetadata';
 
 export function RedirectContainer() {
     const { conditions } = useContext(PaymentConditionsContext);

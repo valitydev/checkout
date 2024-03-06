@@ -1,8 +1,4 @@
-import isNumber from 'checkout/utils/is-number';
-import isString from 'checkout/utils/is-string';
-import toNumber from 'checkout/utils/to-number';
-
-import { getMessageInvalidValue } from '../../log-messages';
+import { isNumber, isString, toNumber } from '../../../common/utils';
 
 const getFromNumber = (userInteger: number): number | null => (Number.isInteger(userInteger) ? userInteger : undefined);
 
@@ -21,16 +17,9 @@ const getInteger = (userInteger: any) => {
     return result;
 };
 
-const log = (userInteger: any, fieldName: string) =>
-    console.warn(getMessageInvalidValue(fieldName, userInteger, 'Value should be positive integer.'));
-
-export const resolveInteger = (userInteger: any, fieldName: string): number | null => {
+export const resolveInteger = (userInteger: any): number | null => {
     if (!userInteger) {
         return null;
     }
-    const result = getInteger(userInteger);
-    if (!result) {
-        log(userInteger, fieldName);
-    }
-    return result;
+    return getInteger(userInteger);
 };

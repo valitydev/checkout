@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 
 import { PaymentModelContext, ViewModelContext } from '../../../common/contexts';
-import { findMetadata, isNil } from '../../../common/utils';
+import { isNil } from '../../../common/utils';
+import { findMetadata } from '../../../common/utils/findMetadata';
 import { MetadataLogo, PaymentMethodItemContainer } from '../../legacy';
 
 export type PaymentTerminalPaneProps = {

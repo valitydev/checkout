@@ -1,6 +1,4 @@
-import isString from 'checkout/utils/is-string';
-
-import { getMessageInvalidValue } from '../../log-messages';
+import { isString } from '../../../common/utils';
 
 const getString = (userString: any): string => {
     let result = null;
@@ -13,16 +11,9 @@ const getString = (userString: any): string => {
     return result;
 };
 
-const log = (userString: any, fieldName: string) =>
-    console.warn(getMessageInvalidValue(fieldName, userString, 'Value should be non empty string.'));
-
-export const resolveString = (userString: any, fieldName: string): string => {
+export const resolveString = (userString: any): string => {
     if (!userString) {
         return null;
     }
-    const result = getString(userString);
-    if (!result) {
-        log(result, fieldName);
-    }
-    return result;
+    return getString(userString);
 };

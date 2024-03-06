@@ -12,7 +12,8 @@ import {
 } from '../../../../common/contexts';
 import { toDefaultFormValuesMetadata } from '../../../../common/paymentCondition';
 import { TerminalValues } from '../../../../common/paymentMgmt';
-import { findMetadata, isNil } from '../../../../common/utils';
+import { isNil } from '../../../../common/utils';
+import { findMetadata } from '../../../../common/utils/findMetadata';
 import {
     ChevronButton,
     Email,

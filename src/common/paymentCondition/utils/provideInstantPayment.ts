@@ -4,7 +4,8 @@ import { pollingResultToConditions } from './pollingResultToConditions';
 import { toDefaultFormValuesMetadata } from './toDefaultFormValuesMetadata';
 import { StartPaymentPayload, createPayment, determineModel, pollInvoiceEvents } from '../../paymentMgmt';
 import { InvoiceContext, PaymentModel } from '../../paymentModel';
-import { extractError, findMetadata } from '../../utils';
+import { extractError } from '../../utils';
+import { findMetadata } from '../../utils/findMetadata';
 import { InvoiceDetermined, PaymentCondition } from '../types';
 
 const getInvoiceContext = async (model: PaymentModel): Promise<InvoiceContext> => {

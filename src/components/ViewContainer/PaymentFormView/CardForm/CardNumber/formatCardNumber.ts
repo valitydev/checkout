@@ -1,7 +1,7 @@
 import { number } from 'card-validator';
 import { FormEvent } from 'react';
 
-import { replaceFullWidthChars, safeVal } from 'checkout/utils';
+import { replaceFullWidthChars, safeVal } from '../../../../../common/utils';
 
 function format(num: string): string {
     num = num.replace(/\D/g, '');

@@ -5,9 +5,9 @@ import { Locale } from 'checkout/locale';
 
 import { formatCVC } from './formatCVC';
 import { validateSecureCode } from './validateSecureCode';
-import { ReactComponent as LockIcon } from '../../../../../app/components/ui/icon/lock.svg';
 import { isNil, safeVal } from '../../../../../common/utils';
 import { Input } from '../../../../legacy';
+import { ReactComponent as LockIcon } from '../../../../legacy/icon/lock.svg';
 import { CardFormInputs } from '../types';
 
 export interface SecureCodeProps {

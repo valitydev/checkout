@@ -14,4 +14,3 @@ export * from './create-payment';
 export * from './get-service-provider-by-id';
 export * from './shorten-url';
 export * from './get-env';
-export * from './p2p';

@@ -4,9 +4,9 @@ import { Locale } from 'checkout/locale';
 
 import { formatExpiry } from './formatExpiry';
 import { validateExpireDate } from './validateExpireDate';
-import { ReactComponent as CalendarIcon } from '../../../../../app/components/ui/icon/calendar.svg';
 import { isNil } from '../../../../../common/utils';
 import { Input } from '../../../../legacy';
+import { ReactComponent as CalendarIcon } from '../../../../legacy/icon/calendar.svg';
 import { CardFormInputs } from '../types';
 
 export type ExpireDateProps = {
