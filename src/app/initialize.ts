@@ -1,9 +1,9 @@
 import * as creditCardType from 'credit-card-type';
 
 import { InitConfig, resolveInitConfig } from 'checkout/config';
-import { getUrlParams, URLParams } from 'checkout/utils';
 
 import { AppConfig, getAppConfig, getEnv } from './backend';
+import { getUrlParams, URLParams } from '../common/utils';
 import { listen, Transport, StubTransport, CommunicatorEvents, communicatorInstanceName } from '../communicator';
 import { getOrigin } from '../get-origin';
 
