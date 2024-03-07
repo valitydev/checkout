@@ -4,9 +4,9 @@ import { Locale } from 'checkout/locale';
 
 import { formatCardHolder } from './formatCardHolder';
 import { validateCardHolder } from './validateCardHolder';
-import { ReactComponent as UserIcon } from '../../../../../app/components/ui/icon/user.svg';
 import { isNil } from '../../../../../common/utils';
 import { Input } from '../../../../legacy';
+import { ReactComponent as UserIcon } from '../../../../legacy/icon/user.svg';
 import { CardFormInputs } from '../types';
 
 export type CardHolderProps = {

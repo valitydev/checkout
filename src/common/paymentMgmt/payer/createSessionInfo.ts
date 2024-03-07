@@ -1,7 +1,8 @@
 import { PaymentSessionInfoMetadata, SessionInfo, ShortenedUrlParams, shortenUrl } from 'checkout/backend';
 
 import { toSelfRedirectUrl } from './toSelfRedirectUrl';
-import { findMetadata, isNil } from '../../../common/utils';
+import { isNil } from '../../../common/utils';
+import { findMetadata } from '../../../common/utils/findMetadata';
 import { CommonPaymentModel, InvoiceContext } from '../../paymentModel';
 import { StartPaymentPayload } from '../types';
 

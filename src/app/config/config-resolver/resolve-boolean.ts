@@ -1,7 +1,4 @@
-import isBoolean from 'checkout/utils/is-boolean';
-import isString from 'checkout/utils/is-string';
-
-import { getMessageInvalidValue } from '../../log-messages';
+import { isBoolean, isString } from '../../../common/utils';
 
 const toBoolean = (str: string): boolean => {
     switch (str) {
@@ -24,16 +21,9 @@ const getBoolean = (userBoolean: any): boolean | null => {
     return result;
 };
 
-const log = (userBoolean: any, fieldName: string) =>
-    console.warn(getMessageInvalidValue(fieldName, userBoolean, 'Value should be boolean.'));
-
-export const resolveBoolean = (userBoolean: any, fieldName: string): boolean | null => {
+export const resolveBoolean = (userBoolean: any): boolean | null => {
     if (userBoolean === undefined) {
         return null;
     }
-    const result = getBoolean(userBoolean);
-    if (result === null) {
-        log(userBoolean, fieldName);
-    }
-    return result;
+    return getBoolean(userBoolean);
 };

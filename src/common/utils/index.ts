@@ -13,9 +13,18 @@ export { formatPhoneNumber, getPhoneCountryCode, validatePhone, formatOnFocus } 
 export { formatEmail, validateEmail } from './email';
 export { isString } from './isString';
 export { getEncodedUrlParams } from './getEncodedUrlParams';
-export { findMetadata } from './findMetadata';
 export { extractError } from './extractError';
 export { fetchApi } from './fetchApi';
-
-export type { CountrySubdivision, Country } from './countries';
+export { guid } from './guid';
+export { getNocacheValue } from './getNocacheValue';
+export { isNumber } from './isNumber';
+export { toNumber } from './toNumber';
+export { intersection } from './intersection';
+export { isSafetyUrl } from './isSafetyUrl';
+export { isBoolean } from './isBoolean';
+export { getUrlParams } from './getUrlParams';
 export { countries } from './countries';
+export { isContainCardNumber } from './isContainCardNumber';
+
+export type { URLParams } from './getUrlParams';
+export type { CountrySubdivision, Country } from './countries';

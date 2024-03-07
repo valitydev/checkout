@@ -7,7 +7,8 @@ import { QrCodeFormMetadata } from 'checkout/backend';
 import { QRCode } from './QrCode';
 import { LocaleContext, PaymentConditionsContext, PaymentContext, PaymentModelContext } from '../../../common/contexts';
 import { PaymentInteractionRequested, PaymentStarted } from '../../../common/paymentCondition';
-import { findMetadata, isNil } from '../../../common/utils';
+import { isNil } from '../../../common/utils';
+import { findMetadata } from '../../../common/utils/findMetadata';
 import { Button, CopyToClipboardButton, Hr, Input } from '../../../components/legacy';
 
 const Instruction = styled.p`

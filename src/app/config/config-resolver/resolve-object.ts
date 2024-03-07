@@ -1,6 +1,4 @@
-import isString from 'checkout/utils/is-string';
-
-import { getMessageInvalidValue } from '../../log-messages';
+import { isString } from '../../../common/utils';
 
 const getObject = (inputObject: object | string): object => {
     if (!isString(inputObject)) {
@@ -20,16 +18,9 @@ const getObject = (inputObject: object | string): object => {
     return null;
 };
 
-const log = (inputObject: any, fieldName: string) =>
-    console.warn(getMessageInvalidValue(fieldName, inputObject, 'Value should be non empty object.'));
-
-export const resolveObject = (inputObject: object | string, fieldName: string): object => {
+export const resolveObject = (inputObject: object | string): object => {
     if (!inputObject) {
         return null;
     }
-    const result = getObject(inputObject);
-    if (!result) {
-        log(result, fieldName);
-    }
-    return result;
+    return getObject(inputObject);
 };

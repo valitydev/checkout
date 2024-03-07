@@ -8,7 +8,8 @@ import {
 import { PaymentCondition } from './types';
 import { invoiceEventsToConditions, provideInstantPayment } from './utils';
 import { InitContext, PaymentModel, PaymentModelInvoice, PaymentTerminal } from '../paymentModel';
-import { extractError, findMetadata, isNil, last } from '../utils';
+import { extractError, isNil, last } from '../utils';
+import { findMetadata } from '../utils/findMetadata';
 
 /*
     Instant payment is available under the following conditions:

@@ -49,7 +49,6 @@ export const useLocale = () => {
                     payload,
                 });
             } catch (ex) {
-                console.error(ex);
                 dispatch({
                     type: 'LOAD_FAILURE',
                 });

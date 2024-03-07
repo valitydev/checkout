@@ -1,4 +1,4 @@
-import guid from 'checkout/utils/guid';
+import { guid } from './guid';
 
 export async function fetchApi(
     endpoint: string,
