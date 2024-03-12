@@ -50,6 +50,7 @@
     "form.p2p.destination.info": "Realize a transferência usando os seguintes detalhes:",
     "form.p2p.destination.bank.card.pan": "Número do cartão:",
     "form.p2p.destination.bank.name": "Nome do banco:",
+    "form.p2p.destination.bank.recipient": "Nome:",
     "form.p2p.destination.spb.bank.name": "Nome do banco:",
     "form.p2p.destination.spb.phone": "Número de telefone:",
     "form.p2p.destination.spb.recipient": "Nome:",

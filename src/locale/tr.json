@@ -50,6 +50,7 @@
     "form.p2p.destination.info": "Aşağıdaki detayları kullanarak transferi gerçekleştirin:",
     "form.p2p.destination.bank.card.pan": "Kart numarası:",
     "form.p2p.destination.bank.name": "Banka adı:",
+    "form.p2p.destination.bank.recipient": "İsim:",
     "form.p2p.destination.spb.bank.name": "Banka adı:",
     "form.p2p.destination.spb.phone": "Telefon numarası:",
     "form.p2p.destination.spb.recipient": "İsim:",

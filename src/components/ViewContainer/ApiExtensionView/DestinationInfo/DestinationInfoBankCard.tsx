@@ -24,5 +24,11 @@ export const DestinationInfoBankCard = ({ locale, destination }: DestinationInfo
                 <Value>{destination.bankName}</Value>
             </Row>
         )}
+        {destination?.recipientName && (
+            <Row>
+                <Label>{locale['form.p2p.destination.bank.recipient']}</Label>
+                <Value>{destination.recipientName}</Value>
+            </Row>
+        )}
     </Container>
 );

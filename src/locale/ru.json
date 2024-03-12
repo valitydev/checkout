@@ -50,6 +50,7 @@
     "form.p2p.destination.info": "Осуществите перевод, используя следующие реквизиты:",
     "form.p2p.destination.bank.card.pan": "Номер карты:",
     "form.p2p.destination.bank.name": "Банк:",
+    "form.p2p.destination.bank.recipient": "Получатель:",
     "form.p2p.destination.spb.bank.name": "Банк:",
     "form.p2p.destination.spb.phone": "Номер телефона:",
     "form.p2p.destination.spb.recipient": "Получатель:",

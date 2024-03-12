@@ -1,31 +1,27 @@
 import { useCallback, useReducer } from 'react';
 
 import { complete as completeApi } from '../../../common/backend/p2p';
+import { extractError, withRetry } from '../../../common/utils';
 
-type State =
-    | { status: 'PRISTINE' }
-    | { status: 'LOADING' }
-    | { status: 'SUCCESS' }
-    | { status: 'FAILURE'; error: unknown };
+type State = { status: 'PRISTINE' | 'LOADING' | 'SUCCESS' | 'FAILURE' };
 
-type Action = { type: 'COMPLETE_INIT' } | { type: 'COMPLETE_SUCCESS' } | { type: 'COMPLETE_FAILURE'; error: unknown };
+type Action = { type: 'FETCH_START' | 'FETCH_SUCCESS' | 'FETCH_FAILURE' };
 
 const dataFetchReducer = (state: State, action: Action): State => {
     switch (action.type) {
-        case 'COMPLETE_INIT':
+        case 'FETCH_START':
             return {
                 status: 'LOADING',
             };
-        case 'COMPLETE_SUCCESS':
+        case 'FETCH_SUCCESS':
             return {
                 ...state,
                 status: 'SUCCESS',
             };
-        case 'COMPLETE_FAILURE':
+        case 'FETCH_FAILURE':
             return {
                 ...state,
                 status: 'FAILURE',
-                error: action.error,
             };
     }
 };
@@ -35,21 +31,19 @@ export const useComplete = (capiEndpoint: string, accessToken: string, invoiceID
         status: 'PRISTINE',
     });
 
-    const complete = useCallback(() => {
-        const fetchData = async () => {
-            try {
-                dispatch({ type: 'COMPLETE_INIT' });
-                await completeApi(capiEndpoint, accessToken, { invoiceId: invoiceID, paymentId: paymentID });
-                dispatch({
-                    type: 'COMPLETE_SUCCESS',
-                });
-            } catch (error) {
-                console.error('complete error', error);
-                dispatch({ type: 'COMPLETE_FAILURE', error });
-            }
-        };
-        fetchData();
-    }, []);
+    const complete = useCallback(async () => {
+        try {
+            dispatch({ type: 'FETCH_START' });
+            const completeWithRetry = withRetry(completeApi);
+            await completeWithRetry(capiEndpoint, accessToken, { invoiceId: invoiceID, paymentId: paymentID });
+            dispatch({
+                type: 'FETCH_SUCCESS',
+            });
+        } catch (error) {
+            dispatch({ type: 'FETCH_FAILURE' });
+            console.error(`Failed to p2p complete. ${extractError(error)}`);
+        }
+    }, [capiEndpoint, accessToken, invoiceID, paymentID]);
 
     return { state, complete };
 };
