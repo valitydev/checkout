@@ -7,6 +7,7 @@ export type DestinationBankCard = {
     destinationType: 'BankCard';
     pan: string;
     bankName?: string;
+    recipientName?: string;
 };
 
 export type DestinationSBP = {

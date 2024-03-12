@@ -50,6 +50,7 @@
     "form.p2p.destination.info": "Sifariş ödənişi:",
     "form.p2p.destination.bank.card.pan": "Bu karta:",
     "form.p2p.destination.bank.name": "Bankın adı:",
+    "form.p2p.destination.bank.recipient": "Adı:",
     "form.p2p.destination.spb.bank.name": "Bankın adı:",
     "form.p2p.destination.spb.phone": "Telefon nömrəsi:",
     "form.p2p.destination.spb.recipient": "Adı:",

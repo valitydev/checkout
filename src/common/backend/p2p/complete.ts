@@ -1,4 +1,4 @@
-import { extractError, fetchApi } from '../../../common/utils';
+import { fetchApi } from '../../../common/utils';
 
 export type CompleteInfo = {
     invoiceId: string;
@@ -7,10 +7,5 @@ export type CompleteInfo = {
 };
 
 export const complete = async (capiEndpoint: string, accessToken: string, info: CompleteInfo): Promise<void> => {
-    try {
-        await fetchApi(capiEndpoint, accessToken, 'POST', 'p2p/payments/complete', info);
-    } catch (error) {
-        console.error(`Failed to fetch complete. ${extractError(error)}`);
-        throw new Error(`Failed to fetch complete. ${extractError(error)}`);
-    }
+    await fetchApi(capiEndpoint, accessToken, 'POST', 'p2p/payments/complete', info);
 };

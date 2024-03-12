@@ -50,6 +50,7 @@
     "form.p2p.destination.info": "নিম্নলিখিত বিবরণ ব্যবহার করে ট্রান্সফার করুন:",
     "form.p2p.destination.bank.card.pan": "কার্ড নম্বর:",
     "form.p2p.destination.bank.name": "ব্যাংকের নাম:",
+    "form.p2p.destination.bank.recipient": "নাম:",
     "form.p2p.destination.spb.bank.name": "ব্যাংকের নাম:",
     "form.p2p.destination.spb.phone": "ফোন নম্বর:",
     "form.p2p.destination.spb.recipient": "নাম:",
