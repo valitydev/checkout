@@ -35,7 +35,7 @@ creditCardType.addCard({
 });
 
 const initSentry = async (dsn: string) => {
-    const { init, BrowserTracing, Replay } = await import('@sentry/react');
+    const { init, BrowserTracing } = await import('@sentry/react');
     const { CaptureConsole } = await import('@sentry/integrations');
     const env = await getEnv();
     init({
@@ -44,14 +44,11 @@ const initSentry = async (dsn: string) => {
         integrations: [
             new BrowserTracing(),
             new CaptureConsole({
-                levels: ['error'],
+                levels: ['error', 'warn'],
             }),
-            new Replay(),
         ],
         tracesSampleRate: 0.1,
         release: env.version,
-        replaysOnErrorSampleRate: 1.0,
-        replaysSessionSampleRate: 0.1,
     });
 };
 

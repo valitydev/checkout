@@ -1,13 +1,6 @@
-import {
-    CostType,
-    InvoiceTemplateLineCostFixed,
-    InvoiceTemplateMultiLine,
-    InvoiceTemplateSingleLine,
-    TemplateType,
-} from 'checkout/backend';
-
 import { BackendModel, BackendModelInvoice, BackendModelInvoiceTemplate } from './getBackendModel';
 import { PaymentAmount } from './types';
+import { InvoiceTemplateLineCostFixed, InvoiceTemplateMultiLine, InvoiceTemplateSingleLine } from '../backend/payments';
 
 const fromInvoiceTemplateMultiLine = (details: InvoiceTemplateMultiLine): PaymentAmount => ({
     value: details.cart.reduce((p, c) => p + c.price * c.quantity, 0),
@@ -22,10 +15,10 @@ const fromInvoiceTemplateLineCostFixed = (fixed: InvoiceTemplateLineCostFixed): 
 export const fromInvoiceTemplateSingleLine = (details: InvoiceTemplateSingleLine): PaymentAmount => {
     const price = details.price;
     switch (price.costType) {
-        case CostType.InvoiceTemplateLineCostFixed:
+        case 'InvoiceTemplateLineCostFixed':
             return fromInvoiceTemplateLineCostFixed(price as InvoiceTemplateLineCostFixed);
-        case CostType.InvoiceTemplateLineCostRange:
-        case CostType.InvoiceTemplateLineCostUnlim:
+        case 'InvoiceTemplateLineCostRange':
+        case 'InvoiceTemplateLineCostUnlim':
             throw new Error(`Unsupported invoice template cost type: ${price.costType}`);
     }
 };
@@ -33,9 +26,9 @@ export const fromInvoiceTemplateSingleLine = (details: InvoiceTemplateSingleLine
 const fromInvoiceTemplate = ({ invoiceTemplate }: BackendModelInvoiceTemplate): PaymentAmount => {
     const details = invoiceTemplate.details;
     switch (details.templateType) {
-        case TemplateType.InvoiceTemplateMultiLine:
+        case 'InvoiceTemplateMultiLine':
             return fromInvoiceTemplateMultiLine(details as InvoiceTemplateMultiLine);
-        case TemplateType.InvoiceTemplateSingleLine:
+        case 'InvoiceTemplateSingleLine':
             return fromInvoiceTemplateSingleLine(details as InvoiceTemplateSingleLine);
     }
 };

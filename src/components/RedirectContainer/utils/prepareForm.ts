@@ -1,22 +1,21 @@
-import { BrowserPostRequest, BrowserRequest, RequestType } from 'checkout/backend';
-
 import { toGetFormInputs } from './toGetFormInputs';
 import { toPostFormInputs } from './toPostFormInputs';
+import { BrowserRequest } from '../../../common/backend/payments';
 
 const toInputs = (origin: string, request: BrowserRequest): HTMLInputElement[] => {
     switch (request.requestType) {
-        case RequestType.BrowserPostRequest:
-            return toPostFormInputs(origin, (request as BrowserPostRequest).form);
-        case RequestType.BrowserGetRequest:
+        case 'BrowserPostRequest':
+            return toPostFormInputs(origin, request.form);
+        case 'BrowserGetRequest':
             return toGetFormInputs(origin, request);
     }
 };
 
 const toMethod = (request: BrowserRequest): 'POST' | 'GET' => {
     switch (request.requestType) {
-        case RequestType.BrowserPostRequest:
+        case 'BrowserPostRequest':
             return 'POST';
-        case RequestType.BrowserGetRequest:
+        case 'BrowserGetRequest':
             return 'GET';
     }
 };

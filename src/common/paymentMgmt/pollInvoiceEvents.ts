@@ -1,6 +1,5 @@
-import { InvoiceChangeType, InvoiceEvent, getInvoiceEvents } from 'checkout/backend';
-
-import { delay, isNil, last } from '../utils';
+import { InvoiceChangeType, InvoiceEvent, getInvoiceEvents } from '../backend/payments';
+import { delay, extractError, isNil, last } from '../utils';
 
 const GET_INVOICE_EVENTS_LIMIT = 20;
 
@@ -16,9 +15,24 @@ const isChangeFound = (event: InvoiceEvent | undefined, stopPollingTypes: Invoic
     }, false);
 };
 
+const fetchInvoiceEventsSafe = async (
+    capiEndpoint: string,
+    accessToken: string,
+    invoiceID: string,
+    limit: number,
+    eventID?: number,
+): Promise<InvoiceEvent[]> => {
+    try {
+        return await getInvoiceEvents(capiEndpoint, accessToken, invoiceID, limit, eventID);
+    } catch (exception) {
+        console.warn(`Failed to fetch invoice events. ${extractError(exception)}`);
+        return [];
+    }
+};
+
 const fetchEvents = async (params: PollInvoiceEventsParams, isStop: () => boolean): Promise<PollingResult> => {
     const { apiEndpoint, invoiceAccessToken, invoiceID, startFromEventID, stopPollingTypes, delays } = params;
-    const events = await getInvoiceEvents(
+    const events = await fetchInvoiceEventsSafe(
         apiEndpoint,
         invoiceAccessToken,
         invoiceID,

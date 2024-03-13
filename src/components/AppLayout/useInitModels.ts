@@ -1,10 +1,10 @@
 import { useCallback, useReducer } from 'react';
-import { extractError } from 'src/common/utils';
 
 import { InitParams } from 'checkout/initialize';
 
 import { initPaymentCondition, PaymentCondition } from '../../common/paymentCondition';
 import { initPaymentModel, PaymentModel } from '../../common/paymentModel';
+import { extractError } from '../../common/utils';
 
 type ModelsStateData = {
     paymentModel: PaymentModel;
@@ -61,7 +61,7 @@ export const useInitModels = () => {
                     payload: { paymentModel, conditions },
                 });
             } catch (error) {
-                console.error(`useInitModels error: ${extractError(error)}`, error);
+                console.error(`useInitModels error. ${extractError(error)}`);
                 dispatch({ type: 'INIT_FAILED', error });
             }
         })();

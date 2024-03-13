@@ -1,5 +1,4 @@
-import { BrowserRequest, InvoiceStatuses, PaymentError, PaymentStatuses } from 'checkout/backend';
-
+import { BrowserRequest, InvoiceStatus, PaymentError, PaymentStatus } from '../backend/payments';
 import { InvoiceContext } from '../paymentModel';
 
 export type InvoiceDetermined = {
@@ -29,7 +28,7 @@ export type PaymentStatusChanged = {
     name: 'paymentStatusChanged';
     eventId: number;
     paymentId: string;
-    status: PaymentStatuses;
+    status: PaymentStatus;
     error?: PaymentError;
 };
 
@@ -39,7 +38,7 @@ export type PaymentStatusUnknown = {
 
 export type InvoiceStatusChanged = {
     name: 'invoiceStatusChanged';
-    status: InvoiceStatuses;
+    status: InvoiceStatus;
 };
 
 export type PaymentInteractionRedirectType = 'frame' | 'self';
