@@ -1,8 +1,7 @@
-import { FormField } from 'checkout/backend';
-
 import { expandWithRedirect } from './expandWithRedirect';
+import { UserInteractionForm } from '../../../common/backend/payments';
 
-const createInput = (origin: string, formField: FormField): HTMLInputElement => {
+const createInput = (origin: string, formField: UserInteractionForm): HTMLInputElement => {
     const formParam = document.createElement('input');
     formParam.name = formField.key;
     formField.key === 'TermUrl'
@@ -11,5 +10,5 @@ const createInput = (origin: string, formField: FormField): HTMLInputElement => 
     return formParam;
 };
 
-export const toPostFormInputs = (origin: string, form: FormField[]): HTMLInputElement[] =>
+export const toPostFormInputs = (origin: string, form: UserInteractionForm[]): HTMLInputElement[] =>
     form.map((field) => createInput(origin, field));

@@ -1,7 +1,6 @@
-import { PaymentMethodName, PaymentTerminal, ServiceProvider } from 'checkout/backend';
-
 import { BackendModel } from './getBackendModel';
 import { KnownProviderCategory, PaymentMethod } from './types';
+import { ServiceProvider } from '../backend/payments';
 import { assertUnreachable, groupBy } from '../utils';
 
 const categoryReducer = (
@@ -47,11 +46,10 @@ const fromPaymentTerminal = (terminalProviderIDs: string[], serviceProviders: Se
 export const backendModelToPaymentMethods = (model: BackendModel): PaymentMethod[] => {
     return model.paymentMethods.reduce((result, backendPaymentMethod) => {
         switch (backendPaymentMethod.method) {
-            case PaymentMethodName.BankCard:
+            case 'BankCard':
                 return result.concat([{ methodName: 'BankCard' }]);
-            case PaymentMethodName.PaymentTerminal:
-                const terminal = backendPaymentMethod as PaymentTerminal;
-                return result.concat(fromPaymentTerminal(terminal.providers, model.serviceProviders));
+            case 'PaymentTerminal':
+                return result.concat(fromPaymentTerminal(backendPaymentMethod.providers, model.serviceProviders));
             default:
                 return result;
         }

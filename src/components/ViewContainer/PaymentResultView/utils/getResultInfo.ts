@@ -1,59 +1,52 @@
-import { InvoiceStatuses, PaymentStatuses } from 'checkout/backend';
-
 import { InvoiceStatusChanged, PaymentCondition, PaymentStatusChanged } from '../../../../common/paymentCondition';
 import { ResultInfo } from '../types';
 
 const fromInvoiceStatusChanged = (condition: InvoiceStatusChanged): ResultInfo => {
     switch (condition.status) {
-        case InvoiceStatuses.paid:
+        case 'paid':
             return {
                 iconName: 'SuccessIcon',
                 label: 'form.header.final.invoice.paid.label',
             };
-        case InvoiceStatuses.cancelled:
+        case 'cancelled':
             return {
                 iconName: 'WarningIcon',
                 label: 'form.header.final.invoice.cancelled.label',
             };
-        case InvoiceStatuses.fulfilled:
+        case 'fulfilled':
             return {
                 iconName: 'WarningIcon',
                 label: 'form.header.final.invoice.fulfilled.label',
-            };
-        case InvoiceStatuses.refunded:
-            return {
-                iconName: 'WarningIcon',
-                label: 'form.header.final.invoice.refunded.label',
             };
     }
 };
 
 const fromPaymentStatusChanged = (condition: PaymentStatusChanged): ResultInfo => {
     switch (condition.status) {
-        case PaymentStatuses.captured:
-        case PaymentStatuses.processed:
+        case 'captured':
+        case 'processed':
             return {
                 iconName: 'SuccessIcon',
                 label: 'form.header.final.success.label',
             };
-        case PaymentStatuses.cancelled:
+        case 'cancelled':
             return {
                 iconName: 'WarningIcon',
                 label: 'form.header.final.cancelled.label',
             };
-        case PaymentStatuses.refunded:
+        case 'refunded':
             return {
                 iconName: 'WarningIcon',
                 label: 'form.header.final.refunded.label',
             };
-        case PaymentStatuses.pending:
+        case 'pending':
             return {
                 iconName: 'WarningIcon',
                 label: 'form.header.final.pending.label',
                 description: 'form.header.final.pending.description',
                 hasActions: true,
             };
-        case PaymentStatuses.failed:
+        case 'failed':
             const error = condition.error;
             return {
                 iconName: 'ErrorIcon',

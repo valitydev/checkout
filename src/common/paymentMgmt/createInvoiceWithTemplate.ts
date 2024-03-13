@@ -1,6 +1,5 @@
-import { createInvoiceWithTemplate as request } from 'checkout/backend';
-
 import { invoiceToInvoiceContext } from './invoiceToInvoiceContext';
+import { createInvoiceWithTemplate as request } from '../backend/payments';
 import { InvoiceContext, PaymentModelInvoiceTemplate } from '../paymentModel';
 
 export const createInvoiceWithTemplate = async (model: PaymentModelInvoiceTemplate): Promise<InvoiceContext> => {

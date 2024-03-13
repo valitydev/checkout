@@ -1,9 +1,8 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { BrowserRequest } from 'checkout/backend';
-
 import { prepareForm } from './utils';
+import { BrowserRequest } from '../../common/backend/payments';
 import { PaymentContext } from '../../common/contexts';
 import { device, isNil } from '../../common/utils';
 

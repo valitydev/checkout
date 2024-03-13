@@ -1,3 +1,5 @@
+import { getServiceProviders } from './getServiceProviders';
+import { InvoiceContext, InvoiceParams, InvoiceTemplateContext, InvoiceTemplateParams } from './types';
 import {
     Invoice,
     InvoiceTemplate,
@@ -7,10 +9,8 @@ import {
     getInvoicePaymentMethods,
     getInvoicePaymentMethodsByTemplateID,
     getInvoiceTemplateByID,
-} from 'checkout/backend';
-
-import { getServiceProviders } from './getServiceProviders';
-import { InvoiceContext, InvoiceParams, InvoiceTemplateContext, InvoiceTemplateParams } from './types';
+} from '../backend/payments';
+import { withRetry } from '../utils';
 
 type CommonBackendModel = {
     paymentMethods: PaymentMethod[];
@@ -33,9 +33,11 @@ const getInvoiceTemplateModel = async (
     apiEndpoint: string,
     { invoiceTemplateID, invoiceTemplateAccessToken }: InvoiceTemplateParams,
 ): Promise<BackendModelInvoiceTemplate> => {
+    const getInvoiceTemplateByIDWithRetry = withRetry(getInvoiceTemplateByID);
+    const getInvoicePaymentMethodsByTemplateIDWithRetry = withRetry(getInvoicePaymentMethodsByTemplateID);
     const [invoiceTemplate, paymentMethods] = await Promise.all([
-        getInvoiceTemplateByID(apiEndpoint, invoiceTemplateAccessToken, invoiceTemplateID),
-        getInvoicePaymentMethodsByTemplateID(apiEndpoint, invoiceTemplateAccessToken, invoiceTemplateID),
+        getInvoiceTemplateByIDWithRetry(apiEndpoint, invoiceTemplateAccessToken, invoiceTemplateID),
+        getInvoicePaymentMethodsByTemplateIDWithRetry(apiEndpoint, invoiceTemplateAccessToken, invoiceTemplateID),
     ]);
     const serviceProviders = await getServiceProviders(paymentMethods, apiEndpoint, invoiceTemplateAccessToken);
     return { type: 'BackendModelInvoiceTemplate', paymentMethods, invoiceTemplate, serviceProviders };
@@ -45,9 +47,11 @@ const getInvoiceModel = async (
     apiEndpoint: string,
     { invoiceID, invoiceAccessToken }: InvoiceParams,
 ): Promise<BackendModelInvoice> => {
+    const getInvoiceByIDWithRetry = withRetry(getInvoiceByID);
+    const getInvoicePaymentMethodsWithRetry = withRetry(getInvoicePaymentMethods);
     const [invoice, paymentMethods] = await Promise.all([
-        getInvoiceByID(apiEndpoint, invoiceAccessToken, invoiceID),
-        getInvoicePaymentMethods(apiEndpoint, invoiceAccessToken, invoiceID),
+        getInvoiceByIDWithRetry(apiEndpoint, invoiceAccessToken, invoiceID),
+        getInvoicePaymentMethodsWithRetry(apiEndpoint, invoiceAccessToken, invoiceID),
     ]);
     const serviceProviders = await getServiceProviders(paymentMethods, apiEndpoint, invoiceAccessToken);
     return { type: 'BackendModelInvoice', paymentMethods, invoice, serviceProviders };

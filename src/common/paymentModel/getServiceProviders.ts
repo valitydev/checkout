@@ -1,39 +1,20 @@
-import {
-    getServiceProviderByID,
-    PaymentMethod,
-    PaymentMethodName,
-    PaymentTerminal,
-    ServiceProvider,
-} from 'checkout/backend';
-
-import { isNil } from '../utils';
-
-export async function getServiceProviderOrNull(
-    endpoint: string,
-    accessToken: string,
-    id: string,
-): Promise<ServiceProvider | null> {
-    try {
-        return await getServiceProviderByID(endpoint, accessToken, id);
-    } catch (err) {
-        console.error(`Failed to load provider "${id}".`, err);
-        return null;
-    }
-}
+import { PaymentMethod, ServiceProvider, getServiceProviderByID } from '../backend/payments';
+import { isNil, withRetry } from '../utils';
 
 const providerIDsReducer = (result: string[], method: PaymentMethod): string[] => {
     switch (method.method) {
-        case PaymentMethodName.PaymentTerminal:
-        case PaymentMethodName.DigitalWallet:
-            const terminalMethod = method as PaymentTerminal;
-            if (!isNil(terminalMethod.providers)) {
-                return result.concat(terminalMethod.providers);
+        case 'PaymentTerminal':
+        case 'DigitalWallet':
+            if (!isNil(method.providers)) {
+                return result.concat(method.providers);
             }
             return result;
         default:
             return result;
     }
 };
+
+const getServiceProviderByIDWithRetry = withRetry(getServiceProviderByID);
 
 export const getServiceProviders = async (
     paymentMethods: PaymentMethod[],
@@ -42,7 +23,7 @@ export const getServiceProviders = async (
 ): Promise<ServiceProvider[]> => {
     const providerIDs = paymentMethods.reduce(providerIDsReducer, []);
     const serviceProvidersOrNull = await Promise.all(
-        providerIDs.map((id) => getServiceProviderOrNull(endpoint, accessToken, id)),
+        providerIDs.map((id) => getServiceProviderByIDWithRetry(endpoint, accessToken, id)),
     );
     return serviceProvidersOrNull.filter((provider): provider is ServiceProvider => !isNil(provider));
 };

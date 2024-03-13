@@ -1,14 +1,8 @@
-import {
-    InvoiceStatuses,
-    ServiceProviderContactInfo,
-    ServiceProviderMetadataField,
-    getInvoiceEvents,
-} from 'checkout/backend';
-
 import { PaymentCondition } from './types';
 import { invoiceEventsToConditions, provideInstantPayment } from './utils';
+import { ServiceProviderContactInfo, ServiceProviderMetadataField, getInvoiceEvents } from '../backend/payments';
 import { InitContext, PaymentModel, PaymentModelInvoice, PaymentTerminal } from '../paymentModel';
-import { extractError, isNil, last } from '../utils';
+import { extractError, isNil, last, withRetry } from '../utils';
 import { findMetadata } from '../utils/findMetadata';
 
 /*
@@ -94,7 +88,8 @@ const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<Payment
             apiEndpoint,
             initContext: { skipUserInteraction },
         } = model;
-        const events = await getInvoiceEvents(
+        const getInvoiceEventsWithRetry = withRetry(getInvoiceEvents);
+        const events = await getInvoiceEventsWithRetry(
             apiEndpoint,
             invoiceParams.invoiceAccessToken,
             invoiceParams.invoiceID,
@@ -125,12 +120,11 @@ const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<Payment
 
 const provideInvoice = async (model: PaymentModelInvoice): Promise<PaymentCondition[]> => {
     switch (model.status) {
-        case InvoiceStatuses.cancelled:
-        case InvoiceStatuses.fulfilled:
-        case InvoiceStatuses.paid:
-        case InvoiceStatuses.refunded:
+        case 'cancelled':
+        case 'fulfilled':
+        case 'paid':
             return [{ name: 'invoiceStatusChanged', status: model.status }];
-        case InvoiceStatuses.unpaid:
+        case 'unpaid':
             return provideInvoiceUnpaid(model);
     }
 };
