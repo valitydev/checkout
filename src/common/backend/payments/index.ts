@@ -5,7 +5,13 @@ export { getInvoiceTemplateByID } from './getInvoiceTemplateByID';
 export { getInvoicePaymentMethodsByTemplateID } from './getInvoicePaymentMethodsByTemplateID';
 export { getInvoiceEvents } from './getInvoiceEvents';
 export { createInvoiceWithTemplate } from './createInvoiceWithTemplate';
+export { createPayment } from './createPayment';
+export { createPaymentResource } from './createPaymentResource';
 
+export { METADATA_NAMESPACE } from './serviceProviderMetadata';
+
+export type { PaymentParams } from './createPayment';
+export type { PaymentResourceParams, PaymentTool, CardData, PaymentTerminalData } from './createPaymentResource';
 export type {
     Invoice,
     InvoiceAndToken,
@@ -27,12 +33,23 @@ export type {
     BrowserGetRequest,
     BrowserPostRequest,
     UserInteractionForm,
-} from './types';
-
+    PaymentResource,
+    ClientInfo,
+    Payer,
+    PaymentResourcePayer,
+    ContactInfo,
+} from './paymentModel';
 export type {
     ServiceProviderMetadata,
     CheckoutServiceProviderMetadata,
     ServiceProviderContactInfo,
     ServiceProviderMetadataField,
-    METADATA_NAMESPACE,
+    ServiceProviderMetadataForm,
+    PaymentSessionInfoMetadata,
+    ServiceProviderIconMetadata,
+    MetadataTextLocalization,
+    ServiceProviderMetadataSelect,
+    ServiceProviderTitleMetadata,
+    MetadataFieldFormatter,
+    QrCodeFormMetadata,
 } from './serviceProviderMetadata';

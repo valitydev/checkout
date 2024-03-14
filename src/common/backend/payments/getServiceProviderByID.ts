@@ -1,5 +1,5 @@
-import { ServiceProvider } from './types';
-import { fetchApi } from '../../../common/utils';
+import { ServiceProvider } from './paymentModel';
+import { fetchApi } from '../../utils';
 
 export const getServiceProviderByID = async (
     capiEndpoint: string,

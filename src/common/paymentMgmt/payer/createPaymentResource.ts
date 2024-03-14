@@ -1,6 +1,7 @@
 import { load } from '@fingerprintjs/fingerprintjs';
 
-import { PaymentResource, PaymentTool, createPaymentResource as request } from 'checkout/backend';
+import { PaymentResource, PaymentTool, createPaymentResource as request } from '../../../common/backend/payments';
+import { withRetry } from '../../../common/utils';
 
 const getClientInfoUrl = (): { url: string } | undefined => {
     if (document.referrer === '') return;
@@ -22,5 +23,6 @@ export const createPaymentResource = async (
         fingerprint: await getFingerprint(),
         ...getClientInfoUrl(),
     };
-    return request(apiEndpoint, invoiceAccessToken, paymentTool, clientInfo);
+    const createPaymentResourceWithRetry = withRetry(request);
+    return createPaymentResourceWithRetry(apiEndpoint, invoiceAccessToken, { paymentTool, clientInfo });
 };

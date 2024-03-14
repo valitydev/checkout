@@ -1,5 +1,5 @@
-import { PaymentMethod } from './types';
-import { fetchApi } from '../../../common/utils';
+import { PaymentMethod } from './paymentModel';
+import { fetchApi } from '../../utils';
 
 export const getInvoicePaymentMethodsByTemplateID = async (
     capiEndpoint: string,

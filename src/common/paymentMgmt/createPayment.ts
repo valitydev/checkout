@@ -1,8 +1,8 @@
-import { FlowType, Payment, createPayment as request } from 'checkout/backend';
-
 import { createPayer } from './payer';
 import { StartPaymentPayload } from './types';
+import { Payment, PaymentParams, createPayment as request } from '../backend/payments';
 import { CommonPaymentModel, InvoiceContext } from '../paymentModel';
+import { withRetry } from '../utils';
 
 export const createPayment = async (
     model: CommonPaymentModel,
@@ -11,9 +11,9 @@ export const createPayment = async (
 ): Promise<Payment> => {
     const payer = await createPayer(model, invoiceContext, payload);
     const { isExternalIDIncluded, metadata, recurring } = model.initContext;
-    const params = {
+    const params: PaymentParams = {
         flow: {
-            type: FlowType.PaymentFlowInstant,
+            type: 'PaymentFlowInstant',
         },
         payer,
         metadata,
@@ -21,5 +21,6 @@ export const createPayment = async (
         externalID: isExternalIDIncluded ? invoiceContext.externalID : undefined,
     };
     const { invoiceID, invoiceAccessToken } = invoiceContext.invoiceParams;
-    return await request(model.apiEndpoint, invoiceAccessToken, invoiceID, params);
+    const createPaymentWithRetry = withRetry(request);
+    return await createPaymentWithRetry(model.apiEndpoint, invoiceAccessToken, invoiceID, params);
 };

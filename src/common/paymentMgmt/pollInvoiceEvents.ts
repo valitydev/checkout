@@ -1,5 +1,5 @@
 import { InvoiceChangeType, InvoiceEvent, getInvoiceEvents } from '../backend/payments';
-import { delay, extractError, isNil, last } from '../utils';
+import { delay, isNil, last } from '../utils';
 
 const GET_INVOICE_EVENTS_LIMIT = 20;
 
@@ -25,7 +25,6 @@ const fetchInvoiceEventsSafe = async (
     try {
         return await getInvoiceEvents(capiEndpoint, accessToken, invoiceID, limit, eventID);
     } catch (exception) {
-        console.warn(`Failed to fetch invoice events. ${extractError(exception)}`);
         return [];
     }
 };

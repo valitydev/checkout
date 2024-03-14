@@ -1,5 +1,4 @@
-import { ServiceProviderMetadataField, ServiceProviderMetadataForm } from 'checkout/backend';
-
+import { ServiceProviderMetadataField, ServiceProviderMetadataForm } from '../../backend/payments';
 import { TerminalValues } from '../../paymentMgmt';
 import { isNil, isString } from '../../utils';
 

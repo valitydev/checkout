@@ -1,7 +1,6 @@
 import { FormEvent } from 'react';
 
-import { MetadataFieldFormatter } from 'checkout/backend';
-
+import { MetadataFieldFormatter } from '../../../../../common/backend/payments';
 import { safeVal, isNil } from '../../../../../common/utils';
 
 export const formatNumbersOnly =

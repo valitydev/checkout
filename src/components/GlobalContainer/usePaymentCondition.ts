@@ -1,8 +1,7 @@
 import { useReducer } from 'react';
 
-import { InvoiceChangeType } from 'checkout/backend';
-
 import { getLastEventId } from './utils';
+import { InvoiceChangeType } from '../../common/backend/payments';
 import { InvoiceDetermined, PaymentCondition, pollingResultToConditions } from '../../common/paymentCondition';
 import {
     PollInvoiceEventsDelay,
@@ -38,15 +37,10 @@ export const usePaymentCondition = (model: PaymentModel, initConditions: Payment
                 dispatch({ type: 'COMBINE_CONDITIONS', payload: [{ name: 'paymentProcessStarted' }] });
                 const { invoiceContext } = await determineInvoice();
                 await createPayment(model, invoiceContext, startPaymentPayload);
-                await startPolling(
-                    model,
-                    invoiceContext,
-                    [InvoiceChangeType.PaymentStatusChanged, InvoiceChangeType.PaymentInteractionRequested],
-                    {
-                        pollingTimeout: 60 * 1000 * 3,
-                        apiMethodCall: 1000,
-                    },
-                );
+                await startPolling(model, invoiceContext, ['PaymentStatusChanged', 'PaymentInteractionRequested'], {
+                    pollingTimeout: 60 * 1000 * 3,
+                    apiMethodCall: 1000,
+                });
             } catch (exception) {
                 console.error(`startPayment error: ${extractError(exception)}`, exception);
                 dispatch({
@@ -66,7 +60,7 @@ export const usePaymentCondition = (model: PaymentModel, initConditions: Payment
         (async () => {
             try {
                 const { invoiceContext } = await determineInvoice();
-                await startPolling(model, invoiceContext, [InvoiceChangeType.PaymentStatusChanged], {
+                await startPolling(model, invoiceContext, ['PaymentStatusChanged'], {
                     pollingTimeout: 60 * 1000 * 20,
                     apiMethodCall: 3000,
                 });

@@ -1,5 +1,18 @@
 import { ServiceProviderMetadata } from './serviceProviderMetadata';
 
+export type ClientInfo = {
+    fingerprint: string;
+    ip?: string;
+    url?: string;
+};
+
+export type PaymentResource = {
+    paymentToolToken: string;
+    paymentSession: string;
+    paymentToolDetails: PaymentToolDetails;
+    clientInfo: ClientInfo;
+};
+
 export type PaymentError = {
     code: string;
     subError?: PaymentError;

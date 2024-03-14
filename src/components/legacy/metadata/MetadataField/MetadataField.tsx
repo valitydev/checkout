@@ -1,9 +1,12 @@
 import { useMemo } from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
-import { MetadataFieldFormatter, MetadataTextLocalization, ServiceProviderMetadataField } from 'checkout/backend';
-
 import { getInputTypeFormatter, getMetadataFieldFormatter } from './formatters';
+import {
+    MetadataFieldFormatter,
+    MetadataTextLocalization,
+    ServiceProviderMetadataField,
+} from '../../../../common/backend/payments';
 import {
     formatOnFocus,
     formatPhoneNumber,

@@ -1,9 +1,8 @@
-import { PayerType, PaymentResourcePayer } from 'checkout/backend';
-
 import { createPaymentResource } from './createPaymentResource';
 import { createSessionInfo } from './createSessionInfo';
 import { toContactInfo } from './toContactInfo';
 import { toPaymentTool } from './toPaymentTool';
+import { PaymentResourcePayer } from '../../../common/backend/payments';
 import { CommonPaymentModel, InvoiceContext } from '../../paymentModel';
 import { StartPaymentPayload } from '../types';
 
@@ -20,7 +19,7 @@ export const createPayer = async (
         createSessionInfo(model, invoiceContext, payload),
     ]);
     return {
-        payerType: PayerType.PaymentResourcePayer,
+        payerType: 'PaymentResourcePayer',
         paymentToolToken,
         paymentSession,
         contactInfo: toContactInfo(payload),

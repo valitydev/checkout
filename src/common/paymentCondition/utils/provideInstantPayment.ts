@@ -1,5 +1,3 @@
-import { InvoiceChangeType } from 'checkout/backend';
-
 import { pollingResultToConditions } from './pollingResultToConditions';
 import { toDefaultFormValuesMetadata } from './toDefaultFormValuesMetadata';
 import { StartPaymentPayload, createPayment, determineModel, pollInvoiceEvents } from '../../paymentMgmt';
@@ -53,7 +51,7 @@ export const provideInstantPayment = async (
             invoiceAccessToken,
             invoiceID,
             startFromEventID: lastEventId,
-            stopPollingTypes: [InvoiceChangeType.PaymentStatusChanged, InvoiceChangeType.PaymentInteractionRequested],
+            stopPollingTypes: ['PaymentStatusChanged', 'PaymentInteractionRequested'],
             delays: {
                 pollingTimeout: DEFAULT_TIMEOUT_MS,
                 apiMethodCall: API_METHOD_CALL_MS,
@@ -66,7 +64,7 @@ export const provideInstantPayment = async (
         const conditions = pollingResultToConditions(pollingResult, skipUserInteraction);
         return [invoiceDetermined, ...conditions];
     } catch (exception) {
-        console.error('provideInstantPayment error:', extractError(exception));
+        console.error(`provideInstantPayment error. ${extractError(exception)}`);
         return [
             {
                 name: 'paymentProcessFailed',

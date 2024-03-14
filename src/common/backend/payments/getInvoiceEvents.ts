@@ -1,5 +1,5 @@
-import { InvoiceEvent } from './types';
-import { fetchApi, isNil } from '../../../common/utils';
+import { InvoiceEvent } from './paymentModel';
+import { fetchApi, isNil } from '../../utils';
 
 export const getInvoiceEvents = async (
     capiEndpoint: string,
