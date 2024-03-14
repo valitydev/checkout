@@ -26,6 +26,8 @@ export { getUrlParams } from './getUrlParams';
 export { countries } from './countries';
 export { isContainCardNumber } from './isContainCardNumber';
 export { withRetry } from './withRetry';
+export { fetchConfig } from './fetchConfig';
+export { getOrigin } from './getOrigin';
 
 export type { URLParams } from './getUrlParams';
 export type { CountrySubdivision, Country } from './countries';

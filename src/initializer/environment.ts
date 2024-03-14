@@ -1,4 +1,4 @@
-import { Initializer } from './initializer/initializer';
+import { Initializer } from './initializer';
 
 export interface Environment extends Window {
     ValityCheckout?: Configurator;

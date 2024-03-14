@@ -1,11 +1,10 @@
 import * as creditCardType from 'credit-card-type';
 
 import { InitConfig, resolveInitConfig } from 'checkout/config';
+import { ThemeName } from 'checkout/themes';
 
-import { AppConfig, getAppConfig, getEnv } from './backend';
-import { getUrlParams, URLParams } from '../common/utils';
-import { listen, Transport, StubTransport, CommunicatorEvents, communicatorInstanceName } from '../communicator';
-import { getOrigin } from '../get-origin';
+import { fetchConfig, getOrigin, getUrlParams, URLParams, withRetry } from './common/utils';
+import { listen, Transport, StubTransport, CommunicatorEvents, communicatorInstanceName } from './communicator';
 
 /**
  * Additional card brands
@@ -37,7 +36,8 @@ creditCardType.addCard({
 const initSentry = async (dsn: string) => {
     const { init, BrowserTracing } = await import('@sentry/react');
     const { CaptureConsole } = await import('@sentry/integrations');
-    const env = await getEnv();
+    const fetchEnv = withRetry(fetchConfig<{ version: string }>);
+    const env = await fetchEnv('./env.json');
     init({
         environment: 'production',
         dsn,
@@ -63,6 +63,16 @@ const resolveUriParams = async (): Promise<[Transport, URLParams]> => {
     return [transport, params];
 };
 
+export type AppConfig = {
+    capiEndpoint?: string;
+    wrapperEndpoint?: string;
+    brandless?: boolean;
+    fixedTheme?: ThemeName;
+    brandName?: string;
+    urlShortenerEndpoint?: string;
+    sentryDsn?: string;
+};
+
 export type InitParams = {
     initConfig: InitConfig;
     appConfig: AppConfig;
@@ -72,7 +82,8 @@ export type InitParams = {
 export const initialize = async (): Promise<[Transport, InitParams]> => {
     const [transport, params] = await resolveUriParams();
     const initConfig = resolveInitConfig(params);
-    const appConfig = await getAppConfig();
+    const fetchAppConfig = withRetry(fetchConfig<AppConfig>);
+    const appConfig = await fetchAppConfig('./appConfig.json');
     if (appConfig.sentryDsn) {
         await initSentry(appConfig.sentryDsn);
     }
@@ -87,7 +98,6 @@ export const initialize = async (): Promise<[Transport, InitParams]> => {
             },
         ];
     } catch (e) {
-        console.error(e);
         transport.emit(CommunicatorEvents.close);
         throw e;
     }

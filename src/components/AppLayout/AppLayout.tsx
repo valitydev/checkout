@@ -2,13 +2,13 @@ import { lazy, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ThemeProvider } from 'styled-components';
 
-import { InitParams } from 'checkout/initialize';
 import { getTheme } from 'checkout/themes';
 
 import { ModalError } from './ModalError';
 import { useInitModels } from './useInitModels';
 import { toCustomizationContext } from './utils';
 import { CustomizationContext } from '../../common/contexts';
+import { InitParams } from '../../initialize';
 import { LayoutLoader, Overlay, AppWrapper, GlobalStyle, ErrorBoundaryFallback } from '../legacy';
 
 type AppLayoutProps = {
