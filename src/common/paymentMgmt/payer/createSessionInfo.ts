@@ -1,17 +1,24 @@
-import { PaymentSessionInfoMetadata, SessionInfo, ShortenedUrlParams, shortenUrl } from 'checkout/backend';
-
 import { toSelfRedirectUrl } from './toSelfRedirectUrl';
-import { isNil } from '../../../common/utils';
-import { findMetadata } from '../../../common/utils/findMetadata';
+import { ShortenedUrlParams, shortenUrl } from '../../backend';
+import { PaymentSessionInfoMetadata } from '../../backend/payments';
 import { CommonPaymentModel, InvoiceContext } from '../../paymentModel';
+import { extractError, isNil } from '../../utils';
+import { findMetadata } from '../../utils/findMetadata';
 import { StartPaymentPayload } from '../types';
 
-export const shorten = (
+const shorten = async (
     urlShortenerEndpoint: string,
     invoiceAccessToken: string,
     params: ShortenedUrlParams,
-): Promise<string> =>
-    shortenUrl(urlShortenerEndpoint, invoiceAccessToken, params).then(({ shortenedUrl }) => shortenedUrl);
+): Promise<string> => {
+    try {
+        const result = await shortenUrl(urlShortenerEndpoint, invoiceAccessToken, params);
+        return result.shortenedUrl;
+    } catch (error) {
+        console.warn(`Failed to shorten url. ${extractError(error)}`);
+        return params.sourceUrl;
+    }
+};
 
 const isSkipUserInteractionParam = (payload: StartPaymentPayload) => payload.methodName === 'PaymentTerminal';
 
@@ -30,7 +37,7 @@ export const createSessionInfo = async (
     model: CommonPaymentModel,
     invoiceContext: InvoiceContext,
     payload: StartPaymentPayload,
-): Promise<SessionInfo> => {
+) => {
     const { urlShortenerEndpoint, origin, localeCode, initContext, serviceProviders } = model;
     const {
         invoiceParams: { invoiceAccessToken, invoiceID },

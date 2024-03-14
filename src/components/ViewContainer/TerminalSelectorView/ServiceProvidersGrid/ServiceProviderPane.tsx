@@ -1,14 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
+import { GridItem } from './useGrigPages';
 import {
     CheckoutServiceProviderMetadata,
     METADATA_NAMESPACE,
     ServiceProviderIconMetadata,
     ServiceProviderMetadata,
-} from 'checkout/backend';
-
-import { GridItem } from './useGrigPages';
+} from '../../../../common/backend/payments';
 import { MetadataLogo } from '../../../../components/legacy';
 
 const PaneContainer = styled.div`

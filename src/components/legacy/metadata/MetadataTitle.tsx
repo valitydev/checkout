@@ -1,8 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { MetadataTextLocalization, ServiceProviderTitleMetadata } from 'checkout/backend';
-
+import { MetadataTextLocalization, ServiceProviderTitleMetadata } from '../../../common/backend/payments';
 import { PaymentMethodIcon } from '../PaymentMethodIcon';
 import { PaymentMethodTitle } from '../PaymentMethodTitle';
 

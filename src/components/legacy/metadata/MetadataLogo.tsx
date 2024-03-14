@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { ServiceProviderIconMetadata } from 'checkout/backend';
+import { ServiceProviderIconMetadata } from '../../../common/backend/payments';
 
 const MetadataImage = styled.img<{ height: string; width: string }>`
     height: ${({ height }) => height};

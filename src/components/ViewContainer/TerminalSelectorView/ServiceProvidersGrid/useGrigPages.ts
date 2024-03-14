@@ -5,8 +5,7 @@ import {
     METADATA_NAMESPACE,
     ServiceProviderIconMetadata,
     ServiceProviderMetadata,
-} from 'checkout/backend';
-
+} from '../../../../common/backend/payments';
 import { TerminalServiceProvider } from '../../../../common/paymentModel';
 import { TerminalSelectorItem } from '../../types';
 

@@ -1,5 +1,5 @@
-import { InvoiceTemplate } from './types';
-import { fetchApi } from '../../../common/utils';
+import { InvoiceTemplate } from './paymentModel';
+import { fetchApi } from '../../utils';
 
 export const getInvoiceTemplateByID = async (
     capiEndpoint: string,

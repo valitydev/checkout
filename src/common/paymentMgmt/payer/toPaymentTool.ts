@@ -1,5 +1,4 @@
-import { CardData, PaymentTool, PaymentToolType } from 'checkout/backend';
-
+import { CardData, PaymentTerminalData, PaymentTool } from '../../backend/payments';
 import { replaceSpaces } from '../../utils';
 import { BankCardValues, StartPaymentPayload, TerminalValues } from '../types';
 
@@ -9,7 +8,7 @@ const toPaymentToolBankCard = (values: BankCardValues): CardData => {
     const cardNumber = replaceSpaces(values.cardNumber);
     const expDate = replaceSpaces(values.expireDate);
     return {
-        paymentToolType: PaymentToolType.CardData,
+        paymentToolType: 'CardData',
         cardNumber,
         expDate,
         cvv: values.secureCode || DEFAULT_CVV,
@@ -17,8 +16,8 @@ const toPaymentToolBankCard = (values: BankCardValues): CardData => {
     };
 };
 
-const toPaymentToolTerminal = (values: TerminalValues) => ({
-    paymentToolType: PaymentToolType.PaymentTerminalData,
+const toPaymentToolTerminal = (values: TerminalValues): PaymentTerminalData => ({
+    paymentToolType: 'PaymentTerminalData',
     provider: values.provider,
     metadata: values.metadata,
 });

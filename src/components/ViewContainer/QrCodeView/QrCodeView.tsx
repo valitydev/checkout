@@ -2,9 +2,8 @@ import isMobile from 'ismobilejs';
 import { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import { QrCodeFormMetadata } from 'checkout/backend';
-
 import { QRCode } from './QrCode';
+import { QrCodeFormMetadata } from '../../../common/backend/payments';
 import { LocaleContext, PaymentConditionsContext, PaymentContext, PaymentModelContext } from '../../../common/contexts';
 import { PaymentInteractionRequested, PaymentStarted } from '../../../common/paymentCondition';
 import { isNil } from '../../../common/utils';

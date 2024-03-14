@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
-import { MetadataTextLocalization, ServiceProviderMetadataSelect } from 'checkout/backend';
-
+import { MetadataTextLocalization, ServiceProviderMetadataSelect } from '../../../common/backend/payments';
 import { isNil, countries, Country, CountrySubdivision } from '../../../common/utils';
 import { Select } from '../Select';
 

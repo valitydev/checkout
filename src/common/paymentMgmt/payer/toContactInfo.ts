@@ -1,5 +1,4 @@
-import { ContactInfo } from 'checkout/backend';
-
+import { ContactInfo } from '../../../common/backend/payments';
 import { isNil, replaceSpaces } from '../../utils';
 import { StartPaymentPayload } from '../types';
 

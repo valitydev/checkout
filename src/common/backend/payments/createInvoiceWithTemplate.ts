@@ -1,5 +1,5 @@
-import { InvoiceAndToken } from './types';
-import { fetchApi } from '../../../common/utils';
+import { InvoiceAndToken } from './paymentModel';
+import { fetchApi } from '../../utils';
 
 export type InvoiceParamsWithTemplate = {
     amount: number;
