@@ -1,8 +1,7 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
 
-import { Locale } from 'checkout/locale';
-
+import { Locale } from '../../../common/contexts';
 import { ReactComponent as ChevronLeftIcon } from '../icon/chevron-left.svg';
 
 const Container = styled.div`

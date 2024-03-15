@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { Locale } from 'checkout/locale';
-
 import { Info } from './commonComponents';
 import { useComplete } from './useComplete';
+import { Locale } from '../../../common/contexts';
 import { isNil } from '../../../common/utils';
 import { Button } from '../../../components/legacy';
 

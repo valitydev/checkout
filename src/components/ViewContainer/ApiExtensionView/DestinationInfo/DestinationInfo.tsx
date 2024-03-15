@@ -1,11 +1,10 @@
 import { useContext } from 'react';
 
-import { Locale } from 'checkout/locale';
-
 import { DestinationInfoBankAccount } from './DestinationInfoBankAccount';
 import { DestinationInfoBankCard } from './DestinationInfoBankCard';
 import { DestinationInfoSpb } from './DestinationInfoSpb';
 import { Destination } from '../../../../common/backend/p2p';
+import { Locale } from '../../../../common/contexts';
 import { ViewModelContext } from '../../../../common/contexts';
 import { Info, Container, Row, Label, Value, Alert } from '../commonComponents';
 

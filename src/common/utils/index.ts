@@ -28,6 +28,7 @@ export { isContainCardNumber } from './isContainCardNumber';
 export { withRetry } from './withRetry';
 export { fetchConfig } from './fetchConfig';
 export { getOrigin } from './getOrigin';
+export { detectLocale } from './detectLocale';
 
 export type { URLParams } from './getUrlParams';
 export type { CountrySubdivision, Country } from './countries';

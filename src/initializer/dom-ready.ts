@@ -1,4 +1,4 @@
-import { getOrigin } from '../common/utils';
+import { getOrigin } from '../common/utils/getOrigin';
 
 export const domReady = (): Promise<string> => {
     const origin = getOrigin();

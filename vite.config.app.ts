@@ -33,10 +33,6 @@ export default defineConfig({
                     src: 'src/assets/*',
                     dest: './assets',
                 },
-                {
-                    src: 'src/locale/*.json',
-                    dest: './locale',
-                },
             ],
         }),
         visualizer(),

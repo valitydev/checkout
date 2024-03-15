@@ -1,4 +1,4 @@
-import { isNil } from '../common/utils';
+import { isNil } from './isNil';
 
 const locales = ['ru', 'en', 'ja', 'pt', 'bn', 'ko', 'tr', 'az'];
 

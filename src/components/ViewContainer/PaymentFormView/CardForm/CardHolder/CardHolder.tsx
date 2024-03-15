@@ -1,9 +1,8 @@
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
-import { Locale } from 'checkout/locale';
-
 import { formatCardHolder } from './formatCardHolder';
 import { validateCardHolder } from './validateCardHolder';
+import { Locale } from '../../../../../common/contexts';
 import { isNil } from '../../../../../common/utils';
 import { Input } from '../../../../legacy';
 import { ReactComponent as UserIcon } from '../../../../legacy/icon/user.svg';

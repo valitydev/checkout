@@ -18,7 +18,7 @@
         "noFallthroughCasesInSwitch": true,
         "baseUrl": ".",
         "paths": {
-            "checkout/*": ["./src/app/*", "./src/locale/*"]
+            "checkout/*": ["./src/app/*"]
         }
     },
     "include": ["./src/**/*", "./types/**/*"]

@@ -5,7 +5,7 @@ import { resolveObject } from './resolveObject';
 import { resolvePhoneNumber } from './resolvePhoneNumber';
 import { resolveRedirectUrl } from './resolveRedirectUrl';
 import { resolveString } from './resolveString';
-import { detectLocale } from '../../../locale';
+import { detectLocale } from '../../utils';
 import { InitConfig } from '../types';
 
 const setDefault = <P, D>(userParam: P, defaultValue: D): P | D =>

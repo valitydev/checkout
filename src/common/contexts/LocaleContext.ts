@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { Locale } from 'checkout/locale';
+export type Locale = Record<string, string | any>;
 
 export type LocaleContextProps = {
     l: Locale;

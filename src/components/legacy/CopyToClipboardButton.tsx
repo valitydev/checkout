@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 
-import { Locale } from 'checkout/locale';
-
 import { Button } from './Button';
+import { Locale } from '../../common/contexts';
 
 export const CopyToClipboardButton: React.FC<{
     onClick: () => void;

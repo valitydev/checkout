@@ -2,9 +2,8 @@ import isMobile from 'ismobilejs';
 import { useMemo } from 'react';
 import styled from 'styled-components';
 
-import { Locale } from 'checkout/locale';
-
 import { Back } from './Back';
+import { Locale } from '../../../common/contexts';
 import { device } from '../../../common/utils';
 
 const InfoWrapper = styled.div`
