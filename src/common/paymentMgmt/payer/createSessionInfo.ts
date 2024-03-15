@@ -2,7 +2,7 @@ import { toSelfRedirectUrl } from './toSelfRedirectUrl';
 import { ShortenedUrlParams, shortenUrl } from '../../backend';
 import { PaymentSessionInfoMetadata } from '../../backend/payments';
 import { CommonPaymentModel, InvoiceContext } from '../../paymentModel';
-import { extractError, isNil } from '../../utils';
+import { isNil } from '../../utils';
 import { findMetadata } from '../../utils/findMetadata';
 import { StartPaymentPayload } from '../types';
 
@@ -15,7 +15,6 @@ const shorten = async (
         const result = await shortenUrl(urlShortenerEndpoint, invoiceAccessToken, params);
         return result.shortenedUrl;
     } catch (error) {
-        console.warn(`Failed to shorten url. ${extractError(error)}`);
         return params.sourceUrl;
     }
 };
