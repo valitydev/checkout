@@ -1,8 +1,11 @@
 import { css } from 'styled-components';
 
-import { ThemeName } from './theme-name';
+export enum ThemeName {
+    plantation = 'plantation',
+    rhino = 'rhino',
+}
 
-export interface Theme {
+export type Theme = {
     name: ThemeName;
     font: {
         family: string;
@@ -53,4 +56,4 @@ export interface Theme {
     alert: {
         background: string;
     };
-}
+};

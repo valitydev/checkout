@@ -1,7 +1,6 @@
 import { css } from 'styled-components';
 
-import { Theme } from './theme';
-import { ThemeName } from './theme-name';
+import { Theme, ThemeName } from './types';
 
 const palette = {
     CodGray: '#110E0B',

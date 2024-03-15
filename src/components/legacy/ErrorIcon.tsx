@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { withTheme } from 'styled-components';
 
-import { WithThemeProps } from 'checkout/themes';
+import { WithThemeProps } from '../../common/theme';
 
 const ErrorIconDef: React.FC<WithThemeProps> = ({ theme }) => (
     <svg fill="none" height="144" id="error-icon" viewBox="0 0 144 144" width="144">

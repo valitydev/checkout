@@ -1,6 +1,6 @@
 import plantation from './plantation';
 import rhino from './rhino';
-import { Theme } from './theme';
+import { Theme } from './types';
 
 const themes = [plantation, rhino];
 
@@ -14,5 +14,4 @@ export function getTheme(themeName: string): Theme {
     return themes.find(({ name }) => name === themeName) || DEFAULT_THEME;
 }
 
-export * from './theme';
-export * from './theme-name';
+export type { Theme, ThemeName } from './types';

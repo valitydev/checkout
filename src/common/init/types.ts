@@ -1,5 +1,3 @@
-import { ThemeName } from 'checkout/themes';
-
 export type InitConfig = {
     integrationType?: 'invoice' | 'invoiceTemplate';
     invoiceID?: string;
@@ -26,7 +24,7 @@ export type AppConfig = {
     capiEndpoint?: string;
     wrapperEndpoint?: string;
     brandless?: boolean;
-    fixedTheme?: ThemeName;
+    fixedTheme?: string;
     brandName?: string;
     urlShortenerEndpoint?: string;
     sentryDsn?: string;

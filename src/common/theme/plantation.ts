@@ -1,7 +1,6 @@
 import { css } from 'styled-components';
 
-import { Theme } from './theme';
-import { ThemeName } from './theme-name';
+import { ThemeName, Theme } from './types';
 
 const palette = {
     Mustard: '#FFDB57',
