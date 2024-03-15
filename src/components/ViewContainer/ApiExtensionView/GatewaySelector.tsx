@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 
-import { Locale } from 'checkout/locale';
-
 import { useGateways } from './useGateways';
 import { Gateway } from '../../../common/backend/p2p';
+import { Locale } from '../../../common/contexts';
 import { Select } from '../../../components/legacy';
 
 export type GatewaySelectorProps = {

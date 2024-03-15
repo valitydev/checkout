@@ -1,6 +1,6 @@
 import { useCallback, useReducer } from 'react';
 
-import { InitParams, initialize } from './app/initialize';
+import { InitParams, initialize } from './common/init';
 import { Transport } from './communicator';
 
 type State =

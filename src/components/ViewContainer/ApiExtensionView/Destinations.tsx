@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 
-import { Locale } from 'checkout/locale';
-
 import { DestinationInfo } from './DestinationInfo';
 import { useDestinations } from './useDestinations';
+import { Locale } from '../../../common/contexts';
 import { isNil } from '../../../common/utils';
 
 export type DestinationsProps = {

@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-import { Locale } from 'checkout/locale';
-
 import { Button } from './Button';
+import { Locale } from '../../common/contexts';
 import { ViewAmount } from '../ViewContainer';
 
 const PayButtonWrapper = styled(Button)`

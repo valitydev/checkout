@@ -1,8 +1,7 @@
 import { FieldError, FieldErrorsImpl, Merge, UseFormRegister } from 'react-hook-form';
 
-import { Locale } from 'checkout/locale';
-
 import { Input } from './Input';
+import { Locale } from '../../common/contexts';
 import { isNil, formatPhoneNumber, validatePhone } from '../../common/utils';
 
 export interface PhoneProps {

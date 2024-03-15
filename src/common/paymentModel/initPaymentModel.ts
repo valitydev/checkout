@@ -1,11 +1,10 @@
-import { InitParams } from 'checkout/initialize';
-
 import { backendModelToPaymentAmount } from './backendModelToPaymentAmount';
 import { backendModelToPaymentMethods } from './backendModelToPaymentMethods';
 import { BackendModel, BackendModelInvoice, BackendModelInvoiceTemplate, getBackendModel } from './getBackendModel';
 import { toInitContext } from './toInitContext';
 import { toInvoiceContext } from './toInvoiceContext';
 import { InvoiceContext, InvoiceTemplateContext, PaymentModel } from './types';
+import { InitParams } from '../init';
 
 const applyInvoice = (
     { invoiceParams, type }: Partial<InvoiceContext>,

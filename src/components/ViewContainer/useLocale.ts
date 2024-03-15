@@ -1,7 +1,7 @@
 import { useCallback, useReducer } from 'react';
 
-import { getLocale } from 'checkout/backend';
-import { Locale } from 'checkout/locale';
+import { Locale } from '../../common/contexts';
+import { fetchConfig, withRetry } from '../../common/utils';
 
 type State =
     | { status: 'PRISTINE' }
@@ -35,15 +35,16 @@ const dataReducer = (state: State, action: Action): State => {
 };
 
 export const useLocale = () => {
-    const [state, dispatch] = useReducer(dataReducer, {
+    const [localeState, dispatch] = useReducer(dataReducer, {
         status: 'PRISTINE',
     });
 
-    const load = useCallback((localeCode: string) => {
+    const loadLocale = useCallback((localeCode: string) => {
         (async () => {
             dispatch({ type: 'LOAD_STARTED' });
             try {
-                const payload = await getLocale(localeCode);
+                const fetchLocale = withRetry(fetchConfig<Locale>);
+                const payload = await fetchLocale(`./assets/locale/${localeCode}.json`);
                 dispatch({
                     type: 'LOAD_SUCCESS',
                     payload,
@@ -56,5 +57,5 @@ export const useLocale = () => {
         })();
     }, []);
 
-    return { state, load };
+    return { localeState, loadLocale };
 };

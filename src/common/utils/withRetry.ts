@@ -9,7 +9,7 @@ import { delay } from './delay';
  * @returns {Function} - A new function that wraps the original async function with retry logic.
  */
 export const withRetry =
-    <T>(asyncFn: (...args: any[]) => Promise<T>, maxRetries = 3, retryDelay = 2000) =>
+    <T>(asyncFn: (...args: any[]) => Promise<T>, maxRetries = 3, retryDelay = 3000) =>
     async (...args: any[]): Promise<T> => {
         let lastError: any;
         for (let attempt = 0; attempt < maxRetries; attempt++) {

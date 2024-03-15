@@ -1,4 +1,4 @@
-import { InitConfig } from 'checkout/config';
+import { InitConfig } from '../common/init';
 
 const isFunction = (val) => typeof val === 'function';
 

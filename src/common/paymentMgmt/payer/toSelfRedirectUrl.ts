@@ -1,4 +1,4 @@
-import { serializeUrlParams } from '../../../serialize-url-params';
+import { isNil } from '../../utils';
 
 export const toSelfRedirectUrl = (
     origin: string,
@@ -7,11 +7,16 @@ export const toSelfRedirectUrl = (
     redirectUrl: string,
     locale: string,
     skipUserInteraction: boolean,
-) =>
-    `${origin}/v1/checkout.html?${serializeUrlParams({
+) => {
+    const queryParams = new URLSearchParams({
         invoiceID,
         invoiceAccessToken,
         redirectUrl,
         locale,
-        skipUserInteraction,
-    })}`;
+        skipUserInteraction: skipUserInteraction.toString(),
+    });
+    if (!isNil(redirectUrl)) {
+        queryParams.append('redirectUrl', redirectUrl);
+    }
+    return `${origin}/v1/checkout.html?${queryParams.toString()}`;
+};

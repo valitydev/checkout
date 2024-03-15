@@ -1,10 +1,9 @@
 import { FieldError, UseFormRegister, UseFormWatch } from 'react-hook-form';
 import styled from 'styled-components';
 
-import { Locale } from 'checkout/locale';
-
 import { formatCardNumber } from './formatCardNumber';
 import { validateCardNumber } from './validateCardNumber';
+import { Locale } from '../../../../../common/contexts';
 import { isNil } from '../../../../../common/utils';
 import { Input, CardTypeIcon } from '../../../../legacy';
 import { ReactComponent as CardIcon } from '../../../../legacy/icon/card.svg';

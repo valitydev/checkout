@@ -1,7 +1,6 @@
 import { useCallback, useReducer } from 'react';
 
-import { InitParams } from 'checkout/initialize';
-
+import { InitParams } from '../../common/init';
 import { initPaymentCondition, PaymentCondition } from '../../common/paymentCondition';
 import { initPaymentModel, PaymentModel } from '../../common/paymentModel';
 import { extractError } from '../../common/utils';

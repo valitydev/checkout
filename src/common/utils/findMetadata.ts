@@ -1,6 +1,5 @@
-import { CheckoutServiceProviderMetadata, METADATA_NAMESPACE, ServiceProviderMetadata } from 'checkout/backend';
-
 import { isNil } from './isNil';
+import { CheckoutServiceProviderMetadata, METADATA_NAMESPACE, ServiceProviderMetadata } from '../backend/payments';
 import { TerminalServiceProvider } from '../paymentModel';
 
 export const getMetadata = (

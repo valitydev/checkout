@@ -1,9 +1,8 @@
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
-import { Locale } from 'checkout/locale';
-
 import { formatExpiry } from './formatExpiry';
 import { validateExpireDate } from './validateExpireDate';
+import { Locale } from '../../../../../common/contexts';
 import { isNil } from '../../../../../common/utils';
 import { Input } from '../../../../legacy';
 import { ReactComponent as CalendarIcon } from '../../../../legacy/icon/calendar.svg';

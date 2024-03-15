@@ -14,7 +14,7 @@ import { formatAmount } from '../../common/utils';
 import { FormBlock, Info } from '../legacy';
 
 export function ViewContainer() {
-    const { state, load } = useLocale();
+    const { localeState, loadLocale } = useLocale();
     const { localeCode, name, description } = useContext(CustomizationContext);
     const { conditions } = useContext(PaymentConditionsContext);
     const {
@@ -25,20 +25,20 @@ export function ViewContainer() {
     const viewAmount = useMemo(() => formatAmount(paymentAmount, localeCode), [localeCode]);
 
     useEffect(() => {
-        load(localeCode);
+        loadLocale(localeCode);
     }, [localeCode]);
 
     return (
         <FormBlock>
-            {state.status === 'SUCCESS' && (
-                <LocaleContext.Provider value={{ l: state.data }}>
-                    <Info description={description} l={state.data} name={name} viewAmount={viewAmount}></Info>
+            {localeState.status === 'SUCCESS' && (
+                <LocaleContext.Provider value={{ l: localeState.data }}>
+                    <Info description={description} l={localeState.data} name={name} viewAmount={viewAmount}></Info>
                     <ViewModelContext.Provider value={{ viewModel, viewAmount, goTo, forward, backward }}>
                         <ViewContainerInner />
                     </ViewModelContext.Provider>
                 </LocaleContext.Provider>
             )}
-            {state.status === 'FAILURE' && <p>Load locale failure.</p>}
+            {localeState.status === 'FAILURE' && <p>Load locale failure.</p>}
         </FormBlock>
     );
 }
