@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 
+import { Locale } from 'checkout/contexts';
+import { isNil } from 'checkout/utils';
+
 import { DestinationInfo } from './DestinationInfo';
 import { useDestinations } from './useDestinations';
-import { Locale } from '../../../common/contexts';
-import { isNil } from '../../../common/utils';
 
 export type DestinationsProps = {
     locale: Locale;

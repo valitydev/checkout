@@ -1,6 +1,7 @@
+import { DestinationBankCard } from 'checkout/backend/p2p';
+import { Locale } from 'checkout/contexts';
+
 import { CopyToClipboard } from './CopyToClipboard';
-import { DestinationBankCard } from '../../../../common/backend/p2p';
-import { Locale } from '../../../../common/contexts';
 import { Container, Label, Row, Value } from '../commonComponents';
 
 export type DestinationInfoBankCardInfo = {

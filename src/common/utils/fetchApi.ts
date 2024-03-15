@@ -1,5 +1,11 @@
 import { guid } from './guid';
 
+export type ApiError = {
+    status: number;
+    endpoint: string;
+    details: Record<string, any>;
+};
+
 export async function fetchApi(
     endpoint: string,
     accessToken: string,
@@ -7,7 +13,8 @@ export async function fetchApi(
     path: string,
     body?: any,
 ): Promise<Response> {
-    const response = await fetch(`${endpoint}/${path}`, {
+    const fullEndpoint = `${endpoint}/${path}`;
+    const response = await fetch(fullEndpoint, {
         method,
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
@@ -18,14 +25,17 @@ export async function fetchApi(
     });
 
     if (!response.ok) {
-        let errorDetails = `Status: ${response.status} Endpoint: ${endpoint}/${path}`;
+        let errorDetails: Record<string, any> = {};
         try {
-            const errorBody = await response.json();
-            errorDetails += ` ${JSON.stringify(errorBody)}`;
+            errorDetails = await response.json();
         } catch (ex) {
-            // Ignore error
+            // If the response is not in JSON format or cannot be parsed, errorDetails will remain an empty object
         }
-        throw new Error(errorDetails);
+        throw {
+            status: response.status,
+            endpoint: fullEndpoint,
+            details: errorDetails,
+        } as ApiError;
     }
 
     return response;

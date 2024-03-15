@@ -1,15 +1,16 @@
 import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { IconName } from './types';
-import { getResultInfo } from './utils';
 import {
     CompletePaymentContext,
     LocaleContext,
     PaymentConditionsContext,
     PaymentModelContext,
-} from '../../../common/contexts';
-import { isNil, last } from '../../../common/utils';
+} from 'checkout/contexts';
+import { isNil, last } from 'checkout/utils';
+
+import { IconName } from './types';
+import { getResultInfo } from './utils';
 import { Button, ErrorIcon, Link, SuccessIcon, WarningIcon } from '../../../components/legacy';
 
 const Wrapper = styled.div`

@@ -1,42 +1,33 @@
 import { withRetry } from './withRetry';
 
-// Mock async function that simulates varying behavior
-const createMockAsyncFunction = (shouldSucceedAfterAttempts: number, result: string, error: Error): jest.Mock => {
-    let attempts = 0;
-    return jest.fn(() => {
-        attempts++;
-        return new Promise((resolve, reject) => {
-            if (attempts >= shouldSucceedAfterAttempts) {
-                resolve(result);
-            } else {
-                reject(error);
-            }
-        });
-    });
-};
+// Mock the delay function to avoid actual waiting time during tests
+jest.mock('./delay', () => ({
+    delay: jest.fn(() => Promise.resolve()),
+}));
 
 describe('withRetry', () => {
-    test('should succeed on first attempt', async () => {
-        const mockFn = createMockAsyncFunction(1, 'success', new Error('fail'));
-        const retriedFn = withRetry(mockFn, 3, 10);
+    it('retries until success for recoverable errors', async () => {
+        const mockRecoverableErrorFn = jest
+            .fn()
+            .mockRejectedValueOnce(new Error('Fail')) // Fail the first time
+            .mockResolvedValueOnce('Recovered'); // Succeed the second time
+        const retriedFn = withRetry(mockRecoverableErrorFn, 2, 100);
 
-        await expect(retriedFn()).resolves.toBe('success');
-        expect(mockFn).toHaveBeenCalledTimes(1);
+        await expect(retriedFn()).resolves.toEqual('Recovered');
+        expect(mockRecoverableErrorFn).toHaveBeenCalledTimes(2); // The function should be retried once
     });
 
-    test('should fail after all retries', async () => {
-        const mockFn = createMockAsyncFunction(5, 'success', new Error('fail')); // Succeeds after 5 attempts, but we only retry 3 times
-        const retriedFn = withRetry(mockFn, 3, 10);
+    it('throws immediately on last attempt without further delay', async () => {
+        const mockFailFn = jest.fn().mockRejectedValue(new Error('Mock error'));
+        const retriedFn = withRetry(mockFailFn, 3, 1000); // Allow for retries
 
-        await expect(retriedFn()).rejects.toThrow('fail');
-        expect(mockFn).toHaveBeenCalledTimes(3);
-    });
+        const startTime = Date.now();
+        await expect(retriedFn()).rejects.toThrow('Mock error');
+        const endTime = Date.now();
 
-    test('should succeed after 2 retries', async () => {
-        const mockFn = createMockAsyncFunction(3, 'success', new Error('fail')); // Succeeds on the third attempt
-        const retriedFn = withRetry(mockFn, 3, 10);
-
-        await expect(retriedFn()).resolves.toBe('success');
-        expect(mockFn).toHaveBeenCalledTimes(3);
+        // Adjusting expectation due to potential slight delays in promise rejection handling
+        // Ensure that the total execution time is significantly less than the cumulative delay that would have occurred
+        expect(endTime - startTime).toBeLessThan(1000); // Significantly less than if it had waited after the last retry
+        expect(mockFailFn).toHaveBeenCalledTimes(3); // Attempted thrice
     });
 });

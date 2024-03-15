@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 
+import { Locale } from 'checkout/contexts';
+import { isNil } from 'checkout/utils';
+
 import { Info } from './commonComponents';
 import { useComplete } from './useComplete';
-import { Locale } from '../../../common/contexts';
-import { isNil } from '../../../common/utils';
 import { Button } from '../../../components/legacy';
 
 const Container = styled.div`

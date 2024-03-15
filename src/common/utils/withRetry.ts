@@ -1,15 +1,18 @@
 import { delay } from './delay';
 
-/**
- * Creates a retry wrapper for any async function, allowing retries on failure.
- *
- * @param {Function} asyncFn - The asynchronous function to wrap with retry logic.
- * @param {number} maxRetries - The maximum number of retries.
- * @param {number} retryDelay - The initial delay between retries in milliseconds.
- * @returns {Function} - A new function that wraps the original async function with retry logic.
- */
+// Defining a type for the predicate function
+type ShouldRetryPredicate = (error: any) => boolean;
+
+// Default predicate function that allows retry only if the error is an instance of Error
+const defaultShouldRetryPredicate: ShouldRetryPredicate = (error: any) => error instanceof Error;
+
 export const withRetry =
-    <T>(asyncFn: (...args: any[]) => Promise<T>, maxRetries = 3, retryDelay = 3000) =>
+    <T>(
+        asyncFn: (...args: any[]) => Promise<T>,
+        maxRetries = 3,
+        retryDelay = 3000,
+        shouldRetryPredicate: ShouldRetryPredicate = defaultShouldRetryPredicate,
+    ) =>
     async (...args: any[]): Promise<T> => {
         let lastError: any;
         for (let attempt = 0; attempt < maxRetries; attempt++) {
@@ -17,12 +20,12 @@ export const withRetry =
                 return await asyncFn(...args);
             } catch (error) {
                 lastError = error;
-                // If this is the last attempt, throw the error immediately
-                if (attempt === maxRetries - 1) {
+                // If this is the last attempt or the predicate returns false, throw the error immediately
+                if (attempt === maxRetries - 1 || !shouldRetryPredicate(error)) {
                     throw lastError;
                 }
                 await delay(retryDelay);
-                // Increase retryDelay for exponential backoff
+                // Optional: Increase retryDelay for exponential backoff
                 retryDelay *= 2;
             }
         }

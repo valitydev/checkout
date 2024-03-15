@@ -1,13 +1,14 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
+import { Gateway } from 'checkout/backend/p2p';
+import { LocaleContext, PaymentConditionsContext, PaymentContext, PaymentModelContext } from 'checkout/contexts';
+import { InvoiceDetermined, PaymentStarted } from 'checkout/paymentCondition';
+import { isNil } from 'checkout/utils';
+
 import { CompletePayment } from './CompletePayment';
 import { Destinations } from './Destinations';
 import { GatewaySelector } from './GatewaySelector';
-import { Gateway } from '../../../common/backend/p2p';
-import { LocaleContext, PaymentConditionsContext, PaymentContext, PaymentModelContext } from '../../../common/contexts';
-import { InvoiceDetermined, PaymentStarted } from '../../../common/paymentCondition';
-import { isNil } from '../../../common/utils';
 import { FormLoader } from '../../../components/legacy';
 
 const FormContainer = styled.div`
