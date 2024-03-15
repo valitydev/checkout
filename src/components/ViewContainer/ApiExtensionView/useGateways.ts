@@ -1,7 +1,7 @@
 import { useCallback, useReducer } from 'react';
 
-import { Gateway, getGateways as getApiGateways } from '../../../common/backend/p2p';
-import { extractError, withRetry } from '../../../common/utils';
+import { Gateway, getGateways as getApiGateways } from 'checkout/backend/p2p';
+import { extractError, withRetry } from 'checkout/utils';
 
 type State = { status: 'PRISTINE' | 'LOADING' | 'FAILURE' } | { status: 'SUCCESS'; data: Gateway[] };
 

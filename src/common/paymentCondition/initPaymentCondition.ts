@@ -107,7 +107,7 @@ const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<Payment
             }
         }
     } catch (exception) {
-        console.error('provideInvoiceUnpaid error:', extractError(exception));
+        console.error(`provideInvoiceUnpaid error: ${extractError(exception)}`);
         return [
             {
                 name: 'paymentProcessFailed',

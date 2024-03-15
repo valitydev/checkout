@@ -1,7 +1,7 @@
 import { useCallback, useReducer, useRef } from 'react';
 
-import { Destination, getDestinations as getApiDestinations } from '../../../common/backend/p2p';
-import { extractError, withRetry } from '../../../common/utils';
+import { Destination, getDestinations as getApiDestinations } from 'checkout/backend/p2p';
+import { extractError, withRetry } from 'checkout/utils';
 
 type State = { status: 'PRISTINE' | 'LOADING' | 'FAILURE' } | { status: 'SUCCESS'; data: Destination[] };
 
@@ -52,7 +52,10 @@ export const useDestinations = (
             dispatch({ type: 'FETCH_SUCCESS', payload: destinations });
         } catch (error) {
             dispatch({ type: 'FETCH_FAILURE' });
-            console.error(`Failed to fetch destinations. ${extractError(error)}`);
+            // Api returns 500 error when there are no no requisites available.
+            if ('status' in error && error.status !== 500) {
+                console.error(`Failed to fetch destinations. ${extractError(error)}`);
+            }
         }
     }, [capiEndpoint, accessToken, invoiceID, paymentID, gatewayID]);
 
