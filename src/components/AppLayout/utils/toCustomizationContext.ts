@@ -1,5 +1,4 @@
-import { InitConfig } from 'checkout/config';
-
+import { InitConfig } from '../../../common/init';
 import { isNil } from '../../../common/utils';
 
 export const toCustomizationContext = ({

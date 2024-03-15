@@ -1,4 +1,4 @@
-import { resolveIntegrationType } from './resolve-integration-type';
+import { resolveIntegrationType } from './resolveIntegrationType';
 
 it('empty config should return null', () => {
     const result = resolveIntegrationType(null);

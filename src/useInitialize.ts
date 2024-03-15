@@ -1,7 +1,7 @@
 import { useCallback, useReducer } from 'react';
 
+import { InitParams, initialize } from './common/init';
 import { Transport } from './communicator';
-import { InitParams, initialize } from './initialize';
 
 type State =
     | { status: 'PRISTINE' }

@@ -1,4 +1,4 @@
-import { resolveInteger } from './resolve-integer';
+import { resolveInteger } from './resolveInteger';
 
 describe('resolve-integer', () => {
     test('wrong param value param should return null', () => {

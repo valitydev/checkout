@@ -1,5 +1,5 @@
-import { intersection } from '../../../common/utils';
-import { InitConfig } from '../init-config';
+import { intersection } from '../../utils';
+import { InitConfig } from '../types';
 
 const typesDef: {
     type: 'invoiceTemplate' | 'invoice';

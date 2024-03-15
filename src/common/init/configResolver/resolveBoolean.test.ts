@@ -1,4 +1,4 @@
-import { resolveBoolean } from './resolve-boolean';
+import { resolveBoolean } from './resolveBoolean';
 
 describe('resolve-boolean', () => {
     test('wrong param should return null', () => {

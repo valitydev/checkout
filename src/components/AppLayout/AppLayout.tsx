@@ -8,7 +8,7 @@ import { ModalError } from './ModalError';
 import { useInitModels } from './useInitModels';
 import { toCustomizationContext } from './utils';
 import { CustomizationContext } from '../../common/contexts';
-import { InitParams } from '../../initialize';
+import { InitParams } from '../../common/init';
 import { LayoutLoader, Overlay, AppWrapper, GlobalStyle, ErrorBoundaryFallback } from '../legacy';
 
 type AppLayoutProps = {

@@ -1,6 +1,5 @@
-import { InitConfig } from 'checkout/config';
-
 import { InitContext } from './types';
+import { InitConfig } from '../init';
 import { isNil } from '../utils';
 
 const toContactInfo = ({ phoneNumber, email }: InitConfig) => ({

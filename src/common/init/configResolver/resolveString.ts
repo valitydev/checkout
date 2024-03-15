@@ -1,4 +1,4 @@
-import { isString } from '../../../common/utils';
+import { isString } from '../../utils';
 
 const getString = (userString: any): string => {
     let result = null;

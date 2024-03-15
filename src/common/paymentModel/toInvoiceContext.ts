@@ -1,6 +1,5 @@
-import { InitConfig } from 'checkout/config';
-
 import { InvoiceContext, InvoiceTemplateContext } from './types';
+import { InitConfig } from '../init';
 import { isNil } from '../utils';
 
 export const toInvoiceContext = (initConfig: InitConfig): Partial<InvoiceTemplateContext | InvoiceContext> => {

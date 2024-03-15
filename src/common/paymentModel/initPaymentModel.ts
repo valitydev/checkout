@@ -4,7 +4,7 @@ import { BackendModel, BackendModelInvoice, BackendModelInvoiceTemplate, getBack
 import { toInitContext } from './toInitContext';
 import { toInvoiceContext } from './toInvoiceContext';
 import { InvoiceContext, InvoiceTemplateContext, PaymentModel } from './types';
-import { InitParams } from '../../initialize';
+import { InitParams } from '../init';
 
 const applyInvoice = (
     { invoiceParams, type }: Partial<InvoiceContext>,

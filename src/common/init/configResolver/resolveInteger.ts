@@ -1,4 +1,4 @@
-import { isNumber, isString, toNumber } from '../../../common/utils';
+import { isNumber, isString, toNumber } from '../../utils';
 
 const getFromNumber = (userInteger: number): number | null => (Number.isInteger(userInteger) ? userInteger : undefined);
 

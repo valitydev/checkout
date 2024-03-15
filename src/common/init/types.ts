@@ -1,4 +1,4 @@
-import { HoldExpirationType } from 'checkout/backend';
+import { ThemeName } from 'checkout/themes';
 
 export type InitConfig = {
     integrationType?: 'invoice' | 'invoiceTemplate';
@@ -6,30 +6,34 @@ export type InitConfig = {
     invoiceAccessToken?: string;
     invoiceTemplateID?: string;
     invoiceTemplateAccessToken?: string;
-    bankCard?: boolean;
-    wallets?: boolean;
-    onlineBanking?: boolean;
-    netBanking?: boolean;
-    upi?: boolean;
-    terminalBankCard?: boolean;
-    terminalWallets?: boolean;
-    pix?: boolean;
-    paymentFlowHold?: boolean;
-    holdExpiration?: HoldExpirationType;
     locale?: string;
     redirectUrl?: string;
     name?: string;
     description?: string;
     email?: string;
     phoneNumber?: string;
-    amount?: number;
     obscureCardCvv?: boolean;
     requireCardHolder?: boolean;
     recurring?: boolean;
     theme?: string;
-    brandless?: boolean;
     metadata?: object;
     terminalFormValues?: object;
     skipUserInteraction?: boolean;
     isExternalIDIncluded?: boolean;
+};
+
+export type AppConfig = {
+    capiEndpoint?: string;
+    wrapperEndpoint?: string;
+    brandless?: boolean;
+    fixedTheme?: ThemeName;
+    brandName?: string;
+    urlShortenerEndpoint?: string;
+    sentryDsn?: string;
+};
+
+export type InitParams = {
+    initConfig: InitConfig;
+    appConfig: AppConfig;
+    origin: string;
 };

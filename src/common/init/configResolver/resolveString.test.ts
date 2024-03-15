@@ -1,4 +1,4 @@
-import { resolveString } from './resolve-string';
+import { resolveString } from './resolveString';
 
 it('wrong param value should return null', () => {
     const actual = resolveString(null);

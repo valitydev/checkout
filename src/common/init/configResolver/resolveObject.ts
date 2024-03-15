@@ -1,4 +1,4 @@
-import { isString } from '../../../common/utils';
+import { isString } from '../../utils';
 
 const getObject = (inputObject: object | string): object => {
     if (!isString(inputObject)) {

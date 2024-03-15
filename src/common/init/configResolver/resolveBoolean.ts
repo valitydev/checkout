@@ -1,4 +1,4 @@
-import { isBoolean, isString } from '../../../common/utils';
+import { isBoolean, isString } from '../../utils';
 
 const toBoolean = (str: string): boolean => {
     switch (str) {

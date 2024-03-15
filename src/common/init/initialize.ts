@@ -1,10 +1,9 @@
 import * as creditCardType from 'credit-card-type';
 
-import { InitConfig, resolveInitConfig } from 'checkout/config';
-import { ThemeName } from 'checkout/themes';
-
-import { fetchConfig, getOrigin, getUrlParams, URLParams, withRetry } from './common/utils';
-import { listen, Transport, StubTransport, CommunicatorEvents, communicatorInstanceName } from './communicator';
+import { resolveInitConfig } from './configResolver';
+import { AppConfig, InitParams } from './types';
+import { listen, Transport, StubTransport, CommunicatorEvents, communicatorInstanceName } from '../../communicator';
+import { fetchConfig, getOrigin, getUrlParams, URLParams, withRetry } from '../utils';
 
 /**
  * Additional card brands
@@ -61,22 +60,6 @@ const resolveUriParams = async (): Promise<[Transport, URLParams]> => {
     }
     const params = getUrlParams(location.search);
     return [transport, params];
-};
-
-export type AppConfig = {
-    capiEndpoint?: string;
-    wrapperEndpoint?: string;
-    brandless?: boolean;
-    fixedTheme?: ThemeName;
-    brandName?: string;
-    urlShortenerEndpoint?: string;
-    sentryDsn?: string;
-};
-
-export type InitParams = {
-    initConfig: InitConfig;
-    appConfig: AppConfig;
-    origin: string;
 };
 
 export const initialize = async (): Promise<[Transport, InitParams]> => {

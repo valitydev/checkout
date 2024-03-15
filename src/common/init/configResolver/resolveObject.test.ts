@@ -1,4 +1,4 @@
-import { resolveObject } from './resolve-object';
+import { resolveObject } from './resolveObject';
 
 it('wrong param value should return null', () => {
     const actual = resolveObject(null);
