@@ -16,10 +16,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
-        "baseUrl": ".",
-        "paths": {
-            "checkout/*": ["./src/app/*"]
-        }
+        "baseUrl": "."
     },
     "include": ["./src/**/*", "./types/**/*"]
 }

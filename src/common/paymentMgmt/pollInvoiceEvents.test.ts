@@ -1,6 +1,5 @@
-import { InvoiceChangeType } from 'checkout/backend';
-
 import { pollInvoiceEvents } from './pollInvoiceEvents';
+import { InvoiceChangeType } from '../backend/payments';
 
 const fetchValueMock = (result, status = 200, ok = true) => ({
     status,
@@ -16,10 +15,10 @@ describe('pollInvoiceEvents', () => {
         invoiceID,
         invoiceAccessToken: 'eyJhbGciOiJQUzI...',
         stopPollingTypes: [
-            InvoiceChangeType.InvoiceStatusChanged,
-            InvoiceChangeType.PaymentStatusChanged,
-            InvoiceChangeType.PaymentInteractionRequested,
-        ],
+            'InvoiceStatusChanged',
+            'PaymentStatusChanged',
+            'PaymentInteractionRequested',
+        ] as InvoiceChangeType[],
     };
 
     describe('non specified eventID', () => {
