@@ -53,7 +53,7 @@ export function PaymentProcessFailedView() {
     const lastCondition = last(conditions);
 
     if (lastCondition.name !== 'paymentProcessFailed') {
-        throw new Error(`Wrong payment condition type. Expected: paymentProcessStarted, actual: ${lastCondition.name}`);
+        throw new Error(`Wrong payment condition type. Expected: paymentProcessFailed, actual: ${lastCondition.name}`);
     }
 
     return (
