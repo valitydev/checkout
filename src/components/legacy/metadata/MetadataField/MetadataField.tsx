@@ -64,7 +64,7 @@ const createValidator =
             return validatePhone(value);
         }
         if (pattern) {
-            return !new RegExp(pattern).test(value);
+            return !new RegExp(pattern, 'u').test(value);
         }
         if (required) {
             return !value || !value.trim();
