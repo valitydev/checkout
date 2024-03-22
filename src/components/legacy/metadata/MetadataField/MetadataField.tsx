@@ -8,6 +8,7 @@ import {
     ServiceProviderMetadataField,
 } from '../../../../common/backend/payments';
 import {
+    createRegExpForMetaPattern,
     formatOnFocus,
     formatPhoneNumber,
     isNil,
@@ -64,7 +65,7 @@ const createValidator =
             return validatePhone(value);
         }
         if (pattern) {
-            return !new RegExp(pattern, 'u').test(value);
+            return !createRegExpForMetaPattern(pattern).test(value);
         }
         if (required) {
             return !value || !value.trim();
