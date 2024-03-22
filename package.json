@@ -33,7 +33,7 @@
     "react-hook-form": "7.45.1",
     "react-svg": "16.1.18",
     "styled-components": "6.0.4",
-    "uri-template": "1.0.3"
+    "uri-template": "2.0.0"
   },
   "devDependencies": {
     "@testing-library/react": "14.0.0",
