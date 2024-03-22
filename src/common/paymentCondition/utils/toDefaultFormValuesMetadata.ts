@@ -1,6 +1,6 @@
 import { ServiceProviderMetadataField, ServiceProviderMetadataForm } from '../../backend/payments';
 import { TerminalValues } from '../../paymentMgmt';
-import { isNil, isString } from '../../utils';
+import { createRegExpForMetaPattern, isNil, isString } from '../../utils';
 
 const applyReplacePattern = <T>(rawValue: T, pattern?: string, replaceValue = ''): string | T => {
     if (!isNil(pattern) && isString(rawValue)) {
@@ -20,7 +20,7 @@ export const prepareFormValues = (
             return acc;
         }
         const appliedValue = applyReplacePattern(value, formField.replaceValuePattern);
-        if (formField.pattern && !new RegExp(formField.pattern).test(appliedValue)) {
+        if (formField.pattern && !createRegExpForMetaPattern(formField.pattern).test(appliedValue)) {
             return acc;
         }
         return {
