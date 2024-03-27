@@ -4,7 +4,7 @@ import { Gateway } from 'checkout/backend/p2p';
 import { Locale } from 'checkout/contexts';
 
 import { useGateways } from './useGateways';
-import { Select } from '../../../components/legacy';
+import { Select } from '../../legacy';
 
 export type GatewaySelectorProps = {
     locale: Locale;

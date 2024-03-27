@@ -62,6 +62,7 @@
     "form.p2p.destination.amount": "Amount:",
     "form.p2p.alert.li": ["Transfer the exact amount", "Transfer the entire amount in one transaction"],
     "form.p2p.alert.p": "Otherwise, the payment will not be credited.",
+    "form.p2p.gateway.selector.heading": "",
     "InvalidPaymentTool": "Invalid payment instrument",
     "AccountLimitsExceeded": "Account limit is exceeded",
     "InsufficientFunds": "Insufficient funds",

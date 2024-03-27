@@ -21,7 +21,7 @@ const reducer = (state: State, action: Action): State => {
 };
 
 export const useGateways = (capiEndpoint: string, accessToken: string, invoiceID: string, paymentID: string) => {
-    const [state, dispatch] = useReducer(reducer, {
+    const [gatewaysState, dispatch] = useReducer(reducer, {
         status: 'PRISTINE',
     });
 
@@ -37,5 +37,5 @@ export const useGateways = (capiEndpoint: string, accessToken: string, invoiceID
         }
     }, [capiEndpoint, accessToken, invoiceID, paymentID]);
 
-    return { state, getGateways };
+    return { gatewaysState, getGateways };
 };

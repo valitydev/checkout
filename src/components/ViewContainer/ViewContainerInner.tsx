@@ -35,7 +35,7 @@ const Layout = styled.div<{ height?: number }>`
     }
     overflow: hidden;
     transition: height 0.3s;
-    height: ${({ height }) => (height ? `${height}px` : 'auto')};
+    /* height: ${({ height }) => (height ? `${height}px` : 'auto')}; */
 `;
 
 const toInitialPos = (slideDirection: SlideAnimationDirection): number => {

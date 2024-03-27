@@ -16,7 +16,11 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
+    "@chakra-ui/icons": "2.1.1",
+    "@chakra-ui/react": "2.8.2",
     "@dinero.js/currencies": "2.0.0-alpha.1",
+    "@emotion/react": "11.11.4",
+    "@emotion/styled": "11.11.0",
     "@fingerprintjs/fingerprintjs": "3.4.2",
     "@sentry/integrations": "7.106.1",
     "@sentry/react": "7.106.1",
@@ -56,7 +60,7 @@
     "rollup-plugin-visualizer": "5.9.2",
     "ts-jest": "29.1.0",
     "typescript": "5.1.6",
-    "vite": "4.4.6",
+    "vite": "4.5.3",
     "vite-plugin-static-copy": "0.17.0",
     "vite-plugin-svgr": "3.2.0",
     "vite-tsconfig-paths": "4.2.0"

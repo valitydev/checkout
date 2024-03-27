@@ -20,44 +20,41 @@ const reducer = (state: State, action: Action): State => {
     }
 };
 
-export const useDestinations = (
-    capiEndpoint: string,
-    accessToken: string,
-    invoiceID: string,
-    paymentID: string,
-    gatewayID: string,
-) => {
-    const [state, dispatch] = useReducer(reducer, {
+export const useDestinations = (capiEndpoint: string, accessToken: string, invoiceID: string, paymentID: string) => {
+    const [destinationsState, dispatch] = useReducer(reducer, {
         status: 'PRISTINE',
     });
     // In React dev mode, calling getDestinations twice in quick succession can lead to a 500 error.
     const lastGatewayIDRef = useRef<string | null>(null);
 
-    const getDestinations = useCallback(async () => {
-        if (lastGatewayIDRef.current === gatewayID) {
-            return;
-        }
-        lastGatewayIDRef.current = gatewayID;
-
-        dispatch({ type: 'FETCH_START' });
-        try {
-            const getDestinationsWithRetry = withRetry(getApiDestinations);
-            const destinations = await getDestinationsWithRetry(
-                capiEndpoint,
-                accessToken,
-                invoiceID,
-                paymentID,
-                gatewayID,
-            );
-            dispatch({ type: 'FETCH_SUCCESS', payload: destinations });
-        } catch (error) {
-            dispatch({ type: 'FETCH_FAILURE' });
-            // Api returns 500 error when there are no no requisites available.
-            if ('status' in error && error.status !== 500) {
-                console.error(`Failed to fetch destinations. ${extractError(error)}`);
+    const getDestinations = useCallback(
+        async (gatewayID: string) => {
+            if (lastGatewayIDRef.current === gatewayID) {
+                return;
             }
-        }
-    }, [capiEndpoint, accessToken, invoiceID, paymentID, gatewayID]);
+            lastGatewayIDRef.current = gatewayID;
 
-    return { state, getDestinations };
+            dispatch({ type: 'FETCH_START' });
+            try {
+                const getDestinationsWithRetry = withRetry(getApiDestinations);
+                const destinations = await getDestinationsWithRetry(
+                    capiEndpoint,
+                    accessToken,
+                    invoiceID,
+                    paymentID,
+                    gatewayID,
+                );
+                dispatch({ type: 'FETCH_SUCCESS', payload: destinations });
+            } catch (error) {
+                dispatch({ type: 'FETCH_FAILURE' });
+                // Api returns 500 error when there are no no requisites available.
+                if ('status' in error && error.status !== 500) {
+                    console.error(`Failed to fetch destinations. ${extractError(error)}`);
+                }
+            }
+        },
+        [capiEndpoint, accessToken, invoiceID, paymentID],
+    );
+
+    return { destinationsState, getDestinations };
 };
