@@ -1,4 +1,3 @@
-import { Box } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 
 import { Destination } from 'checkout/backend/p2p';
@@ -7,6 +6,7 @@ import { InvoiceDetermined, PaymentStarted } from 'checkout/paymentCondition';
 import { isNil } from 'checkout/utils';
 
 import { ApiExtensionViewContext } from './ApiExtensionViewContext';
+import { Destinations } from './Destinations';
 import { GatewaySelector } from './GatewaySelector';
 
 export function ApiExtensionView() {
@@ -25,10 +25,9 @@ export function ApiExtensionView() {
     const [destinations, setDestinations] = useState<Destination[] | null>(null);
 
     return (
-        <Box h="md">
-            <ApiExtensionViewContext.Provider value={{ apiEndpoint, invoiceAccessToken, invoiceID, paymentId }}>
-                {isNil(destinations) && <GatewaySelector onFetchDestinations={setDestinations} />}
-            </ApiExtensionViewContext.Provider>
-        </Box>
+        <ApiExtensionViewContext.Provider value={{ apiEndpoint, invoiceAccessToken, invoiceID, paymentId }}>
+            {isNil(destinations) && <GatewaySelector onFetchDestinations={setDestinations} />}
+            {!isNil(destinations) && <Destinations destinations={destinations} />}
+        </ApiExtensionViewContext.Provider>
     );
 }

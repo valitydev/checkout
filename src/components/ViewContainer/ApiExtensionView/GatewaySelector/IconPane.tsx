@@ -10,7 +10,7 @@ export type IconPaneProps = {
 
 export function IconPane({ label, icon, isActive, onClick }: IconPaneProps) {
     const IconContainer = () => (
-        <Flex alignItems="center" boxSize="10" justifyContent="center" mb={2} ml={2} mr={2} mt={4}>
+        <Flex alignItems="center" boxSize="12" justifyContent="center" mb={2} ml={2} mr={2} mt={4}>
             {cloneElement(icon, { boxSize: '100%' })}
         </Flex>
     );
@@ -19,7 +19,7 @@ export function IconPane({ label, icon, isActive, onClick }: IconPaneProps) {
         <Flex
             alignItems="center"
             border="2px solid"
-            borderColor={isActive ? 'gray.400' : 'gray.200'}
+            borderColor={isActive ? 'gray.500' : 'gray.200'}
             borderRadius="xl"
             boxSizing="border-box"
             cursor={'pointer'}
@@ -29,7 +29,7 @@ export function IconPane({ label, icon, isActive, onClick }: IconPaneProps) {
             onClick={onClick}
         >
             <IconContainer />
-            <Text fontSize="sm" mb={4} ml={2} mr={2} userSelect="none">
+            <Text fontWeight={isActive ? 'medium' : 'regular'} mb={4} ml={2} mr={2} userSelect="none">
                 {label}
             </Text>
         </Flex>

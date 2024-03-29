@@ -1,4 +1,4 @@
-import { VStack, Divider, Heading, Flex, Button, Spacer } from '@chakra-ui/react';
+import { VStack, Divider, Heading, Button, Spacer } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 
 import { Destination, Gateway } from 'checkout/backend/p2p';
@@ -39,27 +39,28 @@ export function GatewaySelector({ onFetchDestinations }: GatewaySelectorProps) {
     }, [destinationsState]);
 
     return (
-        <VStack align="stretch" height="inherit" spacing={5}>
+        <VStack align="stretch" minH="md" spacing={5}>
             <Heading as="h5" size="sm" textAlign="center">
                 {l['form.p2p.gateway.selector.heading']}
             </Heading>
             <Divider />
             {gatewaysState.status === 'LOADING' && <PanesSkeleton />}
             {gatewaysState.status === 'SUCCESS' && (
-                <Flex direction="column" gap={3} height="inherit">
+                <>
                     <GatewayPanes gateways={gatewaysState.data} onSelect={setGateway} />
                     <Spacer />
                     <Button
+                        borderRadius="xl"
                         colorScheme="teal"
                         isDisabled={isNil(gateway)}
                         isLoading={destinationsState.status === 'LOADING'}
-                        variant="solid"
+                        size="lg"
                         onClick={() => getDestinations(gateway.id)}
                     >
                         {l['form.p2p.next.button']}
                     </Button>
                     {destinationsState.status === 'FAILURE' && <P2PApiError />}
-                </Flex>
+                </>
             )}
             {gatewaysState.status === 'FAILURE' && <P2PApiError />}
         </VStack>
