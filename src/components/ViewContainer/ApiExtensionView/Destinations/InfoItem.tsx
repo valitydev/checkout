@@ -1,6 +1,5 @@
-import { VStack, Text, Flex, Spacer, Divider, useClipboard, useToast } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import { useContext, useEffect } from 'react';
+import { VStack, Text, Flex, Spacer, Divider, useClipboard, useToast, IconButton, createIcon } from '@chakra-ui/react';
+import { useContext, useEffect, useState } from 'react';
 
 import { LocaleContext } from 'checkout/contexts';
 
@@ -8,31 +7,27 @@ export type InfoItemProps = {
     label: string;
     value: string;
     isCopyable?: boolean;
+    formatter?: (value: string) => Promise<string>;
 };
 
-const CopyIcon = ({ onClick }: { onClick: () => void }) => (
-    <motion.svg
-        cursor="pointer"
-        fill="currentColor"
-        height="16"
-        transition={{ duration: 0.3 }}
-        viewBox="0 0 16 16"
-        whileTap={{ translateY: 3 }}
-        width="16"
-        onClick={onClick}
-    >
+export const CopyIcon = createIcon({
+    displayName: 'CopyIcon',
+    viewBox: '0 0 16 16',
+    path: (
         <path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z" />
-    </motion.svg>
-);
+    ),
+});
 
-export function InfoItem({ label, value, isCopyable }: InfoItemProps) {
+export function InfoItem({ label, value, isCopyable, formatter }: InfoItemProps) {
     const { l } = useContext(LocaleContext);
-    const { onCopy, setValue, hasCopied } = useClipboard('');
+    const { onCopy, hasCopied } = useClipboard(value);
+    const [displayValue, setDisplayValue] = useState(value);
     const toast = useToast();
 
     useEffect(() => {
-        setValue(value);
-    }, [value]);
+        if (!formatter) return;
+        formatter(value).then(setDisplayValue);
+    }, [value, formatter]);
 
     useEffect(() => {
         if (!hasCopied) return;
@@ -42,7 +37,7 @@ export function InfoItem({ label, value, isCopyable }: InfoItemProps) {
             variant: 'subtle',
             duration: 3000,
         });
-    }, [hasCopied]);
+    }, [hasCopied, l]);
 
     return (
         <VStack align="stretch">
@@ -50,8 +45,8 @@ export function InfoItem({ label, value, isCopyable }: InfoItemProps) {
                 <Text>{label}</Text>
                 <Spacer />
                 <Flex alignItems="center" gap={2}>
-                    <Text fontWeight="medium">{value}</Text>
-                    {isCopyable && <CopyIcon onClick={onCopy} />}
+                    <Text fontWeight="medium">{displayValue}</Text>
+                    {isCopyable && <IconButton aria-label="Copy" icon={<CopyIcon />} size="xs" onClick={onCopy} />}
                 </Flex>
             </Flex>
             <Divider />

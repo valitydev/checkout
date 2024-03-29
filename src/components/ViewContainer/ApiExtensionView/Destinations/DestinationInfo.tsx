@@ -5,6 +5,7 @@ import { Destination } from 'checkout/backend/p2p';
 import { LocaleContext, ViewModelContext } from 'checkout/contexts';
 
 import { InfoItem } from './InfoItem';
+import { formatCardPan, formatPhoneNumber } from './utils';
 
 export type DestinationInfoProps = {
     destination: Destination;
@@ -18,7 +19,12 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
         <VStack align="stretch">
             <InfoItem label={l['form.p2p.destination.amount']} value={viewAmount} />
             {destination.destinationType === 'BankCard' && (
-                <InfoItem isCopyable={true} label={l['form.p2p.destination.bank.card.pan']} value={destination.pan} />
+                <InfoItem
+                    formatter={formatCardPan}
+                    isCopyable={true}
+                    label={l['form.p2p.destination.bank.card.pan']}
+                    value={destination.pan}
+                />
             )}
             {destination.destinationType === 'BankAccount' && (
                 <InfoItem
@@ -29,6 +35,7 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
             )}
             {destination.destinationType === 'DestinationSBP' && (
                 <InfoItem
+                    formatter={formatPhoneNumber}
                     isCopyable={true}
                     label={l['form.p2p.destination.spb.phone']}
                     value={destination.phoneNumber}

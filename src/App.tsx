@@ -10,6 +10,11 @@ import { useInitialize } from './useInitialize';
 const { Button, Spinner, Divider, Heading, Alert, Skeleton } = chakraTheme.components;
 
 const theme = extendBaseTheme({
+    fonts: {
+        body: 'Roboto, sans-serif',
+        heading: 'Roboto, sans-serif',
+        mono: 'monospace',
+    },
     components: {
         Button,
         Spinner,

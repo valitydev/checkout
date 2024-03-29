@@ -52,7 +52,7 @@ export function GatewayPanes({ gateways, onSelect }: GatewayPanesProps) {
             {paneData.map(({ id, label }) => (
                 <IconPane
                     key={id}
-                    icon={<CardIcon />}
+                    icon={<CardIcon color="teal.600" />}
                     isActive={activeGatewayId === id}
                     label={label}
                     onClick={() => setActiveGatewayId(id)}
