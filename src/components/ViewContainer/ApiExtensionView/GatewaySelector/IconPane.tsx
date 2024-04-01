@@ -29,7 +29,7 @@ export function IconPane({ label, icon, isActive, onClick }: IconPaneProps) {
             onClick={onClick}
         >
             <IconContainer />
-            <Text fontWeight={isActive ? 'medium' : 'regular'} mb={4} ml={2} mr={2} userSelect="none">
+            <Text mb={4} ml={2} mr={2} userSelect="none">
                 {label}
             </Text>
         </Flex>

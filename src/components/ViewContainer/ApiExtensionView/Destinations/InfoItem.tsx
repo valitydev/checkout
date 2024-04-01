@@ -45,7 +45,9 @@ export function InfoItem({ label, value, isCopyable, formatter }: InfoItemProps)
                 <Text>{label}</Text>
                 <Spacer />
                 <Flex alignItems="center" gap={2}>
-                    <Text fontWeight="medium">{displayValue}</Text>
+                    <Text fontWeight="medium" textAlign="end">
+                        {displayValue}
+                    </Text>
                     {isCopyable && <IconButton aria-label="Copy" icon={<CopyIcon />} size="xs" onClick={onCopy} />}
                 </Flex>
             </Flex>

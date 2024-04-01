@@ -38,6 +38,12 @@ export function GatewaySelector({ onFetchDestinations }: GatewaySelectorProps) {
         }
     }, [destinationsState]);
 
+    // useEffect(() => {
+    //     if (gatewaysState.status === 'SUCCESS' && gatewaysState.data.length === 1) {
+    //         getDestinations(gatewaysState.data[0].id);
+    //     }
+    // }, [gatewaysState]);
+
     return (
         <VStack align="stretch" minH="md" spacing={5}>
             <Heading as="h5" size="sm" textAlign="center">
@@ -52,7 +58,7 @@ export function GatewaySelector({ onFetchDestinations }: GatewaySelectorProps) {
                     <Button
                         borderRadius="xl"
                         colorScheme="teal"
-                        isDisabled={isNil(gateway)}
+                        isDisabled={isNil(gateway) || destinationsState.status === 'FAILURE'}
                         isLoading={destinationsState.status === 'LOADING'}
                         size="lg"
                         onClick={() => getDestinations(gateway.id)}
