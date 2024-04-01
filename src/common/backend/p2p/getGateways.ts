@@ -14,14 +14,4 @@ export const getGateways = async (
     const path = `p2p/payments/gateways?${queryParams}`;
     const response = await fetchApi(capiEndpoint, accessToken, 'GET', path);
     return await response.json();
-    // return Promise.resolve([
-    //     {
-    //         id: 'test_01',
-    //         name: 'СПБ',
-    //     },
-    //     {
-    //         id: 'test_02',
-    //         name: 'Сбербанк',
-    //     },
-    // ]);
 };
