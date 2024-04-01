@@ -63,7 +63,12 @@ export function Destinations({ destinations }: DestinationsProps) {
                         {l['form.p2p.complete.button']}
                     </Button>
                     {status === 'SUCCESS' && initContext?.redirectUrl && (
-                        <Button colorScheme="teal" size="lg" variant="link">
+                        <Button
+                            colorScheme="teal"
+                            size="lg"
+                            variant="link"
+                            onClick={() => window.open(initContext.redirectUrl, '_self')}
+                        >
                             {l['form.button.back.to.website']}
                         </Button>
                     )}

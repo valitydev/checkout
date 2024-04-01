@@ -5,7 +5,6 @@
     "form.header.payment.methods.label": "Please choose a payment method",
     "form.header.netbanking.label": "Please choose a bank",
     "form.header.pay.card.label": "Pay with a card",
-    "form.header.pay.upi.label": "Unified payment interface",
     "form.header.final.success.label": "Successful payment",
     "form.header.final.invoice.paid.label": "Success",
     "form.header.final.invoice.paid.already.label": "Already fully paid",
@@ -38,41 +37,29 @@
     "form.payment.method.name.card.label": "Card",
     "form.payment.method.name.others.label": "All payment methods",
     "form.serviceProvidersGrid.search": "Search",
-    "form.pay.upi.instruction": [
-        "You can make payment via BHIM, PhonePe, Tez, ICICI, SBI and other UPI apps.",
-        "Example: xxxxx@ybl xxxxx@icicibank xxxx@paytm xxxx@ibl etc."
-    ],
-    "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Select payment system:",
     "form.qr.code": "Please scan the QR code with your banking app or phone camera to complete the payment",
-    "form.p2p.loading": "Loading...",
     "form.p2p.error": "Choose another amount or try later",
-    "form.p2p.select.destination": "Select destination...",
     "form.p2p.destination.info": "Make a transfer using the following details:",
     "form.p2p.destination.bank.card.pan": "Card number:",
     "form.p2p.destination.bank.name": "Bank name:",
     "form.p2p.destination.bank.recipient": "Name:",
-    "form.p2p.destination.spb.bank.name": "Bank name:",
     "form.p2p.destination.spb.phone": "Phone number:",
-    "form.p2p.destination.spb.recipient": "Name:",
     "form.p2p.destination.bank.account.account": "Account number:",
-    "form.p2p.destination.bank.account.bank": "Bank name:",
-    "form.p2p.destination.bank.account.recipient": "Name:",
     "form.p2p.complete.info": "After completing the transfer, press the button below.",
     "form.p2p.complete.button": "Complete payment",
+    "form.p2p.complete.loading": "Please, wait",
     "form.p2p.destination.amount": "Amount:",
     "form.p2p.alert.li": ["Transfer the exact amount", "Transfer the entire amount in one transaction"],
     "form.p2p.alert.p": "Otherwise, the payment will not be credited.",
-    "form.p2p.gateway.selector.heading": "",
+    "form.p2p.gateway.selector.heading": "Choose a method or bank",
+    "form.p2p.default.pane.label": "Any bank",
+    "form.p2p.next.button": "Next",
+    "form.p2p.destinations.heading": "Payment",
+    "form.p2p.copied": "Copied!",
     "InvalidPaymentTool": "Invalid payment instrument",
     "AccountLimitsExceeded": "Account limit is exceeded",
     "InsufficientFunds": "Insufficient funds",
     "PreauthorizationFailed": "Pre-authorization failed",
     "RejectedByIssuer": "Rejected by issuing bank",
-    "PaymentRejected": "Payment is rejected",
-    "digital.wallet.providers": {
-        "sign.up": {
-            "description": "Don't have an account?",
-            "link": "Sign up"
-        }
-    }
+    "PaymentRejected": "Payment is rejected"
 }
