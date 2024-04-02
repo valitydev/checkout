@@ -1,1 +1,0 @@
-export { DestinationInfo } from './DestinationInfo';

@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion';
-
 import { usePaymentCondition } from './usePaymentCondition';
 import { toContainer } from './utils';
 import { PaymentConditionsContext, PaymentContext, PaymentModelContext } from '../../common/contexts';
@@ -21,10 +19,8 @@ export function GlobalContainer({ paymentModel, initConditions }: GlobalContaine
         <PaymentModelContext.Provider value={{ paymentModel }}>
             <PaymentConditionsContext.Provider value={{ conditions }}>
                 <PaymentContext.Provider value={{ startPayment, startWaitingPaymentResult }}>
-                    <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
-                        {containerName === 'ViewContainer' && <ViewContainer />}
-                        {containerName === 'RedirectContainer' && <RedirectContainer />}
-                    </motion.div>
+                    {containerName === 'ViewContainer' && <ViewContainer />}
+                    {containerName === 'RedirectContainer' && <RedirectContainer />}
                 </PaymentContext.Provider>
             </PaymentConditionsContext.Provider>
         </PaymentModelContext.Provider>

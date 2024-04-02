@@ -5,7 +5,6 @@
     "form.header.payment.methods.label": "Выберите способ оплаты",
     "form.header.netbanking.label": "Выберите банк",
     "form.header.pay.card.label": "Оплата банковской картой",
-    "form.header.pay.upi.label": "Unified payment interface",
     "form.header.final.success.label": "Успешная оплата",
     "form.header.final.invoice.paid.label": "Оплачено",
     "form.header.final.invoice.paid.already.label": "Уже оплачено",
@@ -38,40 +37,29 @@
     "form.payment.method.name.card.label": "Банковская карта",
     "form.payment.method.name.others.label": "Другие способы оплаты",
     "form.serviceProvidersGrid.search": "Поиск",
-    "form.pay.upi.instruction": [
-        "You can make payment via BHIM, PhonePe, Tez, ICICI, SBI and other UPI apps.",
-        "Example: xxxxx@ybl xxxxx@icicibank xxxx@paytm xxxx@ibl etc."
-    ],
-    "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Выберите платежную систему:",
     "form.qr.code": "Для оплаты отсканируйте QR-код в мобильном приложении банка или штатной камерой телефона",
-    "form.p2p.loading": "Загрузка...",
-    "form.p2p.error": "Создайте заявку на другую сумму или попробуйте повторить позднее",
-    "form.p2p.select.destination": "Выберите банк...",
+    "form.p2p.error": "Создайте заявку на другую сумму или попробуйте повторить позднее.",
     "form.p2p.destination.info": "Осуществите перевод, используя следующие реквизиты:",
     "form.p2p.destination.bank.card.pan": "Номер карты:",
     "form.p2p.destination.bank.name": "Банк:",
     "form.p2p.destination.bank.recipient": "Получатель:",
-    "form.p2p.destination.spb.bank.name": "Банк:",
     "form.p2p.destination.spb.phone": "Номер телефона:",
-    "form.p2p.destination.spb.recipient": "Получатель:",
     "form.p2p.destination.bank.account.account": "Номер счета:",
-    "form.p2p.destination.bank.account.bank": "Банк:",
-    "form.p2p.destination.bank.account.recipient": "Получатель:",
     "form.p2p.complete.info": "После совершения перевода нажмите кнопку ниже. Обработка платежа занимает до 5 минут.",
     "form.p2p.complete.button": "Перевод выполнен",
+    "form.p2p.complete.loading": "Пожалуйста, подождите",
     "form.p2p.destination.amount": "Сумма:",
-    "form.p2p.alert.li": ["Переводите точную сумму, указанную в заявке", "Оплачивайте всю сумму одним переводом"],
+    "form.p2p.alert.li": ["Переводите точную сумму, указанную в заявке.", "Оплачивайте всю сумму одним переводом."],
     "form.p2p.alert.p": "В противном случае платеж не будет зачислен.",
+    "form.p2p.gateway.selector.heading": "Выбирите метод или банк",
+    "form.p2p.default.pane.label": "Любой банк",
+    "form.p2p.next.button": "Далее",
+    "form.p2p.destinations.heading": "Оплата",
+    "form.p2p.copied": "Скопировано!",
     "InvalidPaymentTool": "Недопустимое средство оплаты",
     "AccountLimitsExceeded": "Превышен лимит",
     "InsufficientFunds": "Недостаточно средств",
     "PreauthorizationFailed": "Неудачная предавторизация",
     "RejectedByIssuer": "Отклонено эмитентом",
-    "PaymentRejected": "Платёж отклонен",
-    "digital.wallet.providers": {
-        "sign.up": {
-            "description": "У вас нет аккаунта?",
-            "link": "Регистрация"
-        }
-    }
+    "PaymentRejected": "Платёж отклонен"
 }

@@ -11,7 +11,7 @@ export const FormBlock = styled.div`
     @media ${device.desktop} {
         height: auto;
         min-height: auto;
-        width: 680px;
+        width: 768px;
         border-radius: 16px;
         display: flex;
         flex-wrap: nowrap;

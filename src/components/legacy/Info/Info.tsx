@@ -14,7 +14,7 @@ const InfoWrapper = styled.div`
 
     @media ${device.desktop} {
         padding: 24px 0;
-        width: 230px;
+        width: 258px;
         margin-right: 30px;
     }
 `;

@@ -27,7 +27,7 @@ const dataFetchReducer = (state: State, action: Action): State => {
 };
 
 export const useComplete = (capiEndpoint: string, accessToken: string, invoiceID: string, paymentID: string) => {
-    const [state, dispatch] = useReducer(dataFetchReducer, {
+    const [completeState, dispatch] = useReducer(dataFetchReducer, {
         status: 'PRISTINE',
     });
 
@@ -45,5 +45,5 @@ export const useComplete = (capiEndpoint: string, accessToken: string, invoiceID
         }
     }, [capiEndpoint, accessToken, invoiceID, paymentID]);
 
-    return { state, complete };
+    return { completeState, complete };
 };

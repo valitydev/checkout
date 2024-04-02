@@ -5,7 +5,6 @@
     "form.header.payment.methods.label": "Zəhmət olmasa, bir ödəniş üsulu seçin",
     "form.header.netbanking.label": "Zəhmət olmasa, bir bank seçin",
     "form.header.pay.card.label": "Kart ilə ödə",
-    "form.header.pay.upi.label": "Vahid ödəniş interfeysi",
     "form.header.final.success.label": "Uğurlu ödəniş",
     "form.header.final.invoice.paid.label": "Uğur",
     "form.header.final.invoice.paid.already.label": "Artıq tam ödənilib",
@@ -38,40 +37,29 @@
     "form.payment.method.name.card.label": "Kart",
     "form.payment.method.name.others.label": "Bütün ödəniş üsulları",
     "form.serviceProvidersGrid.search": "Axtar",
-    "form.pay.upi.instruction": [
-        "BHIM, PhonePe, Tez, ICICI, SBI və digər UPI tətbiqləri vasitəsilə ödəmə edə bilərsiniz.",
-        "Nümunə: xxxxx@ybl xxxxx@icicibank xxxx@paytm xxxx@ibl və s."
-    ],
-    "form.pay.paymentTerminalBankCard.providerSelectorDescription": "Ödəniş sistemini seçin:",
     "form.qr.code": "Ödənişi tamamlamaq üçün bank tətbiqinizlə və ya telefon kamera ilə QR kodunu skan edin",
-    "form.p2p.loading": "Yüklənir...",
     "form.p2p.error": "Fərqli bir məbləğ üçün bir ərizə yaradın və ya daha sonra təkrarlamağa çalışın",
-    "form.p2p.select.destination": "Təyinat yeri seçin...",
     "form.p2p.destination.info": "Sifariş ödənişi:",
     "form.p2p.destination.bank.card.pan": "Bu karta:",
     "form.p2p.destination.bank.name": "Bankın adı:",
     "form.p2p.destination.bank.recipient": "Adı:",
-    "form.p2p.destination.spb.bank.name": "Bankın adı:",
     "form.p2p.destination.spb.phone": "Telefon nömrəsi:",
-    "form.p2p.destination.spb.recipient": "Adı:",
     "form.p2p.destination.bank.account.account": "Hesab nömrəsi:",
-    "form.p2p.destination.bank.account.bank": "Bankın adı:",
-    "form.p2p.destination.bank.account.recipient": "Adı:",
     "form.p2p.complete.info": "Təqdim etdikdən sonra \"Köçürmə tamamlandı\" düyməsini basın. Ödənişin işlənməsi 5 dəqiqəyə qədər çəkir.",
     "form.p2p.complete.button": "Köçürmə tamamlandı",
+    "form.p2p.complete.loading": "Lütfən, gözləyin",
     "form.p2p.destination.amount": "Köçürmə məbləği:",
     "form.p2p.alert.li": ["Ərizədə göstərilən dəqiq məbləği köçürün", "Bütün məbləği bir köçürmədə ödəyin"],
     "form.p2p.alert.p": "Əks halda ödəniş hesaba alınmayacaq.",
+    "form.p2p.gateway.selector.heading": "Bir metod və ya bank seçin",
+    "form.p2p.default.pane.label": "Hər hansı bank",
+    "form.p2p.next.button": "Növbəti",
+    "form.p2p.destinations.heading": "Ödəniş",
+    "form.p2p.copied": "Kopyalandı!",
     "InvalidPaymentTool": "Yanlış ödəniş aləti",
     "AccountLimitsExceeded": "Hesab limiti aşıldı",
     "InsufficientFunds": "Kifayət qədər vəsait yoxdur",
     "PreauthorizationFailed": "Əvvəlcədən avtorizasiya uğursuz oldu",
     "RejectedByIssuer": "Buraxılış bankı tərəfindən rədd edildi",
-    "PaymentRejected": "Ödəniş rədd edildi",
-    "digital.wallet.providers": {
-        "sign.up": {
-            "description": "Hesabınız yoxdur?",
-            "link": "Qeydiyyatdan keçin"
-        }
-    }
+    "PaymentRejected": "Ödəniş rədd edildi"
 }

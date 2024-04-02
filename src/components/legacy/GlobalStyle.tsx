@@ -21,7 +21,6 @@ export const GlobalStyle = createGlobalStyle`
 
         @media ${device.desktop} {
             height: 100%;
-            min-width: 680px;
         }
     }
 
