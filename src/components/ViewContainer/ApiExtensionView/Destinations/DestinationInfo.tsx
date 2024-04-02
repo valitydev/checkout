@@ -5,6 +5,7 @@ import { Destination } from 'checkout/backend/p2p';
 import { LocaleContext, ViewModelContext } from 'checkout/contexts';
 
 import { InfoItem } from './InfoItem';
+import { SBPIcon } from './SBPIcon';
 import { formatCardPan, formatPhoneNumber } from './utils';
 
 export type DestinationInfoProps = {
@@ -36,6 +37,7 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
             {destination.destinationType === 'DestinationSBP' && (
                 <InfoItem
                     formatter={formatPhoneNumber}
+                    icon={<SBPIcon />}
                     isCopyable={true}
                     label={l['form.p2p.destination.spb.phone']}
                     value={destination.phoneNumber}

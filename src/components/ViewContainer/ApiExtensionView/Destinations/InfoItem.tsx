@@ -1,11 +1,12 @@
 import { VStack, Text, Flex, Spacer, Divider, useClipboard, useToast, IconButton, createIcon } from '@chakra-ui/react';
-import { useContext, useEffect, useState } from 'react';
+import { ReactElement, cloneElement, useContext, useEffect, useState } from 'react';
 
 import { LocaleContext } from 'checkout/contexts';
 
 export type InfoItemProps = {
     label: string;
     value: string;
+    icon?: ReactElement;
     isCopyable?: boolean;
     formatter?: (value: string) => Promise<string>;
 };
@@ -18,7 +19,7 @@ export const CopyIcon = createIcon({
     ),
 });
 
-export function InfoItem({ label, value, isCopyable, formatter }: InfoItemProps) {
+export function InfoItem({ label, value, isCopyable, formatter, icon }: InfoItemProps) {
     const { l } = useContext(LocaleContext);
     const { onCopy, hasCopied } = useClipboard(value);
     const [displayValue, setDisplayValue] = useState(value);
@@ -39,12 +40,19 @@ export function InfoItem({ label, value, isCopyable, formatter }: InfoItemProps)
         });
     }, [hasCopied, l]);
 
+    const IconContainer = () => (
+        <Flex alignItems="center" boxSize="5" justifyContent="center">
+            {cloneElement(icon, { boxSize: '100%' })}
+        </Flex>
+    );
+
     return (
         <VStack align="stretch">
             <Flex>
                 <Text>{label}</Text>
                 <Spacer />
                 <Flex alignItems="center" gap={2}>
+                    {icon && <IconContainer />}
                     <Text fontWeight="medium" textAlign="end">
                         {displayValue}
                     </Text>
