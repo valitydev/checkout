@@ -7,7 +7,7 @@ import { isNil } from 'checkout/utils';
 
 import { ApiExtensionViewContext } from './ApiExtensionViewContext';
 import { Destinations } from './Destinations';
-import { GatewaySelector } from './GatewaySelector';
+import { GatewaySelectorTmp } from './GatewaySelector';
 
 export function ApiExtensionView() {
     const {
@@ -26,7 +26,7 @@ export function ApiExtensionView() {
 
     return (
         <ApiExtensionViewContext.Provider value={{ apiEndpoint, invoiceAccessToken, invoiceID, paymentId }}>
-            {isNil(destinations) && <GatewaySelector onFetchDestinations={setDestinations} />}
+            {isNil(destinations) && <GatewaySelectorTmp onFetchDestinations={setDestinations} />}
             {!isNil(destinations) && <Destinations destinations={destinations} />}
         </ApiExtensionViewContext.Provider>
     );
