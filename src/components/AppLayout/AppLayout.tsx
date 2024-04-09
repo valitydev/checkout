@@ -1,3 +1,4 @@
+import { Flex } from '@chakra-ui/react';
 import { lazy, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ThemeProvider } from 'styled-components';
@@ -8,13 +9,30 @@ import { toCustomizationContext } from './utils';
 import { CustomizationContext } from '../../common/contexts';
 import { InitParams } from '../../common/init';
 import { getTheme } from '../../common/theme';
-import { LayoutLoader, Overlay, AppWrapper, GlobalStyle, ErrorBoundaryFallback } from '../legacy';
+import { LayoutLoader, Overlay, ErrorBoundaryFallback } from '../legacy';
 
 type AppLayoutProps = {
     initParams: InitParams;
 };
 
 const GlobalContainer = lazy(() => import('../GlobalContainer/GlobalContainer'));
+
+const ModalContainer = ({ children }: { children: React.ReactNode }) => (
+    <Flex
+        alignItems="center"
+        flexDirection="column"
+        height="100dvh"
+        justifyContent={['start', 'start', 'center']}
+        left={0}
+        overflow="auto"
+        overscroll-behavior-y="none"
+        position="fixed"
+        top={0}
+        width="100vw"
+    >
+        {children}
+    </Flex>
+);
 
 export function AppLayout({ initParams }: AppLayoutProps) {
     const theme = getTheme(initParams.appConfig.fixedTheme);
@@ -26,9 +44,8 @@ export function AppLayout({ initParams }: AppLayoutProps) {
 
     return (
         <ThemeProvider theme={theme}>
-            <GlobalStyle theme={theme} />
-            <AppWrapper>
-                <Overlay />
+            <Overlay />
+            <ModalContainer>
                 {modelsState.status === 'PROCESSING' && <LayoutLoader />}
                 {modelsState.status === 'INITIALIZED' && (
                     <CustomizationContext.Provider value={toCustomizationContext(initParams.initConfig)}>
@@ -41,7 +58,7 @@ export function AppLayout({ initParams }: AppLayoutProps) {
                     </CustomizationContext.Provider>
                 )}
                 {modelsState.status === 'FAILURE' && <ModalError error={modelsState.error} />}
-            </AppWrapper>
+            </ModalContainer>
         </ThemeProvider>
     );
 }

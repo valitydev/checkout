@@ -1,3 +1,5 @@
+import { Box, Flex, Text } from '@chakra-ui/react';
+
 import { usePaymentCondition } from './usePaymentCondition';
 import { toContainer } from './utils';
 import { PaymentConditionsContext, PaymentContext, PaymentModelContext } from '../../common/contexts';
@@ -16,14 +18,19 @@ export function GlobalContainer({ paymentModel, initConditions }: GlobalContaine
     const containerName = toContainer(conditions);
 
     return (
-        <PaymentModelContext.Provider value={{ paymentModel }}>
-            <PaymentConditionsContext.Provider value={{ conditions }}>
-                <PaymentContext.Provider value={{ startPayment, startWaitingPaymentResult }}>
-                    {containerName === 'ViewContainer' && <ViewContainer />}
-                    {containerName === 'RedirectContainer' && <RedirectContainer />}
-                </PaymentContext.Provider>
-            </PaymentConditionsContext.Provider>
-        </PaymentModelContext.Provider>
+        <Box marginBottom={[12, 12, 0]} marginTop={[12, 12, 0]}>
+            <PaymentModelContext.Provider value={{ paymentModel }}>
+                <PaymentConditionsContext.Provider value={{ conditions }}>
+                    <PaymentContext.Provider value={{ startPayment, startWaitingPaymentResult }}>
+                        {containerName === 'ViewContainer' && <ViewContainer />}
+                        {containerName === 'RedirectContainer' && <RedirectContainer />}
+                        <Flex>
+                            <Text color="white">GlobalContainer</Text>
+                        </Flex>
+                    </PaymentContext.Provider>
+                </PaymentConditionsContext.Provider>
+            </PaymentModelContext.Provider>
+        </Box>
     );
 }
 

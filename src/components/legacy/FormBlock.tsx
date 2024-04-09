@@ -3,20 +3,16 @@ import styled from 'styled-components';
 import { device } from '../../common/utils';
 
 export const FormBlock = styled.div`
-    position: relative;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    border-radius: 16px;
+
     background: ${({ theme }) => theme.form.background};
 
     @media ${device.desktop} {
-        height: auto;
-        min-height: auto;
         width: 768px;
-        border-radius: 16px;
-        display: flex;
-        flex-wrap: nowrap;
         flex-direction: row;
         padding: 30px;
-        box-sizing: border-box;
     }
 `;

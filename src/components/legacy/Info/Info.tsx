@@ -7,13 +7,13 @@ import { Locale } from '../../../common/contexts';
 import { device } from '../../../common/utils';
 
 const InfoWrapper = styled.div`
-    padding: 16px;
+    padding: 16px 16px 0 16px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 8px;
 
     @media ${device.desktop} {
-        padding: 24px 0;
+        padding: 0;
         width: 258px;
         margin-right: 30px;
     }
