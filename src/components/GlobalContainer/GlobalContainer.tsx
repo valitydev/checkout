@@ -1,5 +1,7 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+/* eslint-disable react/jsx-max-depth */
+import { Box } from '@chakra-ui/react';
 
+import { LocaleSelector } from './LocaleSelector';
 import { usePaymentCondition } from './usePaymentCondition';
 import { toContainer } from './utils';
 import { PaymentConditionsContext, PaymentContext, PaymentModelContext } from '../../common/contexts';
@@ -18,19 +20,19 @@ export function GlobalContainer({ paymentModel, initConditions }: GlobalContaine
     const containerName = toContainer(conditions);
 
     return (
-        <Box marginBottom={[12, 12, 0]} marginTop={[12, 12, 0]}>
-            <PaymentModelContext.Provider value={{ paymentModel }}>
-                <PaymentConditionsContext.Provider value={{ conditions }}>
-                    <PaymentContext.Provider value={{ startPayment, startWaitingPaymentResult }}>
+        <PaymentModelContext.Provider value={{ paymentModel }}>
+            <PaymentConditionsContext.Provider value={{ conditions }}>
+                <PaymentContext.Provider value={{ startPayment, startWaitingPaymentResult }}>
+                    <Box marginBottom={[12, 12, 0]} marginTop={[12, 12, 0]}>
                         {containerName === 'ViewContainer' && <ViewContainer />}
                         {containerName === 'RedirectContainer' && <RedirectContainer />}
-                        <Flex>
-                            <Text color="white">GlobalContainer</Text>
-                        </Flex>
-                    </PaymentContext.Provider>
-                </PaymentConditionsContext.Provider>
-            </PaymentModelContext.Provider>
-        </Box>
+                        <Box paddingLeft="5" paddingRight="5" paddingTop="3">
+                            <LocaleSelector />
+                        </Box>
+                    </Box>
+                </PaymentContext.Provider>
+            </PaymentConditionsContext.Provider>
+        </PaymentModelContext.Provider>
     );
 }
 
