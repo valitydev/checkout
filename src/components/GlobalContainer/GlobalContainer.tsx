@@ -1,12 +1,20 @@
 /* eslint-disable react/jsx-max-depth */
 import { Box } from '@chakra-ui/react';
+import { useState } from 'react';
+
+import {
+    Locale,
+    LocaleContext,
+    PaymentConditionsContext,
+    PaymentContext,
+    PaymentModelContext,
+} from 'checkout/contexts';
+import { PaymentCondition } from 'checkout/paymentCondition';
+import { PaymentModel } from 'checkout/paymentModel';
 
 import { LocaleSelector } from './LocaleSelector';
 import { usePaymentCondition } from './usePaymentCondition';
 import { toContainer } from './utils';
-import { PaymentConditionsContext, PaymentContext, PaymentModelContext } from '../../common/contexts';
-import { PaymentCondition } from '../../common/paymentCondition';
-import { PaymentModel } from '../../common/paymentModel';
 import { RedirectContainer } from '../RedirectContainer';
 import { ViewContainer } from '../ViewContainer';
 
@@ -18,18 +26,21 @@ export type GlobalContainerProps = {
 export function GlobalContainer({ paymentModel, initConditions }: GlobalContainerProps) {
     const { conditions, startPayment, startWaitingPaymentResult } = usePaymentCondition(paymentModel, initConditions);
     const containerName = toContainer(conditions);
+    const [locale, setLocale] = useState<{ l: Locale; localeCode: string }>({ l: {}, localeCode: 'en' });
 
     return (
         <PaymentModelContext.Provider value={{ paymentModel }}>
             <PaymentConditionsContext.Provider value={{ conditions }}>
                 <PaymentContext.Provider value={{ startPayment, startWaitingPaymentResult }}>
-                    <Box marginBottom={[12, 12, 0]} marginTop={[12, 12, 0]}>
-                        {containerName === 'ViewContainer' && <ViewContainer />}
-                        {containerName === 'RedirectContainer' && <RedirectContainer />}
-                        <Box paddingLeft="5" paddingRight="5" paddingTop="3">
-                            <LocaleSelector />
+                    <LocaleContext.Provider value={locale}>
+                        <Box marginBottom={[12, 12, 0]} marginTop={[12, 12, 0]}>
+                            {containerName === 'ViewContainer' && <ViewContainer />}
+                            {containerName === 'RedirectContainer' && <RedirectContainer />}
+                            <Box paddingLeft="5" paddingRight="5" paddingTop="3">
+                                <LocaleSelector onLocaleChange={setLocale} />
+                            </Box>
                         </Box>
-                    </Box>
+                    </LocaleContext.Provider>
                 </PaymentContext.Provider>
             </PaymentConditionsContext.Provider>
         </PaymentModelContext.Provider>

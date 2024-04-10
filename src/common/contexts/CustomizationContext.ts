@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
 const defaultContext: CustomizationContextProps = {
-    localeCode: 'en',
+    initLocaleCode: 'en',
     name: '',
     description: '',
     obscureCardCvv: true,
@@ -9,7 +9,7 @@ const defaultContext: CustomizationContextProps = {
 };
 
 export type CustomizationContextProps = {
-    localeCode: string;
+    initLocaleCode: string;
     obscureCardCvv: boolean;
     requireCardHolder: boolean;
     name?: string;

@@ -1,7 +1,7 @@
 import { useCallback, useReducer } from 'react';
 
-import { Locale } from '../../common/contexts';
-import { fetchConfig, withRetry } from '../../common/utils';
+import { Locale } from 'checkout/contexts';
+import { extractError, fetchConfig, withRetry } from 'checkout/utils';
 
 type State =
     | { status: 'PRISTINE' }
@@ -9,22 +9,28 @@ type State =
     | { status: 'SUCCESS'; data: Locale }
     | { status: 'FAILURE' };
 
-type Action = { type: 'LOAD_STARTED' } | { type: 'LOAD_SUCCESS'; payload: Locale } | { type: 'LOAD_FAILURE' };
+type Action =
+    | { type: 'FETCH_START' }
+    | {
+          type: 'FETCH_SUCCESS';
+          payload: Locale;
+      }
+    | { type: 'FETCH_FAILURE' };
 
 const dataReducer = (state: State, action: Action): State => {
     switch (action.type) {
-        case 'LOAD_STARTED':
+        case 'FETCH_START':
             return {
                 ...state,
                 status: 'LOADING',
             };
-        case 'LOAD_SUCCESS':
+        case 'FETCH_SUCCESS':
             return {
                 ...state,
                 status: 'SUCCESS',
                 data: action.payload,
             };
-        case 'LOAD_FAILURE':
+        case 'FETCH_FAILURE':
             return {
                 ...state,
                 status: 'FAILURE',
@@ -41,17 +47,18 @@ export const useLocale = () => {
 
     const loadLocale = useCallback((localeCode: string) => {
         (async () => {
-            dispatch({ type: 'LOAD_STARTED' });
+            dispatch({ type: 'FETCH_START' });
             try {
                 const fetchLocale = withRetry(fetchConfig<Locale>);
-                const payload = await fetchLocale(`./assets/locale/${localeCode}.json`);
+                const locale = await fetchLocale(`./assets/locale/${localeCode}.json`);
                 dispatch({
-                    type: 'LOAD_SUCCESS',
-                    payload,
+                    type: 'FETCH_SUCCESS',
+                    payload: locale,
                 });
-            } catch (ex) {
+            } catch (error) {
+                console.error(`Failed to fetch locale: ${extractError(error)}`);
                 dispatch({
-                    type: 'LOAD_FAILURE',
+                    type: 'FETCH_FAILURE',
                 });
             }
         })();

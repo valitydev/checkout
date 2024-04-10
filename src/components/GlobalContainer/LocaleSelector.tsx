@@ -1,8 +1,10 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { CustomizationContext } from 'checkout/contexts';
+import { CustomizationContext, Locale } from 'checkout/contexts';
+
+import { useLocale } from './useLocale';
 
 const localeInfo = {
     az: {
@@ -47,25 +49,47 @@ const localeInfo = {
     },
 };
 
-export function LocaleSelector() {
-    const { localeCode } = useContext(CustomizationContext);
+export type LocaleSelectorProps = {
+    onLocaleChange: (locale: { l: Locale; localeCode: string }) => void;
+};
+
+export function LocaleSelector({ onLocaleChange }: LocaleSelectorProps) {
+    const { initLocaleCode } = useContext(CustomizationContext);
+    const { localeState, loadLocale } = useLocale();
+    const [activeLocaleCode, setActiveLocaleCode] = useState<string>(initLocaleCode);
+
+    useEffect(() => {
+        loadLocale(initLocaleCode);
+    }, [initLocaleCode]);
+
+    useEffect(() => {
+        if (localeState.status === 'SUCCESS') {
+            onLocaleChange({ l: localeState.data, localeCode: activeLocaleCode });
+        }
+    }, [localeState, activeLocaleCode]);
 
     return (
         <Menu isLazy>
             <MenuButton color="white">
                 <Flex alignItems="center" gap="1">
                     <Text as="span" fontSize="md">
-                        {localeInfo[localeCode]?.flag || '🏳️'}
+                        {localeInfo[activeLocaleCode]?.flag || '🏳️'}
                     </Text>
                     <Text color="white" fontSize="md" fontWeight="bold">
-                        {localeInfo[localeCode]?.short || localeCode}
+                        {localeInfo[activeLocaleCode]?.short || activeLocaleCode}
                     </Text>
                     <ChevronDownIcon />
                 </Flex>
             </MenuButton>
             <MenuList>
                 {Object.entries(localeInfo).map(([code, { flag, long }]) => (
-                    <MenuItem key={code}>
+                    <MenuItem
+                        key={code}
+                        onClick={() => {
+                            setActiveLocaleCode(code);
+                            loadLocale(code);
+                        }}
+                    >
                         <Flex alignItems="center" gap="3">
                             <Text as="span" fontSize="xl">
                                 {flag}

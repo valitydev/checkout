@@ -1,5 +1,5 @@
-import { InitConfig } from '../../../common/init';
-import { isNil } from '../../../common/utils';
+import { InitConfig } from 'checkout/init';
+import { isNil } from 'checkout/utils';
 
 export const toCustomizationContext = ({
     name,
@@ -10,7 +10,7 @@ export const toCustomizationContext = ({
 }: InitConfig) => ({
     name,
     description,
-    localeCode: locale,
+    initLocaleCode: locale,
     obscureCardCvv: isNil(obscureCardCvv) || true,
     requireCardHolder: isNil(requireCardHolder) || true,
 });

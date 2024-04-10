@@ -1,9 +1,9 @@
 import isMobile from 'ismobilejs';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { Back } from './Back';
-import { Locale } from '../../../common/contexts';
+import { LocaleContext } from '../../../common/contexts';
 import { device } from '../../../common/utils';
 
 const InfoWrapper = styled.div`
@@ -57,13 +57,13 @@ const DescriptionContainer = styled.div`
 `;
 
 export type InfoProps = {
-    l: Locale;
     viewAmount: string;
     name?: string;
     description?: string;
 };
 
-export const Info = ({ name, description, l, viewAmount }: InfoProps) => {
+export const Info = ({ name, description, viewAmount }: InfoProps) => {
+    const { l } = useContext(LocaleContext);
     const isBackVisible = useMemo(() => isMobile(window.navigator).phone || isMobile(window.navigator).tablet, []);
 
     return (
@@ -73,8 +73,8 @@ export const Info = ({ name, description, l, viewAmount }: InfoProps) => {
                     <Back locale={l} />
                 </div>
             )}
-            {name ? <CompanyName id="company-name-label">{name}</CompanyName> : false}
             {viewAmount ? <Amount>{viewAmount}</Amount> : false}
+            {name ? <CompanyName id="company-name-label">{name}</CompanyName> : false}
             {description && (
                 <DescriptionContainer>
                     <Order>{l['info.order.label']}</Order>

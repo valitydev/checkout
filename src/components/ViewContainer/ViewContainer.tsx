@@ -1,21 +1,21 @@
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 
-import { useLocale } from './useLocale';
-import { useViewModel } from './useViewModel';
-import { ViewContainerInner } from './ViewContainerInner';
 import {
     CustomizationContext,
     LocaleContext,
     PaymentConditionsContext,
     PaymentModelContext,
     ViewModelContext,
-} from '../../common/contexts';
-import { formatAmount } from '../../common/utils';
+} from 'checkout/contexts';
+import { formatAmount } from 'checkout/utils';
+
+import { useViewModel } from './useViewModel';
+import { ViewContainerInner } from './ViewContainerInner';
 import { FormBlock, Info } from '../legacy';
 
 export function ViewContainer() {
-    const { localeState, loadLocale } = useLocale();
-    const { localeCode, name, description } = useContext(CustomizationContext);
+    const { name, description } = useContext(CustomizationContext);
+    const { localeCode } = useContext(LocaleContext);
     const { conditions } = useContext(PaymentConditionsContext);
     const {
         paymentModel: { paymentAmount, paymentMethods },
@@ -24,21 +24,12 @@ export function ViewContainer() {
 
     const viewAmount = useMemo(() => formatAmount(paymentAmount, localeCode), [localeCode]);
 
-    useEffect(() => {
-        loadLocale(localeCode);
-    }, [localeCode]);
-
     return (
         <FormBlock>
-            {localeState.status === 'SUCCESS' && (
-                <LocaleContext.Provider value={{ l: localeState.data }}>
-                    <Info description={description} l={localeState.data} name={name} viewAmount={viewAmount}></Info>
-                    <ViewModelContext.Provider value={{ viewModel, viewAmount, goTo, forward, backward }}>
-                        <ViewContainerInner />
-                    </ViewModelContext.Provider>
-                </LocaleContext.Provider>
-            )}
-            {localeState.status === 'FAILURE' && <p>Load locale failure.</p>}
+            <Info description={description} name={name} viewAmount={viewAmount}></Info>
+            <ViewModelContext.Provider value={{ viewModel, viewAmount, goTo, forward, backward }}>
+                <ViewContainerInner />
+            </ViewModelContext.Provider>
         </FormBlock>
     );
 }
