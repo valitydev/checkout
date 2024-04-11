@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import { prepareForm } from './utils';
 import { BrowserRequest } from '../../common/backend/payments';
-import { LayoutLoader } from '../legacy';
 
 const RedirectContainer = styled.div`
     visibility: hidden;
@@ -29,10 +28,5 @@ export function SelfRedirectContainer({ origin, request }: SelfRedirectContainer
         form && form.submit();
     }, [form]);
 
-    return (
-        <>
-            <LayoutLoader />
-            <RedirectContainer ref={containerRef} />
-        </>
-    );
+    return <RedirectContainer ref={containerRef} />;
 }
