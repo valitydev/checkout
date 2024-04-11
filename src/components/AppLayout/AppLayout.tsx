@@ -9,7 +9,7 @@ import { toCustomizationContext } from './utils';
 import { CustomizationContext } from '../../common/contexts';
 import { InitParams } from '../../common/init';
 import { getTheme } from '../../common/theme';
-import { LayoutLoader, Overlay, ErrorBoundaryFallback } from '../legacy';
+import { ErrorBoundaryFallback } from '../legacy';
 
 type AppLayoutProps = {
     initParams: InitParams;
@@ -44,9 +44,7 @@ export function AppLayout({ initParams }: AppLayoutProps) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Overlay />
             <ModalContainer>
-                {modelsState.status === 'PROCESSING' && <LayoutLoader />}
                 {modelsState.status === 'INITIALIZED' && (
                     <CustomizationContext.Provider value={toCustomizationContext(initParams.initConfig)}>
                         <ErrorBoundary fallback={<ErrorBoundaryFallback />}>

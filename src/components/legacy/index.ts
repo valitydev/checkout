@@ -1,5 +1,3 @@
-export { LayoutLoader } from './LayoutLoader';
-export { Overlay } from './Overlay';
 export { PayButton } from './PayButton';
 export { HeaderWrapper } from './HeaderWrapper';
 export { Title } from './Title';
