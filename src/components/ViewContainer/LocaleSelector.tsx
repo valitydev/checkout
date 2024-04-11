@@ -1,8 +1,9 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
 import { CustomizationContext, Locale } from 'checkout/contexts';
+import { isEmojiSupported } from 'checkout/utils';
 
 import { useLocale } from './useLocale';
 
@@ -68,13 +69,17 @@ export function LocaleSelector({ onLocaleChange }: LocaleSelectorProps) {
         }
     }, [localeState, activeLocaleCode]);
 
+    const isEmojiAvailable = useMemo(() => isEmojiSupported('🏳️'), []);
+
     return (
-        <Menu isLazy>
+        <Menu>
             <MenuButton color="white">
                 <Flex alignItems="center" gap="1">
-                    <Text as="span" fontSize="md">
-                        {localeInfo[activeLocaleCode]?.flag || '🏳️'}
-                    </Text>
+                    {isEmojiAvailable && (
+                        <Text as="span" fontSize="md">
+                            {localeInfo[activeLocaleCode]?.flag}
+                        </Text>
+                    )}
                     <Text color="white" fontSize="md" fontWeight="bold">
                         {localeInfo[activeLocaleCode]?.short || activeLocaleCode}
                     </Text>
@@ -91,9 +96,11 @@ export function LocaleSelector({ onLocaleChange }: LocaleSelectorProps) {
                         }}
                     >
                         <Flex alignItems="center" gap="3">
-                            <Text as="span" fontSize="xl">
-                                {flag}
-                            </Text>
+                            {isEmojiAvailable && (
+                                <Text as="span" fontSize="xl">
+                                    {flag}
+                                </Text>
+                            )}
                             <Text fontSize="md">{long}</Text>
                         </Flex>
                     </MenuItem>
