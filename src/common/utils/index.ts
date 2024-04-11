@@ -31,6 +31,7 @@ export { getOrigin } from './getOrigin';
 export { detectLocale } from './detectLocale';
 export { createRegExpForMetaPattern } from './createRegExpForMetaPattern';
 export { formatCard } from './formatCard';
+export { truncate } from './truncate';
 
 export type { URLParams } from './getUrlParams';
 export type { CountrySubdivision, Country } from './countries';

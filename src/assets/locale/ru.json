@@ -1,6 +1,6 @@
 {
     "info.back": "Назад",
-    "info.order.label": "Ваш заказ",
+    "info.details": "Детали",
     "info.modal.no.available.payment.method": "Отсутствуют доступные методы оплаты",
     "form.header.payment.methods.label": "Выберите способ оплаты",
     "form.header.netbanking.label": "Выберите банк",

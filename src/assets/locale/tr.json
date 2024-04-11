@@ -1,6 +1,6 @@
 {
     "info.back": "Geri",
-    "info.order.label": "Sipariş detayları",
+    "info.details": "Detaylar",
     "info.modal.no.available.payment.method": "Mevcut ödeme yöntemi yok",
     "form.header.payment.methods.label": "Lütfen bir ödeme yöntemi seçin",
     "form.header.netbanking.label": "Lütfen bir banka seçin",

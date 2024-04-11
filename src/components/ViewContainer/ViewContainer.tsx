@@ -1,21 +1,23 @@
-import { useContext, useEffect, useMemo } from 'react';
+import { Box, Flex } from '@chakra-ui/react';
+import { useContext, useMemo } from 'react';
 
-import { useLocale } from './useLocale';
+import { LocaleContext, PaymentConditionsContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
+import { formatAmount } from 'checkout/utils';
+
+import { ApiExtensionView } from './ApiExtensionView';
+import { InfoContainer } from './InfoContainer';
+import { Loader } from './Loader';
+import { NoAvailablePaymentMethodsView } from './NoAvailablePaymentMethodsView';
+import { PaymentFormView } from './PaymentFormView';
+import { PaymentMethodSelectorView } from './PaymentMethodSelectorView';
+import { PaymentProcessFailedView } from './PaymentProcessFailedView';
+import { PaymentResultView } from './PaymentResultView';
+import { QrCodeView } from './QrCodeView';
+import { TerminalSelectorView } from './TerminalSelectorView';
 import { useViewModel } from './useViewModel';
-import { ViewContainerInner } from './ViewContainerInner';
-import {
-    CustomizationContext,
-    LocaleContext,
-    PaymentConditionsContext,
-    PaymentModelContext,
-    ViewModelContext,
-} from '../../common/contexts';
-import { formatAmount } from '../../common/utils';
-import { FormBlock, Info } from '../legacy';
 
 export function ViewContainer() {
-    const { localeState, loadLocale } = useLocale();
-    const { localeCode, name, description } = useContext(CustomizationContext);
+    const { localeCode } = useContext(LocaleContext);
     const { conditions } = useContext(PaymentConditionsContext);
     const {
         paymentModel: { paymentAmount, paymentMethods },
@@ -23,22 +25,40 @@ export function ViewContainer() {
     const { viewModel, goTo, forward, backward } = useViewModel(paymentMethods, conditions);
 
     const viewAmount = useMemo(() => formatAmount(paymentAmount, localeCode), [localeCode]);
-
-    useEffect(() => {
-        loadLocale(localeCode);
-    }, [localeCode]);
+    const { views, activeViewId, isLoading } = viewModel;
+    const activeView = views.get(activeViewId).name;
 
     return (
-        <FormBlock>
-            {localeState.status === 'SUCCESS' && (
-                <LocaleContext.Provider value={{ l: localeState.data }}>
-                    <Info description={description} l={localeState.data} name={name} viewAmount={viewAmount}></Info>
-                    <ViewModelContext.Provider value={{ viewModel, viewAmount, goTo, forward, backward }}>
-                        <ViewContainerInner />
-                    </ViewModelContext.Provider>
-                </LocaleContext.Provider>
-            )}
-            {localeState.status === 'FAILURE' && <p>Load locale failure.</p>}
-        </FormBlock>
+        <Flex
+            alignItems="stretch"
+            background="gray.50"
+            borderRadius="xl"
+            direction={['column', 'column', 'row']}
+            gap={4}
+            p={[4, 4, 8]}
+        >
+            <InfoContainer viewAmount={viewAmount}></InfoContainer>
+            <ViewModelContext.Provider value={{ viewModel, viewAmount, goTo, forward, backward }}>
+                <Box
+                    background="white"
+                    border="1px solid"
+                    borderColor="gray.200"
+                    borderRadius="xl"
+                    padding={[4, 4, 6]}
+                    position="relative"
+                    width={['full', 'full', '420px']}
+                >
+                    {activeView === 'NoAvailablePaymentMethodsView' && <NoAvailablePaymentMethodsView />}
+                    {activeView === 'PaymentMethodSelectorView' && <PaymentMethodSelectorView />}
+                    {activeView === 'TerminalSelectorView' && <TerminalSelectorView />}
+                    {activeView === 'PaymentFormView' && <PaymentFormView />}
+                    {activeView === 'PaymentResultView' && <PaymentResultView />}
+                    {activeView === 'QrCodeView' && <QrCodeView />}
+                    {activeView === 'ApiExtensionView' && <ApiExtensionView />}
+                    {activeView === 'PaymentProcessFailedView' && <PaymentProcessFailedView />}
+                    {isLoading && <Loader />}
+                </Box>
+            </ViewModelContext.Provider>
+        </Flex>
     );
 }

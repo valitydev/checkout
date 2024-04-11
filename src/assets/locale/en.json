@@ -1,6 +1,6 @@
 {
     "info.back": "Back",
-    "info.order.label": "Order details",
+    "info.details": "Details",
     "info.modal.no.available.payment.method": "No available payment methods",
     "form.header.payment.methods.label": "Please choose a payment method",
     "form.header.netbanking.label": "Please choose a bank",

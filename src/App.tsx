@@ -7,7 +7,7 @@ import { CommunicatorEvents } from './communicator';
 import { InitializationFailed, AppLayout } from './components';
 import { useInitialize } from './useInitialize';
 
-const { Button, Spinner, Divider, Heading, Alert, Skeleton } = chakraTheme.components;
+const { Button, Spinner, Divider, Heading, Alert, Skeleton, Menu, Drawer } = chakraTheme.components;
 
 const theme = extendBaseTheme({
     fonts: {
@@ -22,6 +22,8 @@ const theme = extendBaseTheme({
         Heading,
         Alert,
         Skeleton,
+        Menu,
+        Drawer,
     },
 });
 
