@@ -1,4 +1,3 @@
-export { FormLoader } from './FormLoader';
 export { LayoutLoader } from './LayoutLoader';
 export { Overlay } from './Overlay';
 export { PayButton } from './PayButton';

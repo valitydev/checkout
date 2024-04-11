@@ -1,21 +1,22 @@
-import { Flex } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { useContext, useMemo } from 'react';
 
-import {
-    CustomizationContext,
-    LocaleContext,
-    PaymentConditionsContext,
-    PaymentModelContext,
-    ViewModelContext,
-} from 'checkout/contexts';
+import { LocaleContext, PaymentConditionsContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
 import { formatAmount } from 'checkout/utils';
 
+import { ApiExtensionView } from './ApiExtensionView';
 import { InfoContainer } from './InfoContainer';
+import { Loader } from './Loader';
+import { NoAvailablePaymentMethodsView } from './NoAvailablePaymentMethodsView';
+import { PaymentFormView } from './PaymentFormView';
+import { PaymentMethodSelectorView } from './PaymentMethodSelectorView';
+import { PaymentProcessFailedView } from './PaymentProcessFailedView';
+import { PaymentResultView } from './PaymentResultView';
+import { QrCodeView } from './QrCodeView';
+import { TerminalSelectorView } from './TerminalSelectorView';
 import { useViewModel } from './useViewModel';
-import { ViewContainerInner } from './ViewContainerInner';
 
 export function ViewContainer() {
-    const { name, description } = useContext(CustomizationContext);
     const { localeCode } = useContext(LocaleContext);
     const { conditions } = useContext(PaymentConditionsContext);
     const {
@@ -24,19 +25,39 @@ export function ViewContainer() {
     const { viewModel, goTo, forward, backward } = useViewModel(paymentMethods, conditions);
 
     const viewAmount = useMemo(() => formatAmount(paymentAmount, localeCode), [localeCode]);
+    const { views, activeViewId, isLoading } = viewModel;
+    const activeView = views.get(activeViewId).name;
 
-    // TODO Padding should be: [4, 4, 8]
     return (
         <Flex
+            alignItems="stretch"
             background="gray.50"
             borderRadius="xl"
             direction={['column', 'column', 'row']}
-            gap={[0, 0, 2]}
-            p={[0, 0, 8]}
+            gap={4}
+            p={[4, 4, 8]}
         >
-            <InfoContainer description={description} name={name} viewAmount={viewAmount}></InfoContainer>
+            <InfoContainer viewAmount={viewAmount}></InfoContainer>
             <ViewModelContext.Provider value={{ viewModel, viewAmount, goTo, forward, backward }}>
-                <ViewContainerInner />
+                <Box
+                    background="white"
+                    border="1px solid"
+                    borderColor="gray.200"
+                    borderRadius="xl"
+                    padding={[4, 4, 6]}
+                    position="relative"
+                    width={['full', 'full', '420px']}
+                >
+                    {activeView === 'NoAvailablePaymentMethodsView' && <NoAvailablePaymentMethodsView />}
+                    {activeView === 'PaymentMethodSelectorView' && <PaymentMethodSelectorView />}
+                    {activeView === 'TerminalSelectorView' && <TerminalSelectorView />}
+                    {activeView === 'PaymentFormView' && <PaymentFormView />}
+                    {activeView === 'PaymentResultView' && <PaymentResultView />}
+                    {activeView === 'QrCodeView' && <QrCodeView />}
+                    {activeView === 'ApiExtensionView' && <ApiExtensionView />}
+                    {activeView === 'PaymentProcessFailedView' && <PaymentProcessFailedView />}
+                    {isLoading && <Loader />}
+                </Box>
             </ViewModelContext.Provider>
         </Flex>
     );

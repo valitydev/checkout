@@ -3,13 +3,7 @@ import { FieldError, SubmitHandler, useForm } from 'react-hook-form';
 
 import { LogoContainer } from './LogoContainer';
 import { formatMetadataValue } from './utils';
-import {
-    CustomizationContext,
-    LocaleContext,
-    PaymentContext,
-    PaymentModelContext,
-    ViewModelContext,
-} from '../../../../common/contexts';
+import { LocaleContext, PaymentContext, PaymentModelContext, ViewModelContext } from '../../../../common/contexts';
 import { toDefaultFormValuesMetadata } from '../../../../common/paymentCondition';
 import { TerminalValues } from '../../../../common/paymentMgmt';
 import { isNil } from '../../../../common/utils';
@@ -32,14 +26,13 @@ export type MetadataFormProps = {
 };
 
 export function MetadataForm({ provider }: MetadataFormProps) {
-    const { l } = useContext(LocaleContext);
+    const { l, localeCode } = useContext(LocaleContext);
     const {
         viewAmount,
         viewModel: { hasBackward },
         backward,
     } = useContext(ViewModelContext);
     const { startPayment } = useContext(PaymentContext);
-    const { localeCode } = useContext(CustomizationContext);
     const {
         paymentModel: { initContext, serviceProviders },
     } = useContext(PaymentModelContext);

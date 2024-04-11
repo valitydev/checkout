@@ -1,6 +1,6 @@
 {
     "info.back": "পিছনে",
-    "info.order.label": "অর্ডারের বিবরণ",
+    "info.details": "বিস্তারিত",
     "info.modal.no.available.payment.method": "কোনো পেমেন্ট পদ্ধতি উপলব্ধ নেই",
     "form.header.payment.methods.label": "দয়া করে একটি পেমেন্ট পদ্ধতি চয়ন করুন",
     "form.header.netbanking.label": "একটি ব্যাংক চয়ন করুন",

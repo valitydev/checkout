@@ -33,7 +33,7 @@ export function GlobalContainer({ paymentModel, initConditions }: GlobalContaine
             <PaymentConditionsContext.Provider value={{ conditions }}>
                 <PaymentContext.Provider value={{ startPayment, startWaitingPaymentResult }}>
                     <LocaleContext.Provider value={locale}>
-                        <Box marginBottom={[12, 12, 0]} marginTop={[12, 12, 0]}>
+                        <Box marginBottom={16} marginTop={16} width={['full', '75%', 'auto']}>
                             {containerName === 'ViewContainer' && <ViewContainer />}
                             {containerName === 'RedirectContainer' && <RedirectContainer />}
                             <Box paddingLeft="5" paddingRight="5" paddingTop="3">
