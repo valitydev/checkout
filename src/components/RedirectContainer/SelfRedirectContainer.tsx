@@ -19,6 +19,11 @@ export function SelfRedirectContainer({ origin, request }: SelfRedirectContainer
     const [form, setForm] = useState(null);
 
     useEffect(() => {
+        const spinner = document.getElementById('global-spinner');
+        if (spinner) spinner.style.display = 'block';
+    }, []);
+
+    useEffect(() => {
         const prepared = prepareForm(origin, request, '_self');
         containerRef.current.appendChild(prepared);
         setForm(prepared);
