@@ -42,6 +42,13 @@ export function AppLayout({ initParams }: AppLayoutProps) {
         init(initParams);
     }, [initParams]);
 
+    useEffect(() => {
+        if (modelsState.status === 'INITIALIZED') {
+            const spinner = document.getElementById('global-spinner');
+            if (spinner) spinner.style.display = 'none';
+        }
+    }, [modelsState.status]);
+
     return (
         <ThemeProvider theme={theme}>
             <ModalContainer>
