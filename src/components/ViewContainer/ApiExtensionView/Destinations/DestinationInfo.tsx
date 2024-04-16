@@ -2,7 +2,7 @@ import { VStack } from '@chakra-ui/react';
 import { useContext } from 'react';
 
 import { Destination } from 'checkout/backend/p2p';
-import { LocaleContext, ViewModelContext } from 'checkout/contexts';
+import { LocaleContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
 
 import { InfoItem } from './InfoItem';
 import { SBPIcon } from './SBPIcon';
@@ -15,6 +15,12 @@ export type DestinationInfoProps = {
 export function DestinationInfo({ destination }: DestinationInfoProps) {
     const { l } = useContext(LocaleContext);
     const { viewAmount } = useContext(ViewModelContext);
+
+    const {
+        paymentModel: {
+            paymentAmount: { currency },
+        },
+    } = useContext(PaymentModelContext);
 
     return (
         <VStack align="stretch">
@@ -37,7 +43,7 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
             {destination.destinationType === 'DestinationSBP' && (
                 <InfoItem
                     formatter={formatPhoneNumber}
-                    icon={<SBPIcon />}
+                    icon={currency === 'RUB' ? <SBPIcon /> : null}
                     isCopyable={true}
                     label={l['form.p2p.destination.spb.phone']}
                     value={destination.phoneNumber}
