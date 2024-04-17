@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useReducer } from 'react';
 
+import { PaymentCondition, PaymentInteractionRequested } from 'checkout/paymentCondition';
+import { PaymentMethod } from 'checkout/paymentModel';
+import { isNil, last } from 'checkout/utils';
+
 import { PaymentFormView, PaymentMethodSelectorItem, TerminalSelectorView, View, ViewModel } from './types';
-import { PaymentCondition, PaymentInteractionRequested } from '../../common/paymentCondition';
-import { PaymentMethod } from '../../common/paymentModel';
-import { isNil, last } from '../../common/utils';
 
 type Action =
     | {
@@ -56,11 +57,13 @@ const backward = (state: ViewModel): ViewModel => {
 };
 
 const goTo = (state: ViewModel, viewId: string): ViewModel => {
-    const foundIndex = state.history.findIndex((id) => id === viewId);
-    if (foundIndex === -1) return state;
+    if (!state.views.has(viewId)) {
+        console.error(`View with id ${viewId} is not found`);
+        return state;
+    }
     return {
         ...state,
-        history: state.history.slice(0, foundIndex + 1),
+        history: [],
         activeViewId: viewId,
         direction: 'backward',
     };

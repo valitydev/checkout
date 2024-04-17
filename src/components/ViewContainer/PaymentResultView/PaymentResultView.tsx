@@ -1,53 +1,24 @@
+import { WarningIcon, InfoIcon, CheckCircleIcon } from '@chakra-ui/icons';
+import { Button, Flex, Spacer, VStack, Text } from '@chakra-ui/react';
 import { useContext, useEffect } from 'react';
-import styled from 'styled-components';
 
 import {
     CompletePaymentContext,
     LocaleContext,
     PaymentConditionsContext,
     PaymentModelContext,
+    ViewModelContext,
 } from 'checkout/contexts';
 import { isNil, last } from 'checkout/utils';
 
 import { IconName } from './types';
-import { getResultInfo } from './utils';
-import { Button, ErrorIcon, Link, SuccessIcon, WarningIcon } from '../../../components/legacy';
+import { getPaymentFormViewId, getResultInfo } from './utils';
 
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 24px 0;
-    gap: 24px;
-`;
-
-const Label = styled.h2`
-    font-weight: 500;
-    font-size: 32px;
-    color: ${({ theme }) => theme.font.primaryColor};
-    line-height: 48px;
-    text-align: center;
-    margin: 0;
-`;
-
-const Description = styled.p`
-    font-weight: 500;
-    font-size: 16px;
-    color: ${({ theme }) => theme.font.primaryColor};
-    line-height: 24px;
-    text-align: center;
-    margin: 0;
-`;
-
-const OthersButton = styled(Link)`
-    padding-top: 12px;
-`;
-
-const ResultIcon = ({ iconName }: { iconName: IconName }) => (
+const ResultIcon = ({ iconName, color }: { iconName: IconName; color: string }) => (
     <>
-        {iconName === 'SuccessIcon' && <SuccessIcon />}
-        {iconName === 'WarningIcon' && <WarningIcon />}
-        {iconName === 'ErrorIcon' && <ErrorIcon />}
+        {iconName === 'CheckIcon' && <CheckCircleIcon boxSize="28" color={color} />}
+        {iconName === 'WarningIcon' && <WarningIcon boxSize="28" color={color} />}
+        {iconName === 'InfoIcon' && <InfoIcon boxSize="28" color={color} />}
     </>
 );
 
@@ -58,9 +29,12 @@ export function PaymentResultView() {
         paymentModel: { initContext },
     } = useContext(PaymentModelContext);
     const { onComplete } = useContext(CompletePaymentContext);
+    const { viewModel, goTo } = useContext(ViewModelContext);
+
+    const paymentFormViewId = getPaymentFormViewId(viewModel.views);
 
     const lastCondition = last(conditions);
-    const { iconName, label, description, hasActions } = getResultInfo(lastCondition);
+    const { iconName, label, description, hasActions, color } = getResultInfo(lastCondition);
 
     useEffect(() => {
         switch (lastCondition.name) {
@@ -78,22 +52,45 @@ export function PaymentResultView() {
     }, [onComplete, lastCondition]);
 
     return (
-        <>
-            <Wrapper>
-                <ResultIcon iconName={iconName} />
-                <Label>{l[label]}</Label>
-                {!isNil(description) && <Description>{l[description]}</Description>}
-                {hasActions && (
-                    <Button color="primary" onClick={() => location.reload()}>
-                        {l['form.button.reload']}
+        <VStack align="stretch" minH="sm" spacing={6}>
+            <Spacer />
+            <Flex justifyContent="center">
+                <ResultIcon color={color} iconName={iconName} />
+            </Flex>
+            <VStack align="stretch" spacing={3}>
+                <Text color={color} fontSize="4xl" fontWeight="medium" textAlign="center">
+                    {l[label]}
+                </Text>
+                {!isNil(description) && (
+                    <Text fontSize="lg" textAlign="center">
+                        {l[description]}
+                    </Text>
+                )}
+            </VStack>
+            <Spacer />
+            <VStack align="stretch" spacing={6}>
+                {hasActions && !isNil(paymentFormViewId) && (
+                    <Button
+                        borderRadius="xl"
+                        colorScheme="teal"
+                        size="lg"
+                        variant="solid"
+                        onClick={() => goTo(paymentFormViewId)}
+                    >
+                        {l['form.button.pay.again.label']}
                     </Button>
                 )}
                 {initContext?.redirectUrl && (
-                    <OthersButton onClick={() => window.open(initContext.redirectUrl, '_self')}>
+                    <Button
+                        colorScheme="teal"
+                        size="lg"
+                        variant="link"
+                        onClick={() => window.open(initContext.redirectUrl, '_self')}
+                    >
                         {l['form.button.back.to.website']}
-                    </OthersButton>
+                    </Button>
                 )}
-            </Wrapper>
-        </>
+            </VStack>
+        </VStack>
     );
 }

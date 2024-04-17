@@ -101,6 +101,7 @@ const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<Payment
         if (!isNil(lastCondition)) {
             switch (lastCondition.name) {
                 case 'paymentStarted':
+                case 'paymentStatusChanged':
                 case 'interactionRequested':
                 case 'interactionCompleted':
                     return conditions;
