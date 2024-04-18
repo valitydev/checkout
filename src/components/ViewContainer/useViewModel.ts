@@ -230,6 +230,7 @@ export const useViewModel = (paymentMethods: PaymentMethod[], conditions: Paymen
                     type: 'SET_VIEW',
                     payload: { name: 'PaymentProcessFailedView', id: 'PaymentProcessFailedView' },
                 });
+                break;
         }
     }, [lastCondition]);
 
