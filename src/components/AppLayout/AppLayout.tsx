@@ -3,13 +3,14 @@ import { lazy, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ThemeProvider } from 'styled-components';
 
+import { CustomizationContext } from 'checkout/contexts';
+import { InitParams } from 'checkout/init';
+import { getTheme } from 'checkout/theme';
+
+import { ErrorBoundaryFallback } from './ErrorBoundaryFallback';
 import { ModalError } from './ModalError';
 import { useInitModels } from './useInitModels';
 import { toCustomizationContext } from './utils';
-import { CustomizationContext } from '../../common/contexts';
-import { InitParams } from '../../common/init';
-import { getTheme } from '../../common/theme';
-import { ErrorBoundaryFallback } from '../legacy';
 
 type AppLayoutProps = {
     initParams: InitParams;
