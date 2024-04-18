@@ -1,9 +1,10 @@
+import { StartPaymentPayload, createPayment, determineModel, pollInvoiceEvents } from 'checkout/paymentMgmt';
+import { InvoiceContext, PaymentModel } from 'checkout/paymentModel';
+import { extractError } from 'checkout/utils';
+import { findMetadata } from 'checkout/utils/findMetadata';
+
 import { pollingResultToConditions } from './pollingResultToConditions';
 import { toDefaultFormValuesMetadata } from './toDefaultFormValuesMetadata';
-import { StartPaymentPayload, createPayment, determineModel, pollInvoiceEvents } from '../../paymentMgmt';
-import { InvoiceContext, PaymentModel } from '../../paymentModel';
-import { extractError } from '../../utils';
-import { findMetadata } from '../../utils/findMetadata';
 import { InvoiceDetermined, PaymentCondition } from '../types';
 
 const getInvoiceContext = async (model: PaymentModel): Promise<InvoiceContext> => {
@@ -61,7 +62,8 @@ export const provideInstantPayment = async (
             name: 'invoiceDetermined',
             invoiceContext,
         };
-        const conditions = pollingResultToConditions(pollingResult, skipUserInteraction);
+        const isInstantPayment = true;
+        const conditions = pollingResultToConditions(pollingResult, skipUserInteraction, isInstantPayment);
         return [invoiceDetermined, ...conditions];
     } catch (exception) {
         console.error(`provideInstantPayment error. ${extractError(exception)}`);

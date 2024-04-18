@@ -1,6 +1,6 @@
 import { WarningIcon, InfoIcon, CheckCircleIcon } from '@chakra-ui/icons';
 import { Button, Flex, Spacer, VStack, Text } from '@chakra-ui/react';
-import { useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
 import {
     CompletePaymentContext,
@@ -12,7 +12,7 @@ import {
 import { isNil, last } from 'checkout/utils';
 
 import { IconName } from './types';
-import { getPaymentFormViewId, getResultInfo } from './utils';
+import { getPaymentFormViewId, getResultInfo, isInstantPayment } from './utils';
 
 const ResultIcon = ({ iconName, color }: { iconName: IconName; color: string }) => (
     <>
@@ -30,11 +30,17 @@ export function PaymentResultView() {
     } = useContext(PaymentModelContext);
     const { onComplete } = useContext(CompletePaymentContext);
     const { viewModel, goTo } = useContext(ViewModelContext);
-
-    const paymentFormViewId = getPaymentFormViewId(viewModel.views);
-
     const lastCondition = last(conditions);
     const { iconName, label, description, hasActions, color } = getResultInfo(lastCondition);
+
+    const retry = useCallback(() => {
+        if (isInstantPayment(conditions)) {
+            location.reload();
+            return;
+        }
+        const paymentFormViewId = getPaymentFormViewId(viewModel.views);
+        goTo(paymentFormViewId);
+    }, [conditions, viewModel.views]);
 
     useEffect(() => {
         switch (lastCondition.name) {
@@ -69,14 +75,8 @@ export function PaymentResultView() {
             </VStack>
             <Spacer />
             <VStack align="stretch" spacing={6}>
-                {hasActions && !isNil(paymentFormViewId) && (
-                    <Button
-                        borderRadius="xl"
-                        colorScheme="teal"
-                        size="lg"
-                        variant="solid"
-                        onClick={() => goTo(paymentFormViewId)}
-                    >
+                {hasActions && (
+                    <Button borderRadius="xl" colorScheme="teal" size="lg" variant="solid" onClick={retry}>
                         {l['form.button.pay.again.label']}
                     </Button>
                 )}

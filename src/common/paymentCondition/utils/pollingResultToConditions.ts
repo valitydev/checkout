@@ -1,10 +1,12 @@
+import { PollingResult } from 'checkout/paymentMgmt';
+
 import { invoiceEventsToConditions } from './invoiceEventsToConditions';
-import { PollingResult } from '../../paymentMgmt';
 import { PaymentCondition } from '../types';
 
 export const pollingResultToConditions = (
     pollingResult: PollingResult,
     skipUserInteraction: boolean = false,
+    isInstantPayment: boolean = false,
 ): PaymentCondition[] => {
     switch (pollingResult.status) {
         case 'TIMEOUT':
@@ -14,6 +16,6 @@ export const pollingResultToConditions = (
                 },
             ];
         case 'POLLED':
-            return invoiceEventsToConditions(pollingResult.events, skipUserInteraction);
+            return invoiceEventsToConditions(pollingResult.events, skipUserInteraction, isInstantPayment);
     }
 };

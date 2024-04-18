@@ -1,5 +1,6 @@
-import { InvoiceEvent, PaymentStarted, UserInteraction } from '../../../common/backend/payments';
-import { isNil } from '../../../common/utils';
+import { InvoiceEvent, PaymentStarted, UserInteraction } from 'checkout/backend/payments';
+import { isNil } from 'checkout/utils';
+
 import { Interaction, PaymentCondition } from '../types';
 
 const getProvider = (started: PaymentStarted): string | null => {
@@ -32,7 +33,11 @@ const toInteraction = (userInteraction: UserInteraction, skipUserInteraction: bo
     }
 };
 
-export const invoiceEventsToConditions = (events: InvoiceEvent[], skipUserInteraction: boolean): PaymentCondition[] => {
+export const invoiceEventsToConditions = (
+    events: InvoiceEvent[],
+    skipUserInteraction: boolean,
+    isInstantPayment: boolean,
+): PaymentCondition[] => {
     return events.reduce((result, { changes, id }) => {
         const conditions = changes.reduce((acc, change) => {
             switch (change.changeType) {
@@ -44,6 +49,7 @@ export const invoiceEventsToConditions = (events: InvoiceEvent[], skipUserIntera
                             eventId: id,
                             provider: getProvider(change),
                             paymentId: change.payment.id,
+                            isInstantPayment,
                         },
                     ];
                 }
