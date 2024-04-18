@@ -12,6 +12,10 @@ export const CopyToClipboardButton: React.FC<{
     const [label, setLabel] = useState(l['form.button.copy.label']);
 
     useEffect(() => {
+        setLabel(l['form.button.copy.label']);
+    }, [l]);
+
+    useEffect(() => {
         const timer = setTimeout(() => {
             setLabel(l['form.button.copy.label']);
         }, timeout);

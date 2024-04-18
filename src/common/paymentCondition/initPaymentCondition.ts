@@ -95,12 +95,14 @@ const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<Payment
             invoiceParams.invoiceID,
             GET_INVOICE_EVENTS_LIMIT,
         );
-        const conditions = invoiceEventsToConditions(events, skipUserInteraction);
+        const isInstantPayment = false;
+        const conditions = invoiceEventsToConditions(events, skipUserInteraction, isInstantPayment);
         lastEventId = last(events).id;
         const lastCondition = last(conditions);
         if (!isNil(lastCondition)) {
             switch (lastCondition.name) {
                 case 'paymentStarted':
+                case 'paymentStatusChanged':
                 case 'interactionRequested':
                 case 'interactionCompleted':
                     return conditions;
