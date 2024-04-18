@@ -72,19 +72,7 @@ export const getResultInfo = (condition: PaymentCondition): ResultInfo => {
         case 'paymentStatusChanged':
             return fromPaymentStatusChanged(condition);
         case 'paymentStatusUnknown':
-            return {
-                iconName: 'InfoIcon',
-                color: 'blue.500',
-                label: 'form.header.final.pending.label',
-                description: 'form.header.final.pending.description',
-            };
         case 'interactionCompleted':
-            return {
-                iconName: 'InfoIcon',
-                color: 'blue.500',
-                label: 'form.header.final.pending.label',
-                description: 'form.header.final.pending.description',
-            };
         case 'paymentStarted':
             return {
                 iconName: 'InfoIcon',

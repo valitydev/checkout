@@ -1,4 +1,3 @@
-import { WarningIcon, InfoIcon, CheckCircleIcon } from '@chakra-ui/icons';
 import { Button, Flex, Spacer, VStack, Text } from '@chakra-ui/react';
 import { useCallback, useContext, useEffect } from 'react';
 
@@ -11,16 +10,8 @@ import {
 } from 'checkout/contexts';
 import { isNil, last } from 'checkout/utils';
 
-import { IconName } from './types';
+import { ResultIcon } from './ResultIcon';
 import { getPaymentFormViewId, getResultInfo, isInstantPayment } from './utils';
-
-const ResultIcon = ({ iconName, color }: { iconName: IconName; color: string }) => (
-    <>
-        {iconName === 'CheckIcon' && <CheckCircleIcon boxSize="28" color={color} />}
-        {iconName === 'WarningIcon' && <WarningIcon boxSize="28" color={color} />}
-        {iconName === 'InfoIcon' && <InfoIcon boxSize="28" color={color} />}
-    </>
-);
 
 export function PaymentResultView() {
     const { l } = useContext(LocaleContext);
