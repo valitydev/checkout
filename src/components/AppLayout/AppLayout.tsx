@@ -3,12 +3,12 @@ import { lazy, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ThemeProvider } from 'styled-components';
 
+import { ErrorAlert } from 'checkout/components';
 import { CustomizationContext } from 'checkout/contexts';
 import { InitParams } from 'checkout/init';
 import { getTheme } from 'checkout/theme';
+import { extractError } from 'checkout/utils';
 
-import { ErrorBoundaryFallback } from './ErrorBoundaryFallback';
-import { ModalError } from './ModalError';
 import { useInitModels } from './useInitModels';
 import { toCustomizationContext } from './utils';
 
@@ -44,7 +44,7 @@ export function AppLayout({ initParams }: AppLayoutProps) {
     }, [initParams]);
 
     useEffect(() => {
-        if (modelsState.status === 'INITIALIZED') {
+        if (modelsState.status === 'INITIALIZED' || modelsState.status === 'FAILURE') {
             const spinner = document.getElementById('global-spinner');
             if (spinner) spinner.style.display = 'none';
         }
@@ -55,7 +55,15 @@ export function AppLayout({ initParams }: AppLayoutProps) {
             <ModalContainer>
                 {modelsState.status === 'INITIALIZED' && (
                     <CustomizationContext.Provider value={toCustomizationContext(initParams.initConfig)}>
-                        <ErrorBoundary fallback={<ErrorBoundaryFallback />}>
+                        <ErrorBoundary
+                            fallback={
+                                <ErrorAlert
+                                    description="Try reloading"
+                                    isReloading={true}
+                                    title="Something went wrong"
+                                />
+                            }
+                        >
                             <GlobalContainer
                                 initConditions={modelsState.data.conditions}
                                 paymentModel={modelsState.data.paymentModel}
@@ -63,7 +71,13 @@ export function AppLayout({ initParams }: AppLayoutProps) {
                         </ErrorBoundary>
                     </CustomizationContext.Provider>
                 )}
-                {modelsState.status === 'FAILURE' && <ModalError error={modelsState.error} />}
+                {modelsState.status === 'FAILURE' && (
+                    <ErrorAlert
+                        description={extractError(modelsState.error)}
+                        isReloading={false}
+                        title="Initialization failure"
+                    />
+                )}
             </ModalContainer>
         </ThemeProvider>
     );

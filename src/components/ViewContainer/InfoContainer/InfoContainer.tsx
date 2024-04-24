@@ -34,7 +34,7 @@ export function InfoContainer({ viewAmount }: InfoProps) {
                 )}
 
                 <Flex alignItems="center" justifyContent="space-between">
-                    <Text fontSize={['3xl', '3xl', '4xl']} fontWeight="medium">
+                    <Text fontSize="3xl" fontWeight="medium">
                         {viewAmount}
                     </Text>
                     {!isLargerThan768 && (name || description) && (

@@ -1,11 +1,12 @@
 import { ChakraBaseProvider, extendBaseTheme, theme as chakraTheme } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
+import { ErrorAlert } from 'checkout/components';
 import { CompletePaymentContext } from 'checkout/contexts';
-import { isNil } from 'checkout/utils';
+import { extractError, isNil } from 'checkout/utils';
 
 import { CommunicatorEvents } from './communicator';
-import { InitializationFailed, AppLayout } from './components';
+import { AppLayout } from './components';
 import { useInitialize } from './useInitialize';
 
 const { Button, Spinner, Divider, Heading, Alert, Skeleton, Menu, Drawer } = chakraTheme.components;
@@ -37,6 +38,13 @@ export function App() {
         init();
     }, []);
 
+    useEffect(() => {
+        if (state.status === 'FAILURE') {
+            const spinner = document.getElementById('global-spinner');
+            if (spinner) spinner.style.display = 'none';
+        }
+    }, [state.status]);
+
     return (
         <ChakraBaseProvider theme={theme}>
             {state.status === 'SUCCESS' && (
@@ -57,7 +65,13 @@ export function App() {
                     <AppLayout initParams={state.data[1]} />
                 </CompletePaymentContext.Provider>
             )}
-            {state.status === 'FAILURE' && <InitializationFailed error={state.error} />}
+            {state.status === 'FAILURE' && (
+                <ErrorAlert
+                    description={extractError(state.error)}
+                    isReloading={false}
+                    title="Initialization failure"
+                />
+            )}
         </ChakraBaseProvider>
     );
 }
