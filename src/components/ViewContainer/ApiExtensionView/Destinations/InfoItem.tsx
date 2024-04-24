@@ -31,6 +31,10 @@ export function InfoItem({ label, value, isCopyable, formatter, icon }: InfoItem
     }, [value, formatter]);
 
     useEffect(() => {
+        setDisplayValue(value);
+    }, [value]);
+
+    useEffect(() => {
         if (!hasCopied) return;
         toast({
             title: l['form.p2p.copied'],
