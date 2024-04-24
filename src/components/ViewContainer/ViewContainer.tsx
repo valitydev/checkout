@@ -41,7 +41,6 @@ export function ViewContainer() {
     const activeView = views.get(activeViewId).name;
 
     useEffect(() => {
-        console.log(locale.localeCode);
         const dir = locale.localeCode === 'ar' ? 'rtl' : 'ltr';
         document.documentElement.setAttribute('dir', dir);
     }, [locale.localeCode]);
