@@ -1,13 +1,18 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import { CustomizationContext, Locale } from 'checkout/contexts';
+import { Locale } from 'checkout/contexts';
 import { isEmojiSupported } from 'checkout/utils';
 
 import { useLocale } from './useLocale';
 
 const localeInfo = {
+    ar: {
+        flag: '🇸🇦',
+        short: 'عر',
+        long: 'العربية',
+    },
     az: {
         flag: '🇦🇿',
         short: 'Az',
@@ -50,12 +55,19 @@ const localeInfo = {
     },
 };
 
-export type LocaleSelectorProps = {
-    onLocaleChange: (locale: { l: Locale; localeCode: string }) => void;
+export type LocaleDir = 'ltr' | 'rtl';
+
+export type LocaleObj = {
+    l: Locale;
+    localeCode: string;
 };
 
-export function LocaleSelector({ onLocaleChange }: LocaleSelectorProps) {
-    const { initLocaleCode } = useContext(CustomizationContext);
+export type LocaleSelectorProps = {
+    initLocaleCode: string;
+    onLocaleChange: (locale: LocaleObj) => void;
+};
+
+export function LocaleSelector({ initLocaleCode, onLocaleChange }: LocaleSelectorProps) {
     const { localeState, loadLocale } = useLocale();
     const [activeLocaleCode, setActiveLocaleCode] = useState<string>(initLocaleCode);
 
