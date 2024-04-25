@@ -64,5 +64,13 @@
     "InsufficientFunds": "Sem fundos",
     "PreauthorizationFailed": "A pré-autorização falhou",
     "RejectedByIssuer": "Rejeitado pelo banco emissor",
-    "PaymentRejected": "Pagamento rejeitado"
+    "PaymentRejected": "Pagamento rejeitado",
+    "p2p.gateways": {
+        "sberbank": "Sberbank",
+        "tinkoff": "Tinkoff",
+        "raiffeisen": "Raiffeisen",
+        "sbp": "SBP",
+        "kapital": "Kapital",
+        "abb": "ABB"
+    }
 }

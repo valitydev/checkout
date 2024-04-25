@@ -61,5 +61,13 @@
     "InsufficientFunds": "자금 부족",
     "PreauthorizationFailed": "사전 승인 실패",
     "RejectedByIssuer": "발급 은행에 의해 거부됨",
-    "PaymentRejected": "결제 거부됨"
+    "PaymentRejected": "결제 거부됨",
+    "p2p.gateways": {
+        "sberbank": "Sberbank",
+        "tinkoff": "Tinkoff",
+        "raiffeisen": "Raiffeisen",
+        "sbp": "SBP",
+        "kapital": "Kapital",
+        "abb": "ABB"
+    }
 }

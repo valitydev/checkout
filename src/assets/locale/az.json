@@ -61,5 +61,13 @@
     "InsufficientFunds": "Kifayət qədər vəsait yoxdur",
     "PreauthorizationFailed": "Əvvəlcədən avtorizasiya uğursuz oldu",
     "RejectedByIssuer": "Buraxılış bankı tərəfindən rədd edildi",
-    "PaymentRejected": "Ödəniş rədd edildi"
+    "PaymentRejected": "Ödəniş rədd edildi",
+    "p2p.gateways": {
+        "sberbank": "Sberbank",
+        "tinkoff": "Tinkoff",
+        "raiffeisen": "Raiffeisen",
+        "sbp": "SBP",
+        "kapital": "Kapital",
+        "abb": "ABB"
+    }
 }

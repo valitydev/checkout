@@ -7,6 +7,7 @@ import { isNil } from 'checkout/utils';
 
 import { CardIcon } from './CardIcon';
 import { IconPane } from './IconPane';
+import { getGatewayIcon, mapGatewayName } from '../utils';
 
 export type GatewayPanesProps = {
     gateways: Gateway[];
@@ -14,10 +15,10 @@ export type GatewayPanesProps = {
 };
 
 const DEFAULT_PANE_ID = 'defaultPaneId';
+const DEFAULT_ICON = <CardIcon color="teal.600" />;
 
 export function GatewayPanes({ gateways, onSelect }: GatewayPanesProps) {
     const { l } = useContext(LocaleContext);
-
     const [activeGatewayId, setActiveGatewayId] = useState<string | null>(null);
 
     useEffect(() => {
@@ -34,14 +35,14 @@ export function GatewayPanes({ gateways, onSelect }: GatewayPanesProps) {
         const defaultPane = {
             id: DEFAULT_PANE_ID,
             label: l['form.p2p.default.pane.label'],
-            iconName: 'bankCard',
+            icon: DEFAULT_ICON,
         };
 
         return [
             ...gateways.map((gateway) => ({
                 id: gateway.id,
-                label: gateway.name,
-                iconName: 'test', // Consider making this dynamic if necessary
+                label: mapGatewayName(gateway.name, l),
+                icon: getGatewayIcon(gateway.name, DEFAULT_ICON),
             })),
             defaultPane,
         ];
@@ -49,10 +50,10 @@ export function GatewayPanes({ gateways, onSelect }: GatewayPanesProps) {
 
     return (
         <Grid gap="4" templateColumns="repeat(2, 1fr)">
-            {paneData.map(({ id, label }) => (
+            {paneData.map(({ id, label, icon }) => (
                 <IconPane
                     key={id}
-                    icon={<CardIcon color="teal.600" />}
+                    icon={icon}
                     isActive={activeGatewayId === id}
                     label={label}
                     onClick={() => setActiveGatewayId(id)}
