@@ -5,8 +5,9 @@ import { Destination } from 'checkout/backend/p2p';
 import { LocaleContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
 
 import { InfoItem } from './InfoItem';
-import { SBPIcon } from './SBPIcon';
 import { formatCardPan, formatPhoneNumber } from './utils';
+import { SBPIcon } from '../icons/SBPIcon';
+import { getGatewayIcon, mapGatewayName } from '../utils';
 
 export type DestinationInfoProps = {
     destination: Destination;
@@ -50,7 +51,11 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
                 />
             )}
             {destination?.bankName && (
-                <InfoItem label={l['form.p2p.destination.bank.name']} value={destination.bankName} />
+                <InfoItem
+                    icon={getGatewayIcon(destination.bankName)}
+                    label={l['form.p2p.destination.bank.name']}
+                    value={mapGatewayName(destination.bankName, l)}
+                />
             )}
             {destination?.recipientName && (
                 <InfoItem label={l['form.p2p.destination.bank.recipient']} value={destination.recipientName} />

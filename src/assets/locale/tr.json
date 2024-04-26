@@ -61,5 +61,13 @@
     "InsufficientFunds": "Yetersiz bakiye",
     "PreauthorizationFailed": "Ön yetkilendirme başarısız",
     "RejectedByIssuer": "Çıkaran banka tarafından reddedildi",
-    "PaymentRejected": "Ödeme reddedildi"
+    "PaymentRejected": "Ödeme reddedildi",
+    "p2p.gateways": {
+        "sberbank": "Sberbank",
+        "tinkoff": "Tinkoff",
+        "raiffeisen": "Raiffeisen",
+        "sbp": "SBP",
+        "kapital": "Kapital",
+        "abb": "ABB"
+    }
 }

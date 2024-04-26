@@ -6,14 +6,16 @@ export const getDestinations = async (
     accessToken: string,
     invoiceID: string,
     paymentID: string,
-    gatewayID: string,
+    gatewayID?: string,
 ): Promise<Destination[]> => {
     const queryParams = new URLSearchParams({
         invoiceId: invoiceID,
         paymentId: paymentID,
-        gatewayId: gatewayID,
-    }).toString();
-    const path = `p2p/payments/destinations?${queryParams}`;
+    });
+    if (gatewayID) {
+        queryParams.append('gatewayId', gatewayID);
+    }
+    const path = `p2p/payments/destinations?${queryParams.toString()}`;
     const response = await fetchApi(capiEndpoint, accessToken, 'GET', path);
     return await response.json();
 };

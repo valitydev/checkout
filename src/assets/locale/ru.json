@@ -61,5 +61,13 @@
     "InsufficientFunds": "Недостаточно средств",
     "PreauthorizationFailed": "Неудачная предавторизация",
     "RejectedByIssuer": "Отклонено эмитентом",
-    "PaymentRejected": "Платёж отклонен"
+    "PaymentRejected": "Платёж отклонен",
+    "p2p.gateways": {
+        "sberbank": "Сбербанк",
+        "tinkoff": "Тинькофф",
+        "raiffeisen": "Райффайзен",
+        "sbp": "СБП",
+        "kapital": "Kapital",
+        "abb": "ABB"
+    }
 }

@@ -61,5 +61,13 @@
     "InsufficientFunds": "অপর্যাপ্ত তহবিল",
     "PreauthorizationFailed": "প্রাক-অনুমোদন ব্যর্থ হয়েছে",
     "RejectedByIssuer": "জারি করা ব্যাংকের দ্বারা প্রত্যাখ্যান করা হয়েছে",
-    "PaymentRejected": "পেমেন্ট প্রত্যাখ্যান করা হয়েছে"
+    "PaymentRejected": "পেমেন্ট প্রত্যাখ্যান করা হয়েছে",
+    "p2p.gateways": {
+        "sberbank": "Sberbank",
+        "tinkoff": "Tinkoff",
+        "raiffeisen": "Raiffeisen",
+        "sbp": "SBP",
+        "kapital": "Kapital",
+        "abb": "ABB"
+    }
 }

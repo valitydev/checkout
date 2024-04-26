@@ -61,5 +61,13 @@
     "InsufficientFunds": "残高不足",
     "PreauthorizationFailed": "事前認証に失敗しました",
     "RejectedByIssuer": "信用状発行銀行に拒否されました",
-    "PaymentRejected": "支払いが却下されました"
+    "PaymentRejected": "支払いが却下されました",
+    "p2p.gateways": {
+        "sberbank": "Sberbank",
+        "tinkoff": "Tinkoff",
+        "raiffeisen": "Raiffeisen",
+        "sbp": "SBP",
+        "kapital": "Kapital",
+        "abb": "ABB"
+    }
 }
