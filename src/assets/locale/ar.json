@@ -61,5 +61,13 @@
     "InsufficientFunds": "الأموال غير كافية",
     "PreauthorizationFailed": "فشل التفويض المسبق",
     "RejectedByIssuer": "رفض من البنك المصدر",
-    "PaymentRejected": "تم رفض الدفع"
+    "PaymentRejected": "تم رفض الدفع",
+    "p2p.gateways": {
+        "sberbank": "Sberbank",
+        "tinkoff": "Tinkoff",
+        "raiffeisen": "Raiffeisen",
+        "sbp": "SBP",
+        "kapital": "Kapital",
+        "abb": "ABB"
+    }
 }
