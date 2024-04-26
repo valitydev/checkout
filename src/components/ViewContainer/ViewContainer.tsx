@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-max-depth */
 
 import { Box, Flex } from '@chakra-ui/react';
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
 import {
-    Locale,
+    CustomizationContext,
     LocaleContext,
     PaymentConditionsContext,
     PaymentModelContext,
@@ -15,7 +15,7 @@ import { formatAmount } from 'checkout/utils';
 import { ApiExtensionView } from './ApiExtensionView';
 import { InfoContainer } from './InfoContainer';
 import { Loader } from './Loader';
-import { LocaleSelector } from './LocaleSelector';
+import { LocaleObj, LocaleSelector } from './LocaleSelector';
 import { NoAvailablePaymentMethodsView } from './NoAvailablePaymentMethodsView';
 import { PaymentFormView } from './PaymentFormView';
 import { PaymentMethodSelectorView } from './PaymentMethodSelectorView';
@@ -30,11 +30,20 @@ export function ViewContainer() {
     const {
         paymentModel: { paymentAmount, paymentMethods },
     } = useContext(PaymentModelContext);
+    const { initLocaleCode } = useContext(CustomizationContext);
     const { viewModel, goTo, forward, backward } = useViewModel(paymentMethods, conditions);
-    const [locale, setLocale] = useState<{ l: Locale; localeCode: string }>({ l: {}, localeCode: 'en' });
+    const [locale, setLocale] = useState<LocaleObj>({
+        l: {},
+        localeCode: initLocaleCode,
+    });
     const viewAmount = useMemo(() => formatAmount(paymentAmount, locale.localeCode), [locale.localeCode]);
     const { views, activeViewId, isLoading } = viewModel;
     const activeView = views.get(activeViewId).name;
+
+    useEffect(() => {
+        const dir = locale.localeCode === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.setAttribute('dir', dir);
+    }, [locale.localeCode]);
 
     return (
         <>
@@ -72,7 +81,7 @@ export function ViewContainer() {
                 </Flex>
             </LocaleContext.Provider>
             <Box paddingLeft="5" paddingRight="5" paddingTop="3">
-                <LocaleSelector onLocaleChange={setLocale} />
+                <LocaleSelector initLocaleCode={initLocaleCode} onLocaleChange={setLocale} />
             </Box>
         </>
     );
