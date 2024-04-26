@@ -38,8 +38,13 @@ export function GatewaySelectorTmp({ onFetchDestinations }: GatewaySelectorProps
     }, [destinationsState]);
 
     useEffect(() => {
-        if (gatewaysState.status === 'SUCCESS' && gatewaysState.data.length === 1) {
-            getDestinations(gatewaysState.data[0].id);
+        if (gatewaysState.status === 'SUCCESS') {
+            if (gatewaysState.data.length === 1) {
+                getDestinations(gatewaysState.data[0].id);
+            }
+            if (gatewaysState.data.length === 0) {
+                getDestinations();
+            }
         }
     }, [gatewaysState]);
 
@@ -52,7 +57,7 @@ export function GatewaySelectorTmp({ onFetchDestinations }: GatewaySelectorProps
             )}
 
             {gatewaysState.status === 'SUCCESS' &&
-                gatewaysState.data.length === 1 &&
+                gatewaysState.data.length <= 1 &&
                 destinationsState.status === 'LOADING' && (
                     <Flex alignItems="center" justifyContent="center">
                         <Spinner size="xl" />

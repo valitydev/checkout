@@ -28,7 +28,7 @@ export const useDestinations = (capiEndpoint: string, accessToken: string, invoi
     const lastGatewayIDRef = useRef<string | null>(null);
 
     const getDestinations = useCallback(
-        async (gatewayID: string) => {
+        async (gatewayID?: string) => {
             if (lastGatewayIDRef.current === gatewayID) {
                 return;
             }
