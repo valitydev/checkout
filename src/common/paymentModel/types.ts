@@ -58,6 +58,7 @@ export type CommonPaymentModel = {
     readonly paymentMethods: PaymentMethod[];
     readonly paymentAmount: PaymentAmount;
     readonly serviceProviders?: TerminalServiceProvider[];
+    readonly extraFields?: object[];
 };
 
 export type InvoiceTemplateParams = {

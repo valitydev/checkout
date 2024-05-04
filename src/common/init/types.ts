@@ -28,6 +28,7 @@ export type AppConfig = {
     brandName?: string;
     urlShortenerEndpoint?: string;
     sentryDsn?: string;
+    extraFields?: object[];
 };
 
 export type InitParams = {

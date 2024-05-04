@@ -46,6 +46,7 @@ export const initPaymentModel = async ({ initConfig, appConfig, origin }: InitPa
     const partialContext = toInvoiceContext(initConfig);
     const initContext = toInitContext(initConfig);
     const apiEndpoint = appConfig.capiEndpoint;
+    const extraFields = appConfig.extraFields;
     const backendModel = await getBackendModel(apiEndpoint, partialContext);
     const paymentAmount = backendModelToPaymentAmount(backendModel);
     const paymentMethods = backendModelToPaymentMethods(backendModel);
@@ -59,6 +60,7 @@ export const initPaymentModel = async ({ initConfig, appConfig, origin }: InitPa
         paymentMethods,
         paymentAmount,
         serviceProviders: backendModel.serviceProviders,
+        extraFields,
     };
     return result;
 };

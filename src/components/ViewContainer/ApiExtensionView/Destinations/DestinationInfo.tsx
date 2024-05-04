@@ -20,6 +20,7 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
     const {
         paymentModel: {
             paymentAmount: { currency },
+            extraFields,
         },
     } = useContext(PaymentModelContext);
 
@@ -41,6 +42,15 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
                     value={destination.account}
                 />
             )}
+            {destination.destinationType === 'BankAccount' &&
+                extraFields?.map(field => (
+                <InfoItem
+                label={field["key"]}
+                value={field["value"]}
+                isCopyable={true}
+                />
+            )
+            )}
             {destination.destinationType === 'DestinationSBP' && (
                 <InfoItem
                     formatter={formatPhoneNumber}
@@ -58,7 +68,11 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
                 />
             )}
             {destination?.recipientName && (
-                <InfoItem label={l['form.p2p.destination.bank.recipient']} value={destination.recipientName} />
+                <InfoItem
+                    label={l['form.p2p.destination.bank.recipient']}
+                    value={destination.recipientName}
+                    isCopyable={destination.destinationType === 'BankAccount'}
+                />
             )}
         </VStack>
     );
