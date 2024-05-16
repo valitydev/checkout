@@ -45,6 +45,8 @@
     "form.p2p.destination.bank.recipient": "প্রাপক:",
     "form.p2p.destination.spb.phone": "ফোন নম্বর:",
     "form.p2p.destination.bank.account.account": "অ্যাকাউন্ট নম্বর:",
+    "form.p2p.destination.bank.account.bic": "BIC",
+    "form.p2p.destination.bank.account.purpose": "প্রদানের উদ্দেশ্য",
     "form.p2p.complete.info": "ট্রান্সফার সম্পন্ন হওয়ার পর নিচের বোতাম চাপুন। পেমেন্ট প্রক্রিয়াকরণে ৫ মিনিট সময় লাগতে পারে।",
     "form.p2p.complete.button": "ট্রান্সফার সম্পন্ন",
     "form.p2p.complete.loading": "অনুগ্রহ করে অপেক্ষা করুন",
