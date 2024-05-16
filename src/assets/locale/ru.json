@@ -53,7 +53,7 @@
     "form.p2p.destination.amount": "Сумма:",
     "form.p2p.alert.li": ["Переводите точную сумму, указанную в заявке.", "Оплачивайте всю сумму одним переводом."],
     "form.p2p.alert.p": "В противном случае платеж не будет зачислен.",
-    "form.p2p.gateway.selector.heading": "Выбирите метод или банк",
+    "form.p2p.gateway.selector.heading": "Выберите метод или банк",
     "form.p2p.default.pane.label": "Любой банк",
     "form.p2p.next.button": "Далее",
     "form.p2p.destinations.heading": "Оплата",
