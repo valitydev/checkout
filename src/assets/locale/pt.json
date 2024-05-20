@@ -72,5 +72,11 @@
         "sbp": "SBP",
         "kapital": "Kapital",
         "abb": "ABB"
+    },
+    "metadata.addons": {
+        "pinikle": {
+            "label": "Não tem um voucher?",
+            "link": "Comprar"
+        }
     }
 }
