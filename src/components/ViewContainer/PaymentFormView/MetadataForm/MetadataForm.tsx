@@ -1,26 +1,18 @@
+import { Button, Spacer, VStack } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { FieldError, SubmitHandler, useForm } from 'react-hook-form';
 
+import { BackwardBox } from 'checkout/components';
+import { LocaleContext, PaymentContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
+import { toDefaultFormValuesMetadata } from 'checkout/paymentCondition';
+import { TerminalValues } from 'checkout/paymentMgmt';
+import { isNil } from 'checkout/utils';
+import { findMetadata } from 'checkout/utils/findMetadata';
+
 import { Addon } from './Addon';
-import { LogoContainer } from './LogoContainer';
+import { MetadataLogoBox } from './MetadataLogoBox';
 import { formatMetadataValue } from './utils';
-import { LocaleContext, PaymentContext, PaymentModelContext, ViewModelContext } from '../../../../common/contexts';
-import { toDefaultFormValuesMetadata } from '../../../../common/paymentCondition';
-import { TerminalValues } from '../../../../common/paymentMgmt';
-import { isNil } from '../../../../common/utils';
-import { findMetadata } from '../../../../common/utils/findMetadata';
-import {
-    ChevronButton,
-    Email,
-    FormGroup,
-    HeaderWrapper,
-    MetadataField,
-    MetadataLogo,
-    MetadataSelect,
-    PayButton,
-    Phone,
-    sortByIndex,
-} from '../../../legacy';
+import { Email, MetadataField, Phone, sortByIndex } from '../../../legacy';
 
 export type MetadataFormProps = {
     provider: string;
@@ -66,68 +58,48 @@ export function MetadataForm({ provider }: MetadataFormProps) {
     };
 
     return (
-        <>
-            {hasBackward && (
-                <HeaderWrapper>
-                    <ChevronButton type="left" onClick={backward} />
-                </HeaderWrapper>
-            )}
-            {!isNil(logo) && (
-                <LogoContainer>
-                    <MetadataLogo metadata={logo} />
-                </LogoContainer>
-            )}
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <VStack align="stretch" spacing={5}>
+                {hasBackward ? <BackwardBox onClick={backward} /> : <Spacer />}
+                {!isNil(logo) && <MetadataLogoBox logo={logo} />}
                 {!isNil(form) &&
-                    form?.sort(sortByIndex).map((m) => (
-                        <FormGroup key={m.name} direction={'column'}>
-                            {m.type === 'select' && (
-                                <MetadataSelect
-                                    fieldError={errors?.metadata?.[m.name] as FieldError}
-                                    isDirty={dirtyFields?.metadata?.[m.name]}
-                                    localeCode={localeCode}
-                                    metadata={m}
-                                    register={register}
-                                    wrappedName="metadata"
-                                />
-                            )}
-                            {m.type !== 'select' && (
-                                <MetadataField
-                                    fieldError={errors?.metadata?.[m.name] as FieldError}
-                                    isDirty={dirtyFields?.metadata?.[m.name]}
-                                    localeCode={localeCode}
-                                    metadata={m}
-                                    register={register}
-                                    wrappedName="metadata"
-                                />
-                            )}
-                        </FormGroup>
-                    ))}
+                    form
+                        ?.sort(sortByIndex)
+                        .map((m) => (
+                            <MetadataField
+                                key={m.name}
+                                fieldError={errors?.metadata?.[m.name] as FieldError}
+                                isDirty={dirtyFields?.metadata?.[m.name]}
+                                localeCode={localeCode}
+                                metadata={m}
+                                register={register}
+                                wrappedName="metadata"
+                            />
+                        ))}
                 {contactInfo?.email && (
-                    <FormGroup>
-                        <Email
-                            fieldError={errors?.contactInfo?.email}
-                            isDirty={dirtyFields?.contactInfo?.email}
-                            locale={l}
-                            register={register}
-                            registerName="contactInfo.email"
-                        />
-                    </FormGroup>
+                    <Email
+                        fieldError={errors?.contactInfo?.email}
+                        isDirty={dirtyFields?.contactInfo?.email}
+                        locale={l}
+                        register={register}
+                        registerName="contactInfo.email"
+                    />
                 )}
                 {contactInfo?.phoneNumber && (
-                    <FormGroup>
-                        <Phone
-                            fieldError={errors?.contactInfo?.phoneNumber}
-                            isDirty={dirtyFields?.contactInfo?.email}
-                            locale={l}
-                            register={register}
-                            registerName="contactInfo.phoneNumber"
-                        />
-                    </FormGroup>
+                    <Phone
+                        fieldError={errors?.contactInfo?.phoneNumber}
+                        isDirty={dirtyFields?.contactInfo?.email}
+                        locale={l}
+                        register={register}
+                        registerName="contactInfo.phoneNumber"
+                    />
                 )}
                 {!isNil(addon) && <Addon addon={addon} />}
-                <PayButton l={l} viewAmount={viewAmount} />
-            </form>
-        </>
+                <Spacer />
+                <Button borderRadius="xl" colorScheme="teal" size="lg" type="submit" variant="solid">
+                    {l['form.button.pay.label']} {viewAmount}
+                </Button>
+            </VStack>
+        </form>
     );
 }

@@ -13,7 +13,7 @@ export type PinikleAddonProps = {
 export function PinikleAddon({ localePath, redirectLink }: PinikleAddonProps) {
     const locale = localePath['pinikle'];
     return (
-        <VStack align="center" pt={3}>
+        <VStack align="center">
             <Text fontSize="md" fontWeight="medium">
                 {locale['label']}
             </Text>
