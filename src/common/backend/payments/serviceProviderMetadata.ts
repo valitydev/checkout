@@ -24,7 +24,6 @@ export type ServiceProviderMetadataField = {
     index?: number;
     formatter?: MetadataFieldFormatter;
     inputMode?: AttributeInputMode;
-    addon?: 'vpa';
     replaceValuePattern?: string;
 };
 
@@ -79,16 +78,23 @@ export type PrefilledMetadataValues = {
 
 export type ServiceProviderMetadataForm = ServiceProviderMetadataField[] | ServiceProviderMetadataSelect[];
 
+export type PinikleAddon = {
+    type: 'pinikle';
+    redirectLink: string;
+};
+
+export type Addon = PinikleAddon;
+
 export type CheckoutServiceProviderMetadata = {
     form?: ServiceProviderMetadataForm;
     logo?: ServiceProviderIconMetadata;
     title?: ServiceProviderTitleMetadata;
-    signUpLink?: string;
     contactInfo?: ServiceProviderContactInfo;
     userInteraction?: UserInteractionMetadata;
     qrCodeForm?: QrCodeFormMetadata;
     paymentSessionInfo?: PaymentSessionInfoMetadata;
     prefilledMetadataValues?: PrefilledMetadataValues;
+    addon: Addon;
 };
 
 export type ServiceProviderMetadata = {

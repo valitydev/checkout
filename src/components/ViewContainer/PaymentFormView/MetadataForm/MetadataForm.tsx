@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { FieldError, SubmitHandler, useForm } from 'react-hook-form';
 
+import { Addon } from './Addon';
 import { LogoContainer } from './LogoContainer';
 import { formatMetadataValue } from './utils';
 import { LocaleContext, PaymentContext, PaymentModelContext, ViewModelContext } from '../../../../common/contexts';
@@ -36,7 +37,7 @@ export function MetadataForm({ provider }: MetadataFormProps) {
     const {
         paymentModel: { initContext, serviceProviders },
     } = useContext(PaymentModelContext);
-    const { form, contactInfo, logo, prefilledMetadataValues } = findMetadata(serviceProviders, provider);
+    const { form, contactInfo, logo, prefilledMetadataValues, addon } = findMetadata(serviceProviders, provider);
 
     const {
         register,
@@ -124,6 +125,7 @@ export function MetadataForm({ provider }: MetadataFormProps) {
                         />
                     </FormGroup>
                 )}
+                {!isNil(addon) && <Addon addon={addon} />}
                 <PayButton l={l} viewAmount={viewAmount} />
             </form>
         </>
