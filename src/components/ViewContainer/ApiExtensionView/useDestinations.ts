@@ -48,7 +48,8 @@ export const useDestinations = (capiEndpoint: string, accessToken: string, invoi
             } catch (error) {
                 dispatch({ type: 'FETCH_FAILURE' });
                 // Api returns 500 error when there are no no requisites available.
-                if ('status' in error && error.status !== 500) {
+                // Api 400 error is a common case
+                if ('status' in error && error.status !== 500 && error.status !== 400) {
                     console.error(`Failed to fetch destinations. ${extractError(error)}`);
                 }
             }
