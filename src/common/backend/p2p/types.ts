@@ -22,6 +22,8 @@ export type DestinationBankAccount = {
     account: string;
     bankName?: string;
     recipientName?: string;
+    bic?: string;
+    purpose?: string;
 };
 
 export type Destination = DestinationBankCard | DestinationSBP | DestinationBankAccount;

@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { Destination } from 'checkout/backend/p2p';
 import { LocaleContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
 
+import { DestinationBankAccountInfo } from './DestinationBankAccountInfo';
 import { InfoItem } from './InfoItem';
 import { formatCardPan, formatPhoneNumber } from './utils';
 import { SBPIcon } from '../icons/SBPIcon';
@@ -34,13 +35,7 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
                     value={destination.pan}
                 />
             )}
-            {destination.destinationType === 'BankAccount' && (
-                <InfoItem
-                    isCopyable={true}
-                    label={l['form.p2p.destination.bank.account.account']}
-                    value={destination.account}
-                />
-            )}
+            {destination.destinationType === 'BankAccount' && <DestinationBankAccountInfo destination={destination} />}
             {destination.destinationType === 'DestinationSBP' && (
                 <InfoItem
                     formatter={formatPhoneNumber}
