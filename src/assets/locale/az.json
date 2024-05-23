@@ -45,6 +45,8 @@
     "form.p2p.destination.bank.recipient": "Adı:",
     "form.p2p.destination.spb.phone": "Telefon nömrəsi:",
     "form.p2p.destination.bank.account.account": "Hesab nömrəsi:",
+    "form.p2p.destination.bank.account.bic": "BIC:",
+    "form.p2p.destination.bank.account.purpose": "Ödənişin təyinatı:",
     "form.p2p.complete.info": "Təqdim etdikdən sonra \"Köçürmə tamamlandı\" düyməsini basın. Ödənişin işlənməsi 5 dəqiqəyə qədər çəkir.",
     "form.p2p.complete.button": "Köçürmə tamamlandı",
     "form.p2p.complete.loading": "Lütfən, gözləyin",
