@@ -94,7 +94,7 @@ export type CheckoutServiceProviderMetadata = {
     qrCodeForm?: QrCodeFormMetadata;
     paymentSessionInfo?: PaymentSessionInfoMetadata;
     prefilledMetadataValues?: PrefilledMetadataValues;
-    addon: Addon;
+    addon?: Addon;
 };
 
 export type ServiceProviderMetadata = {
