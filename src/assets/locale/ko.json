@@ -71,5 +71,11 @@
         "sbp": "SBP",
         "kapital": "Kapital",
         "abb": "ABB"
+    },
+    "metadata.addons": {
+        "pinikle": {
+            "label": "바우처가 없으신가요?",
+            "link": "구매"
+        }
     }
 }

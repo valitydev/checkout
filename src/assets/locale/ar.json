@@ -71,5 +71,11 @@
         "sbp": "SBP",
         "kapital": "Kapital",
         "abb": "ABB"
+    },
+    "metadata.addons": {
+        "pinikle": {
+            "label": "هل عندك قسيمة ؟",
+            "link": "اشتر"
+        }
     }
 }
