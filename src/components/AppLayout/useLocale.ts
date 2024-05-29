@@ -1,19 +1,18 @@
-import { useCallback, useReducer } from 'react';
+import { useCallback, useEffect, useReducer } from 'react';
 
 import { Locale } from 'checkout/contexts';
 import { extractError, fetchConfig, withRetry } from 'checkout/utils';
 
-type State =
-    | { status: 'PRISTINE' }
-    | { status: 'LOADING' }
-    | { status: 'SUCCESS'; data: Locale }
-    | { status: 'FAILURE' };
+type State = { status: 'PRISTINE' | 'LOADING' | 'SUCCESS' | 'FAILURE'; localeCode: string; l: Locale };
 
 type Action =
     | { type: 'FETCH_START' }
     | {
           type: 'FETCH_SUCCESS';
-          payload: Locale;
+          payload: {
+              l: Locale;
+              localeCode: string;
+          };
       }
     | { type: 'FETCH_FAILURE' };
 
@@ -27,8 +26,8 @@ const dataReducer = (state: State, action: Action): State => {
         case 'FETCH_SUCCESS':
             return {
                 ...state,
+                ...action.payload,
                 status: 'SUCCESS',
-                data: action.payload,
             };
         case 'FETCH_FAILURE':
             return {
@@ -40,20 +39,27 @@ const dataReducer = (state: State, action: Action): State => {
     }
 };
 
-export const useLocale = () => {
+export const useLocale = (initLocaleCode: string) => {
     const [localeState, dispatch] = useReducer(dataReducer, {
         status: 'PRISTINE',
+        l: {},
+        localeCode: initLocaleCode,
     });
 
-    const loadLocale = useCallback((localeCode: string) => {
+    useEffect(() => {
+        const dir = localeState.localeCode === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.setAttribute('dir', dir);
+    }, [localeState.localeCode]);
+
+    const changeLocale = useCallback((localeCode: string) => {
         (async () => {
             dispatch({ type: 'FETCH_START' });
             try {
                 const fetchLocale = withRetry(fetchConfig<Locale>);
-                const locale = await fetchLocale(`./assets/locale/${localeCode}.json`);
+                const l = await fetchLocale(`./assets/locale/${localeCode}.json`);
                 dispatch({
                     type: 'FETCH_SUCCESS',
-                    payload: locale,
+                    payload: { l, localeCode },
                 });
             } catch (error) {
                 console.error(`Failed to fetch locale: ${extractError(error)}`);
@@ -64,5 +70,5 @@ export const useLocale = () => {
         })();
     }, []);
 
-    return { localeState, loadLocale };
+    return { localeState, changeLocale };
 };
