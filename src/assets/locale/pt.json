@@ -80,5 +80,13 @@
             "label": "Não tem um voucher?",
             "link": "Comprar"
         }
-    }
+    },
+    "loaderMessages": [
+        "Carregando... Por favor, não feche a página.",
+        "Ainda trabalhando nisso... Isso não vai demorar muito.",
+        "Aguarde! Estamos processando seu pedido...",
+        "Por favor, aguarde... Seu pedido está sendo processado.",
+        "Por favor, aguarde... Estamos quase lá!",
+        "Quase pronto... Obrigado por esperar!"
+    ]
 }

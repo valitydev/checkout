@@ -77,5 +77,13 @@
             "label": "Kuponunuz yok mu?",
             "link": "Satın Al"
         }
-    }
+    },
+    "loaderMessages": [
+        "Yükleniyor... Lütfen sayfayı kapatmayın.",
+        "Hala üzerinde çalışıyoruz... Bu uzun sürmeyecek.",
+        "Sıkı durun! Talebinizi işliyoruz...",
+        "Lütfen bekleyin... Talebiniz işleniyor.",
+        "Lütfen bekleyin... Neredeyse bitti!",
+        "Neredeyse bitti... Beklediğiniz için teşekkürler!"
+    ]
 }

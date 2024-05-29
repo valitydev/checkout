@@ -1,11 +1,8 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import { Locale } from 'checkout/contexts';
 import { isEmojiSupported } from 'checkout/utils';
-
-import { useLocale } from './useLocale';
 
 const localeInfo = {
     ar: {
@@ -55,32 +52,13 @@ const localeInfo = {
     },
 };
 
-export type LocaleDir = 'ltr' | 'rtl';
-
-export type LocaleObj = {
-    l: Locale;
-    localeCode: string;
-};
-
 export type LocaleSelectorProps = {
     initLocaleCode: string;
-    onLocaleChange: (locale: LocaleObj) => void;
+    onLocaleChange: (localeCode: string) => void;
 };
 
 export function LocaleSelector({ initLocaleCode, onLocaleChange }: LocaleSelectorProps) {
-    const { localeState, loadLocale } = useLocale();
     const [activeLocaleCode, setActiveLocaleCode] = useState<string>(initLocaleCode);
-
-    useEffect(() => {
-        loadLocale(initLocaleCode);
-    }, [initLocaleCode]);
-
-    useEffect(() => {
-        if (localeState.status === 'SUCCESS') {
-            onLocaleChange({ l: localeState.data, localeCode: activeLocaleCode });
-        }
-    }, [localeState, activeLocaleCode]);
-
     const isEmojiAvailable = useMemo(() => isEmojiSupported('🏳️'), []);
 
     return (
@@ -104,7 +82,7 @@ export function LocaleSelector({ initLocaleCode, onLocaleChange }: LocaleSelecto
                         key={code}
                         onClick={() => {
                             setActiveLocaleCode(code);
-                            loadLocale(code);
+                            onLocaleChange(code);
                         }}
                     >
                         <Flex alignItems="center" gap="3">

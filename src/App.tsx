@@ -39,7 +39,7 @@ export function App() {
     }, []);
 
     useEffect(() => {
-        if (state.status === 'FAILURE') {
+        if (state.status === 'FAILURE' || state.status === 'SUCCESS') {
             const spinner = document.getElementById('global-spinner');
             if (spinner) spinner.style.display = 'none';
         }

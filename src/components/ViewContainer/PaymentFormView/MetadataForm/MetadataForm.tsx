@@ -96,7 +96,7 @@ export function MetadataForm({ provider }: MetadataFormProps) {
                 )}
                 {!isNil(addon) && <Addon addon={addon} />}
                 <Spacer />
-                <Button borderRadius="xl" colorScheme="teal" size="lg" type="submit" variant="solid">
+                <Button borderRadius="lg" colorScheme="teal" size="lg" type="submit" variant="solid">
                     {l['form.button.pay.label']} {viewAmount}
                 </Button>
             </VStack>

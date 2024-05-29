@@ -67,7 +67,7 @@ export function PaymentResultView() {
             <Spacer />
             <VStack align="stretch" spacing={6}>
                 {hasActions && (
-                    <Button borderRadius="xl" colorScheme="teal" size="lg" variant="solid" onClick={retry}>
+                    <Button borderRadius="lg" colorScheme="teal" size="lg" variant="solid" onClick={retry}>
                         {l['form.button.pay.again.label']}
                     </Button>
                 )}
