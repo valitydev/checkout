@@ -77,5 +77,13 @@
             "label": "Don't have a voucher?",
             "link": "Buy"
         }
-    }
+    },
+    "loaderMessages": [
+        "Loading... Please don't close the page.",
+        "Still working on it... This won't take much longer.",
+        "Hang tight! We're processing your request...",
+        "Please hold on... Your request is being processed.",
+        "Please wait... We're nearly there!",
+        "Almost done... Thank you for waiting!"
+    ]
 }

@@ -54,7 +54,7 @@ export function AppLayout({ initParams }: AppLayoutProps) {
         <ThemeProvider theme={theme}>
             <LocaleContext.Provider value={{ l, localeCode, changeLocale }}>
                 <ModalContainer>
-                    {modelsState.status === 'PROCESSING' && <GlobalSpinner />}
+                    {modelsState.status === 'PROCESSING' && <GlobalSpinner l={l} />}
                     {modelsState.status === 'INITIALIZED' && (
                         <CustomizationContext.Provider value={customizationContextValue}>
                             <ErrorBoundary

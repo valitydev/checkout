@@ -77,5 +77,13 @@
             "label": "Voucheriniz yoxdur?",
             "link": "Almaq"
         }
-    }
+    },
+    "loaderMessages": [
+        "Yüklənir... Zəhmət olmasa səhifəni bağlamayın.",
+        "Hələ də işləyirik... Bu çox çəkməyəcək.",
+        "Səbirli olun! Sifarişinizi emal edirik...",
+        "Zəhmət olmasa gözləyin... Sifarişiniz emal olunur.",
+        "Zəhmət olmasa gözləyin... Demək olar ki, buradayıq!",
+        "Demək olar ki, hazıram... Gözlədiyiniz üçün təşəkkürlər!"
+    ]
 }

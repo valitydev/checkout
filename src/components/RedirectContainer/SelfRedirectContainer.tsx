@@ -1,8 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
+import { BrowserRequest } from 'checkout/backend/payments';
+import { GlobalSpinner } from 'checkout/components';
+import { LocaleContext } from 'checkout/contexts';
+
 import { prepareForm } from './utils';
-import { BrowserRequest } from '../../common/backend/payments';
 
 const RedirectContainer = styled.div`
     visibility: hidden;
@@ -15,13 +18,9 @@ export type SelfRedirectContainerProps = {
 };
 
 export function SelfRedirectContainer({ origin, request }: SelfRedirectContainerProps) {
+    const { l } = useContext(LocaleContext);
     const containerRef = useRef(null);
     const [form, setForm] = useState(null);
-
-    useEffect(() => {
-        const spinner = document.getElementById('global-spinner');
-        if (spinner) spinner.style.display = 'block';
-    }, []);
 
     useEffect(() => {
         const prepared = prepareForm(origin, request, '_self');
@@ -33,5 +32,10 @@ export function SelfRedirectContainer({ origin, request }: SelfRedirectContainer
         form && form.submit();
     }, [form]);
 
-    return <RedirectContainer ref={containerRef} />;
+    return (
+        <>
+            <GlobalSpinner l={l} />
+            <RedirectContainer ref={containerRef} />
+        </>
+    );
 }

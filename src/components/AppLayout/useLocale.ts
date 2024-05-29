@@ -47,6 +47,10 @@ export const useLocale = (initLocaleCode: string) => {
     });
 
     useEffect(() => {
+        changeLocale(initLocaleCode);
+    }, [initLocaleCode]);
+
+    useEffect(() => {
         const dir = localeState.localeCode === 'ar' ? 'rtl' : 'ltr';
         document.documentElement.setAttribute('dir', dir);
     }, [localeState.localeCode]);
