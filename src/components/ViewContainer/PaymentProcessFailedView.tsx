@@ -51,7 +51,7 @@ export function PaymentProcessFailedView() {
             <Spacer />
             <VStack align="stretch" spacing={6}>
                 <Button
-                    borderRadius="xl"
+                    borderRadius="lg"
                     colorScheme="teal"
                     size="lg"
                     variant="solid"

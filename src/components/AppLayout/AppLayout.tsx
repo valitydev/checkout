@@ -1,9 +1,9 @@
 import { Flex } from '@chakra-ui/react';
-import { lazy, useEffect } from 'react';
+import { lazy, useContext, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ThemeProvider } from 'styled-components';
 
-import { ErrorAlert } from 'checkout/components';
+import { ErrorAlert, GlobalSpinner } from 'checkout/components';
 import { CustomizationContext } from 'checkout/contexts';
 import { InitParams } from 'checkout/init';
 import { getTheme } from 'checkout/theme';
@@ -22,7 +22,7 @@ const ModalContainer = ({ children }: { children: React.ReactNode }) => (
     <Flex
         alignItems="center"
         flexDirection="column"
-        height="100dvh"
+        height="100vh"
         justifyContent={['start', 'start', 'center']}
         left={0}
         overflow="auto"
@@ -39,22 +39,18 @@ export function AppLayout({ initParams }: AppLayoutProps) {
     const theme = getTheme(initParams.appConfig.fixedTheme);
     const { modelsState, init } = useInitModels();
 
+    const customizationContextValue = toCustomizationContext(initParams.initConfig);
+
     useEffect(() => {
         init(initParams);
     }, [initParams]);
 
-    useEffect(() => {
-        if (modelsState.status === 'INITIALIZED' || modelsState.status === 'FAILURE') {
-            const spinner = document.getElementById('global-spinner');
-            if (spinner) spinner.style.display = 'none';
-        }
-    }, [modelsState.status]);
-
     return (
         <ThemeProvider theme={theme}>
             <ModalContainer>
+                {modelsState.status === 'PROCESSING' && <GlobalSpinner />}
                 {modelsState.status === 'INITIALIZED' && (
-                    <CustomizationContext.Provider value={toCustomizationContext(initParams.initConfig)}>
+                    <CustomizationContext.Provider value={customizationContextValue}>
                         <ErrorBoundary
                             fallback={
                                 <ErrorAlert

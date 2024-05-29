@@ -51,10 +51,10 @@ export function ViewContainer() {
                 <Flex
                     alignItems="stretch"
                     background="gray.50"
-                    borderRadius="xl"
+                    borderRadius="2xl"
                     direction={['column', 'column', 'row']}
                     gap={4}
-                    p={[4, 4, 8]}
+                    p={[4, 4, 6]}
                 >
                     <InfoContainer viewAmount={viewAmount}></InfoContainer>
                     <ViewModelContext.Provider value={{ viewModel, viewAmount, goTo, forward, backward }}>
@@ -63,7 +63,7 @@ export function ViewContainer() {
                             border="1px solid"
                             borderColor="gray.200"
                             borderRadius="xl"
-                            padding={[4, 4, 6]}
+                            p={[4, 4, 6]}
                             position="relative"
                             width={['full', 'full', '420px']}
                         >

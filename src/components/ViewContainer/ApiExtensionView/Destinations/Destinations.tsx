@@ -53,7 +53,7 @@ export function Destinations({ destinations }: DestinationsProps) {
                 </Text>
                 <VStack align="stretch" spacing={5}>
                     <Button
-                        borderRadius="xl"
+                        borderRadius="lg"
                         colorScheme="teal"
                         isLoading={status === 'LOADING' || status === 'SUCCESS'}
                         loadingText={l['form.p2p.complete.loading']}

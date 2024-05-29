@@ -56,7 +56,7 @@ export function GatewaySelector({ onFetchDestinations }: GatewaySelectorProps) {
                     <GatewayPanes gateways={gatewaysState.data} onSelect={setGateway} />
                     <Spacer />
                     <Button
-                        borderRadius="xl"
+                        borderRadius="lg"
                         colorScheme="teal"
                         isDisabled={isNil(gateway) || destinationsState.status === 'FAILURE'}
                         isLoading={destinationsState.status === 'LOADING'}
