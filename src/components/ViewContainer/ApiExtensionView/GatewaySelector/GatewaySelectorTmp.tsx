@@ -2,7 +2,7 @@ import { VStack, Divider, Heading, Button, Spacer, Spinner, Flex } from '@chakra
 import { useContext, useEffect, useState } from 'react';
 
 import { Destination, Gateway } from 'checkout/backend/p2p';
-import { LocaleContext } from 'checkout/contexts';
+import { LocaleContext, PaymentModelContext } from 'checkout/contexts';
 import { isNil } from 'checkout/utils';
 
 import { GatewayPanes } from './GatewayPanes';
@@ -18,6 +18,9 @@ export type GatewaySelectorProps = {
 export function GatewaySelectorTmp({ onFetchDestinations }: GatewaySelectorProps) {
     const { l } = useContext(LocaleContext);
     const { apiEndpoint, invoiceAccessToken, invoiceID, paymentId } = useContext(ApiExtensionViewContext);
+    const {
+        paymentModel: { initContext },
+    } = useContext(PaymentModelContext);
     const { gatewaysState, getGateways } = useGateways(apiEndpoint, invoiceAccessToken, invoiceID, paymentId);
     const { destinationsState, getDestinations } = useDestinations(
         apiEndpoint,
@@ -85,8 +88,36 @@ export function GatewaySelectorTmp({ onFetchDestinations }: GatewaySelectorProps
                 </>
             )}
 
-            {destinationsState.status === 'FAILURE' && <P2PApiError />}
-            {gatewaysState.status === 'FAILURE' && <P2PApiError />}
+            {gatewaysState.status === 'FAILURE' && (
+                <VStack align="stretch" spacing={12}>
+                    <P2PApiError />
+                    {initContext?.redirectUrl && (
+                        <Button
+                            colorScheme="teal"
+                            size="lg"
+                            variant="link"
+                            onClick={() => window.open(initContext.redirectUrl, '_self')}
+                        >
+                            {l['form.button.back.to.website']}
+                        </Button>
+                    )}
+                </VStack>
+            )}
+            {destinationsState.status === 'FAILURE' && (
+                <VStack align="stretch" spacing={12}>
+                    <P2PApiError />
+                    {initContext?.redirectUrl && (
+                        <Button
+                            colorScheme="teal"
+                            size="lg"
+                            variant="link"
+                            onClick={() => window.open(initContext.redirectUrl, '_self')}
+                        >
+                            {l['form.button.back.to.website']}
+                        </Button>
+                    )}
+                </VStack>
+            )}
         </VStack>
     );
 }
