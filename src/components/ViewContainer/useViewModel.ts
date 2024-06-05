@@ -216,7 +216,6 @@ export const useViewModel = (paymentMethods: PaymentMethod[], conditions: Paymen
         switch (lastCondition.name) {
             case 'invoiceStatusChanged':
             case 'paymentStatusChanged':
-            case 'interactionCompleted':
             case 'paymentStatusUnknown':
             case 'paymentStarted':
                 dispatch({ type: 'SET_VIEW', payload: { name: 'PaymentResultView', id: 'PaymentResultView' } });
@@ -230,6 +229,11 @@ export const useViewModel = (paymentMethods: PaymentMethod[], conditions: Paymen
                     type: 'SET_VIEW',
                     payload: { name: 'PaymentProcessFailedView', id: 'PaymentProcessFailedView' },
                 });
+                break;
+            case 'interactionCompleted':
+                // Error for an inappropriate condition usage. 'InteractionCompleted' event requires invoice status change waiting.
+                console.error('Inappropriate condition state: interactionCompleted');
+                dispatch({ type: 'SET_VIEW', payload: { name: 'PaymentResultView', id: 'PaymentResultView' } });
                 break;
         }
     }, [lastCondition]);
