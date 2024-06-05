@@ -1,5 +1,5 @@
 import { PaymentCondition } from './types';
-import { invoiceEventsToConditions, provideInstantPayment } from './utils';
+import { invoiceEventsToConditions, provideInstantPayment, provideInteractionCompleted } from './utils';
 import { ServiceProviderContactInfo, ServiceProviderMetadataField, getInvoiceEvents } from '../backend/payments';
 import { InitContext, PaymentModel, PaymentModelInvoice, PaymentTerminal } from '../paymentModel';
 import { extractError, isNil, last, withRetry } from '../utils';
@@ -104,8 +104,9 @@ const provideInvoiceUnpaid = async (model: PaymentModelInvoice): Promise<Payment
                 case 'paymentStarted':
                 case 'paymentStatusChanged':
                 case 'interactionRequested':
-                case 'interactionCompleted':
                     return conditions;
+                case 'interactionCompleted':
+                    return provideInteractionCompleted(model, lastEventId);
             }
         }
     } catch (exception) {
