@@ -45,6 +45,6 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         metadata: setDefault(resolveObject(metadata), undefined),
         terminalFormValues: setDefault(resolveObject(terminalFormValues), undefined),
         skipUserInteraction: setDefault(resolveBoolean(skipUserInteraction), false),
-        isExternalIDIncluded: setDefault(resolveBoolean(isExternalIDIncluded), false),
+        isExternalIDIncluded: setDefault(resolveBoolean(isExternalIDIncluded), true),
     };
 };
