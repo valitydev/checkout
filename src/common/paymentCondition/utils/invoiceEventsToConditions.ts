@@ -49,6 +49,7 @@ export const invoiceEventsToConditions = (
                             eventId: id,
                             provider: getProvider(change),
                             paymentId: change.payment.id,
+                            externalId: change.payment.externalID,
                             isInstantPayment,
                         },
                     ];
