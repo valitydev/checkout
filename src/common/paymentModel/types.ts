@@ -74,14 +74,15 @@ export type InvoiceTemplateContext = {
     readonly type: 'InvoiceTemplateContext';
     readonly invoiceTemplateParams: InvoiceTemplateParams;
     readonly metadata: object;
+    readonly externalID?: string;
 };
 
 export type InvoiceContext = {
     readonly type: 'InvoiceContext';
     readonly invoiceParams: InvoiceParams;
     readonly dueDate: string;
-    readonly externalID: string;
     readonly status: InvoiceStatus;
+    readonly externalID?: string;
 };
 
 export type PaymentModelInvoice = InvoiceContext & CommonPaymentModel;

@@ -17,7 +17,7 @@ export function PaymentResultView() {
     const { l } = useContext(LocaleContext);
     const { conditions } = useContext(PaymentConditionsContext);
     const {
-        paymentModel: { initContext },
+        paymentModel: { initContext, externalID },
     } = useContext(PaymentModelContext);
     const { onComplete } = useContext(CompletePaymentContext);
     const { viewModel, goTo } = useContext(ViewModelContext);
@@ -66,7 +66,7 @@ export function PaymentResultView() {
             </VStack>
             <Spacer />
             <VStack align="stretch" spacing={6}>
-                {hasActions && (
+                {hasActions && isNil(externalID) && (
                     <Button borderRadius="lg" colorScheme="teal" size="lg" variant="solid" onClick={retry}>
                         {l['form.button.pay.again.label']}
                     </Button>

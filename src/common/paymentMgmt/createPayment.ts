@@ -18,7 +18,7 @@ export const createPayment = async (
         payer,
         metadata,
         makeRecurrent: recurring,
-        externalID: isExternalIDIncluded ? invoiceContext.externalID : undefined,
+        externalID: isExternalIDIncluded ? invoiceContext?.externalID : undefined,
     };
     const { invoiceID, invoiceAccessToken } = invoiceContext.invoiceParams;
     const createPaymentWithRetry = withRetry(request);

@@ -5,6 +5,7 @@ export type InvoiceParamsWithTemplate = {
     amount: number;
     currency: string;
     metadata: object;
+    externalID?: string;
 };
 
 export const createInvoiceWithTemplate = async (
