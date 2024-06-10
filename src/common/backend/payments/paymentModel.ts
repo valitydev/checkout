@@ -224,6 +224,7 @@ export type InvoiceTemplate = {
     lifetime: LifetimeInterval;
     details: InvoiceTemplateMultiLine | InvoiceTemplateSingleLine;
     metadata: object;
+    externalID?: string;
 };
 
 export type ServiceProvider = {
@@ -273,5 +274,5 @@ export type Invoice = {
     status: InvoiceStatus;
     reason: string;
     cart: InvoiceLine[];
-    externalID: string;
+    externalID?: string;
 };

@@ -7,12 +7,14 @@ export const createInvoiceWithTemplate = async (model: PaymentModelInvoiceTempla
         apiEndpoint,
         metadata,
         paymentAmount,
+        externalID,
         invoiceTemplateParams: { invoiceTemplateID, invoiceTemplateAccessToken },
     } = model;
     const invoiceAndToken = await request(apiEndpoint, invoiceTemplateAccessToken, invoiceTemplateID, {
         amount: paymentAmount.value,
         currency: paymentAmount.currency,
         metadata,
+        externalID,
     });
     return invoiceToInvoiceContext(invoiceAndToken);
 };

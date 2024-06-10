@@ -11,7 +11,7 @@ import {
 import { isNil, last } from 'checkout/utils';
 
 import { ResultIcon } from './ResultIcon';
-import { getPaymentFormViewId, getResultInfo, isInstantPayment } from './utils';
+import { getPaymentFormViewId, getResultInfo, isExternalIdEmpty, isInstantPayment } from './utils';
 
 export function PaymentResultView() {
     const { l } = useContext(LocaleContext);
@@ -66,7 +66,7 @@ export function PaymentResultView() {
             </VStack>
             <Spacer />
             <VStack align="stretch" spacing={6}>
-                {hasActions && (
+                {hasActions && isExternalIdEmpty(conditions) && (
                     <Button borderRadius="lg" colorScheme="teal" size="lg" variant="solid" onClick={retry}>
                         {l['form.button.pay.again.label']}
                     </Button>

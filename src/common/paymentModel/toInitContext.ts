@@ -8,10 +8,10 @@ const toContactInfo = ({ phoneNumber, email }: InitConfig) => ({
 });
 
 export const toInitContext = (initConfig: InitConfig): InitContext => ({
-    skipUserInteraction: initConfig?.skipUserInteraction || false,
+    skipUserInteraction: initConfig?.skipUserInteraction,
+    isExternalIDIncluded: initConfig?.isExternalIDIncluded,
     terminalFormValues: initConfig.terminalFormValues,
     paymentMetadata: initConfig.metadata,
-    isExternalIDIncluded: initConfig.isExternalIDIncluded,
     contactInfo: toContactInfo(initConfig),
     redirectUrl: initConfig.redirectUrl,
     metadata: initConfig.metadata,

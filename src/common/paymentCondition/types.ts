@@ -22,6 +22,7 @@ export type PaymentStarted = {
     eventId: number;
     paymentId: string;
     provider?: string;
+    externalId?: string;
     isInstantPayment: boolean;
 };
 

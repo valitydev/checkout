@@ -19,11 +19,12 @@ const applyInvoice = (
 
 const applyInvoiceTemplate = (
     { invoiceTemplateParams, type }: Partial<InvoiceTemplateContext>,
-    { invoiceTemplate: { metadata } }: BackendModelInvoiceTemplate,
+    { invoiceTemplate: { metadata, externalID } }: BackendModelInvoiceTemplate,
 ): InvoiceTemplateContext => ({
     type,
     invoiceTemplateParams,
     metadata,
+    externalID,
 });
 
 const applyBackendModel = (
