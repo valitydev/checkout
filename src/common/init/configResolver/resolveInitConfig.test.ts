@@ -18,7 +18,7 @@ it('should return resolved init config', () => {
         invoiceID: 'someID',
         invoiceAccessToken: 'some token',
         recurring: false,
-        isExternalIDIncluded: false,
+        isExternalIDIncluded: true,
         locale: 'en',
         requireCardHolder: false,
         obscureCardCvv: true,
