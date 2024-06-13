@@ -1,4 +1,3 @@
-import { Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 import { Locale } from 'checkout/contexts';
@@ -6,11 +5,7 @@ import { isNil } from 'checkout/utils';
 
 const MESSAGE_CHANGING_INTERVAL = 5000;
 
-export type LoaderMessageProps = {
-    l: Locale;
-};
-
-export function LoaderMessage({ l }: LoaderMessageProps) {
+export const useLoaderMessage = (l: Locale) => {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
@@ -24,9 +19,5 @@ export function LoaderMessage({ l }: LoaderMessageProps) {
         return () => clearInterval(interval);
     }, [l]);
 
-    return (
-        <Text color="white" fontSize="lg" fontWeight="medium" textAlign="center">
-            {message}
-        </Text>
-    );
-}
+    return message;
+};

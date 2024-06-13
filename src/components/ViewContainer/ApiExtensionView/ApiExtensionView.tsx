@@ -1,20 +1,20 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
-import { Destination } from 'checkout/backend/p2p';
 import { PaymentConditionsContext, PaymentModelContext } from 'checkout/contexts';
 import { InvoiceDetermined, PaymentStarted } from 'checkout/paymentCondition';
-import { isNil } from 'checkout/utils';
 
 import { ApiExtensionViewContext } from './ApiExtensionViewContext';
 import { Destinations } from './Destinations';
-import { GatewaySelectorTmp } from './GatewaySelector';
+import { FetchRequisitesError } from './FetchRequisitesError';
+import { GatewaySelector } from './GatewaySelector';
+import { RequisitesLoader } from './RequisitesLoader';
+import { useRequisites } from './useRequisites';
 
 export function ApiExtensionView() {
     const {
         paymentModel: { apiEndpoint },
     } = useContext(PaymentModelContext);
     const { conditions } = useContext(PaymentConditionsContext);
-
     const { paymentId } = conditions.find((c) => c.name === 'paymentStarted') as PaymentStarted;
     const {
         invoiceContext: {
@@ -22,12 +22,20 @@ export function ApiExtensionView() {
         },
     } = conditions.find((c) => c.name === 'invoiceDetermined') as InvoiceDetermined;
 
-    const [destinations, setDestinations] = useState<Destination[] | null>(null);
+    const { state, start, setGateway } = useRequisites(apiEndpoint, invoiceAccessToken, invoiceID, paymentId);
+
+    useEffect(() => {
+        start();
+    }, []);
 
     return (
         <ApiExtensionViewContext.Provider value={{ apiEndpoint, invoiceAccessToken, invoiceID, paymentId }}>
-            {isNil(destinations) && <GatewaySelectorTmp onFetchDestinations={setDestinations} />}
-            {!isNil(destinations) && <Destinations destinations={destinations} />}
+            {state.status === 'REQUIRE_GATEWAY_SELECTION' && (
+                <GatewaySelector gateways={state.gateway} onSelect={setGateway} />
+            )}
+            {state.status === 'READY' && <Destinations destinations={state.destinations} />}
+            {state.status === 'LOADING' && <RequisitesLoader />}
+            {state.status === 'FAILURE' && <FetchRequisitesError />}
         </ApiExtensionViewContext.Provider>
     );
 }
