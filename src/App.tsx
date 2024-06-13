@@ -9,7 +9,7 @@ import { CommunicatorEvents } from './communicator';
 import { AppLayout } from './components';
 import { useInitialize } from './useInitialize';
 
-const { Button, Spinner, Divider, Heading, Alert, Skeleton, Menu, Drawer } = chakraTheme.components;
+const { Button, Spinner, Divider, Heading, Alert, Menu, Drawer } = chakraTheme.components;
 
 const theme = extendBaseTheme({
     fonts: {
@@ -23,7 +23,6 @@ const theme = extendBaseTheme({
         Divider,
         Heading,
         Alert,
-        Skeleton,
         Menu,
         Drawer,
     },

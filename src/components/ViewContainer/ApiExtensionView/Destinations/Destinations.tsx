@@ -73,7 +73,7 @@ export function Destinations({ destinations }: DestinationsProps) {
                         </Button>
                     )}
                 </VStack>
-                {status === 'FAILURE' && <P2PApiError />}
+                {status === 'FAILURE' && <P2PApiError l={l} />}
             </VStack>
         </VStack>
     );
