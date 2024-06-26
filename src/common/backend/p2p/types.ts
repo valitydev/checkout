@@ -11,7 +11,7 @@ export type DestinationBankCard = {
 };
 
 export type DestinationSBP = {
-    destinationType: 'DestinationSBP';
+    destinationType: 'DestinationSBP' | 'SBP';
     phoneNumber: string;
     bankName?: string;
     recipientName?: string;
