@@ -36,7 +36,7 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
                 />
             )}
             {destination.destinationType === 'BankAccount' && <DestinationBankAccountInfo destination={destination} />}
-            {destination.destinationType === 'DestinationSBP' && (
+            {(destination.destinationType === 'DestinationSBP' || destination.destinationType === 'SBP') && (
                 <InfoItem
                     formatter={formatPhoneNumber}
                     icon={currency === 'RUB' ? <SBPIcon /> : null}
