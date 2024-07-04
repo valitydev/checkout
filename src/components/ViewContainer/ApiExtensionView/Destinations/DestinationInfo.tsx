@@ -3,13 +3,16 @@ import { useContext } from 'react';
 
 import { Destination } from 'checkout/backend/p2p';
 import { LocaleContext, PaymentConditionsContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
-import { isNil } from 'checkout/utils';
+import { InvoiceDetermined, PaymentCondition } from 'checkout/paymentCondition';
 
 import { DestinationBankAccountInfo } from './DestinationBankAccountInfo';
 import { InfoItem } from './InfoItem';
 import { formatCardPan, formatPhoneNumber } from './utils';
 import { SBPIcon } from '../icons/SBPIcon';
 import { getGatewayIcon, mapGatewayName } from '../utils';
+
+const isInvoiceDetermined = (condition: PaymentCondition): condition is InvoiceDetermined =>
+    condition.name === 'invoiceDetermined';
 
 export type DestinationInfoProps = {
     destination: Destination;
@@ -21,13 +24,9 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
     const { paymentModel } = useContext(PaymentModelContext);
     const { conditions } = useContext(PaymentConditionsContext);
 
-    const invoiceDetermined = conditions.find((c) => c.name === 'invoiceDetermined');
-
-    if (isNil(invoiceDetermined)) {
-        throw new Error('DestinationInfo component should contain invoiceDetermined condition');
-    }
-
-    const isAmountRandomized = invoiceDetermined.invoiceContext.isAmountRandomized;
+    const {
+        invoiceContext: { isAmountRandomized },
+    } = conditions.find<InvoiceDetermined>(isInvoiceDetermined);
 
     const {
         paymentAmount: { currency },
