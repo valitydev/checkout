@@ -51,6 +51,7 @@
     "form.p2p.complete.button": "ট্রান্সফার সম্পন্ন",
     "form.p2p.complete.loading": "অনুগ্রহ করে অপেক্ষা করুন",
     "form.p2p.destination.amount": "পরিমাণ:",
+    "form.p2p.destination.randomizeAmountDescription": "আমরা স্থানান্তরের পরিমাণ পরিবর্তন করেছি। এটি সফল পেমেন্টের সম্ভাবনা বাড়াতে সাহায্য করে।",
     "form.p2p.alert.li": ["অর্ডারে উল্লিখিত সঠিক পরিমাণ ট্রান্সফার করুন।", "পুরো পরিমাণ একবারে পরিশোধ করুন।"],
     "form.p2p.alert.p": "অন্যথায়, পেমেন্ট গৃহীত হবে না।",
     "form.p2p.gateway.selector.heading": "একটি পদ্ধতি বা ব্যাংক চয়ন করুন",

@@ -1,13 +1,15 @@
 import { VStack, Text, Flex, Spacer, Divider, useClipboard, useToast, IconButton, createIcon } from '@chakra-ui/react';
-import { ReactElement, cloneElement, useContext, useEffect, useState } from 'react';
+import { ReactElement, cloneElement, useContext, useEffect, useMemo, useState } from 'react';
 
 import { LocaleContext } from 'checkout/contexts';
+import { isNil } from 'checkout/utils';
 
 export type InfoItemProps = {
     label: string;
     value: string;
     icon?: ReactElement;
     isCopyable?: boolean;
+    isDivider?: boolean;
     formatter?: (value: string) => Promise<string>;
 };
 
@@ -19,11 +21,18 @@ export const CopyIcon = createIcon({
     ),
 });
 
-export function InfoItem({ label, value, isCopyable, formatter, icon }: InfoItemProps) {
+export function InfoItem({ label, value, isCopyable, formatter, icon, isDivider }: InfoItemProps) {
     const { l } = useContext(LocaleContext);
     const { onCopy, hasCopied } = useClipboard(value);
     const [displayValue, setDisplayValue] = useState(value);
     const toast = useToast();
+
+    const isDividerVisible = useMemo(() => {
+        if (isNil(isDivider)) {
+            return true;
+        }
+        return isDivider;
+    }, [isDivider]);
 
     useEffect(() => {
         if (!formatter) return;
@@ -63,7 +72,7 @@ export function InfoItem({ label, value, isCopyable, formatter, icon }: InfoItem
                     {isCopyable && <IconButton aria-label="Copy" icon={<CopyIcon />} size="xs" onClick={onCopy} />}
                 </Flex>
             </Flex>
-            <Divider />
+            {isDividerVisible && <Divider />}
         </VStack>
     );
 }

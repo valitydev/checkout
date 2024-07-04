@@ -51,6 +51,7 @@
     "form.p2p.complete.button": "이체 완료",
     "form.p2p.complete.loading": "기다려 주십시오",
     "form.p2p.destination.amount": "금액:",
+    "form.p2p.destination.randomizeAmountDescription": "송금 금액을 조정했습니다. 이는 성공적인 결제 가능성을 높이는 데 도움이 됩니다.",
     "form.p2p.alert.li": ["요청한 정확한 금액을 이체하십시오.", "전체 금액을 한 번에 이체하십시오."],
     "form.p2p.alert.p": "그렇지 않으면 결제가 인정되지 않습니다.",
     "form.p2p.gateway.selector.heading": "방법 또는 은행 선택",

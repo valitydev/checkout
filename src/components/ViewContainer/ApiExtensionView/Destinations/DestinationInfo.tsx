@@ -1,8 +1,9 @@
-import { VStack } from '@chakra-ui/react';
+import { VStack, Alert, Text, Divider, AlertIcon } from '@chakra-ui/react';
 import { useContext } from 'react';
 
 import { Destination } from 'checkout/backend/p2p';
-import { LocaleContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
+import { LocaleContext, PaymentConditionsContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
+import { isNil } from 'checkout/utils';
 
 import { DestinationBankAccountInfo } from './DestinationBankAccountInfo';
 import { InfoItem } from './InfoItem';
@@ -17,16 +18,33 @@ export type DestinationInfoProps = {
 export function DestinationInfo({ destination }: DestinationInfoProps) {
     const { l } = useContext(LocaleContext);
     const { viewAmount } = useContext(ViewModelContext);
+    const { paymentModel } = useContext(PaymentModelContext);
+    const { conditions } = useContext(PaymentConditionsContext);
+
+    const invoiceDetermined = conditions.find((c) => c.name === 'invoiceDetermined');
+
+    if (isNil(invoiceDetermined)) {
+        throw new Error('DestinationInfo component should contain invoiceDetermined condition');
+    }
+
+    const isAmountRandomized = invoiceDetermined.invoiceContext.isAmountRandomized;
 
     const {
-        paymentModel: {
-            paymentAmount: { currency },
-        },
-    } = useContext(PaymentModelContext);
+        paymentAmount: { currency },
+    } = paymentModel;
 
     return (
         <VStack align="stretch">
-            <InfoItem label={l['form.p2p.destination.amount']} value={viewAmount} />
+            <VStack align="stretch">
+                {!isAmountRandomized && (
+                    <Alert borderRadius="xl" p={3} status="warning">
+                        <AlertIcon />
+                        <Text fontSize="sm">{l['form.p2p.destination.randomizeAmountDescription']}</Text>
+                    </Alert>
+                )}
+                <InfoItem isDivider={false} label={l['form.p2p.destination.amount']} value={viewAmount} />
+                <Divider />
+            </VStack>
             {destination.destinationType === 'BankCard' && (
                 <InfoItem
                     formatter={formatCardPan}

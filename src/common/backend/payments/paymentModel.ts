@@ -1,5 +1,10 @@
 import { ServiceProviderMetadata } from './serviceProviderMetadata';
 
+export type InvoiceAmountRandomized = {
+    original: number;
+    randomized: number;
+};
+
 export type ClientInfo = {
     fingerprint: string;
     ip?: string;
@@ -275,4 +280,5 @@ export type Invoice = {
     reason: string;
     cart: InvoiceLine[];
     externalID?: string;
+    amountRandomized?: InvoiceAmountRandomized;
 };

@@ -1,8 +1,10 @@
+import { isNil } from 'checkout/utils';
+
 import { InvoiceAndToken } from '../backend/payments';
 import { InvoiceContext } from '../paymentModel';
 
 export const invoiceToInvoiceContext = ({
-    invoice: { id, externalID, dueDate, status },
+    invoice: { id, externalID, dueDate, status, amountRandomized },
     invoiceAccessToken,
 }: InvoiceAndToken): InvoiceContext => ({
     type: 'InvoiceContext',
@@ -13,4 +15,5 @@ export const invoiceToInvoiceContext = ({
     externalID,
     dueDate,
     status,
+    isAmountRandomized: !isNil(amountRandomized),
 });

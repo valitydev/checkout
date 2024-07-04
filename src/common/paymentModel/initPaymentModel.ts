@@ -1,3 +1,5 @@
+import { isNil } from 'checkout/utils';
+
 import { backendModelToPaymentAmount } from './backendModelToPaymentAmount';
 import { backendModelToPaymentMethods } from './backendModelToPaymentMethods';
 import { BackendModel, BackendModelInvoice, BackendModelInvoiceTemplate, getBackendModel } from './getBackendModel';
@@ -8,13 +10,14 @@ import { InitParams } from '../init';
 
 const applyInvoice = (
     { invoiceParams, type }: Partial<InvoiceContext>,
-    { invoice: { dueDate, externalID, status } }: BackendModelInvoice,
+    { invoice: { dueDate, externalID, status, amountRandomized } }: BackendModelInvoice,
 ): InvoiceContext => ({
     type,
     invoiceParams,
     dueDate,
     externalID,
     status,
+    isAmountRandomized: !isNil(amountRandomized),
 });
 
 const applyInvoiceTemplate = (
