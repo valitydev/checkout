@@ -36,7 +36,7 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
     return (
         <VStack align="stretch">
             <VStack align="stretch">
-                {!isAmountRandomized && (
+                {isAmountRandomized && (
                     <Alert borderRadius="xl" p={3} status="warning">
                         <AlertIcon />
                         <Text fontSize="sm">{l['form.p2p.destination.randomizeAmountDescription']}</Text>
