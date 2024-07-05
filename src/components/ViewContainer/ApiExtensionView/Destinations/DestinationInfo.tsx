@@ -1,14 +1,18 @@
-import { VStack } from '@chakra-ui/react';
+import { VStack, Alert, Text, Divider, AlertIcon } from '@chakra-ui/react';
 import { useContext } from 'react';
 
 import { Destination } from 'checkout/backend/p2p';
-import { LocaleContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
+import { LocaleContext, PaymentConditionsContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
+import { InvoiceDetermined, PaymentCondition } from 'checkout/paymentCondition';
 
 import { DestinationBankAccountInfo } from './DestinationBankAccountInfo';
 import { InfoItem } from './InfoItem';
 import { formatCardPan, formatPhoneNumber } from './utils';
 import { SBPIcon } from '../icons/SBPIcon';
 import { getGatewayIcon, mapGatewayName } from '../utils';
+
+const isInvoiceDetermined = (condition: PaymentCondition): condition is InvoiceDetermined =>
+    condition.name === 'invoiceDetermined';
 
 export type DestinationInfoProps = {
     destination: Destination;
@@ -17,16 +21,29 @@ export type DestinationInfoProps = {
 export function DestinationInfo({ destination }: DestinationInfoProps) {
     const { l } = useContext(LocaleContext);
     const { viewAmount } = useContext(ViewModelContext);
+    const { paymentModel } = useContext(PaymentModelContext);
+    const { conditions } = useContext(PaymentConditionsContext);
 
     const {
-        paymentModel: {
-            paymentAmount: { currency },
-        },
-    } = useContext(PaymentModelContext);
+        invoiceContext: { isAmountRandomized },
+    } = conditions.find<InvoiceDetermined>(isInvoiceDetermined);
+
+    const {
+        paymentAmount: { currency },
+    } = paymentModel;
 
     return (
         <VStack align="stretch">
-            <InfoItem label={l['form.p2p.destination.amount']} value={viewAmount} />
+            <VStack align="stretch">
+                {isAmountRandomized && (
+                    <Alert borderRadius="xl" p={3} status="warning">
+                        <AlertIcon />
+                        <Text fontSize="sm">{l['form.p2p.destination.randomizeAmountDescription']}</Text>
+                    </Alert>
+                )}
+                <InfoItem isDivider={false} label={l['form.p2p.destination.amount']} value={viewAmount} />
+                <Divider />
+            </VStack>
             {destination.destinationType === 'BankCard' && (
                 <InfoItem
                     formatter={formatCardPan}

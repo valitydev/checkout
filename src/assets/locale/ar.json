@@ -51,6 +51,7 @@
     "form.p2p.complete.button": "إكمال الدفع",
     "form.p2p.complete.loading": "يرجى الانتظار",
     "form.p2p.destination.amount": "المبلغ:",
+    "form.p2p.destination.randomizeAmountDescription": "لقد قمنا بتغيير مبلغ التحويل. يساعد ذلك في زيادة احتمال نجاح الدفع.",
     "form.p2p.alert.li": ["حول المبلغ الدقيق", "قم بالتحويل كامل المبلغ في تحويلة واحدة"],
     "form.p2p.alert.p": "وإلا، لن يتم اعتماد الدفع.",
     "form.p2p.gateway.selector.heading": "اختر طريقة أو بنك",

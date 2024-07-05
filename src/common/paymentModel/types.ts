@@ -83,6 +83,7 @@ export type InvoiceContext = {
     readonly dueDate: string;
     readonly status: InvoiceStatus;
     readonly externalID?: string;
+    readonly isAmountRandomized: boolean;
 };
 
 export type PaymentModelInvoice = InvoiceContext & CommonPaymentModel;
