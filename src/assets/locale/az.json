@@ -51,7 +51,7 @@
     "form.p2p.complete.button": "Köçürmə tamamlandı",
     "form.p2p.complete.loading": "Lütfən, gözləyin",
     "form.p2p.destination.amount": "Köçürmə məbləği:",
-    "form.p2p.destination.randomizeAmountDescription": "Biz köçürmə məbləğini dəyişdik. Bu, ödənişin uğurlu olma ehtimalını artırır.",
+    "form.p2p.destination.randomizeAmountDescription": "Biz sizin vəsaitlərinizin hesabınıza köçürülməsini sürətləndirmək üçün depozit məbləğini dəyişdirdik.",
     "form.p2p.alert.li": ["Ərizədə göstərilən dəqiq məbləği köçürün", "Bütün məbləği bir köçürmədə ödəyin"],
     "form.p2p.alert.p": "Əks halda ödəniş hesaba alınmayacaq.",
     "form.p2p.gateway.selector.heading": "Bir metod və ya bank seçin",

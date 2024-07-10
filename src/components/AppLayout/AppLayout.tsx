@@ -24,7 +24,6 @@ const ModalContainer = ({ children }: { children: React.ReactNode }) => (
         alignItems="center"
         flexDirection="column"
         height="100vh"
-        justifyContent={['start', 'start', 'center']}
         left={0}
         overflow="auto"
         overscroll-behavior-y="none"

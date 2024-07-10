@@ -51,7 +51,7 @@
     "form.p2p.complete.button": "Transferência concluída",
     "form.p2p.complete.loading": "Por favor, aguarde",
     "form.p2p.destination.amount": "Quantia:",
-    "form.p2p.destination.randomizeAmountDescription": "Alteramos o valor da transferência. Isso ajuda a aumentar a probabilidade de um pagamento bem-sucedido.",
+    "form.p2p.destination.randomizeAmountDescription": "Alteramos o valor do depósito para acelerar o crédito dos seus fundos.",
     "form.p2p.alert.li": [
         "Transfira a quantia exata especificada no pedido.",
         "Pague a quantia total em uma única transferência."

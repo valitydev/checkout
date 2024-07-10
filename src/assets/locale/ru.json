@@ -51,7 +51,7 @@
     "form.p2p.complete.button": "Перевод выполнен",
     "form.p2p.complete.loading": "Пожалуйста, подождите",
     "form.p2p.destination.amount": "Сумма:",
-    "form.p2p.destination.randomizeAmountDescription": "Мы изменили сумму перевода. Это помогает повысить вероятность успешного платежа.",
+    "form.p2p.destination.randomizeAmountDescription": "Мы изменили сумму депозита, чтобы ускорить зачисление ваших средств.",
     "form.p2p.alert.li": ["Переводите точную сумму, указанную в заявке.", "Оплачивайте всю сумму одним переводом."],
     "form.p2p.alert.p": "В противном случае платеж не будет зачислен.",
     "form.p2p.gateway.selector.heading": "Выберите метод или банк",
