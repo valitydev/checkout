@@ -62,11 +62,11 @@ export function InfoItem({ label, value, isCopyable, formatter, icon, isDivider 
     return (
         <VStack align="stretch">
             <Flex>
-                <Text>{label}</Text>
+                <Text color="bodyText">{label}</Text>
                 <Spacer />
                 <Flex alignItems="center" gap={2}>
                     {icon && <IconContainer />}
-                    <Text fontWeight="medium" textAlign="end">
+                    <Text color="bodyText" fontWeight="medium" textAlign="end">
                         {displayValue}
                     </Text>
                     {isCopyable && <IconButton aria-label="Copy" icon={<CopyIcon />} size="xs" onClick={onCopy} />}

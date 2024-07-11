@@ -38,13 +38,13 @@ export const CardNumber = ({ register, locale, fieldError, isDirty, watch }: Car
             autoComplete="cc-number"
             dirty={isDirty}
             error={!isNil(fieldError)}
-            icon={<CardIcon />}
+            // icon={<CardIcon />}
             id="card-number-input"
             mark={true}
             placeholder={locale['form.input.card.placeholder']}
             type="tel"
             onInput={formatCardNumber}
         />
-        <CardTypeIcon cardNumber={watch('cardNumber')} />
+        {/* <CardTypeIcon cardNumber={watch('cardNumber')} /> */}
     </InputContainer>
 );

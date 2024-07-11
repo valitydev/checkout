@@ -20,7 +20,9 @@ export type Theme = {
         border: string;
     };
     input: {
+        backgroundColor: string;
         border: string;
+        color: string;
         placeholder: string;
         error: string;
         focus: string;

@@ -15,8 +15,8 @@ export function GlobalSpinner({ l }: GlobalSpinnerProps) {
             <VStack align="center" minHeight={32} spacing={4}>
                 <Spinner
                     alignItems="center"
-                    color="yellow.300"
-                    emptyColor="orange.400"
+                    color="brand.500"
+                    emptyColor="brand.200"
                     size="xl"
                     speed="0.65s"
                     thickness="4px"

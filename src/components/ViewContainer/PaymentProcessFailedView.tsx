@@ -52,7 +52,7 @@ export function PaymentProcessFailedView() {
             <VStack align="stretch" spacing={6}>
                 <Button
                     borderRadius="lg"
-                    colorScheme="teal"
+                    colorScheme="brand"
                     size="lg"
                     variant="solid"
                     onClick={() => location.reload()}

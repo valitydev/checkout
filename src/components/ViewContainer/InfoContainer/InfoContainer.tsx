@@ -34,7 +34,7 @@ export function InfoContainer({ viewAmount }: InfoProps) {
                 )}
 
                 <Flex alignItems="center" justifyContent="space-between">
-                    <Text fontSize="3xl" fontWeight="medium">
+                    <Text color="bodyText" fontSize="3xl" fontWeight="medium">
                         {viewAmount}
                     </Text>
                     {!isLargerThan768 && (name || description) && (
@@ -45,11 +45,15 @@ export function InfoContainer({ viewAmount }: InfoProps) {
                 </Flex>
 
                 {isLargerThan768 && name && (
-                    <Text fontSize="xl" fontWeight="medium">
+                    <Text color="bodyText" fontSize="xl" fontWeight="medium">
                         {truncate(name, 80)}
                     </Text>
                 )}
-                {isLargerThan768 && description && <Text fontSize="lg">{truncate(description, 120)}</Text>}
+                {isLargerThan768 && description && (
+                    <Text color="bodyText" fontSize="lg">
+                        {truncate(description, 120)}
+                    </Text>
+                )}
             </VStack>
             <DetailsDrawer description={description} isOpen={isOpen} name={name} onClose={onClose} />
         </>

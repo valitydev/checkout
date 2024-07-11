@@ -17,7 +17,7 @@ export function PinikleAddon({ localePath, redirectLink }: PinikleAddonProps) {
             <Text fontSize="md" fontWeight="medium">
                 {locale['label']}
             </Text>
-            <Button colorScheme="teal" variant="link" onClick={() => window.open(redirectLink, '_blank')}>
+            <Button colorScheme="brand" variant="link" onClick={() => window.open(redirectLink, '_blank')}>
                 {locale['link']}
             </Button>
         </VStack>

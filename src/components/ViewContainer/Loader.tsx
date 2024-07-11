@@ -11,7 +11,7 @@ export const Loader = () => (
     <motion.div animate="show" exit="exit" initial="hidden" variants={fadeIn}>
         <Flex
             alignItems="center"
-            background="whiteAlpha.800"
+            background="viewContainerLoaderBg"
             borderRadius="xl"
             height="100%"
             justifyContent="center"
@@ -20,7 +20,7 @@ export const Loader = () => (
             top={0}
             width="100%"
         >
-            <Spinner color="teal.500" emptyColor="gray.200" size="xl" speed="0.65s" thickness="4px" />
+            <Spinner color="brand.500" emptyColor="brand.200" size="xl" speed="0.65s" thickness="4px" />
         </Flex>
     </motion.div>
 );

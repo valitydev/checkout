@@ -35,26 +35,28 @@ export function Destinations({ destinations }: DestinationsProps) {
 
     return (
         <VStack align="stretch" minH="md" spacing={5}>
-            <Heading as="h5" size="sm" textAlign="center">
+            <Heading as="h5" color="bodyText" size="sm" textAlign="center">
                 {l['form.p2p.destinations.heading']}
             </Heading>
             <Divider />
             <P2PAlert />
             <VStack align="stretch" spacing={3}>
-                <Text fontWeight="medium">{l['form.p2p.destination.info']}</Text>
+                <Text color="bodyText" fontWeight="medium">
+                    {l['form.p2p.destination.info']}
+                </Text>
                 {destinations.map((destination, index) => (
                     <DestinationInfo key={index} destination={destination} />
                 ))}
             </VStack>
             <Spacer />
             <VStack align="stretch" spacing={3}>
-                <Text fontSize="sm" textAlign="center">
+                <Text color="bodyText" fontSize="sm" textAlign="center">
                     {l['form.p2p.complete.info']}
                 </Text>
                 <VStack align="stretch" spacing={5}>
                     <Button
                         borderRadius="lg"
-                        colorScheme="teal"
+                        colorScheme="brand"
                         isLoading={status === 'LOADING' || status === 'SUCCESS'}
                         loadingText={l['form.p2p.complete.loading']}
                         size="lg"
@@ -64,7 +66,7 @@ export function Destinations({ destinations }: DestinationsProps) {
                     </Button>
                     {status === 'SUCCESS' && initContext?.redirectUrl && (
                         <Button
-                            colorScheme="teal"
+                            colorScheme="brand"
                             size="lg"
                             variant="link"
                             onClick={() => window.open(initContext.redirectUrl, '_self')}

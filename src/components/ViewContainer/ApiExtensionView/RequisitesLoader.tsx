@@ -11,9 +11,9 @@ export function RequisitesLoader() {
     return (
         <VStack alignItems="center" justifyContent="center" minH="md">
             <VStack align="center" minHeight={32} spacing={4}>
-                <Spinner color="teal.500" emptyColor="gray.200" size="xl" speed="0.65s" thickness="4px" />
+                <Spinner color="brand.500" emptyColor="brand.200" size="xl" speed="0.65s" thickness="4px" />
                 {message !== '' && (
-                    <Text fontSize="md" fontWeight="medium" textAlign="center">
+                    <Text color="bodyText" fontSize="md" fontWeight="medium" textAlign="center">
                         {message}
                     </Text>
                 )}
