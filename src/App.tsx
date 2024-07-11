@@ -66,6 +66,10 @@ const defaultTheme = {
             },
         },
     },
+    qrCode: {
+        back: '#FFFFFF',
+        fill: '#1A202C',
+    },
 };
 
 const ON_COMPLETE_TIMEOUT_MS = 1000 * 5;

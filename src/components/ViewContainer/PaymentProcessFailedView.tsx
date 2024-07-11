@@ -43,7 +43,7 @@ export function PaymentProcessFailedView() {
                     {l['form.header.final.error.label']}
                 </Text>
                 {!isNil(exception) && (
-                    <Text fontSize="lg" textAlign="center">
+                    <Text color="bodyText" fontSize="lg" textAlign="center">
                         {getErrorDescription(exception)}
                     </Text>
                 )}

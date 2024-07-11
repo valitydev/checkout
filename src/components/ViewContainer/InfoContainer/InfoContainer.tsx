@@ -38,7 +38,7 @@ export function InfoContainer({ viewAmount }: InfoProps) {
                         {viewAmount}
                     </Text>
                     {!isLargerThan768 && (name || description) && (
-                        <Button colorScheme="gray" rightIcon={<ChevronDownIcon />} variant="ghost" onClick={onOpen}>
+                        <Button colorScheme="gray" rightIcon={<ChevronDownIcon />} onClick={onOpen}>
                             {l['info.details']}
                         </Button>
                     )}

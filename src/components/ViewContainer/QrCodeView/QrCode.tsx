@@ -1,3 +1,4 @@
+import { useTheme } from '@chakra-ui/react';
 import kjua from 'kjua';
 import styled from 'styled-components';
 
@@ -11,12 +12,16 @@ export type QRCodeProps = {
 };
 
 export function QRCode({ text }: QRCodeProps) {
+    const {
+        qrCode: { back, fill },
+    } = useTheme();
     return (
         <Wrapper
             dangerouslySetInnerHTML={{
                 __html: kjua({
                     size: 224,
-                    fill: '#2596A1',
+                    back,
+                    fill,
                     rounded: 100,
                     crisp: true,
                     ecLevel: 'H',

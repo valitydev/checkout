@@ -59,7 +59,7 @@ export function PaymentResultView() {
                     {l[label]}
                 </Text>
                 {!isNil(description) && (
-                    <Text fontSize="lg" textAlign="center">
+                    <Text color="bodyText" fontSize="lg" textAlign="center">
                         {l[description]}
                     </Text>
                 )}

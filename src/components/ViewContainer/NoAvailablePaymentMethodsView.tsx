@@ -20,7 +20,9 @@ export function NoAvailablePaymentMethodsView() {
 
     return (
         <Container>
-            <Text centered={true}>{l['info.modal.no.available.payment.method']}</Text>
+            <Text centered={true} color="bodyText">
+                {l['info.modal.no.available.payment.method']}
+            </Text>
         </Container>
     );
 }
