@@ -27,7 +27,7 @@ export type CardNumberProps = {
     isDirty: boolean;
 };
 
-export const CardNumber = ({ register, locale, fieldError, isDirty, watch }: CardNumberProps) => (
+export const CardNumber = ({ register, locale, fieldError, isDirty }: CardNumberProps) => (
     <InputContainer>
         <CardNumberInput
             {...register('cardNumber', {
