@@ -6,7 +6,6 @@ import { validateSecureCode } from './validateSecureCode';
 import { Locale } from '../../../../../common/contexts';
 import { isNil, safeVal } from '../../../../../common/utils';
 import { Input } from '../../../../legacy';
-import { ReactComponent as LockIcon } from '../../../../legacy/icon/lock.svg';
 import { CardFormInputs } from '../types';
 
 export interface SecureCodeProps {

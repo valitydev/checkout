@@ -29,6 +29,7 @@ it('should return resolved init config', () => {
         phoneNumber: null,
         redirectUrl: null,
         skipUserInteraction: false,
+        theme: null,
     };
     expect(actual).toEqual(expected);
 });

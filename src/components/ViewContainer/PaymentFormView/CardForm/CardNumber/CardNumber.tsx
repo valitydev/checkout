@@ -5,8 +5,7 @@ import { formatCardNumber } from './formatCardNumber';
 import { validateCardNumber } from './validateCardNumber';
 import { Locale } from '../../../../../common/contexts';
 import { isNil } from '../../../../../common/utils';
-import { Input, CardTypeIcon } from '../../../../legacy';
-import { ReactComponent as CardIcon } from '../../../../legacy/icon/card.svg';
+import { Input } from '../../../../legacy';
 import { CardFormInputs } from '../types';
 
 const InputContainer = styled.div`
