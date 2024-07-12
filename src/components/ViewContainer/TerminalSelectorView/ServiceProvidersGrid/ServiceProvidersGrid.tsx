@@ -10,6 +10,7 @@ import { TerminalSelectorItem } from '../../types';
 
 const GridContainer = styled.div`
     height: 312px;
+    width: 100%;
 `;
 
 const Grid = styled.div`
