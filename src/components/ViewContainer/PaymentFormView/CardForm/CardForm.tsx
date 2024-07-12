@@ -1,5 +1,15 @@
+import { Spacer, VStack, Text, Flex, HStack, Button } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+
+import { BackwardBox } from 'checkout/components';
+import {
+    CustomizationContext,
+    LocaleContext,
+    PaymentContext,
+    PaymentModelContext,
+    ViewModelContext,
+} from 'checkout/contexts';
 
 import { CardHolder } from './CardHolder';
 import { CardNumber } from './CardNumber';
@@ -7,14 +17,6 @@ import { ExpireDate } from './ExpireDate';
 import { SecureCode } from './SecureCode';
 import { CardFormInputs } from './types';
 import { isSecureCodeAvailable } from './utils';
-import {
-    CustomizationContext,
-    LocaleContext,
-    PaymentContext,
-    PaymentModelContext,
-    ViewModelContext,
-} from '../../../../common/contexts';
-import { ChevronButton, FormGroup, HeaderWrapper, PayButton, Title } from '../../../../components/legacy';
 
 export function CardForm() {
     const { l } = useContext(LocaleContext);
@@ -48,22 +50,22 @@ export function CardForm() {
     const isSecureCode = isSecureCodeAvailable(watch('cardNumber'));
 
     return (
-        <>
-            <HeaderWrapper>
-                {hasBackward && <ChevronButton type="left" onClick={backward} />}
-                <Title>{l['form.header.pay.card.label']}</Title>
-            </HeaderWrapper>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <FormGroup>
-                    <CardNumber
-                        fieldError={errors.cardNumber}
-                        isDirty={dirtyFields.cardNumber}
-                        locale={l}
-                        register={register}
-                        watch={watch}
-                    />
-                </FormGroup>
-                <FormGroup $gap={10}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <VStack align="stretch" spacing={5}>
+                <Flex alignItems="center" direction="row">
+                    {hasBackward && <BackwardBox onClick={backward} />}
+                    <Text color="bodyText" fontWeight="medium" textAlign="center" width="full">
+                        {l['form.header.pay.card.label']}
+                    </Text>
+                </Flex>
+                <CardNumber
+                    fieldError={errors.cardNumber}
+                    isDirty={dirtyFields.cardNumber}
+                    locale={l}
+                    register={register}
+                    watch={watch}
+                />
+                <HStack align="stretch" spacing={5}>
                     <ExpireDate
                         fieldError={errors.expireDate}
                         isDirty={dirtyFields.expireDate}
@@ -80,19 +82,20 @@ export function CardForm() {
                             register={register}
                         />
                     )}
-                </FormGroup>
+                </HStack>
                 {requireCardHolder && (
-                    <FormGroup>
-                        <CardHolder
-                            fieldError={errors.cardHolder}
-                            isDirty={dirtyFields.cardHolder}
-                            locale={l}
-                            register={register}
-                        />
-                    </FormGroup>
+                    <CardHolder
+                        fieldError={errors.cardHolder}
+                        isDirty={dirtyFields.cardHolder}
+                        locale={l}
+                        register={register}
+                    />
                 )}
-                <PayButton l={l} viewAmount={viewAmount} />
-            </form>
-        </>
+                <Spacer />
+                <Button borderRadius="lg" colorScheme="brand" size="lg" type="submit" variant="solid">
+                    {l['form.button.pay.label']} {viewAmount}
+                </Button>
+            </VStack>
+        </form>
     );
 }

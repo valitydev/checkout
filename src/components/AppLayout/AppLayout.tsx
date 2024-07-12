@@ -15,6 +15,7 @@ import { toCustomizationContext } from './utils';
 
 type AppLayoutProps = {
     initParams: InitParams;
+    styledComponentsTheme?: Record<string, any>;
 };
 
 const GlobalContainer = lazy(() => import('../GlobalContainer/GlobalContainer'));
@@ -35,8 +36,8 @@ const ModalContainer = ({ children }: { children: React.ReactNode }) => (
     </Flex>
 );
 
-export function AppLayout({ initParams }: AppLayoutProps) {
-    const theme = getTheme(initParams.appConfig.fixedTheme);
+export function AppLayout({ initParams, styledComponentsTheme }: AppLayoutProps) {
+    const theme = styledComponentsTheme || getTheme(initParams.appConfig.fixedTheme);
     const { modelsState, init } = useInitModels();
     const customizationContextValue = toCustomizationContext(initParams.initConfig);
     const initLocaleCode = customizationContextValue.initLocaleCode;

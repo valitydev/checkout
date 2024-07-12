@@ -1,28 +1,15 @@
+import { Divider, useClipboard, useToast, VStack, Text, Button } from '@chakra-ui/react';
 import isMobile from 'ismobilejs';
 import { useContext, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+
+import { LocaleContext, PaymentConditionsContext, PaymentContext, PaymentModelContext } from 'checkout/contexts';
+import { PaymentInteractionRequested, PaymentStarted } from 'checkout/paymentCondition';
+import { isNil } from 'checkout/utils';
+import { findMetadata } from 'checkout/utils/findMetadata';
 
 import { QRCode } from './QrCode';
 import { QrCodeFormMetadata } from '../../../common/backend/payments';
-import { LocaleContext, PaymentConditionsContext, PaymentContext, PaymentModelContext } from '../../../common/contexts';
-import { PaymentInteractionRequested, PaymentStarted } from '../../../common/paymentCondition';
-import { isNil } from '../../../common/utils';
-import { findMetadata } from '../../../common/utils/findMetadata';
-import { Button, CopyToClipboardButton, Hr, Input } from '../../../components/legacy';
-
-const Instruction = styled.p`
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    text-align: center;
-    margin: 0;
-`;
-
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-`;
+import { Input } from '../../../components/legacy';
 
 const isQrCodeRedirect = (formMetadata: QrCodeFormMetadata) =>
     !isNil(formMetadata) &&
@@ -48,13 +35,21 @@ export function QrCodeView() {
         startWaitingPaymentResult();
     }, []);
 
-    const copyToClipboard = () => {
-        qrCodeInputRef.current.select();
-        document.execCommand('copy');
-    };
+    const { onCopy, hasCopied } = useClipboard(interaction.qrCode);
+    const toast = useToast();
+
+    useEffect(() => {
+        if (!hasCopied) return;
+        toast({
+            title: l['form.button.copied.label'],
+            status: 'success',
+            variant: 'subtle',
+            duration: 3000,
+        });
+    }, [hasCopied, l]);
 
     return (
-        <Wrapper>
+        <VStack align="stretch" spacing={5}>
             {qrCodeForm && (
                 <>
                     {qrCodeForm.isCopyCodeBlock && (
@@ -65,17 +60,24 @@ export function QrCodeView() {
                                 id="qr-code-input"
                                 readOnly={true}
                             ></Input>
-                            <CopyToClipboardButton l={l} onClick={() => copyToClipboard()} />
-                            <Hr />
+                            <Button borderRadius="lg" colorScheme="brand" size="lg" onClick={onCopy}>
+                                {l['form.button.copy.label']}
+                            </Button>
+                            <Divider />
                         </>
                     )}
-                    <Instruction>{l['form.qr.code']}</Instruction>
+                    <Text color="bodyText" fontWeight="medium" textAlign="center">
+                        {l['form.qr.code']}
+                    </Text>
                     <QRCode text={interaction.qrCode} />
                     {initContext.redirectUrl && (
                         <>
-                            <Hr />
+                            <Divider />
                             <Button
-                                id="back-to-website-btn"
+                                borderRadius="lg"
+                                colorScheme="brand"
+                                size="lg"
+                                variant="link"
                                 onClick={() => window.open(initContext.redirectUrl, '_self')}
                             >
                                 {l['form.button.back.to.website']}
@@ -84,6 +86,6 @@ export function QrCodeView() {
                     )}
                 </>
             )}
-        </Wrapper>
+        </VStack>
     );
 }

@@ -59,7 +59,7 @@ export function PaymentResultView() {
                     {l[label]}
                 </Text>
                 {!isNil(description) && (
-                    <Text fontSize="lg" textAlign="center">
+                    <Text color="bodyText" fontSize="lg" textAlign="center">
                         {l[description]}
                     </Text>
                 )}
@@ -67,13 +67,13 @@ export function PaymentResultView() {
             <Spacer />
             <VStack align="stretch" spacing={6}>
                 {hasActions && isExternalIdEmpty(conditions) && (
-                    <Button borderRadius="lg" colorScheme="teal" size="lg" variant="solid" onClick={retry}>
+                    <Button borderRadius="lg" colorScheme="brand" size="lg" variant="solid" onClick={retry}>
                         {l['form.button.pay.again.label']}
                     </Button>
                 )}
                 {initContext?.redirectUrl && (
                     <Button
-                        colorScheme="teal"
+                        colorScheme="brand"
                         size="lg"
                         variant="link"
                         onClick={() => window.open(initContext.redirectUrl, '_self')}

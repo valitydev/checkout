@@ -40,7 +40,9 @@ const theme: Theme = {
         border: palette.Loblolly,
     },
     input: {
+        backgroundColor: 'none',
         border: palette.Loblolly,
+        color: '#000000',
         placeholder: palette.RegentGray,
         error: palette.Cinnabar,
         focus: palette.Zeus,

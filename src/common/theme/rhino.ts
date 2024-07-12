@@ -40,7 +40,9 @@ const theme: Theme = {
         border: palette.SilverChalice,
     },
     input: {
+        backgroundColor: 'none',
         border: palette.SilverChalice,
+        color: '#000000',
         placeholder: palette.RegentGray,
         error: palette.Cinnabar,
         focus: palette.CodGray,

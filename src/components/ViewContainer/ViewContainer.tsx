@@ -32,7 +32,7 @@ export function ViewContainer() {
         <>
             <Flex
                 alignItems="stretch"
-                background="gray.50"
+                background="mainContainerBg"
                 borderRadius="2xl"
                 direction={['column', 'column', 'row']}
                 gap={4}
@@ -41,9 +41,9 @@ export function ViewContainer() {
                 <InfoContainer viewAmount={viewAmount}></InfoContainer>
                 <ViewModelContext.Provider value={{ viewModel, viewAmount, goTo, forward, backward }}>
                     <Box
-                        background="white"
-                        border="1px solid"
-                        borderColor="gray.200"
+                        background="viewContainerBg"
+                        // border="1px solid"
+                        // borderColor="gray.200"
                         borderRadius="xl"
                         p={[4, 4, 6]}
                         position="relative"

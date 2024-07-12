@@ -26,7 +26,7 @@ export function GatewaySelector({ gateways, onSelect }: GatewaySelectorProps) {
             <Spacer />
             <Button
                 borderRadius="lg"
-                colorScheme="teal"
+                colorScheme="brand"
                 isDisabled={isNil(gateway)}
                 size="lg"
                 onClick={() => onSelect(gateway.id)}

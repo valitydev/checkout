@@ -20,6 +20,8 @@ export type InitConfig = {
     isExternalIDIncluded?: boolean;
 };
 
+export type ThemeConfig = Record<string, any>;
+
 export type AppConfig = {
     capiEndpoint?: string;
     wrapperEndpoint?: string;
@@ -28,6 +30,7 @@ export type AppConfig = {
     brandName?: string;
     urlShortenerEndpoint?: string;
     sentryDsn?: string;
+    themes: ThemeConfig[];
 };
 
 export type InitParams = {

@@ -43,7 +43,7 @@ export function PaymentProcessFailedView() {
                     {l['form.header.final.error.label']}
                 </Text>
                 {!isNil(exception) && (
-                    <Text fontSize="lg" textAlign="center">
+                    <Text color="bodyText" fontSize="lg" textAlign="center">
                         {getErrorDescription(exception)}
                     </Text>
                 )}
@@ -52,7 +52,7 @@ export function PaymentProcessFailedView() {
             <VStack align="stretch" spacing={6}>
                 <Button
                     borderRadius="lg"
-                    colorScheme="teal"
+                    colorScheme="brand"
                     size="lg"
                     variant="solid"
                     onClick={() => location.reload()}

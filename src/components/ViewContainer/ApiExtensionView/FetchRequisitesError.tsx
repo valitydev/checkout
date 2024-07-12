@@ -18,7 +18,7 @@ export function FetchRequisitesError() {
             <Spacer />
             {initContext?.redirectUrl && (
                 <Button
-                    colorScheme="teal"
+                    colorScheme="brand"
                     size="lg"
                     variant="link"
                     onClick={() => window.open(initContext.redirectUrl, '_self')}

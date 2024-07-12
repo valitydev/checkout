@@ -5,7 +5,6 @@ import { validateCardHolder } from './validateCardHolder';
 import { Locale } from '../../../../../common/contexts';
 import { isNil } from '../../../../../common/utils';
 import { Input } from '../../../../legacy';
-import { ReactComponent as UserIcon } from '../../../../legacy/icon/user.svg';
 import { CardFormInputs } from '../types';
 
 export type CardHolderProps = {
@@ -24,7 +23,7 @@ export const CardHolder = ({ register, locale, fieldError, isDirty }: CardHolder
         autoComplete="cc-name"
         dirty={isDirty}
         error={!isNil(fieldError)}
-        icon={<UserIcon />}
+        // icon={<UserIcon />}
         id="card-holder-input"
         mark={true}
         placeholder={locale['form.input.cardholder.placeholder']}

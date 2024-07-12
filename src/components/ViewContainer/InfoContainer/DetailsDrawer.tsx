@@ -23,15 +23,19 @@ export function DetailsDrawer({ isOpen, onClose, name, description }: DetailsDra
     return (
         <Drawer isOpen={isOpen} placement="top" size="sm" onClose={onClose}>
             <DrawerOverlay />
-            <DrawerContent>
+            <DrawerContent background="viewContainerBg">
                 <DrawerBody>
                     <VStack align="stretch">
                         {name && (
-                            <Text fontSize="xl" fontWeight="medium">
+                            <Text color="bodyText" fontSize="xl" fontWeight="medium">
                                 {truncate(name, 100)}
                             </Text>
                         )}
-                        {description && <Text fontSize="lg">{truncate(description, 140)}</Text>}
+                        {description && (
+                            <Text color="bodyText" fontSize="lg">
+                                {truncate(description, 140)}
+                            </Text>
+                        )}
                     </VStack>
                 </DrawerBody>
                 <DrawerFooter>

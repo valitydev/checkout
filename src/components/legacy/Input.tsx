@@ -23,6 +23,8 @@ const Icon = styled.div`
 `;
 
 const StyledInput = styled.input<{ $hasIcon?: boolean }>`
+    background-color: ${({ theme }) => theme.input.backgroundColor};
+    color: ${({ theme }) => theme.input.color};
     margin: 0;
     width: 100%;
     height: 48px;
@@ -35,11 +37,11 @@ const StyledInput = styled.input<{ $hasIcon?: boolean }>`
     padding-left: ${({ $hasIcon }) => `${$hasIcon ? CONTENT_OFFSET + ICON_SIZE + TEXT_ICON_OFFSET : CONTENT_OFFSET}px`};
     padding-right: ${CONTENT_OFFSET}px;
     appearance: none;
-    transition: border-color 0.3s;
+    /* transition: border-color 0.3s; */
 
     ::placeholder {
         color: ${({ theme }) => theme.input.placeholder};
-        opacity: 1;
+        /* opacity: 1; */
     }
 
     &:focus-visible {

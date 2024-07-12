@@ -5,7 +5,6 @@ import { validateExpireDate } from './validateExpireDate';
 import { Locale } from '../../../../../common/contexts';
 import { isNil } from '../../../../../common/utils';
 import { Input } from '../../../../legacy';
-import { ReactComponent as CalendarIcon } from '../../../../legacy/icon/calendar.svg';
 import { CardFormInputs } from '../types';
 
 export type ExpireDateProps = {
@@ -24,7 +23,7 @@ export const ExpireDate = ({ register, locale, fieldError, isDirty }: ExpireDate
         autoComplete="cc-exp"
         dirty={isDirty}
         error={!isNil(fieldError)}
-        icon={<CalendarIcon />}
+        // icon={<CalendarIcon />}
         id="expire-date-input"
         mark={true}
         placeholder={locale['form.input.expiry.placeholder']}

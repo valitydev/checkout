@@ -6,7 +6,6 @@ import { validateSecureCode } from './validateSecureCode';
 import { Locale } from '../../../../../common/contexts';
 import { isNil, safeVal } from '../../../../../common/utils';
 import { Input } from '../../../../legacy';
-import { ReactComponent as LockIcon } from '../../../../legacy/icon/lock.svg';
 import { CardFormInputs } from '../types';
 
 export interface SecureCodeProps {
@@ -32,7 +31,7 @@ export const SecureCode = ({ cardNumber, locale, obscureCardCvv, register, field
         autoComplete="cc-csc"
         dirty={isDirty}
         error={!isNil(fieldError)}
-        icon={<LockIcon />}
+        // icon={<LockIcon />}
         id="secure-code-input"
         mark={true}
         placeholder={getPlaceholder(cardNumber, locale)}

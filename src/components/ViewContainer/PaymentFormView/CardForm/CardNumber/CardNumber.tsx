@@ -5,8 +5,7 @@ import { formatCardNumber } from './formatCardNumber';
 import { validateCardNumber } from './validateCardNumber';
 import { Locale } from '../../../../../common/contexts';
 import { isNil } from '../../../../../common/utils';
-import { Input, CardTypeIcon } from '../../../../legacy';
-import { ReactComponent as CardIcon } from '../../../../legacy/icon/card.svg';
+import { Input } from '../../../../legacy';
 import { CardFormInputs } from '../types';
 
 const InputContainer = styled.div`
@@ -28,7 +27,7 @@ export type CardNumberProps = {
     isDirty: boolean;
 };
 
-export const CardNumber = ({ register, locale, fieldError, isDirty, watch }: CardNumberProps) => (
+export const CardNumber = ({ register, locale, fieldError, isDirty }: CardNumberProps) => (
     <InputContainer>
         <CardNumberInput
             {...register('cardNumber', {
@@ -38,13 +37,13 @@ export const CardNumber = ({ register, locale, fieldError, isDirty, watch }: Car
             autoComplete="cc-number"
             dirty={isDirty}
             error={!isNil(fieldError)}
-            icon={<CardIcon />}
+            // icon={<CardIcon />}
             id="card-number-input"
             mark={true}
             placeholder={locale['form.input.card.placeholder']}
             type="tel"
             onInput={formatCardNumber}
         />
-        <CardTypeIcon cardNumber={watch('cardNumber')} />
+        {/* <CardTypeIcon cardNumber={watch('cardNumber')} /> */}
     </InputContainer>
 );

@@ -30,6 +30,7 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         terminalFormValues,
         skipUserInteraction,
         isExternalIDIncluded,
+        theme,
     } = userConfig;
     return {
         ...resolvedIntegrationType,
@@ -46,5 +47,6 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         terminalFormValues: setDefault(resolveObject(terminalFormValues), undefined),
         skipUserInteraction: setDefault(resolveBoolean(skipUserInteraction), false),
         isExternalIDIncluded: setDefault(resolveBoolean(isExternalIDIncluded), true),
+        theme: resolveString(theme),
     };
 };
