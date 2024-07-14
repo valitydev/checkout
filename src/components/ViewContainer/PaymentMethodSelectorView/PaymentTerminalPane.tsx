@@ -1,3 +1,4 @@
+import { Text } from '@chakra-ui/react';
 import { useContext } from 'react';
 
 import { PaymentModelContext, ViewModelContext } from '../../../common/contexts';
@@ -31,7 +32,7 @@ export function PaymentTerminalPane({ destinationViewId }: PaymentTerminalPanePr
             onClick={() => forward(destinationViewId)}
         >
             {!isNil(logo) && <MetadataLogo metadata={logo} />}
-            {isNil(logo) && <>{destination.provider}</>}
+            {isNil(logo) && <Text color="bodyText">{destination.provider}</Text>}
         </PaymentMethodItemContainer>
     );
 }
