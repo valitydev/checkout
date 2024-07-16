@@ -18,6 +18,7 @@ export type InitConfig = {
     terminalFormValues?: object;
     skipUserInteraction?: boolean;
     isExternalIDIncluded?: boolean;
+    paymentFlow?: object;
 };
 
 export type ThemeConfig = Record<string, any>;

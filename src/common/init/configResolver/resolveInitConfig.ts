@@ -31,6 +31,7 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         skipUserInteraction,
         isExternalIDIncluded,
         theme,
+        paymentFlow,
     } = userConfig;
     return {
         ...resolvedIntegrationType,
@@ -48,5 +49,6 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         skipUserInteraction: setDefault(resolveBoolean(skipUserInteraction), false),
         isExternalIDIncluded: setDefault(resolveBoolean(isExternalIDIncluded), true),
         theme: resolveString(theme),
+        paymentFlow: resolveObject(paymentFlow),
     };
 };

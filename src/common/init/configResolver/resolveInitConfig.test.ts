@@ -30,6 +30,7 @@ it('should return resolved init config', () => {
         redirectUrl: null,
         skipUserInteraction: false,
         theme: null,
+        paymentFlow: null,
     };
     expect(actual).toEqual(expected);
 });

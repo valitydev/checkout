@@ -1,4 +1,4 @@
-import { InvoiceStatus, ServiceProviderMetadata } from '../backend/payments';
+import { InvoiceStatus, PaymentFlow, ServiceProviderMetadata } from '../backend/payments';
 
 export type PaymentAmount = {
     readonly value: number;
@@ -40,6 +40,7 @@ export type InitContextContactInfo = {
 
 export type InitContext = {
     readonly skipUserInteraction: boolean;
+    readonly paymentFlow: PaymentFlow;
     readonly contactInfo?: InitContextContactInfo;
     readonly terminalFormValues?: object;
     readonly paymentMetadata?: object;
