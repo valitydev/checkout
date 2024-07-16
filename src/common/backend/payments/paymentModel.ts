@@ -30,7 +30,6 @@ export type PaymentFlowInstant = {
 export type PaymentFlowHold = {
     type: 'PaymentFlowHold';
     onHoldExpiration: 'cancel' | 'capture';
-    heldUntil?: string;
 };
 
 export type PaymentFlow = PaymentFlowInstant | PaymentFlowHold;

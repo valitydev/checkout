@@ -38,6 +38,9 @@ export type {
     Payer,
     PaymentResourcePayer,
     ContactInfo,
+    PaymentFlow,
+    PaymentFlowInstant,
+    PaymentFlowHold,
 } from './paymentModel';
 export type {
     ServiceProviderMetadata,

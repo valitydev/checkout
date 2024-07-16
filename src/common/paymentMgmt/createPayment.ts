@@ -10,11 +10,9 @@ export const createPayment = async (
     payload: StartPaymentPayload,
 ): Promise<Payment> => {
     const payer = await createPayer(model, invoiceContext, payload);
-    const { isExternalIDIncluded, metadata, recurring } = model.initContext;
+    const { isExternalIDIncluded, metadata, recurring, paymentFlow } = model.initContext;
     const params: PaymentParams = {
-        flow: {
-            type: 'PaymentFlowInstant',
-        },
+        flow: paymentFlow,
         payer,
         metadata,
         makeRecurrent: recurring,
