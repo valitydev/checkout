@@ -1,4 +1,4 @@
-import { Button, Spacer, VStack } from '@chakra-ui/react';
+import { Button, LightMode, Spacer, VStack } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { FieldError, SubmitHandler, useForm } from 'react-hook-form';
 
@@ -96,9 +96,11 @@ export function MetadataForm({ provider }: MetadataFormProps) {
                 )}
                 {!isNil(addon) && <Addon addon={addon} />}
                 <Spacer />
-                <Button borderRadius="lg" colorScheme="brand" size="lg" type="submit" variant="solid">
-                    {l['form.button.pay.label']} {viewAmount}
-                </Button>
+                <LightMode>
+                    <Button borderRadius="lg" colorScheme="brand" size="lg" type="submit" variant="solid">
+                        {l['form.button.pay.label']} {viewAmount}
+                    </Button>
+                </LightMode>
             </VStack>
         </form>
     );

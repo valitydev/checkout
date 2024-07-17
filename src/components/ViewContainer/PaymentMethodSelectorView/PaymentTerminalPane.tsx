@@ -32,7 +32,7 @@ export function PaymentTerminalPane({ destinationViewId }: PaymentTerminalPanePr
             onClick={() => forward(destinationViewId)}
         >
             {!isNil(logo) && <MetadataLogo metadata={logo} />}
-            {isNil(logo) && <Text color="bodyText">{destination.provider}</Text>}
+            {isNil(logo) && <Text>{destination.provider}</Text>}
         </PaymentMethodItemContainer>
     );
 }

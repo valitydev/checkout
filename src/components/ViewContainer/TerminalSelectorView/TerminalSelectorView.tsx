@@ -1,5 +1,16 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
-import { VStack, Text, SimpleGrid, Center, Image, Input, IconButton, Flex, Square } from '@chakra-ui/react';
+import {
+    VStack,
+    Text,
+    SimpleGrid,
+    Center,
+    Image,
+    Input,
+    IconButton,
+    Flex,
+    Square,
+    useColorModeValue,
+} from '@chakra-ui/react';
 import { useContext, useMemo } from 'react';
 import { HiOutlineCash } from 'react-icons/hi';
 
@@ -16,10 +27,12 @@ type MetadataLogoBoxProps = {
 };
 
 function MetadataLogoBox({ logo, height }: MetadataLogoBoxProps) {
+    const bgColor = useColorModeValue('blackAlpha.50', 'gray.100');
+
     return (
-        <Center bgColor="gray.100" borderRadius="md" height={height} p={2} userSelect="none">
+        <Center bgColor={bgColor} borderRadius="md" height={height} p={2} userSelect="none">
             {!isNil(logo) && <Image height={logo.height} src={logo.src} width={logo.width} />}
-            {isNil(logo) && <Square as={HiOutlineCash} color="bodyText" size={12} />}
+            {isNil(logo) && <Square as={HiOutlineCash} color="gray.800" size={12} />}
         </Center>
     );
 }
@@ -31,12 +44,14 @@ type ServiceProviderPaneProps = {
 };
 
 function ServiceProviderPane({ text, logo, onClick }: ServiceProviderPaneProps) {
+    const hoverBorderColor = useColorModeValue('gray.300', 'whiteAlpha.400');
+
     return (
         <VStack
-            _hover={{ borderColor: 'gray.300' }}
+            _hover={{ borderColor: hoverBorderColor }}
             align="stretch"
-            border="1px solid"
-            borderColor="gray.200"
+            border="1px"
+            borderColor="chakra-border-color"
             borderRadius="lg"
             cursor="pointer"
             p={2}
@@ -45,7 +60,6 @@ function ServiceProviderPane({ text, logo, onClick }: ServiceProviderPaneProps) 
         >
             <MetadataLogoBox height={16} logo={logo} />
             <Text
-                color="bodyText"
                 fontWeight="medium"
                 overflow="hidden"
                 textAlign="center"

@@ -92,9 +92,7 @@ export function LocaleSelector({ initLocaleCode, onLocaleChange }: LocaleSelecto
                                     {flag}
                                 </Text>
                             )}
-                            <Text color="bodyText" fontSize="md">
-                                {long}
-                            </Text>
+                            <Text fontSize="md">{long}</Text>
                         </Flex>
                     </MenuItem>
                 ))}

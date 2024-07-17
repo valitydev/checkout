@@ -9,9 +9,10 @@ import { CommunicatorEvents } from './communicator';
 import { AppLayout } from './components';
 import { useInitialize } from './useInitialize';
 
-const { Button, Spinner, Divider, Heading, Alert, Menu, Drawer, Input } = chakraTheme.components;
+const { Button, Spinner, Divider, Heading, Menu, Alert, Drawer, Input } = chakraTheme.components;
 
 const common = {
+    useSystemColorMode: false,
     components: {
         Button,
         Spinner,
@@ -25,6 +26,7 @@ const common = {
 };
 
 const defaultTheme = {
+    initialColorMode: 'light',
     fonts: {
         body: 'Roboto, sans-serif',
         heading: 'Roboto, sans-serif',
@@ -54,9 +56,6 @@ const defaultTheme = {
             },
             viewContainerLoaderBg: {
                 default: 'whiteAlpha.800',
-            },
-            bodyText: {
-                default: 'gray.800',
             },
         },
     },
@@ -123,7 +122,11 @@ export function App() {
                                 }, ON_COMPLETE_TIMEOUT_MS),
                         }}
                     >
-                        <AppLayout initParams={state.data[1]} styledComponentsTheme={theme?.__styledComponents} />
+                        <AppLayout
+                            colorMode={theme.initialColorMode}
+                            initParams={state.data[1]}
+                            styledComponentsTheme={theme?.__styledComponents}
+                        />
                     </CompletePaymentContext.Provider>
                 </ChakraBaseProvider>
             )}
