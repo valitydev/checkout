@@ -1,8 +1,8 @@
-import { Button, LightMode, Spacer, VStack } from '@chakra-ui/react';
+import { Button, Center, LightMode, Spacer, VStack } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { FieldError, SubmitHandler, useForm } from 'react-hook-form';
 
-import { BackwardBox } from 'checkout/components';
+import { BackwardBox, MetadataLogoBox } from 'checkout/components';
 import { LocaleContext, PaymentContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
 import { toDefaultFormValuesMetadata } from 'checkout/paymentCondition';
 import { TerminalValues } from 'checkout/paymentMgmt';
@@ -10,7 +10,6 @@ import { isNil } from 'checkout/utils';
 import { findMetadata } from 'checkout/utils/findMetadata';
 
 import { Addon } from './Addon';
-import { MetadataLogoBox } from './MetadataLogoBox';
 import { formatMetadataValue } from './utils';
 import { Email, MetadataField, Phone, sortByIndex } from '../../../legacy';
 
@@ -61,7 +60,11 @@ export function MetadataForm({ provider }: MetadataFormProps) {
         <form onSubmit={handleSubmit(onSubmit)}>
             <VStack align="stretch" spacing={5}>
                 {hasBackward ? <BackwardBox onClick={backward} /> : <Spacer />}
-                {!isNil(logo) && <MetadataLogoBox logo={logo} />}
+                {!isNil(logo) && (
+                    <Center>
+                        <MetadataLogoBox height={16} logo={logo} />
+                    </Center>
+                )}
                 {!isNil(form) &&
                     form
                         ?.sort(sortByIndex)
