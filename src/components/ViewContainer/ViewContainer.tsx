@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, useTheme } from '@chakra-ui/react';
 import { useContext, useMemo } from 'react';
 
 import { LocaleContext, PaymentConditionsContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
@@ -28,11 +28,15 @@ export function ViewContainer() {
     const { views, activeViewId, isLoading } = viewModel;
     const activeView = views.get(activeViewId).name;
 
+    const {
+        ViewContainer: { mainContainerBg, viewContainerBg },
+    } = useTheme();
+
     return (
         <>
             <Flex
                 alignItems="stretch"
-                background="mainContainerBg"
+                backgroundColor={mainContainerBg}
                 borderRadius="2xl"
                 direction={['column', 'column', 'row']}
                 gap={4}
@@ -41,9 +45,7 @@ export function ViewContainer() {
                 <InfoContainer viewAmount={viewAmount}></InfoContainer>
                 <ViewModelContext.Provider value={{ viewModel, viewAmount, goTo, forward, backward }}>
                     <Box
-                        background="viewContainerBg"
-                        // border="1px solid"
-                        // borderColor="gray.200"
+                        backgroundColor={viewContainerBg}
                         borderRadius="xl"
                         p={[4, 4, 6]}
                         position="relative"

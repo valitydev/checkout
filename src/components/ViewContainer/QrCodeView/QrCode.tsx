@@ -13,7 +13,7 @@ export type QRCodeProps = {
 
 export function QRCode({ text }: QRCodeProps) {
     const {
-        qrCode: { back, fill },
+        QRCode: { back, fill },
     } = useTheme();
     return (
         <Wrapper

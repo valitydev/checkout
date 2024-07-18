@@ -7,9 +7,10 @@ import { extractError, isNil } from 'checkout/utils';
 
 import { CommunicatorEvents } from './communicator';
 import { AppLayout } from './components';
+import { Menu } from './theme';
 import { useInitialize } from './useInitialize';
 
-const { Button, Spinner, Divider, Heading, Menu, Alert, Drawer, Input } = chakraTheme.components;
+const { Button, Spinner, Divider, Heading, Alert, Drawer, Input } = chakraTheme.components;
 
 const common = {
     useSystemColorMode: false,
@@ -45,18 +46,8 @@ const defaultTheme = {
             800: '#234E52',
             900: '#1D4044',
         },
-    },
-    semanticTokens: {
-        colors: {
-            mainContainerBg: {
-                default: 'gray.100',
-            },
-            viewContainerBg: {
-                default: 'white',
-            },
-            viewContainerLoaderBg: {
-                default: 'whiteAlpha.800',
-            },
+        menuBg: {
+            default: '#fff',
         },
     },
     styles: {
@@ -66,9 +57,16 @@ const defaultTheme = {
             },
         },
     },
-    qrCode: {
-        back: '#FFFFFF',
+    QRCode: {
+        back: '#fff',
         fill: '#1A202C',
+    },
+    ViewContainer: {
+        mainContainerBg: 'gray.100',
+        viewContainerBg: '#fff',
+    },
+    Loader: {
+        bg: 'whiteAlpha.800',
     },
 };
 
