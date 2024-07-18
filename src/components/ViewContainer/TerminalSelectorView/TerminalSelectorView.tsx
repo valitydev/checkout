@@ -1,4 +1,4 @@
-import { VStack, SimpleGrid, Input } from '@chakra-ui/react';
+import { VStack, SimpleGrid, Input, Flex, Text } from '@chakra-ui/react';
 import { useContext, useMemo } from 'react';
 
 import { BackwardBox } from 'checkout/components';
@@ -39,8 +39,13 @@ export function TerminalSelectorView() {
     };
 
     return (
-        <VStack align="stretch" spacing={5}>
-            {hasBackward && <BackwardBox onClick={backward} />}
+        <VStack align="stretch" minH="sm" spacing={5}>
+            <Flex alignItems="center">
+                {hasBackward && <BackwardBox onClick={backward} />}
+                <Text fontWeight="medium" textAlign="center" width="full">
+                    {l['form.header.payment.methods.label']}
+                </Text>
+            </Flex>
             {isSearchAvailable && <Input placeholder={l['form.serviceProvidersGrid.search']} onChange={onChange} />}
             <SimpleGrid columns={[1, 2, 2]} spacing={5}>
                 {pageItems.map(({ logo, brandName, viewId }, i) => (

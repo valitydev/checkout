@@ -1,28 +1,19 @@
-import { useContext } from 'react';
+import { HiCash } from 'react-icons/hi';
 
-import { ViewModelContext } from '../../../common/contexts';
-import { Method, PaymentMethodIcon, PaymentMethodTitle } from '../../legacy';
+import { Pane, PaneLogoBox, PaneLogo, PaneText } from 'checkout/components';
 
 export type TerminalSelectorPaneProps = {
-    destinationViewId: string;
+    category: string;
+    onClick: () => void;
 };
 
-export function TerminalSelectorPane({ destinationViewId }: TerminalSelectorPaneProps) {
-    const {
-        forward,
-        viewModel: { views },
-    } = useContext(ViewModelContext);
-
-    const destination = views.get(destinationViewId);
-
-    if (destination.name !== 'TerminalSelectorView') {
-        throw new Error(`Wrong View. Expected: TerminalSelectorView, actual: ${destination.name}`);
-    }
-
+export function TerminalSelectorPane({ onClick, category }: TerminalSelectorPaneProps) {
     return (
-        <Method onClick={() => forward(destinationViewId)}>
-            <PaymentMethodIcon name="terminals" />
-            <PaymentMethodTitle>{destination.category}</PaymentMethodTitle>
-        </Method>
+        <Pane onClick={onClick}>
+            <PaneLogoBox>
+                <PaneLogo as={HiCash} />
+            </PaneLogoBox>
+            <PaneText>{category}</PaneText>
+        </Pane>
     );
 }

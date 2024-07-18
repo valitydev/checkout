@@ -1,29 +1,22 @@
 import { useContext } from 'react';
+import { HiCreditCard } from 'react-icons/hi';
 
-import { LocaleContext, ViewModelContext } from '../../../common/contexts';
-import { Method, PaymentMethodIcon, PaymentMethodTitle } from '../../legacy';
+import { Pane, PaneLogo, PaneLogoBox, PaneText } from 'checkout/components';
+import { LocaleContext } from 'checkout/contexts';
 
 export type BankCardPaneProps = {
-    destinationViewId: string;
+    onClick: () => void;
 };
 
-export function BankCardPane({ destinationViewId }: BankCardPaneProps) {
+export function BankCardPane({ onClick }: BankCardPaneProps) {
     const { l } = useContext(LocaleContext);
-    const {
-        viewModel: { views },
-        forward,
-    } = useContext(ViewModelContext);
-
-    const destination = views.get(destinationViewId);
-
-    if (destination.name !== 'PaymentFormView') {
-        throw new Error(`Wrong View. Expected: PaymentFormView, actual: ${destination.name}`);
-    }
 
     return (
-        <Method onClick={() => forward(destinationViewId)}>
-            <PaymentMethodIcon name="bank-card" />
-            <PaymentMethodTitle>{l['form.payment.method.name.card.label']}</PaymentMethodTitle>
-        </Method>
+        <Pane onClick={onClick}>
+            <PaneLogoBox>
+                <PaneLogo as={HiCreditCard} />
+            </PaneLogoBox>
+            <PaneText>{l['form.payment.method.name.card.label']}</PaneText>
+        </Pane>
     );
 }

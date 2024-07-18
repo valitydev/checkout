@@ -52,7 +52,7 @@ export function CardForm() {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <VStack align="stretch" spacing={5}>
-                <Flex alignItems="center" direction="row">
+                <Flex alignItems="center">
                     {hasBackward && <BackwardBox onClick={backward} />}
                     <Text fontWeight="medium" textAlign="center" width="full">
                         {l['form.header.pay.card.label']}

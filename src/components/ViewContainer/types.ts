@@ -31,6 +31,7 @@ export type TerminalSelectorView = {
 export type PaymentMethodSelectorItem = {
     name: PaymentMethodName | 'TerminalSelector';
     viewId: string;
+    category?: string;
     provider?: string;
 };
 
