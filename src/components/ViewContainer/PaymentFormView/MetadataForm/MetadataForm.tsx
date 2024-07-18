@@ -1,8 +1,8 @@
-import { Button, Center, LightMode, Spacer, VStack } from '@chakra-ui/react';
+import { Button, LightMode, Spacer, VStack } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { FieldError, SubmitHandler, useForm } from 'react-hook-form';
 
-import { BackwardBox, MetadataLogoBox } from 'checkout/components';
+import { BackwardBox, PaneLogoBox, PaneMetadataLogo } from 'checkout/components';
 import { LocaleContext, PaymentContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
 import { toDefaultFormValuesMetadata } from 'checkout/paymentCondition';
 import { TerminalValues } from 'checkout/paymentMgmt';
@@ -61,9 +61,9 @@ export function MetadataForm({ provider }: MetadataFormProps) {
             <VStack align="stretch" spacing={5}>
                 {hasBackward ? <BackwardBox onClick={backward} /> : <Spacer />}
                 {!isNil(logo) && (
-                    <Center>
-                        <MetadataLogoBox height={16} logo={logo} />
-                    </Center>
+                    <PaneLogoBox alignSelf="center" width="50%">
+                        <PaneMetadataLogo logo={logo} />
+                    </PaneLogoBox>
                 )}
                 {!isNil(form) &&
                     form
