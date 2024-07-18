@@ -10,10 +10,10 @@ export function BackwardBox({ onClick }: BackwardButtonProps) {
         <Flex>
             <IconButton
                 aria-label="Back"
-                colorScheme="brand"
                 fontSize={24}
                 icon={<ChevronLeftIcon />}
                 size="sm"
+                variant="ghost"
                 onClick={onClick}
             />
         </Flex>

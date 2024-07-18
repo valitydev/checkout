@@ -76,11 +76,10 @@ export function LocaleSelector({ initLocaleCode, onLocaleChange }: LocaleSelecto
                     <ChevronDownIcon />
                 </Flex>
             </MenuButton>
-            <MenuList backgroundColor="viewContainerBg">
+            <MenuList>
                 {Object.entries(localeInfo).map(([code, { flag, long }]) => (
                     <MenuItem
                         key={code}
-                        backgroundColor="viewContainerBg"
                         onClick={() => {
                             setActiveLocaleCode(code);
                             onLocaleChange(code);
@@ -92,9 +91,7 @@ export function LocaleSelector({ initLocaleCode, onLocaleChange }: LocaleSelecto
                                     {flag}
                                 </Text>
                             )}
-                            <Text color="bodyText" fontSize="md">
-                                {long}
-                            </Text>
+                            <Text fontSize="md">{long}</Text>
                         </Flex>
                     </MenuItem>
                 ))}

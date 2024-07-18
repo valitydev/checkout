@@ -1,4 +1,4 @@
-import { Button, Flex, Spacer, VStack, Text } from '@chakra-ui/react';
+import { Button, Flex, Spacer, VStack, Text, LightMode } from '@chakra-ui/react';
 import { useCallback, useContext, useEffect } from 'react';
 
 import {
@@ -59,7 +59,7 @@ export function PaymentResultView() {
                     {l[label]}
                 </Text>
                 {!isNil(description) && (
-                    <Text color="bodyText" fontSize="lg" textAlign="center">
+                    <Text fontSize="lg" textAlign="center">
                         {l[description]}
                     </Text>
                 )}
@@ -67,19 +67,23 @@ export function PaymentResultView() {
             <Spacer />
             <VStack align="stretch" spacing={6}>
                 {hasActions && isExternalIdEmpty(conditions) && (
-                    <Button borderRadius="lg" colorScheme="brand" size="lg" variant="solid" onClick={retry}>
-                        {l['form.button.pay.again.label']}
-                    </Button>
+                    <LightMode>
+                        <Button borderRadius="lg" colorScheme="brand" size="lg" variant="solid" onClick={retry}>
+                            {l['form.button.pay.again.label']}
+                        </Button>
+                    </LightMode>
                 )}
                 {initContext?.redirectUrl && (
-                    <Button
-                        colorScheme="brand"
-                        size="lg"
-                        variant="link"
-                        onClick={() => window.open(initContext.redirectUrl, '_self')}
-                    >
-                        {l['form.button.back.to.website']}
-                    </Button>
+                    <LightMode>
+                        <Button
+                            colorScheme="brand"
+                            size="lg"
+                            variant="link"
+                            onClick={() => window.open(initContext.redirectUrl, '_self')}
+                        >
+                            {l['form.button.back.to.website']}
+                        </Button>
+                    </LightMode>
                 )}
             </VStack>
         </VStack>

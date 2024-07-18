@@ -1,4 +1,4 @@
-import { Divider, useClipboard, useToast, VStack, Text, Button } from '@chakra-ui/react';
+import { Divider, useClipboard, useToast, VStack, Text, Button, LightMode } from '@chakra-ui/react';
 import isMobile from 'ismobilejs';
 import { useContext, useEffect, useRef } from 'react';
 
@@ -60,28 +60,32 @@ export function QrCodeView() {
                                 id="qr-code-input"
                                 readOnly={true}
                             ></Input>
-                            <Button borderRadius="lg" colorScheme="brand" size="lg" onClick={onCopy}>
-                                {l['form.button.copy.label']}
-                            </Button>
+                            <LightMode>
+                                <Button borderRadius="lg" colorScheme="brand" size="lg" onClick={onCopy}>
+                                    {l['form.button.copy.label']}
+                                </Button>
+                            </LightMode>
                             <Divider />
                         </>
                     )}
-                    <Text color="bodyText" fontWeight="medium" textAlign="center">
+                    <Text fontWeight="medium" textAlign="center">
                         {l['form.qr.code']}
                     </Text>
                     <QRCode text={interaction.qrCode} />
                     {initContext.redirectUrl && (
                         <>
                             <Divider />
-                            <Button
-                                borderRadius="lg"
-                                colorScheme="brand"
-                                size="lg"
-                                variant="link"
-                                onClick={() => window.open(initContext.redirectUrl, '_self')}
-                            >
-                                {l['form.button.back.to.website']}
-                            </Button>
+                            <LightMode>
+                                <Button
+                                    borderRadius="lg"
+                                    colorScheme="brand"
+                                    size="lg"
+                                    variant="link"
+                                    onClick={() => window.open(initContext.redirectUrl, '_self')}
+                                >
+                                    {l['form.button.back.to.website']}
+                                </Button>
+                            </LightMode>
                         </>
                     )}
                 </>

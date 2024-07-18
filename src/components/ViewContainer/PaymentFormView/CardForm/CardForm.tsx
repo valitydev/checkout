@@ -1,4 +1,4 @@
-import { Spacer, VStack, Text, Flex, HStack, Button } from '@chakra-ui/react';
+import { Spacer, VStack, Text, Flex, HStack, Button, LightMode } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -54,7 +54,7 @@ export function CardForm() {
             <VStack align="stretch" spacing={5}>
                 <Flex alignItems="center" direction="row">
                     {hasBackward && <BackwardBox onClick={backward} />}
-                    <Text color="bodyText" fontWeight="medium" textAlign="center" width="full">
+                    <Text fontWeight="medium" textAlign="center" width="full">
                         {l['form.header.pay.card.label']}
                     </Text>
                 </Flex>
@@ -92,9 +92,11 @@ export function CardForm() {
                     />
                 )}
                 <Spacer />
-                <Button borderRadius="lg" colorScheme="brand" size="lg" type="submit" variant="solid">
-                    {l['form.button.pay.label']} {viewAmount}
-                </Button>
+                <LightMode>
+                    <Button borderRadius="lg" colorScheme="brand" size="lg" type="submit" variant="solid">
+                        {l['form.button.pay.label']} {viewAmount}
+                    </Button>
+                </LightMode>
             </VStack>
         </form>
     );

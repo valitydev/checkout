@@ -13,7 +13,7 @@ export function RequisitesLoader() {
             <VStack align="center" minHeight={32} spacing={4}>
                 <Spinner color="brand.500" emptyColor="brand.200" size="xl" speed="0.65s" thickness="4px" />
                 {message !== '' && (
-                    <Text color="bodyText" fontSize="md" fontWeight="medium" textAlign="center">
+                    <Text fontSize="md" fontWeight="medium" textAlign="center">
                         {message}
                     </Text>
                 )}

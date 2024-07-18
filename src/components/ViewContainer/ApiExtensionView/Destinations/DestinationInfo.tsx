@@ -38,9 +38,7 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
                 {isAmountRandomized && (
                     <Alert borderRadius="xl" p={3} status="warning">
                         <AlertIcon />
-                        <Text color="bodyText" fontSize="sm">
-                            {l['form.p2p.destination.randomizeAmountDescription']}
-                        </Text>
+                        <Text fontSize="sm">{l['form.p2p.destination.randomizeAmountDescription']}</Text>
                     </Alert>
                 )}
                 <InfoItem isDivider={false} label={l['form.p2p.destination.amount']} value={viewAmount} />

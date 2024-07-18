@@ -5,9 +5,10 @@ import {
     METADATA_NAMESPACE,
     ServiceProviderIconMetadata,
     ServiceProviderMetadata,
-} from '../../../../common/backend/payments';
-import { TerminalServiceProvider } from '../../../../common/paymentModel';
-import { TerminalSelectorItem } from '../../types';
+} from 'checkout/backend/payments';
+import { TerminalServiceProvider } from 'checkout/paymentModel';
+
+import { TerminalSelectorItem } from '../types';
 
 type ServiceProviderPage = {
     items: GridItem[];

@@ -1,4 +1,5 @@
-import { VStack, Text, Heading, Button, Divider, Spacer } from '@chakra-ui/react';
+/* eslint-disable react/jsx-max-depth */
+import { VStack, Text, Heading, Button, Divider, Spacer, LightMode } from '@chakra-ui/react';
 import { useContext, useEffect } from 'react';
 
 import { Destination } from 'checkout/backend/p2p';
@@ -35,45 +36,45 @@ export function Destinations({ destinations }: DestinationsProps) {
 
     return (
         <VStack align="stretch" minH="md" spacing={5}>
-            <Heading as="h5" color="bodyText" size="sm" textAlign="center">
+            <Heading as="h5" size="sm" textAlign="center">
                 {l['form.p2p.destinations.heading']}
             </Heading>
             <Divider />
             <P2PAlert />
             <VStack align="stretch" spacing={3}>
-                <Text color="bodyText" fontWeight="medium">
-                    {l['form.p2p.destination.info']}
-                </Text>
+                <Text fontWeight="medium">{l['form.p2p.destination.info']}</Text>
                 {destinations.map((destination, index) => (
                     <DestinationInfo key={index} destination={destination} />
                 ))}
             </VStack>
             <Spacer />
             <VStack align="stretch" spacing={3}>
-                <Text color="bodyText" fontSize="sm" textAlign="center">
+                <Text fontSize="sm" textAlign="center">
                     {l['form.p2p.complete.info']}
                 </Text>
                 <VStack align="stretch" spacing={5}>
-                    <Button
-                        borderRadius="lg"
-                        colorScheme="brand"
-                        isLoading={status === 'LOADING' || status === 'SUCCESS'}
-                        loadingText={l['form.p2p.complete.loading']}
-                        size="lg"
-                        onClick={complete}
-                    >
-                        {l['form.p2p.complete.button']}
-                    </Button>
-                    {status === 'SUCCESS' && initContext?.redirectUrl && (
+                    <LightMode>
                         <Button
+                            borderRadius="lg"
                             colorScheme="brand"
+                            isLoading={status === 'LOADING' || status === 'SUCCESS'}
+                            loadingText={l['form.p2p.complete.loading']}
                             size="lg"
-                            variant="link"
-                            onClick={() => window.open(initContext.redirectUrl, '_self')}
+                            onClick={complete}
                         >
-                            {l['form.button.back.to.website']}
+                            {l['form.p2p.complete.button']}
                         </Button>
-                    )}
+                        {status === 'SUCCESS' && initContext?.redirectUrl && (
+                            <Button
+                                colorScheme="brand"
+                                size="lg"
+                                variant="link"
+                                onClick={() => window.open(initContext.redirectUrl, '_self')}
+                            >
+                                {l['form.button.back.to.website']}
+                            </Button>
+                        )}
+                    </LightMode>
                 </VStack>
                 {status === 'FAILURE' && <P2PApiError l={l} />}
             </VStack>

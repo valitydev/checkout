@@ -1,5 +1,5 @@
 import { WarningIcon } from '@chakra-ui/icons';
-import { Flex, Spacer, VStack, Text, Button } from '@chakra-ui/react';
+import { Flex, Spacer, VStack, Text, Button, LightMode } from '@chakra-ui/react';
 import { useContext, useMemo } from 'react';
 
 import { LocaleContext, PaymentConditionsContext } from 'checkout/contexts';
@@ -43,22 +43,24 @@ export function PaymentProcessFailedView() {
                     {l['form.header.final.error.label']}
                 </Text>
                 {!isNil(exception) && (
-                    <Text color="bodyText" fontSize="lg" textAlign="center">
+                    <Text fontSize="lg" textAlign="center">
                         {getErrorDescription(exception)}
                     </Text>
                 )}
             </VStack>
             <Spacer />
             <VStack align="stretch" spacing={6}>
-                <Button
-                    borderRadius="lg"
-                    colorScheme="brand"
-                    size="lg"
-                    variant="solid"
-                    onClick={() => location.reload()}
-                >
-                    {l['form.button.reload']}
-                </Button>
+                <LightMode>
+                    <Button
+                        borderRadius="lg"
+                        colorScheme="brand"
+                        size="lg"
+                        variant="solid"
+                        onClick={() => location.reload()}
+                    >
+                        {l['form.button.reload']}
+                    </Button>
+                </LightMode>
             </VStack>
         </VStack>
     );

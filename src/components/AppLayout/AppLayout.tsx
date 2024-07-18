@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, useColorMode } from '@chakra-ui/react';
 import { lazy, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ThemeProvider } from 'styled-components';
@@ -16,6 +16,7 @@ import { toCustomizationContext } from './utils';
 type AppLayoutProps = {
     initParams: InitParams;
     styledComponentsTheme?: Record<string, any>;
+    colorMode: string;
 };
 
 const GlobalContainer = lazy(() => import('../GlobalContainer/GlobalContainer'));
@@ -36,7 +37,8 @@ const ModalContainer = ({ children }: { children: React.ReactNode }) => (
     </Flex>
 );
 
-export function AppLayout({ initParams, styledComponentsTheme }: AppLayoutProps) {
+export function AppLayout({ initParams, styledComponentsTheme, colorMode }: AppLayoutProps) {
+    const { setColorMode } = useColorMode();
     const theme = styledComponentsTheme || getTheme(initParams.appConfig.fixedTheme);
     const { modelsState, init } = useInitModels();
     const customizationContextValue = toCustomizationContext(initParams.initConfig);
@@ -49,6 +51,10 @@ export function AppLayout({ initParams, styledComponentsTheme }: AppLayoutProps)
     useEffect(() => {
         init(initParams);
     }, [initParams]);
+
+    useEffect(() => {
+        setColorMode(colorMode);
+    }, [colorMode]);
 
     return (
         <ThemeProvider theme={theme}>
