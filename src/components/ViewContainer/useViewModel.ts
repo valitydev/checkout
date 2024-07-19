@@ -126,6 +126,7 @@ const toViews = (paymentMethods: PaymentMethod[]): [Map<string, View>, string] =
                         const singleProviderSelectorItem: PaymentMethodSelectorItem = {
                             name: methodName,
                             viewId: singleProviderTerminalId,
+                            category,
                             provider: providers[0],
                         };
                         return [
@@ -150,6 +151,7 @@ const toViews = (paymentMethods: PaymentMethod[]): [Map<string, View>, string] =
                     };
                     const terminalSelectorItem: PaymentMethodSelectorItem = {
                         name: 'TerminalSelector',
+                        category,
                         viewId: terminalSelectorId,
                     };
                     return [

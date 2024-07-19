@@ -1,11 +1,12 @@
-import { VStack, SimpleGrid, Input } from '@chakra-ui/react';
+import { VStack, SimpleGrid, Input, Flex, Text } from '@chakra-ui/react';
 import { useContext, useMemo } from 'react';
+import { HiCash } from 'react-icons/hi';
 
-import { BackwardBox } from 'checkout/components';
+import { BackwardBox, Pane, PaneLogo, PaneLogoBox, PaneMetadataLogo, PaneText } from 'checkout/components';
 import { LocaleContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
+import { isNil } from 'checkout/utils';
 
 import { PageNavigation } from './PageNavigation';
-import { ServiceProviderPane } from './ServiceProviderPane';
 import { useGridPages } from './useGrigPages';
 
 const ITEMS_ON_PAGE = 6;
@@ -13,13 +14,13 @@ const ITEMS_ON_PAGE = 6;
 export function TerminalSelectorView() {
     const { l } = useContext(LocaleContext);
     const {
-        paymentModel: { serviceProviders },
-    } = useContext(PaymentModelContext);
-    const {
         viewModel: { views, activeViewId, hasBackward },
         backward,
         forward,
     } = useContext(ViewModelContext);
+    const {
+        paymentModel: { serviceProviders },
+    } = useContext(PaymentModelContext);
 
     const view = views.get(activeViewId);
     if (view.name !== 'TerminalSelectorView') {
@@ -39,12 +40,22 @@ export function TerminalSelectorView() {
     };
 
     return (
-        <VStack align="stretch" spacing={5}>
-            {hasBackward && <BackwardBox onClick={backward} />}
+        <VStack align="stretch" minH="sm" spacing={5}>
+            <Flex alignItems="center">
+                {hasBackward && <BackwardBox onClick={backward} />}
+                <Text fontWeight="medium" textAlign="center" width="full">
+                    {l['form.header.payment.methods.label']}
+                </Text>
+            </Flex>
             {isSearchAvailable && <Input placeholder={l['form.serviceProvidersGrid.search']} onChange={onChange} />}
             <SimpleGrid columns={[1, 2, 2]} spacing={5}>
                 {pageItems.map(({ logo, brandName, viewId }, i) => (
-                    <ServiceProviderPane key={i} logo={logo} text={brandName} onClick={() => forward(viewId)} />
+                    <Pane key={i} onClick={() => forward(viewId)}>
+                        <PaneLogoBox>
+                            {isNil(logo) && <PaneLogo as={HiCash} />} {!isNil(logo) && <PaneMetadataLogo logo={logo} />}
+                        </PaneLogoBox>
+                        <PaneText>{brandName}</PaneText>
+                    </Pane>
                 ))}
             </SimpleGrid>
             {totalPages > 1 && (

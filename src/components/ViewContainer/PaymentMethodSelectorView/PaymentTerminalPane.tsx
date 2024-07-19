@@ -1,38 +1,29 @@
-import { Text } from '@chakra-ui/react';
 import { useContext } from 'react';
+import { HiCash } from 'react-icons/hi';
 
-import { PaymentModelContext, ViewModelContext } from '../../../common/contexts';
-import { isNil } from '../../../common/utils';
-import { findMetadata } from '../../../common/utils/findMetadata';
-import { MetadataLogo, PaymentMethodItemContainer } from '../../legacy';
+import { Pane, PaneLogoBox, PaneLogo, PaneText, PaneMetadataLogo } from 'checkout/components';
+import { PaymentModelContext } from 'checkout/contexts';
+import { isNil } from 'checkout/utils';
+import { findMetadata } from 'checkout/utils/findMetadata';
 
 export type PaymentTerminalPaneProps = {
-    destinationViewId: string;
+    provider: string;
+    onClick: () => void;
 };
 
-export function PaymentTerminalPane({ destinationViewId }: PaymentTerminalPaneProps) {
+export function PaymentTerminalPane({ onClick, provider }: PaymentTerminalPaneProps) {
     const {
         paymentModel: { serviceProviders },
     } = useContext(PaymentModelContext);
-    const {
-        forward,
-        viewModel: { views },
-    } = useContext(ViewModelContext);
-    const destination = views.get(destinationViewId);
-
-    if (destination.name !== 'PaymentFormView') {
-        throw new Error(`Wrong View. Expected: PaymentFormView, actual: ${destination.name}`);
-    }
-
-    const { logo } = findMetadata(serviceProviders, destination.provider);
+    const { logo } = findMetadata(serviceProviders, provider);
+    const serviceProvider = serviceProviders.find(({ id }) => id === provider);
 
     return (
-        <PaymentMethodItemContainer
-            id={`${Math.floor(Math.random() * 100)}-payment-method-item`}
-            onClick={() => forward(destinationViewId)}
-        >
-            {!isNil(logo) && <MetadataLogo metadata={logo} />}
-            {isNil(logo) && <Text>{destination.provider}</Text>}
-        </PaymentMethodItemContainer>
+        <Pane onClick={onClick}>
+            <PaneLogoBox>
+                {isNil(logo) && <PaneLogo as={HiCash} />} {!isNil(logo) && <PaneMetadataLogo logo={logo} />}
+            </PaneLogoBox>
+            <PaneText>{serviceProvider?.brandName}</PaneText>
+        </Pane>
     );
 }
