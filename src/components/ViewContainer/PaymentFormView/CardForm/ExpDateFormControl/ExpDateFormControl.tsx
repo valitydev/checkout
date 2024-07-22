@@ -1,4 +1,3 @@
-
 import { FormControl, Input, InputGroup, InputLeftElement, Square } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { FormState, UseFormRegister } from 'react-hook-form';
