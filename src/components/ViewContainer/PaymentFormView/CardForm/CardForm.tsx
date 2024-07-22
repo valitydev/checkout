@@ -1,4 +1,4 @@
-import { Spacer, VStack, Text, Flex, HStack, Button, LightMode } from '@chakra-ui/react';
+import { Spacer, VStack, Text, Flex, Button, LightMode } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -11,10 +11,10 @@ import {
     ViewModelContext,
 } from 'checkout/contexts';
 
-import { CardHolder } from './CardHolder';
-import { CardNumber } from './CardNumber';
-import { ExpireDate } from './ExpireDate';
-import { SecureCode } from './SecureCode';
+import { CardHolderFormControl } from './CardHolderFormControl';
+import { CardNumberFormControl } from './CardNumberFormControl';
+import { ExpDateFormControl } from './ExpDateFormControl';
+import { SecureCodeFormControl } from './SecureCodeFormControl';
 import { CardFormInputs } from './types';
 import { isSecureCodeAvailable } from './utils';
 
@@ -30,12 +30,7 @@ export function CardForm() {
     const {
         paymentModel: { initContext },
     } = useContext(PaymentModelContext);
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors, dirtyFields },
-    } = useForm<CardFormInputs>({ mode: 'onChange' });
+    const { register, handleSubmit, watch, formState } = useForm<CardFormInputs>({ mode: 'onChange' });
 
     const onSubmit: SubmitHandler<CardFormInputs> = (values) => {
         startPayment({
@@ -58,39 +53,19 @@ export function CardForm() {
                         {l['form.header.pay.card.label']}
                     </Text>
                 </Flex>
-                <CardNumber
-                    fieldError={errors.cardNumber}
-                    isDirty={dirtyFields.cardNumber}
-                    locale={l}
-                    register={register}
-                    watch={watch}
-                />
-                <HStack align="stretch" spacing={5}>
-                    <ExpireDate
-                        fieldError={errors.expireDate}
-                        isDirty={dirtyFields.expireDate}
-                        locale={l}
-                        register={register}
-                    />
+                <CardNumberFormControl formState={formState} register={register} />
+                <Flex gap={5}>
+                    <ExpDateFormControl formState={formState} register={register} />
                     {isSecureCode && (
-                        <SecureCode
-                            cardNumber={watch('cardNumber')}
-                            fieldError={errors.secureCode}
-                            isDirty={dirtyFields.secureCode}
-                            locale={l}
+                        <SecureCodeFormControl
+                            formState={formState}
                             obscureCardCvv={obscureCardCvv}
                             register={register}
+                            watch={watch}
                         />
                     )}
-                </HStack>
-                {requireCardHolder && (
-                    <CardHolder
-                        fieldError={errors.cardHolder}
-                        isDirty={dirtyFields.cardHolder}
-                        locale={l}
-                        register={register}
-                    />
-                )}
+                </Flex>
+                {requireCardHolder && <CardHolderFormControl formState={formState} register={register} />}
                 <Spacer />
                 <LightMode>
                     <Button borderRadius="lg" colorScheme="brand" size="lg" type="submit" variant="solid">
