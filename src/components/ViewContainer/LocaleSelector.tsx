@@ -1,6 +1,6 @@
-import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { useMemo, useState } from 'react';
+import { HiChevronDown } from 'react-icons/hi';
 
 import { isEmojiSupported } from 'checkout/utils';
 
@@ -73,7 +73,7 @@ export function LocaleSelector({ initLocaleCode, onLocaleChange }: LocaleSelecto
                     <Text color="white" fontSize="md" fontWeight="bold">
                         {localeInfo[activeLocaleCode]?.short || activeLocaleCode}
                     </Text>
-                    <ChevronDownIcon />
+                    <HiChevronDown />
                 </Flex>
             </MenuButton>
             <MenuList>

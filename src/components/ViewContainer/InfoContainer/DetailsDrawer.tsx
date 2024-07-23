@@ -1,4 +1,3 @@
-import { ChevronUpIcon } from '@chakra-ui/icons';
 import {
     Drawer,
     DrawerBody,
@@ -9,6 +8,7 @@ import {
     VStack,
     Text,
 } from '@chakra-ui/react';
+import { HiChevronUp } from 'react-icons/hi';
 
 import { truncate } from 'checkout/utils';
 
@@ -23,7 +23,7 @@ export function DetailsDrawer({ isOpen, onClose, name, description }: DetailsDra
     return (
         <Drawer isOpen={isOpen} placement="top" size="sm" onClose={onClose}>
             <DrawerOverlay />
-            <DrawerContent background="viewContainerBg">
+            <DrawerContent>
                 <DrawerBody>
                     <VStack align="stretch">
                         {name && (
@@ -35,7 +35,7 @@ export function DetailsDrawer({ isOpen, onClose, name, description }: DetailsDra
                     </VStack>
                 </DrawerBody>
                 <DrawerFooter>
-                    <IconButton aria-label="close" colorScheme="gray" icon={<ChevronUpIcon />} onClick={onClose} />
+                    <IconButton aria-label="close" colorScheme="gray" icon={<HiChevronUp />} onClick={onClose} />
                 </DrawerFooter>
             </DrawerContent>
         </Drawer>

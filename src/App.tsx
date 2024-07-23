@@ -60,11 +60,7 @@ export function App() {
                                 }, ON_COMPLETE_TIMEOUT_MS),
                         }}
                     >
-                        <AppLayout
-                            colorMode={theme.initialColorMode}
-                            initParams={state.data[1]}
-                            styledComponentsTheme={theme?.__styledComponents}
-                        />
+                        <AppLayout colorMode={theme.initialColorMode} initParams={state.data[1]} />
                     </CompletePaymentContext.Provider>
                 </ChakraBaseProvider>
             )}
