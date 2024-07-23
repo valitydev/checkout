@@ -1,5 +1,6 @@
+import { UserInteractionForm } from 'checkout/backend/payments';
+
 import { expandWithRedirect } from './expandWithRedirect';
-import { UserInteractionForm } from '../../../common/backend/payments';
 
 const createInput = (origin: string, formField: UserInteractionForm): HTMLInputElement => {
     const formParam = document.createElement('input');

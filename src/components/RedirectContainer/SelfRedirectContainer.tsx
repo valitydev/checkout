@@ -1,16 +1,11 @@
+import { Box } from '@chakra-ui/react';
 import { useContext, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
 
 import { BrowserRequest } from 'checkout/backend/payments';
 import { GlobalSpinner } from 'checkout/components';
 import { LocaleContext } from 'checkout/contexts';
 
 import { prepareForm } from './utils';
-
-const RedirectContainer = styled.div`
-    visibility: hidden;
-    height: 0;
-`;
 
 export type SelfRedirectContainerProps = {
     origin: string;
@@ -35,7 +30,7 @@ export function SelfRedirectContainer({ origin, request }: SelfRedirectContainer
     return (
         <>
             <GlobalSpinner l={l} />
-            <RedirectContainer ref={containerRef} />
+            <Box ref={containerRef} height={0} visibility="hidden" />
         </>
     );
 }

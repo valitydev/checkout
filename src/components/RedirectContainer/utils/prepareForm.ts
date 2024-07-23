@@ -1,6 +1,7 @@
+import { BrowserRequest } from 'checkout/backend/payments';
+
 import { toGetFormInputs } from './toGetFormInputs';
 import { toPostFormInputs } from './toPostFormInputs';
-import { BrowserRequest } from '../../../common/backend/payments';
 
 const toInputs = (origin: string, request: BrowserRequest): HTMLInputElement[] => {
     switch (request.requestType) {
