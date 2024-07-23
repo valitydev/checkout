@@ -1,15 +1,14 @@
-import { Divider, useClipboard, useToast, VStack, Text, Button, LightMode } from '@chakra-ui/react';
+import { Divider, useClipboard, useToast, VStack, Text, Button, LightMode, Input } from '@chakra-ui/react';
 import isMobile from 'ismobilejs';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect } from 'react';
 
+import { QrCodeFormMetadata } from 'checkout/backend/payments';
 import { LocaleContext, PaymentConditionsContext, PaymentContext, PaymentModelContext } from 'checkout/contexts';
 import { PaymentInteractionRequested, PaymentStarted } from 'checkout/paymentCondition';
 import { isNil } from 'checkout/utils';
 import { findMetadata } from 'checkout/utils/findMetadata';
 
 import { QRCode } from './QrCode';
-import { QrCodeFormMetadata } from '../../../common/backend/payments';
-import { Input } from '../../../components/legacy';
 
 const isQrCodeRedirect = (formMetadata: QrCodeFormMetadata) =>
     !isNil(formMetadata) &&
@@ -17,7 +16,6 @@ const isQrCodeRedirect = (formMetadata: QrCodeFormMetadata) =>
     formMetadata.qrCodeRedirect === 'mobile';
 
 export function QrCodeView() {
-    const qrCodeInputRef = useRef(null);
     const { l } = useContext(LocaleContext);
     const { conditions } = useContext(PaymentConditionsContext);
     const {
@@ -54,12 +52,7 @@ export function QrCodeView() {
                 <>
                     {qrCodeForm.isCopyCodeBlock && (
                         <>
-                            <Input
-                                ref={qrCodeInputRef}
-                                defaultValue={interaction.qrCode}
-                                id="qr-code-input"
-                                readOnly={true}
-                            ></Input>
+                            <Input defaultValue={interaction.qrCode} id="qr-code-input" readOnly={true}></Input>
                             <LightMode>
                                 <Button borderRadius="lg" colorScheme="brand" size="lg" onClick={onCopy}>
                                     {l['form.button.copy.label']}

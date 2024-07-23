@@ -1,1 +1,0 @@
-export { PaymentMethodIcon } from './PaymentMethodIcon';
