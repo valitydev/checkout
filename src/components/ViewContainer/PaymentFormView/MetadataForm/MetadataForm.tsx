@@ -1,6 +1,6 @@
 import { Button, LightMode, Spacer, VStack } from '@chakra-ui/react';
 import { useContext } from 'react';
-import { FieldError, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { BackwardBox, PaneLogoBox, PaneMetadataLogo } from 'checkout/components';
 import { LocaleContext, PaymentContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
@@ -10,15 +10,17 @@ import { isNil } from 'checkout/utils';
 import { findMetadata } from 'checkout/utils/findMetadata';
 
 import { Addon } from './Addon';
-import { formatMetadataValue } from './utils';
-import { Email, MetadataField, Phone, sortByIndex } from '../../../legacy';
+import { EmailFormControl, PhoneNumberFormControl } from './ContactInfoFormControls';
+import { MetadataFormControl } from './MetadataFormControl';
+import { MetadataFormValues } from './types';
+import { formatMetadataValue, sortByIndex } from './utils';
 
 export type MetadataFormProps = {
     provider: string;
 };
 
 export function MetadataForm({ provider }: MetadataFormProps) {
-    const { l, localeCode } = useContext(LocaleContext);
+    const { l } = useContext(LocaleContext);
     const {
         viewAmount,
         viewModel: { hasBackward },
@@ -30,11 +32,7 @@ export function MetadataForm({ provider }: MetadataFormProps) {
     } = useContext(PaymentModelContext);
     const { form, contactInfo, logo, prefilledMetadataValues, addon } = findMetadata(serviceProviders, provider);
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, dirtyFields },
-    } = useForm({
+    const { register, handleSubmit, formState } = useForm<MetadataFormValues>({
         mode: 'onChange',
         defaultValues: {
             contactInfo: initContext.contactInfo,
@@ -69,34 +67,10 @@ export function MetadataForm({ provider }: MetadataFormProps) {
                     form
                         ?.sort(sortByIndex)
                         .map((m) => (
-                            <MetadataField
-                                key={m.name}
-                                fieldError={errors?.metadata?.[m.name] as FieldError}
-                                isDirty={dirtyFields?.metadata?.[m.name]}
-                                localeCode={localeCode}
-                                metadata={m}
-                                register={register}
-                                wrappedName="metadata"
-                            />
+                            <MetadataFormControl key={m.name} formState={formState} metadata={m} register={register} />
                         ))}
-                {contactInfo?.email && (
-                    <Email
-                        fieldError={errors?.contactInfo?.email}
-                        isDirty={dirtyFields?.contactInfo?.email}
-                        locale={l}
-                        register={register}
-                        registerName="contactInfo.email"
-                    />
-                )}
-                {contactInfo?.phoneNumber && (
-                    <Phone
-                        fieldError={errors?.contactInfo?.phoneNumber}
-                        isDirty={dirtyFields?.contactInfo?.email}
-                        locale={l}
-                        register={register}
-                        registerName="contactInfo.phoneNumber"
-                    />
-                )}
+                {contactInfo?.email && <EmailFormControl formState={formState} register={register} />}
+                {contactInfo?.phoneNumber && <PhoneNumberFormControl formState={formState} register={register} />}
                 {!isNil(addon) && <Addon addon={addon} />}
                 <Spacer />
                 <LightMode>

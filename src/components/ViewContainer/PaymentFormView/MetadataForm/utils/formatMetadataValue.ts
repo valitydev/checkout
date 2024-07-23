@@ -1,5 +1,5 @@
-import { ServiceProviderMetadataField } from '../../../../../common/backend/payments';
-import { isNil, replaceSpaces } from '../../../../../common/utils';
+import { ServiceProviderMetadataField } from 'checkout/backend/payments';
+import { isNil, replaceSpaces } from 'checkout/utils';
 
 const toResultValue = (field: ServiceProviderMetadataField, formValue) => {
     switch (field.type) {
