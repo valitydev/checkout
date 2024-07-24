@@ -80,5 +80,15 @@ export const getResultInfo = (condition: PaymentCondition): ResultInfo => {
                 label: 'form.header.final.pending.label',
                 description: 'form.header.final.pending.description',
             };
+        default:
+            const errDescription = `Unexpected Payment condition: ${condition.name}`;
+            console.error(errDescription, JSON.stringify(condition));
+            return {
+                iconName: 'WarningIcon',
+                color: 'red.500',
+                label: 'form.header.final.error.label',
+                description: errDescription,
+                hasActions: false,
+            };
     }
 };

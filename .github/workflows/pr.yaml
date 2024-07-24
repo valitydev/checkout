@@ -56,3 +56,5 @@ jobs:
                   key: ${{ github.sha }}
             - name: Build
               run: npm run build
+              env:
+                  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
