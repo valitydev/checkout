@@ -20,12 +20,10 @@ jobs:
               uses: ./.github/actions/init
             - name: Build
               run: npm run build
-            - name: Set checkout version
-              uses: jossef/action-set-json-field@v2
-              with:
-                  file: ./dist/v1/env.json
-                  field: version
-                  value: ${{ github.sha }}
+              env:
+                  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+                  SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+                  SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
             - name: Deploy image
               uses: valitydev/action-deploy-docker@v2
               with:
@@ -61,12 +59,3 @@ jobs:
                   directory: 'dist'
                   gitHubToken: ${{ secrets.GITHUB_TOKEN }}
                   branch: main
-            - name: Create Sentry release
-              uses: getsentry/action-release@v1
-              env:
-                  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-                  SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-                  SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-              with:
-                  environment: 'production'
-                  sourcemaps: './dist'
