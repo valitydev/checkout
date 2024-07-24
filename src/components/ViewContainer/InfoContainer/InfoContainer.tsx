@@ -1,6 +1,6 @@
-import { ChevronDownIcon, ChevronLeftIcon } from '@chakra-ui/icons';
 import { Button, Flex, Text, VStack, useDisclosure, useMediaQuery } from '@chakra-ui/react';
 import { useContext } from 'react';
+import { HiChevronDown, HiChevronLeft } from 'react-icons/hi';
 
 import { CustomizationContext, LocaleContext } from 'checkout/contexts';
 import { truncate } from 'checkout/utils';
@@ -24,7 +24,7 @@ export function InfoContainer({ viewAmount }: InfoProps) {
                     <VStack align="start">
                         <Button
                             colorScheme="gray"
-                            leftIcon={<ChevronLeftIcon />}
+                            leftIcon={<HiChevronLeft />}
                             variant="link"
                             onClick={() => window.history.back()}
                         >
@@ -38,7 +38,7 @@ export function InfoContainer({ viewAmount }: InfoProps) {
                         {viewAmount}
                     </Text>
                     {!isLargerThan768 && (name || description) && (
-                        <Button colorScheme="gray" rightIcon={<ChevronDownIcon />} onClick={onOpen}>
+                        <Button colorScheme="gray" rightIcon={<HiChevronDown />} onClick={onOpen}>
                             {l['info.details']}
                         </Button>
                     )}

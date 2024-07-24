@@ -1,5 +1,5 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Text, IconButton, Flex } from '@chakra-ui/react';
+import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 
 export type PageNavigationProps = {
     page: number;
@@ -17,7 +17,7 @@ export function PageNavigation({ previous, next, page, totalPages, isNext, isPre
                 aria-label="Previous"
                 colorScheme="gray"
                 fontSize={24}
-                icon={<ChevronLeftIcon />}
+                icon={<HiChevronLeft />}
                 isDisabled={!isPrevious}
                 size="sm"
                 variant="ghost"
@@ -30,7 +30,7 @@ export function PageNavigation({ previous, next, page, totalPages, isNext, isPre
                 aria-label="Next"
                 colorScheme="gray"
                 fontSize={24}
-                icon={<ChevronRightIcon />}
+                icon={<HiChevronRight />}
                 isDisabled={!isNext}
                 size="sm"
                 variant="ghost"
