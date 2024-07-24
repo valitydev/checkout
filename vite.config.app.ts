@@ -28,10 +28,6 @@ export default defineConfig({
                     dest: './',
                 },
                 {
-                    src: 'src/env.json',
-                    dest: './',
-                },
-                {
                     src: 'src/assets/*',
                     dest: './assets',
                 },
@@ -39,10 +35,10 @@ export default defineConfig({
         }),
         visualizer(),
         sentryVitePlugin({
-            org: 'empayredev',
-            project: 'checkout',
-            telemetry: false,
+            org: process.env.SENTRY_ORG,
+            project: process.env.SENTRY_PROJECT,
             authToken: process.env.SENTRY_AUTH_TOKEN,
+            telemetry: false,
         }),
     ],
     server: {

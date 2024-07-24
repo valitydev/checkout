@@ -35,8 +35,6 @@ creditCardType.addCard({
 const initSentry = async (dsn: string) => {
     const { init, BrowserTracing } = await import('@sentry/react');
     const { CaptureConsole } = await import('@sentry/integrations');
-    const fetchEnv = withRetry(fetchConfig<{ version: string }>);
-    const env = await fetchEnv('./env.json');
     init({
         environment: 'production',
         dsn,
@@ -47,7 +45,6 @@ const initSentry = async (dsn: string) => {
             }),
         ],
         tracesSampleRate: 0.1,
-        release: env.version,
     });
 };
 
