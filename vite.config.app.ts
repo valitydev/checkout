@@ -42,6 +42,7 @@ export default defineConfig({
             org: 'empayredev',
             project: 'checkout',
             telemetry: false,
+            authToken: process.env.SENTRY_AUTH_TOKEN,
         }),
     ],
     server: {
