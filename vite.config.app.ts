@@ -1,3 +1,4 @@
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
@@ -8,11 +9,14 @@ export default defineConfig({
     base: './',
     build: {
         outDir: 'dist/v1',
+
         rollupOptions: {
             input: {
                 app: './checkout.html',
             },
         },
+
+        sourcemap: true,
     },
     plugins: [
         react(),
@@ -34,6 +38,11 @@ export default defineConfig({
             ],
         }),
         visualizer(),
+        sentryVitePlugin({
+            org: 'empayredev',
+            project: 'checkout',
+            telemetry: false,
+        }),
     ],
     server: {
         port: 7050,
