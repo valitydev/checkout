@@ -1,8 +1,6 @@
 import { Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { HiChevronDown } from 'react-icons/hi';
-
-import { isEmojiSupported } from 'checkout/utils';
 
 const localeInfo = {
     ar: {
@@ -59,17 +57,14 @@ export type LocaleSelectorProps = {
 
 export function LocaleSelector({ initLocaleCode, onLocaleChange }: LocaleSelectorProps) {
     const [activeLocaleCode, setActiveLocaleCode] = useState<string>(initLocaleCode);
-    const isEmojiAvailable = useMemo(() => isEmojiSupported('🏳️'), []);
 
     return (
         <Menu>
             <MenuButton color="white">
                 <Flex alignItems="center" gap="1">
-                    {isEmojiAvailable && (
-                        <Text as="span" fontSize="md">
-                            {localeInfo[activeLocaleCode]?.flag}
-                        </Text>
-                    )}
+                    <Text as="span" fontSize="md">
+                        {localeInfo[activeLocaleCode]?.flag}
+                    </Text>
                     <Text color="white" fontSize="md" fontWeight="bold">
                         {localeInfo[activeLocaleCode]?.short || activeLocaleCode}
                     </Text>
@@ -86,11 +81,9 @@ export function LocaleSelector({ initLocaleCode, onLocaleChange }: LocaleSelecto
                         }}
                     >
                         <Flex alignItems="center" gap="3">
-                            {isEmojiAvailable && (
-                                <Text as="span" fontSize="xl">
-                                    {flag}
-                                </Text>
-                            )}
+                            <Text as="span" fontSize="xl">
+                                {flag}
+                            </Text>
                             <Text fontSize="md">{long}</Text>
                         </Flex>
                     </MenuItem>

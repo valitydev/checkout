@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { HiCash } from 'react-icons/hi';
+import { HiQuestionMarkCircle } from 'react-icons/hi';
 
 import { Pane, PaneLogoBox, PaneLogo, PaneText, PaneMetadataLogo } from 'checkout/components';
 import { PaymentModelContext } from 'checkout/contexts';
@@ -21,7 +21,8 @@ export function PaymentTerminalPane({ onClick, provider }: PaymentTerminalPanePr
     return (
         <Pane onClick={onClick}>
             <PaneLogoBox>
-                {isNil(logo) && <PaneLogo as={HiCash} />} {!isNil(logo) && <PaneMetadataLogo logo={logo} />}
+                {isNil(logo) && <PaneLogo as={HiQuestionMarkCircle} />}
+                {!isNil(logo) && <PaneMetadataLogo logo={logo} />}
             </PaneLogoBox>
             <PaneText>{serviceProvider?.brandName}</PaneText>
         </Pane>

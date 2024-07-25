@@ -41,11 +41,19 @@ export type ServiceProviderMetadataSelect = {
     index?: number;
 };
 
-export type ServiceProviderIconMetadata = {
+export type ServiceProviderMetadataImage = {
+    type?: 'image';
     src: string;
     width: string;
     height: string;
 };
+
+export type ServiceProviderMetadataBuildInIcon = {
+    type: 'buildInIcon';
+    name: 'HiCreditCard' | 'HiCash' | 'HiLibrary';
+};
+
+export type ServiceProviderMetadataLogo = ServiceProviderMetadataImage | ServiceProviderMetadataBuildInIcon;
 
 export type ServiceProviderTitleMetadata = {
     icon: 'wallets' | 'online-banking' | 'bank-card';
@@ -87,7 +95,7 @@ export type Addon = PinikleAddon;
 
 export type CheckoutServiceProviderMetadata = {
     form?: ServiceProviderMetadataForm;
-    logo?: ServiceProviderIconMetadata;
+    logo?: ServiceProviderMetadataLogo;
     title?: ServiceProviderTitleMetadata;
     contactInfo?: ServiceProviderContactInfo;
     userInteraction?: UserInteractionMetadata;

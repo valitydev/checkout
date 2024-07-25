@@ -14,7 +14,7 @@ export function Pane(props: PaneProps) {
             borderColor="chakra-border-color"
             borderRadius="lg"
             cursor="pointer"
-            p={2}
+            p={4}
             spacing={2}
             {...rest}
         >

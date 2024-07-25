@@ -32,7 +32,6 @@ export { detectLocale } from './detectLocale';
 export { createRegExpForMetaPattern } from './createRegExpForMetaPattern';
 export { formatCard } from './formatCard';
 export { truncate } from './truncate';
-export { isEmojiSupported } from './isEmojiSupported';
 
 export type { URLParams } from './getUrlParams';
 export type { CountrySubdivision, Country } from './countries';
