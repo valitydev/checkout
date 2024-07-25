@@ -1,10 +1,47 @@
-import { ImageProps, Image } from '@chakra-ui/react';
+import { useMemo } from 'react';
+import { HiQuestionMarkCircle } from 'react-icons/hi';
 
-import { ServiceProviderIconMetadata } from 'checkout/backend/payments/serviceProviderMetadata';
+import {
+    ServiceProviderMetadataImage,
+    ServiceProviderMetadataLogo,
+} from 'checkout/backend/payments/serviceProviderMetadata';
+import { isNil } from 'checkout/utils';
 
-export type PaneMetadataLogoProps = { logo: ServiceProviderIconMetadata } & ImageProps;
+import { PaneLogo } from './PaneLogo';
+import { PaneMetadataBuildInIcon } from './PaneMetadataBuildInIcon';
+import { PaneMetadataImageLogo } from './PaneMetadataImageLogo';
 
-export function PaneMetadataLogo(props: PaneMetadataLogoProps) {
-    const { logo, ...rest } = props;
-    return <Image height={logo.height} src={logo.src} width={logo.width} {...rest} />;
+export type PaneMetadataLogoProps = {
+    logo: ServiceProviderMetadataLogo;
+};
+
+const isServiceProviderMetadataImage = (logo: ServiceProviderMetadataLogo): logo is ServiceProviderMetadataImage => {
+    return isNil(logo.type) || logo.type === 'image';
+};
+
+export function PaneMetadataLogo({ logo }: PaneMetadataLogoProps) {
+    const metadataLogo = useMemo(() => {
+        if (isServiceProviderMetadataImage(logo)) {
+            const requiredImage: Required<ServiceProviderMetadataImage> = {
+                ...logo,
+                type: 'image',
+            };
+            return requiredImage;
+        }
+        if (logo.type === 'buildInIcon') {
+            return logo;
+        }
+        console.error('ServiceProvider metadata logo is unsupported', logo);
+        return null;
+    }, [logo]);
+
+    return (
+        <>
+            {isNil(metadataLogo) && <PaneLogo as={HiQuestionMarkCircle} />}
+            {!isNil(metadataLogo) && metadataLogo.type === 'image' && <PaneMetadataImageLogo logo={metadataLogo} />}
+            {!isNil(metadataLogo) && metadataLogo.type === 'buildInIcon' && (
+                <PaneMetadataBuildInIcon logo={metadataLogo} />
+            )}
+        </>
+    );
 }

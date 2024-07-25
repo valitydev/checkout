@@ -1,4 +1,4 @@
-import { HiCash } from 'react-icons/hi';
+import { HiViewGrid } from 'react-icons/hi';
 
 import { Pane, PaneLogoBox, PaneLogo, PaneText } from 'checkout/components';
 
@@ -11,7 +11,7 @@ export function TerminalSelectorPane({ onClick, category }: TerminalSelectorPane
     return (
         <Pane onClick={onClick}>
             <PaneLogoBox>
-                <PaneLogo as={HiCash} />
+                <PaneLogo as={HiViewGrid} />
             </PaneLogoBox>
             <PaneText>{category}</PaneText>
         </Pane>

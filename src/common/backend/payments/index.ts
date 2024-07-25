@@ -49,7 +49,6 @@ export type {
     ServiceProviderMetadataField,
     ServiceProviderMetadataForm,
     PaymentSessionInfoMetadata,
-    ServiceProviderIconMetadata,
     MetadataTextLocalization,
     ServiceProviderMetadataSelect,
     ServiceProviderTitleMetadata,

@@ -3,9 +3,9 @@ import { useCallback, useReducer } from 'react';
 import {
     CheckoutServiceProviderMetadata,
     METADATA_NAMESPACE,
-    ServiceProviderIconMetadata,
+    ServiceProviderMetadataLogo,
     ServiceProviderMetadata,
-} from 'checkout/backend/payments';
+} from 'checkout/backend/payments/serviceProviderMetadata';
 import { TerminalServiceProvider } from 'checkout/paymentModel';
 
 import { TerminalSelectorItem } from '../types';
@@ -17,7 +17,7 @@ type ServiceProviderPage = {
 export type GridItem = {
     viewId: string;
     brandName: string;
-    logo: ServiceProviderIconMetadata | null;
+    logo: ServiceProviderMetadataLogo | null;
 };
 
 const toPages = (gridItems: GridItem[], itemsOnPage: number): ServiceProviderPage[] => {

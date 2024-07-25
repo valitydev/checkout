@@ -1,6 +1,6 @@
 import { VStack, SimpleGrid, Input, Flex, Text } from '@chakra-ui/react';
 import { useContext, useMemo } from 'react';
-import { HiCash } from 'react-icons/hi';
+import { HiQuestionMarkCircle } from 'react-icons/hi';
 
 import { BackwardBox, Pane, PaneLogo, PaneLogoBox, PaneMetadataLogo, PaneText } from 'checkout/components';
 import { LocaleContext, PaymentModelContext, ViewModelContext } from 'checkout/contexts';
@@ -52,7 +52,8 @@ export function TerminalSelectorView() {
                 {pageItems.map(({ logo, brandName, viewId }, i) => (
                     <Pane key={i} onClick={() => forward(viewId)}>
                         <PaneLogoBox>
-                            {isNil(logo) && <PaneLogo as={HiCash} />} {!isNil(logo) && <PaneMetadataLogo logo={logo} />}
+                            {isNil(logo) && <PaneLogo as={HiQuestionMarkCircle} />}
+                            {!isNil(logo) && <PaneMetadataLogo logo={logo} />}
                         </PaneLogoBox>
                         <PaneText>{brandName}</PaneText>
                     </Pane>
