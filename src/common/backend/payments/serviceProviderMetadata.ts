@@ -25,6 +25,7 @@ export type ServiceProviderMetadataField = {
     formatter?: MetadataFieldFormatter;
     inputMode?: AttributeInputMode;
     replaceValuePattern?: string;
+    replaceValue?: string;
 };
 
 export type MetadataSelectSource = {

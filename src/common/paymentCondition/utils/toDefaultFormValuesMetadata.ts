@@ -1,14 +1,7 @@
+import { applyReplacePattern } from './applyReplacePattern';
 import { ServiceProviderMetadataField, ServiceProviderMetadataForm } from '../../backend/payments';
 import { TerminalValues } from '../../paymentMgmt';
-import { createRegExpForMetaPattern, isNil, isString } from '../../utils';
-
-const applyReplacePattern = <T>(rawValue: T, pattern?: string, replaceValue = ''): string | T => {
-    if (!isNil(pattern) && isString(rawValue)) {
-        const regExp = new RegExp(pattern, 'g');
-        return rawValue.replace(regExp, replaceValue);
-    }
-    return rawValue;
-};
+import { createRegExpForMetaPattern, isNil } from '../../utils';
 
 export const prepareFormValues = (
     form: ServiceProviderMetadataField[],
@@ -19,7 +12,7 @@ export const prepareFormValues = (
         if (isNil(value)) {
             return acc;
         }
-        const appliedValue = applyReplacePattern(value, formField.replaceValuePattern);
+        const appliedValue = applyReplacePattern(value, formField.replaceValuePattern, formField.replaceValue);
         if (formField.pattern && !createRegExpForMetaPattern(formField.pattern).test(appliedValue)) {
             return acc;
         }
