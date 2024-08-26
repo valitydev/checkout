@@ -66,7 +66,7 @@
     "RejectedByIssuer": "Отклонено эмитентом",
     "PaymentRejected": "Платёж отклонен",
     "p2p.gateways": {
-        "sberbank": "Сбербанк",
+        "Сбербанк": "sberbank",
         "tinkoff": "Тинькофф",
         "raiffeisen": "Райффайзен",
         "sbp": "СБП",
