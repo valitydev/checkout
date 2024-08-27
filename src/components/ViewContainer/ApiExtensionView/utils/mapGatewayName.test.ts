@@ -6,21 +6,22 @@ describe('mapGatewayName', () => {
     beforeEach(() => {
         locale = {
             'p2p.gateways': {
-                gatewayA: 'Localized Gateway A',
-                gatewayB: 'Localized Gateway B',
-                gatewayC: 'Localized Gateway C',
+                gatewaya: 'Localized Gateway A',
+                gatewayb: 'Localized Gateway B',
+                gatewayc: 'Localized Gateway C',
             },
         };
     });
 
-    test('should return the localized gateway name when it exists in the locale', () => {
+    test('should return the localized gateway name when it exists in the locale, case insensitive', () => {
         expect(mapGatewayName('gatewayA', locale)).toBe('Localized Gateway A');
-        expect(mapGatewayName('gatewayB', locale)).toBe('Localized Gateway B');
-        expect(mapGatewayName('gatewayC', locale)).toBe('Localized Gateway C');
+        expect(mapGatewayName('GATEWAYB', locale)).toBe('Localized Gateway B');
+        expect(mapGatewayName('gatewayc', locale)).toBe('Localized Gateway C');
     });
 
-    test('should return the original gateway name when it does not exist in the locale', () => {
+    test('should return the original gateway name when it does not exist in the locale, regardless of case', () => {
         expect(mapGatewayName('unknownGateway', locale)).toBe('unknownGateway');
+        expect(mapGatewayName('UNKNOWNGATEWAY', locale)).toBe('UNKNOWNGATEWAY');
     });
 
     test('should return the original gateway name when the locale does not contain the "p2p.gateways" key', () => {
@@ -47,7 +48,7 @@ describe('mapGatewayName', () => {
     test('should handle locale with other unrelated keys', () => {
         const complexLocale = {
             'p2p.gateways': {
-                gatewayA: 'Localized Gateway A',
+                gatewaya: 'Localized Gateway A',
             },
             'other.key': 'some value',
         };

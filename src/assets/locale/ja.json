@@ -66,7 +66,11 @@
     "RejectedByIssuer": "信用状発行銀行に拒否されました",
     "PaymentRejected": "支払いが却下されました",
     "p2p.gateways": {
-        "sberbank": "Sberbank",
+        "сбер": "sberbank",
+        "sber": "sberbank",
+        "сбербанк": "sberbank",
+        "сбр": "sberbank",
+        "sbr": "sberbank",
         "tinkoff": "Tinkoff",
         "raiffeisen": "Raiffeisen",
         "sbp": "SBP",

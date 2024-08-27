@@ -69,7 +69,11 @@
     "RejectedByIssuer": "Rejeitado pelo banco emissor",
     "PaymentRejected": "Pagamento rejeitado",
     "p2p.gateways": {
-        "sberbank": "Sberbank",
+        "сбер": "sberbank",
+        "sber": "sberbank",
+        "сбербанк": "sberbank",
+        "сбр": "sberbank",
+        "sbr": "sberbank",
         "tinkoff": "Tinkoff",
         "raiffeisen": "Raiffeisen",
         "sbp": "SBP",

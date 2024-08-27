@@ -48,6 +48,11 @@ const localeInfo = {
         short: 'Tr',
         long: 'Türkçe',
     },
+    tj: {
+        flag: '🇹🇯',
+        short: 'Тҷ',
+        long: 'Тоҷикӣ',
+    },
 };
 
 export type LocaleSelectorProps = {
