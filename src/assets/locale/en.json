@@ -52,7 +52,12 @@
     "form.p2p.complete.loading": "Please, wait",
     "form.p2p.destination.amount": "Amount:",
     "form.p2p.destination.randomizeAmountDescription": "We have changed the deposit amount to speed up the crediting of your funds.",
-    "form.p2p.alert.li": ["Transfer the exact amount", "Transfer the entire amount in one transaction"],
+    "form.p2p.alert.li": [
+        "Transfer the exact amount",
+        "Transfer the entire amount in one transaction",
+        "Complete the transfer within 15 minutes.",
+        "After completing the transfer, click the \"Complete payment\" button."
+    ],
     "form.p2p.alert.p": "Otherwise, the payment will not be credited.",
     "form.p2p.gateway.selector.heading": "Choose a method or bank",
     "form.p2p.default.pane.label": "Any bank",

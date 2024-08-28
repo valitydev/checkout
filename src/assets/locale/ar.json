@@ -52,7 +52,12 @@
     "form.p2p.complete.loading": "يرجى الانتظار",
     "form.p2p.destination.amount": "المبلغ:",
     "form.p2p.destination.randomizeAmountDescription": "لقد قمنا بتغيير مبلغ الإيداع لتسريع إيداع أموالك.",
-    "form.p2p.alert.li": ["حول المبلغ الدقيق", "قم بالتحويل كامل المبلغ في تحويلة واحدة"],
+    "form.p2p.alert.li": [
+        "حول المبلغ الدقيق",
+        "قم بالتحويل كامل المبلغ في تحويلة واحدة",
+        "أكمل التحويل خلال 15 دقيقة.",
+        "بعد إتمام التحويل، اضغط على زر \"تم التحويل\"."
+    ],
     "form.p2p.alert.p": "وإلا، لن يتم اعتماد الدفع.",
     "form.p2p.gateway.selector.heading": "اختر طريقة أو بنك",
     "form.p2p.default.pane.label": "أي بنك",
