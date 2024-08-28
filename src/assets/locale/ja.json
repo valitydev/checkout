@@ -52,7 +52,12 @@
     "form.p2p.complete.loading": "読み込み中...",
     "form.p2p.destination.amount": "金額:",
     "form.p2p.destination.randomizeAmountDescription": "資金の入金を迅速に行うために、預金額を変更しました。",
-    "form.p2p.alert.li": ["正確な金額を振り込んでください", "全額を一回の取引で振り込んでください"],
+    "form.p2p.alert.li": [
+        "正確な金額を振り込んでください",
+        "全額を一回の取引で振り込んでください",
+        "15分以内に振り込みを完了してください。",
+        "振り込みが完了したら、「振り込み完了」ボタンをクリックしてください。"
+    ],
     "form.p2p.alert.p": "そうしない場合、支払いは認められません。",
     "form.p2p.gateway.selector.heading": "方法または銀行を選択してください",
     "form.p2p.default.pane.label": "任意の銀行",

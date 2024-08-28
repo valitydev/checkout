@@ -52,7 +52,12 @@
     "form.p2p.complete.loading": "기다려 주십시오",
     "form.p2p.destination.amount": "금액:",
     "form.p2p.destination.randomizeAmountDescription": "자금 입금을 신속하게 처리하기 위해 입금 금액을 변경했습니다.",
-    "form.p2p.alert.li": ["요청한 정확한 금액을 이체하십시오.", "전체 금액을 한 번에 이체하십시오."],
+    "form.p2p.alert.li": [
+        "요청한 정확한 금액을 이체하십시오.",
+        "전체 금액을 한 번에 이체하십시오.",
+        "15분 이내에 이체를 완료하세요.",
+        "이체 완료 후 \"이체 완료\" 버튼을 클릭하세요."
+    ],
     "form.p2p.alert.p": "그렇지 않으면 결제가 인정되지 않습니다.",
     "form.p2p.gateway.selector.heading": "방법 또는 은행 선택",
     "form.p2p.default.pane.label": "어떤 은행이든",

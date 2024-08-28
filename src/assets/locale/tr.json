@@ -52,7 +52,12 @@
     "form.p2p.complete.loading": "Lütfen bekleyin",
     "form.p2p.destination.amount": "Miktar:",
     "form.p2p.destination.randomizeAmountDescription": "Fonlarınızın hesaba geçme süresini hızlandırmak için para yatırma tutarını değiştirdik.",
-    "form.p2p.alert.li": ["Talep edilen kesin miktarı transfer edin.", "Tüm miktarı tek bir transferde ödeyin."],
+    "form.p2p.alert.li": [
+        "Talep edilen kesin miktarı transfer edin.",
+        "Tüm miktarı tek bir transferde ödeyin.",
+        "Transferi 15 dakika içinde tamamlayın.",
+        "Transferi tamamladıktan sonra \"Transfer Tamamlandı\" düğmesine tıklayın."
+    ],
     "form.p2p.alert.p": "Aksi takdirde ödeme alınmayacaktır.",
     "form.p2p.gateway.selector.heading": "Bir yöntem veya banka seçin",
     "form.p2p.default.pane.label": "Herhangi bir banka",
