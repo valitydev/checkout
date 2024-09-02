@@ -1,6 +1,6 @@
-import { Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
+import { Button, DarkMode, Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { useState } from 'react';
-import { HiChevronDown } from 'react-icons/hi';
+import { HiChevronDown, HiGlobeAlt } from 'react-icons/hi';
 
 const localeInfo = {
     ar: {
@@ -53,6 +53,11 @@ const localeInfo = {
         short: 'Тҷ',
         long: 'Тоҷикӣ',
     },
+    uz: {
+        flag: '🇺🇿',
+        short: 'Uz',
+        long: 'Oʻzbekcha',
+    },
 };
 
 export type LocaleSelectorProps = {
@@ -65,18 +70,20 @@ export function LocaleSelector({ initLocaleCode, onLocaleChange }: LocaleSelecto
 
     return (
         <Menu>
-            <MenuButton color="white">
-                <Flex alignItems="center" gap="1">
-                    <Text as="span" fontSize="md">
-                        {localeInfo[activeLocaleCode]?.flag}
-                    </Text>
-                    <Text color="white" fontSize="md" fontWeight="bold">
-                        {localeInfo[activeLocaleCode]?.short || activeLocaleCode}
-                    </Text>
-                    <HiChevronDown />
-                </Flex>
-            </MenuButton>
-            <MenuList>
+            <DarkMode>
+                <MenuButton
+                    as={Button}
+                    borderRadius="xl"
+                    leftIcon={<HiGlobeAlt />}
+                    rightIcon={<HiChevronDown />}
+                    size="lg"
+                    variant="ghost"
+                >
+                    {localeInfo[activeLocaleCode]?.short || activeLocaleCode}
+                </MenuButton>
+            </DarkMode>
+
+            <MenuList borderRadius="xl">
                 {Object.entries(localeInfo).map(([code, { flag, long }]) => (
                     <MenuItem
                         key={code}

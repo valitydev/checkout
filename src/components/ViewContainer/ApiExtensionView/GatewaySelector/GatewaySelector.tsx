@@ -25,7 +25,7 @@ export function GatewaySelector({ gateways, onSelect }: GatewaySelectorProps) {
             <GatewayPanes gateways={gateways} onSelect={setGateway} />
             <Spacer />
             <Button
-                borderRadius="lg"
+                borderRadius="xl"
                 colorScheme="brand"
                 isDisabled={isNil(gateway)}
                 size="lg"

@@ -54,7 +54,7 @@ export function QrCodeView() {
                         <>
                             <Input defaultValue={interaction.qrCode} id="qr-code-input" readOnly={true}></Input>
                             <LightMode>
-                                <Button borderRadius="lg" colorScheme="brand" size="lg" onClick={onCopy}>
+                                <Button borderRadius="xl" colorScheme="brand" size="lg" onClick={onCopy}>
                                     {l['form.button.copy.label']}
                                 </Button>
                             </LightMode>
@@ -70,7 +70,7 @@ export function QrCodeView() {
                             <Divider />
                             <LightMode>
                                 <Button
-                                    borderRadius="lg"
+                                    borderRadius="xl"
                                     colorScheme="brand"
                                     size="lg"
                                     variant="link"

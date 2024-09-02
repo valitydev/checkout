@@ -33,7 +33,7 @@ export function PaymentProcessFailedView() {
     }, [conditions]);
 
     return (
-        <VStack align="stretch" minH="sm" spacing={6}>
+        <VStack align="stretch" minH="sm" spacing={5}>
             <Spacer />
             <Flex justifyContent="center">
                 <WarningIcon boxSize="28" color="red.500" />
@@ -52,7 +52,7 @@ export function PaymentProcessFailedView() {
             <VStack align="stretch" spacing={6}>
                 <LightMode>
                     <Button
-                        borderRadius="lg"
+                        borderRadius="xl"
                         colorScheme="brand"
                         size="lg"
                         variant="solid"

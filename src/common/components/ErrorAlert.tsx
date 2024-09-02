@@ -24,7 +24,7 @@ export function ErrorAlert({ title, description, isReloading }: ErrorAlertProps)
             </AlertTitle>
             <AlertDescription maxWidth="lg">{description}</AlertDescription>
             {isReloading && (
-                <Button colorScheme="gray" onClick={() => location.reload()}>
+                <Button borderRadius="xl" colorScheme="gray" onClick={() => location.reload()}>
                     Reload
                 </Button>
             )}
