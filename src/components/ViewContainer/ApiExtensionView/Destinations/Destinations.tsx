@@ -52,10 +52,10 @@ export function Destinations({ destinations }: DestinationsProps) {
                 <Text fontSize="sm" textAlign="center">
                     {l['form.p2p.complete.info']}
                 </Text>
-                <VStack align="stretch" spacing={5}>
+                <VStack align="stretch" spacing={4}>
                     <LightMode>
                         <Button
-                            borderRadius="lg"
+                            borderRadius="xl"
                             colorScheme="brand"
                             isLoading={status === 'LOADING' || status === 'SUCCESS'}
                             loadingText={l['form.p2p.complete.loading']}

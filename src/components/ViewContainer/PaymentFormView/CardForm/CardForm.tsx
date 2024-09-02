@@ -68,7 +68,7 @@ export function CardForm() {
                 {requireCardHolder && <CardHolderFormControl formState={formState} register={register} />}
                 <Spacer />
                 <LightMode>
-                    <Button borderRadius="lg" colorScheme="brand" size="lg" type="submit" variant="solid">
+                    <Button borderRadius="xl" colorScheme="brand" size="lg" type="submit" variant="solid">
                         {l['form.button.pay.label']} {viewAmount}
                     </Button>
                 </LightMode>

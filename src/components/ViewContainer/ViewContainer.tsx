@@ -37,17 +37,19 @@ export function ViewContainer() {
             <Flex
                 alignItems="stretch"
                 backgroundColor={mainContainerBg}
-                borderRadius="2xl"
+                borderRadius="3xl"
+                boxShadow="lg"
                 direction={['column', 'column', 'row']}
                 gap={4}
-                p={[4, 4, 6]}
+                p={4}
             >
                 <InfoContainer viewAmount={viewAmount}></InfoContainer>
                 <ViewModelContext.Provider value={{ viewModel, viewAmount, goTo, forward, backward }}>
                     <Box
                         backgroundColor={viewContainerBg}
-                        borderRadius="xl"
-                        p={[4, 4, 6]}
+                        borderRadius="2xl"
+                        boxShadow="base"
+                        p={4}
                         position="relative"
                         width={['full', 'full', '420px']}
                     >
@@ -63,7 +65,7 @@ export function ViewContainer() {
                     </Box>
                 </ViewModelContext.Provider>
             </Flex>
-            <Box paddingLeft="5" paddingRight="5" paddingTop="3">
+            <Box pt="2" px="4">
                 <LocaleSelector initLocaleCode={localeCode} onLocaleChange={changeLocale} />
             </Box>
         </>

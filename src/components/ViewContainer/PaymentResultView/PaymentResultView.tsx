@@ -49,7 +49,7 @@ export function PaymentResultView() {
     }, [onComplete, lastCondition]);
 
     return (
-        <VStack align="stretch" minH="sm" spacing={6}>
+        <VStack align="stretch" minH="sm" spacing={5}>
             <Spacer />
             <Flex justifyContent="center">
                 <ResultIcon color={color} iconName={iconName} />
@@ -68,7 +68,7 @@ export function PaymentResultView() {
             <VStack align="stretch" spacing={6}>
                 {hasActions && isExternalIdEmpty(conditions) && (
                     <LightMode>
-                        <Button borderRadius="lg" colorScheme="brand" size="lg" variant="solid" onClick={retry}>
+                        <Button borderRadius="xl" colorScheme="brand" size="lg" variant="solid" onClick={retry}>
                             {l['form.button.pay.again.label']}
                         </Button>
                     </LightMode>
