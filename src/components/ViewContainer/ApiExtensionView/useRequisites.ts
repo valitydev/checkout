@@ -63,6 +63,10 @@ export const useRequisites = (
         if (gatewaysState.status === 'FAILURE') {
             dispatch({ type: 'FETCH_FAILURE' });
         }
+        if (gatewaysState.status === 'BUSINESS_ERROR') {
+            console.error(`Failed to fetch gateways. Business Error: ${gatewaysState.error.errorMessage}`);
+            dispatch({ type: 'FETCH_FAILURE' });
+        }
     }, [gatewaysState]);
 
     useEffect(() => {
