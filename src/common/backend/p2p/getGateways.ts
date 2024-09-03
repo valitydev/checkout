@@ -1,4 +1,4 @@
-import { Gateway } from './types';
+import { BusinessError, Gateway } from './types';
 import { fetchApi } from '../../../common/utils';
 
 export const getGateways = async (
@@ -6,7 +6,7 @@ export const getGateways = async (
     accessToken: string,
     invoiceID: string,
     paymentID: string,
-): Promise<Gateway[]> => {
+): Promise<Gateway[] | BusinessError> => {
     const queryParams = new URLSearchParams({
         invoiceId: invoiceID,
         paymentId: paymentID,

@@ -1,3 +1,7 @@
+export type BusinessError = {
+    errorMessage: string;
+};
+
 export type Gateway = {
     id: string;
     name: string;
