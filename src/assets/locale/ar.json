@@ -71,6 +71,7 @@
     "RejectedByIssuer": "رفض من البنك المصدر",
     "PaymentRejected": "تم رفض الدفع",
     "p2p.gateways": {
+        "sberbank": "sberbank",
         "сбер": "sberbank",
         "sber": "sberbank",
         "сбербанк": "sberbank",

@@ -71,6 +71,7 @@
     "RejectedByIssuer": "Эмитент томонидан рад этилди",
     "PaymentRejected": "Тўлов рад этилди",
     "p2p.gateways": {
+        "sberbank": "sberbank",
         "сбер": "sberbank",
         "sber": "sberbank",
         "сбербанк": "sberbank",

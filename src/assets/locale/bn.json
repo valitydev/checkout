@@ -71,6 +71,7 @@
     "RejectedByIssuer": "জারি করা ব্যাংকের দ্বারা প্রত্যাখ্যান করা হয়েছে",
     "PaymentRejected": "পেমেন্ট প্রত্যাখ্যান করা হয়েছে",
     "p2p.gateways": {
+        "sberbank": "sberbank",
         "сбер": "sberbank",
         "sber": "sberbank",
         "сбербанк": "sberbank",
