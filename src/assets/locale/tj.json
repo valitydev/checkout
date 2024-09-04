@@ -71,6 +71,7 @@
     "RejectedByIssuer": "Аз ҷониби эмитент рад карда шуд",
     "PaymentRejected": "Пардохт рад карда шуд",
     "p2p.gateways": {
+        "sberbank": "sberbank",
         "сбер": "sberbank",
         "sber": "sberbank",
         "сбербанк": "sberbank",

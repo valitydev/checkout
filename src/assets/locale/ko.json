@@ -71,6 +71,7 @@
     "RejectedByIssuer": "발급 은행에 의해 거부됨",
     "PaymentRejected": "결제 거부됨",
     "p2p.gateways": {
+        "sberbank": "sberbank",
         "сбер": "sberbank",
         "sber": "sberbank",
         "сбербанк": "sberbank",

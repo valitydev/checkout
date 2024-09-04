@@ -71,6 +71,7 @@
     "RejectedByIssuer": "Buraxılış bankı tərəfindən rədd edildi",
     "PaymentRejected": "Ödəniş rədd edildi",
     "p2p.gateways": {
+        "sberbank": "sberbank",
         "сбер": "sberbank",
         "sber": "sberbank",
         "сбербанк": "sberbank",
