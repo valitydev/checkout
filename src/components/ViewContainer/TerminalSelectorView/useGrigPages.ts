@@ -63,7 +63,7 @@ type Action =
 
 const getMetadata = (
     metadata: ServiceProviderMetadata | null,
-    namespace = METADATA_NAMESPACE,
+    namespace: keyof ServiceProviderMetadata = METADATA_NAMESPACE,
 ): CheckoutServiceProviderMetadata => metadata?.[namespace] || {};
 
 const mapToGridItem =

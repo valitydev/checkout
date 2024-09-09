@@ -1,4 +1,5 @@
 import { resolveInitConfig } from './resolveInitConfig';
+import { InitConfig } from '../types';
 
 it('should return resolved init config', () => {
     const param = {
@@ -13,7 +14,7 @@ it('should return resolved init config', () => {
     };
 
     const actual = resolveInitConfig(param as any);
-    const expected = {
+    const expected: InitConfig = {
         integrationType: 'invoice',
         invoiceID: 'someID',
         invoiceAccessToken: 'some token',

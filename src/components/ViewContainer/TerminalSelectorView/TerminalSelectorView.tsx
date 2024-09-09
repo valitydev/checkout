@@ -1,5 +1,5 @@
 import { VStack, SimpleGrid, Input, Flex, Text } from '@chakra-ui/react';
-import { useContext, useMemo } from 'react';
+import { ChangeEvent, useContext, useMemo } from 'react';
 import { HiQuestionMarkCircle } from 'react-icons/hi';
 
 import { BackwardBox, Pane, PaneLogo, PaneLogoBox, PaneMetadataLogo, PaneText } from 'checkout/components';
@@ -35,7 +35,7 @@ export function TerminalSelectorView() {
 
     const isSearchAvailable = useMemo(() => view.items.length > ITEMS_ON_PAGE, [serviceProviders]);
 
-    const onChange = (e) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         filter(e.target.value);
     };
 
