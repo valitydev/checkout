@@ -44,7 +44,7 @@ const initSentry = async (dsn: string) => {
                 levels: ['error', 'warn'],
             }),
         ],
-        tracesSampleRate: 0.1,
+        tracesSampleRate: 0.05,
     });
 };
 
