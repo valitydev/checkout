@@ -1,20 +1,20 @@
 import { appendInitButton } from './init-button/append-init-button';
 
-const mapKeys = (obj, mapper) =>
+const mapKeys = <T, K extends keyof any>(obj: Record<string, T>, mapper: (value: T, key: string) => K): Record<K, T> =>
     Object.entries(obj).reduce(
         (acc, [key, value]) => ({
             ...acc,
             [mapper(value, key)]: value,
         }),
-        {},
+        {} as Record<K, T>,
     );
 
-const getOuterForm = (element: HTMLScriptElement) => {
+const getOuterForm = (element: HTMLScriptElement): HTMLFormElement | null => {
     const node = element.parentNode as HTMLFormElement;
     return node && node.nodeName === 'FORM' && node.action ? node : null;
 };
 
-const prepareUserConfig = (element: HTMLScriptElement): object => ({
+const prepareUserConfig = (element: HTMLScriptElement): { [key: string]: string | (() => void) } => ({
     ...mapKeys(element.dataset, (_value, key) => key.replace('Id', 'ID')),
     finished: () => {
         const outerForm = getOuterForm(element);
@@ -35,7 +35,7 @@ export class HtmlIntegration {
         this.isAvailable = !!(this.element && this.element.dataset);
     }
 
-    getUserConfig(): any {
+    getUserConfig(): { [key: string]: string | (() => void) } {
         return prepareUserConfig(this.element);
     }
 

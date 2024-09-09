@@ -21,7 +21,7 @@ export type GridItem = {
 };
 
 const toPages = (gridItems: GridItem[], itemsOnPage: number): ServiceProviderPage[] => {
-    let result = [];
+    let result: ServiceProviderPage[] = [];
     let start = 0;
     let end = itemsOnPage;
     let isMorePages = true;

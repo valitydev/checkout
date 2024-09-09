@@ -7,7 +7,7 @@ import { isNil } from 'checkout/utils';
 export function P2PAlert() {
     const { l } = useContext(LocaleContext);
 
-    const localePath = l['form.p2p.alert.li'];
+    const localePath: string[] = l['form.p2p.alert.li'];
 
     return (
         <>

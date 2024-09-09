@@ -1,7 +1,7 @@
 import { mapGatewayName } from './mapGatewayName';
 
 describe('mapGatewayName', () => {
-    let locale;
+    let locale: Record<string, any>;
 
     beforeEach(() => {
         locale = {
