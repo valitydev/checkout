@@ -1,11 +1,19 @@
 import { useCallback, useReducer, useRef } from 'react';
 
-import { Destination, getDestinations as getApiDestinations } from 'checkout/backend/p2p';
-import { extractError, withRetry } from 'checkout/utils';
+import { BusinessError, Destination, getDestinations as getApiDestinations } from 'checkout/backend/p2p';
+import { extractError, isNil, withRetry } from 'checkout/utils';
 
-type State = { status: 'PRISTINE' | 'LOADING' | 'FAILURE' } | { status: 'SUCCESS'; data: Destination[] };
+type State =
+    | { status: 'PRISTINE' | 'LOADING' }
+    | { status: 'SUCCESS'; data: Destination[] }
+    | { status: 'FETCH_BUSINESS_ERROR'; error: BusinessError }
+    | { status: 'FAILURE'; error: unknown };
 
-type Action = { type: 'FETCH_START' } | { type: 'FETCH_SUCCESS'; payload: Destination[] } | { type: 'FETCH_FAILURE' };
+type Action =
+    | { type: 'FETCH_START' }
+    | { type: 'FETCH_SUCCESS'; payload: Destination[] }
+    | { type: 'FETCH_FAILURE'; error: unknown }
+    | { type: 'FETCH_BUSINESS_ERROR'; payload: BusinessError };
 
 const reducer = (state: State, action: Action): State => {
     switch (action.type) {
@@ -13,11 +21,22 @@ const reducer = (state: State, action: Action): State => {
             return { ...state, status: 'LOADING' };
         case 'FETCH_SUCCESS':
             return { status: 'SUCCESS', data: action.payload };
+        case 'FETCH_BUSINESS_ERROR':
+            return { status: 'FETCH_BUSINESS_ERROR', error: action.payload };
         case 'FETCH_FAILURE':
-            return { ...state, status: 'FAILURE' };
+            return { status: 'FAILURE', error: action.error };
         default:
             return state;
     }
+};
+
+const isDestinations = (payload: Destination[] | BusinessError): payload is Destination[] => {
+    return Array.isArray(payload);
+};
+
+const isBusinessError = (payload: Destination[] | BusinessError): payload is BusinessError => {
+    if (isDestinations(payload)) return false;
+    return !isNil(payload?.errorMessage);
 };
 
 export const useDestinations = (capiEndpoint: string, accessToken: string, invoiceID: string, paymentID: string) => {
@@ -37,21 +56,25 @@ export const useDestinations = (capiEndpoint: string, accessToken: string, invoi
             dispatch({ type: 'FETCH_START' });
             try {
                 const getDestinationsWithRetry = withRetry(getApiDestinations);
-                const destinations = await getDestinationsWithRetry(
+                const destinationsOrBusinessError = await getDestinationsWithRetry(
                     capiEndpoint,
                     accessToken,
                     invoiceID,
                     paymentID,
                     gatewayID,
                 );
-                dispatch({ type: 'FETCH_SUCCESS', payload: destinations });
-            } catch (error) {
-                dispatch({ type: 'FETCH_FAILURE' });
-                // Api returns 500 error when there are no no requisites available.
-                // Api 400 error is a common case
-                if ('status' in error && error.status !== 500 && error.status !== 400) {
-                    console.error(`Failed to fetch destinations. ${extractError(error)}`);
+                if (isDestinations(destinationsOrBusinessError)) {
+                    dispatch({ type: 'FETCH_SUCCESS', payload: destinationsOrBusinessError });
+                    return;
                 }
+                if (isBusinessError(destinationsOrBusinessError)) {
+                    dispatch({ type: 'FETCH_BUSINESS_ERROR', payload: destinationsOrBusinessError });
+                    return;
+                }
+                throw new Error('Unknown getDestinations response format.');
+            } catch (error) {
+                dispatch({ type: 'FETCH_FAILURE', error });
+                console.error(`Failed to fetch destinations. ${extractError(error)}`);
             }
         },
         [capiEndpoint, accessToken, invoiceID, paymentID],

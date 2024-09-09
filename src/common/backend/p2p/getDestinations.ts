@@ -1,4 +1,4 @@
-import { Destination } from './types';
+import { BusinessError, Destination } from './types';
 import { fetchApi } from '../../../common/utils';
 
 export const getDestinations = async (
@@ -7,7 +7,7 @@ export const getDestinations = async (
     invoiceID: string,
     paymentID: string,
     gatewayID?: string,
-): Promise<Destination[]> => {
+): Promise<Destination[] | BusinessError> => {
     const queryParams = new URLSearchParams({
         invoiceId: invoiceID,
         paymentId: paymentID,

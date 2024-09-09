@@ -76,6 +76,10 @@ export const useRequisites = (
         if (destinationsState.status === 'FAILURE') {
             dispatch({ type: 'FETCH_FAILURE' });
         }
+        if (destinationsState.status === 'FETCH_BUSINESS_ERROR') {
+            console.error(`Failed to fetch destinations. Business Error: ${destinationsState.error.errorMessage}`);
+            dispatch({ type: 'FETCH_FAILURE' });
+        }
     }, [destinationsState]);
 
     const start = () => {
