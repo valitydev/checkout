@@ -64,7 +64,6 @@ export const useRequisites = (
             dispatch({ type: 'FETCH_FAILURE' });
         }
         if (gatewaysState.status === 'BUSINESS_ERROR') {
-            console.error(`Failed to fetch gateways. Business Error: ${gatewaysState.error.errorMessage}`);
             dispatch({ type: 'FETCH_FAILURE' });
         }
     }, [gatewaysState]);
@@ -77,7 +76,6 @@ export const useRequisites = (
             dispatch({ type: 'FETCH_FAILURE' });
         }
         if (destinationsState.status === 'FETCH_BUSINESS_ERROR') {
-            console.error(`Failed to fetch destinations. Business Error: ${destinationsState.error.errorMessage}`);
             dispatch({ type: 'FETCH_FAILURE' });
         }
     }, [destinationsState]);

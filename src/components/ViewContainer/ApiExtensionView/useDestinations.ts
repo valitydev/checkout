@@ -1,7 +1,7 @@
 import { useCallback, useReducer, useRef } from 'react';
 
 import { BusinessError, Destination, getDestinations as getApiDestinations } from 'checkout/backend/p2p';
-import { extractError, isNil, withRetry } from 'checkout/utils';
+import { isNil, withRetry } from 'checkout/utils';
 
 type State =
     | { status: 'PRISTINE' | 'LOADING' }
@@ -74,7 +74,6 @@ export const useDestinations = (capiEndpoint: string, accessToken: string, invoi
                 throw new Error('Unknown getDestinations response format.');
             } catch (error) {
                 dispatch({ type: 'FETCH_FAILURE', error });
-                console.error(`Failed to fetch destinations. ${extractError(error)}`);
             }
         },
         [capiEndpoint, accessToken, invoiceID, paymentID],
