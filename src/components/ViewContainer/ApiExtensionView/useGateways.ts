@@ -1,7 +1,7 @@
 import { useCallback, useReducer } from 'react';
 
 import { BusinessError, Gateway, getGateways as getApiGateways } from 'checkout/backend/p2p';
-import { extractError, isNil, withRetry } from 'checkout/utils';
+import { isNil, withRetry } from 'checkout/utils';
 
 type State =
     | { status: 'PRISTINE' | 'LOADING' }
@@ -60,7 +60,6 @@ export const useGateways = (capiEndpoint: string, accessToken: string, invoiceID
             throw new Error('Unknown getGateways response format.');
         } catch (error) {
             dispatch({ type: 'FETCH_FAILURE', error });
-            console.error(`Failed to fetch gateways. ${extractError(error)}`);
         }
     }, [capiEndpoint, accessToken, invoiceID, paymentID]);
 
