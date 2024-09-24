@@ -5,7 +5,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorAlert, GlobalSpinner } from 'checkout/components';
 import { CustomizationContext, LocaleContext } from 'checkout/contexts';
 import { InitParams } from 'checkout/init';
-import { extractError } from 'checkout/utils';
+import { extractError, sendPostMessage } from 'checkout/utils';
 
 import { useInitModels } from './useInitModels';
 import { useLocale } from './useLocale';
@@ -51,6 +51,12 @@ export function AppLayout({ initParams, colorMode }: AppLayoutProps) {
     useEffect(() => {
         setColorMode(colorMode);
     }, [colorMode]);
+
+    useEffect(() => {
+        if (modelsState.status === 'FAILURE') {
+            sendPostMessage('onError');
+        }
+    }, [modelsState]);
 
     return (
         <LocaleContext.Provider value={{ l, localeCode, changeLocale }}>
