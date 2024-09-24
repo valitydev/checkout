@@ -12,6 +12,9 @@ const handlePaymentStatusChanged = (condition: PaymentStatusChanged) => {
         case 'failed':
             sendPostMessage('onError');
             break;
+        case 'pending':
+            sendPostMessage('onProgress');
+            break;
     }
 };
 
@@ -35,6 +38,11 @@ export function usePostMessage(conditions: PaymentCondition[]) {
                 break;
             case 'invoiceStatusChanged':
                 handleInvoiceStatusChanged(lastCondition);
+                break;
+            case 'paymentStatusUnknown':
+            case 'interactionCompleted':
+            case 'paymentStarted':
+                sendPostMessage('onProgress');
                 break;
         }
     }, [conditions]);
