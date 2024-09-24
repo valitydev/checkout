@@ -36,10 +36,6 @@ export function Destinations({ destinations }: DestinationsProps) {
 
     return (
         <VStack align="stretch" minH="md" spacing={5}>
-            <Heading as="h5" size="sm" textAlign="center">
-                {l['form.p2p.destinations.heading']}
-            </Heading>
-            <Divider />
             <P2PAlert />
             <VStack align="stretch" spacing={3}>
                 <Text fontWeight="medium">{l['form.p2p.destination.info']}</Text>

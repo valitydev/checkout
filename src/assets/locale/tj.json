@@ -47,6 +47,7 @@
     "form.p2p.destination.bank.account.account": "Рақами ҳисоб:",
     "form.p2p.destination.bank.account.bic": "BIC:",
     "form.p2p.destination.bank.account.purpose": "Мақсади пардохт:",
+    "form.p2p.destination.qrCode.description": "Лутфан рамзи QR-ро бо барномаи бонкии худ ё камераи телефон скан кунед",
     "form.p2p.complete.info": "Пас аз анҷом додани интиқол, тугмаи зерро пахш кунед. Коркарди пардохт то 5 дақиқа вақт мегирад.",
     "form.p2p.complete.button": "Интикол анҷом дода шуд",
     "form.p2p.complete.loading": "Лутфан интизор шавед",
