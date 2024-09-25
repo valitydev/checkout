@@ -19,7 +19,8 @@
         "baseUrl": ".",
         "paths": {
             "checkout/*": ["./src/common/*"]
-        }
+        },
+        "noImplicitAny": true
     },
     "include": ["./src/**/*", "./types/**/*"]
 }

@@ -21,7 +21,7 @@ export type GridItem = {
 };
 
 const toPages = (gridItems: GridItem[], itemsOnPage: number): ServiceProviderPage[] => {
-    let result = [];
+    let result: ServiceProviderPage[] = [];
     let start = 0;
     let end = itemsOnPage;
     let isMorePages = true;
@@ -63,7 +63,7 @@ type Action =
 
 const getMetadata = (
     metadata: ServiceProviderMetadata | null,
-    namespace = METADATA_NAMESPACE,
+    namespace: keyof ServiceProviderMetadata = METADATA_NAMESPACE,
 ): CheckoutServiceProviderMetadata => metadata?.[namespace] || {};
 
 const mapToGridItem =

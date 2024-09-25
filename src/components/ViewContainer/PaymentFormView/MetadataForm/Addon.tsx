@@ -6,7 +6,7 @@ import { LocaleContext } from 'checkout/contexts';
 import { isNil } from 'checkout/utils';
 
 export type PinikleAddonProps = {
-    localePath: string;
+    localePath: Record<string, any>;
     redirectLink: string;
 };
 
