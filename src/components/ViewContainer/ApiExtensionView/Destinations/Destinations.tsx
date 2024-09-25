@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-max-depth */
-import { VStack, Text, Heading, Button, Divider, Spacer, LightMode } from '@chakra-ui/react';
+import { VStack, Text, Button, Spacer, LightMode } from '@chakra-ui/react';
 import { useContext, useEffect } from 'react';
 
 import { Destination } from 'checkout/backend/p2p';
