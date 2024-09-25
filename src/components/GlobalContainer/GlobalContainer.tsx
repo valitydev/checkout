@@ -5,6 +5,7 @@ import { PaymentCondition } from 'checkout/paymentCondition';
 import { PaymentModel } from 'checkout/paymentModel';
 
 import { usePaymentCondition } from './usePaymentCondition';
+import { usePostMessage } from './usePostMessage';
 import { toContainer } from './utils';
 import { RedirectContainer } from '../RedirectContainer';
 import { ViewContainer } from '../ViewContainer';
@@ -17,6 +18,8 @@ export type GlobalContainerProps = {
 export function GlobalContainer({ paymentModel, initConditions }: GlobalContainerProps) {
     const { conditions, startPayment, startWaitingPaymentResult } = usePaymentCondition(paymentModel, initConditions);
     const containerName = toContainer(conditions);
+
+    usePostMessage(conditions);
 
     return (
         <PaymentModelContext.Provider value={{ paymentModel }}>
