@@ -47,6 +47,7 @@
     "form.p2p.destination.bank.account.account": "계좌 번호:",
     "form.p2p.destination.bank.account.bic": "BIC:",
     "form.p2p.destination.bank.account.purpose": "지급 목적:",
+    "form.p2p.destination.qrCode.description": "은행 앱 또는 휴대폰 카메라로 QR 코드를 스캔하세요",
     "form.p2p.complete.info": "이체를 완료한 후 아래 버튼을 누르십시오. 결제 처리에는 최대 5분이 소요될 수 있습니다.",
     "form.p2p.complete.button": "이체 완료",
     "form.p2p.complete.loading": "기다려 주십시오",

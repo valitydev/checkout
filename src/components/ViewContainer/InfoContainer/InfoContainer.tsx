@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { HiChevronDown, HiChevronLeft } from 'react-icons/hi';
 
 import { CustomizationContext, LocaleContext } from 'checkout/contexts';
-import { truncate } from 'checkout/utils';
+import { sendPostMessage, truncate } from 'checkout/utils';
 
 import { DetailsDrawer } from './DetailsDrawer';
 
@@ -26,7 +26,10 @@ export function InfoContainer({ viewAmount }: InfoProps) {
                             colorScheme="gray"
                             leftIcon={<HiChevronLeft />}
                             variant="link"
-                            onClick={() => window.history.back()}
+                            onClick={() => {
+                                // window.history.back()
+                                sendPostMessage('onBack');
+                            }}
                         >
                             {l['info.back']}
                         </Button>

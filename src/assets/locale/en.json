@@ -47,6 +47,7 @@
     "form.p2p.destination.bank.account.account": "Account number:",
     "form.p2p.destination.bank.account.bic": "BIC:",
     "form.p2p.destination.bank.account.purpose": "Purpose:",
+    "form.p2p.destination.qrCode.description": "Please scan the QR code with your banking app or phone camera",
     "form.p2p.complete.info": "After completing the transfer, press the button below.",
     "form.p2p.complete.button": "Complete payment",
     "form.p2p.complete.loading": "Please, wait",

@@ -8,7 +8,7 @@ import {
     PaymentModelContext,
     ViewModelContext,
 } from 'checkout/contexts';
-import { isNil, last } from 'checkout/utils';
+import { isNil, last, sendPostMessage } from 'checkout/utils';
 
 import { ResultIcon } from './ResultIcon';
 import { getPaymentFormViewId, getResultInfo, isExternalIdEmpty, isInstantPayment } from './utils';
@@ -79,7 +79,10 @@ export function PaymentResultView() {
                             colorScheme="brand"
                             size="lg"
                             variant="link"
-                            onClick={() => window.open(initContext.redirectUrl, '_self')}
+                            onClick={() => {
+                                sendPostMessage('onBack');
+                                window.open(initContext.redirectUrl, '_self');
+                            }}
                         >
                             {l['form.button.back.to.website']}
                         </Button>

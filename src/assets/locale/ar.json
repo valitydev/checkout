@@ -47,6 +47,7 @@
     "form.p2p.destination.bank.account.account": "رقم الحساب:",
     "form.p2p.destination.bank.account.bic": "BIC:",
     "form.p2p.destination.bank.account.purpose": "الغرض من الدفع:",
+    "form.p2p.destination.qrCode.description": "يرجى مسح رمز الاستجابة السريعة باستخدام تطبيقك البنكي أو كاميرا الهاتف",
     "form.p2p.complete.info": "بعد إتمام التحويل، اضغط على الزر أدناه.",
     "form.p2p.complete.button": "إكمال الدفع",
     "form.p2p.complete.loading": "يرجى الانتظار",

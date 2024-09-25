@@ -3,12 +3,11 @@ import isMobile from 'ismobilejs';
 import { useContext, useEffect } from 'react';
 
 import { QrCodeFormMetadata } from 'checkout/backend/payments';
+import { QRCode } from 'checkout/components';
 import { LocaleContext, PaymentConditionsContext, PaymentContext, PaymentModelContext } from 'checkout/contexts';
 import { PaymentInteractionRequested, PaymentStarted } from 'checkout/paymentCondition';
 import { isNil } from 'checkout/utils';
 import { findMetadata } from 'checkout/utils/findMetadata';
-
-import { QRCode } from './QrCode';
 
 const isQrCodeRedirect = (formMetadata: QrCodeFormMetadata) =>
     !isNil(formMetadata) &&

@@ -6,6 +6,7 @@ import { LocaleContext, PaymentConditionsContext, PaymentModelContext, ViewModel
 import { InvoiceDetermined, PaymentCondition } from 'checkout/paymentCondition';
 
 import { DestinationBankAccountInfo } from './DestinationBankAccountInfo';
+import { DestinationQRCodeAccountInfo } from './DestinationQRCodeAccountInfo';
 import { InfoItem } from './InfoItem';
 import { formatCardPan, formatPhoneNumber } from './utils';
 import { SBPIcon } from '../icons/SBPIcon';
@@ -62,6 +63,7 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
                     value={destination.phoneNumber}
                 />
             )}
+            {destination.destinationType === 'QRCode' && <DestinationQRCodeAccountInfo qrCode={destination.qrCode} />}
             {destination?.bankName && (
                 <InfoItem
                     icon={getGatewayIcon(destination.bankName)}
