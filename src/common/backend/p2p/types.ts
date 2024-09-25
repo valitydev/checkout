@@ -12,6 +12,7 @@ export type DestinationBankCard = {
     pan: string;
     bankName?: string;
     recipientName?: string;
+    notification?: string;
 };
 
 export type DestinationSBP = {
@@ -19,6 +20,7 @@ export type DestinationSBP = {
     phoneNumber: string;
     bankName?: string;
     recipientName?: string;
+    notification?: string;
 };
 
 export type DestinationBankAccount = {
@@ -28,6 +30,15 @@ export type DestinationBankAccount = {
     recipientName?: string;
     bic?: string;
     purpose?: string;
+    notification?: string;
 };
 
-export type Destination = DestinationBankCard | DestinationSBP | DestinationBankAccount;
+export type DestinationQRCode = {
+    destinationType: 'QRCode';
+    qrCode: string;
+    bankName?: string;
+    recipientName?: string;
+    notification?: string;
+};
+
+export type Destination = DestinationBankCard | DestinationSBP | DestinationBankAccount | DestinationQRCode;
