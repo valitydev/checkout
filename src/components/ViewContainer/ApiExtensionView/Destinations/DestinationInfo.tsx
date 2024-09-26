@@ -72,7 +72,11 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
                 />
             )}
             {destination?.recipientName && (
-                <InfoItem label={l['form.p2p.destination.bank.recipient']} value={destination.recipientName} />
+                <InfoItem
+                    isCopyable={true}
+                    label={l['form.p2p.destination.bank.recipient']}
+                    value={destination.recipientName}
+                />
             )}
         </VStack>
     );
