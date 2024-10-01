@@ -6,6 +6,7 @@ import { LocaleContext, PaymentConditionsContext, PaymentModelContext, ViewModel
 import { InvoiceDetermined, PaymentCondition } from 'checkout/paymentCondition';
 
 import { DestinationBankAccountInfo } from './DestinationBankAccountInfo';
+import { DestinationNotification } from './DestinationNotification';
 import { DestinationQRCodeAccountInfo } from './DestinationQRCodeAccountInfo';
 import { InfoItem } from './InfoItem';
 import { formatCardPan, formatPhoneNumber } from './utils';
@@ -35,6 +36,7 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
 
     return (
         <VStack align="stretch">
+            {destination?.notification && <DestinationNotification code={destination.notification} />}
             <VStack align="stretch">
                 {isAmountRandomized && (
                     <Alert borderRadius="xl" p={3} status="warning">

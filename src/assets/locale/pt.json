@@ -84,6 +84,9 @@
         "kapital": "Kapital",
         "abb": "ABB"
     },
+    "p2p.notification": {
+        "verified": "Antes de efetuar o pagamento, certifique-se de que sua conta na carteira MPAY está verificada."
+    },
     "metadata.addons": {
         "pinikle": {
             "label": "Não tem um voucher?",

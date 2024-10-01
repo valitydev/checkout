@@ -13,25 +13,10 @@ const localeInfo = {
         short: 'Az',
         long: 'Azerbaijani',
     },
-    bn: {
-        flag: '🇧🇩',
-        short: 'বাং',
-        long: 'বাংলা',
-    },
     en: {
         flag: '🇬🇧',
         short: 'En',
         long: 'English',
-    },
-    ja: {
-        flag: '🇯🇵',
-        short: '日本',
-        long: '日本語',
-    },
-    ko: {
-        flag: '🇰🇷',
-        short: '한국',
-        long: '한국어',
     },
     pt: {
         flag: '🇵🇹',

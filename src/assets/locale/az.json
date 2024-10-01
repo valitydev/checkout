@@ -84,6 +84,9 @@
         "kapital": "Kapital",
         "abb": "ABB"
     },
+    "p2p.notification": {
+        "verified": "Ödəniş etməzdən əvvəl MPAY pul kisəsi hesabınızın təsdiqləndiyinə əmin olun."
+    },
     "metadata.addons": {
         "pinikle": {
             "label": "Voucheriniz yoxdur?",

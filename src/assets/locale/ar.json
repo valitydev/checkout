@@ -84,6 +84,9 @@
         "kapital": "Kapital",
         "abb": "ABB"
     },
+    "p2p.notification": {
+        "verified": "يرجى التأكد من أن حساب محفظة MPAY الخاص بك تم التحقق منه قبل إجراء الدفع."
+    },
     "metadata.addons": {
         "pinikle": {
             "label": "هل عندك قسيمة ؟",

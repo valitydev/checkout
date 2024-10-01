@@ -84,6 +84,9 @@
         "kapital": "Kapital",
         "abb": "ABB"
     },
+    "p2p.notification": {
+        "verified": "결제를 진행하기 전에 MPAY 지갑 계정이 인증되었는지 확인하십시오."
+    },
     "metadata.addons": {
         "pinikle": {
             "label": "바우처가 없으신가요?",
