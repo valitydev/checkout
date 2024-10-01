@@ -84,6 +84,9 @@
         "kapital": "Kapital",
         "abb": "ABB"
     },
+    "p2p.notification": {
+        "verified": "Тўловни амалга оширишдан олдин MPAY ҳамёнидаги ҳисобингиз тасдиқланганига ишонч ҳосил қилинг."
+    },
     "metadata.addons": {
         "pinikle": {
             "label": "Ваучер йўқми?",

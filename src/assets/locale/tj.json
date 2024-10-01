@@ -84,6 +84,9 @@
         "kapital": "Kapital",
         "abb": "ABB"
     },
+    "p2p.notification": {
+        "verified": "Пеш аз пардохт боварӣ ҳосил кунед, ки ҳисоби шумо дар ҳамёни MPAY тасдиқ шудааст."
+    },
     "metadata.addons": {
         "pinikle": {
             "label": "Шумо ваучер надоред?",

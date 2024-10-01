@@ -84,6 +84,9 @@
         "kapital": "Kapital",
         "abb": "ABB"
     },
+    "p2p.notification": {
+        "verified": "Перед проведением платежа убедитесь, что ваша учетная запись в кошельке MPAY верифицирована."
+    },
     "metadata.addons": {
         "pinikle": {
             "label": "У вас нет ваучера?",

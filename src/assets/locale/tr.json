@@ -84,6 +84,9 @@
         "kapital": "Kapital",
         "abb": "ABB"
     },
+    "p2p.notification": {
+        "verified": "Ödeme yapmadan önce MPAY cüzdanındaki hesabınızın doğrulandığından emin olun."
+    },
     "metadata.addons": {
         "pinikle": {
             "label": "Kuponunuz yok mu?",
