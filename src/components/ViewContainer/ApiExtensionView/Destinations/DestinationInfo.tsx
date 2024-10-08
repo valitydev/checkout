@@ -65,7 +65,6 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
                     value={destination.phoneNumber}
                 />
             )}
-            {destination.destinationType === 'QRCode' && <DestinationQRCodeAccountInfo qrCode={destination.qrCode} />}
             {destination?.bankName && (
                 <InfoItem
                     icon={getGatewayIcon(destination.bankName)}
@@ -73,6 +72,7 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
                     value={mapGatewayName(destination.bankName, l)}
                 />
             )}
+            {destination.destinationType === 'QRCode' && <DestinationQRCodeAccountInfo qrCode={destination.qrCode} />}
             {destination?.recipientName && (
                 <InfoItem
                     isCopyable={true}
