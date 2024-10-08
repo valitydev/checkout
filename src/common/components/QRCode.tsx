@@ -3,9 +3,10 @@ import kjua from 'kjua';
 
 export type QRCodeProps = {
     text: string;
+    size?: number;
 };
 
-export function QRCode({ text }: QRCodeProps) {
+export function QRCode({ text, size = 224 }: QRCodeProps) {
     const {
         QRCode: { back, fill },
     } = useTheme();
@@ -13,7 +14,7 @@ export function QRCode({ text }: QRCodeProps) {
         <Center
             dangerouslySetInnerHTML={{
                 __html: kjua({
-                    size: 224,
+                    size,
                     back,
                     fill,
                     rounded: 100,
