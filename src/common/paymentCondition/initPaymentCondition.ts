@@ -19,6 +19,12 @@ const isInstantPaymentContactInfoEligible = (
         return true;
     }
     const { email, phoneNumber } = metadata;
+    // Metadata contactInfo email and phoneNumber are not required, instant payment is eligible
+    if (!email && !phoneNumber) {
+        return true;
+    }
+
+    console.warn(`isInstantPaymentContactInfoEligible, email: ${email}, phoneNumber: ${phoneNumber}`);
     const { contactInfo } = initContext;
     if (email && !isNil(contactInfo.email)) {
         return true;
