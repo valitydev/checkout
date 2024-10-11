@@ -45,6 +45,9 @@ export function PaymentResultView() {
                     onComplete();
                 }
                 break;
+            case 'interactionCompleted':
+                onComplete();
+                break;
         }
     }, [onComplete, lastCondition]);
 
