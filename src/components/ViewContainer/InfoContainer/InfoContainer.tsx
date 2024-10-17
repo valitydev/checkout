@@ -1,9 +1,9 @@
 import { Button, Flex, Text, VStack, useDisclosure, useMediaQuery } from '@chakra-ui/react';
 import { useContext } from 'react';
-import { HiChevronDown, HiChevronLeft } from 'react-icons/hi';
+import { HiArrowLeft, HiChevronDown } from 'react-icons/hi';
 
-import { CustomizationContext, LocaleContext } from 'checkout/contexts';
-import { sendPostMessage, truncate } from 'checkout/utils';
+import { CustomizationContext, LocaleContext, PaymentModelContext } from 'checkout/contexts';
+import { isNil, truncate } from 'checkout/utils';
 
 import { DetailsDrawer } from './DetailsDrawer';
 
@@ -16,19 +16,21 @@ export function InfoContainer({ viewAmount }: InfoProps) {
     const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { l } = useContext(LocaleContext);
+    const {
+        paymentModel: { initContext },
+    } = useContext(PaymentModelContext);
 
     return (
         <>
             <VStack align="stretch" spacing={3} width={['inherit', 'inherit', '64']}>
-                {!isLargerThan768 && document.referrer !== '' && (
+                {!isNil(initContext.cancelUrl) && (
                     <VStack align="start">
                         <Button
                             colorScheme="gray"
-                            leftIcon={<HiChevronLeft />}
+                            leftIcon={<HiArrowLeft />}
                             variant="link"
                             onClick={() => {
-                                // window.history.back()
-                                sendPostMessage('onBack');
+                                window.open(initContext.cancelUrl, '_self');
                             }}
                         >
                             {l['info.back']}

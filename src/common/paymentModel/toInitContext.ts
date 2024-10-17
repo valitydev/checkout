@@ -39,6 +39,7 @@ export const toInitContext = (initConfig: InitConfig): InitContext => ({
     paymentMetadata: initConfig.metadata,
     contactInfo: toContactInfo(initConfig),
     redirectUrl: initConfig.redirectUrl,
+    cancelUrl: initConfig.cancelUrl,
     metadata: initConfig.metadata,
     recurring: initConfig.recurring,
     paymentFlow: toPaymentFlow(initConfig.paymentFlow),

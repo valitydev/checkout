@@ -6,6 +6,7 @@ export type InitConfig = {
     invoiceTemplateAccessToken?: string;
     locale?: string;
     redirectUrl?: string;
+    cancelUrl?: string;
     name?: string;
     description?: string;
     email?: string;
