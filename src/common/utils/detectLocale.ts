@@ -1,6 +1,6 @@
 import { isNil } from './isNil';
 
-const locales = ['ru', 'en', 'pt', 'tr', 'az', 'ar', 'tj', 'uz'];
+const locales = ['ru', 'en', 'ar', 'az', 'pt', 'tj', 'tr', 'uz'];
 
 export const detectLocale = (locale: string | null): string => {
     let result;
