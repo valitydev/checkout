@@ -49,6 +49,7 @@ export type InitContext = {
     readonly cancelUrl?: string;
     readonly metadata?: Record<string, any>;
     readonly recurring?: boolean;
+    readonly deepLink?: string;
 };
 
 export type CommonPaymentModel = {

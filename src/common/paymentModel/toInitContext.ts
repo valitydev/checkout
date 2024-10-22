@@ -43,4 +43,5 @@ export const toInitContext = (initConfig: InitConfig): InitContext => ({
     metadata: initConfig.metadata,
     recurring: initConfig.recurring,
     paymentFlow: toPaymentFlow(initConfig.paymentFlow),
+    deepLink: initConfig.deepLink,
 });

@@ -33,6 +33,7 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         isExternalIDIncluded,
         theme,
         paymentFlow,
+        deepLink,
     } = userConfig;
     return {
         ...resolvedIntegrationType,
@@ -52,5 +53,6 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         isExternalIDIncluded: setDefault(resolveBoolean(isExternalIDIncluded), true),
         theme: resolveString(theme),
         paymentFlow: resolveObject(paymentFlow),
+        deepLink: resolveString(deepLink),
     };
 };

@@ -32,6 +32,7 @@ it('should return resolved init config', () => {
         skipUserInteraction: false,
         theme: null,
         paymentFlow: null,
+        deepLink: null,
     };
     expect(actual).toEqual(expected);
 });
