@@ -2,7 +2,10 @@ import { ContactInfo } from '../../../common/backend/payments';
 import { isNil, replaceSpaces } from '../../utils';
 import { StartPaymentPayload } from '../types';
 
-const mapFrom = (obj: { email?: string; phoneNumber?: string }, targetKeys = ['email', 'phoneNumber']): ContactInfo => {
+const mapFrom = (
+    obj: { email?: string; phoneNumber?: string },
+    targetKeys = ['email', 'phoneNumber'] as const,
+): ContactInfo => {
     const defaultResult = {} as ContactInfo;
     if (isNil(obj)) {
         return defaultResult;
@@ -19,7 +22,7 @@ const mapFrom = (obj: { email?: string; phoneNumber?: string }, targetKeys = ['e
     }, defaultResult);
 };
 
-const replaceSpacesFromObjectValues = (obj) => {
+const replaceSpacesFromObjectValues = (obj: Record<string, any>): Record<string, any> => {
     Object.keys(obj).forEach((key) => {
         const value = obj[key];
         if (typeof value === 'string') {
@@ -39,7 +42,7 @@ const replaceSpacesFromObjectValues = (obj) => {
     return obj;
 };
 
-export const toContactInfo = ({ methodName, values }: StartPaymentPayload): ContactInfo => {
+export const toContactInfo = ({ methodName, values }: StartPaymentPayload): Partial<ContactInfo> => {
     const fromContactInfo = isNil(values?.contactInfo)
         ? {}
         : // TODO: Delete this function once space removal has been implemented for the phoneNumber field.

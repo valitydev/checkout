@@ -56,7 +56,7 @@ export type PaymentToolDetails = PaymentToolDetailsBankCard | PaymentToolDetails
 
 export type PaymentResourcePayer = {
     payerType: 'PaymentResourcePayer';
-    contactInfo: ContactInfo;
+    contactInfo: Partial<ContactInfo>;
     paymentToolToken?: string;
     paymentSession?: string;
     sessionInfo?: {
