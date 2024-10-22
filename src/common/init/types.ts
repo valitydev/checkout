@@ -20,6 +20,7 @@ export type InitConfig = {
     skipUserInteraction?: boolean;
     isExternalIDIncluded?: boolean;
     paymentFlow?: object;
+    deepLink?: string;
 };
 
 export type ThemeConfig = Record<string, any>;
