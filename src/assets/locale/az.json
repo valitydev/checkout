@@ -47,7 +47,9 @@
     "form.p2p.destination.bank.account.account": "Hesab nömrəsi:",
     "form.p2p.destination.bank.account.bic": "BIC:",
     "form.p2p.destination.bank.account.purpose": "Ödənişin təyinatı:",
-    "form.p2p.destination.qrCode.description": "Zəhmət olmasa, QR kodunu bank tətbiqiniz və ya telefon kamerası ilə tarayın",
+    "form.p2p.destination.qrCode.description": "QR kodunu telefonunuzun standart kamerası ilə tarayın.",
+    "form.p2p.destination.qrCode.button.redirect": "Proqramda aç",
+    "form.p2p.destination.qrCode.button.copy": "Linki kopyalayın",
     "form.p2p.complete.info": "Təqdim etdikdən sonra \"Köçürmə tamamlandı\" düyməsini basın. Ödənişin işlənməsi 5 dəqiqəyə qədər çəkir.",
     "form.p2p.complete.button": "Köçürmə tamamlandı",
     "form.p2p.complete.loading": "Lütfən, gözləyin",
@@ -83,6 +85,9 @@
         "sbp": "SBP",
         "kapital": "Kapital",
         "abb": "ABB"
+    },
+    "p2p.notification": {
+        "verified": "Ödəniş etməzdən əvvəl MPAY pul kisəsi hesabınızın təsdiqləndiyinə əmin olun."
     },
     "metadata.addons": {
         "pinikle": {

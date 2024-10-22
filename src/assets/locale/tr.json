@@ -47,7 +47,9 @@
     "form.p2p.destination.bank.account.account": "Hesap numarası:",
     "form.p2p.destination.bank.account.bic": "BIC:",
     "form.p2p.destination.bank.account.purpose": "Ödeme amacı:",
-    "form.p2p.destination.qrCode.description": "Lütfen QR kodunu banka uygulamanız veya telefon kameranızla tarayın",
+    "form.p2p.destination.qrCode.description": "QR kodunu telefonunuzun varsayılan kamerası ile tarayın.",
+    "form.p2p.destination.qrCode.button.redirect": "Uygulamada aç",
+    "form.p2p.destination.qrCode.button.copy": "Bağlantıyı kopyala",
     "form.p2p.complete.info": "Transferi tamamladıktan sonra aşağıdaki butona basın. Ödeme işleminin tamamlanması 5 dakikaya kadar sürebilir.",
     "form.p2p.complete.button": "Transfer tamamlandı",
     "form.p2p.complete.loading": "Lütfen bekleyin",
@@ -83,6 +85,9 @@
         "sbp": "SBP",
         "kapital": "Kapital",
         "abb": "ABB"
+    },
+    "p2p.notification": {
+        "verified": "Ödeme yapmadan önce MPAY cüzdanındaki hesabınızın doğrulandığından emin olun."
     },
     "metadata.addons": {
         "pinikle": {

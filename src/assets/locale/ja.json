@@ -84,6 +84,9 @@
         "kapital": "Kapital",
         "abb": "ABB"
     },
+    "p2p.notification": {
+        "verified": "支払いを行う前に、MPAYウォレットのアカウントが認証されていることを確認してください。"
+    },
     "metadata.addons": {
         "pinikle": {
             "label": "バウチャーがありませんか？",

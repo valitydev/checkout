@@ -24,6 +24,7 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         obscureCardCvv,
         requireCardHolder,
         redirectUrl,
+        cancelUrl,
         locale,
         recurring,
         metadata,
@@ -32,6 +33,7 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         isExternalIDIncluded,
         theme,
         paymentFlow,
+        deepLink,
     } = userConfig;
     return {
         ...resolvedIntegrationType,
@@ -42,6 +44,7 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         obscureCardCvv: resolveBoolean(obscureCardCvv),
         requireCardHolder: resolveBoolean(requireCardHolder),
         redirectUrl: resolveRedirectUrl(resolveString(redirectUrl)),
+        cancelUrl: resolveRedirectUrl(resolveString(cancelUrl)),
         locale: detectLocale(resolveString(locale)),
         recurring: setDefault(resolveBoolean(recurring), false),
         metadata: setDefault(resolveObject(metadata), undefined),
@@ -50,5 +53,6 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         isExternalIDIncluded: setDefault(resolveBoolean(isExternalIDIncluded), true),
         theme: resolveString(theme),
         paymentFlow: resolveObject(paymentFlow),
+        deepLink: resolveString(deepLink),
     };
 };

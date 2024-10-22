@@ -47,7 +47,9 @@
     "form.p2p.destination.bank.account.account": "Número da conta:",
     "form.p2p.destination.bank.account.bic": "BIC:",
     "form.p2p.destination.bank.account.purpose": "Finalidade do pagamento:",
-    "form.p2p.destination.qrCode.description": "Por favor, escaneie o código QR com seu aplicativo bancário ou câmera do telefone",
+    "form.p2p.destination.qrCode.description": "Escaneie o código QR com a câmera padrão do seu telefone.",
+    "form.p2p.destination.qrCode.button.redirect": "Abrir no aplicativo",
+    "form.p2p.destination.qrCode.button.copy": "Copiar link",
     "form.p2p.complete.info": "Após completar a transferência, pressione o botão abaixo. O processamento do pagamento pode levar até 5 minutos.",
     "form.p2p.complete.button": "Transferência concluída",
     "form.p2p.complete.loading": "Por favor, aguarde",
@@ -83,6 +85,9 @@
         "sbp": "SBP",
         "kapital": "Kapital",
         "abb": "ABB"
+    },
+    "p2p.notification": {
+        "verified": "Antes de efetuar o pagamento, certifique-se de que sua conta na carteira MPAY está verificada."
     },
     "metadata.addons": {
         "pinikle": {

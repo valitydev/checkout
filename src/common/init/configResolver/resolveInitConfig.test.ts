@@ -29,9 +29,11 @@ it('should return resolved init config', () => {
         name: 'some name',
         phoneNumber: null,
         redirectUrl: null,
+        cancelUrl: null,
         skipUserInteraction: false,
         theme: null,
         paymentFlow: null,
+        deepLink: null,
     };
     expect(actual).toEqual(expected);
 });
