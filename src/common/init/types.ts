@@ -6,6 +6,7 @@ export type InitConfig = {
     invoiceTemplateAccessToken?: string;
     locale?: string;
     redirectUrl?: string;
+    cancelUrl?: string;
     name?: string;
     description?: string;
     email?: string;
@@ -19,6 +20,7 @@ export type InitConfig = {
     skipUserInteraction?: boolean;
     isExternalIDIncluded?: boolean;
     paymentFlow?: object;
+    deepLink?: string;
 };
 
 export type ThemeConfig = Record<string, any>;

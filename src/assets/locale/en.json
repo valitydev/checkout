@@ -47,7 +47,9 @@
     "form.p2p.destination.bank.account.account": "Account number:",
     "form.p2p.destination.bank.account.bic": "BIC:",
     "form.p2p.destination.bank.account.purpose": "Purpose:",
-    "form.p2p.destination.qrCode.description": "Please scan the QR code with your banking app or phone camera",
+    "form.p2p.destination.qrCode.description": "Scan the QR code with your phone's camera.",
+    "form.p2p.destination.qrCode.button.redirect": "Open in the app",
+    "form.p2p.destination.qrCode.button.copy": "Copy link",
     "form.p2p.complete.info": "After completing the transfer, press the button below.",
     "form.p2p.complete.button": "Complete payment",
     "form.p2p.complete.loading": "Please, wait",
@@ -83,6 +85,9 @@
         "sbp": "SBP",
         "kapital": "Kapital",
         "abb": "ABB"
+    },
+    "p2p.notification": {
+        "verified": "Please make sure your MPAY wallet account is verified before making a payment."
     },
     "metadata.addons": {
         "pinikle": {

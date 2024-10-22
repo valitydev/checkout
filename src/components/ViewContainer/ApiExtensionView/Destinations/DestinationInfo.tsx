@@ -6,6 +6,7 @@ import { LocaleContext, PaymentConditionsContext, PaymentModelContext, ViewModel
 import { InvoiceDetermined, PaymentCondition } from 'checkout/paymentCondition';
 
 import { DestinationBankAccountInfo } from './DestinationBankAccountInfo';
+import { DestinationNotification } from './DestinationNotification';
 import { DestinationQRCodeAccountInfo } from './DestinationQRCodeAccountInfo';
 import { InfoItem } from './InfoItem';
 import { formatCardPan, formatPhoneNumber } from './utils';
@@ -35,6 +36,7 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
 
     return (
         <VStack align="stretch">
+            {destination?.notification && <DestinationNotification code={destination.notification} />}
             <VStack align="stretch">
                 {isAmountRandomized && (
                     <Alert borderRadius="xl" p={3} status="warning">
@@ -63,7 +65,6 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
                     value={destination.phoneNumber}
                 />
             )}
-            {destination.destinationType === 'QRCode' && <DestinationQRCodeAccountInfo qrCode={destination.qrCode} />}
             {destination?.bankName && (
                 <InfoItem
                     icon={getGatewayIcon(destination.bankName)}
@@ -71,8 +72,13 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
                     value={mapGatewayName(destination.bankName, l)}
                 />
             )}
+            {destination.destinationType === 'QRCode' && <DestinationQRCodeAccountInfo qrCode={destination.qrCode} />}
             {destination?.recipientName && (
-                <InfoItem label={l['form.p2p.destination.bank.recipient']} value={destination.recipientName} />
+                <InfoItem
+                    isCopyable={true}
+                    label={l['form.p2p.destination.bank.recipient']}
+                    value={destination.recipientName}
+                />
             )}
         </VStack>
     );

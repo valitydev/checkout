@@ -1,5 +1,5 @@
 import { Spacer, VStack, Text, Flex, Button, LightMode } from '@chakra-ui/react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { BackwardBox } from 'checkout/components';
@@ -10,6 +10,7 @@ import {
     PaymentModelContext,
     ViewModelContext,
 } from 'checkout/contexts';
+import { isNil } from 'checkout/utils';
 
 import { CardHolderFormControl } from './CardHolderFormControl';
 import { CardNumberFormControl } from './CardNumberFormControl';
@@ -44,6 +45,13 @@ export function CardForm() {
 
     const isSecureCode = isSecureCodeAvailable(watch('cardNumber'));
 
+    const deepLink = initContext?.deepLink;
+
+    useEffect(() => {
+        if (isNil(deepLink)) return;
+        window.location.replace(deepLink);
+    }, [deepLink]);
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <VStack align="stretch" spacing={5}>
@@ -72,6 +80,16 @@ export function CardForm() {
                         {l['form.button.pay.label']} {viewAmount}
                     </Button>
                 </LightMode>
+                {!isNil(deepLink) && (
+                    <Button
+                        onClick={() => {
+                            window.open(deepLink, '_self');
+                            // window.location.replace(deepLink);
+                        }}
+                    >
+                        Go to deep link
+                    </Button>
+                )}
             </VStack>
         </form>
     );

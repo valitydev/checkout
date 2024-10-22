@@ -25,7 +25,7 @@ export function GlobalContainer({ paymentModel, initConditions }: GlobalContaine
         <PaymentModelContext.Provider value={{ paymentModel }}>
             <PaymentConditionsContext.Provider value={{ conditions }}>
                 <PaymentContext.Provider value={{ startPayment, startWaitingPaymentResult }}>
-                    <Box marginBottom={[12, 12, 20]} marginTop={[12, 12, 20]} width={['full', '75%', 'auto']}>
+                    <Box my={[10, 10, 16]} width={['full', '75%', 'auto']}>
                         {containerName === 'ViewContainer' && <ViewContainer />}
                         {containerName === 'RedirectContainer' && <RedirectContainer />}
                     </Box>

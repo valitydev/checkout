@@ -38,7 +38,6 @@ export function Destinations({ destinations }: DestinationsProps) {
         <VStack align="stretch" minH="md" spacing={5}>
             <P2PAlert />
             <VStack align="stretch" spacing={3}>
-                <Text fontWeight="medium">{l['form.p2p.destination.info']}</Text>
                 {destinations.map((destination, index) => (
                     <DestinationInfo key={index} destination={destination} />
                 ))}
@@ -60,7 +59,7 @@ export function Destinations({ destinations }: DestinationsProps) {
                         >
                             {l['form.p2p.complete.button']}
                         </Button>
-                        {status === 'SUCCESS' && initContext?.redirectUrl && (
+                        {initContext?.redirectUrl && (
                             <Button
                                 colorScheme="brand"
                                 size="lg"
