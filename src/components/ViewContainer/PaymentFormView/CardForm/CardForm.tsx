@@ -1,5 +1,5 @@
-import { Spacer, VStack, Text, Flex, Button, LightMode, useToast } from '@chakra-ui/react';
-import { useContext } from 'react';
+import { Spacer, VStack, Text, Flex, Button, LightMode } from '@chakra-ui/react';
+import { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { BackwardBox } from 'checkout/components';
@@ -10,7 +10,7 @@ import {
     PaymentModelContext,
     ViewModelContext,
 } from 'checkout/contexts';
-import { extractError, isNil } from 'checkout/utils';
+import { isNil } from 'checkout/utils';
 
 import { CardHolderFormControl } from './CardHolderFormControl';
 import { CardNumberFormControl } from './CardNumberFormControl';
@@ -47,7 +47,10 @@ export function CardForm() {
 
     const deepLink = initContext?.deepLink;
 
-    const toast = useToast();
+    useEffect(() => {
+        if (isNil(deepLink)) return;
+        window.location.replace(deepLink);
+    }, [deepLink]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -80,17 +83,8 @@ export function CardForm() {
                 {!isNil(deepLink) && (
                     <Button
                         onClick={() => {
-                            // window.open(deepLink, '_self');
-                            try {
-                                window.location.replace(deepLink);
-                            } catch (ex) {
-                                toast({
-                                    description: extractError(ex),
-                                    status: 'error',
-                                    duration: 20000,
-                                    isClosable: true,
-                                });
-                            }
+                            window.open(deepLink, '_self');
+                            // window.location.replace(deepLink);
                         }}
                     >
                         Go to deep link
