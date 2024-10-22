@@ -1,11 +1,11 @@
-const s4 = () =>
+const s4 = (): string =>
     Math.floor((1 + Math.random()) * 0x10000)
         .toString(16)
         .substring(1);
 
-const generateId = () => `${s4()}${s4()}${s4()}${s4()}`;
+const generateId = (): string => `${s4()}${s4()}${s4()}${s4()}`;
 
-const styles = {
+const styles: Partial<CSSStyleDeclaration> = {
     overflowX: 'hidden',
     overflowY: 'auto',
     visibility: 'visible',
@@ -18,12 +18,15 @@ const styles = {
     top: '0',
     width: '100%',
     height: '100%',
-    zIndex: 2147483647,
+    zIndex: '2147483647',
 };
 
-const setStyles = (element, styles) => {
+const setStyles = (element: HTMLElement, styles: Partial<CSSStyleDeclaration>): void => {
     for (const property in styles) {
-        element.style[property] = styles[property];
+        // eslint-disable-next-line no-prototype-builtins
+        if (styles.hasOwnProperty(property)) {
+            element.style[property as any] = styles[property as keyof CSSStyleDeclaration] as string;
+        }
     }
 };
 
@@ -50,29 +53,29 @@ export class IframeContainer {
         this.render();
     }
 
-    reinitialize() {
+    reinitialize(): void {
         this.hide();
         this.destroy();
         this.render();
     }
 
-    render() {
+    render(): void {
         document.body.appendChild(this.container);
     }
 
-    destroy() {
+    destroy(): void {
         document.body.removeChild(this.container);
     }
 
-    show() {
+    show(): void {
         this.container.style.display = 'block';
     }
 
-    hide() {
+    hide(): void {
         this.container.style.display = 'none';
     }
 
     getName(): string {
-        return this.container.getAttribute('name');
+        return this.container.getAttribute('name') || '';
     }
 }

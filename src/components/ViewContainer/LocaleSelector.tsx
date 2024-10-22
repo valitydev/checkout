@@ -2,7 +2,13 @@ import { Button, DarkMode, Flex, Menu, MenuButton, MenuItem, MenuList, Text } fr
 import { useState } from 'react';
 import { HiChevronDown, HiGlobeAlt } from 'react-icons/hi';
 
-const localeInfo = {
+type LocaleInfo = {
+    flag: string;
+    short: string;
+    long: string;
+};
+
+const localeInfo: Record<string, LocaleInfo> = {
     ar: {
         flag: '🇸🇦',
         short: 'عر',

@@ -4,8 +4,13 @@ import { TerminalServiceProvider } from '../paymentModel';
 
 export const getMetadata = (
     metadata: ServiceProviderMetadata | null,
-    namespace = METADATA_NAMESPACE,
-): CheckoutServiceProviderMetadata => metadata?.[namespace] || {};
+    namespace: keyof ServiceProviderMetadata = METADATA_NAMESPACE,
+): CheckoutServiceProviderMetadata => {
+    if (metadata && namespace in metadata) {
+        return metadata[namespace] as CheckoutServiceProviderMetadata;
+    }
+    return {};
+};
 
 export const findMetadata = (
     serviceProviders: TerminalServiceProvider[] | null,

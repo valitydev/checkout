@@ -42,8 +42,8 @@ export type InitContext = {
     readonly skipUserInteraction: boolean;
     readonly paymentFlow: PaymentFlow;
     readonly contactInfo?: InitContextContactInfo;
-    readonly terminalFormValues?: Record<string, any>;
-    readonly paymentMetadata?: Record<string, any>;
+    readonly terminalFormValues?: Record<string, unknown>;
+    readonly paymentMetadata?: Record<string, unknown>;
     readonly isExternalIDIncluded?: boolean;
     readonly redirectUrl?: string;
     readonly cancelUrl?: string;

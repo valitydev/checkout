@@ -58,7 +58,7 @@ const getPlaceholder = (localeCode: string, localization: MetadataTextLocalizati
 };
 
 const createValidator =
-    (type: JSX.IntrinsicElements['input']['type'], required: boolean, pattern?: string) => (value) => {
+    (type: JSX.IntrinsicElements['input']['type'], required: boolean, pattern?: string) => (value: string) => {
         if (!required && isNil(value)) {
             return undefined;
         }
