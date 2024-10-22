@@ -42,7 +42,7 @@ export type InitContext = {
     readonly skipUserInteraction: boolean;
     readonly paymentFlow: PaymentFlow;
     readonly contactInfo?: InitContextContactInfo;
-    readonly terminalFormValues?: object;
+    readonly terminalFormValues?: Record<string, unknown>;
     readonly paymentMetadata?: object;
     readonly isExternalIDIncluded?: boolean;
     readonly redirectUrl?: string;
