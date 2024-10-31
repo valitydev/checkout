@@ -1,30 +1,20 @@
 import { Center, useTheme } from '@chakra-ui/react';
-import kjua from 'kjua';
+import { QRCodeSVG } from 'qrcode.react';
 
 export type QRCodeProps = {
-    text: string;
+    value: string;
     size?: number;
 };
 
-export function QRCode({ text, size = 224 }: QRCodeProps) {
+export function QRCode({ value, size = 224 }: QRCodeProps) {
     const {
-        QRCode: { back, fill },
+        colors,
+        ViewContainer: { viewContainerBg },
     } = useTheme();
+
     return (
-        <Center
-            dangerouslySetInnerHTML={{
-                __html: kjua({
-                    size,
-                    back,
-                    fill,
-                    rounded: 100,
-                    crisp: true,
-                    ecLevel: 'H',
-                    quiet: 0,
-                    mode: 'plain',
-                    text,
-                }).outerHTML,
-            }}
-        />
+        <Center>
+            <QRCodeSVG bgColor={viewContainerBg} fgColor={colors.brand[500]} size={size} value={value} />
+        </Center>
     );
 }
