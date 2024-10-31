@@ -63,7 +63,7 @@ export function QrCodeView() {
                     <Text fontWeight="medium" textAlign="center">
                         {l['form.qr.code']}
                     </Text>
-                    <QRCode text={interaction.qrCode} />
+                    <QRCode value={interaction.qrCode} />
                     {initContext.redirectUrl && (
                         <>
                             <Divider />

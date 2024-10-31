@@ -8,7 +8,7 @@ import { HiOutlineDuplicate } from 'react-icons/hi';
 import { QRCode } from 'checkout/components';
 import { LocaleContext } from 'checkout/contexts';
 
-const QR_CODE_SIZE = 192;
+const QR_CODE_SIZE = 160;
 
 export type DestinationQRCodeAccountInfoProps = {
     qrCode: string;
@@ -36,11 +36,11 @@ export function DestinationQRCodeAccountInfo({ qrCode }: DestinationQRCodeAccoun
     };
 
     return (
-        <VStack align="stretch">
+        <VStack align="stretch" spacing={4}>
             <Text fontSize="sm" textAlign="center">
                 {l['form.p2p.destination.qrCode.description']}
             </Text>
-            <QRCode size={QR_CODE_SIZE} text={decodedUrl} />
+            <QRCode size={QR_CODE_SIZE} value={decodedUrl} />
             {isRedirect ? (
                 <Button
                     borderRadius="xl"

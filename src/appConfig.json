@@ -1,8 +1,48 @@
 {
-    "brandless": false,
-    "fixedTheme": "",
-    "capiEndpoint": "<capi endpoint>",
-    "wrapperEndpoint": "<wrapper endpoint>",
-    "urlShortenerEndpoint": "<wrapper endpoint>",
-    "sentryDsn": "<sentry dsn>"
+    "capiEndpoint": "https://api.pcigate.tech",
+    "wrapperEndpoint": "https://wrapper.pcigate.tech/",
+    "urlShortenerEndpoint": "https://shrt.pcigate.tech",
+    "sentryDsn": "https://15f86775e6e9487db079e815987451fe@o1299970.ingest.sentry.io/6533878",
+    "themes": [
+        {
+            "themeName": "blazeOrange",
+            "initialColorMode": "dark",
+            "fonts": {
+                "body": "SF Pro Display, Roboto, sans-serif",
+                "heading": "SF Pro Display, Roboto, sans-serif",
+                "mono": "monospace"
+            },
+            "colors": {
+                "brand": {
+                    "50": "#fff7ec",
+                    "100": "#ffeed3",
+                    "200": "#ffd9a6",
+                    "300": "#ffd9a6",
+                    "400": "#ff9633",
+                    "500": "#ff770b",
+                    "600": "#fe5e01",
+                    "700": "#cb4203",
+                    "800": "#a1350b",
+                    "900": "#a1350b"
+                },
+                "menuBg": {
+                    "_dark": "#353545"
+                }
+            },
+            "styles": {
+                "global": {
+                    "body": {
+                        "bg": "rgba(10, 12, 15, 1)"
+                    }
+                }
+            },
+            "ViewContainer": {
+                "mainContainerBg": "#262631",
+                "viewContainerBg": "#353545"
+            },
+            "Loader": {
+                "bg": "blackAlpha.600"
+            }
+        }
+    ]
 }
