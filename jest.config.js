@@ -3,6 +3,6 @@ module.exports = {
     preset: 'ts-jest',
     testEnvironment: 'jest-environment-jsdom',
     moduleNameMapper: {
-        '^checkout/(.*)': '<rootDir>/src/app/$1',
+        '^checkout/(.*)$': '<rootDir>/src/common/$1',
     },
 };

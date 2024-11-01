@@ -12,11 +12,13 @@ export type InfoItemProps = {
     isCopyable?: boolean;
     isDivider?: boolean;
     formatter?: (value: string) => Promise<string>;
+    copyValueFormatter?: (value: string) => Promise<string>;
 };
 
-export function InfoItem({ label, value, isCopyable, formatter, icon, isDivider }: InfoItemProps) {
+export function InfoItem({ label, value, isCopyable, formatter, icon, isDivider, copyValueFormatter }: InfoItemProps) {
     const { l } = useContext(LocaleContext);
-    const { onCopy, hasCopied } = useClipboard(value);
+    const [copiedValue, setCopiedValue] = useState(value);
+    const { onCopy, hasCopied } = useClipboard(copiedValue);
     const [displayValue, setDisplayValue] = useState(value);
     const toast = useToast();
 
@@ -31,6 +33,11 @@ export function InfoItem({ label, value, isCopyable, formatter, icon, isDivider 
         if (!formatter) return;
         formatter(value).then(setDisplayValue);
     }, [value, formatter]);
+
+    useEffect(() => {
+        if (!copyValueFormatter) return;
+        copyValueFormatter(value).then(setCopiedValue);
+    }, [value, copyValueFormatter]);
 
     useEffect(() => {
         setDisplayValue(value);
