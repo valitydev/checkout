@@ -9,7 +9,7 @@ import { DestinationBankAccountInfo } from './DestinationBankAccountInfo';
 import { DestinationNotification } from './DestinationNotification';
 import { DestinationQRCodeAccountInfo } from './DestinationQRCodeAccountInfo';
 import { InfoItem } from './InfoItem';
-import { formatCardPan, formatPhoneNumber } from './utils';
+import { formatCardPan, formatPhoneNumber, normalizePhoneNumber, parseNationalNumber } from './utils';
 import { SBPIcon } from '../icons/SBPIcon';
 import { getGatewayIcon, mapGatewayName } from '../utils';
 
@@ -58,11 +58,12 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
             {destination.destinationType === 'BankAccount' && <DestinationBankAccountInfo destination={destination} />}
             {(destination.destinationType === 'DestinationSBP' || destination.destinationType === 'SBP') && (
                 <InfoItem
+                    copyValueFormatter={parseNationalNumber(['AZ'])}
                     formatter={formatPhoneNumber}
                     icon={currency === 'RUB' ? <SBPIcon /> : null}
                     isCopyable={true}
                     label={l['form.p2p.destination.spb.phone']}
-                    value={destination.phoneNumber}
+                    value={normalizePhoneNumber(destination.phoneNumber)}
                 />
             )}
             {destination?.bankName && (
