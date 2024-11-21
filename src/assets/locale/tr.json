@@ -58,7 +58,6 @@
     "form.p2p.alert.li": [
         "Talep edilen kesin miktarı transfer edin.",
         "Tüm miktarı tek bir transferde ödeyin.",
-        "Transferi 15 dakika içinde tamamlayın.",
         "Transferi tamamladıktan sonra \"Transfer Tamamlandı\" düğmesine tıklayın."
     ],
     "form.p2p.alert.p": "Aksi takdirde ödeme alınmayacaktır.",

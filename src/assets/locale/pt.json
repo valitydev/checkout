@@ -58,7 +58,6 @@
     "form.p2p.alert.li": [
         "Transfira a quantia exata especificada no pedido.",
         "Pague a quantia total em uma única transferência.",
-        "Conclua a transferência em até 15 minutos.",
         "Após concluir a transferência, clique no botão \"Transferência Concluída\"."
     ],
     "form.p2p.alert.p": "Caso contrário, o pagamento não será creditado.",
