@@ -2,8 +2,8 @@ interface Dictionary<T> {
     [index: string]: T;
 }
 
-function baseAssignValue(object, key, value) {
-    if (key == '__proto__') {
+function baseAssignValue<T extends object>(object: T, key: string, value: any): void {
+    if (key === '__proto__') {
         Object.defineProperty(object, key, {
             configurable: true,
             enumerable: true,
@@ -11,7 +11,7 @@ function baseAssignValue(object, key, value) {
             writable: true,
         });
     } else {
-        object[key] = value;
+        object[key as keyof T] = value;
     }
 }
 
@@ -21,12 +21,19 @@ function baseAssignValue(object, key, value) {
  * key. The iteratee is invoked with one argument: (value).
  *
  * @param collection The collection to iterate over.
- * @param {String} The iteratee to transform keys.
+ * @param iteratee The key of the property to group by.
  * @return Returns the composed aggregate object.
  */
-export const groupBy = <T>(collection: T[] | null | undefined, iteratee: string): Dictionary<T[]> => {
-    return collection.reduce((result, value, key) => {
-        key = value[iteratee];
+export const groupBy = <T extends Record<string, any>>(
+    collection: T[] | null | undefined,
+    iteratee: keyof T,
+): Dictionary<T[]> => {
+    if (!collection) {
+        return {};
+    }
+
+    return collection.reduce((result: Dictionary<T[]>, value) => {
+        const key = value[iteratee];
         if (Object.prototype.hasOwnProperty.call(result, key)) {
             result[key].push(value);
         } else {

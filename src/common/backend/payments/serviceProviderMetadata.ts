@@ -1,10 +1,7 @@
 export const METADATA_NAMESPACE = 'dev.vality.checkout';
 
 export type MetadataTextLocalization = {
-    ja?: string;
-    en?: string;
-    ru?: string;
-    pt?: string;
+    [key: string]: string;
 };
 
 export type MetadataFieldFormatter = {
