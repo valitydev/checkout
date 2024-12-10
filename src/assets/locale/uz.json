@@ -90,7 +90,8 @@
         "abb": "ABB"
     },
     "p2p.notification": {
-        "verified": "Тўловни амалга оширишдан олдин MPAY ҳамёнидаги ҳисобингиз тасдиқланганига ишонч ҳосил қилинг."
+        "verified": "Тўловни амалга оширишдан олдин MPAY ҳамёнидаги ҳисобингиз тасдиқланганига ишонч ҳосил қилинг.",
+        "solidarnost": "E'tibor bering: pul o'tkazmalari faqat Solidarnost Bankiga amalga oshirilishi mumkin. Boshqa bankka o'tkazilgan taqdirda, depozit hisobingizga kiritilmaydi"
     },
     "metadata.addons": {
         "pinikle": {
