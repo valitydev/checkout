@@ -90,7 +90,8 @@
         "abb": "ABB"
     },
     "p2p.notification": {
-        "verified": "Please make sure your MPAY wallet account is verified before making a payment."
+        "verified": "Please make sure your MPAY wallet account is verified before making a payment.",
+        "solidarnost": "Please note that the transfer can only be made to Solidarnost Bank. If transferred to another bank, the deposit will not be credited"
     },
     "metadata.addons": {
         "pinikle": {

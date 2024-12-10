@@ -90,7 +90,8 @@
         "abb": "ABB"
     },
     "p2p.notification": {
-        "verified": "Ödəniş etməzdən əvvəl MPAY pul kisəsi hesabınızın təsdiqləndiyinə əmin olun."
+        "verified": "Ödəniş etməzdən əvvəl MPAY pul kisəsi hesabınızın təsdiqləndiyinə əmin olun.",
+        "solidarnost": "Nəzərə alın ki, köçürmə yalnız Solidarnost Bankına edilə bilər. Başqa banka köçürüldüyü təqdirdə, depozit hesabınıza daxil edilməyəcək"
     },
     "metadata.addons": {
         "pinikle": {
