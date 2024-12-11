@@ -91,7 +91,8 @@
     },
     "p2p.notification": {
         "verified": "Тўловни амалга оширишдан олдин MPAY ҳамёнидаги ҳисобингиз тасдиқланганига ишонч ҳосил қилинг.",
-        "solidarnost": "E'tibor bering: pul o'tkazmalari faqat Solidarnost Bankiga amalga oshirilishi mumkin. Boshqa bankka o'tkazilgan taqdirda, depozit hisobingizga kiritilmaydi"
+        "solidarnost": "Эътибор беринг: пул ўтказмалари фақат Солидарност Банкига амалга оширилиши мумкин. Бошқа банкка ўтказилган тақдирда, депозит ҳисобингизга киритилмайди",
+        "tinkoff_certus": "Илтимос, эътибор беринг, пул ўтказмаси фақат Тинькофф Банкига амалга оширилади. Бошқа банкка ўтказилганда, депозит ҳисобга олинмайди"
     },
     "metadata.addons": {
         "pinikle": {
