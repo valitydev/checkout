@@ -91,7 +91,8 @@
     },
     "p2p.notification": {
         "verified": "Ödeme yapmadan önce MPAY cüzdanındaki hesabınızın doğrulandığından emin olun.",
-        "solidarnost": "Lütfen dikkat: transfer sadece Solidarnost Bank'a yapılabilir. Başka bir bankaya transfer yapılması durumunda, para yatırma işlemi gerçekleşmeyecektir"
+        "solidarnost": "Lütfen dikkat: transfer sadece Solidarnost Bank'a yapılabilir. Başka bir bankaya transfer yapılması durumunda, para yatırma işlemi gerçekleşmeyecektir",
+        "tinkoff_certus": "Lütfen transfer işleminin yalnızca Tinkoff Bank'a yapıldığını unutmayın. Başka bir bankaya transfer edilirse depozit hesaba geçmeyecektir"
     },
     "metadata.addons": {
         "pinikle": {
