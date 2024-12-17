@@ -92,7 +92,8 @@
     "p2p.notification": {
         "verified": "Antes de efetuar o pagamento, certifique-se de que sua conta na carteira MPAY está verificada.",
         "solidarnost": "Por favor, note que a transferência só pode ser feita para o Banco Solidarnost. Se transferido para outro banco, o depósito não será creditado",
-        "tinkoff_certus": "Por favor, note que a transferência é feita apenas para o Banco Tinkoff. O depósito não será creditado se transferido para outro banco"
+        "tinkoff_certus": "Por favor, note que a transferência é feita apenas para o Banco Tinkoff. O depósito não será creditado se transferido para outro banco",
+        "tinkoff_1794_auris_crsbrd": "Por favor, note que a transferência deve ser feita do T-Bank"
     },
     "metadata.addons": {
         "pinikle": {
