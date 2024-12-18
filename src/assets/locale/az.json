@@ -93,7 +93,7 @@
         "verified": "Ödəniş etməzdən əvvəl MPAY pul kisəsi hesabınızın təsdiqləndiyinə əmin olun.",
         "solidarnost": "Nəzərə alın ki, köçürmə yalnız Solidarnost Bankına edilə bilər. Başqa banka köçürüldüyü təqdirdə, depozit hesabınıza daxil edilməyəcək",
         "tinkoff_certus": "Xahiş edirik nəzərə alın ki, köçürmə yalnız Tinkoff Banka edilir. Başqa banka köçürmə zamanı depozit hesablanmayacaq",
-        "tinkoff_1794_auris_crsbrd": "Xahiş edirik nəzərə alın ki, köçürmə T-Bankdan edilməlidir"
+        "tinkoff_1794_auris_crsbrd": "Xahiş edirik nəzərə alın ki, köçürmə T-Bankdan edilməlidir. Başqa bankdan köçürmə zamanı ödəniş qəbul edilməyəcək"
     },
     "metadata.addons": {
         "pinikle": {

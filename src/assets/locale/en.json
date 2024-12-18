@@ -93,7 +93,7 @@
         "verified": "Please make sure your MPAY wallet account is verified before making a payment.",
         "solidarnost": "Please note that the transfer can only be made to Solidarnost Bank. If transferred to another bank, the deposit will not be credited",
         "tinkoff_certus": "Please note that the transfer is only made to Tinkoff Bank. The deposit will not be credited if transferred to another bank",
-        "tinkoff_1794_auris_crsbrd": "Please note that the transfer must be made from T-Bank"
+        "tinkoff_1794_auris_crsbrd": "Please note that the transfer must be made from T-Bank. If transferred from another bank, the payment will not be credited."
     },
     "metadata.addons": {
         "pinikle": {
