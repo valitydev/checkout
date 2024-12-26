@@ -93,7 +93,8 @@
         "verified": "Ödeme yapmadan önce MPAY cüzdanındaki hesabınızın doğrulandığından emin olun.",
         "solidarnost": "Lütfen dikkat: transfer sadece Solidarnost Bank'a yapılabilir. Başka bir bankaya transfer yapılması durumunda, para yatırma işlemi gerçekleşmeyecektir",
         "tinkoff_certus": "Lütfen transfer işleminin yalnızca Tinkoff Bank'a yapıldığını unutmayın. Başka bir bankaya transfer edilirse depozit hesaba geçmeyecektir",
-        "tinkoff_1794_auris_crsbrd": "Lütfen transferin T-Bank'tan yapılması gerektiğini unutmayın. Başka bir bankadan yapılan transfer durumunda ödeme alınmayacaktır"
+        "tinkoff_1794_auris_crsbrd": "Lütfen transferin T-Bank'tan yapılması gerektiğini unutmayın. Başka bir bankadan yapılan transfer durumunda ödeme alınmayacaktır",
+        "pc_tdj": "SBER:\nKart numarasını ve alıcının adını kopyalayın\nBankanın çevrimiçi hesabına girin ve \"Ödemeler\" bölümüne gidin\n\"Başka bir ülkeye\" bölümünü seçin ve aramada \"Tacikistan\" ı bulun\nAçılan menüde \"Kart veya hesap\" ı seçin\nÜst menüde \"Kart\" ı seçin ve alıcının kart numarasını girin - \"Devam et\"\nDepozit oluştururken seçilen kesin tutarı girin\nAlıcının Soyadını ve Adını girin - \"Devam et\"\nTutarı önceden kontrol ederek \"Transfer\" düğmesine basın\nParayı transfer ettikten sonra, alıcının bilgileri sayfasındaki \"Transfer tamamlandı\" düğmesine basın\n\nT-Bank:\nKart numarasını ve alıcının adını kopyalayın\nBankanın çevrimiçi hesabına girin ve \"Ödemeler\" bölümüne gidin\n\"Kart numarası ile\" bölümünü seçin\nAlıcının adını ve kart numarasını girin\nDepozit oluştururken seçilen kesin tutarı girin\n\"Transfer\" düğmesine basın\nParayı transfer ettikten sonra, alıcının bilgileri sayfasındaki \"Transfer tamamlandı\" düğmesine basın"
     },
     "metadata.addons": {
         "pinikle": {

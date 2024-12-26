@@ -93,7 +93,8 @@
         "verified": "Please make sure your MPAY wallet account is verified before making a payment.",
         "solidarnost": "Please note that the transfer can only be made to Solidarnost Bank. If transferred to another bank, the deposit will not be credited",
         "tinkoff_certus": "Please note that the transfer is only made to Tinkoff Bank. The deposit will not be credited if transferred to another bank",
-        "tinkoff_1794_auris_crsbrd": "Please note that the transfer must be made from T-Bank. If transferred from another bank, the payment will not be credited."
+        "tinkoff_1794_auris_crsbrd": "Please note that the transfer must be made from T-Bank. If transferred from another bank, the payment will not be credited.",
+        "pc_tdj": "SBER:\nCopy the card number and recipient's name\nLog in to the bank's online account and go to the \"Payments\" section\nSelect the \"To another country\" section and find \"Tajikistan\" in the search\nIn the opened menu, select \"To card or account\"\nIn the top menu, select \"Card\" and enter the recipient's card number - \"Continue\"\nEnter the exact amount chosen when creating your deposit\nEnter the recipient's Last Name and First Name - \"Continue\"\nClick the \"Transfer\" button after checking the amount\nAfter transferring the funds, click the \"Transfer completed\" button on the recipient's data page\n\nT-Bank:\nCopy the card number and recipient's name\nLog in to the bank's online account and go to the \"Payments\" section\nSelect the \"By card number\" section\nEnter the recipient's name and card number\nEnter the exact amount chosen when creating your deposit\nClick the \"Transfer\" button\nAfter transferring the funds, click the \"Transfer completed\" button on the recipient's data page"
     },
     "metadata.addons": {
         "pinikle": {

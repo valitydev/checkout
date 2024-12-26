@@ -1,4 +1,4 @@
-import { Alert, AlertIcon, Text } from '@chakra-ui/react';
+import { Alert, Text } from '@chakra-ui/react';
 import { useContext } from 'react';
 
 import { LocaleContext } from 'checkout/contexts';
@@ -15,8 +15,9 @@ export function DestinationNotification({ code }: NotificationProps) {
 
     return (
         <Alert borderRadius="xl" p={3} status="warning">
-            <AlertIcon />
-            <Text fontSize="sm">{message}</Text>
+            <Text fontSize="sm" whiteSpace="pre-wrap">
+                {message}
+            </Text>
         </Alert>
     );
 }
