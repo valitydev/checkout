@@ -93,7 +93,8 @@
         "verified": "Ödəniş etməzdən əvvəl MPAY pul kisəsi hesabınızın təsdiqləndiyinə əmin olun.",
         "solidarnost": "Nəzərə alın ki, köçürmə yalnız Solidarnost Bankına edilə bilər. Başqa banka köçürüldüyü təqdirdə, depozit hesabınıza daxil edilməyəcək",
         "tinkoff_certus": "Xahiş edirik nəzərə alın ki, köçürmə yalnız Tinkoff Banka edilir. Başqa banka köçürmə zamanı depozit hesablanmayacaq",
-        "tinkoff_1794_auris_crsbrd": "Xahiş edirik nəzərə alın ki, köçürmə T-Bankdan edilməlidir. Başqa bankdan köçürmə zamanı ödəniş qəbul edilməyəcək"
+        "tinkoff_1794_auris_crsbrd": "Xahiş edirik nəzərə alın ki, köçürmə T-Bankdan edilməlidir. Başqa bankdan köçürmə zamanı ödəniş qəbul edilməyəcək",
+        "pc_tdj": "SBER:\nKart nömrəsini və alıcının adını kopyalayın\nBankın onlayn hesabına daxil olun və \"Ödənişlər\" bölməsinə keçin\n\"Başqa ölkəyə\" bölməsini seçin və axtarışda \"Tacikistan\" tapın\nAçılan menyuda \"Kart və ya hesab\" seçin\nYuxarı menyuda \"Kart\" seçin və alıcının kart nömrəsini daxil edin - \"Davam et\"\nDepozit yaradarkən seçilən dəqiq məbləği daxil edin\nAlıcının Soyadını və Adını daxil edin - \"Davam et\"\nMəbləği əvvəlcədən yoxlayaraq \"Köçürmə\" düyməsini basın\nVəsaitləri köçürdükdən sonra, alıcının məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın\n\nT-Bank:\nKart nömrəsini və alıcının adını kopyalayın\nBankın onlayn hesabına daxil olun və \"Ödənişlər\" bölməsinə keçin\n\"Kart nömrəsi ilə\" bölməsini seçin\nAlıcının adını və kart nömrəsini daxil edin\nDepozit yaradarkən seçilən dəqiq məbləği daxil edin\n\"Köçürmə\" düyməsini basın\nVəsaitləri köçürdükdən sonra, alıcının məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
     },
     "metadata.addons": {
         "pinikle": {
