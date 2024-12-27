@@ -3,11 +3,6 @@ import { useState } from 'react';
 import { HiChevronDown, HiGlobeAlt } from 'react-icons/hi';
 
 const localeInfo = {
-    ar: {
-        flag: '🇸🇦',
-        short: 'عر',
-        long: 'العربية',
-    },
     az: {
         flag: '🇦🇿',
         short: 'Az',
