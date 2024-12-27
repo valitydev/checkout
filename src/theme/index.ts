@@ -2,7 +2,7 @@ import { theme as chakraTheme } from '@chakra-ui/react';
 
 import { Menu } from './components/Menu';
 
-const { Button, Spinner, Divider, Heading, Alert, Modal, Drawer, Input } = chakraTheme.components;
+const { Button, Spinner, Divider, Heading, Alert, Modal, Drawer, Input, Accordion } = chakraTheme.components;
 
 export const common = {
     useSystemColorMode: false,
@@ -16,6 +16,7 @@ export const common = {
         Menu,
         Drawer,
         Input,
+        Accordion,
     },
 };
 

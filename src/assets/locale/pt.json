@@ -94,7 +94,34 @@
         "solidarnost": "Por favor, note que a transferência só pode ser feita para o Banco Solidarnost. Se transferido para outro banco, o depósito não será creditado",
         "tinkoff_certus": "Por favor, note que a transferência é feita apenas para o Banco Tinkoff. O depósito não será creditado se transferido para outro banco",
         "tinkoff_1794_auris_crsbrd": "Por favor, note que a transferência deve ser feita do T-Bank. Se transferido de outro banco, o pagamento não será aceito",
-        "pc_tdj": "SBER:\nCopie o número do cartão e o nome do destinatário\nEntre no banco online e vá para a seção \"Pagamentos\"\nEscolha a seção \"Para outro país\" e encontre \"Tajiquistão\" na pesquisa\nNo menu aberto, escolha \"Para cartão ou conta\"\nNo menu superior, escolha \"Cartão\" e insira o número do cartão do destinatário - \"Continuar\"\nInsira o valor exato escolhido ao criar seu depósito\nInsira o Sobrenome e Nome do destinatário - \"Continuar\"\nClique no botão \"Transferir\" verificando previamente o valor\nApós transferir os fundos, clique no botão \"Transferência concluída\" na página com os dados do destinatário\n\nT-Bank:\nCopie o número do cartão e o nome do destinatário\nEntre no banco online e vá para a seção \"Pagamentos\"\nEscolha a seção \"Por número do cartão\"\nInsira o nome e o número do cartão do destinatário\nInsira o valor exato escolhido ao criar seu depósito\nClique no botão \"Transferir\"\nApós transferir os fundos, clique no botão \"Transferência concluída\" na página com os dados do destinatário"
+        "pc_tdj": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copie o número do cartão e o nome do destinatário",
+                    "Entre no banco online e vá para a seção \"Pagamentos\"",
+                    "Escolha a seção \"Para outro país\" e encontre \"Tajiquistão\" na pesquisa",
+                    "No menu aberto, escolha \"Para cartão ou conta\"",
+                    "No menu superior, escolha \"Cartão\" e insira o número do cartão do destinatário - \"Continuar\"",
+                    "Insira o valor exato escolhido ao criar seu depósito",
+                    "Insira o Sobrenome e Nome do destinatário - \"Continuar\"",
+                    "Clique no botão \"Transferir\" verificando previamente o valor",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página com os dados do destinatário"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copie o número do cartão e o nome do destinatário",
+                    "Entre no banco online e vá para a seção \"Pagamentos\"",
+                    "Escolha a seção \"Por número do cartão\"",
+                    "Insira o nome e o número do cartão do destinatário",
+                    "Insira o valor exato escolhido ao criar seu depósito",
+                    "Clique no botão \"Transferir\"",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página com os dados do destinatário"
+                ]
+            }
+        ]
     },
     "metadata.addons": {
         "pinikle": {

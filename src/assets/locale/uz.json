@@ -94,7 +94,34 @@
         "solidarnost": "Эътибор беринг: пул ўтказмалари фақат Солидарност Банкига амалга оширилиши мумкин. Бошқа банкка ўтказилган тақдирда, депозит ҳисобингизга киритилмайди",
         "tinkoff_certus": "Илтимос, эътибор беринг, пул ўтказмаси фақат Тинькофф Банкига амалга оширилади. Бошқа банкка ўтказилганда, депозит ҳисобга олинмайди",
         "tinkoff_1794_auris_crsbrd": "Илтимос, эътибор беринг, ўтказма Т-Банкдан амалга оширилиши керак. Бошқа банкдан ўтказилганда, тўлов қабул қилинмайди",
-        "pc_tdj": "SBER:\nKarta raqamini va oluvchining FIO sini nusxalang\nBankning onlayn kabinetiga kiring va \"To'lovlar\" bo'limiga o'ting\n\"Boshqa mamlakatga\" bo'limini tanlang va qidiruvda \"Tojikiston\" ni toping\nOchilgan menyuda \"Kartaga yoki hisobga\" ni tanlang\nYuqori menyuda \"Karta\" ni tanlang va oluvchining karta raqamini kiriting - \"Davom etish\"\nDepozit yaratishda tanlangan aniq summani kiriting\nOluvchining Familiyasi va Ismini kiriting - \"Davom etish\"\nSummani oldindan tekshirib \"O'tkazish\" tugmasini bosing\nMablag'ni o'tkazgandan so'ng, oluvchining ma'lumotlari sahifasidagi \"O'tkazish bajarildi\" tugmasini bosing\n\nT-Bank:\nKarta raqamini va oluvchining FIO sini nusxalang\nBankning onlayn kabinetiga kiring va \"To'lovlar\" bo'limiga o'ting\n\"Karta raqami bo'yicha\" bo'limini tanlang\nOluvchining FIO sini va karta raqamini kiriting\nDepozit yaratishda tanланган aniq summani kiriting\n\"O'tkazish\" tugmasini bosing\nMablag'ni o'tkazgandan so'ng, oluvchining ma'lumotlari sahifasidagi \"O'tkazish bajarildi\" tugmasini bosing"
+        "pc_tdj": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Karta raqamini va oluvchining FIO sini nusxalang",
+                    "Bankning onlayn kabinetiga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"Boshqa mamlakatga\" bo'limini tanlang va qidiruvda \"Tojikiston\" ni toping",
+                    "Ochilgan menyuda \"Kartaga yoki hisobga\" ni tanlang",
+                    "Yuqori menyuda \"Karta\" ni tanlang va oluvchining karta raqamini kiriting - \"Davom etish\"",
+                    "Depozit yaratishda tanlangan aniq summani kiriting",
+                    "Oluvchining Familiyasi va Ismini kiriting - \"Davom etish\"",
+                    "Summani oldindan tekshirib \"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng, oluvchining ma'lumotlari sahifasidagi \"O'tkazish bajarildi\" tugmasini bosing"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Karta raqamini va oluvchining FIO sini nusxalang",
+                    "Bankning onlayn kabinetiga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"Karta raqami bo'yicha\" bo'limini tanlang",
+                    "Oluvchining FIO sini va karta raqamini kiriting",
+                    "Depozit yaratishda tanlangan aniq summani kiriting",
+                    "\"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng, oluvchining ma'lumotlari sahifasidagi \"O'tkazish bajarildi\" tugmasini bosing"
+                ]
+            }
+        ]
     },
     "metadata.addons": {
         "pinikle": {
