@@ -10,7 +10,7 @@ import {
     PaymentModelContext,
     ViewModelContext,
 } from 'checkout/contexts';
-import { isBoolean, isNil, isString } from 'checkout/utils';
+import { isNil } from 'checkout/utils';
 
 import { CardHolderFormControl } from './CardHolderFormControl';
 import { CardNumberFormControl } from './CardNumberFormControl';
@@ -36,22 +36,13 @@ export function CardForm() {
 
     const { dateOfBirth, documentId } = initContext.contactInfo;
 
-    const showDateOfBirth = isBoolean(dateOfBirth);
-    const showDocumentId = isBoolean(documentId);
-
-    useEffect(() => {
-        console.log('Contact info', initContext.contactInfo);
-    }, [initContext.contactInfo]);
-
     const onSubmit: SubmitHandler<CardFormInputs> = (values) => {
-        const contactInfo = {
-            ...initContext.contactInfo,
-            dateOfBirth: isString(dateOfBirth) ? dateOfBirth : values.dateOfBirth,
-            documentId: isString(documentId) ? documentId : values.documentId,
-        };
         const payload = {
             ...values,
-            contactInfo,
+            contactInfo: {
+                ...initContext.contactInfo,
+                ...values.contactInfo,
+            },
         };
         console.log('payload', payload);
         // startPayment({
@@ -94,7 +85,7 @@ export function CardForm() {
                     )}
                 </Flex>
                 {requireCardHolder && <CardHolderFormControl formState={formState} register={register} />}
-                {showDateOfBirth && <DateOfBirthFormControl formState={formState} register={register} />}
+                {dateOfBirth === true && <DateOfBirthFormControl formState={formState} register={register} />}
                 <Spacer />
                 <LightMode>
                     <Button borderRadius="xl" colorScheme="brand" size="lg" type="submit" variant="solid">
