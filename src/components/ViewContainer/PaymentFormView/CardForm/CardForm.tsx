@@ -10,10 +10,11 @@ import {
     PaymentModelContext,
     ViewModelContext,
 } from 'checkout/contexts';
-import { isNil } from 'checkout/utils';
+import { isBoolean, isNil, isString } from 'checkout/utils';
 
 import { CardHolderFormControl } from './CardHolderFormControl';
 import { CardNumberFormControl } from './CardNumberFormControl';
+import { DateOfBirthFormControl } from './DateOfBirthFormControl';
 import { ExpDateFormControl } from './ExpDateFormControl';
 import { SecureCodeFormControl } from './SecureCodeFormControl';
 import { CardFormInputs } from './types';
@@ -33,14 +34,33 @@ export function CardForm() {
     } = useContext(PaymentModelContext);
     const { register, handleSubmit, watch, formState } = useForm<CardFormInputs>({ mode: 'onChange' });
 
+    const { dateOfBirth, documentId } = initContext.contactInfo;
+
+    const showDateOfBirth = isBoolean(dateOfBirth);
+    const showDocumentId = isBoolean(documentId);
+
+    useEffect(() => {
+        console.log('Contact info', initContext.contactInfo);
+    }, [initContext.contactInfo]);
+
     const onSubmit: SubmitHandler<CardFormInputs> = (values) => {
-        startPayment({
-            methodName: 'BankCard',
-            values: {
-                ...values,
-                contactInfo: initContext.contactInfo,
-            },
-        });
+        const contactInfo = {
+            ...initContext.contactInfo,
+            dateOfBirth: isString(dateOfBirth) ? dateOfBirth : values.dateOfBirth,
+            documentId: isString(documentId) ? documentId : values.documentId,
+        };
+        const payload = {
+            ...values,
+            contactInfo,
+        };
+        console.log('payload', payload);
+        // startPayment({
+        //     methodName: 'BankCard',
+        //     values: {
+        //         ...values,
+        //         contactInfo,
+        //     },
+        // });
     };
 
     const isSecureCode = isSecureCodeAvailable(watch('cardNumber'));
@@ -74,6 +94,7 @@ export function CardForm() {
                     )}
                 </Flex>
                 {requireCardHolder && <CardHolderFormControl formState={formState} register={register} />}
+                {showDateOfBirth && <DateOfBirthFormControl formState={formState} register={register} />}
                 <Spacer />
                 <LightMode>
                     <Button borderRadius="xl" colorScheme="brand" size="lg" type="submit" variant="solid">

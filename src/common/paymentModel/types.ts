@@ -36,6 +36,8 @@ export type PaymentMethod = PaymentTerminal | BankCard;
 export type InitContextContactInfo = {
     readonly email?: string;
     readonly phoneNumber?: string;
+    readonly dateOfBirth?: string | true;
+    readonly documentId?: string | true;
 };
 
 export type InitContext = {

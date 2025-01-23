@@ -4,9 +4,11 @@ import { InitContext } from './types';
 import { InitConfig } from '../init';
 import { isNil } from '../utils';
 
-const toContactInfo = ({ phoneNumber, email }: InitConfig) => ({
+const toContactInfo = ({ phoneNumber, email, dateOfBirth, documentId }: InitConfig) => ({
     phoneNumber: isNil(phoneNumber) ? undefined : phoneNumber,
     email: isNil(email) ? undefined : email,
+    dateOfBirth: isNil(dateOfBirth) ? undefined : dateOfBirth,
+    documentId: isNil(documentId) ? undefined : documentId,
 });
 
 const isPaymentFlowInstant = (obj: any): obj is PaymentFlowInstant => {

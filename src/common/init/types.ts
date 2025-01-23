@@ -9,8 +9,6 @@ export type InitConfig = {
     cancelUrl?: string;
     name?: string;
     description?: string;
-    email?: string;
-    phoneNumber?: string;
     obscureCardCvv?: boolean;
     requireCardHolder?: boolean;
     recurring?: boolean;
@@ -21,6 +19,10 @@ export type InitConfig = {
     isExternalIDIncluded?: boolean;
     paymentFlow?: object;
     deepLink?: string;
+    email?: string;
+    phoneNumber?: string;
+    dateOfBirth?: string | true;
+    documentId?: string | true;
 };
 
 export type ThemeConfig = Record<string, any>;

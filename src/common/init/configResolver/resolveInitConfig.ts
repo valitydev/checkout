@@ -19,8 +19,6 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
     const {
         name,
         description,
-        email,
-        phoneNumber,
         obscureCardCvv,
         requireCardHolder,
         redirectUrl,
@@ -34,13 +32,15 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         theme,
         paymentFlow,
         deepLink,
+        email,
+        phoneNumber,
+        dateOfBirth,
+        documentId,
     } = userConfig;
     return {
         ...resolvedIntegrationType,
         name: resolveString(name),
         description: resolveString(description),
-        email: resolveEmail(resolveString(email)),
-        phoneNumber: resolvePhoneNumber(resolveString(phoneNumber)),
         obscureCardCvv: resolveBoolean(obscureCardCvv),
         requireCardHolder: resolveBoolean(requireCardHolder),
         redirectUrl: resolveRedirectUrl(resolveString(redirectUrl)),
@@ -54,5 +54,9 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         theme: resolveString(theme),
         paymentFlow: resolveObject(paymentFlow),
         deepLink: resolveString(deepLink),
+        email: resolveEmail(resolveString(email)),
+        phoneNumber: resolvePhoneNumber(resolveString(phoneNumber)),
+        dateOfBirth,
+        documentId,
     };
 };

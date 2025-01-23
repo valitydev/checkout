@@ -27,6 +27,8 @@
     "form.input.cardholder.placeholder": "Cardholder name",
     "form.input.email.placeholder": "Email",
     "form.input.amount.placeholder": "Amount",
+    "form.input.dateOfBirth.placeholder": "Date of birth",
+    "form.input.dateOfBirth.hint": "day/month/year. Example: 23/01/1995",
     "form.button.back.to.website": "Back to website",
     "form.button.reload": "Reload",
     "form.button.next.label": "Next",

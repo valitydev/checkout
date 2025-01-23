@@ -37,6 +37,8 @@ export type PaymentFlow = PaymentFlowInstant | PaymentFlowHold;
 export type ContactInfo = {
     email: string;
     phoneNumber: string;
+    dateOfBirth?: string;
+    documentId?: string;
 };
 
 export type PaymentToolDetailsBankCard = {

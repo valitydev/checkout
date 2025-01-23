@@ -1,6 +1,8 @@
 export type ContactInfoValues = {
     email?: string;
     phoneNumber?: string;
+    dateOfBirth?: string;
+    documentId?: string;
 };
 
 export type TerminalValuesMetadata = Record<string, any>;
