@@ -21,8 +21,8 @@ export type InitConfig = {
     deepLink?: string;
     email?: string;
     phoneNumber?: string;
-    dateOfBirth?: string | true;
-    documentId?: string | true;
+    dateOfBirth?: string | boolean;
+    documentId?: string | boolean;
 };
 
 export type ThemeConfig = Record<string, any>;

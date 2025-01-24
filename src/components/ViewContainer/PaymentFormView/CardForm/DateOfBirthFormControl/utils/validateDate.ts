@@ -1,33 +1,52 @@
-const parseDate = (value: string) => {
-    const cleanValue = value.replace(/\s/g, '');
-    const [day, month, year] = cleanValue.split('/').map(Number);
-    const date = new Date(year, month - 1, day);
+import { parse, isValid, isAfter, subYears, isBefore } from 'date-fns';
 
-    if (isNaN(date.getTime())) return null;
+const parseDate = (value: string): { date: Date; day: number; month: number; year: number } | null => {
+    try {
+        // Parse date from "yyyy-MM-dd" format
+        const date = parse(value, 'yyyy-MM-dd', new Date());
 
-    return { date, day, month, year };
+        if (!isValid(date)) {
+            return null;
+        }
+
+        return {
+            date,
+            day: date.getDate(),
+            month: date.getMonth() + 1, // date-fns uses 0-based months
+            year: date.getFullYear(),
+        };
+    } catch {
+        return null;
+    }
 };
+const isValidDateRange = (date: Date): boolean => {
+    const minDate = new Date(1900, 0, 1);
+    const today = new Date();
 
-const isValidDateRange = (day: number, month: number, year: number): boolean => {
-    return day <= 31 && month <= 12 && year >= 1900;
+    return isAfter(date, minDate) && isBefore(date, today);
 };
 
 const isOver18 = (birthDate: Date): boolean => {
     const today = new Date();
-    const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
-    return birthDate <= minDate;
+    const eighteenYearsAgo = subYears(today, 18);
+
+    return isBefore(birthDate, eighteenYearsAgo);
 };
 
 export const validateDate = (value: string): true | string => {
     if (!value) return 'Date is required';
 
     const parsedDate = parseDate(value);
-    if (!parsedDate) return 'Please enter a valid date of birth (must be 18 or older)';
+    if (!parsedDate) return 'Please enter a valid date';
 
-    const { date, day, month, year } = parsedDate;
+    const { date } = parsedDate;
 
-    if (!isValidDateRange(day, month, year) || !isOver18(date)) {
-        return 'Please enter a valid date of birth (must be 18 or older)';
+    if (!isValidDateRange(date)) {
+        return 'Please enter a valid date between 1900 and today';
+    }
+
+    if (!isOver18(date)) {
+        return 'You must be 18 or older';
     }
 
     return true;

@@ -1,15 +1,23 @@
 import { PaymentFlow, PaymentFlowHold, PaymentFlowInstant } from 'checkout/backend/payments';
 
-import { InitContext } from './types';
+import { InitContext, InitContextContactInfo } from './types';
 import { InitConfig } from '../init';
 import { isNil } from '../utils';
 
-const toContactInfo = ({ phoneNumber, email, dateOfBirth, documentId }: InitConfig) => ({
-    phoneNumber: isNil(phoneNumber) ? undefined : phoneNumber,
-    email: isNil(email) ? undefined : email,
-    dateOfBirth: isNil(dateOfBirth) ? undefined : dateOfBirth,
-    documentId: isNil(documentId) ? undefined : documentId,
-});
+const toContactInfo = ({ phoneNumber, email, dateOfBirth, documentId }: InitConfig): InitContextContactInfo => {
+    const formatField = (value: string | boolean | undefined) => {
+        if (isNil(value) || value === false) return undefined;
+        if (value === true) return true;
+        return String(value);
+    };
+
+    return {
+        phoneNumber: isNil(phoneNumber) ? undefined : phoneNumber,
+        email: isNil(email) ? undefined : email,
+        dateOfBirth: formatField(dateOfBirth),
+        documentId: formatField(documentId),
+    };
+};
 
 const isPaymentFlowInstant = (obj: any): obj is PaymentFlowInstant => {
     if (isNil(obj)) return false;

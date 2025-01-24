@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-max-depth */
 import { FormControl, InputGroup, InputLeftElement, Square, Input, VStack, Text } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { FormState, UseFormRegister } from 'react-hook-form';
@@ -8,7 +7,7 @@ import { StatusInputRightElement } from 'checkout/components';
 import { LocaleContext } from 'checkout/contexts';
 import { isNil } from 'checkout/utils';
 
-import { handleDateInput, validateDate } from './utils';
+import { formatDateToDashFormat, handleDateInput, validateDate } from './utils';
 import { CardFormInputs } from '../types';
 
 export type DateOfBirthFormControlProps = {
@@ -27,6 +26,7 @@ export function DateOfBirthFormControl({ register, formState: { errors, dirtyFie
             <VStack align="stretch" spacing={1}>
                 <InputGroup size="lg">
                     <InputLeftElement pointerEvents="none">
+                        {/* eslint-disable-next-line react/jsx-max-depth */}
                         <Square as={HiCalendar} color="gray.400" />
                     </InputLeftElement>
                     <Input
@@ -34,6 +34,7 @@ export function DateOfBirthFormControl({ register, formState: { errors, dirtyFie
                             required: true,
                             validate: validateDate,
                             onChange: handleDateInput,
+                            setValueAs: formatDateToDashFormat,
                         })}
                         maxLength={16} // Updated to account for spaces
                         placeholder={l['form.input.dateOfBirth.placeholder']}
