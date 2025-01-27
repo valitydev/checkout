@@ -124,6 +124,38 @@
                     "Mablag'ni o'tkazgandan so'ng, oluvchining ma'lumotlari sahifasidagi \"O'tkazish bajarildi\" tugmasini bosing"
                 ]
             }
+        ],
+        "pc_tjk_SBP": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Oluvchining telefon raqamini nusxalang",
+                    "Bankning onlayn kabinetiga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"SBER yoki boshqa bankka\" bo'limini tanlang va \"Boshqa mamlakatga\" tanlang",
+                    "Ochilgan menyuda \"Tojikiston\"ni tanlang",
+                    "Menyuda \"Karta raqami, hisob yoki telefon orqali\" tanlang va oluvchining telefon raqamini kiriting",
+                    "Rekvizitlar sahifasidan oluvchining bankini tanlang",
+                    "Depozit yaratishda tanlangan aniq summani kiriting",
+                    "Summani tekshirgandan so'ng \"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng, oluvchining ma'lumotlari sahifasidagi \"O'tkazish bajarildi\" tugmasini bosing"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Oluvchining telefon raqamini nusxalang",
+                    "Bankning onlayn kabinetiga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"O'tkazmalar\" bo'limini tanlang va \"Boshqa mamlakatga\" tanlang",
+                    "\"Telefon raqami orqali\" tanlang",
+                    "Oluvchining telefon raqamini kiriting va tasdiqlang",
+                    "Rekvizitlar sahifasidagi kerakli bank tanlov qatorida paydo bo'lishi mumkin, agar yo'q bo'lsa:",
+                    "\"Boshqa bankka\" tanlang, keyin \"Boshqa mamlakatlar banki\"ni tanlang",
+                    "Rekvizitlar sahifasidan oluvchining bankini tanlang",
+                    "Depozit yaratishda tanlangan aniq summani kiriting",
+                    "\"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng, oluvchining ma'lumotlari sahifasidagi \"O'tkazish bajarildi\" tugmasini bosing"
+                ]
+            }
         ]
     },
     "metadata.addons": {

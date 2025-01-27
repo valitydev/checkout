@@ -124,6 +124,38 @@
                     "Parayı transfer ettikten sonra, alıcının bilgileri sayfasındaki \"Transfer tamamlandı\" düğmesine basın"
                 ]
             }
+        ],
+        "pc_tjk_SBP": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Alıcının telefon numarasını kopyalayın",
+                    "Bankanın çevrimiçi hesabına giriş yapın ve \"Ödemeler\" bölümüne gidin",
+                    "\"SBER veya başka bir bankaya\" seçeneğini seçin ve \"Başka bir ülkeye\" seçin",
+                    "Açılan menüde \"Tacikistan\"ı seçin",
+                    "Menüde \"Kart numarası, hesap veya telefon ile\" seçeneğini seçin ve alıcının telefon numarasını girin",
+                    "Detaylar sayfasından alıcının bankasını seçin",
+                    "Depozit oluştururken seçilen kesin tutarı girin",
+                    "Tutarı kontrol ettikten sonra \"Transfer\" düğmesine tıklayın",
+                    "Parayı transfer ettikten sonra, alıcının bilgileri sayfasındaki \"Transfer tamamlandı\" düğmesine basın"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Alıcının telefon numarasını kopyalayın",
+                    "Bankanın çevrimiçi hesabına giriş yapın ve \"Ödemeler\" bölümüne gidin",
+                    "\"Transferler\" seçeneğini seçin ve \"Başka bir ülkeye\" seçin",
+                    "\"Telefon numarası ile\" seçeneğini seçin",
+                    "Alıcının telefon numarasını girin ve onaylayın",
+                    "Detaylar sayfasındaki gerekli banka seçim satırında görünebilir, görünmezse:",
+                    "\"Başka bir bankaya\" seçeneğini seçin, ardından \"Diğer ülkelerin bankası\"nı seçin",
+                    "Detaylar sayfasından alıcının bankasını seçin",
+                    "Depozit oluştururken seçilen kesin tutarı girin",
+                    "\"Transfer\" düğmesine tıklayın",
+                    "Parayı transfer ettikten sonra, alıcının bilgileri sayfasındaki \"Transfer tamamlandı\" düğmesine basın"
+                ]
+            }
         ]
     },
     "metadata.addons": {
