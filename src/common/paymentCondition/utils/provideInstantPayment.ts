@@ -1,5 +1,6 @@
 import { StartPaymentPayload, createPayment, determineModel, pollInvoiceEvents } from 'checkout/paymentMgmt';
-import { InvoiceContext, PaymentModel } from 'checkout/paymentModel';
+import { ContactInfoValues } from 'checkout/paymentMgmt/types';
+import { InitContextContactInfo, InvoiceContext, PaymentModel } from 'checkout/paymentModel';
 import { extractError } from 'checkout/utils';
 import { findMetadata } from 'checkout/utils/findMetadata';
 
@@ -15,6 +16,11 @@ const getInvoiceContext = async (model: PaymentModel): Promise<InvoiceContext> =
             return determineModel(model);
     }
 };
+
+const getContactInfo = (contactInfo: InitContextContactInfo): ContactInfoValues => ({
+    email: contactInfo?.email,
+    phoneNumber: contactInfo?.phoneNumber,
+});
 
 export const provideInstantPayment = async (
     model: PaymentModel,
@@ -37,7 +43,7 @@ export const provideInstantPayment = async (
             methodName: 'PaymentTerminal',
             values: {
                 provider,
-                contactInfo,
+                contactInfo: getContactInfo(contactInfo),
                 metadata: {
                     ...toDefaultFormValuesMetadata(terminalFormValues, form),
                     ...prefilledMetadataValues,

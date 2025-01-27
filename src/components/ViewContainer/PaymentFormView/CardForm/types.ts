@@ -3,4 +3,8 @@ export type CardFormInputs = {
     secureCode: string;
     expireDate?: string;
     cardHolder?: string;
+    contactInfo: {
+        dateOfBirth?: string;
+        documentId?: string;
+    };
 };
