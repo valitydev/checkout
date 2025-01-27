@@ -124,6 +124,38 @@
                     "Vəsaitləri köçürdükdən sonra, alıcının məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
                 ]
             }
+        ],
+        "pc_tjk_SBP": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Alıcının telefon nömrəsini kopyalayın",
+                    "Bankın onlayn hesabına daxil olun və \"Ödənişlər\" bölməsinə keçin",
+                    "\"SBER və ya başqa banka\" seçin və \"Başqa ölkəyə\" seçin",
+                    "Açılan menyuda \"Tacikistan\"ı seçin",
+                    "Menyuda \"Kart nömrəsi, hesab və ya telefonla\" seçin və alıcının telefon nömrəsini daxil edin",
+                    "Təfərrüatlar səhifəsindən alıcının bankını seçin",
+                    "Depozit yaradarkən seçilən dəqiq məbləği daxil edin",
+                    "Məbləği yoxladıqdan sonra \"Köçürmə\" düyməsini basın",
+                    "Vəsaitləri köçürdükdən sonra, alıcının məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Alıcının telefon nömrəsini kopyalayın",
+                    "Bankın onlayn hesabına daxil olun və \"Ödənişlər\" bölməsinə keçin",
+                    "\"Köçürmələr\" seçin və \"Başqa ölkəyə\" seçin",
+                    "\"Telefon nömrəsi ilə\" seçin",
+                    "Alıcının telefon nömrəsini daxil edin və təsdiqləyin",
+                    "Təfərrüatlar səhifəsindəki lazımi bank seçim sətirində görünə bilər, görünməzsə:",
+                    "\"Başqa banka\" seçin, sonra \"Digər ölkələrin bankı\"nı seçin",
+                    "Təfərrüatlar səhifəsindən alıcının bankını seçin",
+                    "Depozit yaradarkən seçilən dəqiq məbləği daxil edin",
+                    "\"Köçürmə\" düyməsini basın",
+                    "Vəsaitləri köçürdükdən sonra, alıcının məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
+                ]
+            }
         ]
     },
     "metadata.addons": {
