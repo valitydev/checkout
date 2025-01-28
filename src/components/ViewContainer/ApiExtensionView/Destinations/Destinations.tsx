@@ -4,26 +4,31 @@ import { useContext, useEffect } from 'react';
 
 import { Destination } from 'checkout/backend/p2p';
 import { LocaleContext, PaymentContext, PaymentModelContext } from 'checkout/contexts';
+import { findMetadata } from 'checkout/utils/findMetadata';
 
 import { DestinationInfo } from './DestinationInfo';
 import { LeaveAlert } from './LeaveAlert';
 import { P2PAlert } from './P2PAlert';
+import { UploadFileButton } from './UploadFileButton';
 import { ApiExtensionViewContext } from '../ApiExtensionViewContext';
 import { P2PApiError } from '../P2PApiError';
 import { useComplete } from '../useComplete';
 
 export type DestinationsProps = {
     destinations: Destination[];
+    provider?: string;
 };
 
-export function Destinations({ destinations }: DestinationsProps) {
+export function Destinations({ destinations, provider }: DestinationsProps) {
     const { l } = useContext(LocaleContext);
     const { apiEndpoint, invoiceAccessToken, invoiceID, paymentId } = useContext(ApiExtensionViewContext);
     const { startWaitingPaymentResult } = useContext(PaymentContext);
     const {
-        paymentModel: { initContext },
+        paymentModel: { initContext, serviceProviders },
     } = useContext(PaymentModelContext);
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { p2p } = findMetadata(serviceProviders, provider ?? '');
+    const requiresFileAttachment = p2p?.requiresFileAttachment ?? false;
 
     const {
         completeState: { status },
@@ -35,6 +40,13 @@ export function Destinations({ destinations }: DestinationsProps) {
             startWaitingPaymentResult();
         }
     }, [status]);
+
+    const handleFileUpload = (data: string) => {
+        complete({
+            mimeType: 'application/pdf',
+            data,
+        });
+    };
 
     return (
         <>
@@ -48,20 +60,29 @@ export function Destinations({ destinations }: DestinationsProps) {
                 <Spacer />
                 <VStack align="stretch" spacing={3}>
                     <Text fontSize="sm" textAlign="center">
-                        {l['form.p2p.complete.info']}
+                        {requiresFileAttachment ? l['form.p2p.complete.info.attachment'] : l['form.p2p.complete.info']}
                     </Text>
                     <VStack align="stretch" spacing={4}>
                         <LightMode>
-                            <Button
-                                borderRadius="xl"
-                                colorScheme="brand"
-                                isLoading={status === 'LOADING' || status === 'SUCCESS'}
-                                loadingText={l['form.p2p.complete.loading']}
-                                size="lg"
-                                onClick={complete}
-                            >
-                                {l['form.p2p.complete.button']}
-                            </Button>
+                            {requiresFileAttachment === false && (
+                                <Button
+                                    borderRadius="xl"
+                                    colorScheme="brand"
+                                    isLoading={status === 'LOADING' || status === 'SUCCESS'}
+                                    loadingText={l['form.p2p.complete.loading']}
+                                    size="lg"
+                                    onClick={() => complete()}
+                                >
+                                    {l['form.p2p.complete.button']}
+                                </Button>
+                            )}
+                            {requiresFileAttachment === true && (
+                                <UploadFileButton
+                                    isLoading={status === 'LOADING' || status === 'SUCCESS'}
+                                    loadingText={l['form.p2p.complete.loading']}
+                                    onUpload={handleFileUpload}
+                                />
+                            )}
                             {initContext?.redirectUrl && (
                                 <Button colorScheme="brand" pt={4} size="lg" variant="link" onClick={() => onOpen()}>
                                     {l['form.button.back.to.website']}
