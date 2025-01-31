@@ -15,35 +15,25 @@ export function ApiExtensionView() {
     } = useContext(PaymentModelContext);
     const { conditions } = useContext(PaymentConditionsContext);
 
-    const paymentStarted = conditions.find((c) => c.name === 'paymentStarted');
-
+    const { paymentId } = conditions.find((c) => c.name === 'paymentStarted');
     const {
         invoiceContext: {
             invoiceParams: { invoiceID, invoiceAccessToken },
         },
     } = conditions.find((c) => c.name === 'invoiceDetermined');
 
-    const { state, start, setGateway } = useRequisites(
-        apiEndpoint,
-        invoiceAccessToken,
-        invoiceID,
-        paymentStarted.paymentId,
-    );
+    const { state, start, setGateway } = useRequisites(apiEndpoint, invoiceAccessToken, invoiceID, paymentId);
 
     useEffect(() => {
         start();
     }, []);
 
     return (
-        <ApiExtensionViewContext.Provider
-            value={{ apiEndpoint, invoiceAccessToken, invoiceID, paymentId: paymentStarted.paymentId }}
-        >
+        <ApiExtensionViewContext.Provider value={{ apiEndpoint, invoiceAccessToken, invoiceID, paymentId }}>
             {state.status === 'REQUIRE_GATEWAY_SELECTION' && (
                 <GatewaySelector gateways={state.gateway} onSelect={setGateway} />
             )}
-            {state.status === 'READY' && (
-                <Destinations destinations={state.destinations} provider={paymentStarted?.provider} />
-            )}
+            {state.status === 'READY' && <Destinations destinations={state.destinations} />}
             {state.status === 'LOADING' && <RequisitesLoader />}
             {state.status === 'FAILURE' && <FetchRequisitesError />}
         </ApiExtensionViewContext.Provider>

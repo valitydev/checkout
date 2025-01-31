@@ -94,10 +94,6 @@ export type PinikleAddon = {
 
 export type Addon = PinikleAddon;
 
-export type P2PMetadata = {
-    requiresFileAttachment: boolean;
-};
-
 export type CheckoutServiceProviderMetadata = {
     form?: ServiceProviderMetadataForm;
     logo?: ServiceProviderMetadataLogo;
@@ -108,7 +104,6 @@ export type CheckoutServiceProviderMetadata = {
     paymentSessionInfo?: PaymentSessionInfoMetadata;
     prefilledMetadataValues?: PrefilledMetadataValues;
     addon?: Addon;
-    p2p?: P2PMetadata;
 };
 
 export type ServiceProviderMetadata = {

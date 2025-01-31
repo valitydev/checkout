@@ -1,10 +1,8 @@
-/* eslint-disable react/jsx-max-depth */
 import { VStack, Text, Button, Spacer, LightMode, useDisclosure } from '@chakra-ui/react';
 import { useContext, useEffect } from 'react';
 
 import { Destination } from 'checkout/backend/p2p';
 import { LocaleContext, PaymentContext, PaymentModelContext } from 'checkout/contexts';
-import { findMetadata } from 'checkout/utils/findMetadata';
 
 import { DestinationInfo } from './DestinationInfo';
 import { LeaveAlert } from './LeaveAlert';
@@ -16,19 +14,18 @@ import { useComplete } from '../useComplete';
 
 export type DestinationsProps = {
     destinations: Destination[];
-    provider?: string;
 };
 
-export function Destinations({ destinations, provider }: DestinationsProps) {
+export function Destinations({ destinations }: DestinationsProps) {
     const { l } = useContext(LocaleContext);
     const { apiEndpoint, invoiceAccessToken, invoiceID, paymentId } = useContext(ApiExtensionViewContext);
     const { startWaitingPaymentResult } = useContext(PaymentContext);
     const {
-        paymentModel: { initContext, serviceProviders },
+        paymentModel: { initContext },
     } = useContext(PaymentModelContext);
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const { p2p } = findMetadata(serviceProviders, provider ?? '');
-    const requiresFileAttachment = p2p?.requiresFileAttachment ?? false;
+
+    const receiptRequired = destinations.reduce((acc, curr) => acc || !!curr.receiptRequired, false);
 
     const {
         completeState: { status },
@@ -60,11 +57,12 @@ export function Destinations({ destinations, provider }: DestinationsProps) {
                 <Spacer />
                 <VStack align="stretch" spacing={3}>
                     <Text fontSize="sm" textAlign="center">
-                        {requiresFileAttachment ? l['form.p2p.complete.info.attachment'] : l['form.p2p.complete.info']}
+                        {receiptRequired ? l['form.p2p.complete.info.attachment'] : l['form.p2p.complete.info']}
                     </Text>
                     <VStack align="stretch" spacing={4}>
+                        {/* eslint-disable-next-line react/jsx-max-depth */}
                         <LightMode>
-                            {requiresFileAttachment === false && (
+                            {receiptRequired === false && (
                                 <Button
                                     borderRadius="xl"
                                     colorScheme="brand"
@@ -76,7 +74,7 @@ export function Destinations({ destinations, provider }: DestinationsProps) {
                                     {l['form.p2p.complete.button']}
                                 </Button>
                             )}
-                            {requiresFileAttachment === true && (
+                            {receiptRequired === true && (
                                 <UploadFileButton
                                     isLoading={status === 'LOADING' || status === 'SUCCESS'}
                                     loadingText={l['form.p2p.complete.loading']}
