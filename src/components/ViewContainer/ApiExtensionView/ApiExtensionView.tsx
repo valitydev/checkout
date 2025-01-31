@@ -16,12 +16,12 @@ export function ApiExtensionView() {
     } = useContext(PaymentModelContext);
     const { conditions } = useContext(PaymentConditionsContext);
 
-    const { paymentId } = conditions.find<PaymentStarted>((c) => c.name === 'paymentStarted');
+    const { paymentId } = conditions.find((c): c is PaymentStarted => c.name === 'paymentStarted');
     const {
         invoiceContext: {
             invoiceParams: { invoiceID, invoiceAccessToken },
         },
-    } = conditions.find<InvoiceDetermined>((c) => c.name === 'invoiceDetermined');
+    } = conditions.find((c): c is InvoiceDetermined => c.name === 'invoiceDetermined');
 
     const { state, start, setGateway } = useRequisites(apiEndpoint, invoiceAccessToken, invoiceID, paymentId);
 
