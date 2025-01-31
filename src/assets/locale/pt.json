@@ -158,6 +158,34 @@
                     "Após transferir os fundos, clique no botão \"Transferência concluída\" na página com os dados do destinatário"
                 ]
             }
+        ],
+        "abhz_card_1795": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copie o número do cartão e o nome do destinatário",
+                    "Entre no banco online e vá para a seção \"Pagamentos\"",
+                    "Escolha a seção \"Para outro país\" e encontre \"Abkhazia\" na pesquisa",
+                    "No menu aberto, escolha \"Para cartão ou conta\"",
+                    "No menu superior, escolha \"Cartão\" e insira o número do cartão do destinatário - \"Continuar\"",
+                    "Insira o valor exato escolhido ao criar seu depósito",
+                    "Insira o Sobrenome e Nome do destinatário - \"Continuar\"",
+                    "Clique no botão \"Transferir\" verificando previamente o valor",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página com os dados do destinatário"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copie o número do cartão e o nome do destinatário",
+                    "Entre no banco online e vá para a seção \"Pagamentos\"",
+                    "Escolha a seção \"Por número do cartão\"",
+                    "Insira o nome e o número do cartão do destinatário",
+                    "Insira o valor exato escolhido ao criar seu depósito",
+                    "Clique no botão \"Transferir\"",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página com os dados do destinatário"
+                ]
+            }
         ]
     },
     "metadata.addons": {

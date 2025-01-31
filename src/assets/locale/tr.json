@@ -158,6 +158,34 @@
                     "Parayı transfer ettikten sonra, alıcının bilgileri sayfasındaki \"Transfer tamamlandı\" düğmesine basın"
                 ]
             }
+        ],
+        "abhz_card_1795": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Kart numarasını ve alıcının adını kopyalayın",
+                    "Banka online hesabına giriş yapın ve \"Ödemeler\" bölümüne gidin",
+                    "\"Başka bir ülkeye\" bölümünü seçin ve arama kısmında \"Abhazya\" yı bulun",
+                    "Açılan menüde \"Kart veya hesaba\" seçeneğini seçin",
+                    "Üst menüde \"Kart\" seçeneğini seçin ve alıcının kart numarasını girin - \"Devam\"",
+                    "Depozit oluştururken seçtiğiniz tam miktarı girin",
+                    "Alıcının Soyadını ve Adını girin - \"Devam\"",
+                    "Miktarı kontrol ettikten sonra \"Transfer\" düğmesine tıklayın",
+                    "Parayı transfer ettikten sonra, alıcının bilgileri sayfasında \"Transfer Tamamlandı\" düğmesine tıklayın"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Kart numarasını ve alıcının adını kopyalayın",
+                    "Banka online hesabına giriş yapın ve \"Ödemeler\" bölümüne gidin",
+                    "\"Kart Numarası ile\" bölümünü seçin",
+                    "Alıcının adını ve kart numarasını girin",
+                    "Depozit oluştururken seçtiğiniz tam miktarı girin",
+                    "\"Transfer\" düğmesine tıklayın",
+                    "Parayı transfer ettikten sonra, alıcının bilgileri sayfasında \"Transfer Tamamlandı\" düğmesine tıklayın"
+                ]
+            }
         ]
     },
     "metadata.addons": {
