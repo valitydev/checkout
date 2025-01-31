@@ -156,6 +156,34 @@
                     "Vəsaitləri köçürdükdən sonra, alıcının məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
                 ]
             }
+        ],
+        "abhz_card_1795": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Kart nömrəsini və alıcının adını kopyalayın",
+                    "Bankın onlayn hesabına daxil olun və \"Ödənişlər\" bölməsinə keçin",
+                    "\"Başqa ölkəyə\" bölməsini seçin və axtarışda \"Abxaziya\" tapın",
+                    "Açılan menyuda \"Kart və ya hesab\" seçin",
+                    "Yuxarı menyuda \"Kart\" seçin və alıcının kart nömrəsini daxil edin - \"Davam et\"",
+                    "Depozit yaradarkən seçilən dəqiq məbləği daxil edin",
+                    "Alıcının Soyadını və Adını daxil edin - \"Davam et\"",
+                    "Məbləği əvvəlcədən yoxlayaraq \"Köçürmə\" düyməsini basın",
+                    "Vəsaitləri köçürdükdən sonra, alıcının məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Kart nömrəsini və alıcının adını kopyalayın",
+                    "Bankın onlayn hesabına daxil olun və \"Ödənişlər\" bölməsinə keçin",
+                    "\"Kart nömrəsi ilə\" bölməsini seçin",
+                    "Alıcının adını və kart nömrəsini daxil edin",
+                    "Depozit yaradarkən seçilən dəqiq məbləği daxil edin",
+                    "\"Köçürmə\" düyməsini basın",
+                    "Vəsaitləri köçürdükdən sonra, alıcının məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
+                ]
+            }
         ]
     },
     "metadata.addons": {

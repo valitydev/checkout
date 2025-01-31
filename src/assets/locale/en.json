@@ -156,6 +156,34 @@
                     "After transferring the funds, click the \"Transfer completed\" button on the recipient's data page"
                 ]
             }
+        ],
+        "abhz_card_1795": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copy the card number and recipient's name",
+                    "Log in to the bank's online account and go to the \"Payments\" section",
+                    "Select the \"To another country\" section and find \"Abkhazia\" in the search",
+                    "In the opened menu, select \"To card or account\"",
+                    "In the top menu, select \"Card\" and enter the recipient's card number - \"Continue\"",
+                    "Enter the exact amount chosen when creating your deposit",
+                    "Enter the recipient's Last Name and First Name - \"Continue\"",
+                    "Click the \"Transfer\" button after checking the amount",
+                    "After transferring the funds, click the \"Transfer completed\" button on the recipient's data page"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copy the card number and recipient's name",
+                    "Log in to the bank's online account and go to the \"Payments\" section",
+                    "Select the \"By card number\" section",
+                    "Enter the recipient's name and card number",
+                    "Enter the exact amount chosen when creating your deposit",
+                    "Click the \"Transfer\" button",
+                    "After transferring the funds, click the \"Transfer completed\" button on the recipient's data page"
+                ]
+            }
         ]
     },
     "metadata.addons": {
