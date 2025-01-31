@@ -1,6 +1,6 @@
 import { useCallback, useReducer } from 'react';
 
-import { complete as completeApi } from 'checkout/backend/p2p';
+import { complete as completeApi, CompleteInfoAttachment } from 'checkout/backend/p2p';
 import { extractError, withRetry } from 'checkout/utils';
 
 type State = { status: 'PRISTINE' | 'LOADING' | 'SUCCESS' | 'FAILURE' };
@@ -31,19 +31,26 @@ export const useComplete = (capiEndpoint: string, accessToken: string, invoiceID
         status: 'PRISTINE',
     });
 
-    const complete = useCallback(async () => {
-        try {
-            dispatch({ type: 'FETCH_START' });
-            const completeWithRetry = withRetry(completeApi);
-            await completeWithRetry(capiEndpoint, accessToken, { invoiceId: invoiceID, paymentId: paymentID });
-            dispatch({
-                type: 'FETCH_SUCCESS',
-            });
-        } catch (error) {
-            dispatch({ type: 'FETCH_FAILURE' });
-            console.error(`Failed to p2p complete. ${extractError(error)}`);
-        }
-    }, [capiEndpoint, accessToken, invoiceID, paymentID]);
+    const complete = useCallback(
+        async (attachment?: CompleteInfoAttachment) => {
+            try {
+                dispatch({ type: 'FETCH_START' });
+                const completeWithRetry = withRetry(completeApi);
+                await completeWithRetry(capiEndpoint, accessToken, {
+                    invoiceId: invoiceID,
+                    paymentId: paymentID,
+                    attachment,
+                });
+                dispatch({
+                    type: 'FETCH_SUCCESS',
+                });
+            } catch (error) {
+                dispatch({ type: 'FETCH_FAILURE' });
+                console.error(`Failed to p2p complete. ${extractError(error)}`);
+            }
+        },
+        [capiEndpoint, accessToken, invoiceID, paymentID],
+    );
 
     return { completeState, complete };
 };
