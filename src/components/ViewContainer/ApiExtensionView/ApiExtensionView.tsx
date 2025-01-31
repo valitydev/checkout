@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 
 import { PaymentConditionsContext, PaymentModelContext } from 'checkout/contexts';
+import { InvoiceDetermined, PaymentStarted } from 'checkout/paymentCondition';
 
 import { ApiExtensionViewContext } from './ApiExtensionViewContext';
 import { Destinations } from './Destinations';
@@ -15,12 +16,12 @@ export function ApiExtensionView() {
     } = useContext(PaymentModelContext);
     const { conditions } = useContext(PaymentConditionsContext);
 
-    const { paymentId } = conditions.find((c) => c.name === 'paymentStarted');
+    const { paymentId } = conditions.find<PaymentStarted>((c) => c.name === 'paymentStarted');
     const {
         invoiceContext: {
             invoiceParams: { invoiceID, invoiceAccessToken },
         },
-    } = conditions.find((c) => c.name === 'invoiceDetermined');
+    } = conditions.find<InvoiceDetermined>((c) => c.name === 'invoiceDetermined');
 
     const { state, start, setGateway } = useRequisites(apiEndpoint, invoiceAccessToken, invoiceID, paymentId);
 
