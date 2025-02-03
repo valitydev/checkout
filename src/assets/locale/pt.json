@@ -183,6 +183,10 @@
                     "Clique no botão \"Transferir\"",
                     "Após transferir os fundos, clique no botão \"Transferência concluída\" na página com os dados do destinatário"
                 ]
+            },
+            {
+                "title": "Outros bancos",
+                "content": ["Outros bancos disponíveis para pagamento: Yoomoney, GPB, PSB, CMRbank, Bank Russia"]
             }
         ]
     },
