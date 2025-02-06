@@ -185,6 +185,10 @@
                     "Click the \"Transfer\" button",
                     "After transferring the funds, click the \"Transfer completed\" button on the recipient's data page"
                 ]
+            },
+            {
+                "title": "Other banks",
+                "content": ["Other banks available for payment: Yoomoney, GPB, PSB, CMRbank, Bank Russia"]
             }
         ]
     },

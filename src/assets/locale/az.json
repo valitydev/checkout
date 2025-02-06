@@ -185,6 +185,10 @@
                     "\"Köçürmə\" düyməsini basın",
                     "Vəsaitləri köçürdükdən sonra, alıcının məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
                 ]
+            },
+            {
+                "title": "Digər banklar",
+                "content": ["Ödəniş üçün mövcud olan digər banklar: Yoomoney, GPB, PSB, CMRbank, Bank Russia"]
             }
         ]
     },

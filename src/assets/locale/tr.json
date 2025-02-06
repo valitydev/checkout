@@ -185,6 +185,10 @@
                     "\"Transfer\" düğmesine tıklayın",
                     "Parayı transfer ettikten sonra, alıcının bilgileri sayfasında \"Transfer Tamamlandı\" düğmesine tıklayın"
                 ]
+            },
+            {
+                "title": "Diğer bankalar",
+                "content": ["Ödeme için kullanılabilir diğer bankalar: Yoomoney, GPB, PSB, CMRbank, Bank Russia"]
             }
         ]
     },
