@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-max-depth */
 import { VStack, Text, Button, Spacer, LightMode, useDisclosure } from '@chakra-ui/react';
 import { useContext, useEffect } from 'react';
 
@@ -8,6 +7,7 @@ import { LocaleContext, PaymentContext, PaymentModelContext } from 'checkout/con
 import { DestinationInfo } from './DestinationInfo';
 import { LeaveAlert } from './LeaveAlert';
 import { P2PAlert } from './P2PAlert';
+import { UploadFileButton } from './UploadFileButton';
 import { ApiExtensionViewContext } from '../ApiExtensionViewContext';
 import { P2PApiError } from '../P2PApiError';
 import { useComplete } from '../useComplete';
@@ -25,6 +25,8 @@ export function Destinations({ destinations }: DestinationsProps) {
     } = useContext(PaymentModelContext);
     const { isOpen, onOpen, onClose } = useDisclosure();
 
+    const receiptRequired = destinations.reduce((acc, curr) => acc || !!curr.receiptRequired, false);
+
     const {
         completeState: { status },
         complete,
@@ -35,6 +37,13 @@ export function Destinations({ destinations }: DestinationsProps) {
             startWaitingPaymentResult();
         }
     }, [status]);
+
+    const handleFileUpload = (data: string) => {
+        complete({
+            mimeType: 'application/pdf',
+            data,
+        });
+    };
 
     return (
         <>
@@ -48,20 +57,30 @@ export function Destinations({ destinations }: DestinationsProps) {
                 <Spacer />
                 <VStack align="stretch" spacing={3}>
                     <Text fontSize="sm" textAlign="center">
-                        {l['form.p2p.complete.info']}
+                        {receiptRequired ? l['form.p2p.complete.info.attachment'] : l['form.p2p.complete.info']}
                     </Text>
                     <VStack align="stretch" spacing={4}>
+                        {/* eslint-disable-next-line react/jsx-max-depth */}
                         <LightMode>
-                            <Button
-                                borderRadius="xl"
-                                colorScheme="brand"
-                                isLoading={status === 'LOADING' || status === 'SUCCESS'}
-                                loadingText={l['form.p2p.complete.loading']}
-                                size="lg"
-                                onClick={complete}
-                            >
-                                {l['form.p2p.complete.button']}
-                            </Button>
+                            {receiptRequired === false && (
+                                <Button
+                                    borderRadius="xl"
+                                    colorScheme="brand"
+                                    isLoading={status === 'LOADING' || status === 'SUCCESS'}
+                                    loadingText={l['form.p2p.complete.loading']}
+                                    size="lg"
+                                    onClick={() => complete()}
+                                >
+                                    {l['form.p2p.complete.button']}
+                                </Button>
+                            )}
+                            {receiptRequired === true && (
+                                <UploadFileButton
+                                    isLoading={status === 'LOADING' || status === 'SUCCESS'}
+                                    loadingText={l['form.p2p.complete.loading']}
+                                    onUpload={handleFileUpload}
+                                />
+                            )}
                             {initContext?.redirectUrl && (
                                 <Button colorScheme="brand" pt={4} size="lg" variant="link" onClick={() => onOpen()}>
                                     {l['form.button.back.to.website']}

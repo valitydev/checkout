@@ -13,6 +13,7 @@ export type DestinationBankCard = {
     bankName?: string;
     recipientName?: string;
     notification?: string;
+    receiptRequired?: boolean;
 };
 
 export type DestinationSBP = {
@@ -21,6 +22,7 @@ export type DestinationSBP = {
     bankName?: string;
     recipientName?: string;
     notification?: string;
+    receiptRequired?: boolean;
 };
 
 export type DestinationBankAccount = {
@@ -31,6 +33,7 @@ export type DestinationBankAccount = {
     bic?: string;
     purpose?: string;
     notification?: string;
+    receiptRequired?: boolean;
 };
 
 export type DestinationQRCode = {
@@ -39,6 +42,7 @@ export type DestinationQRCode = {
     bankName?: string;
     recipientName?: string;
     notification?: string;
+    receiptRequired?: boolean;
 };
 
 export type Destination = DestinationBankCard | DestinationSBP | DestinationBankAccount | DestinationQRCode;

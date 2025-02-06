@@ -10,3 +10,5 @@ export type {
     DestinationSBP,
     BusinessError,
 } from './types';
+
+export type { CompleteInfoAttachment, CompleteInfo } from './complete';
