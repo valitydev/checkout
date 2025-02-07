@@ -8,6 +8,11 @@ const localeInfo = {
         short: 'Az',
         long: 'Azerbaijani',
     },
+    kk: {
+        flag: '🇰🇿',
+        short: 'Kk',
+        long: 'Қазақша',
+    },
     en: {
         flag: '🇬🇧',
         short: 'En',
