@@ -38,9 +38,9 @@ export function Destinations({ destinations }: DestinationsProps) {
         }
     }, [status]);
 
-    const handleFileUpload = (data: string) => {
+    const handleFileUpload = (data: string, mimeType: string) => {
         complete({
-            mimeType: 'application/pdf',
+            mimeType,
             data,
         });
     };
