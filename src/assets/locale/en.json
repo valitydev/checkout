@@ -131,31 +131,29 @@
             {
                 "title": "SBER",
                 "content": [
-                    "Copy the recipient's phone number",
-                    "Log in to the bank's online account and go to the \"Payments\" section",
-                    "Select \"To SBER or another bank\" and choose \"To another country\"",
-                    "In the opened menu, select \"Tajikistan\"",
-                    "In the menu, select \"By card number, account or phone\" and enter the recipient's phone number",
-                    "Select the recipient's bank from the details page",
+                    "Copy recipient's phone number",
+                    "Log in to your online banking and go to \"Payments\" section",
+                    "Select \"To another country\" section",
+                    "Find \"Tajikistan\" in the opened list",
+                    "In the menu select \"By card number, account or phone\" and paste recipient's phone number",
+                    "Select recipient's bank (specified on the recipient details page)",
                     "Enter the exact amount chosen when creating your deposit",
-                    "Click the \"Transfer\" button after checking the amount",
-                    "After transferring the funds, click the \"Transfer completed\" button on the recipient's data page"
+                    "Click \"Transfer\" button after verifying the amount",
+                    "After transferring funds, click \"Transfer completed\" button on the recipient details page"
                 ]
             },
             {
                 "title": "T-Bank",
                 "content": [
-                    "Copy the recipient's phone number",
-                    "Log in to the bank's online account and go to the \"Payments\" section",
-                    "Select \"Transfers\" and choose \"To another country\"",
-                    "Select \"By phone number\"",
-                    "Enter the recipient's phone number and confirm it",
-                    "The required bank from the details page may appear in the selection line, if not:",
-                    "Select \"To another bank\", then \"Bank of other countries\"",
-                    "Select the recipient's bank from the details page",
-                    "Enter the exact amount chosen when creating your deposit",
-                    "Click the \"Transfer\" button",
-                    "After transferring the funds, click the \"Transfer completed\" button on the recipient's data page"
+                    "Copy recipient's phone number",
+                    "Log in to your online banking and go to \"Payments\" section",
+                    "In the \"Phone transfers\" section paste the recipient's number",
+                    "Check recipient's name and confirm it",
+                    "Required bank from the details page should appear in the selection field, if not:",
+                    "Select \"To another bank\" and use search (bank name is on the details page)",
+                    "Enter the exact amount in rubles specified on the details page",
+                    "Click \"Transfer\" button",
+                    "After transferring funds, click \"Transfer completed\" button on the recipient details page"
                 ]
             }
         ],
