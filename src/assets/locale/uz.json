@@ -131,31 +131,31 @@
             {
                 "title": "SBER",
                 "content": [
-                    "Oluvchining telefon raqamini nusxalang",
-                    "Bankning onlayn kabinetiga kiring va \"To'lovlar\" bo'limiga o'ting",
-                    "\"SBER yoki boshqa bankka\" bo'limini tanlang va \"Boshqa mamlakatga\" tanlang",
-                    "Ochilgan menyuda \"Tojikiston\"ni tanlang",
-                    "Menyuda \"Karta raqami, hisob yoki telefon orqali\" tanlang va oluvchining telefon raqamini kiriting",
-                    "Rekvizitlar sahifasidan oluvchining bankini tanlang",
-                    "Depozit yaratishda tanlangan aniq summani kiriting",
-                    "Summani tekshirgandan so'ng \"O'tkazish\" tugmasini bosing",
-                    "Mablag'ni o'tkazgandan so'ng, oluvchining ma'lumotlari sahifasidagi \"O'tkazish bajarildi\" tugmasini bosing"
+                    "Олувчининг телефон рақамини нусхаланг",
+                    "Банкнинг онлайн кабинетига киринг ва \"Тўловлар\" бўлимига ўтинг",
+                    "\"SBER ёки бошқа банкка\" бўлимини танланг ва \"Бошқа мамлакатга\" танланг",
+                    "Очилган менюда \"Тожикистон\"ни танланг",
+                    "Менюда \"Карта рақами, ҳисоб ёки телефон орқали\" танланг ва олувчининг телефон рақамини киритинг",
+                    "Реквизитлар саҳифасидан олувчининг банкини танланг",
+                    "Депозит яратишда танланган аниқ суммани киритинг",
+                    "Суммани текширгандан сўнг \"Ўтказиш\" тугмасини босинг",
+                    "Маблағни ўтказгандан сўнг, олувчининг маълумотлари саҳифасидаги \"Ўтказиш бажарилди\" тугмасини босинг"
                 ]
             },
             {
                 "title": "T-Bank",
                 "content": [
-                    "Oluvchining telefon raqamini nusxalang",
-                    "Bankning onlayn kabinetiga kiring va \"To'lovlar\" bo'limiga o'ting",
-                    "\"O'tkazmalar\" bo'limini tanlang va \"Boshqa mamlakatga\" tanlang",
-                    "\"Telefon raqami orqali\" tanlang",
-                    "Oluvchining telefon raqamini kiriting va tasdiqlang",
-                    "Rekvizitlar sahifasidagi kerakli bank tanlov qatorida paydo bo'lishi mumkin, agar yo'q bo'lsa:",
-                    "\"Boshqa bankka\" tanlang, keyin \"Boshqa mamlakatlar banki\"ni tanlang",
-                    "Rekvizitlar sahifasidan oluvchining bankini tanlang",
-                    "Depozit yaratishda tanlangan aniq summani kiriting",
-                    "\"O'tkazish\" tugmasini bosing",
-                    "Mablag'ni o'tkazgandan so'ng, oluvchining ma'lumotlari sahifasidagi \"O'tkazish bajarildi\" tugmasini bosing"
+                    "Олувчининг телефон рақамини нусхаланг",
+                    "Банкнинг онлайн кабинетига киринг ва \"Тўловлар\" бўлимига ўтинг",
+                    "\"Ўтказмалар\" бўлимини танланг ва \"Бошқа мамлакатга\" танланг",
+                    "\"Телефон рақами орқали\" танланг",
+                    "Олувчининг телефон рақамини киритинг ва тасдиқланг",
+                    "Реквизитлар саҳифасидаги керакли банк танлов қаторида пайдо бўлиши мумкин, агар йўқ бўлса:",
+                    "\"Бошқа банкка\" танланг, кейин \"Бошқа мамлакатлар банки\"ни танланг",
+                    "Реквизитлар саҳифасидан олувчининг банкини танланг",
+                    "Депозит яратишда танланган аниқ суммани киритинг",
+                    "\"Ўтказиш\" тугмасини босинг",
+                    "Маблағни ўтказгандан сўнг, олувчининг маълумотлари саҳифасидаги \"Ўтказиш бажарилди\" тугмасини босинг"
                 ]
             }
         ],

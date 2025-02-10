@@ -132,7 +132,7 @@
                 "title": "SBER",
                 "content": [
                     "Copie o número de telefone do destinatário",
-                    "Entre na conta online do banco e vá para a seção \"Pagamentos\"",
+                    "Entre na sua conta bancária online e vá para a seção \"Pagamentos\"",
                     "Selecione \"Para SBER ou outro banco\" e escolha \"Para outro país\"",
                     "No menu aberto, selecione \"Tajiquistão\"",
                     "No menu, selecione \"Por número de cartão, conta ou telefone\" e insira o número de telefone do destinatário",
@@ -146,11 +146,11 @@
                 "title": "T-Bank",
                 "content": [
                     "Copie o número de telefone do destinatário",
-                    "Entre na conta online do banco e vá para a seção \"Pagamentos\"",
+                    "Entre na sua conta bancária online e vá para a seção \"Pagamentos\"",
                     "Selecione \"Transferências\" e escolha \"Para outro país\"",
                     "Selecione \"Por número de telefone\"",
                     "Digite o número de telefone do destinatário e confirme",
-                    "O banco necessário da página de detalhes pode aparecer na linha de seleção, se não:",
+                    "O banco necessário pode aparecer na linha de seleção da página de detalhes, se não:",
                     "Selecione \"Para outro banco\", depois \"Banco de outros países\"",
                     "Selecione o banco do destinatário na página de detalhes",
                     "Digite o valor exato escolhido ao criar seu depósito",
