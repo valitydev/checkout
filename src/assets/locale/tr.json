@@ -65,6 +65,11 @@
         "Tüm miktarı tek bir transferde ödeyin.",
         "Transferi tamamladıktan sonra \"Transfer Tamamlandı\" düğmesine tıklayın."
     ],
+    "form.p2p.alert.li.receipt": [
+        "Talep edilen kesin miktarı transfer edin.",
+        "Tüm miktarı tek bir transferde ödeyin.",
+        "Transferi tamamladıktan sonra ödeme makbuzunu ekleyin"
+    ],
     "form.p2p.alert.p": "Aksi takdirde ödeme alınmayacaktır.",
     "form.p2p.gateway.selector.heading": "Bir yöntem veya banka seçin",
     "form.p2p.default.pane.label": "Herhangi bir banka",

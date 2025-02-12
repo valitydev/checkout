@@ -65,6 +65,11 @@
         "Transfer the entire amount in one transaction",
         "After completing the transfer, click the \"Complete payment\" button."
     ],
+    "form.p2p.alert.li.receipt": [
+        "Transfer the exact amount specified in the request.",
+        "Pay the entire amount in one transfer.",
+        "After completing the transfer, attach the payment receipt"
+    ],
     "form.p2p.alert.p": "Otherwise, the payment will not be credited.",
     "form.p2p.gateway.selector.heading": "Choose a method or bank",
     "form.p2p.default.pane.label": "Any bank",

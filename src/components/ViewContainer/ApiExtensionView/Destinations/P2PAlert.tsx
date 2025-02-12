@@ -4,10 +4,14 @@ import { useContext } from 'react';
 import { LocaleContext } from 'checkout/contexts';
 import { isNil } from 'checkout/utils';
 
-export function P2PAlert() {
+export type P2PAlertProps = {
+    receiptRequired: boolean;
+};
+
+export function P2PAlert({ receiptRequired }: P2PAlertProps) {
     const { l } = useContext(LocaleContext);
 
-    const localePath = l['form.p2p.alert.li'];
+    const localePath = receiptRequired ? l['form.p2p.alert.li'] : l['form.p2p.alert.li.receipt'];
 
     return (
         <>
