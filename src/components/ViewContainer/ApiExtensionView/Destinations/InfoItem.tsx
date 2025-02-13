@@ -66,7 +66,7 @@ export function InfoItem({ label, value, isCopyable, formatter, icon, isDivider,
                 <Spacer />
                 <Flex alignItems="center" gap={2}>
                     {icon && <IconContainer />}
-                    <Text fontWeight="medium" textAlign="end">
+                    <Text fontWeight="medium" textAlign="end" whiteSpace="nowrap">
                         {displayValue}
                     </Text>
                     {isCopyable && (
