@@ -13,9 +13,19 @@ export type InfoItemProps = {
     isDivider?: boolean;
     formatter?: (value: string) => Promise<string>;
     copyValueFormatter?: (value: string) => Promise<string>;
+    whiteSpace?: 'nowrap' | 'normal';
 };
 
-export function InfoItem({ label, value, isCopyable, formatter, icon, isDivider, copyValueFormatter }: InfoItemProps) {
+export function InfoItem({
+    label,
+    value,
+    isCopyable,
+    formatter,
+    icon,
+    isDivider,
+    copyValueFormatter,
+    whiteSpace,
+}: InfoItemProps) {
     const { l } = useContext(LocaleContext);
     const [copiedValue, setCopiedValue] = useState(value);
     const { onCopy, hasCopied } = useClipboard(copiedValue);
@@ -66,7 +76,7 @@ export function InfoItem({ label, value, isCopyable, formatter, icon, isDivider,
                 <Spacer />
                 <Flex alignItems="center" gap={2}>
                     {icon && <IconContainer />}
-                    <Text fontWeight="medium" textAlign="end">
+                    <Text fontWeight="medium" textAlign="end" whiteSpace={whiteSpace ?? 'normal'}>
                         {displayValue}
                     </Text>
                     {isCopyable && (
