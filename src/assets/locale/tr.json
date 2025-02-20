@@ -195,6 +195,21 @@
                 "title": "Diğer bankalar",
                 "content": ["Ödeme için kullanılabilir diğer bankalar: Yoomoney, GPB, PSB, CMRbank, Bank Russia"]
             }
+        ],
+        "trnsgrn_card_tbank": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Kart numarasını ve kart sahibinin adını kopyalayın",
+                    "Bankanın online hesabına giriş yapın ve \"Ödemeler\" bölümüne gidin",
+                    "\"Kart numarası ile\" bölümünü seçin",
+                    "Alıcının adını ve kart numarasını girin",
+                    "Depozito oluştururken seçilen tam tutarı belirtin",
+                    "\"Transfer\" düğmesine tıklayın",
+                    "Para transferinden sonra alıcı detay sayfasındaki \"Transfer tamamlandı\" düğmesine tıklayın",
+                    "Lütfen transferin T-Bank'tan yapılması gerektiğini unutmayın. Başka bir bankadan transfer edilirse, ödeme işleme alınmayacaktır."
+                ]
+            }
         ]
     },
     "metadata.addons": {

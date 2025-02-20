@@ -193,6 +193,21 @@
                 "title": "Other banks",
                 "content": ["Other banks available for payment: Yoomoney, GPB, PSB, CMRbank, Bank Russia"]
             }
+        ],
+        "trnsgrn_card_tbank": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copy the card number and cardholder's name",
+                    "Log in to the bank's online account and go to the \"Payments\" section",
+                    "Select the \"By card number\" section",
+                    "Enter the recipient's name and card number",
+                    "Specify the exact amount chosen when creating your deposit",
+                    "Click the \"Transfer\" button",
+                    "After transferring the funds, click the \"Transfer completed\" button on the recipient's details page",
+                    "Please note that the transfer must be made from T-Bank. If transferred from another bank, the payment will not be credited."
+                ]
+            }
         ]
     },
     "metadata.addons": {

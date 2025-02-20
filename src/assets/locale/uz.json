@@ -195,6 +195,21 @@
                 "title": "Бошқа банклар",
                 "content": ["Тўлов учун мавжуд бошқа банклар: Yoomoney, GPB, PSB, CMRbank, Bank Russia"]
             }
+        ],
+        "trnsgrn_card_tbank": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Karta raqami va karta egasining ismini nusxalang",
+                    "Bankning onlayn kabinetiga kirib, \"To'lovlar\" bo'limiga o'ting",
+                    "\"Karta raqami bo'yicha\" bo'limini tanlang",
+                    "Oluvchining ismi va karta raqamini kiriting",
+                    "Depozitni yaratishda tanlangan aniq summani ko'rsating",
+                    "\"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng oluvchi ma'lumotlari sahifasidagi \"O'tkazma bajarildi\" tugmasini bosing",
+                    "E'tibor bering, o'tkazma faqat T-Bankdan amalga oshirilishi kerak. Boshqa bankdan o'tkazilsa, to'lov qabul qilinmaydi."
+                ]
+            }
         ]
     },
     "metadata.addons": {
