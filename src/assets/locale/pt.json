@@ -210,6 +210,34 @@
                     "Observe que a transferência deve ser feita pelo T-Bank. Se transferido de outro banco, o pagamento não será creditado."
                 ]
             }
+        ],
+        "abhz_card_sber_tbank": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copie o número do cartão e o nome do beneficiário",
+                    "Entre no gabinete online do banco e vá para a seção \"Pagamentos\"",
+                    "Selecione a seção \"Para outro país\" e encontre \"Abkházia\" na busca",
+                    "No menu aberto, selecione \"Para cartão ou conta\"",
+                    "No menu superior, selecione \"Cartão\" e insira o número do cartão do beneficiário - \"Continuar\"",
+                    "Especifique o valor exato que você selecionou ao criar seu depósito",
+                    "Insira o sobrenome e nome do beneficiário - \"Continuar\"",
+                    "Clique no botão \"Transferir\" após verificar o valor",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página com os detalhes do beneficiário"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copie o número do cartão e o nome do beneficiário",
+                    "Entre no gabinete online do banco e vá para a seção \"Pagamentos\"",
+                    "Selecione a seção \"Por número do cartão\"",
+                    "Insira o nome do beneficiário e o número do cartão",
+                    "Especifique o valor exato que você selecionou ao criar seu depósito",
+                    "Clique no botão \"Transferir\"",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página com os detalhes do beneficiário"
+                ]
+            }
         ]
     },
     "metadata.addons": {

@@ -210,6 +210,34 @@
                     "Nəzərə alın ki, köçürmə T-Bankdan edilməlidir. Başqa bankdan köçürmə edilərsə, ödəniş qəbul edilməyəcək."
                 ]
             }
+        ],
+        "abhz_card_sber_tbank": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Kart nömrəsini və benefisiarın adını kopyalayın",
+                    "Bankın onlayn kabinetinə daxil olun və \"Ödənişlər\" bölməsinə keçin",
+                    "\"Başqa ölkəyə\" bölməsini seçin və axtarışda \"Abxaziya\" tapın",
+                    "Açılan menyuda \"Karta və ya hesaba\" seçin",
+                    "Yuxarı menyuda \"Kart\" seçin və benefisiarın kart nömrəsini daxil edin - \"Davam et\"",
+                    "Depozitinizi yaradarkən seçdiyiniz dəqiq məbləği göstərin",
+                    "Benefisiarın soyadını və adını daxil edin - \"Davam et\"",
+                    "Məbləği yoxlayaraq \"Köçür\" düyməsini basın",
+                    "Vəsaiti köçürdükdən sonra benefisiarın məlumatları olan səhifədəki \"Köçürmə yerinə yetirildi\" düyməsini basın"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Kart nömrəsini və benefisiarın adını kopyalayın",
+                    "Bankın onlayn kabinetinə daxil olun və \"Ödənişlər\" bölməsinə keçin",
+                    "\"Kart nömrəsi ilə\" bölməsini seçin",
+                    "Benefisiarın adını və kart nömrəsini daxil edin",
+                    "Depozitinizi yaradarkən seçdiyiniz dəqiq məbləği göstərin",
+                    "\"Köçür\" düyməsini basın",
+                    "Vəsaiti köçürdükdən sonra benefisiarın məlumatları olan səhifədəki \"Köçürmə yerinə yetirildi\" düyməsini basın"
+                ]
+            }
         ]
     },
     "metadata.addons": {
