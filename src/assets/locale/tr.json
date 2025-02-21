@@ -210,6 +210,34 @@
                     "Lütfen transferin T-Bank'tan yapılması gerektiğini unutmayın. Başka bir bankadan transfer edilirse, ödeme işleme alınmayacaktır."
                 ]
             }
+        ],
+        "abhz_card_sber_tbank": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Kart numarasını ve alıcının adını kopyalayın",
+                    "Bankanın çevrimiçi kabinesine giriş yapın ve \"Ödemeler\" bölümüne gidin",
+                    "\"Başka ülkeye\" bölümünü seçin ve aramada \"Abhazya\"yı bulun",
+                    "Açılan menüde \"Karta veya hesaba\" seçeneğini seçin",
+                    "Üst menüde \"Kart\" seçeneğini seçin ve alıcının kart numarasını girin - \"Devam\"",
+                    "Depozitinizi oluştururken seçtiğiniz tam tutarı belirtin",
+                    "Alıcının soyadını ve adını girin - \"Devam\"",
+                    "Tutarı kontrol ettikten sonra \"Transfer\" düğmesine tıklayın",
+                    "Parayı transfer ettikten sonra alıcı bilgilerinin olduğu sayfadaki \"Transfer tamamlandı\" düğmesine tıklayın"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Kart numarasını ve alıcının adını kopyalayın",
+                    "Bankanın çevrimiçi kabinesine giriş yapın ve \"Ödemeler\" bölümüne gidin",
+                    "\"Kart numarası ile\" bölümünü seçin",
+                    "Alıcının adını ve kart numarasını girin",
+                    "Depozitinizi oluştururken seçtiğiniz tam tutarı belirtin",
+                    "\"Transfer\" düğmesine tıklayın",
+                    "Parayı transfer ettikten sonra alıcı bilgilerinin olduğu sayfadaki \"Transfer tamamlandı\" düğmesine tıklayın"
+                ]
+            }
         ]
     },
     "metadata.addons": {

@@ -208,6 +208,34 @@
                     "Please note that the transfer must be made from T-Bank. If transferred from another bank, the payment will not be credited."
                 ]
             }
+        ],
+        "abhz_card_sber_tbank": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copy the card number and beneficiary's name",
+                    "Log in to the bank's online cabinet and go to the \"Payments\" section",
+                    "Select \"To another country\" section and find \"Abkhazia\" in the search",
+                    "In the opened menu, select \"To card or account\"",
+                    "In the top menu, select \"Card\" and enter the beneficiary's card number - \"Continue\"",
+                    "Specify the exact amount you selected when creating your deposit",
+                    "Enter the beneficiary's surname and name - \"Continue\"",
+                    "Click the \"Transfer\" button after checking the amount",
+                    "After transferring the funds, click the \"Transfer completed\" button on the page with beneficiary details"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copy the card number and beneficiary's name",
+                    "Log in to the bank's online cabinet and go to the \"Payments\" section",
+                    "Select \"By card number\" section",
+                    "Enter the beneficiary's name and card number",
+                    "Specify the exact amount you selected when creating your deposit",
+                    "Click the \"Transfer\" button",
+                    "After transferring the funds, click the \"Transfer completed\" button on the page with beneficiary details"
+                ]
+            }
         ]
     },
     "metadata.addons": {

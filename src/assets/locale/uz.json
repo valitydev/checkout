@@ -210,6 +210,34 @@
                     "E'tibor bering, o'tkazma faqat T-Bankdan amalga oshirilishi kerak. Boshqa bankdan o'tkazilsa, to'lov qabul qilinmaydi."
                 ]
             }
+        ],
+        "abhz_card_sber_tbank": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Karta raqami va oluvchining ismini nusxalang",
+                    "Bankning onlayn kabinetiga kirib, \"To'lovlar\" bo'limiga o'ting",
+                    "\"Boshqa mamlakatga\" bo'limini tanlang va qidiruvda \"Abxaziya\"ni toping",
+                    "Ochilgan menyuda \"Kartaga yoki hisobga\" ni tanlang",
+                    "Yuqori menyuda \"Karta\"ni tanlang va oluvchining karta raqamini kiriting - \"Davom etish\"",
+                    "Depozitingizni yaratishda tanlagan aniq summani ko'rsating",
+                    "Oluvchining familiyasi va ismini kiriting - \"Davom etish\"",
+                    "Summani tekshirgandan so'ng \"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng oluvchi ma'lumotlari sahifasidagi \"O'tkazma bajarildi\" tugmasini bosing"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Karta raqami va oluvchining ismini nusxalang",
+                    "Bankning onlayn kabinetiga kirib, \"To'lovlar\" bo'limiga o'ting",
+                    "\"Karta raqami bo'yicha\" bo'limini tanlang",
+                    "Oluvchining ismi va karta raqamini kiriting",
+                    "Depozitingizni yaratishda tanlagan aniq summani ko'rsating",
+                    "\"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng oluvchi ma'lumotlari sahifasidagi \"O'tkazma bajarildi\" tugmasini bosing"
+                ]
+            }
         ]
     },
     "metadata.addons": {
