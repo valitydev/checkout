@@ -6,5 +6,7 @@ export type CardFormInputs = {
     contactInfo: {
         dateOfBirth?: string;
         documentId?: string;
+        firstName?: string;
+        lastName?: string;
     };
 };

@@ -39,6 +39,8 @@ export type ContactInfo = {
     phoneNumber: string;
     dateOfBirth?: string;
     documentId?: string;
+    firstName?: string;
+    lastName?: string;
 };
 
 export type PaymentToolDetailsBankCard = {

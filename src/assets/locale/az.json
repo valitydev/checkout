@@ -30,6 +30,8 @@
     "form.input.dateOfBirth.placeholder": "Doğum tarixi",
     "form.input.dateOfBirth.hint": "gün / ay / il. Nümunə: 23 / 01 / 1995",
     "form.input.documentId.placeholder": "Şəxsiyyət vəsiqəsinin nömrəsi",
+    "form.input.firstName.placeholder": "Ad",
+    "form.input.lastName.placeholder": "Soyad",
     "form.button.back.to.website": "Sayta qayıt",
     "form.button.reload": "Yenidən yüklə",
     "form.button.next.label": "Növbəti",

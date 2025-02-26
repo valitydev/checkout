@@ -30,6 +30,8 @@
     "form.input.dateOfBirth.placeholder": "Data de nascimento",
     "form.input.dateOfBirth.hint": "dia / mês / ano. Exemplo: 23 / 01 / 1995",
     "form.input.documentId.placeholder": "Número do documento de identidade",
+    "form.input.firstName.placeholder": "Nome",
+    "form.input.lastName.placeholder": "Sobrenome",
     "form.button.back.to.website": "Voltar ao site",
     "form.button.reload": "Recarregar",
     "form.button.next.label": "Seguinte",
