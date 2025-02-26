@@ -30,6 +30,8 @@
     "form.input.dateOfBirth.placeholder": "Туған күні",
     "form.input.dateOfBirth.hint": "күн / ай / жыл. Мысалы: 23 / 01 / 1995",
     "form.input.documentId.placeholder": "Жеке куәлік нөмірі",
+    "form.input.firstName.placeholder": "Аты",
+    "form.input.lastName.placeholder": "Тегі",
     "form.button.back.to.website": "Сайтқа оралу",
     "form.button.reload": "Қайта жүктеу",
     "form.button.next.label": "Келесі",

@@ -30,6 +30,8 @@
     "form.input.dateOfBirth.placeholder": "Дата рождения",
     "form.input.dateOfBirth.hint": "день / месяц / год. Пример: 23 / 01 / 1995",
     "form.input.documentId.placeholder": "Номер документа, удостоверяющего личность",
+    "form.input.firstName.placeholder": "Имя",
+    "form.input.lastName.placeholder": "Фамилия",
     "form.button.back.to.website": "Вернуться на сайт",
     "form.button.reload": "Перезагрузить",
     "form.button.next.label": "Далее",

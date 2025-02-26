@@ -30,6 +30,8 @@
     "form.input.dateOfBirth.placeholder": "Туғилган сана",
     "form.input.dateOfBirth.hint": "кун / ой / йил. Мисол: 23 / 01 / 1995",
     "form.input.documentId.placeholder": "Шахсни тасдиқловчи ҳужжат рақами",
+    "form.input.firstName.placeholder": "Ism",
+    "form.input.lastName.placeholder": "Familiya",
     "form.button.back.to.website": "Сайтга қайтиш",
     "form.button.reload": "Қайта юклаш",
     "form.button.next.label": "Кейинги",

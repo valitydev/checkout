@@ -30,6 +30,8 @@
     "form.input.dateOfBirth.placeholder": "Санаи таваллуд",
     "form.input.dateOfBirth.hint": "рӯз / моҳ / сол. Мисол: 23 / 01 / 1995",
     "form.input.documentId.placeholder": "Рақами ҳуҷҷати шахсӣ",
+    "form.input.firstName.placeholder": "Ном",
+    "form.input.lastName.placeholder": "Насаб",
     "form.button.back.to.website": "Ба сайт баргаштан",
     "form.button.reload": "Такрор кардан",
     "form.button.next.label": "Баъдӣ",

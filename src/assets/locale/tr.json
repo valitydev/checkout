@@ -30,6 +30,8 @@
     "form.input.dateOfBirth.placeholder": "Doğum tarihi",
     "form.input.dateOfBirth.hint": "gün / ay / yıl. Örnek: 23 / 01 / 1995",
     "form.input.documentId.placeholder": "Kimlik belgesi numarası",
+    "form.input.firstName.placeholder": "Ad",
+    "form.input.lastName.placeholder": "Soyad",
     "form.button.back.to.website": "Web sitesine geri dön",
     "form.button.reload": "Yenile",
     "form.button.next.label": "İleri",

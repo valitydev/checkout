@@ -23,6 +23,8 @@ export type InitConfig = {
     phoneNumber?: string;
     dateOfBirth?: string | boolean;
     documentId?: string | boolean;
+    firstName?: string | boolean;
+    lastName?: string | boolean;
 };
 
 export type ThemeConfig = Record<string, any>;
