@@ -11,7 +11,7 @@ export type P2PAlertProps = {
 export function P2PAlert({ receiptRequired }: P2PAlertProps) {
     const { l } = useContext(LocaleContext);
 
-    const localePath = receiptRequired ? l['form.p2p.alert.li'] : l['form.p2p.alert.li.receipt'];
+    const localePath = receiptRequired ? l['form.p2p.alert.li.receipt'] : l['form.p2p.alert.li'];
 
     return (
         <>
