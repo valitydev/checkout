@@ -240,6 +240,24 @@
                     "Após transferir os fundos, clique no botão \"Transferência concluída\" na página com os detalhes do beneficiário"
                 ]
             }
+        ],
+        "trnsgrn_sbp_tbank": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copie o número de telefone do destinatário",
+                    "Acesse seu banco online e navegue até a seção \"Pagamentos\"",
+                    "Selecione a seção \"Transferências\" e escolha \"Para outro país\"",
+                    "Selecione \"Por número de telefone\"",
+                    "Digite o número de telefone do destinatário e confirme",
+                    "O banco necessário dos detalhes do destinatário pode aparecer na linha de seleção, se não:",
+                    "Selecione \"Para outro banco\", depois \"Bancos de outros países\"",
+                    "Selecione o banco do destinatário da página de detalhes do destinatário",
+                    "Digite o valor exato selecionado ao criar seu depósito",
+                    "Clique no botão \"Transferir\"",
+                    "Após a transferência, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            }
         ]
     },
     "metadata.addons": {

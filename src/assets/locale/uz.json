@@ -240,6 +240,24 @@
                     "Mablag'ni o'tkazgandan so'ng oluvchi ma'lumotlari sahifasidagi \"O'tkazma bajarildi\" tugmasini bosing"
                 ]
             }
+        ],
+        "trnsgrn_sbp_tbank": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Qabul qiluvchining telefon raqamini nusxalang",
+                    "Online bankka kirib, \"To'lovlar\" bo'limiga o'ting",
+                    "\"O'tkazmalar\" bo'limini tanlang va \"Boshqa mamlakatga\" tanlang",
+                    "\"Telefon raqami orqali\" tanlang",
+                    "Qabul qiluvchining telefon raqamini kiriting va tasdiqlang",
+                    "Qabul qiluvchi ma'lumotlaridan kerakli bank tanlash qatorida paydo bo'lishi mumkin, agar yo'q bo'lsa:",
+                    "\"Boshqa bankka\", keyin \"Boshqa mamlakatlar banklari\" tanlang",
+                    "Qabul qiluvchi ma'lumotlari sahifasidan qabul qiluvchining bankini tanlang",
+                    "Deposit yaratishda tanlagan aniq summani kiriting",
+                    "\"O'tkazish\" tugmasini bosing",
+                    "O'tkazishdan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazish tugadi\" tugmasini bosing"
+                ]
+            }
         ]
     },
     "metadata.addons": {

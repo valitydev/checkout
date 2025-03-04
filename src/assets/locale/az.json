@@ -240,6 +240,24 @@
                     "Vəsaiti köçürdükdən sonra benefisiarın məlumatları olan səhifədəki \"Köçürmə yerinə yetirildi\" düyməsini basın"
                 ]
             }
+        ],
+        "trnsgrn_sbp_tbank": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Alıcının telefon nömrəsini kopyalayın",
+                    "Onlayn bank xidmətinə daxil olun və \"Ödənişlər\" bölməsinə keçin",
+                    "\"Köçürmələr\" bölməsini seçin və \"Başqa ölkəyə\" seçin",
+                    "\"Telefon nömrəsi ilə\" seçin",
+                    "Alıcının telefon nömrəsini daxil edin və təsdiqləyin",
+                    "Alıcının məlumatlarından tələb olunan bank seçim sətirində görünə bilər, əgər yoxdursa:",
+                    "\"Başqa banka\", sonra \"Digər ölkələrin bankları\" seçin",
+                    "Alıcının məlumatları səhifəsindən alıcının bankını seçin",
+                    "Depozit yaradarkən seçdiyiniz dəqiq məbləği daxil edin",
+                    "\"Köçür\" düyməsini basın",
+                    "Köçürmədən sonra alıcının məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
+                ]
+            }
         ]
     },
     "metadata.addons": {
