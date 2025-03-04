@@ -240,6 +240,24 @@
                     "Parayı transfer ettikten sonra alıcı bilgilerinin olduğu sayfadaki \"Transfer tamamlandı\" düğmesine tıklayın"
                 ]
             }
+        ],
+        "trnsgrn_sbp_tbank": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Alıcının telefon numarasını kopyalayın",
+                    "Online bankacılığınıza giriş yapın ve \"Ödemeler\" bölümüne gidin",
+                    "\"Transferler\" bölümünü seçin ve \"Başka ülkeye\" seçeneğini seçin",
+                    "\"Telefon numarası ile\" seçeneğini seçin",
+                    "Alıcının telefon numarasını girin ve onaylayın",
+                    "Alıcının bilgilerinden gerekli banka seçim satırında görünebilir, eğer yoksa:",
+                    "\"Başka bankaya\", ardından \"Diğer ülkelerin bankaları\" seçeneğini seçin",
+                    "Alıcının bilgiler sayfasından alıcının bankasını seçin",
+                    "Depozito oluştururken seçtiğiniz tam tutarı girin",
+                    "\"Transfer et\" düğmesine tıklayın",
+                    "Transferden sonra alıcının bilgiler sayfasında \"Transfer tamamlandı\" düğmesine tıklayın"
+                ]
+            }
         ]
     },
     "metadata.addons": {

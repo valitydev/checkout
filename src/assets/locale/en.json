@@ -238,6 +238,24 @@
                     "After transferring the funds, click the \"Transfer completed\" button on the page with beneficiary details"
                 ]
             }
+        ],
+        "trnsgrn_sbp_tbank": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copy the recipient's phone number",
+                    "Go to your online banking and navigate to the \"Payments\" section",
+                    "Select the \"Transfers\" section and choose \"To another country\"",
+                    "Select \"By phone number\"",
+                    "Enter the recipient's phone number and confirm it",
+                    "The required bank from the recipient's details may appear in the selection line, if not:",
+                    "Select \"To another bank\", then \"Banks of other countries\"",
+                    "Select the recipient's bank from the recipient's details page",
+                    "Enter the exact amount selected when creating your deposit",
+                    "Click the \"Transfer\" button",
+                    "After the transfer, click the \"Transfer completed\" button on the recipient's details page"
+                ]
+            }
         ]
     },
     "metadata.addons": {
