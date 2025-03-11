@@ -258,6 +258,34 @@
                     "Köçürmədən sonra alıcının məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
                 ]
             }
+        ],
+        "pc_tjk_SBP_Bank_DushanbeCity": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Alıcının telefon nömrəsini kopyalayın",
+                    "Bankın onlayn kabinetinə daxil olun və \"Ödənişlər\" bölməsinə keçin",
+                    "\"Başqa ölkəyə\" bölməsini seçin",
+                    "Açılan siyahıda \"Tacikistan\"ı tapın",
+                    "Menyuda \"Kart, hesab və ya telefon nömrəsi ilə\" seçin və alıcının telefon nömrəsini daxil edin",
+                    "Dushanbe City bankını seçin",
+                    "Depozitinizi yaradarkən seçdiyiniz dəqiq məbləği göstərin",
+                    "Məbləği yoxlayaraq \"Köçür\" düyməsini basın",
+                    "Vəsaiti köçürdükdən sonra alıcının məlumatları olan səhifədəki \"Köçürmə yerinə yetirildi\" düyməsini basın"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Alıcının telefon nömrəsini kopyalayın",
+                    "Bankın onlayn kabinetinə daxil olun və \"Ödənişlər\" bölməsinə keçin",
+                    "\"Telefon ilə köçürmələr\" bölməsində alıcının nömrəsini daxil edin",
+                    "\"Başqa banka\" seçin və axtarışdan istifadə edin (Dushanbe City-ni tapın)",
+                    "Rekvizitlər səhifəsində göstərilən dəqiq rubl məbləğini daxil edin",
+                    "\"Köçür\" düyməsini basın",
+                    "Vəsaiti köçürdükdən sonra alıcının məlumatları olan səhifədəki \"Köçürmə yerinə yetirildi\" düyməsini basın"
+                ]
+            }
         ]
     },
     "metadata.addons": {

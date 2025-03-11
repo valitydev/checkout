@@ -258,6 +258,34 @@
                     "Após a transferência, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
                 ]
             }
+        ],
+        "pc_tjk_SBP_Bank_DushanbeCity": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copie o número de telefone do destinatário",
+                    "Entre no seu banco online e vá para a seção \"Pagamentos\"",
+                    "Selecione a seção \"Para outro país\"",
+                    "Encontre \"Tajiquistão\" na lista aberta",
+                    "No menu, selecione \"Por cartão, conta ou número de telefone\" e cole o número do destinatário",
+                    "Selecione o banco Dushanbe City",
+                    "Digite o valor exato que você escolheu ao criar seu depósito",
+                    "Clique no botão \"Transferir\" após verificar o valor",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copie o número de telefone do destinatário",
+                    "Entre no seu banco online e vá para a seção \"Pagamentos\"",
+                    "Na seção \"Transferências por telefone\", cole o número do destinatário",
+                    "Selecione \"Para outro banco\" e use a pesquisa (encontre Dushanbe City)",
+                    "Digite o valor exato em rublos mostrado na página de detalhes",
+                    "Clique no botão \"Transferir\"",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            }
         ]
     },
     "metadata.addons": {
