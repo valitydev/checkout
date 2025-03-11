@@ -258,6 +258,34 @@
                     "Transferden sonra alıcının bilgiler sayfasında \"Transfer tamamlandı\" düğmesine tıklayın"
                 ]
             }
+        ],
+        "pc_tjk_SBP_Bank_DushanbeCity": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Alıcının telefon numarasını kopyalayın",
+                    "Bankanızın online sistemine giriş yapın ve \"Ödemeler\" bölümüne gidin",
+                    "\"Başka ülkeye\" bölümünü seçin",
+                    "Açılan listede \"Tacikistan\"ı bulun",
+                    "Menüde \"Kart, hesap veya telefon numarası ile\" seçeneğini seçin ve alıcının telefon numarasını yapıştırın",
+                    "Dushanbe City bankasını seçin",
+                    "Depozit oluştururken seçtiğiniz tam tutarı girin",
+                    "Tutarı kontrol ettikten sonra \"Transfer\" düğmesine tıklayın",
+                    "Para transferinden sonra alıcı detayları sayfasındaki \"Transfer tamamlandı\" düğmesine tıklayın"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Alıcının telefon numarasını kopyalayın",
+                    "Bankanızın online sistemine giriş yapın ve \"Ödemeler\" bölümüne gidin",
+                    "\"Telefon ile transfer\" bölümünde alıcının numarasını yapıştırın",
+                    "\"Başka bankaya\" seçin ve arama yapın (Dushanbe City'yi bulun)",
+                    "Detaylar sayfasında gösterilen tam ruble tutarını girin",
+                    "\"Transfer\" düğmesine tıklayın",
+                    "Para transferinden sonra alıcı detayları sayfasındaki \"Transfer tamamlandı\" düğmesine tıklayın"
+                ]
+            }
         ]
     },
     "metadata.addons": {
