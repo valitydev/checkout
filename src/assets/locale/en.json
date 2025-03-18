@@ -284,6 +284,21 @@
                     "After transferring the funds, click the \"Transfer completed\" button on the recipient's details page"
                 ]
             }
+        ],
+        "trnsgrn_card_vtb": [
+            {
+                "title": "VTB",
+                "content": [
+                    "Copy the card number and recipient's full name",
+                    "Log in to your online banking and go to the \"Payments\" section",
+                    "Select \"To another country\" and find \"Tajikistan\" in the search",
+                    "In the opened menu, select \"By card number\"",
+                    "Enter the recipient's card number and click \"Continue\"",
+                    "Enter the recipient's First and Last name, the exact amount chosen when creating your deposit and click \"Continue\"",
+                    "Verify the correctness of the information and amount you provided and click \"Transfer\"",
+                    "After transferring the funds, click the \"Transfer completed\" button on the recipient's details page"
+                ]
+            }
         ]
     },
     "metadata.addons": {

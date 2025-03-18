@@ -286,6 +286,21 @@
                     "Mablag'ni o'tkazgandan so'ng qabul qiluvchi ma'lumotlari sahifasidagi \"O'tkazma bajarildi\" tugmasini bosing"
                 ]
             }
+        ],
+        "trnsgrn_card_vtb": [
+            {
+                "title": "VTB",
+                "content": [
+                    "Karta raqami va oluvchining to'liq ismini nusxalang",
+                    "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"Boshqa mamlakatga\" bo'limini tanlang va qidiruvda \"Tojikiston\"ni toping",
+                    "Ochilgan menyuda \"Karta raqami bo'yicha\" tanlang",
+                    "Oluvchining karta raqamini kiriting va \"Davom etish\" tugmasini bosing",
+                    "Oluvchining ismi va familiyasini, depozitingizni yaratishda tanlangan aniq summani kiriting va \"Davom etish\" tugmasini bosing",
+                    "Kiritilgan ma'lumotlar va summaning to'g'riligini tekshiring va \"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng oluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
+                ]
+            }
         ]
     },
     "metadata.addons": {

@@ -286,6 +286,21 @@
                     "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
                 ]
             }
+        ],
+        "trnsgrn_card_vtb": [
+            {
+                "title": "VTB",
+                "content": [
+                    "Copie o número do cartão e o nome completo do destinatário",
+                    "Faça login no banco online e vá para a seção \"Pagamentos\"",
+                    "Selecione \"Para outro país\" e encontre \"Tajiquistão\" na busca",
+                    "No menu aberto, selecione \"Por número do cartão\"",
+                    "Digite o número do cartão do destinatário e clique em \"Continuar\"",
+                    "Digite o nome e sobrenome do destinatário, o valor exato escolhido ao criar seu depósito e clique em \"Continuar\"",
+                    "Verifique a exatidão das informações e do valor fornecidos e clique em \"Transferir\"",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            }
         ]
     },
     "metadata.addons": {
