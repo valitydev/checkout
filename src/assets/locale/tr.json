@@ -286,6 +286,21 @@
                     "Para transferinden sonra alıcı detayları sayfasındaki \"Transfer tamamlandı\" düğmesine tıklayın"
                 ]
             }
+        ],
+        "trnsgrn_card_vtb": [
+            {
+                "title": "VTB",
+                "content": [
+                    "Kart numarasını ve alıcının tam adını kopyalayın",
+                    "Çevrimiçi bankacılığa giriş yapın ve \"Ödemeler\" bölümüne gidin",
+                    "\"Başka ülkeye\" bölümünü seçin ve aramada \"Tacikistan\"ı bulun",
+                    "Açılan menüde \"Kart numarası ile\" seçeneğini seçin",
+                    "Alıcının kart numarasını girin ve \"Devam\" düğmesine tıklayın",
+                    "Alıcının adını ve soyadını, depozitonuzu oluştururken seçilen tam tutarı girin ve \"Devam\" düğmesine tıklayın",
+                    "Girdiğiniz bilgilerin ve tutarın doğruluğunu kontrol edin ve \"Transfer\" düğmesine tıklayın",
+                    "Parayı transfer ettikten sonra alıcı detayları sayfasında \"Transfer tamamlandı\" düğmesine tıklayın"
+                ]
+            }
         ]
     },
     "metadata.addons": {
