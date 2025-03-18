@@ -299,6 +299,22 @@
                     "After transferring the funds, click the \"Transfer completed\" button on the recipient's details page"
                 ]
             }
+        ],
+        "trnsgrn_tjk_card_sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copy recipient's phone number",
+                    "Log in to your online banking and go to the \"Payments\" section",
+                    "Select \"To another country\"",
+                    "Find \"Tajikistan\" in the list",
+                    "In the menu, select \"By card number, account or phone\" and paste the recipient's phone number",
+                    "Select Dushanbe City Bank",
+                    "Enter the exact amount chosen when creating your deposit",
+                    "Click \"Transfer\" after verifying the amount",
+                    "After transferring the funds, click the \"Transfer completed\" button on the recipient details page"
+                ]
+            }
         ]
     },
     "metadata.addons": {

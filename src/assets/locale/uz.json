@@ -301,6 +301,22 @@
                     "Mablag'ni o'tkazgandan so'ng oluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
                 ]
             }
+        ],
+        "trnsgrn_tjk_card_sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Qabul qiluvchining telefon raqamini nusxalang",
+                    "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"Boshqa mamlakatga\" bo'limini tanlang",
+                    "Ro'yxatdan \"Tojikiston\"ni toping",
+                    "Menyuda \"Karta raqami, hisob yoki telefon orqali\" ni tanlang va qabul qiluvchining telefon raqamini joylang",
+                    "Dushanbe City Bank ni tanlang",
+                    "Depozitingizni yaratishda tanlangan aniq summani kiriting",
+                    "Summani tekshirgandan so'ng \"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
+                ]
+            }
         ]
     },
     "metadata.addons": {

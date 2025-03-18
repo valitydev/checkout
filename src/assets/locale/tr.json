@@ -301,6 +301,22 @@
                     "Parayı transfer ettikten sonra alıcı detayları sayfasında \"Transfer tamamlandı\" düğmesine tıklayın"
                 ]
             }
+        ],
+        "trnsgrn_tjk_card_sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Alıcının telefon numarasını kopyalayın",
+                    "Çevrimiçi bankacılığa giriş yapın ve \"Ödemeler\" bölümüne gidin",
+                    "\"Başka ülkeye\" bölümünü seçin",
+                    "Listeden \"Tacikistan\"ı bulun",
+                    "Menüden \"Kart numarası, hesap veya telefon ile\" seçeneğini seçin ve alıcının telefon numarasını yapıştırın",
+                    "Duşanbe City Bank'ı seçin",
+                    "Depozito oluştururken seçilen tam tutarı girin",
+                    "Tutarı doğruladıktan sonra \"Transfer et\" düğmesine tıklayın",
+                    "Parayı transfer ettikten sonra alıcı detayları sayfasındaki \"Transfer tamamlandı\" düğmesine tıklayın"
+                ]
+            }
         ]
     },
     "metadata.addons": {
