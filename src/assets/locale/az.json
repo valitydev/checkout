@@ -301,6 +301,22 @@
                     "Vəsaiti köçürdükdən sonra alıcının məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
                 ]
             }
+        ],
+        "trnsgrn_tjk_card_sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Alıcının telefon nömrəsini kopyalayın",
+                    "Onlayn bankinqə daxil olun və \"Ödənişlər\" bölməsinə keçin",
+                    "\"Başqa ölkəyə\" bölməsini seçin",
+                    "Siyahıdan \"Tacikistan\"ı tapın",
+                    "Menyuda \"Kart nömrəsi, hesab və ya telefon ilə\" seçin və alıcının telefon nömrəsini yapışdırın",
+                    "Düşənbə Şəhər Bankını seçin",
+                    "Depozitinizi yaradarkən seçdiyiniz dəqiq məbləği daxil edin",
+                    "Məbləği yoxladıqdan sonra \"Köçür\" düyməsini basın",
+                    "Vəsaiti köçürdükdən sonra alıcı məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
+                ]
+            }
         ]
     },
     "metadata.addons": {

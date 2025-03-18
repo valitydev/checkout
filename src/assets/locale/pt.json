@@ -301,6 +301,22 @@
                     "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
                 ]
             }
+        ],
+        "trnsgrn_tjk_card_sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copie o número de telefone do destinatário",
+                    "Entre no seu banco online e vá para a seção \"Pagamentos\"",
+                    "Selecione \"Para outro país\"",
+                    "Encontre \"Tajiquistão\" na lista",
+                    "No menu, selecione \"Por número de cartão, conta ou telefone\" e cole o número de telefone do destinatário",
+                    "Selecione o Banco Dushanbe City",
+                    "Digite o valor exato escolhido ao criar seu depósito",
+                    "Clique em \"Transferir\" após verificar o valor",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            }
         ]
     },
     "metadata.addons": {
