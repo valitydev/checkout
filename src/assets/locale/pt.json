@@ -317,6 +317,12 @@
                     "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
                 ]
             }
+        ],
+        "vtb": [
+            {
+                "title": "VTB",
+                "content": ["Transferências internas do banco, apenas para clientes VTB."]
+            }
         ]
     },
     "metadata.addons": {

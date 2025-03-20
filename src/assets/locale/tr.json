@@ -317,6 +317,12 @@
                     "Parayı transfer ettikten sonra alıcı detayları sayfasındaki \"Transfer tamamlandı\" düğmesine tıklayın"
                 ]
             }
+        ],
+        "vtb": [
+            {
+                "title": "VTB",
+                "content": ["Banka içi transferler, sadece VTB müşterileri için."]
+            }
         ]
     },
     "metadata.addons": {
