@@ -315,6 +315,12 @@
                     "After transferring the funds, click the \"Transfer completed\" button on the recipient details page"
                 ]
             }
+        ],
+        "vtb": [
+            {
+                "title": "VTB",
+                "content": ["Intra-bank transfers, for VTB clients only."]
+            }
         ]
     },
     "metadata.addons": {
