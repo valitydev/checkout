@@ -323,6 +323,22 @@
                 "title": "VTB",
                 "content": ["Bank daxili köçürmələr, yalnız VTB müştəriləri üçün."]
             }
+        ],
+        "trnsgrn_tjk_sbp_sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Alıcının telefon nömrəsini kopyalayın",
+                    "Bank onlayn kabinetinə daxil olun və \"Ödənişlər\" bölməsinə keçin",
+                    "\"SBER-ə və ya digər banka\" bölməsini seçin və \"Başqa ölkəyə\" seçin",
+                    "Açılan menyuda \"Tacikistan\"ı seçin",
+                    "Menyuda \"Kart, hesab və ya telefon nömrəsi ilə\" seçin və alıcının telefon nömrəsini daxil edin",
+                    "Rekvizitlər səhifəsindən alıcı bankını seçin",
+                    "Depozitinizi yaradarkən seçdiyiniz dəqiq məbləği göstərin",
+                    "Məbləği yoxlayaraq \"Köçür\" düyməsini basın",
+                    "Pul köçürüldükdən sonra alıcının məlumatları olan səhifədəki \"Köçürmə yerinə yetirildi\" düyməsini basın"
+                ]
+            }
         ]
     },
     "metadata.addons": {
