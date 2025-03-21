@@ -321,6 +321,22 @@
                 "title": "VTB",
                 "content": ["Intra-bank transfers, for VTB clients only."]
             }
+        ],
+        "trnsgrn_tjk_sbp_sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copy the recipient's phone number",
+                    "Log in to your online banking and go to the \"Payments\" section",
+                    "Select \"To SBER or other bank\" and choose \"To another country\"",
+                    "Select \"Tajikistan\" in the opened menu",
+                    "In the menu, select \"By card, account or phone number\" and enter the recipient's phone number",
+                    "Select the recipient's bank from the requisites page",
+                    "Enter the exact amount you selected when creating your deposit",
+                    "Click the \"Transfer\" button after verifying the amount",
+                    "After making the transfer, click the \"Transfer completed\" button on the recipient's details page"
+                ]
+            }
         ]
     },
     "metadata.addons": {

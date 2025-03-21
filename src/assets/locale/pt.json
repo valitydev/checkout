@@ -323,6 +323,22 @@
                 "title": "VTB",
                 "content": ["Transferências internas do banco, apenas para clientes VTB."]
             }
+        ],
+        "trnsgrn_tjk_sbp_sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copie o número de telefone do destinatário",
+                    "Faça login no seu banco online e vá para a seção \"Pagamentos\"",
+                    "Selecione \"Para SBER ou outro banco\" e escolha \"Para outro país\"",
+                    "Selecione \"Tajiquistão\" no menu aberto",
+                    "No menu, selecione \"Por cartão, conta ou número de telefone\" e insira o número de telefone do destinatário",
+                    "Selecione o banco do destinatário na página de requisitos",
+                    "Digite o valor exato que você selecionou ao criar seu depósito",
+                    "Clique no botão \"Transferir\" após verificar o valor",
+                    "Após fazer a transferência, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            }
         ]
     },
     "metadata.addons": {

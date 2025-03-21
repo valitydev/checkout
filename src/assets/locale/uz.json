@@ -323,6 +323,22 @@
                 "title": "VTB",
                 "content": ["Bank ichidagi o'tkazmalar, faqat VTB mijozlari uchun."]
             }
+        ],
+        "trnsgrn_tjk_sbp_sber": [
+            {
+                "title": "СБЕР",
+                "content": [
+                    "Qabul qiluvchining telefon raqamini nusxalang",
+                    "Bank onlayn kabinetiga kirib, \"To'lovlar\" bo'limiga o'ting",
+                    "\"SBER yoki boshqa bankka\" bo'limini tanlang va \"Boshqa mamlakatga\" tanlang",
+                    "Ochilgan menyuda \"Tojikiston\"ni tanlang",
+                    "Menyuda \"Karta, hisob yoki telefon raqami orqali\" tanlang va qabul qiluvchining telefon raqamini kiriting",
+                    "Rekvizitlar sahifasidan qabul qiluvchi bankini tanlang",
+                    "Depozitingizni yaratishda tanlagan aniq summani ko'rsating",
+                    "Summani tekshirib, \"O'tkazish\" tugmasini bosing",
+                    "Pul o'tkazilgandan so'ng qabul qiluvchi ma'lumotlari sahifasidagi \"O'tkazma bajarildi\" tugmasini bosing"
+                ]
+            }
         ]
     },
     "metadata.addons": {

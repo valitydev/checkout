@@ -323,6 +323,22 @@
                 "title": "VTB",
                 "content": ["Banka içi transferler, sadece VTB müşterileri için."]
             }
+        ],
+        "trnsgrn_tjk_sbp_sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Alıcının telefon numarasını kopyalayın",
+                    "Çevrimiçi bankacılığınıza giriş yapın ve \"Ödemeler\" bölümüne gidin",
+                    "\"SBER'e veya diğer bankaya\" seçeneğini seçin ve \"Başka bir ülkeye\" seçin",
+                    "Açılan menüde \"Tacikistan\"ı seçin",
+                    "Menüde \"Kart, hesap veya telefon numarası ile\" seçeneğini seçin ve alıcının telefon numarasını girin",
+                    "Alıcı bankasını bilgiler sayfasından seçin",
+                    "Depozito oluştururken seçtiğiniz tam tutarı girin",
+                    "Tutarı doğruladıktan sonra \"Transfer\" düğmesine tıklayın",
+                    "Transfer yaptıktan sonra, alıcı detayları sayfasındaki \"Transfer tamamlandı\" düğmesine tıklayın"
+                ]
+            }
         ]
     },
     "metadata.addons": {
