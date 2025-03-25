@@ -262,26 +262,26 @@
                 "title": "SBER",
                 "content": [
                     "Copy recipient's phone number",
-                    "Log in to your online banking and go to \"Payments\" section",
-                    "Select \"To another country\" section",
-                    "Find \"Tajikistan\" in the opened list",
-                    "In the menu, select \"By card, account or phone number\" and paste the recipient's phone number",
-                    "Select Dushanbe City bank",
-                    "Enter the exact amount you chose when creating your deposit",
-                    "Click \"Transfer\" button after verifying the amount",
-                    "After transferring the funds, click the \"Transfer completed\" button on the recipient's details page"
+                    "Log in to your online banking and go to the \"Payments\" section",
+                    "Select \"To another country\"",
+                    "Find \"Tajikistan\" in the list",
+                    "In the menu, select \"By card number, account or phone\" and enter the recipient's phone number",
+                    "Select Dushanbe City Bank",
+                    "Enter the exact amount chosen when creating your deposit",
+                    "Click \"Transfer\" after verifying the amount",
+                    "After the transfer, click the \"Transfer completed\" button on the recipient details page"
                 ]
             },
             {
                 "title": "T-Bank",
                 "content": [
                     "Copy recipient's phone number",
-                    "Log in to your online banking and go to \"Payments\" section",
-                    "In the \"Phone transfers\" section, paste the recipient's number",
-                    "Select \"To another bank\" and use search (find Dushanbe City)",
+                    "Log in to your online banking and go to the \"Payments\" section",
+                    "In the \"Phone transfers\" section, enter the recipient's number",
+                    "Select Dushanbe City Bank (If the bank is not found, use the \"Other bank\" search and find Dushanbe City)",
                     "Enter the exact amount in rubles shown on the details page",
-                    "Click \"Transfer\" button",
-                    "After transferring the funds, click the \"Transfer completed\" button on the recipient's details page"
+                    "Click \"Transfer\"",
+                    "After the transfer, click the \"Transfer completed\" button on the recipient details page"
                 ]
             }
         ],
@@ -335,6 +335,22 @@
                     "Enter the exact amount you selected when creating your deposit",
                     "Click the \"Transfer\" button after verifying the amount",
                     "After making the transfer, click the \"Transfer completed\" button on the recipient's details page"
+                ]
+            }
+        ],
+        "trnsgrn_tjk_sbp_sber_dc": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copy the recipient's phone number",
+                    "Log in to your online banking and go to the \"Payments\" section",
+                    "Select \"To another country\" section",
+                    "Find \"Tajikistan\" in the dropdown list",
+                    "In the submenu, select \"By card, account or phone number\" and enter the recipient's phone number",
+                    { "content": "Select Dushanbe City Bank", "fontWeight": "bold" },
+                    "Enter the exact amount you chose when creating your deposit",
+                    "Click the \"Transfer\" button after verifying the amount",
+                    "After transferring the funds, click the \"Transfer completed\" button on the recipient's details page"
                 ]
             }
         ]

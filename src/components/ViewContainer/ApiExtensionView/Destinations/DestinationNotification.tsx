@@ -18,16 +18,25 @@ import { isString } from 'checkout/utils';
 
 import { mapNotification } from '../utils';
 
-function NotificationItemAlert({ content }: { content: string[] }) {
+function NotificationItemAlert({ content }: { content: string[] | { content: string; fontWeight: string }[] }) {
     return (
         <Alert borderRadius="xl" status="warning">
             <VStack align="stretch">
                 <UnorderedList>
-                    {content.map((value, key) => (
-                        <ListItem key={key} fontSize="sm">
-                            {value}
-                        </ListItem>
-                    ))}
+                    {content.map((value, key) => {
+                        if (isString(value)) {
+                            return (
+                                <ListItem key={key} fontSize="sm">
+                                    {value}
+                                </ListItem>
+                            );
+                        }
+                        return (
+                            <ListItem key={key} fontSize="sm" fontWeight={value.fontWeight}>
+                                {value.content}
+                            </ListItem>
+                        );
+                    })}
                 </UnorderedList>
             </VStack>
         </Alert>

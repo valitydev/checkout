@@ -264,26 +264,26 @@
                 "title": "SBER",
                 "content": [
                     "Qabul qiluvchining telefon raqamini nusxalang",
-                    "Bankning onlayn kabinetiga kirib, \"To'lovlar\" bo'limiga o'ting",
+                    "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
                     "\"Boshqa mamlakatga\" bo'limini tanlang",
-                    "Ochilgan ro'yxatdan \"Tojikiston\"ni toping",
-                    "Menyuda \"Karta, hisob yoki telefon raqami orqali\" tanlang va qabul qiluvchining telefon raqamini joylashtiring",
-                    "Dushanbe City bankini tanlang",
-                    "Depozitingizni yaratishda tanlagan aniq summani ko'rsating",
-                    "Summani tekshirib, \"O'tkazish\" tugmasini bosing",
-                    "Mablag'ni o'tkazgandan so'ng qabul qiluvchi ma'lumotlari sahifasidagi \"O'tkazma bajarildi\" tugmasini bosing"
+                    "Ro'yxatdan \"Tojikiston\"ni toping",
+                    "Menyuda \"Karta raqami, hisob yoki telefon orqali\" tanlang va qabul qiluvchining telefon raqamini kiriting",
+                    "Dushanbe City Bankni tanlang",
+                    "Depozitingizni yaratishda tanlangan aniq summani kiriting",
+                    "Summani tekshirgandan so'ng \"O'tkazish\" tugmasini bosing",
+                    "O'tkazmadan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
                 ]
             },
             {
                 "title": "T-Bank",
                 "content": [
                     "Qabul qiluvchining telefon raqamini nusxalang",
-                    "Bankning onlayn kabinetiga kirib, \"To'lovlar\" bo'limiga o'ting",
-                    "\"Telefon orqali o'tkazmalar\" bo'limida qabul qiluvchining raqamini joylashtiring",
-                    "\"Boshqa bankka\" tanlang va qidiruv orqali Dushanbe City bankini toping",
-                    "Rekvizitlar sahifasida ko'rsatilgan aniq rubl miqdorini kiriting",
+                    "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"Telefon orqali o'tkazmalar\" bo'limida qabul qiluvchining raqamini kiriting",
+                    "Dushanbe City Bankni tanlang (Bank topilmasa, \"Boshqa bank\" qidiruvidan foydalanib Dushanbe Cityni toping)",
+                    "Ma'lumotlar sahifasida ko'rsatilgan aniq rubl summasini kiriting",
                     "\"O'tkazish\" tugmasini bosing",
-                    "Mablag'ni o'tkazgandan so'ng qabul qiluvchi ma'lumotlari sahifasidagi \"O'tkazma bajarildi\" tugmasini bosing"
+                    "O'tkazmadan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
                 ]
             }
         ],
@@ -337,6 +337,22 @@
                     "Depozitingizni yaratishda tanlagan aniq summani ko'rsating",
                     "Summani tekshirib, \"O'tkazish\" tugmasini bosing",
                     "Pul o'tkazilgandan so'ng qabul qiluvchi ma'lumotlari sahifasidagi \"O'tkazma bajarildi\" tugmasini bosing"
+                ]
+            }
+        ],
+        "trnsgrn_tjk_sbp_sber_dc": [
+            {
+                "title": "СБЕР",
+                "content": [
+                    "Qabul qiluvchining telefon raqamini nusxalang",
+                    "Bank onlayn kabinetiga kirib, \"To'lovlar\" bo'limiga o'ting",
+                    "\"Boshqa mamlakatga\" bo'limini tanlang",
+                    "Ochilgan ro'yxatdan \"Tojikiston\"ni toping",
+                    "Pastki menyuda \"Karta, hisob yoki telefon raqami orqali\" ni tanlab, qabul qiluvchining telefon raqamini kiriting",
+                    { "content": "Dushanbe City Bankni tanlang", "fontWeight": "bold" },
+                    "Depozitingizni yaratishda tanlagan aniq summani ko'rsating",
+                    "Summani tekshirib, \"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng, qabul qiluvchi ma'lumotlari sahifasidagi \"O'tkazma yakunlandi\" tugmasini bosing"
                 ]
             }
         ]
