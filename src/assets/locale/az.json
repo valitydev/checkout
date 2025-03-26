@@ -355,6 +355,20 @@
                     "Vəsaiti köçürdükdən sonra alıcının məlumatları olan səhifədəki \"Köçürmə yerinə yetirildi\" düyməsini basın"
                 ]
             }
+        ],
+        "sbp_vtb": [
+            {
+                "title": "VTB",
+                "content": [
+                    "Köçürmə üçün telefon nömrəsini kopyalayın",
+                    "Bank onlayn kabinetinə daxil olun və \"Ödənişlər\" bölməsinə keçin",
+                    "\"Köçürmə\" sahəsinə klikləyin və yeni pəncərədə telefon nömrəsini daxil edin",
+                    "Telefon nömrəsini seçin",
+                    "\"VTB Bank\"ı seçin",
+                    "Məbləği daxil edin və \"Davam et\" düyməsini basın",
+                    "Daxil etdiyiniz məlumatların və məbləğin düzgünlüyünü yoxlayın və \"Köçür\" düyməsini basın"
+                ]
+            }
         ]
     },
     "metadata.addons": {

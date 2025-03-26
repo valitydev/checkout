@@ -355,6 +355,20 @@
                     "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
                 ]
             }
+        ],
+        "sbp_vtb": [
+            {
+                "title": "VTB",
+                "content": [
+                    "Copie o número de telefone para transferência",
+                    "Entre no seu banco online e vá para a seção \"Pagamentos\"",
+                    "Clique no campo \"Transferir\" e insira o número de telefone na nova janela",
+                    "Selecione o número de telefone",
+                    "Selecione \"Banco VTB\"",
+                    "Digite o valor e clique em \"Continuar\"",
+                    "Verifique as informações e o valor inseridos e clique em \"Transferir\""
+                ]
+            }
         ]
     },
     "metadata.addons": {
