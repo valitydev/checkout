@@ -355,6 +355,20 @@
                     "Mablag'ni o'tkazgandan so'ng, qabul qiluvchi ma'lumotlari sahifasidagi \"O'tkazma yakunlandi\" tugmasini bosing"
                 ]
             }
+        ],
+        "sbp_vtb": [
+            {
+                "title": "VTB",
+                "content": [
+                    "O'tkazma uchun telefon raqamini nusxalang",
+                    "Bank onlayn kabinetiga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"O'tkazish\" maydonini bosing va yangi oynada telefon raqamini kiriting",
+                    "Telefon raqamini tanlang",
+                    "\"VTB Bank\"ni tanlang",
+                    "Summani kiriting va \"Davom etish\" tugmasini bosing",
+                    "Kiritilgan ma'lumotlar va summaning to'g'riligini tekshiring va \"O'tkazish\" tugmasini bosing"
+                ]
+            }
         ]
     },
     "metadata.addons": {
