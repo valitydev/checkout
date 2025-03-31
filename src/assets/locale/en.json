@@ -266,7 +266,7 @@
                     "Select \"To another country\"",
                     "Find \"Tajikistan\" in the list",
                     "In the menu, select \"By card number, account or phone\" and enter the recipient's phone number",
-                    "Select Dushanbe City Bank",
+                    { "content": "Select Dushanbe City Bank", "fontWeight": "bold" },
                     "Enter the exact amount chosen when creating your deposit",
                     "Click \"Transfer\" after verifying the amount",
                     "After the transfer, click the \"Transfer completed\" button on the recipient details page"
@@ -278,7 +278,10 @@
                     "Copy recipient's phone number",
                     "Log in to your online banking and go to the \"Payments\" section",
                     "In the \"Phone transfers\" section, enter the recipient's number",
-                    "Select Dushanbe City Bank (If the bank is not found, use the \"Other bank\" search and find Dushanbe City)",
+                    {
+                        "content": "Select Dushanbe City Bank (If the bank is not found, use the \"Other bank\" search and find Dushanbe City)",
+                        "fontWeight": "bold"
+                    },
                     "Enter the exact amount in rubles shown on the details page",
                     "Click \"Transfer\"",
                     "After the transfer, click the \"Transfer completed\" button on the recipient details page"
@@ -351,6 +354,23 @@
                     "Enter the exact amount you chose when creating your deposit",
                     "Click the \"Transfer\" button after verifying the amount",
                     "After transferring the funds, click the \"Transfer completed\" button on the recipient's details page"
+                ]
+            }
+        ],
+        "trnsgrn_tjk_sbp_tbank_dc": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copy recipient's phone number",
+                    "Log in to online banking and go to the \"Payments\" section",
+                    "In the \"Phone transfers\" section, paste the recipient's number",
+                    {
+                        "content": "Select Dushanbe City Bank (If the bank is not found, use the \"Other bank\" search and find Dushanbe City)",
+                        "fontWeight": "bold"
+                    },
+                    "Enter the exact amount in rubles shown on the details page",
+                    "Click the \"Transfer\" button",
+                    "After transferring the funds, click the \"Transfer completed\" button on the recipient details page"
                 ]
             }
         ],

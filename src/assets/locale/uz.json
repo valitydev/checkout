@@ -268,7 +268,7 @@
                     "\"Boshqa mamlakatga\" bo'limini tanlang",
                     "Ro'yxatdan \"Tojikiston\"ni toping",
                     "Menyuda \"Karta raqami, hisob yoki telefon orqali\" tanlang va qabul qiluvchining telefon raqamini kiriting",
-                    "Dushanbe City Bankni tanlang",
+                    { "content": "Dushanbe City Bankni tanlang", "fontWeight": "bold" },
                     "Depozitingizni yaratishda tanlangan aniq summani kiriting",
                     "Summani tekshirgandan so'ng \"O'tkazish\" tugmasini bosing",
                     "O'tkazmadan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
@@ -280,7 +280,10 @@
                     "Qabul qiluvchining telefon raqamini nusxalang",
                     "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
                     "\"Telefon orqali o'tkazmalar\" bo'limida qabul qiluvchining raqamini kiriting",
-                    "Dushanbe City Bankni tanlang (Bank topilmasa, \"Boshqa bank\" qidiruvidan foydalanib Dushanbe Cityni toping)",
+                    {
+                        "content": "Dushanbe City Bankni tanlang (Bank topilmasa, \"Boshqa bank\" qidiruvidan foydalanib Dushanbe Cityni toping)",
+                        "fontWeight": "bold"
+                    },
                     "Ma'lumotlar sahifasida ko'rsatilgan aniq rubl summasini kiriting",
                     "\"O'tkazish\" tugmasini bosing",
                     "O'tkazmadan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
@@ -353,6 +356,23 @@
                     "Depozitingizni yaratishda tanlagan aniq summani ko'rsating",
                     "Summani tekshirib, \"O'tkazish\" tugmasini bosing",
                     "Mablag'ni o'tkazgandan so'ng, qabul qiluvchi ma'lumotlari sahifasidagi \"O'tkazma yakunlandi\" tugmasini bosing"
+                ]
+            }
+        ],
+        "trnsgrn_tjk_sbp_tbank_dc": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Qabul qiluvchining telefon raqamini nusxalang",
+                    "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"Telefon orqali o'tkazmalar\" bo'limida qabul qiluvchining raqamini joylang",
+                    {
+                        "content": "Dushanbe City Bankni tanlang (Bank topilmasa, \"Boshqa bank\" qidiruvidan foydalanib Dushanbe Cityni toping)",
+                        "fontWeight": "bold"
+                    },
+                    "Tafsilotlar sahifasida ko'rsatilgan aniq summani rubl bilan kiriting",
+                    "\"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
                 ]
             }
         ],
