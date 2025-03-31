@@ -281,9 +281,10 @@
                     "Bankın onlayn kabinetinə daxil olun və \"Ödənişlər\" bölməsinə keçin",
                     "\"Telefon ilə köçürmələr\" bölməsində alıcının nömrəsini daxil edin",
                     {
-                        "content": "\"Başqa banka\" seçin və axtarışdan istifadə edin (Dushanbe City-ni tapın)",
+                        "content": "\"Başqa banka\" seçin və axtarışdan istifadə edin",
                         "fontWeight": "bold"
                     },
+                    "Dushanbe City-ni tapın",
                     "Rekvizitlər səhifəsində göstərilən dəqiq rubl məbləğini daxil edin",
                     "\"Köçür\" düyməsini basın",
                     "Vəsaiti köçürdükdən sonra alıcının məlumatları olan səhifədəki \"Köçürmə yerinə yetirildi\" düyməsini basın"
@@ -367,9 +368,10 @@
                     "Onlayn bankçılığa daxil olun və \"Ödənişlər\" bölməsinə keçin",
                     "\"Telefon köçürmələri\" bölməsində alıcının nömrəsini yapışdırın",
                     {
-                        "content": "Düşənbə Şəhər Bankını seçin (Bank tapılmadıqda, \"Digər bank\" axtarışından istifadə edərək Düşənbə Şəhərini tapın)",
+                        "content": "Düşənbə Şəhər Bankını seçin",
                         "fontWeight": "bold"
                     },
+                    "Bank tapılmadıqda, \"Digər bank\" axtarışından istifadə edərək Düşənbə Şəhərini tapın",
                     "Təfərrüat səhifəsində göstərilən dəqiq məbləği rubl ilə daxil edin",
                     "\"Köçür\" düyməsini basın",
                     "Vəsaiti köçürdükdən sonra alıcı məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
