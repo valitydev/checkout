@@ -280,7 +280,8 @@
                     "Copie o número de telefone do destinatário",
                     "Entre no seu banco online e vá para a seção \"Pagamentos\"",
                     "Na seção \"Transferências por telefone\", insira o número do destinatário",
-                    "Selecione Banco Dushanbe City (Se o banco não for encontrado, use a busca \"Outro banco\" e encontre Dushanbe City)",
+                    "Selecione Banco Dushanbe City",
+                    "Se o banco não for encontrado, use a busca \"Outro banco\" e encontre Dushanbe City",
                     "Digite o valor exato em rublos mostrado na página de detalhes",
                     "Clique em \"Transferir\"",
                     "Após a transferência, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
@@ -364,9 +365,10 @@
                     "Acesse o banco online e vá para a seção \"Pagamentos\"",
                     "Na seção \"Transferências por telefone\", cole o número do destinatário",
                     {
-                        "content": "Selecione o Banco Dushanbe City (Se o banco não for encontrado, use a busca \"Outro banco\" e encontre Dushanbe City)",
+                        "content": "Selecione o Banco Dushanbe City",
                         "fontWeight": "bold"
                     },
+                    "Se o banco não for encontrado, use a busca \"Outro banco\" e encontre Dushanbe City",
                     "Digite o valor exato em rublos mostrado na página de detalhes",
                     "Clique no botão \"Transferir\"",
                     "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"

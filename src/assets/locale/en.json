@@ -279,9 +279,10 @@
                     "Log in to your online banking and go to the \"Payments\" section",
                     "In the \"Phone transfers\" section, enter the recipient's number",
                     {
-                        "content": "Select Dushanbe City Bank (If the bank is not found, use the \"Other bank\" search and find Dushanbe City)",
+                        "content": "Select Dushanbe City Bank",
                         "fontWeight": "bold"
                     },
+                    "If the bank is not found, use the \"Other bank\" search and find Dushanbe City",
                     "Enter the exact amount in rubles shown on the details page",
                     "Click \"Transfer\"",
                     "After the transfer, click the \"Transfer completed\" button on the recipient details page"
@@ -365,9 +366,10 @@
                     "Log in to online banking and go to the \"Payments\" section",
                     "In the \"Phone transfers\" section, paste the recipient's number",
                     {
-                        "content": "Select Dushanbe City Bank (If the bank is not found, use the \"Other bank\" search and find Dushanbe City)",
+                        "content": "Select Dushanbe City Bank",
                         "fontWeight": "bold"
                     },
+                    "If the bank is not found, use the \"Other bank\" search and find Dushanbe City",
                     "Enter the exact amount in rubles shown on the details page",
                     "Click the \"Transfer\" button",
                     "After transferring the funds, click the \"Transfer completed\" button on the recipient details page"

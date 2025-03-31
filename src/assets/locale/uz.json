@@ -281,9 +281,10 @@
                     "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
                     "\"Telefon orqali o'tkazmalar\" bo'limida qabul qiluvchining raqamini kiriting",
                     {
-                        "content": "Dushanbe City Bankni tanlang (Bank topilmasa, \"Boshqa bank\" qidiruvidan foydalanib Dushanbe Cityni toping)",
+                        "content": "Dushanbe City Bankni tanlang",
                         "fontWeight": "bold"
                     },
+                    "Bank topilmasa, \"Boshqa bank\" qidiruvidan foydalanib Dushanbe Cityni toping",
                     "Ma'lumotlar sahifasida ko'rsatilgan aniq rubl summasini kiriting",
                     "\"O'tkazish\" tugmasini bosing",
                     "O'tkazmadan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
@@ -367,9 +368,10 @@
                     "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
                     "\"Telefon orqali o'tkazmalar\" bo'limida qabul qiluvchining raqamini joylang",
                     {
-                        "content": "Dushanbe City Bankni tanlang (Bank topilmasa, \"Boshqa bank\" qidiruvidan foydalanib Dushanbe Cityni toping)",
+                        "content": "Dushanbe City Bankni tanlang",
                         "fontWeight": "bold"
                     },
+                    "Bank topilmasa, \"Boshqa bank\" qidiruvidan foydalanib Dushanbe Cityni toping",
                     "Tafsilotlar sahifasida ko'rsatilgan aniq summani rubl bilan kiriting",
                     "\"O'tkazish\" tugmasini bosing",
                     "Mablag'ni o'tkazgandan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
