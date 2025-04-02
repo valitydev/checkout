@@ -28,10 +28,14 @@ export type ServiceProviderMetadataField = {
     replaceValue?: string;
 };
 
-export type MetadataSelectSource = {
-    type: 'countrySubdivisions';
-    countryCode?: string;
-};
+export type MetadataSelectSource =
+    | {
+          type: 'countrySubdivisions';
+          countryCode?: string;
+      }
+    | {
+          type: 'countryCodes';
+      };
 
 export type ServiceProviderMetadataSelect = {
     type: 'select';
