@@ -393,6 +393,23 @@
             }
         ]
     },
+    "sber": [
+        {
+            "title": "SBER",
+            "content": [
+                "Alıcının telefon nömrəsini kopyalayın",
+                "Bankın onlayn hesabına daxil olun və \"Ödənişlər\" bölməsinə keçin",
+                "\"Köçürmə\" sahəsində alıcının telefon nömrəsini daxil edin - \"Davam et\" düyməsini basın",
+                {
+                    "content": "Alıcının bankı \"Sberbank\"",
+                    "fontWeight": "bold"
+                },
+                "Depozit yaradarkən seçilən dəqiq məbləği daxil edin",
+                "Məbləği yoxladıqdan sonra \"Köçürmə\" düyməsini basın",
+                "Vəsaitləri köçürdükdən sonra, alıcının məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
+            ]
+        }
+    ],
     "metadata.addons": {
         "pinikle": {
             "label": "Voucheriniz yoxdur?",

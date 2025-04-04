@@ -391,6 +391,23 @@
             }
         ]
     },
+    "sber": [
+        {
+            "title": "SBER",
+            "content": [
+                "Copy recipient's phone number",
+                "Log in to your online banking and go to \"Payments\" section",
+                "In the \"Transfer\" field enter the recipient's phone number - click \"Continue\"",
+                {
+                    "content": "Recipient's bank \"Sberbank\"",
+                    "fontWeight": "bold"
+                },
+                "Enter the exact amount chosen when creating your deposit",
+                "Click \"Transfer\" button after verifying the amount",
+                "After transferring funds, click \"Transfer completed\" button on the recipient details page"
+            ]
+        }
+    ],
     "metadata.addons": {
         "pinikle": {
             "label": "Don't have a voucher?",
