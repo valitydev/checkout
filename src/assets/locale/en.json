@@ -408,6 +408,24 @@
             ]
         }
     ],
+    "alfa": [
+        {
+            "title": "ALFA",
+            "content": [
+                "Copy the recipient's phone number",
+                "Log in to your online banking and go to the \"Payments\" section",
+                "In the \"Transfers\" field, select \"By phone number\"",
+                "Enter the recipient's number and click \"Continue\"",
+                {
+                    "content": "Recipient's bank \"Alfa Bank\"",
+                    "fontWeight": "bold"
+                },
+                "Enter the exact amount selected when creating your deposit",
+                "Click the \"Transfer\" button after verifying the amount",
+                "After making the transfer, click the button on the recipient's details page \"Transfer completed\""
+            ]
+        }
+    ],
     "metadata.addons": {
         "pinikle": {
             "label": "Don't have a voucher?",
