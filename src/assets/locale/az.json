@@ -410,6 +410,24 @@
             ]
         }
     ],
+    "alfa": [
+        {
+            "title": "ALFA",
+            "content": [
+                "Alıcının telefon nömrəsini kopyalayın",
+                "Onlayn bankçılığa daxil olun və \"Ödənişlər\" bölməsinə keçin",
+                "\"Köçürmələr\" sahəsində \"Telefon nömrəsi ilə\" seçin",
+                "Alıcının nömrəsini daxil edin və \"Davam et\" düyməsini basın",
+                {
+                    "content": "Alıcı bank \"Alfa Bank\"",
+                    "fontWeight": "bold"
+                },
+                "Depozitinizi yaradarkən seçilmiş dəqiq məbləği daxil edin",
+                "Məbləği yoxladıqdan sonra \"Köçür\" düyməsini basın",
+                "Köçürmə etdikdən sonra alıcının məlumatları səhifəsində \"Köçürmə tamamlandı\" düyməsini basın"
+            ]
+        }
+    ],
     "metadata.addons": {
         "pinikle": {
             "label": "Voucheriniz yoxdur?",
