@@ -40,10 +40,10 @@ const getOnInputHandler = (type: JSX.IntrinsicElements['input']['type'], formatt
     return getInputTypeFormatter(type);
 };
 
-const getOnFocusHandler = (type: JSX.IntrinsicElements['input']['type']) => {
+const getOnFocusHandler = (type: JSX.IntrinsicElements['input']['type'], telOnFocusValue?: string) => {
     switch (type) {
         case 'tel':
-            return partialRight(formatPhoneNumber, formatOnFocus);
+            return partialRight(formatPhoneNumber, formatOnFocus(telOnFocusValue));
         default:
             return null;
     }
@@ -66,6 +66,9 @@ const createValidator =
             return validateEmail(value);
         }
         if (type === 'tel') {
+            if (pattern) {
+                return validatePhone(value, createRegExpForMetaPattern(pattern));
+            }
             return validatePhone(value);
         }
         if (pattern) {
@@ -83,7 +86,7 @@ export type MetadataFieldProps = {
 };
 
 export function MetadataFormControl({ metadata, register, formState: { errors, dirtyFields } }: MetadataFieldProps) {
-    const { name, type, required, pattern, localization, formatter, inputMode } = metadata;
+    const { name, type, required, pattern, localization, formatter, inputMode, telOnFocusValue } = metadata;
     const { localeCode } = useContext(LocaleContext);
     const validate = useMemo(() => createValidator(type, required, pattern), [name]);
     const inputRightElStatus = isNil(errors?.metadata?.[name]) && dirtyFields?.metadata?.[name] ? 'success' : 'unknown';
@@ -100,7 +103,7 @@ export function MetadataFormControl({ metadata, register, formState: { errors, d
                     inputMode={inputMode}
                     placeholder={getPlaceholder(localeCode, localization)}
                     type={type}
-                    onFocus={getOnFocusHandler(type)}
+                    onFocus={getOnFocusHandler(type, telOnFocusValue)}
                     onInput={getOnInputHandler(type, formatter)}
                 />
                 <StatusInputRightElement status={inputRightElStatus} />
