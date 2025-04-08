@@ -9,7 +9,7 @@ export { replaceSpaces } from './replaceSpaces';
 export { last } from './last';
 export { groupBy } from './groupBy';
 export { partialRight } from './partialRight';
-export { formatPhoneNumber, getPhoneCountryCode, validatePhone, formatOnFocus } from './phone';
+export { formatPhoneNumber, validatePhone, formatOnFocus } from './phone';
 export { formatEmail, validateEmail } from './email';
 export { isString } from './isString';
 export { getEncodedUrlParams } from './getEncodedUrlParams';

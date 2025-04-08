@@ -54,4 +54,6 @@ export type {
     ServiceProviderTitleMetadata,
     MetadataFieldFormatter,
     QrCodeFormMetadata,
+    NumbersOnlyFormatter,
+    PhoneNumberFormatter,
 } from './serviceProviderMetadata';
