@@ -1,14 +1,9 @@
 import { Button, DarkMode, Flex, Icon, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
-import { AZ, GB, PT, RU, TJ, UZ } from 'country-flag-icons/react/3x2';
+import { GB, PT, RU, TJ, UZ } from 'country-flag-icons/react/3x2';
 import { useState } from 'react';
 import { HiChevronDown, HiGlobeAlt } from 'react-icons/hi';
 
 const localeInfo = {
-    az: {
-        flag: <AZ />,
-        short: 'Az',
-        long: 'Azerbaijani',
-    },
     en: {
         flag: <GB />,
         short: 'En',
