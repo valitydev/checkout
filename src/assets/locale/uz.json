@@ -391,43 +391,43 @@
                     "Kiritilgan ma'lumotlar va summaning to'g'riligini tekshiring va \"O'tkazish\" tugmasini bosing"
                 ]
             }
+        ],
+        "sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Олувчининг телефон рақамини нусхаланг",
+                    "Банкнинг онлайн кабинетига киринг ва \"Тўловлар\" бўлимига ўтинг",
+                    "\"Ўтказиш\" майдонига олувчининг телефон рақамини киритинг - \"Давом этиш\" тугмасини босинг",
+                    {
+                        "content": "Олувчининг банки \"Сбербанк\"",
+                        "fontWeight": "bold"
+                    },
+                    "Депозит яратишда танланган аниқ суммани киритинг",
+                    "Суммани текширгандан сўнг \"Ўтказиш\" тугмасини босинг",
+                    "Маблағни ўтказгандан сўнг, олувчининг маълумотлари саҳифасидаги \"Ўтказиш бажарилди\" тугмасини босинг"
+                ]
+            }
+        ],
+        "alfa": [
+            {
+                "title": "ALFA",
+                "content": [
+                    "Qabul qiluvchining telefon raqamini nusxalang",
+                    "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"O'tkazmalar\" maydonida \"Telefon raqami orqali\" ni tanlang",
+                    "Qabul qiluvchining raqamini kiriting va \"Davom etish\" tugmasini bosing",
+                    {
+                        "content": "Qabul qiluvchi bank \"Alfa Bank\"",
+                        "fontWeight": "bold"
+                    },
+                    "Depozitingizni yaratishda tanlangan aniq summani kiriting",
+                    "Summani tekshirgandan so'ng \"O'tkazish\" tugmasini bosing",
+                    "O'tkazma qilgandan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
+                ]
+            }
         ]
     },
-    "sber": [
-        {
-            "title": "SBER",
-            "content": [
-                "Олувчининг телефон рақамини нусхаланг",
-                "Банкнинг онлайн кабинетига киринг ва \"Тўловлар\" бўлимига ўтинг",
-                "\"Ўтказиш\" майдонига олувчининг телефон рақамини киритинг - \"Давом этиш\" тугмасини босинг",
-                {
-                    "content": "Олувчининг банки \"Сбербанк\"",
-                    "fontWeight": "bold"
-                },
-                "Депозит яратишда танланган аниқ суммани киритинг",
-                "Суммани текширгандан сўнг \"Ўтказиш\" тугмасини босинг",
-                "Маблағни ўтказгандан сўнг, олувчининг маълумотлари саҳифасидаги \"Ўтказиш бажарилди\" тугмасини босинг"
-            ]
-        }
-    ],
-    "alfa": [
-        {
-            "title": "ALFA",
-            "content": [
-                "Qabul qiluvchining telefon raqamini nusxalang",
-                "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
-                "\"O'tkazmalar\" maydonida \"Telefon raqami orqali\" ni tanlang",
-                "Qabul qiluvchining raqamini kiriting va \"Davom etish\" tugmasini bosing",
-                {
-                    "content": "Qabul qiluvchi bank \"Alfa Bank\"",
-                    "fontWeight": "bold"
-                },
-                "Depozitingizni yaratishda tanlangan aniq summani kiriting",
-                "Summani tekshirgandan so'ng \"O'tkazish\" tugmasini bosing",
-                "O'tkazma qilgandan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
-            ]
-        }
-    ],
     "metadata.addons": {
         "pinikle": {
             "label": "Ваучер йўқми?",
