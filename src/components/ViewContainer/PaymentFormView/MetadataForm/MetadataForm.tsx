@@ -12,6 +12,7 @@ import { findMetadata } from 'checkout/utils/findMetadata';
 import { Addon } from './Addon';
 import { EmailFormControl, PhoneNumberFormControl } from './ContactInfoFormControls';
 import { MetadataFormControl } from './MetadataFormControl';
+import { MetadataSelectControl } from './MetadataSelectControl';
 import { MetadataFormValues } from './types';
 import { formatMetadataValue, sortByIndex } from './utils';
 
@@ -64,11 +65,20 @@ export function MetadataForm({ provider }: MetadataFormProps) {
                     </PaneLogoBox>
                 )}
                 {!isNil(form) &&
-                    form
-                        ?.sort(sortByIndex)
-                        .map((m) => (
+                    form?.sort(sortByIndex).map((m) => {
+                        if (m.type === 'select')
+                            return (
+                                <MetadataSelectControl
+                                    key={m.name}
+                                    formState={formState}
+                                    metadata={m}
+                                    register={register}
+                                />
+                            );
+                        return (
                             <MetadataFormControl key={m.name} formState={formState} metadata={m} register={register} />
-                        ))}
+                        );
+                    })}
                 {contactInfo?.email && <EmailFormControl formState={formState} register={register} />}
                 {contactInfo?.phoneNumber && <PhoneNumberFormControl formState={formState} register={register} />}
                 {!isNil(addon) && <Addon addon={addon} />}

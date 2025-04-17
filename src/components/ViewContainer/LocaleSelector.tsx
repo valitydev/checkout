@@ -1,45 +1,31 @@
-import { Button, DarkMode, Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
+import { Button, DarkMode, Flex, Icon, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
+import { GB, PT, RU, TJ, UZ } from 'country-flag-icons/react/3x2';
 import { useState } from 'react';
 import { HiChevronDown, HiGlobeAlt } from 'react-icons/hi';
 
 const localeInfo = {
-    az: {
-        flag: '🇦🇿',
-        short: 'Az',
-        long: 'Azerbaijani',
-    },
-    kk: {
-        flag: '🇰🇿',
-        short: 'Kk',
-        long: 'Қазақша',
-    },
     en: {
-        flag: '🇬🇧',
+        flag: <GB />,
         short: 'En',
         long: 'English',
     },
     pt: {
-        flag: '🇵🇹',
+        flag: <PT />,
         short: 'Pt',
         long: 'Português',
     },
     ru: {
-        flag: '🇷🇺',
+        flag: <RU />,
         short: 'Ру',
         long: 'Русский',
     },
-    tr: {
-        flag: '🇹🇷',
-        short: 'Tr',
-        long: 'Türkçe',
-    },
     tj: {
-        flag: '🇹🇯',
+        flag: <TJ />,
         short: 'Тҷ',
         long: 'Тоҷикӣ',
     },
     uz: {
-        flag: '🇺🇿',
+        flag: <UZ />,
         short: 'Uz',
         long: 'Oʻzbekcha',
     },
@@ -69,7 +55,7 @@ export function LocaleSelector({ initLocaleCode, onLocaleChange }: LocaleSelecto
             </DarkMode>
 
             <MenuList borderRadius="xl">
-                {Object.entries(localeInfo).map(([code, { flag, long }]) => (
+                {Object.entries(localeInfo).map(([code, { long, flag }]) => (
                     <MenuItem
                         key={code}
                         onClick={() => {
@@ -78,9 +64,7 @@ export function LocaleSelector({ initLocaleCode, onLocaleChange }: LocaleSelecto
                         }}
                     >
                         <Flex alignItems="center" gap="3">
-                            <Text as="span" fontSize="xl">
-                                {flag}
-                            </Text>
+                            <Icon boxSize={6}>{flag}</Icon>
                             <Text fontSize="md">{long}</Text>
                         </Flex>
                     </MenuItem>

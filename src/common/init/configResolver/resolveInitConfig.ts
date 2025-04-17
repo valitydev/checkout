@@ -36,6 +36,8 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         phoneNumber,
         dateOfBirth,
         documentId,
+        firstName,
+        lastName,
     } = userConfig;
     return {
         ...resolvedIntegrationType,
@@ -58,5 +60,7 @@ export const resolveInitConfig = (userConfig: Partial<InitConfig>): InitConfig =
         phoneNumber: resolvePhoneNumber(resolveString(phoneNumber)),
         dateOfBirth,
         documentId,
+        firstName,
+        lastName,
     };
 };

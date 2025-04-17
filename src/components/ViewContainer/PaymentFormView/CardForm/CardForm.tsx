@@ -18,6 +18,8 @@ import { CardNumberFormControl } from './CardNumberFormControl';
 import { DateOfBirthFormControl } from './DateOfBirthFormControl';
 import { DocumentIdFormControl } from './DocumentIdFormControl';
 import { ExpDateFormControl } from './ExpDateFormControl';
+import { FirstNameFormControl } from './FirstNameFormControl';
+import { LastNameFormControl } from './LastNameFormControl';
 import { SecureCodeFormControl } from './SecureCodeFormControl';
 import { CardFormInputs } from './types';
 import { isSecureCodeAvailable } from './utils';
@@ -36,7 +38,7 @@ export function CardForm() {
     } = useContext(PaymentModelContext);
     const { register, handleSubmit, watch, formState } = useForm<CardFormInputs>({ mode: 'onChange' });
 
-    const { dateOfBirth, documentId } = initContext.contactInfo;
+    const { dateOfBirth, documentId, firstName, lastName } = initContext.contactInfo;
 
     const onSubmit: SubmitHandler<CardFormInputs> = (values) => {
         const contactInfo = {
@@ -87,6 +89,8 @@ export function CardForm() {
                 {(dateOfBirth === true || documentId === true) && <Divider />}
                 {dateOfBirth === true && <DateOfBirthFormControl formState={formState} register={register} />}
                 {documentId === true && <DocumentIdFormControl formState={formState} register={register} />}
+                {firstName === true && <FirstNameFormControl formState={formState} register={register} />}
+                {lastName === true && <LastNameFormControl formState={formState} register={register} />}
 
                 <Spacer />
                 <LightMode>

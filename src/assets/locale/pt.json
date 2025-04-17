@@ -30,6 +30,8 @@
     "form.input.dateOfBirth.placeholder": "Data de nascimento",
     "form.input.dateOfBirth.hint": "dia / mês / ano. Exemplo: 23 / 01 / 1995",
     "form.input.documentId.placeholder": "Número do documento de identidade",
+    "form.input.firstName.placeholder": "Nome",
+    "form.input.lastName.placeholder": "Sobrenome",
     "form.button.back.to.website": "Voltar ao site",
     "form.button.reload": "Recarregar",
     "form.button.next.label": "Seguinte",
@@ -64,6 +66,11 @@
         "Transfira a quantia exata especificada no pedido.",
         "Pague a quantia total em uma única transferência.",
         "Após concluir a transferência, clique no botão \"Transferência Concluída\"."
+    ],
+    "form.p2p.alert.li.receipt": [
+        "Transfira a quantia exata especificada no pedido.",
+        "Pague a quantia total em uma única transferência.",
+        "Após concluir a transferência, anexe o comprovante de pagamento"
     ],
     "form.p2p.alert.p": "Caso contrário, o pagamento não será creditado.",
     "form.p2p.gateway.selector.heading": "Escolha o método ou banco",
@@ -132,7 +139,7 @@
                 "title": "SBER",
                 "content": [
                     "Copie o número de telefone do destinatário",
-                    "Entre na conta online do banco e vá para a seção \"Pagamentos\"",
+                    "Entre na sua conta bancária online e vá para a seção \"Pagamentos\"",
                     "Selecione \"Para SBER ou outro banco\" e escolha \"Para outro país\"",
                     "No menu aberto, selecione \"Tajiquistão\"",
                     "No menu, selecione \"Por número de cartão, conta ou telefone\" e insira o número de telefone do destinatário",
@@ -146,11 +153,11 @@
                 "title": "T-Bank",
                 "content": [
                     "Copie o número de telefone do destinatário",
-                    "Entre na conta online do banco e vá para a seção \"Pagamentos\"",
+                    "Entre na sua conta bancária online e vá para a seção \"Pagamentos\"",
                     "Selecione \"Transferências\" e escolha \"Para outro país\"",
                     "Selecione \"Por número de telefone\"",
                     "Digite o número de telefone do destinatário e confirme",
-                    "O banco necessário da página de detalhes pode aparecer na linha de seleção, se não:",
+                    "O banco necessário pode aparecer na linha de seleção da página de detalhes, se não:",
                     "Selecione \"Para outro banco\", depois \"Banco de outros países\"",
                     "Selecione o banco do destinatário na página de detalhes",
                     "Digite o valor exato escolhido ao criar seu depósito",
@@ -189,6 +196,232 @@
             {
                 "title": "Outros bancos",
                 "content": ["Outros bancos disponíveis para pagamento: Yoomoney, GPB, PSB, CMRbank, Bank Russia"]
+            }
+        ],
+        "trnsgrn_card_tbank": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copie o número do cartão e o nome do titular",
+                    "Entre na conta online do banco e vá para a seção \"Pagamentos\"",
+                    "Selecione a seção \"Por número do cartão\"",
+                    "Insira o nome e o número do cartão do destinatário",
+                    "Especifique o valor exato escolhido ao criar seu depósito",
+                    "Clique no botão \"Transferir\"",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário",
+                    "Observe que a transferência deve ser feita pelo T-Bank. Se transferido de outro banco, o pagamento não será creditado."
+                ]
+            }
+        ],
+        "abhz_card_sber_tbank": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copie o número do cartão e o nome do beneficiário",
+                    "Entre no gabinete online do banco e vá para a seção \"Pagamentos\"",
+                    "Selecione a seção \"Para outro país\" e encontre \"Abkházia\" na busca",
+                    "No menu aberto, selecione \"Para cartão ou conta\"",
+                    "No menu superior, selecione \"Cartão\" e insira o número do cartão do beneficiário - \"Continuar\"",
+                    "Especifique o valor exato que você selecionou ao criar seu depósito",
+                    "Insira o sobrenome e nome do beneficiário - \"Continuar\"",
+                    "Clique no botão \"Transferir\" após verificar o valor",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página com os detalhes do beneficiário"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copie o número do cartão e o nome do beneficiário",
+                    "Entre no gabinete online do banco e vá para a seção \"Pagamentos\"",
+                    "Selecione a seção \"Por número do cartão\"",
+                    "Insira o nome do beneficiário e o número do cartão",
+                    "Especifique o valor exato que você selecionou ao criar seu depósito",
+                    "Clique no botão \"Transferir\"",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página com os detalhes do beneficiário"
+                ]
+            }
+        ],
+        "trnsgrn_sbp_tbank": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copie o número de telefone do destinatário",
+                    "Acesse seu banco online e navegue até a seção \"Pagamentos\"",
+                    "Selecione a seção \"Transferências\" e escolha \"Para outro país\"",
+                    "Selecione \"Por número de telefone\"",
+                    "Digite o número de telefone do destinatário e confirme",
+                    "O banco necessário dos detalhes do destinatário pode aparecer na linha de seleção, se não:",
+                    "Selecione \"Para outro banco\", depois \"Bancos de outros países\"",
+                    "Selecione o banco do destinatário da página de detalhes do destinatário",
+                    "Digite o valor exato selecionado ao criar seu depósito",
+                    "Clique no botão \"Transferir\"",
+                    "Após a transferência, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            }
+        ],
+        "pc_tjk_SBP_Bank_DushanbeCity": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copie o número de telefone do destinatário",
+                    "Entre no seu banco online e vá para a seção \"Pagamentos\"",
+                    "Selecione \"Para outro país\"",
+                    "Encontre \"Tajiquistão\" na lista",
+                    "No menu, selecione \"Por número de cartão, conta ou telefone\" e insira o número de telefone do destinatário",
+                    "Selecione Banco Dushanbe City",
+                    "Digite o valor exato escolhido ao criar seu depósito",
+                    "Clique em \"Transferir\" após verificar o valor",
+                    "Após a transferência, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copie o número de telefone do destinatário",
+                    "Entre no seu banco online e vá para a seção \"Pagamentos\"",
+                    "Na seção \"Transferências por telefone\", insira o número do destinatário",
+                    "Selecione Banco Dushanbe City",
+                    "Se o banco não for encontrado, use a busca \"Outro banco\" e encontre Dushanbe City",
+                    "Digite o valor exato em rublos mostrado na página de detalhes",
+                    "Clique em \"Transferir\"",
+                    "Após a transferência, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            }
+        ],
+        "trnsgrn_card_vtb": [
+            {
+                "title": "VTB",
+                "content": [
+                    "Copie o número do cartão e o nome completo do destinatário",
+                    "Faça login no banco online e vá para a seção \"Pagamentos\"",
+                    "Selecione \"Para outro país\" e encontre \"Tajiquistão\" na busca",
+                    "No menu aberto, selecione \"Por número do cartão\"",
+                    "Digite o número do cartão do destinatário e clique em \"Continuar\"",
+                    "Digite o nome e sobrenome do destinatário, o valor exato escolhido ao criar seu depósito e clique em \"Continuar\"",
+                    "Verifique a exatidão das informações e do valor fornecidos e clique em \"Transferir\"",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            }
+        ],
+        "trnsgrn_tjk_card_sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copie o número de telefone do destinatário",
+                    "Entre no seu banco online e vá para a seção \"Pagamentos\"",
+                    "Selecione \"Para outro país\"",
+                    "Encontre \"Tajiquistão\" na lista",
+                    "No menu, selecione \"Por número de cartão, conta ou telefone\" e cole o número de telefone do destinatário",
+                    "Selecione o Banco Dushanbe City",
+                    "Digite o valor exato escolhido ao criar seu depósito",
+                    "Clique em \"Transferir\" após verificar o valor",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            }
+        ],
+        "vtb": [
+            {
+                "title": "VTB",
+                "content": ["Transferências internas do banco, apenas para clientes VTB."]
+            }
+        ],
+        "trnsgrn_tjk_sbp_sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copie o número de telefone do destinatário",
+                    "Faça login no seu banco online e vá para a seção \"Pagamentos\"",
+                    "Selecione \"Para SBER ou outro banco\" e escolha \"Para outro país\"",
+                    "Selecione \"Tajiquistão\" no menu aberto",
+                    "No menu, selecione \"Por cartão, conta ou número de telefone\" e insira o número de telefone do destinatário",
+                    "Selecione o banco do destinatário na página de requisitos",
+                    "Digite o valor exato que você selecionou ao criar seu depósito",
+                    "Clique no botão \"Transferir\" após verificar o valor",
+                    "Após fazer a transferência, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            }
+        ],
+        "trnsgrn_tjk_sbp_sber_dc": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copie o número de telefone do destinatário",
+                    "Acesse seu banco online e vá para a seção \"Pagamentos\"",
+                    "Selecione a seção \"Para outro país\"",
+                    "Encontre \"Tajiquistão\" na lista suspensa",
+                    "No submenu, selecione \"Por cartão, conta ou número de telefone\" e insira o número de telefone do destinatário",
+                    { "content": "Selecione o Banco Dushanbe City", "fontWeight": "bold" },
+                    "Digite o valor exato que você escolheu ao criar seu depósito",
+                    "Clique no botão \"Transferir\" após verificar o valor",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            }
+        ],
+        "trnsgrn_tjk_sbp_tbank_dc": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copie o número de telefone do destinatário",
+                    "Acesse o banco online e vá para a seção \"Pagamentos\"",
+                    "Na seção \"Transferências por telefone\", cole o número do destinatário",
+                    {
+                        "content": "Selecione o Banco Dushanbe City",
+                        "fontWeight": "bold"
+                    },
+                    "Se o banco não for encontrado, use a busca \"Outro banco\" e encontre Dushanbe City",
+                    "Digite o valor exato em rublos mostrado na página de detalhes",
+                    "Clique no botão \"Transferir\"",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            }
+        ],
+        "sbp_vtb": [
+            {
+                "title": "VTB",
+                "content": [
+                    "Copie o número de telefone para transferência",
+                    "Entre no seu banco online e vá para a seção \"Pagamentos\"",
+                    "Clique no campo \"Transferir\" e insira o número de telefone na nova janela",
+                    "Selecione o número de telefone",
+                    "Selecione \"Banco VTB\"",
+                    "Digite o valor e clique em \"Continuar\"",
+                    "Verifique as informações e o valor inseridos e clique em \"Transferir\""
+                ]
+            }
+        ],
+        "sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copie o número de telefone do destinatário",
+                    "Entre no seu banco online e vá para a seção \"Pagamentos\"",
+                    "No campo \"Transferir\", insira o número de telefone do destinatário - clique em \"Continuar\"",
+                    {
+                        "content": "Banco do destinatário \"Sberbank\"",
+                        "fontWeight": "bold"
+                    },
+                    "Digite o valor exato escolhido ao criar seu depósito",
+                    "Clique no botão \"Transferir\" após verificar o valor",
+                    "Após transferir os fundos, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
+            }
+        ],
+        "alfa": [
+            {
+                "title": "ALFA",
+                "content": [
+                    "Copie o número de telefone do destinatário",
+                    "Acesse seu banco online e vá para a seção \"Pagamentos\"",
+                    "No campo \"Transferências\", selecione \"Por número de telefone\"",
+                    "Digite o número do destinatário e clique em \"Continuar\"",
+                    {
+                        "content": "Banco do destinatário \"Alfa Bank\"",
+                        "fontWeight": "bold"
+                    },
+                    "Digite o valor exato selecionado ao criar seu depósito",
+                    "Clique no botão \"Transferir\" após verificar o valor",
+                    "Após fazer a transferência, clique no botão \"Transferência concluída\" na página de detalhes do destinatário"
+                ]
             }
         ]
     },

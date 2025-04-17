@@ -1,1 +1,4 @@
-export const formatOnFocus = (value: string): string => (value === '' ? '+' : value);
+export const formatOnFocus =
+    (telOnFocusValue = '+') =>
+    (value: string): string =>
+        value === '' ? telOnFocusValue : value;

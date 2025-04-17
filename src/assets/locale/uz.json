@@ -30,6 +30,8 @@
     "form.input.dateOfBirth.placeholder": "Туғилган сана",
     "form.input.dateOfBirth.hint": "кун / ой / йил. Мисол: 23 / 01 / 1995",
     "form.input.documentId.placeholder": "Шахсни тасдиқловчи ҳужжат рақами",
+    "form.input.firstName.placeholder": "Ism",
+    "form.input.lastName.placeholder": "Familiya",
     "form.button.back.to.website": "Сайтга қайтиш",
     "form.button.reload": "Қайта юклаш",
     "form.button.next.label": "Кейинги",
@@ -64,6 +66,11 @@
         "Сўровда кўрсатилган аниқ суммани ўтказинг.",
         "Бутун суммани бир ўтказишда амалга оширинг.",
         "Ўтказишни амалга оширгач \"Ўтказиш бажарилди\" тугмасини босинг."
+    ],
+    "form.p2p.alert.li.receipt": [
+        "Сўровда кўрсатилган аниқ суммани ўтказинг.",
+        "Бутун суммани бир ўтказишда амалга оширинг.",
+        "Ўтказишни амалга оширгач тўлов квитанциясини бирктиринг"
     ],
     "form.p2p.alert.p": "Акс ҳолда тўловингиз қабул қилинмайди.",
     "form.p2p.gateway.selector.heading": "Усул ёки банкни танланг",
@@ -131,31 +138,31 @@
             {
                 "title": "SBER",
                 "content": [
-                    "Oluvchining telefon raqamini nusxalang",
-                    "Bankning onlayn kabinetiga kiring va \"To'lovlar\" bo'limiga o'ting",
-                    "\"SBER yoki boshqa bankka\" bo'limini tanlang va \"Boshqa mamlakatga\" tanlang",
-                    "Ochilgan menyuda \"Tojikiston\"ni tanlang",
-                    "Menyuda \"Karta raqami, hisob yoki telefon orqali\" tanlang va oluvchining telefon raqamini kiriting",
-                    "Rekvizitlar sahifasidan oluvchining bankini tanlang",
-                    "Depozit yaratishda tanlangan aniq summani kiriting",
-                    "Summani tekshirgandan so'ng \"O'tkazish\" tugmasini bosing",
-                    "Mablag'ni o'tkazgandan so'ng, oluvchining ma'lumotlari sahifasidagi \"O'tkazish bajarildi\" tugmasini bosing"
+                    "Олувчининг телефон рақамини нусхаланг",
+                    "Банкнинг онлайн кабинетига киринг ва \"Тўловлар\" бўлимига ўтинг",
+                    "\"SBER ёки бошқа банкка\" бўлимини танланг ва \"Бошқа мамлакатга\" танланг",
+                    "Очилган менюда \"Тожикистон\"ни танланг",
+                    "Менюда \"Карта рақами, ҳисоб ёки телефон орқали\" танланг ва олувчининг телефон рақамини киритинг",
+                    "Реквизитлар саҳифасидан олувчининг банкини танланг",
+                    "Депозит яратишда танланган аниқ суммани киритинг",
+                    "Суммани текширгандан сўнг \"Ўтказиш\" тугмасини босинг",
+                    "Маблағни ўтказгандан сўнг, олувчининг маълумотлари саҳифасидаги \"Ўтказиш бажарилди\" тугмасини босинг"
                 ]
             },
             {
                 "title": "T-Bank",
                 "content": [
-                    "Oluvchining telefon raqamini nusxalang",
-                    "Bankning onlayn kabinetiga kiring va \"To'lovlar\" bo'limiga o'ting",
-                    "\"O'tkazmalar\" bo'limini tanlang va \"Boshqa mamlakatga\" tanlang",
-                    "\"Telefon raqami orqali\" tanlang",
-                    "Oluvchining telefon raqamini kiriting va tasdiqlang",
-                    "Rekvizitlar sahifasidagi kerakli bank tanlov qatorida paydo bo'lishi mumkin, agar yo'q bo'lsa:",
-                    "\"Boshqa bankka\" tanlang, keyin \"Boshqa mamlakatlar banki\"ni tanlang",
-                    "Rekvizitlar sahifasidan oluvchining bankini tanlang",
-                    "Depozit yaratishda tanlangan aniq summani kiriting",
-                    "\"O'tkazish\" tugmasini bosing",
-                    "Mablag'ni o'tkazgandan so'ng, oluvchining ma'lumotlari sahifasidagi \"O'tkazish bajarildi\" tugmasini bosing"
+                    "Олувчининг телефон рақамини нусхаланг",
+                    "Банкнинг онлайн кабинетига киринг ва \"Тўловлар\" бўлимига ўтинг",
+                    "\"Ўтказмалар\" бўлимини танланг ва \"Бошқа мамлакатга\" танланг",
+                    "\"Телефон рақами орқали\" танланг",
+                    "Олувчининг телефон рақамини киритинг ва тасдиқланг",
+                    "Реквизитлар саҳифасидаги керакли банк танлов қаторида пайдо бўлиши мумкин, агар йўқ бўлса:",
+                    "\"Бошқа банкка\" танланг, кейин \"Бошқа мамлакатлар банки\"ни танланг",
+                    "Реквизитлар саҳифасидан олувчининг банкини танланг",
+                    "Депозит яратишда танланган аниқ суммани киритинг",
+                    "\"Ўтказиш\" тугмасини босинг",
+                    "Маблағни ўтказгандан сўнг, олувчининг маълумотлари саҳифасидаги \"Ўтказиш бажарилди\" тугмасини босинг"
                 ]
             }
         ],
@@ -189,6 +196,235 @@
             {
                 "title": "Бошқа банклар",
                 "content": ["Тўлов учун мавжуд бошқа банклар: Yoomoney, GPB, PSB, CMRbank, Bank Russia"]
+            }
+        ],
+        "trnsgrn_card_tbank": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Karta raqami va karta egasining ismini nusxalang",
+                    "Bankning onlayn kabinetiga kirib, \"To'lovlar\" bo'limiga o'ting",
+                    "\"Karta raqami bo'yicha\" bo'limini tanlang",
+                    "Oluvchining ismi va karta raqamini kiriting",
+                    "Depozitni yaratishda tanlangan aniq summani ko'rsating",
+                    "\"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng oluvchi ma'lumotlari sahifasidagi \"O'tkazma bajarildi\" tugmasini bosing",
+                    "E'tibor bering, o'tkazma faqat T-Bankdan amalga oshirilishi kerak. Boshqa bankdan o'tkazilsa, to'lov qabul qilinmaydi."
+                ]
+            }
+        ],
+        "abhz_card_sber_tbank": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Karta raqami va oluvchining ismini nusxalang",
+                    "Bankning onlayn kabinetiga kirib, \"To'lovlar\" bo'limiga o'ting",
+                    "\"Boshqa mamlakatga\" bo'limini tanlang va qidiruvda \"Abxaziya\"ni toping",
+                    "Ochilgan menyuda \"Kartaga yoki hisobga\" ni tanlang",
+                    "Yuqori menyuda \"Karta\"ni tanlang va oluvchining karta raqamini kiriting - \"Davom etish\"",
+                    "Depozitingizni yaratishda tanlagan aniq summani ko'rsating",
+                    "Oluvchining familiyasi va ismini kiriting - \"Davom etish\"",
+                    "Summani tekshirgandan so'ng \"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng oluvchi ma'lumotlari sahifasidagi \"O'tkazma bajarildi\" tugmasini bosing"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Karta raqami va oluvchining ismini nusxalang",
+                    "Bankning onlayn kabinetiga kirib, \"To'lovlar\" bo'limiga o'ting",
+                    "\"Karta raqami bo'yicha\" bo'limini tanlang",
+                    "Oluvchining ismi va karta raqamini kiriting",
+                    "Depozitingizni yaratishda tanlagan aniq summani ko'rsating",
+                    "\"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng oluvchi ma'lumotlari sahifasidagi \"O'tkazma bajarildi\" tugmasini bosing"
+                ]
+            }
+        ],
+        "trnsgrn_sbp_tbank": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Qabul qiluvchining telefon raqamini nusxalang",
+                    "Online bankka kirib, \"To'lovlar\" bo'limiga o'ting",
+                    "\"O'tkazmalar\" bo'limini tanlang va \"Boshqa mamlakatga\" tanlang",
+                    "\"Telefon raqami orqali\" tanlang",
+                    "Qabul qiluvchining telefon raqamini kiriting va tasdiqlang",
+                    "Qabul qiluvchi ma'lumotlaridan kerakli bank tanlash qatorida paydo bo'lishi mumkin, agar yo'q bo'lsa:",
+                    "\"Boshqa bankka\", keyin \"Boshqa mamlakatlar banklari\" tanlang",
+                    "Qabul qiluvchi ma'lumotlari sahifasidan qabul qiluvchining bankini tanlang",
+                    "Deposit yaratishda tanlagan aniq summani kiriting",
+                    "\"O'tkazish\" tugmasini bosing",
+                    "O'tkazishdan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazish tugadi\" tugmasini bosing"
+                ]
+            }
+        ],
+        "pc_tjk_SBP_Bank_DushanbeCity": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Qabul qiluvchining telefon raqamini nusxalang",
+                    "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"Boshqa mamlakatga\" bo'limini tanlang",
+                    "Ro'yxatdan \"Tojikiston\"ni toping",
+                    "Menyuda \"Karta raqami, hisob yoki telefon orqali\" tanlang va qabul qiluvchining telefon raqamini kiriting",
+                    { "content": "Dushanbe City Bankni tanlang", "fontWeight": "bold" },
+                    "Depozitingizni yaratishda tanlangan aniq summani kiriting",
+                    "Summani tekshirgandan so'ng \"O'tkazish\" tugmasini bosing",
+                    "O'tkazmadan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Qabul qiluvchining telefon raqamini nusxalang",
+                    "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"Telefon orqali o'tkazmalar\" bo'limida qabul qiluvchining raqamini kiriting",
+                    {
+                        "content": "Dushanbe City Bankni tanlang",
+                        "fontWeight": "bold"
+                    },
+                    "Bank topilmasa, \"Boshqa bank\" qidiruvidan foydalanib Dushanbe Cityni toping",
+                    "Ma'lumotlar sahifasida ko'rsatilgan aniq rubl summasini kiriting",
+                    "\"O'tkazish\" tugmasini bosing",
+                    "O'tkazmadan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
+                ]
+            }
+        ],
+        "trnsgrn_card_vtb": [
+            {
+                "title": "VTB",
+                "content": [
+                    "Karta raqami va oluvchining to'liq ismini nusxalang",
+                    "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"Boshqa mamlakatga\" bo'limini tanlang va qidiruvda \"Tojikiston\"ni toping",
+                    "Ochilgan menyuda \"Karta raqami bo'yicha\" tanlang",
+                    "Oluvchining karta raqamini kiriting va \"Davom etish\" tugmasini bosing",
+                    "Oluvchining ismi va familiyasini, depozitingizni yaratishda tanlangan aniq summani kiriting va \"Davom etish\" tugmasini bosing",
+                    "Kiritilgan ma'lumotlar va summaning to'g'riligini tekshiring va \"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng oluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
+                ]
+            }
+        ],
+        "trnsgrn_tjk_card_sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Qabul qiluvchining telefon raqamini nusxalang",
+                    "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"Boshqa mamlakatga\" bo'limini tanlang",
+                    "Ro'yxatdan \"Tojikiston\"ni toping",
+                    "Menyuda \"Karta raqami, hisob yoki telefon orqali\" ni tanlang va qabul qiluvchining telefon raqamini joylang",
+                    "Dushanbe City Bank ni tanlang",
+                    "Depozitingizni yaratishda tanlangan aniq summani kiriting",
+                    "Summani tekshirgandan so'ng \"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
+                ]
+            }
+        ],
+        "vtb": [
+            {
+                "title": "VTB",
+                "content": ["Bank ichidagi o'tkazmalar, faqat VTB mijozlari uchun."]
+            }
+        ],
+        "trnsgrn_tjk_sbp_sber": [
+            {
+                "title": "СБЕР",
+                "content": [
+                    "Qabul qiluvchining telefon raqamini nusxalang",
+                    "Bank onlayn kabinetiga kirib, \"To'lovlar\" bo'limiga o'ting",
+                    "\"SBER yoki boshqa bankka\" bo'limini tanlang va \"Boshqa mamlakatga\" tanlang",
+                    "Ochilgan menyuda \"Tojikiston\"ni tanlang",
+                    "Menyuda \"Karta, hisob yoki telefon raqami orqali\" tanlang va qabul qiluvchining telefon raqamini kiriting",
+                    "Rekvizitlar sahifasidan qabul qiluvchi bankini tanlang",
+                    "Depozitingizni yaratishda tanlagan aniq summani ko'rsating",
+                    "Summani tekshirib, \"O'tkazish\" tugmasini bosing",
+                    "Pul o'tkazilgandan so'ng qabul qiluvchi ma'lumotlari sahifasidagi \"O'tkazma bajarildi\" tugmasini bosing"
+                ]
+            }
+        ],
+        "trnsgrn_tjk_sbp_sber_dc": [
+            {
+                "title": "СБЕР",
+                "content": [
+                    "Qabul qiluvchining telefon raqamini nusxalang",
+                    "Bank onlayn kabinetiga kirib, \"To'lovlar\" bo'limiga o'ting",
+                    "\"Boshqa mamlakatga\" bo'limini tanlang",
+                    "Ochilgan ro'yxatdan \"Tojikiston\"ni toping",
+                    "Pastki menyuda \"Karta, hisob yoki telefon raqami orqali\" ni tanlab, qabul qiluvchining telefon raqamini kiriting",
+                    { "content": "Dushanbe City Bankni tanlang", "fontWeight": "bold" },
+                    "Depozitingizni yaratishda tanlagan aniq summani ko'rsating",
+                    "Summani tekshirib, \"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng, qabul qiluvchi ma'lumotlari sahifasidagi \"O'tkazma yakunlandi\" tugmasini bosing"
+                ]
+            }
+        ],
+        "trnsgrn_tjk_sbp_tbank_dc": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Qabul qiluvchining telefon raqamini nusxalang",
+                    "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"Telefon orqali o'tkazmalar\" bo'limida qabul qiluvchining raqamini joylang",
+                    {
+                        "content": "Dushanbe City Bankni tanlang",
+                        "fontWeight": "bold"
+                    },
+                    "Bank topilmasa, \"Boshqa bank\" qidiruvidan foydalanib Dushanbe Cityni toping",
+                    "Tafsilotlar sahifasida ko'rsatilgan aniq summani rubl bilan kiriting",
+                    "\"O'tkazish\" tugmasini bosing",
+                    "Mablag'ni o'tkazgandan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
+                ]
+            }
+        ],
+        "sbp_vtb": [
+            {
+                "title": "VTB",
+                "content": [
+                    "O'tkazma uchun telefon raqamini nusxalang",
+                    "Bank onlayn kabinetiga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"O'tkazish\" maydonini bosing va yangi oynada telefon raqamini kiriting",
+                    "Telefon raqamini tanlang",
+                    "\"VTB Bank\"ni tanlang",
+                    "Summani kiriting va \"Davom etish\" tugmasini bosing",
+                    "Kiritilgan ma'lumotlar va summaning to'g'riligini tekshiring va \"O'tkazish\" tugmasini bosing"
+                ]
+            }
+        ],
+        "sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Олувчининг телефон рақамини нусхаланг",
+                    "Банкнинг онлайн кабинетига киринг ва \"Тўловлар\" бўлимига ўтинг",
+                    "\"Ўтказиш\" майдонига олувчининг телефон рақамини киритинг - \"Давом этиш\" тугмасини босинг",
+                    {
+                        "content": "Олувчининг банки \"Сбербанк\"",
+                        "fontWeight": "bold"
+                    },
+                    "Депозит яратишда танланган аниқ суммани киритинг",
+                    "Суммани текширгандан сўнг \"Ўтказиш\" тугмасини босинг",
+                    "Маблағни ўтказгандан сўнг, олувчининг маълумотлари саҳифасидаги \"Ўтказиш бажарилди\" тугмасини босинг"
+                ]
+            }
+        ],
+        "alfa": [
+            {
+                "title": "ALFA",
+                "content": [
+                    "Qabul qiluvchining telefon raqamini nusxalang",
+                    "Onlayn bankingga kiring va \"To'lovlar\" bo'limiga o'ting",
+                    "\"O'tkazmalar\" maydonida \"Telefon raqami orqali\" ni tanlang",
+                    "Qabul qiluvchining raqamini kiriting va \"Davom etish\" tugmasini bosing",
+                    {
+                        "content": "Qabul qiluvchi bank \"Alfa Bank\"",
+                        "fontWeight": "bold"
+                    },
+                    "Depozitingizni yaratishda tanlangan aniq summani kiriting",
+                    "Summani tekshirgandan so'ng \"O'tkazish\" tugmasini bosing",
+                    "O'tkazma qilgandan so'ng qabul qiluvchi ma'lumotlari sahifasida \"O'tkazma yakunlandi\" tugmasini bosing"
+                ]
             }
         ]
     },

@@ -1,16 +1,22 @@
 export const METADATA_NAMESPACE = 'dev.vality.checkout';
 
 export type MetadataTextLocalization = {
-    ja?: string;
     en?: string;
     ru?: string;
     pt?: string;
 };
 
-export type MetadataFieldFormatter = {
+export type NumbersOnlyFormatter = {
     type: 'numbersOnly';
     maxLength?: number;
 };
+
+export type PhoneNumberFormatter = {
+    type: 'phoneNumber';
+    length: number;
+};
+
+export type MetadataFieldFormatter = NumbersOnlyFormatter | PhoneNumberFormatter;
 
 export type AttributeType = JSX.IntrinsicElements['input']['type'];
 export type AttributeInputMode = JSX.IntrinsicElements['input']['inputMode'];
@@ -26,12 +32,17 @@ export type ServiceProviderMetadataField = {
     inputMode?: AttributeInputMode;
     replaceValuePattern?: string;
     replaceValue?: string;
+    telOnFocusValue?: string;
 };
 
-export type MetadataSelectSource = {
-    type: 'countrySubdivisions';
-    countryCode?: string;
-};
+export type MetadataSelectSource =
+    | {
+          type: 'countrySubdivisions';
+          countryCode?: string;
+      }
+    | {
+          type: 'countryCodes';
+      };
 
 export type ServiceProviderMetadataSelect = {
     type: 'select';

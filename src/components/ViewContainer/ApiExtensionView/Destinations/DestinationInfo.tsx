@@ -64,6 +64,7 @@ export function DestinationInfo({ destination }: DestinationInfoProps) {
                     isCopyable={true}
                     label={l['form.p2p.destination.spb.phone']}
                     value={normalizePhoneNumber(destination.phoneNumber)}
+                    whiteSpace="nowrap"
                 />
             )}
             {destination?.bankName && (

@@ -38,6 +38,8 @@ export type InitContextContactInfo = {
     readonly phoneNumber?: string;
     readonly dateOfBirth?: string | true;
     readonly documentId?: string | true;
+    readonly firstName?: string | true;
+    readonly lastName?: string | true;
 };
 
 export type InitContext = {

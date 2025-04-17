@@ -30,6 +30,8 @@
     "form.input.dateOfBirth.placeholder": "Date of birth",
     "form.input.dateOfBirth.hint": "day / month / year. Example: 23 / 01 / 1995",
     "form.input.documentId.placeholder": "Identity document number",
+    "form.input.firstName.placeholder": "First name",
+    "form.input.lastName.placeholder": "Last name",
     "form.button.back.to.website": "Back to website",
     "form.button.reload": "Reload",
     "form.button.next.label": "Next",
@@ -64,6 +66,11 @@
         "Transfer the exact amount",
         "Transfer the entire amount in one transaction",
         "After completing the transfer, click the \"Complete payment\" button."
+    ],
+    "form.p2p.alert.li.receipt": [
+        "Transfer the exact amount specified in the request.",
+        "Pay the entire amount in one transfer.",
+        "After completing the transfer, attach the payment receipt"
     ],
     "form.p2p.alert.p": "Otherwise, the payment will not be credited.",
     "form.p2p.gateway.selector.heading": "Choose a method or bank",
@@ -131,31 +138,29 @@
             {
                 "title": "SBER",
                 "content": [
-                    "Copy the recipient's phone number",
-                    "Log in to the bank's online account and go to the \"Payments\" section",
-                    "Select \"To SBER or another bank\" and choose \"To another country\"",
-                    "In the opened menu, select \"Tajikistan\"",
-                    "In the menu, select \"By card number, account or phone\" and enter the recipient's phone number",
-                    "Select the recipient's bank from the details page",
+                    "Copy recipient's phone number",
+                    "Log in to your online banking and go to \"Payments\" section",
+                    "Select \"To another country\" section",
+                    "Find \"Tajikistan\" in the opened list",
+                    "In the menu select \"By card number, account or phone\" and paste recipient's phone number",
+                    "Select recipient's bank (specified on the recipient details page)",
                     "Enter the exact amount chosen when creating your deposit",
-                    "Click the \"Transfer\" button after checking the amount",
-                    "After transferring the funds, click the \"Transfer completed\" button on the recipient's data page"
+                    "Click \"Transfer\" button after verifying the amount",
+                    "After transferring funds, click \"Transfer completed\" button on the recipient details page"
                 ]
             },
             {
                 "title": "T-Bank",
                 "content": [
-                    "Copy the recipient's phone number",
-                    "Log in to the bank's online account and go to the \"Payments\" section",
-                    "Select \"Transfers\" and choose \"To another country\"",
-                    "Select \"By phone number\"",
-                    "Enter the recipient's phone number and confirm it",
-                    "The required bank from the details page may appear in the selection line, if not:",
-                    "Select \"To another bank\", then \"Bank of other countries\"",
-                    "Select the recipient's bank from the details page",
-                    "Enter the exact amount chosen when creating your deposit",
-                    "Click the \"Transfer\" button",
-                    "After transferring the funds, click the \"Transfer completed\" button on the recipient's data page"
+                    "Copy recipient's phone number",
+                    "Log in to your online banking and go to \"Payments\" section",
+                    "In the \"Phone transfers\" section paste the recipient's number",
+                    "Check recipient's name and confirm it",
+                    "Required bank from the details page should appear in the selection field, if not:",
+                    "Select \"To another bank\" and use search (bank name is on the details page)",
+                    "Enter the exact amount in rubles specified on the details page",
+                    "Click \"Transfer\" button",
+                    "After transferring funds, click \"Transfer completed\" button on the recipient details page"
                 ]
             }
         ],
@@ -189,6 +194,235 @@
             {
                 "title": "Other banks",
                 "content": ["Other banks available for payment: Yoomoney, GPB, PSB, CMRbank, Bank Russia"]
+            }
+        ],
+        "trnsgrn_card_tbank": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copy the card number and cardholder's name",
+                    "Log in to the bank's online account and go to the \"Payments\" section",
+                    "Select the \"By card number\" section",
+                    "Enter the recipient's name and card number",
+                    "Specify the exact amount chosen when creating your deposit",
+                    "Click the \"Transfer\" button",
+                    "After transferring the funds, click the \"Transfer completed\" button on the recipient's details page",
+                    "Please note that the transfer must be made from T-Bank. If transferred from another bank, the payment will not be credited."
+                ]
+            }
+        ],
+        "abhz_card_sber_tbank": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copy the card number and beneficiary's name",
+                    "Log in to the bank's online cabinet and go to the \"Payments\" section",
+                    "Select \"To another country\" section and find \"Abkhazia\" in the search",
+                    "In the opened menu, select \"To card or account\"",
+                    "In the top menu, select \"Card\" and enter the beneficiary's card number - \"Continue\"",
+                    "Specify the exact amount you selected when creating your deposit",
+                    "Enter the beneficiary's surname and name - \"Continue\"",
+                    "Click the \"Transfer\" button after checking the amount",
+                    "After transferring the funds, click the \"Transfer completed\" button on the page with beneficiary details"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copy the card number and beneficiary's name",
+                    "Log in to the bank's online cabinet and go to the \"Payments\" section",
+                    "Select \"By card number\" section",
+                    "Enter the beneficiary's name and card number",
+                    "Specify the exact amount you selected when creating your deposit",
+                    "Click the \"Transfer\" button",
+                    "After transferring the funds, click the \"Transfer completed\" button on the page with beneficiary details"
+                ]
+            }
+        ],
+        "trnsgrn_sbp_tbank": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copy the recipient's phone number",
+                    "Go to your online banking and navigate to the \"Payments\" section",
+                    "Select the \"Transfers\" section and choose \"To another country\"",
+                    "Select \"By phone number\"",
+                    "Enter the recipient's phone number and confirm it",
+                    "The required bank from the recipient's details may appear in the selection line, if not:",
+                    "Select \"To another bank\", then \"Banks of other countries\"",
+                    "Select the recipient's bank from the recipient's details page",
+                    "Enter the exact amount selected when creating your deposit",
+                    "Click the \"Transfer\" button",
+                    "After the transfer, click the \"Transfer completed\" button on the recipient's details page"
+                ]
+            }
+        ],
+        "pc_tjk_SBP_Bank_DushanbeCity": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copy recipient's phone number",
+                    "Log in to your online banking and go to the \"Payments\" section",
+                    "Select \"To another country\"",
+                    "Find \"Tajikistan\" in the list",
+                    "In the menu, select \"By card number, account or phone\" and enter the recipient's phone number",
+                    { "content": "Select Dushanbe City Bank", "fontWeight": "bold" },
+                    "Enter the exact amount chosen when creating your deposit",
+                    "Click \"Transfer\" after verifying the amount",
+                    "After the transfer, click the \"Transfer completed\" button on the recipient details page"
+                ]
+            },
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copy recipient's phone number",
+                    "Log in to your online banking and go to the \"Payments\" section",
+                    "In the \"Phone transfers\" section, enter the recipient's number",
+                    {
+                        "content": "Select Dushanbe City Bank",
+                        "fontWeight": "bold"
+                    },
+                    "If the bank is not found, use the \"Other bank\" search and find Dushanbe City",
+                    "Enter the exact amount in rubles shown on the details page",
+                    "Click \"Transfer\"",
+                    "After the transfer, click the \"Transfer completed\" button on the recipient details page"
+                ]
+            }
+        ],
+        "trnsgrn_card_vtb": [
+            {
+                "title": "VTB",
+                "content": [
+                    "Copy the card number and recipient's full name",
+                    "Log in to your online banking and go to the \"Payments\" section",
+                    "Select \"To another country\" and find \"Tajikistan\" in the search",
+                    "In the opened menu, select \"By card number\"",
+                    "Enter the recipient's card number and click \"Continue\"",
+                    "Enter the recipient's First and Last name, the exact amount chosen when creating your deposit and click \"Continue\"",
+                    "Verify the correctness of the information and amount you provided and click \"Transfer\"",
+                    "After transferring the funds, click the \"Transfer completed\" button on the recipient's details page"
+                ]
+            }
+        ],
+        "trnsgrn_tjk_card_sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copy recipient's phone number",
+                    "Log in to your online banking and go to the \"Payments\" section",
+                    "Select \"To another country\"",
+                    "Find \"Tajikistan\" in the list",
+                    "In the menu, select \"By card number, account or phone\" and paste the recipient's phone number",
+                    "Select Dushanbe City Bank",
+                    "Enter the exact amount chosen when creating your deposit",
+                    "Click \"Transfer\" after verifying the amount",
+                    "After transferring the funds, click the \"Transfer completed\" button on the recipient details page"
+                ]
+            }
+        ],
+        "vtb": [
+            {
+                "title": "VTB",
+                "content": ["Intra-bank transfers, for VTB clients only."]
+            }
+        ],
+        "trnsgrn_tjk_sbp_sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copy the recipient's phone number",
+                    "Log in to your online banking and go to the \"Payments\" section",
+                    "Select \"To SBER or other bank\" and choose \"To another country\"",
+                    "Select \"Tajikistan\" in the opened menu",
+                    "In the menu, select \"By card, account or phone number\" and enter the recipient's phone number",
+                    "Select the recipient's bank from the requisites page",
+                    "Enter the exact amount you selected when creating your deposit",
+                    "Click the \"Transfer\" button after verifying the amount",
+                    "After making the transfer, click the \"Transfer completed\" button on the recipient's details page"
+                ]
+            }
+        ],
+        "trnsgrn_tjk_sbp_sber_dc": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copy the recipient's phone number",
+                    "Log in to your online banking and go to the \"Payments\" section",
+                    "Select \"To another country\" section",
+                    "Find \"Tajikistan\" in the dropdown list",
+                    "In the submenu, select \"By card, account or phone number\" and enter the recipient's phone number",
+                    { "content": "Select Dushanbe City Bank", "fontWeight": "bold" },
+                    "Enter the exact amount you chose when creating your deposit",
+                    "Click the \"Transfer\" button after verifying the amount",
+                    "After transferring the funds, click the \"Transfer completed\" button on the recipient's details page"
+                ]
+            }
+        ],
+        "trnsgrn_tjk_sbp_tbank_dc": [
+            {
+                "title": "T-Bank",
+                "content": [
+                    "Copy recipient's phone number",
+                    "Log in to online banking and go to the \"Payments\" section",
+                    "In the \"Phone transfers\" section, paste the recipient's number",
+                    {
+                        "content": "Select Dushanbe City Bank",
+                        "fontWeight": "bold"
+                    },
+                    "If the bank is not found, use the \"Other bank\" search and find Dushanbe City",
+                    "Enter the exact amount in rubles shown on the details page",
+                    "Click the \"Transfer\" button",
+                    "After transferring the funds, click the \"Transfer completed\" button on the recipient details page"
+                ]
+            }
+        ],
+        "sbp_vtb": [
+            {
+                "title": "VTB",
+                "content": [
+                    "Copy the phone number for transfer",
+                    "Log in to your online banking and go to the \"Payments\" section",
+                    "Click on the \"Transfer\" field and enter the phone number in the new window",
+                    "Select the phone number",
+                    "Select \"VTB Bank\"",
+                    "Enter the amount and click \"Continue\"",
+                    "Verify the information and amount you entered and click \"Transfer\""
+                ]
+            }
+        ],
+        "sber": [
+            {
+                "title": "SBER",
+                "content": [
+                    "Copy recipient's phone number",
+                    "Log in to your online banking and go to \"Payments\" section",
+                    "In the \"Transfer\" field enter the recipient's phone number - click \"Continue\"",
+                    {
+                        "content": "Recipient's bank \"Sberbank\"",
+                        "fontWeight": "bold"
+                    },
+                    "Enter the exact amount chosen when creating your deposit",
+                    "Click \"Transfer\" button after verifying the amount",
+                    "After transferring funds, click \"Transfer completed\" button on the recipient details page"
+                ]
+            }
+        ],
+        "alfa": [
+            {
+                "title": "ALFA",
+                "content": [
+                    "Copy the recipient's phone number",
+                    "Log in to your online banking and go to the \"Payments\" section",
+                    "In the \"Transfers\" field, select \"By phone number\"",
+                    "Enter the recipient's number and click \"Continue\"",
+                    {
+                        "content": "Recipient's bank \"Alfa Bank\"",
+                        "fontWeight": "bold"
+                    },
+                    "Enter the exact amount selected when creating your deposit",
+                    "Click the \"Transfer\" button after verifying the amount",
+                    "After making the transfer, click the button on the recipient's details page \"Transfer completed\""
+                ]
             }
         ]
     },

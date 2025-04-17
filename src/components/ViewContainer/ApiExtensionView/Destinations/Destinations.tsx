@@ -48,7 +48,7 @@ export function Destinations({ destinations }: DestinationsProps) {
     return (
         <>
             <VStack align="stretch" minH="md" spacing={5}>
-                <P2PAlert />
+                <P2PAlert receiptRequired={receiptRequired} />
                 <VStack align="stretch" spacing={3}>
                     {destinations.map((destination, index) => (
                         <DestinationInfo key={index} destination={destination} />
