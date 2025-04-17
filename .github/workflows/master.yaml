@@ -59,13 +59,13 @@ jobs:
                   directory: 'dist'
                   gitHubToken: ${{ secrets.GITHUB_TOKEN }}
                   branch: main
-            - name: set globalgatein config
+            - name: set v3 config
               run: |
                   printf "$APP_3_ENV_FILE" > dist/v1/appConfig.json
               shell: bash
               env:
                   APP_3_ENV_FILE: ${{secrets.APP_3_CONFIG_CF}}
-            - name: Publish globalgatein to CF Pages
+            - name: Publish v3 to CF Pages
               uses: cloudflare/pages-action@1
               with:
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -74,18 +74,33 @@ jobs:
                   directory: 'dist'
                   gitHubToken: ${{ secrets.GITHUB_TOKEN }}
                   branch: main
-            - name: set flow3dtunnel config
+            - name: set v4 config
               run: |
                   printf "$APP_4_ENV_FILE" > dist/v1/appConfig.json
               shell: bash
               env:
                   APP_4_ENV_FILE: ${{secrets.APP_4_CONFIG_CF}}
-            - name: Publish flow3dtunnel to CF Pages
+            - name: Publish v4 to CF Pages
               uses: cloudflare/pages-action@1
               with:
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
                   projectName: 'payform-flow3dtunnel'
+                  directory: 'dist'
+                  gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+                  branch: main
+            - name: set v5 config
+              run: |
+                  printf "$APP_5_ENV_FILE" > dist/v1/appConfig.json
+              shell: bash
+              env:
+                  APP_5_ENV_FILE: ${{secrets.APP_5_CONFIG_CF}}
+            - name: Publish v5 to CF Pages
+              uses: cloudflare/pages-action@1
+              with:
+                  apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                  accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+                  projectName: 'payform-v5'
                   directory: 'dist'
                   gitHubToken: ${{ secrets.GITHUB_TOKEN }}
                   branch: main
