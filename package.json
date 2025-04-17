@@ -62,7 +62,7 @@
     "rollup-plugin-visualizer": "5.9.2",
     "ts-jest": "29.1.0",
     "typescript": "5.1.6",
-    "vite": "4.5.3",
+    "vite": "4.5.13",
     "vite-plugin-static-copy": "0.17.0",
     "vite-tsconfig-paths": "4.2.0"
   }
